@@ -19,7 +19,7 @@
  *
  */
 
-#include "BookModel.h"
+#include "BookListModel.h"
 
 #include <QDateTime>
 

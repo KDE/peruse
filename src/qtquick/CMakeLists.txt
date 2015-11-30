@@ -1,6 +1,6 @@
 set(qmlplugin_SRCS
     qmlplugin.cpp
-    BookModel.cpp
+    BookListModel.cpp
 )
 
 add_library (peruseqmlplugin SHARED ${qmlplugin_SRCS})

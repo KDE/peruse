@@ -21,7 +21,7 @@
 
 #include "qmlplugin.h"
 
-#include "BookModel.h"
+#include "BookListModel.h"
 
 #include <QtQml/qqml.h>
 
@@ -31,5 +31,5 @@ void QmlPlugins::initializeEngine(QQmlEngine *, const char *)
 
 void QmlPlugins::registerTypes(const char *uri)
 {
-    qmlRegisterType<BookModel>(uri, 0, 1, "BookModel");
+    qmlRegisterType<BookListModel>(uri, 0, 1, "BookListModel");
 }
