@@ -21,7 +21,10 @@
 
 #include "qmlplugin.h"
 
+#include "ArchiveBookModel.h"
 #include "BookListModel.h"
+#include "BookModel.h"
+#include "FolderBookModel.h"
 
 #include <QtQml/qqml.h>
 
@@ -32,4 +35,7 @@ void QmlPlugins::initializeEngine(QQmlEngine *, const char *)
 void QmlPlugins::registerTypes(const char *uri)
 {
     qmlRegisterType<BookListModel>(uri, 0, 1, "BookListModel");
+    qmlRegisterType<BookModel>(uri, 0, 1, "BookModel");
+    qmlRegisterType<ArchiveBookModel>(uri, 0, 1, "ArchiveBookModel");
+    qmlRegisterType<FolderBookModel>(uri, 0, 1, "FolderBookModel");
 }

@@ -1,12 +1,19 @@
 set(qmlplugin_SRCS
     qmlplugin.cpp
+    ArchiveBookModel.cpp
+    ArchiveImageProvider.cpp
+    BookModel.cpp
     BookListModel.cpp
+    FolderBookModel.cpp
 )
 
 add_library (peruseqmlplugin SHARED ${qmlplugin_SRCS})
 
 target_link_libraries (peruseqmlplugin
+    Qt5::Core
     Qt5::Qml
+    Qt5::Quick
+    KF5::Archive
 )
 
 install (TARGETS peruseqmlplugin DESTINATION ${QML_INSTALL_DIR}/org/kde/peruse)
