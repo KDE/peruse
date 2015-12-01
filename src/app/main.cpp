@@ -80,8 +80,9 @@ int main(int argc, char** argv)
     QQmlContext* objectContext = engine.rootContext();
     engine.rootContext()->setContextProperty("PLASMA_PLATFORM", QString(qgetenv("PLASMA_PLATFORM")));
     engine.rootContext()->setContextProperty("bookLocations", locations);
-//     objectContext->setContextProperty("kokoProcessor", &processor);
-//     objectContext->setContextProperty("kokoConfig", &config);
+    // Yes, i realise this is a touch on the ugly side. I have found no better way to allow for
+    // things like the archive book model to create imageproviders for the archives
+    engine.rootContext()->setContextProperty("globalQmlEngine", &engine);
 
     QString path;
     if (qgetenv("PLASMA_PLATFORM") == QByteArray("phone")) {
