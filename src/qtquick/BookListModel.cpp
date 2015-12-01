@@ -37,7 +37,7 @@ struct BookEntry {
     int currentPage;
 };
 
-class BookModel::Private {
+class BookListModel::Private {
 public:
     Private()
         : contentModel(0)
@@ -51,18 +51,18 @@ public:
     QAbstractListModel* contentModel;
 };
 
-BookModel::BookModel(QObject* parent)
+BookListModel::BookListModel(QObject* parent)
     : QAbstractListModel(parent)
     , d(new Private)
 {
 }
 
-BookModel::~BookModel()
+BookListModel::~BookListModel()
 {
     delete d;
 }
 
-QHash<int, QByteArray> BookModel::roleNames() const
+QHash<int, QByteArray> BookListModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
     roles[FilenameRole] = "filename";
@@ -75,7 +75,7 @@ QHash<int, QByteArray> BookModel::roleNames() const
     return roles;
 }
 
-QVariant BookModel::data(const QModelIndex& index, int role) const
+QVariant BookListModel::data(const QModelIndex& index, int role) const
 {
     QVariant result;
     if(index.isValid() && index.row() > -1 && index.row() < d->entries.count())
@@ -112,14 +112,14 @@ QVariant BookModel::data(const QModelIndex& index, int role) const
     return result;
 }
 
-int BookModel::rowCount(const QModelIndex& parent) const
+int BookListModel::rowCount(const QModelIndex& parent) const
 {
     if(parent.isValid())
         return 0;
     return d->entries.count();
 }
 
-void BookModel::setContentModel(QObject* newModel)
+void BookListModel::setContentModel(QObject* newModel)
 {
     if(d->contentModel)
     {
@@ -133,12 +133,12 @@ void BookModel::setContentModel(QObject* newModel)
     emit contentModelChanged();
 }
 
-QObject * BookModel::contentModel() const
+QObject * BookListModel::contentModel() const
 {
     return d->contentModel;
 }
 
-void BookModel::contentModelItemsInserted(QModelIndex index, int first, int last)
+void BookListModel::contentModelItemsInserted(QModelIndex index, int first, int last)
 {
     int newRow = d->entries.count();
     beginInsertRows(QModelIndex(), newRow, newRow + (last - first));

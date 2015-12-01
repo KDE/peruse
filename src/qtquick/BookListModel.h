@@ -19,19 +19,19 @@
  *
  */
 
-#ifndef BOOKMODEL_H
-#define BOOKMODEL_H
+#ifndef BOOKLISTMODEL_H
+#define BOOKLISTMODEL_H
 
 #include <QAbstractListModel>
 
-class BookModel : public QAbstractListModel
+class BookListModel : public QAbstractListModel
 {
     Q_OBJECT
     Q_PROPERTY(QObject* contentModel READ contentModel WRITE setContentModel NOTIFY contentModelChanged)
     Q_ENUMS(Grouping)
 public:
-    explicit BookModel(QObject* parent = 0);
-    virtual ~BookModel();
+    explicit BookListModel(QObject* parent = 0);
+    virtual ~BookListModel();
 
     enum Grouping {
         GroupByNone = 0,
@@ -66,4 +66,4 @@ private:
     Q_SLOT void contentModelItemsInserted(QModelIndex index,int first, int last);
 };
 
-#endif//BOOKMODEL_H
+#endif//BOOKLISTMODEL_H
