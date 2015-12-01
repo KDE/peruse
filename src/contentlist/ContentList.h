@@ -31,6 +31,8 @@ public:
     explicit ContentList(QObject* parent = 0);
     virtual ~ContentList();
 
+    Q_INVOKABLE static QString getMimetype(QString filePath);
+
     Q_SLOT void addLocation(QString path);
     Q_SLOT void addMimetype(QString mimetype);
     Q_SLOT void setSearchString(const QString& searchString);

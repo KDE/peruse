@@ -20,6 +20,7 @@
  */
 
 #include "ContentList.h"
+#include <QMimeDatabase>
 
 #include "BalooContentLister.h"
 
@@ -47,6 +48,13 @@ ContentList::ContentList(QObject* parent)
 ContentList::~ContentList()
 {
     delete d;
+}
+
+QString ContentList::getMimetype(QString filePath)
+{
+    QMimeDatabase db;
+    QMimeType mime = db.mimeTypeForFile(filePath);
+    return mime.name();
 }
 
 void ContentList::addLocation(QString path)
