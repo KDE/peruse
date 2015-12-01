@@ -23,6 +23,7 @@ import QtQuick 2.1
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.0
 
+import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 import org.kde.peruse 0.1 as Peruse
 
@@ -30,7 +31,7 @@ Item {
     id: root;
     objectName: "bookshelf";
     property alias model: shelfList.model;
-    signal bookSelected(string filename);
+    signal bookSelected(string filename, int currentPage);
     property alias headerText: shelfTitle.text;
     property int group: Peruse.BookModel.GroupByNone;
     PlasmaExtras.Title {
@@ -55,7 +56,7 @@ Item {
             width: root.width;
             MouseArea {
                 anchors.fill: parent;
-                onClicked: root.bookSelected(model.filename);
+                onClicked: root.bookSelected(model.filename, model.currentPage);
             }
             Item {
                 id: bookCover;
@@ -78,7 +79,7 @@ Item {
                     }
                 }
             }
-            Text {
+            PlasmaComponents.Label {
                 id: bookTitle;
                 anchors {
                     top: parent.top;
