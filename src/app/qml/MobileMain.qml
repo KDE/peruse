@@ -36,7 +36,7 @@ MobileMainWindow {
 
     SystemPalette { id: sysPal; }
 
-    Peruse.BookModel {
+    Peruse.BookListModel {
         id: contentList;
         contentModel: ContentList { }
     }
@@ -152,39 +152,43 @@ MobileMainWindow {
                 onBookSelected: {
                     view.push({
                         item: bookViewer,
-                        properties: { focus: true, file: filename }
+                        properties: { focus: true, file: filename, currentPage: currentPage, contentList: contentList }
                     })
                 }
                 headerText: "All Comics";
-                group: Peruse.BookModel.GroupByTitle;
+                group: Peruse.BookListModel.GroupByTitle;
             }
         }
 
         Component {
             id: bookshelfAuthor;
             Bookshelf {
+                width: view.width;
+                model: contentList;
                 onBookSelected: {
                     view.push({
                         item: bookViewer,
-                        properties: { focus: true, file: filename }
+                        properties: { focus: true, file: filename, currentPage: currentPage, contentList: contentList }
                     })
                 }
                 headerText: "Comics by Author";
-                group: Peruse.BookModel.GroupByAuthor;
+                group: Peruse.BookListModel.GroupByAuthor;
             }
         }
 
         Component {
             id: bookshelfPublisher;
             Bookshelf {
+                width: view.width;
+                model: contentList;
                 onBookSelected: {
                     view.push({
                         item: bookViewer,
-                        properties: { focus: true, file: filename }
+                        properties: { focus: true, file: filename, currentPage: currentPage, contentList: contentList }
                     })
                 }
                 headerText: "Comics by Publisher";
-                group: Peruse.BookModel.GroupByPublisher;
+                group: Peruse.BookListModel.GroupByPublisher;
             }
         }
     }
@@ -198,7 +202,7 @@ MobileMainWindow {
         for(var i = 0; i < bookLocations.length; ++i) {
             contentList.contentModel.addLocation(bookLocations[i]);
         }
-        contentList.contentModel.setSearchString("cbr OR cbz OR cb7 OR cbt OR cba OR chm OR djvu OR epub OR pdf");
+        contentList.contentModel.setSearchString("cbz");// OR cbr OR cb7 OR cbt OR cba OR chm OR djvu OR epub OR pdf");
         contentList.contentModel.startSearch();
     }
 }
