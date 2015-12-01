@@ -23,10 +23,15 @@ import QtQuick 2.1
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.0
 
+import org.kde.peruse 0.1 as Peruse
+
 ViewerBase {
     id: root;
-    Text {
-        anchors.centerIn: parent;
-        text: file;
+    ImageBrowser {
+        anchors.fill: parent;
+        model: Peruse.FolderBookModel { filename: root.file; }
+        onCurrentIndexChanged: root.currentIndex = currentIndex;
+        imageWidth: root.width;
+        imageHeight: root.height;
     }
 }
