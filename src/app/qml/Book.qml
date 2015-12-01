@@ -28,7 +28,9 @@ import org.kde.peruse 0.1 as Peruse
 
 Item {
     id: root;
+    property QtObject contentList;
     property string file;
+    property int currentPage;
     Loader {
         id: viewLoader;
         anchors.fill: parent;
@@ -40,14 +42,31 @@ Item {
                 item.file = root.file;
             }
         }
+        Connections {
+            target: viewLoader.item;
+            onLoadingCompleted: {
+                if(success) {
+                    item.currentIndex = root.currentPage;
+                }
+            }
+        }
     }
     onFileChanged: {
         // The idea is to have a number of specialised options as relevant to various
         // types of comic books, and then finally fall back to Okular as a catch-all
         // but generic viewer component.
-        if(false) {
+        var attemptFallback = false;
+
+        var mimetype = root.contentList.contentModel.getMimetype(file);
+        console.debug("Mimetype is " + mimetype);
+        if(mimetype == "application/x-cbz") {
+            viewLoader.source = "viewers/cbr.qml";
         }
-        else {
+        if(mimetype == "inode/directory") {
+            viewLoader.source = "viewers/folderofimages.qml";
+        }
+
+        if(attemptFallback) {
             viewLoader.source = "viewers/okular.qml";
         }
     }
