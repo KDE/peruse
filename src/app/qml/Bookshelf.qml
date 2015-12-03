@@ -25,6 +25,9 @@ import QtQuick.Controls 1.0
 
 import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.plasma.extras 2.0 as PlasmaExtras
+
+import org.kde.kquickcontrolsaddons 2.0 as KQuickControlsAddons
+
 import org.kde.peruse 0.1 as Peruse
 
 Item {
@@ -34,7 +37,7 @@ Item {
     signal bookSelected(string filename, int currentPage);
     property alias headerText: shelfTitle.text;
     property int group: Peruse.BookModel.GroupByNone;
-    PlasmaExtras.Title {
+    PlasmaExtras.Heading {
         id: shelfTitle;
         anchors {
             top: parent.top;
@@ -66,28 +69,65 @@ Item {
                     bottom: parent.bottom;
                 }
                 width: height;
-                Rectangle {
-                    radius: 2;
-                    border.width: 1;
-                    border.color: "black";
-                    color: "silver";
+                KQuickControlsAddons.QPixmapItem {
                     height: parent.height - 6;
                     width: height * 2 / 3;
                     anchors {
                         centerIn: parent;
-                        margins: 3;
+                        margins: 2;
+                    }
+                    pixmap: fetcher.preview
+                    fillMode: KQuickControlsAddons.QPixmapItem.PreserveAspectFit;
+
+                    Peruse.PreviewFetcher {
+                        id: fetcher
+                        url: model.filename
+                        mimetype: root.model.contentModel.getMimetype(model.filename)
+                        width: bookCover.width
+                        height: bookCover.height
                     }
                 }
             }
-            PlasmaComponents.Label {
+            PlasmaExtras.Title {
                 id: bookTitle;
                 anchors {
                     top: parent.top;
                     left: bookCover.right;
                     right: parent.right;
                 }
-                text: model.filename;
+                text: model.title ? model.title : model.filetitle;
+            }
+            PlasmaComponents.Label {
+                id: bookAuthorLabel;
+                anchors {
+                    top: bookTitle.bottom;
+                    topMargin: 5;
+                    left: bookCover.right;
+                }
+                width: paintedWidth;
+                text: "by";
                 font.bold: true;
+            }
+            PlasmaComponents.Label {
+                id: bookAuthor;
+                anchors {
+                    top: bookTitle.bottom;
+                    topMargin: 5;
+                    left: bookAuthorLabel.right;
+                    leftMargin: 5;
+                    right: parent.right;
+                }
+                text: model.author ? model.author : "(unknown)";
+            }
+            PlasmaComponents.Label {
+                id: bookFile;
+                anchors {
+                    bottom: parent.bottom;
+                    left: bookCover.right;
+                    right: parent.right;
+                }
+                elide: Text.ElideMiddle;
+                text: model.filename;
             }
         }
     }
