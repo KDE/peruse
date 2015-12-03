@@ -23,10 +23,73 @@ import QtQuick 2.1
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.0
 
+import org.kde.plasma.components 2.0 as PlasmaComponents
+import org.kde.plasma.extras 2.0 as PlasmaExtras
+
 Item {
     id: root;
-    Text {
-        anchors.centerIn: parent;
-        text: "Peruse";
+    Item {
+        id: titleContainer;
+        anchors {
+            top: parent.top;
+            left: parent.left;
+            right: parent.right;
+        }
+        height: mainWindow.isLoading ? (parent.height / 2) : parent.height;
+        Behavior on height { PropertyAnimation { duration: mainWindow.animationDuration; easing.type: Easing.InOutQuad; } }
+        PlasmaExtras.Heading {
+            id: appNameLabel;
+            anchors {
+                left: parent.left;
+                right: parent.right;
+                bottom: parent.verticalCenter;
+            }
+            text: "Peruse";
+            horizontalAlignment: Text.AlignHCenter;
+        }
+        PlasmaComponents.Label {
+            id: appDescriptionLabel;
+            anchors {
+                top: parent.verticalCenter;
+                left: parent.left;
+                right: parent.right;
+            }
+            text: "Comic Book Reader";
+            horizontalAlignment: Text.AlignHCenter;
+        }
+        Rectangle {
+            anchors.centerIn: parent;
+            height: 1;
+            color: "black";
+            width: appDescriptionLabel.paintedWidth;
+        }
+    }
+    Item {
+        id: loadingProgress;
+        anchors {
+            top: parent.verticalCenter;
+            left: parent.left;
+            right: parent.right;
+            bottom: parent.bottom;
+        }
+        opacity: mainWindow.isLoading ? 1 : 0;
+        Behavior on opacity { PropertyAnimation { duration: mainWindow.animationDuration; } }
+        PlasmaComponents.Label {
+            anchors {
+                bottom: parent.verticalCenter;
+                left: parent.left;
+                right: parent.right;
+            }
+            horizontalAlignment: Text.AlignHCenter;
+            text: "Please wait while we find your comics...";
+        }
+        PlasmaComponents.BusyIndicator {
+            anchors {
+                top: parent.verticalCenter;
+                left: parent.left;
+                right: parent.right;
+            }
+            running: mainWindow.isLoading;
+        }
     }
 }
