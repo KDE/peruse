@@ -202,7 +202,7 @@ MobileMainWindow {
         for(var i = 0; i < bookLocations.length; ++i) {
             contentList.contentModel.addLocation(bookLocations[i]);
         }
-        contentList.contentModel.setSearchString("cbz");// OR cbr OR cb7 OR cbt OR cba OR chm OR djvu OR epub OR pdf");
+        contentList.contentModel.setSearchString("cbz OR cbr OR cb7 OR cbt OR cba OR chm OR djvu OR epub OR pdf");
         contentList.contentModel.startSearch();
     }
 }
