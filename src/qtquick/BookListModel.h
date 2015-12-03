@@ -44,6 +44,7 @@ public:
 
     enum Roles {
         FilenameRole = Qt::UserRole + 1,
+        FiletitleRole,
         TitleRole,
         AuthorRole,
         PublisherRole,

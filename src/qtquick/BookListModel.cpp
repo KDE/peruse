@@ -21,7 +21,16 @@
 
 #include "BookListModel.h"
 
+#include <QCoreApplication>
 #include <QDateTime>
+#include <QDir>
+#include <QDebug>
+#include <QMimeDatabase>
+
+#include "kfilemetadata/extractor.h"
+#include "kfilemetadata/extractorcollection.h"
+#include "kfilemetadata/propertyinfo.h"
+#include "kfilemetadata/simpleextractionresult.h"
 
 struct BookEntry {
     BookEntry()
@@ -29,6 +38,7 @@ struct BookEntry {
         , currentPage(0)
     {}
     QString filename;
+    QString filetitle;
     QString title;
     QString author;
     QString publisher;
@@ -66,6 +76,7 @@ QHash<int, QByteArray> BookListModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
     roles[FilenameRole] = "filename";
+    roles[FiletitleRole] = "filetitle";
     roles[TitleRole] = "title";
     roles[AuthorRole] = "author";
     roles[PublisherRole] = "publisher";
@@ -85,6 +96,9 @@ QVariant BookListModel::data(const QModelIndex& index, int role) const
         {
             case FilenameRole:
                 result.setValue(entry->filename);
+                break;
+            case FiletitleRole:
+                result.setValue(entry->filetitle);
                 break;
             case TitleRole:
                 result.setValue(entry->title);
@@ -147,6 +161,35 @@ void BookListModel::contentModelItemsInserted(QModelIndex index, int first, int 
         QVariant filename = d->contentModel->data(d->contentModel->index(first, 0, index), Qt::UserRole + 1);
         BookEntry* entry = new BookEntry();
         entry->filename = filename.toString();
+        entry->filetitle = entry->filename.split(QDir::separator()).last();
+
+        QMimeDatabase mimeDb;
+        QString mimetype = mimeDb.mimeTypeForFile(entry->filename).name();
+
+        KFileMetaData::ExtractorCollection extractors;
+        QList<KFileMetaData::Extractor*> exList = extractors.fetchExtractors(mimetype);
+
+        Q_FOREACH (KFileMetaData::Extractor* ex, exList)
+        {
+            KFileMetaData::SimpleExtractionResult result(entry->filename, mimetype, KFileMetaData::ExtractionResult::ExtractMetaData);
+            ex->extract(&result);
+            KFileMetaData::PropertyMap properties = result.properties();
+            KFileMetaData::PropertyMap::const_iterator it = properties.constBegin();
+            for (; it != properties.constEnd(); it++) {
+                KFileMetaData::PropertyInfo propInfo(it.key());
+                QString propName = propInfo.name();
+                if(propName == QLatin1String("author"))
+                {
+                    entry->author = it.value().toString();
+                }
+                else if(propName == QLatin1String("title"))
+                {
+                    entry->title = it.value().toString();
+                }
+//                 qDebug() << KFileMetaData::PropertyInfo(it.key()).name() << " --> "
+//                     << it.value().toString() << " (" << it.value().typeName() << ")\n";
+            }
+        }
         d->entries.append(entry);
     }
     endInsertRows();
