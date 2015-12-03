@@ -26,6 +26,7 @@
 
 struct ContentEntry {
     QString filename;
+    QVariantHash metadata;
 };
 
 class ContentList::Private {
@@ -42,7 +43,7 @@ ContentList::ContentList(QObject* parent)
     , d(new Private)
 {
     d->actualContentList = new BalooContentLister(this);
-    connect(d->actualContentList, SIGNAL(fileFound(QString)), this, SLOT(fileFound(QString)));
+    connect(d->actualContentList, SIGNAL(fileFound(QString,QVariantHash)), this, SLOT(fileFound(QString,QVariantHash)));
 }
 
 ContentList::~ContentList()
@@ -77,10 +78,11 @@ void ContentList::startSearch()
     d->actualContentList->startSearch();
 }
 
-void ContentList::fileFound(const QString& filePath)
+void ContentList::fileFound(const QString& filePath, const QVariantHash& metadata)
 {
     ContentEntry* entry = new ContentEntry();
     entry->filename = filePath;
+    entry->metadata = metadata;
 
     int newRow = d->entries.count();
     beginInsertRows(QModelIndex(), newRow, newRow);
@@ -92,6 +94,7 @@ QHash<int, QByteArray> ContentList::roleNames() const
 {
     QHash<int, QByteArray> roles;
     roles[FilenameRole] = "filename";
+    roles[MetadataRole] = "metadata";
     return roles;
 }
 
@@ -105,6 +108,9 @@ QVariant ContentList::data(const QModelIndex& index, int role) const
         {
             case FilenameRole:
                 result.setValue(entry->filename);
+                break;
+            case MetadataRole:
+                result.setValue(entry->metadata);
                 break;
             default:
                 result.setValue(QString("Unknown role"));

@@ -39,14 +39,15 @@ public:
     Q_SLOT void startSearch();
 
     enum Roles {
-        FilenameRole = Qt::UserRole + 1
+        FilenameRole = Qt::UserRole + 1,
+        MetadataRole
     };
 
     virtual QHash<int, QByteArray> roleNames() const;
     virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
     virtual int rowCount(const QModelIndex& parent = QModelIndex()) const;
 
-    Q_SLOT void fileFound(const QString& filePath);
+    Q_SLOT void fileFound(const QString& filePath, const QVariantHash& metaData);
 private:
     class Private;
     Private* d;
