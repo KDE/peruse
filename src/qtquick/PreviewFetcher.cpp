@@ -49,7 +49,7 @@ void PreviewFetcher::fetchPreview()
     const QStringList* allPlugins = new QStringList(KIO::PreviewJob::availablePlugins());
     KIO::PreviewJob* job = new KIO::PreviewJob(KFileItemList() << KFileItem(QUrl(m_url), m_mimetype, 0), m_size, allPlugins);
     job->setIgnoreMaximumSize(true);
-    job->setScaleType(KIO::PreviewJob::Scaled);
+    job->setScaleType(KIO::PreviewJob::ScaledAndCached);
     connect(job, SIGNAL(gotPreview(KFileItem,QPixmap)), SLOT(updatePreview(KFileItem,QPixmap)));
     connect(job, SIGNAL(failed(KFileItem)), SLOT(fallbackPreview(KFileItem)));
     job->start();
