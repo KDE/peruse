@@ -31,6 +31,7 @@ import org.kde.contentlist 0.1
 MobileMainWindow {
     id: mainWindow;
     property int animationDuration: 200;
+    property bool isLoading: true;
     width: 750
     height: 1100
 
@@ -38,7 +39,11 @@ MobileMainWindow {
 
     Peruse.BookListModel {
         id: contentList;
-        contentModel: ContentList { }
+        contentModel: ContentList {
+            onSearchCompleted: {
+                mainWindow.isLoading = false;
+            }
+        }
     }
 
     toolBar: ToolBar {
