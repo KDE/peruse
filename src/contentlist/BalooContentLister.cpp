@@ -22,6 +22,8 @@
 #include "BalooContentLister.h"
 
 #include <Baloo/Query>
+#include <Baloo/File>
+#include <kfilemetadata/propertyinfo.h>
 
 #include <QThreadPool>
 #include <QList>
@@ -90,5 +92,17 @@ void BalooContentLister::queryCompleted(Baloo::QueryRunnable* query)
 void BalooContentLister::queryResult(Baloo::QueryRunnable* query, QString file)
 {
     Q_UNUSED(query)
-    emit fileFound(file);
+    QVariantHash metadata;
+
+    Baloo::File balooFile(file);
+    balooFile.load();
+    KFileMetaData::PropertyMap properties = balooFile.properties();
+    KFileMetaData::PropertyMap::const_iterator it = properties.constBegin();
+    for (; it != properties.constEnd(); it++) {
+        KFileMetaData::PropertyInfo propInfo(it.key());
+        metadata[propInfo.name()] = it.value();
+//             qDebug() << KFileMetaData::PropertyInfo(it.key()).name() << " --> "
+//                 << it.value().toString() << " (" << it.value().typeName() << ")\n";
+    }
+    emit fileFound(file, metadata);
 }

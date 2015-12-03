@@ -39,7 +39,7 @@ public:
     void setSearchString(const QString& searchString);
     void startSearch();
 
-    Q_SIGNAL void fileFound(const QString& filePath);
+    Q_SIGNAL void fileFound(const QString& filePath, const QVariantHash& metadata);
     Q_SIGNAL void searchCompleted();
 private:
     class Private;
