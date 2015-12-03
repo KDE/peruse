@@ -15,7 +15,6 @@ target_link_libraries (peruseqmlplugin
     Qt5::Qml
     Qt5::Quick
     KF5::Archive
-    KF5::FileMetaData
     KF5::KIOWidgets
 )
 

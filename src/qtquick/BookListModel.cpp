@@ -27,11 +27,6 @@
 #include <QDebug>
 #include <QMimeDatabase>
 
-#include "kfilemetadata/extractor.h"
-#include "kfilemetadata/extractorcollection.h"
-#include "kfilemetadata/propertyinfo.h"
-#include "kfilemetadata/simpleextractionresult.h"
-
 struct BookEntry {
     BookEntry()
         : totalPages(0)
@@ -163,33 +158,17 @@ void BookListModel::contentModelItemsInserted(QModelIndex index, int first, int 
         entry->filename = filename.toString();
         entry->filetitle = entry->filename.split(QDir::separator()).last();
 
-        QMimeDatabase mimeDb;
-        QString mimetype = mimeDb.mimeTypeForFile(entry->filename).name();
-
-        KFileMetaData::ExtractorCollection extractors;
-        QList<KFileMetaData::Extractor*> exList = extractors.fetchExtractors(mimetype);
-
-        Q_FOREACH (KFileMetaData::Extractor* ex, exList)
-        {
-            KFileMetaData::SimpleExtractionResult result(entry->filename, mimetype, KFileMetaData::ExtractionResult::ExtractMetaData);
-            ex->extract(&result);
-            KFileMetaData::PropertyMap properties = result.properties();
-            KFileMetaData::PropertyMap::const_iterator it = properties.constBegin();
-            for (; it != properties.constEnd(); it++) {
-                KFileMetaData::PropertyInfo propInfo(it.key());
-                QString propName = propInfo.name();
-                if(propName == QLatin1String("author"))
-                {
-                    entry->author = it.value().toString();
-                }
-                else if(propName == QLatin1String("title"))
-                {
-                    entry->title = it.value().toString();
-                }
-//                 qDebug() << KFileMetaData::PropertyInfo(it.key()).name() << " --> "
-//                     << it.value().toString() << " (" << it.value().typeName() << ")\n";
-            }
+        QVariantHash metadata = d->contentModel->data(d->contentModel->index(first, 0, index), Qt::UserRole + 2).toHash();
+        QVariantHash::const_iterator it = metadata.constBegin();
+        for (; it != metadata.constEnd(); it++) {
+            if(it.key() == QLatin1String("author"))
+            { entry->author = it.value().toString(); }
+            else if(it.key() == QLatin1String("title"))
+            { entry->title = it.value().toString(); }
+            else if(it.key() == QLatin1String("publisher"))
+            { entry->publisher = it.value().toString(); }
         }
+
         d->entries.append(entry);
     }
     endInsertRows();
