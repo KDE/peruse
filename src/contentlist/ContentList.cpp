@@ -44,6 +44,7 @@ ContentList::ContentList(QObject* parent)
 {
     d->actualContentList = new BalooContentLister(this);
     connect(d->actualContentList, SIGNAL(fileFound(QString,QVariantHash)), this, SLOT(fileFound(QString,QVariantHash)));
+    connect(d->actualContentList, SIGNAL(searchCompleted()), this, SIGNAL(searchCompleted()));
 }
 
 ContentList::~ContentList()

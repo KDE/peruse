@@ -48,6 +48,7 @@ public:
     virtual int rowCount(const QModelIndex& parent = QModelIndex()) const;
 
     Q_SLOT void fileFound(const QString& filePath, const QVariantHash& metaData);
+    Q_SIGNAL void searchCompleted();
 private:
     class Private;
     Private* d;
