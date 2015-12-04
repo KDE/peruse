@@ -36,7 +36,6 @@ Item {
     property alias model: shelfList.model;
     signal bookSelected(string filename, int currentPage);
     property alias headerText: shelfTitle.text;
-    property int group: Peruse.BookModel.GroupByNone;
     PlasmaExtras.Heading {
         id: shelfTitle;
         anchors {
@@ -53,6 +52,26 @@ Item {
             left: parent.left;
             right: parent.right;
             bottom: parent.bottom;
+        }
+        section {
+            property: "title";
+            criteria: ViewSection.FirstCharacter;
+            delegate: PlasmaExtras.Heading {
+                anchors.leftMargin: 5;
+                width: root.width;
+                text: section;
+                Rectangle {
+                    anchors {
+                        right: parent.right;
+                        rightMargin: 5;
+                        verticalCenter: parent.verticalCenter;
+                    }
+                    height: 2;
+                    radius: 2;
+                    width: parent.width - parent.paintedWidth - 10;
+                    color: parent.color;
+                }
+            }
         }
         delegate: Item {
             height: 200;
@@ -82,7 +101,7 @@ Item {
                     Peruse.PreviewFetcher {
                         id: fetcher
                         url: model.filename
-                        mimetype: root.model.contentModel.getMimetype(model.filename)
+                        mimetype: contentList.contentModel.getMimetype(model.filename)
                         width: bookCover.width
                         height: bookCover.height
                     }
@@ -95,7 +114,7 @@ Item {
                     left: bookCover.right;
                     right: parent.right;
                 }
-                text: model.title ? model.title : model.filetitle;
+                text: model.title;
             }
             PlasmaComponents.Label {
                 id: bookAuthorLabel;
