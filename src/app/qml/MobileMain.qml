@@ -96,6 +96,19 @@ MobileMainWindow {
             }
         }
         PlasmaComponents.ToolButton {
+            text: "Group by Series"
+            iconName: "system-search"
+            Layout.fillWidth: true
+            onClicked: {
+//                 view.clear()
+                view.push({
+                    item: bookshelfSeries,
+                    properties: { focus: true }
+                })
+                mainWindow.toggleSidebar();
+            }
+        }
+        PlasmaComponents.ToolButton {
             text: "Group by Publisher"
             iconName: "system-search"
             Layout.fillWidth: true
@@ -157,27 +170,43 @@ MobileMainWindow {
                 onBookSelected: {
                     view.push({
                         item: bookViewer,
-                        properties: { focus: true, file: filename, currentPage: currentPage, contentList: contentList }
+                        properties: { focus: true, file: filename, currentPage: currentPage }
                     })
                 }
                 headerText: "All Comics";
-                group: Peruse.BookListModel.GroupByTitle;
+//                 group: Peruse.BookListModel.GroupByTitle;
+            }
+        }
+
+        Component {
+            id: bookshelfSeries;
+            Categoryshelf {
+                width: view.width;
+                model: contentList.seriesCategoryModel;
+                onBookSelected: {
+                    view.push({
+                        item: bookViewer,
+                        properties: { focus: true, file: filename, currentPage: currentPage }
+                    })
+                }
+                headerText: "Comics by Series";
+//                 group: Peruse.BookListModel.GroupByAuthor;
             }
         }
 
         Component {
             id: bookshelfAuthor;
-            Bookshelf {
+            Categoryshelf {
                 width: view.width;
-                model: contentList;
+                model: contentList.authorCategoryModel;
                 onBookSelected: {
                     view.push({
                         item: bookViewer,
-                        properties: { focus: true, file: filename, currentPage: currentPage, contentList: contentList }
+                        properties: { focus: true, file: filename, currentPage: currentPage }
                     })
                 }
                 headerText: "Comics by Author";
-                group: Peruse.BookListModel.GroupByAuthor;
+//                 group: Peruse.BookListModel.GroupByAuthor;
             }
         }
 
@@ -189,11 +218,11 @@ MobileMainWindow {
                 onBookSelected: {
                     view.push({
                         item: bookViewer,
-                        properties: { focus: true, file: filename, currentPage: currentPage, contentList: contentList }
+                        properties: { focus: true, file: filename, currentPage: currentPage }
                     })
                 }
                 headerText: "Comics by Publisher";
-                group: Peruse.BookListModel.GroupByPublisher;
+//                 group: Peruse.BookListModel.GroupByPublisher;
             }
         }
     }
