@@ -22,12 +22,15 @@
 #ifndef BOOKLISTMODEL_H
 #define BOOKLISTMODEL_H
 
-#include <QAbstractListModel>
+#include "CategoryEntriesModel.h"
 
-class BookListModel : public QAbstractListModel
+class BookListModel : public CategoryEntriesModel
 {
     Q_OBJECT
+    Q_PROPERTY(int count READ count NOTIFY countChanged)
     Q_PROPERTY(QObject* contentModel READ contentModel WRITE setContentModel NOTIFY contentModelChanged)
+    Q_PROPERTY(QObject* authorCategoryModel READ authorCategoryModel NOTIFY authorCategoryModelChanged)
+    Q_PROPERTY(QObject* seriesCategoryModel READ seriesCategoryModel NOTIFY seriesCategoryModelChanged)
     Q_ENUMS(Grouping)
 public:
     explicit BookListModel(QObject* parent = 0);
@@ -42,24 +45,18 @@ public:
         GroupByPublisher
     };
 
-    enum Roles {
-        FilenameRole = Qt::UserRole + 1,
-        FiletitleRole,
-        TitleRole,
-        AuthorRole,
-        PublisherRole,
-        LastOpenedTimeRole,
-        TotalPagesRole,
-        CurrentPageRole
-    };
-
-    virtual QHash<int, QByteArray> roleNames() const;
-    virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
-    virtual int rowCount(const QModelIndex& parent = QModelIndex()) const;
-
     QObject* contentModel() const;
     void setContentModel(QObject* newModel);
     Q_SIGNAL void contentModelChanged();
+
+    int count() const;
+    Q_SIGNAL void countChanged();
+
+    QObject* authorCategoryModel() const;
+    Q_SIGNAL void authorCategoryModelChanged();
+
+    QObject* seriesCategoryModel() const;
+    Q_SIGNAL void seriesCategoryModelChanged();
 private:
     class Private;
     Private* d;

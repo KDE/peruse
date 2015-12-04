@@ -21,31 +21,19 @@
 
 #include "BookListModel.h"
 
+#include "CategoryModel.h"
+
 #include <QCoreApplication>
-#include <QDateTime>
 #include <QDir>
 #include <QDebug>
 #include <QMimeDatabase>
-
-struct BookEntry {
-    BookEntry()
-        : totalPages(0)
-        , currentPage(0)
-    {}
-    QString filename;
-    QString filetitle;
-    QString title;
-    QString author;
-    QString publisher;
-    QDateTime lastOpenedTime;
-    int totalPages;
-    int currentPage;
-};
 
 class BookListModel::Private {
 public:
     Private()
         : contentModel(0)
+        , authorCategoryModel(0)
+        , seriesCategoryModel(0)
     {};
     ~Private()
     {
@@ -54,10 +42,12 @@ public:
     QList<BookEntry*> entries;
 
     QAbstractListModel* contentModel;
+    CategoryModel* authorCategoryModel;
+    CategoryModel* seriesCategoryModel;
 };
 
 BookListModel::BookListModel(QObject* parent)
-    : QAbstractListModel(parent)
+    : CategoryEntriesModel(parent)
     , d(new Private)
 {
 }
@@ -65,67 +55,6 @@ BookListModel::BookListModel(QObject* parent)
 BookListModel::~BookListModel()
 {
     delete d;
-}
-
-QHash<int, QByteArray> BookListModel::roleNames() const
-{
-    QHash<int, QByteArray> roles;
-    roles[FilenameRole] = "filename";
-    roles[FiletitleRole] = "filetitle";
-    roles[TitleRole] = "title";
-    roles[AuthorRole] = "author";
-    roles[PublisherRole] = "publisher";
-    roles[LastOpenedTimeRole] = "lastOpenedTime";
-    roles[TotalPagesRole] = "totalPages";
-    roles[CurrentPageRole] = "currentPage";
-    return roles;
-}
-
-QVariant BookListModel::data(const QModelIndex& index, int role) const
-{
-    QVariant result;
-    if(index.isValid() && index.row() > -1 && index.row() < d->entries.count())
-    {
-        const BookEntry* entry = d->entries[index.row()];
-        switch(role)
-        {
-            case FilenameRole:
-                result.setValue(entry->filename);
-                break;
-            case FiletitleRole:
-                result.setValue(entry->filetitle);
-                break;
-            case TitleRole:
-                result.setValue(entry->title);
-                break;
-            case AuthorRole:
-                result.setValue(entry->author);
-                break;
-            case PublisherRole:
-                result.setValue(entry->publisher);
-                break;
-            case LastOpenedTimeRole:
-                result.setValue(entry->lastOpenedTime);
-                break;
-            case TotalPagesRole:
-                result.setValue(entry->totalPages);
-                break;
-            case CurrentPageRole:
-                result.setValue(entry->currentPage);
-                break;
-            default:
-                result.setValue(QString("Unknown role"));
-                break;
-        }
-    }
-    return result;
-}
-
-int BookListModel::rowCount(const QModelIndex& parent) const
-{
-    if(parent.isValid())
-        return 0;
-    return d->entries.count();
 }
 
 void BookListModel::setContentModel(QObject* newModel)
@@ -149,6 +78,17 @@ QObject * BookListModel::contentModel() const
 
 void BookListModel::contentModelItemsInserted(QModelIndex index, int first, int last)
 {
+    if(!d->authorCategoryModel)
+    {
+        d->authorCategoryModel = new CategoryModel(this);
+        emit authorCategoryModelChanged();
+    }
+    if(!d->seriesCategoryModel)
+    {
+        d->seriesCategoryModel = new CategoryModel(this);
+        emit seriesCategoryModelChanged();
+    }
+
     int newRow = d->entries.count();
     beginInsertRows(QModelIndex(), newRow, newRow + (last - first));
     for(int i = first; i < last + 1; ++i)
@@ -156,21 +96,45 @@ void BookListModel::contentModelItemsInserted(QModelIndex index, int first, int 
         QVariant filename = d->contentModel->data(d->contentModel->index(first, 0, index), Qt::UserRole + 1);
         BookEntry* entry = new BookEntry();
         entry->filename = filename.toString();
-        entry->filetitle = entry->filename.split(QDir::separator()).last();
+        QStringList splitName = entry->filename.split(QDir::separator());
+        entry->filetitle = splitName.takeLast();
+        entry->series = splitName.takeLast(); // hahahaheuristics (dumb assumptions about filesystems, go!)
+        // just in case we end up without a title...
+        entry->title = entry->filetitle;
 
         QVariantHash metadata = d->contentModel->data(d->contentModel->index(first, 0, index), Qt::UserRole + 2).toHash();
         QVariantHash::const_iterator it = metadata.constBegin();
         for (; it != metadata.constEnd(); it++) {
             if(it.key() == QLatin1String("author"))
-            { entry->author = it.value().toString(); }
+            { entry->author = it.value().toString().trimmed(); }
             else if(it.key() == QLatin1String("title"))
-            { entry->title = it.value().toString(); }
+            { entry->title = it.value().toString().trimmed(); }
             else if(it.key() == QLatin1String("publisher"))
-            { entry->publisher = it.value().toString(); }
+            { entry->publisher = it.value().toString().trimmed(); }
         }
 
         d->entries.append(entry);
+
+        append(entry);
+        d->authorCategoryModel->addCategoryEntry(entry->author, entry);
+        d->seriesCategoryModel->addCategoryEntry(entry->series, entry);
     }
     endInsertRows();
+    emit countChanged();
+    qApp->processEvents();
 }
 
+QObject * BookListModel::authorCategoryModel() const
+{
+    return d->authorCategoryModel;
+}
+
+QObject * BookListModel::seriesCategoryModel() const
+{
+    return d->seriesCategoryModel;
+}
+
+int BookListModel::count() const
+{
+    return d->entries.count();
+}
