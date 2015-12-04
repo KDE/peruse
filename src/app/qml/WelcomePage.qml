@@ -84,12 +84,22 @@ Item {
             text: "Please wait while we find your comics...";
         }
         PlasmaComponents.BusyIndicator {
+            id: loadingSpinner;
             anchors {
                 top: parent.verticalCenter;
                 left: parent.left;
                 right: parent.right;
             }
             running: mainWindow.isLoading;
+        }
+        PlasmaComponents.Label {
+            anchors {
+                top: loadingSpinner.bottom;
+                left: parent.left;
+                right: parent.right;
+            }
+            horizontalAlignment: Text.AlignHCenter;
+            text: contentList.count;
         }
     }
 }
