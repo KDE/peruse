@@ -2,6 +2,8 @@ set(qmlplugin_SRCS
     qmlplugin.cpp
     ArchiveBookModel.cpp
     ArchiveImageProvider.cpp
+    CategoryModel.cpp
+    CategoryEntriesModel.cpp
     BookModel.cpp
     BookListModel.cpp
     FolderBookModel.cpp
