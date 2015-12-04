@@ -61,7 +61,7 @@ int main(int argc, char** argv)
 
     QStringList locations = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
     Q_ASSERT(locations.size() >= 1);
-    qDebug() << locations;
+//     qDebug() << locations;
 //     FileSystemTracker tracker;
 //     tracker.setFolder(locations.first());
 //     tracker.moveToThread(&trackerThread);
