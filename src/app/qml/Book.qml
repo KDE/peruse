@@ -28,7 +28,6 @@ import org.kde.peruse 0.1 as Peruse
 
 Item {
     id: root;
-    property QtObject contentList;
     property string file;
     property int currentPage;
     Loader {
@@ -57,7 +56,7 @@ Item {
         // but generic viewer component.
         var attemptFallback = false;
 
-        var mimetype = root.contentList.contentModel.getMimetype(file);
+        var mimetype = contentList.contentModel.getMimetype(file);
         console.debug("Mimetype is " + mimetype);
         if(mimetype == "application/x-cbz") {
             viewLoader.source = "viewers/cbr.qml";
