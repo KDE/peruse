@@ -121,6 +121,19 @@ MobileMainWindow {
                 mainWindow.toggleSidebar();
             }
         }
+        PlasmaComponents.ToolButton {
+            text: "Group by Folder"
+            iconName: "system-search"
+            Layout.fillWidth: true
+            onClicked: {
+//                 view.clear()
+                view.push({
+                    item: bookshelfFolder,
+                    properties: { focus: true }
+                })
+                mainWindow.toggleSidebar();
+            }
+        }
 
         Item {
             Layout.fillHeight: true
@@ -223,6 +236,34 @@ MobileMainWindow {
                 }
                 headerText: "Comics by Publisher";
 //                 group: Peruse.BookListModel.GroupByPublisher;
+            }
+        }
+
+        Component {
+            id: bookshelfFolder;
+            Categoryshelf {
+                width: view.width;
+                model: contentList.folderCategoryModel;
+                onBookSelected: {
+                    view.push({
+                        item: bookViewer,
+                        properties: { focus: true, file: filename, currentPage: currentPage }
+                    })
+                }
+                headerText: "Comics by Folder";
+//                 group: Peruse.BookListModel.GroupByPublisher;
+            }
+        }
+        Component {
+            id: bookshelf;
+            Bookshelf {
+                width: view.width;
+                onBookSelected: {
+                    view.push({
+                        item: bookViewer,
+                        properties: { focus: true, file: filename, currentPage: currentPage }
+                    })
+                }
             }
         }
     }
