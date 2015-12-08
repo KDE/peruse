@@ -74,79 +74,121 @@ Item {
             }
         }
         delegate: Item {
-            height: 200;
+            height: model.categoryEntriesCount === 0 ? 200 : 50;
             width: root.width;
-            MouseArea {
-                anchors.fill: parent;
-                onClicked: root.bookSelected(model.filename, model.currentPage);
+            Item {
+                height: model.categoryEntriesCount > 0 ? 50 : 0;
+                width: parent.width;
+                visible: height > 0;
+                enabled: visible;
+                clip: true;
+                MouseArea {
+                    anchors.fill: parent;
+                    onClicked: {
+                        view.push({
+                            item: bookshelf,
+                            properties: { focus: true, headerText: "Comics in folder: " + model.title, model: model.categoryEntriesModel }
+                        })
+                    }
+                }
+                PlasmaExtras.Title {
+                    id: categoryTitle;
+                    anchors {
+                        margins: 5;
+                        top: parent.top;
+                        left: parent.left;
+                        right: parent.right;
+                    }
+                    text: model.title;
+                }
+                PlasmaComponents.Label {
+                    id: categoryCount;
+                    anchors {
+                        margins: 5;
+                        verticalCenter: parent.verticalCenter;
+                        right: parent.right;
+                    }
+                    text: model.categoryEntriesCount;
+                }
             }
             Item {
-                id: bookCover;
-                anchors {
-                    top: parent.top;
-                    left: parent.left;
-                    bottom: parent.bottom;
+                height: model.categoryEntriesCount < 1 ? 200 : 0;
+                width: parent.width;
+                visible: height > 0;
+                enabled: visible;
+                clip: true;
+                MouseArea {
+                    anchors.fill: parent;
+                    onClicked: root.bookSelected(model.filename, model.currentPage);
                 }
-                width: height;
-                KQuickControlsAddons.QPixmapItem {
-                    height: parent.height - 6;
-                    width: height * 2 / 3;
+                Item {
+                    id: bookCover;
                     anchors {
-                        centerIn: parent;
-                        margins: 2;
+                        top: parent.top;
+                        left: parent.left;
+                        bottom: parent.bottom;
                     }
-                    pixmap: fetcher.preview
-                    fillMode: KQuickControlsAddons.QPixmapItem.PreserveAspectFit;
+                    width: height;
+                    KQuickControlsAddons.QPixmapItem {
+                        height: parent.height - 6;
+                        width: height * 2 / 3;
+                        anchors {
+                            centerIn: parent;
+                            margins: 2;
+                        }
+                        pixmap: fetcher.preview
+                        fillMode: KQuickControlsAddons.QPixmapItem.PreserveAspectFit;
 
-                    Peruse.PreviewFetcher {
-                        id: fetcher
-                        url: model.filename
-                        mimetype: contentList.contentModel.getMimetype(model.filename)
-                        width: bookCover.width
-                        height: bookCover.height
+                        Peruse.PreviewFetcher {
+                            id: fetcher
+                            url: model.filename
+                            mimetype: contentList.contentModel.getMimetype(model.filename)
+                            width: bookCover.width
+                            height: bookCover.height
+                        }
                     }
                 }
-            }
-            PlasmaExtras.Title {
-                id: bookTitle;
-                anchors {
-                    top: parent.top;
-                    left: bookCover.right;
-                    right: parent.right;
+                PlasmaExtras.Title {
+                    id: bookTitle;
+                    anchors {
+                        top: parent.top;
+                        left: bookCover.right;
+                        right: parent.right;
+                    }
+                    text: model.title;
                 }
-                text: model.title;
-            }
-            PlasmaComponents.Label {
-                id: bookAuthorLabel;
-                anchors {
-                    top: bookTitle.bottom;
-                    topMargin: 5;
-                    left: bookCover.right;
+                PlasmaComponents.Label {
+                    id: bookAuthorLabel;
+                    anchors {
+                        top: bookTitle.bottom;
+                        topMargin: 5;
+                        left: bookCover.right;
+                    }
+                    width: paintedWidth;
+                    text: "by";
+                    font.bold: true;
                 }
-                width: paintedWidth;
-                text: "by";
-                font.bold: true;
-            }
-            PlasmaComponents.Label {
-                id: bookAuthor;
-                anchors {
-                    top: bookTitle.bottom;
-                    topMargin: 5;
-                    left: bookAuthorLabel.right;
-                    leftMargin: 5;
-                    right: parent.right;
+                PlasmaComponents.Label {
+                    id: bookAuthor;
+                    anchors {
+                        top: bookTitle.bottom;
+                        topMargin: 5;
+                        left: bookAuthorLabel.right;
+                        leftMargin: 5;
+                        right: parent.right;
+                    }
+                    text: model.author ? model.author : "(unknown)";
                 }
-                text: model.author ? model.author : "(unknown)";
-            }
-            PlasmaComponents.Label {
-                id: bookFile;
-                anchors {
-                    bottom: parent.bottom;
-                    left: bookCover.right;
-                    right: parent.right;
+                PlasmaComponents.Label {
+                    id: bookFile;
+                    anchors {
+                        bottom: parent.bottom;
+                        left: bookCover.right;
+                        right: parent.right;
+                    }
+                    elide: Text.ElideMiddle;
+                    text: model.filename;
                 }
-                elide: Text.ElideMiddle;
-                text: model.filename;
             }
         }
     }
