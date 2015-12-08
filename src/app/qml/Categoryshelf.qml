@@ -76,7 +76,7 @@ Item {
                 onClicked: {
                     view.push({
                         item: bookshelf,
-                        properties: { focus: true, headerText: "Comics by " + model.categoryName, model: model.entriesModel }
+                        properties: { focus: true, headerText: "Comics in folder: " + model.categoryName, model: model.entriesModel }
                     })
                 }
             }
@@ -98,18 +98,6 @@ Item {
                     right: parent.right;
                 }
                 text: model.entryCount;
-            }
-            Component {
-                id: bookshelf;
-                Bookshelf {
-                    width: view.width;
-                    onBookSelected: {
-                        view.push({
-                            item: bookViewer,
-                            properties: { focus: true, file: filename, currentPage: currentPage }
-                        })
-                    }
-                }
             }
         }
     }
