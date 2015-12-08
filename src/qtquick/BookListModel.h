@@ -31,6 +31,7 @@ class BookListModel : public CategoryEntriesModel
     Q_PROPERTY(QObject* contentModel READ contentModel WRITE setContentModel NOTIFY contentModelChanged)
     Q_PROPERTY(QObject* authorCategoryModel READ authorCategoryModel NOTIFY authorCategoryModelChanged)
     Q_PROPERTY(QObject* seriesCategoryModel READ seriesCategoryModel NOTIFY seriesCategoryModelChanged)
+    Q_PROPERTY(QObject* folderCategoryModel READ folderCategoryModel NOTIFY folderCategoryModelChanged)
     Q_ENUMS(Grouping)
 public:
     explicit BookListModel(QObject* parent = 0);
@@ -57,6 +58,9 @@ public:
 
     QObject* seriesCategoryModel() const;
     Q_SIGNAL void seriesCategoryModelChanged();
+
+    QObject* folderCategoryModel() const;
+    Q_SIGNAL void folderCategoryModelChanged();
 private:
     class Private;
     Private* d;

@@ -20,6 +20,7 @@
  */
 
 #include "BookListModel.h"
+#include <QUrl>
 
 #include "CategoryModel.h"
 
@@ -34,6 +35,7 @@ public:
         : contentModel(0)
         , authorCategoryModel(0)
         , seriesCategoryModel(0)
+        , folderCategoryModel(0)
     {};
     ~Private()
     {
@@ -44,6 +46,7 @@ public:
     QAbstractListModel* contentModel;
     CategoryModel* authorCategoryModel;
     CategoryModel* seriesCategoryModel;
+    CategoryModel* folderCategoryModel;
 };
 
 BookListModel::BookListModel(QObject* parent)
@@ -88,6 +91,11 @@ void BookListModel::contentModelItemsInserted(QModelIndex index, int first, int 
         d->seriesCategoryModel = new CategoryModel(this);
         emit seriesCategoryModelChanged();
     }
+    if(!d->folderCategoryModel)
+    {
+        d->folderCategoryModel = new CategoryModel(this);
+        emit folderCategoryModel();
+    }
 
     int newRow = d->entries.count();
     beginInsertRows(QModelIndex(), newRow, newRow + (last - first));
@@ -118,6 +126,8 @@ void BookListModel::contentModelItemsInserted(QModelIndex index, int first, int 
         append(entry);
         d->authorCategoryModel->addCategoryEntry(entry->author, entry);
         d->seriesCategoryModel->addCategoryEntry(entry->series, entry);
+        QUrl url(entry->filename.left(entry->filename.lastIndexOf(QDir::separator())));
+        d->folderCategoryModel->addCategoryEntry(url.path().mid(1), entry);
     }
     endInsertRows();
     emit countChanged();
@@ -132,6 +142,11 @@ QObject * BookListModel::authorCategoryModel() const
 QObject * BookListModel::seriesCategoryModel() const
 {
     return d->seriesCategoryModel;
+}
+
+QObject * BookListModel::folderCategoryModel() const
+{
+    return d->folderCategoryModel;
 }
 
 int BookListModel::count() const
