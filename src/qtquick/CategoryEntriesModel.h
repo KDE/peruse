@@ -25,6 +25,7 @@
 #include <QAbstractListModel>
 #include <QDateTime>
 
+class CategoryEntriesModel;
 struct BookEntry {
     BookEntry()
         : totalPages(0)
@@ -57,7 +58,9 @@ public:
         PublisherRole,
         LastOpenedTimeRole,
         TotalPagesRole,
-        CurrentPageRole
+        CurrentPageRole,
+        CategoryEntriesModelRole,
+        CategoryEntryCountRole
     };
 
     virtual QHash<int, QByteArray> roleNames() const;
@@ -65,6 +68,10 @@ public:
     virtual int rowCount(const QModelIndex& parent = QModelIndex()) const;
 
     void append(BookEntry* entry);
+    void addCategoryEntry(const QString& categoryName, BookEntry* entry);
+protected:
+    QString name() const;
+    void setName(const QString& newName);
 private:
     class Private;
     Private* d;

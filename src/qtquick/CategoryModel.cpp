@@ -20,11 +20,15 @@
  */
 
 #include "CategoryModel.h"
+#include <QDir>
+#include <QDebug>
 
 struct CategoryEntry
 {
 public:
-    CategoryEntry() {}
+    CategoryEntry()
+        : entries(0)
+    {}
     QString name;
     CategoryEntriesModel* entries;
     QString thumbnailUrl;
@@ -100,9 +104,11 @@ int CategoryModel::rowCount(const QModelIndex& parent) const
 void CategoryModel::addCategoryEntry(const QString& categoryName, BookEntry* bookEntry)
 {
     CategoryEntry* entry = 0;
+    QStringList splitName = categoryName.split(QDir::separator());
+    QString actualName = splitName.takeFirst();
     Q_FOREACH(CategoryEntry* existingEntry, d->entries)
     {
-        if(existingEntry->name == categoryName)
+        if(existingEntry->name == actualName)
         {
             entry = existingEntry;
             break;
@@ -110,7 +116,7 @@ void CategoryModel::addCategoryEntry(const QString& categoryName, BookEntry* boo
     }
     if(!entry) {
         entry = new CategoryEntry();
-        entry->name = categoryName;
+        entry->name = actualName;
         entry->thumbnailUrl = ""; // find useful thumbnail... probably first book in category?
         entry->entries = new CategoryEntriesModel(this);
 
@@ -127,4 +133,9 @@ void CategoryModel::addCategoryEntry(const QString& categoryName, BookEntry* boo
         endInsertRows();
     }
     entry->entries->append(bookEntry);
+
+    if(splitName.count() > 0)
+    {
+        entry->entries->addCategoryEntry(splitName.join(QDir::separator()), bookEntry);
+    }
 }

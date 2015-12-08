@@ -20,6 +20,8 @@
  */
 
 #include "CategoryEntriesModel.h"
+#include <QDir>
+#include <QDebug>
 
 class CategoryEntriesModel::Private {
 public:
@@ -28,7 +30,9 @@ public:
     {
         // No deleting the entries - this is done by the master BookListModel already, so do that at your own risk
     }
+    QString name;
     QList<BookEntry*> entries;
+    QList<CategoryEntriesModel*> categoryModels;
 };
 
 CategoryEntriesModel::CategoryEntriesModel(QObject* parent)
@@ -54,47 +58,77 @@ QHash<int, QByteArray> CategoryEntriesModel::roleNames() const
     roles[LastOpenedTimeRole] = "lastOpenedTime";
     roles[TotalPagesRole] = "totalPages";
     roles[CurrentPageRole] = "currentPage";
+    roles[CategoryEntriesModelRole] = "categoryEntriesModel";
+    roles[CategoryEntryCountRole] = "categoryEntriesCount";
     return roles;
 }
 
 QVariant CategoryEntriesModel::data(const QModelIndex& index, int role) const
 {
     QVariant result;
-    if(index.isValid() && index.row() > -1 && index.row() < d->entries.count())
+    if(index.isValid() && index.row() > -1)
     {
-        const BookEntry* entry = d->entries[index.row()];
-        switch(role)
+        if(index.row() < d->categoryModels.count())
         {
-            case FilenameRole:
-                result.setValue(entry->filename);
-                break;
-            case FiletitleRole:
-                result.setValue(entry->filetitle);
-                break;
-            case TitleRole:
-                result.setValue(entry->title);
-                break;
-            case SeriesRole:
-                result.setValue(entry->series);
-                break;
-            case AuthorRole:
-                result.setValue(entry->author);
-                break;
-            case PublisherRole:
-                result.setValue(entry->publisher);
-                break;
-            case LastOpenedTimeRole:
-                result.setValue(entry->lastOpenedTime);
-                break;
-            case TotalPagesRole:
-                result.setValue(entry->totalPages);
-                break;
-            case CurrentPageRole:
-                result.setValue(entry->currentPage);
-                break;
-            default:
-                result.setValue(QString("Unknown role"));
-                break;
+            CategoryEntriesModel* model = d->categoryModels[index.row()];
+            switch(role)
+            {
+                case TitleRole:
+                    result.setValue(model->name());
+                    break;
+                case CategoryEntryCountRole:
+                    result.setValue(model->rowCount(QModelIndex()));
+                    break;
+                case CategoryEntriesModelRole:
+                    result.setValue(model);
+                    break;
+                default:
+                    result.setValue(QString("Unknown role"));
+                    break;
+            }
+        }
+        else
+        {
+            const BookEntry* entry = d->entries[index.row() - d->categoryModels.count()];
+            switch(role)
+            {
+                case FilenameRole:
+                    result.setValue(entry->filename);
+                    break;
+                case FiletitleRole:
+                    result.setValue(entry->filetitle);
+                    break;
+                case TitleRole:
+                    result.setValue(entry->title);
+                    break;
+                case SeriesRole:
+                    result.setValue(entry->series);
+                    break;
+                case AuthorRole:
+                    result.setValue(entry->author);
+                    break;
+                case PublisherRole:
+                    result.setValue(entry->publisher);
+                    break;
+                case LastOpenedTimeRole:
+                    result.setValue(entry->lastOpenedTime);
+                    break;
+                case TotalPagesRole:
+                    result.setValue(entry->totalPages);
+                    break;
+                case CurrentPageRole:
+                    result.setValue(entry->currentPage);
+                    break;
+                case CategoryEntriesModelRole:
+                    // Nothing, if we're not equipped with one such...
+                    break;
+                case CategoryEntryCountRole:
+                    result.setValue<int>(0);
+                    break;
+                default:
+                    result.setValue(QString("Unknown role"));
+                    break;
+            }
         }
     }
     return result;
@@ -104,7 +138,7 @@ int CategoryEntriesModel::rowCount(const QModelIndex& parent) const
 {
     if(parent.isValid())
         return 0;
-    return d->entries.count();
+    return d->categoryModels.count() + d->entries.count();
 }
 
 void CategoryEntriesModel::append(BookEntry* entry)
@@ -120,4 +154,52 @@ void CategoryEntriesModel::append(BookEntry* entry)
     beginInsertRows(QModelIndex(), insertionIndex, insertionIndex);
     d->entries.insert(insertionIndex, entry);
     endInsertRows();
+}
+
+QString CategoryEntriesModel::name() const
+{
+    return d->name;
+}
+
+void CategoryEntriesModel::setName(const QString& newName)
+{
+    d->name = newName;
+}
+
+void CategoryEntriesModel::addCategoryEntry(const QString& categoryName, BookEntry* entry)
+{
+    if(categoryName.length() > 1)
+    {
+        QStringList splitName = categoryName.split(QDir::separator());
+//         qDebug() << "Parsing" << categoryName;
+        QString nextCategory = splitName.takeFirst();
+        CategoryEntriesModel* categoryModel = 0;
+        Q_FOREACH(CategoryEntriesModel* existingModel, d->categoryModels)
+        {
+            if(existingModel->name() == nextCategory)
+            {
+                categoryModel = existingModel;
+                break;
+            }
+        }
+        if(!categoryModel)
+        {
+            categoryModel = new CategoryEntriesModel(this);
+            categoryModel->setName(nextCategory);
+
+            int insertionIndex = 0;
+            for(; insertionIndex < d->categoryModels.count(); ++insertionIndex)
+            {
+                if(QString::localeAwareCompare(d->categoryModels.at(insertionIndex)->name(), categoryModel->name()) > 0)
+                {
+                    break;
+                }
+            }
+            beginInsertRows(QModelIndex(), insertionIndex, insertionIndex);
+            d->categoryModels.insert(insertionIndex, categoryModel);
+            endInsertRows();
+        }
+        categoryModel->append(entry);
+        categoryModel->addCategoryEntry(splitName.join(QDir::separator()), entry);
+    }
 }
