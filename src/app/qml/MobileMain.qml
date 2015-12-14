@@ -148,6 +148,7 @@ MobileMainWindow {
             pushTransition: StackViewTransition {
                 PropertyAnimation {
                     duration: mainWindow.animationDuration;
+                    easing.type: Easing.InOutQuad;
                     target: enterItem
                     property: "x"
                     from: exitItem.width
@@ -157,6 +158,7 @@ MobileMainWindow {
             popTransition: StackViewTransition {
                 PropertyAnimation {
                     duration: mainWindow.animationDuration;
+                    easing.type: Easing.InOutQuad;
                     target: exitItem
                     property: "x"
                     from: 0
