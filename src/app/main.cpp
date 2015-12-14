@@ -78,14 +78,15 @@ int main(int argc, char** argv)
 
     QQmlEngine engine;
     QQmlContext* objectContext = engine.rootContext();
-    engine.rootContext()->setContextProperty("PLASMA_PLATFORM", QString(qgetenv("PLASMA_PLATFORM")));
+    QString platformEnv(qgetenv("PLASMA_PLATFORM"));
+    engine.rootContext()->setContextProperty("PLASMA_PLATFORM", platformEnv);
     engine.rootContext()->setContextProperty("bookLocations", locations);
     // Yes, i realise this is a touch on the ugly side. I have found no better way to allow for
     // things like the archive book model to create imageproviders for the archives
     engine.rootContext()->setContextProperty("globalQmlEngine", &engine);
 
     QString path;
-    if (qgetenv("PLASMA_PLATFORM") == QByteArray("phone")) {
+    if (platformEnv.startsWith("phone")) {
         path = QStandardPaths::locate(QStandardPaths::DataLocation, "qml/MobileMain.qml");
     } else {
         path = QStandardPaths::locate(QStandardPaths::DataLocation, "qml/Main.qml");
