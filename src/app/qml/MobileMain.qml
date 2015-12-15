@@ -23,19 +23,20 @@ import QtQuick 2.1
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.0
 
+import org.kde.plasma.mobilecomponents 0.2 as MobileComponents
 import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 import org.kde.peruse 0.1 as Peruse
 import org.kde.contentlist 0.1
 
-MobileMainWindow {
+MobileComponents.ApplicationWindow {
     id: mainWindow;
     property int animationDuration: 200;
     property bool isLoading: true;
-    width: 750
-    height: 1100
-
-    SystemPalette { id: sysPal; }
+    initialPage: welcomePage;
+    width: 750;
+    height: 1100;
+    visible: true;
 
     Peruse.BookListModel {
         id: contentList;
@@ -45,234 +46,109 @@ MobileMainWindow {
             }
         }
     }
+    contextDrawer: MobileComponents.ContextDrawer {
+        id: contextDrawer;
+    }
 
-    toolBar: ToolBar {
-        RowLayout {
-            PlasmaComponents.ToolButton {
-                iconName: "format-justify-fill"
-                onClicked: mainWindow.toggleSidebar();
+    globalDrawer: MobileComponents.GlobalDrawer {
+        title: "Navigation";
+        titleIcon: "system-search";
+        actions: [
+            Action {
+                text: "All Comics";
+                iconName: "system-search";
+                onTriggered: changeCategory(bookshelfTitle);
+            },
+            Action {
+                text: "Group by Authors";
+                iconName: "system-search";
+                onTriggered: changeCategory(bookshelfAuthor);
+            },
+            Action {
+                text: "Group by Series";
+                iconName: "system-search";
+                onTriggered: changeCategory(bookshelfSeries);
+            },
+            Action {
+                text: "Group by Publisher";
+                iconName: "system-search";
+                onTriggered: changeCategory(bookshelfPublisher);
+            },
+            Action {
+                text: "Group by Folder";
+                iconName: "system-search";
+                onTriggered: changeCategory(bookshelfFolder);
             }
-            PlasmaComponents.ToolButton {
-                iconName: "draw-arrow-back"
-                text: "Back"
-                enabled: view.depth > 1
+        ]
+    }
 
-                onClicked: goUp();
-            }
+    Component {
+        id: welcomePage;
+        WelcomePage { }
+    }
+
+    Component {
+        id: bookViewer;
+        Book { }
+    }
+
+    Component {
+        id: bookshelfTitle;
+        Bookshelf {
+            model: contentList;
+            headerText: "All Comics";
+            onBookSelected: mainWindow.pageStack.push(bookViewer, { focus: true, file: filename, currentPage: currentPage });
         }
     }
 
-    sidebar: ColumnLayout {
-        spacing: 0
-        PlasmaExtras.Heading {
-            text: "Navigation"
-            font.bold: true
-            level: 2
-        }
-        PlasmaComponents.ToolButton {
-            text: "All Comics"
-            iconName: "system-search"
-            Layout.fillWidth: true
-            onClicked: {
-//                 view.clear()
-                view.push({
-                    item: bookshelfTitle,
-                    properties: { focus: true }
-                })
-                mainWindow.toggleSidebar();
-            }
-        }
-        PlasmaComponents.ToolButton {
-            text: "Group by Authors"
-            iconName: "system-search"
-            Layout.fillWidth: true
-            onClicked: {
-//                 view.clear()
-                view.push({
-                    item: bookshelfAuthor,
-                    properties: { focus: true }
-                })
-                mainWindow.toggleSidebar();
-            }
-        }
-        PlasmaComponents.ToolButton {
-            text: "Group by Series"
-            iconName: "system-search"
-            Layout.fillWidth: true
-            onClicked: {
-//                 view.clear()
-                view.push({
-                    item: bookshelfSeries,
-                    properties: { focus: true }
-                })
-                mainWindow.toggleSidebar();
-            }
-        }
-        PlasmaComponents.ToolButton {
-            text: "Group by Publisher"
-            iconName: "system-search"
-            Layout.fillWidth: true
-            onClicked: {
-//                 view.clear()
-                view.push({
-                    item: bookshelfPublisher,
-                    properties: { focus: true }
-                })
-                mainWindow.toggleSidebar();
-            }
-        }
-        PlasmaComponents.ToolButton {
-            text: "Group by Folder"
-            iconName: "system-search"
-            Layout.fillWidth: true
-            onClicked: {
-//                 view.clear()
-                view.push({
-                    item: bookshelfFolder,
-                    properties: { focus: true }
-                })
-                mainWindow.toggleSidebar();
-            }
-        }
-
-        Item {
-            Layout.fillHeight: true
-        }
-    }
-    mainItem: StackView {
-        id: view
-        focus: true
-        initialItem: welcomePage;
-
-        delegate: StackViewDelegate {
-            pushTransition: StackViewTransition {
-                PropertyAnimation {
-                    duration: mainWindow.animationDuration;
-                    easing.type: Easing.InOutQuad;
-                    target: enterItem
-                    property: "x"
-                    from: exitItem.width
-                    to: 0
-                }
-            }
-            popTransition: StackViewTransition {
-                PropertyAnimation {
-                    duration: mainWindow.animationDuration;
-                    easing.type: Easing.InOutQuad;
-                    target: exitItem
-                    property: "x"
-                    from: 0
-                    to: enterItem.width
-                }
-            }
-        }
-
-        Component {
-            id: welcomePage;
-            WelcomePage { }
-        }
-
-        Component {
-            id: bookViewer;
-            Book { }
-        }
-
-        Component {
-            id: bookshelfTitle;
-            Bookshelf {
-                width: view.width;
-                model: contentList;
-                onBookSelected: {
-                    view.push({
-                        item: bookViewer,
-                        properties: { focus: true, file: filename, currentPage: currentPage }
-                    })
-                }
-                headerText: "All Comics";
-//                 group: Peruse.BookListModel.GroupByTitle;
-            }
-        }
-
-        Component {
-            id: bookshelfSeries;
-            Categoryshelf {
-                width: view.width;
-                model: contentList.seriesCategoryModel;
-                onBookSelected: {
-                    view.push({
-                        item: bookViewer,
-                        properties: { focus: true, file: filename, currentPage: currentPage }
-                    })
-                }
-                headerText: "Comics by Series";
-//                 group: Peruse.BookListModel.GroupByAuthor;
-            }
-        }
-
-        Component {
-            id: bookshelfAuthor;
-            Categoryshelf {
-                width: view.width;
-                model: contentList.authorCategoryModel;
-                onBookSelected: {
-                    view.push({
-                        item: bookViewer,
-                        properties: { focus: true, file: filename, currentPage: currentPage }
-                    })
-                }
-                headerText: "Comics by Author";
-//                 group: Peruse.BookListModel.GroupByAuthor;
-            }
-        }
-
-        Component {
-            id: bookshelfPublisher;
-            Bookshelf {
-                width: view.width;
-                model: contentList;
-                onBookSelected: {
-                    view.push({
-                        item: bookViewer,
-                        properties: { focus: true, file: filename, currentPage: currentPage }
-                    })
-                }
-                headerText: "Comics by Publisher";
-//                 group: Peruse.BookListModel.GroupByPublisher;
-            }
-        }
-
-        Component {
-            id: bookshelfFolder;
-            Categoryshelf {
-                width: view.width;
-                model: contentList.folderCategoryModel;
-                onBookSelected: {
-                    view.push({
-                        item: bookViewer,
-                        properties: { focus: true, file: filename, currentPage: currentPage }
-                    })
-                }
-                headerText: "Comics by Folder";
-//                 group: Peruse.BookListModel.GroupByPublisher;
-            }
-        }
-        Component {
-            id: bookshelf;
-            Bookshelf {
-                width: view.width;
-                onBookSelected: {
-                    view.push({
-                        item: bookViewer,
-                        properties: { focus: true, file: filename, currentPage: currentPage }
-                    })
-                }
-            }
+    Component {
+        id: bookshelfSeries;
+        Categoryshelf {
+            model: contentList.seriesCategoryModel;
+            headerText: "Comics by Series";
+            onBookSelected: mainWindow.pageStack.push(bookViewer, { focus: true, file: filename, currentPage: currentPage });
         }
     }
 
-    function goUp() {
-        view.pop()
-        view.currentItem.focus = true
+    Component {
+        id: bookshelfAuthor;
+        Categoryshelf {
+            model: contentList.authorCategoryModel;
+            headerText: "Comics by Author";
+            onBookSelected: mainWindow.pageStack.push(bookViewer, { focus: true, file: filename, currentPage: currentPage });
+        }
+    }
+
+    Component {
+        id: bookshelfPublisher;
+        Bookshelf {
+            model: contentList;
+            headerText: "Comics by Publisher";
+            onBookSelected: mainWindow.pageStack.push(bookViewer, { focus: true, file: filename, currentPage: currentPage });
+        }
+    }
+
+    Component {
+        id: bookshelfFolder;
+        Categoryshelf {
+            model: contentList.folderCategoryModel;
+            headerText: "Comics by Folder";
+            onBookSelected: mainWindow.pageStack.push(bookViewer, { focus: true, file: filename, currentPage: currentPage });
+        }
+    }
+
+    Component {
+        id: bookshelf;
+        Bookshelf {
+            onBookSelected: mainWindow.pageStack.push(bookViewer, { focus: true, file: filename, currentPage: currentPage });
+        }
+    }
+
+    function changeCategory(categoryItem) {
+        // Clear all the way to the welcome page if we change the category...
+        mainWindow.pageStack.pop(welcomePage);
+        mainWindow.pageStack.push(categoryItem);
+        globalDrawer.close();
     }
 
     Component.onCompleted: {
