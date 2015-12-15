@@ -23,6 +23,7 @@ import QtQuick 2.1
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.0
 
+import org.kde.plasma.mobilecomponents 0.2 as MobileComponents
 import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 
@@ -30,8 +31,10 @@ import org.kde.kquickcontrolsaddons 2.0 as KQuickControlsAddons
 
 import org.kde.peruse 0.1 as Peruse
 
-Item {
+MobileComponents.Page {
     id: root;
+    color: MobileComponents.Theme.viewBackgroundColor;
+    flickable: shelfList;
     objectName: "bookshelf";
     property alias model: shelfList.model;
     signal bookSelected(string filename, int currentPage);
@@ -85,10 +88,7 @@ Item {
                 MouseArea {
                     anchors.fill: parent;
                     onClicked: {
-                        view.push({
-                            item: bookshelf,
-                            properties: { focus: true, headerText: "Comics in folder: " + model.title, model: model.categoryEntriesModel }
-                        })
+                        mainWindow.pageStack.push(bookshelf, { focus: true, headerText: "Comics in folder: " + model.title, model: model.categoryEntriesModel })
                     }
                 }
                 PlasmaExtras.Title {
