@@ -8,7 +8,6 @@ set(qmlplugin_SRCS
     BookListModel.cpp
     FolderBookModel.cpp
     PreviewImageProvider.cpp
-    PreviewFetcher.cpp
 )
 
 add_library (peruseqmlplugin SHARED ${qmlplugin_SRCS})
