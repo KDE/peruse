@@ -19,28 +19,33 @@
  *
  */
 
-#include "qmlplugin.h"
-#include <QQmlEngine>
+#ifndef PREVIEWIMAGEPROVIDER_H
+#define PREVIEWIMAGEPROVIDER_H
 
-#include "ArchiveBookModel.h"
-#include "BookListModel.h"
-#include "BookModel.h"
-#include "FolderBookModel.h"
-#include "PreviewFetcher.h"
-#include "PreviewImageProvider.h"
+#include <QQuickImageProvider>
 
-#include <QtQml/qqml.h>
-
-void QmlPlugins::initializeEngine(QQmlEngine *engine, const char *)
+/**
+ * \brief Get file previews using KIO::PreviewJob
+ *
+ * NOTE: As this task is potentially heavy, make sure to mark any Image using this provider asynchronous
+ */
+class KFileItem;
+class KJob;
+class PreviewImageProvider : public QObject, public QQuickImageProvider
 {
-    engine->addImageProvider("preview", new PreviewImageProvider());
-}
+    Q_OBJECT
+public:
+    explicit PreviewImageProvider(QObject* parent = 0);
+    virtual ~PreviewImageProvider();
 
-void QmlPlugins::registerTypes(const char *uri)
-{
-    qmlRegisterType<BookListModel>(uri, 0, 1, "BookListModel");
-    qmlRegisterType<BookModel>(uri, 0, 1, "BookModel");
-    qmlRegisterType<ArchiveBookModel>(uri, 0, 1, "ArchiveBookModel");
-    qmlRegisterType<FolderBookModel>(uri, 0, 1, "FolderBookModel");
-    qmlRegisterType<PreviewFetcher>(uri, 0, 1, "PreviewFetcher");
-}
+    virtual QImage requestImage(const QString& id, QSize* size, const QSize& requestedSize);
+
+    Q_SLOT void updatePreview(const KFileItem&, const QPixmap& p);
+    Q_SLOT void fallbackPreview(const KFileItem& item);
+    Q_SLOT void finishedPreview(KJob* job);
+private:
+    class Private;
+    Private* d;
+};
+
+#endif//PREVIEWIMAGEPROVIDER_H
