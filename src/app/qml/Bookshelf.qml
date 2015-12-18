@@ -27,8 +27,6 @@ import org.kde.plasma.mobilecomponents 0.2 as MobileComponents
 import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 
-import org.kde.kquickcontrolsaddons 2.0 as KQuickControlsAddons
-
 import org.kde.peruse 0.1 as Peruse
 
 MobileComponents.Page {
@@ -129,23 +127,14 @@ MobileComponents.Page {
                         bottom: parent.bottom;
                     }
                     width: height;
-                    KQuickControlsAddons.QPixmapItem {
-                        height: parent.height - 6;
-                        width: height * 2 / 3;
+                    Image {
                         anchors {
-                            centerIn: parent;
-                            margins: 2;
+                            fill: parent;
+                            margins: 5;
                         }
-                        pixmap: fetcher.preview
-                        fillMode: KQuickControlsAddons.QPixmapItem.PreserveAspectFit;
-
-                        Peruse.PreviewFetcher {
-                            id: fetcher
-                            url: model.filename
-                            mimetype: contentList.contentModel.getMimetype(model.filename)
-                            width: bookCover.width
-                            height: bookCover.height
-                        }
+                        source: "image://preview/" + model.filename
+                        asynchronous: true;
+                        fillMode: Image.PreserveAspectFit;
                     }
                 }
                 PlasmaExtras.Title {
