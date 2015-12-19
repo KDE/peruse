@@ -30,7 +30,6 @@ import org.kde.plasma.extras 2.0 as PlasmaExtras
 MobileComponents.Page {
     id: root;
     color: MobileComponents.Theme.viewBackgroundColor;
-    flickable: shelfList;
     property alias model: shelfList.model;
     signal bookSelected(string filename, int currentPage);
     property alias headerText: shelfTitle.text;

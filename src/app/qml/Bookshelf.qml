@@ -32,7 +32,6 @@ import org.kde.peruse 0.1 as Peruse
 MobileComponents.Page {
     id: root;
     color: MobileComponents.Theme.viewBackgroundColor;
-    flickable: shelfList;
     objectName: "bookshelf";
     property alias model: shelfList.model;
     signal bookSelected(string filename, int currentPage);
