@@ -64,7 +64,7 @@ MobileComponents.Page {
             target: viewLoader.item;
             onLoadingCompleted: {
                 if(success) {
-                    item.currentIndex = root.currentPage;
+                    viewLoader.item.currentIndex = root.currentPage;
                 }
             }
         }
@@ -73,15 +73,17 @@ MobileComponents.Page {
         // The idea is to have a number of specialised options as relevant to various
         // types of comic books, and then finally fall back to Okular as a catch-all
         // but generic viewer component.
-        var attemptFallback = false;
+        var attemptFallback = true;
 
         var mimetype = contentList.contentModel.getMimetype(file);
         console.debug("Mimetype is " + mimetype);
         if(mimetype == "application/x-cbz") {
             viewLoader.source = "viewers/cbr.qml";
+            attemptFallback = false;
         }
         if(mimetype == "inode/directory") {
             viewLoader.source = "viewers/folderofimages.qml";
+            attemptFallback = false;
         }
 
         if(attemptFallback) {
