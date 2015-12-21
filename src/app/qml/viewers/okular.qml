@@ -22,11 +22,37 @@
 import QtQuick 2.1
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.0
+import org.kde.okular 2.0 as Okular
 
 ViewerBase {
     id: root;
-    Text {
-        anchors.centerIn: parent;
-        text: file;
+    onFileChanged: documentItem.path = file;
+    onCurrentIndexChanged: {
+        if(pageArea.currentPage !== currentIndex) {
+            pageArea.currentPage = currentIndex;
+        }
+    }
+    Okular.DocumentItem {
+        id: documentItem
+//         onWindowTitleForDocumentChanged: {
+//             fileBrowserRoot.title = windowTitleForDocument
+//         }
+        onOpenedChanged: {
+            if(opened === true) {
+                root.loadingCompleted(true);
+            }
+        }
+    }
+
+    Okular.DocumentView {
+        id: pageArea
+        document: documentItem
+        anchors.fill: parent
+
+        onPageChanged: {
+//             bookmarkConnection.target = page
+//             actionButton.checked = page.bookmarked
+        }
+        onClicked: actionButton.toggleVisibility();
     }
 }
