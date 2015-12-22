@@ -59,7 +59,8 @@ int main(int argc, char** argv)
 
     QThread trackerThread;
 
-    QStringList locations = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
+    QStringList locations = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation);
+    locations << QStandardPaths::standardLocations(QStandardPaths::DownloadLocation);
     Q_ASSERT(locations.size() >= 1);
 //     qDebug() << locations;
 //     FileSystemTracker tracker;
