@@ -156,6 +156,8 @@ MobileComponents.ApplicationWindow {
             contentList.contentModel.addLocation(bookLocations[i]);
         }
         contentList.contentModel.setSearchString("cbz OR cbr OR cb7 OR cbt OR cba OR chm OR djvu OR epub OR pdf");
+        contentList.contentModel.addMimetype("application/pdf");
+        contentList.contentModel.addMimetype("application/x-cbz");
         contentList.contentModel.startSearch();
     }
 }
