@@ -1,7 +1,9 @@
 set(qmlplugin_SRCS
     qmlplugin.cpp
     ContentList.cpp
+    ContentListerBase.cpp
     BalooContentLister.cpp
+    FilesystemContentLister.cpp
 )
 
 add_library (contentlistqmlplugin SHARED ${qmlplugin_SRCS})
