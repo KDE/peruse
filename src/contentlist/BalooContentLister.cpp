@@ -21,11 +21,10 @@
 
 #include "BalooContentLister.h"
 
-#include <Baloo/Query>
+#include <Baloo/IndexerConfig>
 #include <Baloo/File>
 #include <kfilemetadata/propertyinfo.h>
 
-#include <QCoreApplication>
 #include <QThreadPool>
 #include <QList>
 
@@ -38,7 +37,7 @@ public:
 };
 
 BalooContentLister::BalooContentLister(QObject* parent)
-    : QObject(parent)
+    : ContentListerBase(parent)
     , d(new Private)
 {
 }
@@ -46,6 +45,12 @@ BalooContentLister::BalooContentLister(QObject* parent)
 BalooContentLister::~BalooContentLister()
 {
     delete d;
+}
+
+bool BalooContentLister::balooEnabled() const
+{
+    Baloo::IndexerConfig config;
+    return config.fileIndexingEnabled();
 }
 
 void BalooContentLister::addLocation(QString path)
@@ -71,20 +76,15 @@ void BalooContentLister::startSearch()
         query.setSearchString(d->searchString);
         query.setIncludeFolder(location);
 
-        Baloo::ResultIterator results = query.exec();
-        while(results.next()) {
-            queryResult(0, results.filePath());
-        }
-//         Baloo::QueryRunnable *runnable = new Baloo::QueryRunnable(query);
-//         connect(runnable, SIGNAL(queryResult(Baloo::QueryRunnable*, QString)),
-//                 this, SLOT(queryResult(Baloo::QueryRunnable*, QString)), Qt::QueuedConnection);
-//         connect(runnable, SIGNAL(finished(Baloo::QueryRunnable*)),
-//                 this, SLOT(queryCompleted(Baloo::QueryRunnable*)));
-// 
-//         d->queries.append(runnable);
-//         QThreadPool::globalInstance()->start(runnable);
+        Baloo::QueryRunnable *runnable = new Baloo::QueryRunnable(query);
+        connect(runnable, SIGNAL(queryResult(Baloo::QueryRunnable*, QString)),
+                this, SLOT(queryResult(Baloo::QueryRunnable*, QString)), Qt::QueuedConnection);
+        connect(runnable, SIGNAL(finished(Baloo::QueryRunnable*)),
+                this, SLOT(queryCompleted(Baloo::QueryRunnable*)));
+
+        d->queries.append(runnable);
+        QThreadPool::globalInstance()->start(runnable);
     }
-    emit searchCompleted();
 }
 
 void BalooContentLister::queryCompleted(Baloo::QueryRunnable* query)
@@ -109,7 +109,6 @@ void BalooContentLister::queryResult(Baloo::QueryRunnable* query, QString file)
         metadata[propInfo.name()] = it.value();
 //             qDebug() << KFileMetaData::PropertyInfo(it.key()).name() << " --> "
 //                 << it.value().toString() << " (" << it.value().typeName() << ")\n";
-        qApp->processEvents();
     }
     emit fileFound(file, metadata);
 }

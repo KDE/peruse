@@ -22,25 +22,25 @@
 #ifndef BALOOCONTENTLISTER_H
 #define BALOOCONTENTLISTER_H
 
+#include "ContentListerBase.h"
+
 #include <Baloo/QueryRunnable>
 
-#include <QObject>
 #include <QString>
 
-class BalooContentLister : public QObject
+class BalooContentLister : public ContentListerBase
 {
     Q_OBJECT
 public:
     explicit BalooContentLister(QObject* parent = 0);
     virtual ~BalooContentLister();
 
-    void addLocation(QString path);
-    void addMimetype(QString mimetype);
-    void setSearchString(const QString& searchString);
-    void startSearch();
+    bool balooEnabled() const;
 
-    Q_SIGNAL void fileFound(const QString& filePath, const QVariantHash& metadata);
-    Q_SIGNAL void searchCompleted();
+    virtual void addLocation(QString path);
+    virtual void addMimetype(QString mimetype);
+    virtual void setSearchString(const QString& searchString);
+    virtual void startSearch();
 private:
     class Private;
     Private* d;
