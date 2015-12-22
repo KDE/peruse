@@ -20,6 +20,7 @@
  */
 
 #include "ContentList.h"
+#include "FilesystemContentLister.h"
 #include <QMimeDatabase>
 
 #include "BalooContentLister.h"
@@ -35,14 +36,23 @@ public:
         : actualContentList(0)
     {}
     QList<ContentEntry*> entries;
-    BalooContentLister* actualContentList;
+    ContentListerBase* actualContentList;
 };
 
 ContentList::ContentList(QObject* parent)
     : QAbstractListModel(parent)
     , d(new Private)
 {
-    d->actualContentList = new BalooContentLister(this);
+    BalooContentLister* baloo = new BalooContentLister(this);
+    if(baloo->balooEnabled())
+    {
+        d->actualContentList = baloo;
+    }
+    else
+    {
+        baloo->deleteLater();
+        d->actualContentList = new FilesystemContentLister(this);
+    }
     connect(d->actualContentList, SIGNAL(fileFound(QString,QVariantHash)), this, SLOT(fileFound(QString,QVariantHash)));
     connect(d->actualContentList, SIGNAL(searchCompleted()), this, SIGNAL(searchCompleted()));
 }
