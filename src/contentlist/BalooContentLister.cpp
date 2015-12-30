@@ -28,7 +28,8 @@
 #include <QThreadPool>
 #include <QList>
 
-class BalooContentLister::Private {
+class BalooContentLister::Private
+{
 public:
     Private() {}
     QList<QString> locations;
@@ -71,7 +72,8 @@ void BalooContentLister::setSearchString(const QString& searchString)
 
 void BalooContentLister::startSearch()
 {
-    Q_FOREACH(const QString& location, d->locations) {
+    Q_FOREACH(const QString& location, d->locations)
+    {
         Baloo::Query query;
         query.setSearchString(d->searchString);
         query.setIncludeFolder(location);
@@ -83,15 +85,24 @@ void BalooContentLister::startSearch()
                 this, SLOT(queryCompleted(Baloo::QueryRunnable*)));
 
         d->queries.append(runnable);
-        QThreadPool::globalInstance()->start(runnable);
+    }
+
+    if(!d->queries.empty())
+    {
+        QThreadPool::globalInstance()->start(d->queries.first());
     }
 }
 
 void BalooContentLister::queryCompleted(Baloo::QueryRunnable* query)
 {
     d->queries.removeAll(query);
-    if(d->queries.empty()) {
+    if(d->queries.empty())
+    {
         emit searchCompleted();
+    }
+    else
+    {
+        QThreadPool::globalInstance()->start(d->queries.first());
     }
 }
 
@@ -104,7 +115,8 @@ void BalooContentLister::queryResult(Baloo::QueryRunnable* query, QString file)
     balooFile.load();
     KFileMetaData::PropertyMap properties = balooFile.properties();
     KFileMetaData::PropertyMap::const_iterator it = properties.constBegin();
-    for (; it != properties.constEnd(); it++) {
+    for (; it != properties.constEnd(); it++)
+    {
         KFileMetaData::PropertyInfo propInfo(it.key());
         metadata[propInfo.name()] = it.value();
 //             qDebug() << KFileMetaData::PropertyInfo(it.key()).name() << " --> "
