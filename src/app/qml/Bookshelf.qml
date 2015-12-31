@@ -29,6 +29,8 @@ import org.kde.plasma.extras 2.0 as PlasmaExtras
 
 import org.kde.peruse 0.1 as Peruse
 
+import "listcomponents" as ListComponents
+
 MobileComponents.Page {
     id: root;
     color: MobileComponents.Theme.viewBackgroundColor;
@@ -56,127 +58,29 @@ MobileComponents.Page {
         section {
             property: "title";
             criteria: ViewSection.FirstCharacter;
-            delegate: PlasmaExtras.Heading {
-                anchors.leftMargin: 5;
-                width: root.width;
-                text: section;
-                Rectangle {
-                    anchors {
-                        right: parent.right;
-                        rightMargin: 5;
-                        verticalCenter: parent.verticalCenter;
-                    }
-                    height: 2;
-                    radius: 2;
-                    width: parent.width - parent.paintedWidth - 10;
-                    color: parent.color;
-                }
-            }
+            delegate: ListComponents.Section { text: section; }
         }
         delegate: Item {
-            height: model.categoryEntriesCount === 0 ? 200 : 50;
+            height: model.categoryEntriesCount === 0 ? bookTile.neededHeight : categoryTile.neededHeight;
             width: root.width;
-            Item {
-                height: model.categoryEntriesCount > 0 ? 50 : 0;
+            ListComponents.CategoryTile {
+                id: categoryTile;
+                height: model.categoryEntriesCount > 0 ? neededHeight : 0;
                 width: parent.width;
-                visible: height > 0;
-                enabled: visible;
-                clip: true;
-                MouseArea {
-                    anchors.fill: parent;
-                    onClicked: {
-                        mainWindow.pageStack.push(bookshelf, { focus: true, headerText: "Comics in folder: " + model.title, model: model.categoryEntriesModel })
-                    }
-                }
-                PlasmaExtras.Title {
-                    id: categoryTitle;
-                    anchors {
-                        margins: 5;
-                        top: parent.top;
-                        left: parent.left;
-                        right: parent.right;
-                    }
-                    text: model.title;
-                }
-                PlasmaComponents.Label {
-                    id: categoryCount;
-                    anchors {
-                        margins: 5;
-                        verticalCenter: parent.verticalCenter;
-                        right: parent.right;
-                    }
-                    text: model.categoryEntriesCount;
-                }
+                count: model.categoryEntriesCount;
+                title: model.title;
+                entriesModel: model.categoryEntriesModel ? model.categoryEntriesModel : null;
             }
-            Item {
-                height: model.categoryEntriesCount < 1 ? 200 : 0;
+            ListComponents.BookTile {
+                id: bookTile;
+                height: model.categoryEntriesCount < 1 ? neededHeight : 0;
                 width: parent.width;
-                visible: height > 0;
-                enabled: visible;
-                clip: true;
-                MouseArea {
-                    anchors.fill: parent;
-                    onClicked: root.bookSelected(model.filename, model.currentPage);
-                }
-                Item {
-                    id: bookCover;
-                    anchors {
-                        top: parent.top;
-                        left: parent.left;
-                        bottom: parent.bottom;
-                    }
-                    width: height;
-                    Image {
-                        anchors {
-                            fill: parent;
-                            margins: 5;
-                        }
-                        source: "image://preview/" + model.filename
-                        asynchronous: true;
-                        fillMode: Image.PreserveAspectFit;
-                    }
-                }
-                PlasmaExtras.Title {
-                    id: bookTitle;
-                    anchors {
-                        top: parent.top;
-                        left: bookCover.right;
-                        right: parent.right;
-                    }
-                    text: model.title;
-                }
-                PlasmaComponents.Label {
-                    id: bookAuthorLabel;
-                    anchors {
-                        top: bookTitle.bottom;
-                        topMargin: 5;
-                        left: bookCover.right;
-                    }
-                    width: paintedWidth;
-                    text: "by";
-                    font.bold: true;
-                }
-                PlasmaComponents.Label {
-                    id: bookAuthor;
-                    anchors {
-                        top: bookTitle.bottom;
-                        topMargin: 5;
-                        left: bookAuthorLabel.right;
-                        leftMargin: 5;
-                        right: parent.right;
-                    }
-                    text: model.author ? model.author : "(unknown)";
-                }
-                PlasmaComponents.Label {
-                    id: bookFile;
-                    anchors {
-                        bottom: parent.bottom;
-                        left: bookCover.right;
-                        right: parent.right;
-                    }
-                    elide: Text.ElideMiddle;
-                    text: model.filename;
-                }
+                author: model.author ? model.author : "(unknown)";
+                title: model.title;
+                filename: model.filename;
+                categoryEntriesCount: model.categoryEntriesCount;
+                currentPage: model.currentPage;
+                onBookSelected: root.bookSelected(filename, currentPage);
             }
         }
     }

@@ -27,6 +27,8 @@ import org.kde.plasma.mobilecomponents 0.2 as MobileComponents
 import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 
+import "listcomponents" as ListComponents
+
 MobileComponents.Page {
     id: root;
     color: MobileComponents.Theme.viewBackgroundColor;
@@ -53,51 +55,15 @@ MobileComponents.Page {
         section {
             property: "categoryName";
             criteria: ViewSection.FirstCharacter;
-            delegate: PlasmaExtras.Heading {
-                anchors.leftMargin: 5;
-                width: root.width;
-                text: section;
-                Rectangle {
-                    anchors {
-                        right: parent.right;
-                        rightMargin: 5;
-                        verticalCenter: parent.verticalCenter;
-                    }
-                    height: 2;
-                    radius: 2;
-                    width: parent.width - parent.paintedWidth - 10;
-                    color: parent.color;
-                }
-            }
+            delegate: ListComponents.Section { text: section; }
         }
-        delegate: Item {
-            height: 50;
+        delegate: ListComponents.CategoryTile {
+            id: categoryTile;
+            height: neededHeight;
             width: root.width;
-            MouseArea {
-                anchors.fill: parent;
-                onClicked: {
-                    mainWindow.pageStack.push(bookshelf, { focus: true, headerText: "Comics in folder: " + model.categoryName, model: model.entriesModel })
-                }
-            }
-            PlasmaExtras.Title {
-                id: categoryTitle;
-                anchors {
-                    margins: 5;
-                    top: parent.top;
-                    left: parent.left;
-                    right: parent.right;
-                }
-                text: model.categoryName === "" ? "(unknown)" : model.categoryName;
-            }
-            PlasmaComponents.Label {
-                id: categoryCount;
-                anchors {
-                    margins: 5;
-                    verticalCenter: parent.verticalCenter;
-                    right: parent.right;
-                }
-                text: model.entryCount;
-            }
+            count: model.entryCount;
+            title: model.categoryName === "" ? "(unknown)" : model.categoryName;
+            entriesModel: model.entriesModel ? model.entriesModel : null;
         }
     }
 }
