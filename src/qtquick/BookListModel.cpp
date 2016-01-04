@@ -107,8 +107,10 @@ void BookListModel::contentModelItemsInserted(QModelIndex index, int first, int 
         QStringList splitName = entry->filename.split(QDir::separator());
         entry->filetitle = splitName.takeLast();
         entry->series = splitName.takeLast(); // hahahaheuristics (dumb assumptions about filesystems, go!)
-        // just in case we end up without a title...
-        entry->title = entry->filetitle;
+        // just in case we end up without a title... using complete basename here,
+        // as we would rather have "book one. part two" and the odd "book one - part two.tar"
+        QFileInfo fileinfo(entry->filename);
+        entry->title = fileinfo.completeBaseName();
 
         QVariantHash metadata = d->contentModel->data(d->contentModel->index(first, 0, index), Qt::UserRole + 2).toHash();
         QVariantHash::const_iterator it = metadata.constBegin();
