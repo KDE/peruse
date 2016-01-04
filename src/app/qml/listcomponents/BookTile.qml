@@ -49,7 +49,7 @@ Item {
             bottom: parent.bottom;
             margins: units.smallSpacing;
         }
-        width: units.iconSizes.enormous + units.smallSpacing * 2;
+        width: units.iconSizes.huge + units.smallSpacing * 2;
         Image {
             id: coverImage;
             anchors.fill: parent;
@@ -58,7 +58,7 @@ Item {
             fillMode: Image.PreserveAspectFit;
         }
     }
-    PlasmaExtras.Title {
+    PlasmaComponents.Label {
         id: bookTitle;
         anchors {
             top: parent.top;
@@ -67,6 +67,7 @@ Item {
         }
         maximumLineCount: 1;
         elide: Text.ElideMiddle;
+        font.weight: Font.Bold;
     }
     PlasmaComponents.Label {
         id: bookAuthorLabel;
