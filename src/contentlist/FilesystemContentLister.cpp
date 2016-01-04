@@ -75,9 +75,14 @@ void FilesystemContentLister::startSearch()
         {
             QString filePath = it.next();
 
+            if(QFileInfo(filePath).isDir())
+            {
+                qApp->processEvents();
+                continue;
+            }
             useThis = false;
             QString mimetype = mimeDb.mimeTypeForFile(filePath, QMimeDatabase::MatchExtension).name();
-            qDebug() << useThis << mimetype << filePath;
+//             qDebug() << useThis << mimetype << filePath;
             Q_FOREACH(const QString& type, d->mimetypes)
             {
                 if(type == mimetype) {
