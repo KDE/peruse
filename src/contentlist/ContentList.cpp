@@ -21,9 +21,11 @@
 
 #include "ContentList.h"
 #include "FilesystemContentLister.h"
-#include <QMimeDatabase>
 
 #include "BalooContentLister.h"
+
+#include <QMimeDatabase>
+#include <QDebug>
 
 struct ContentEntry {
     QString filename;
@@ -47,11 +49,13 @@ ContentList::ContentList(QObject* parent)
     if(baloo->balooEnabled())
     {
         d->actualContentList = baloo;
+        qDebug() << "Baloo support enabled";
     }
     else
     {
         baloo->deleteLater();
         d->actualContentList = new FilesystemContentLister(this);
+        qDebug() << "Baloo is disabled for the system, use the filesystem scraper";
     }
     connect(d->actualContentList, SIGNAL(fileFound(QString,QVariantHash)), this, SLOT(fileFound(QString,QVariantHash)));
     connect(d->actualContentList, SIGNAL(searchCompleted()), this, SIGNAL(searchCompleted()));
