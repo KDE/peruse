@@ -20,6 +20,7 @@
  */
 
 #include "BalooContentLister.h"
+#include <QProcess>
 
 #include <Baloo/IndexerConfig>
 #include <Baloo/File>
@@ -51,7 +52,24 @@ BalooContentLister::~BalooContentLister()
 bool BalooContentLister::balooEnabled() const
 {
     Baloo::IndexerConfig config;
-    return config.fileIndexingEnabled();
+    bool result = config.fileIndexingEnabled();
+
+    if(result)
+    {
+        // It would be terribly nice with a bit of baloo engine exporting, so
+        // we can ask the database about whether or not it is accessible...
+        // But, this is a catch-all check anyway, so we get a complete "everything's broken"
+        // result if anything is broken... guess it will do :)
+        QProcess statuscheck;
+        statuscheck.start("balooctl", QStringList() << "status");
+        statuscheck.waitForFinished();
+        if(statuscheck.exitStatus() == QProcess::CrashExit || statuscheck.exitCode() > 1)
+        {
+            result = false;
+        }
+    }
+
+    return result;
 }
 
 void BalooContentLister::addLocation(QString path)
