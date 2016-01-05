@@ -123,6 +123,7 @@ void PreviewImageProvider::fallbackPreview(const KFileItem& item)
         QMimeDatabase db;
         QPixmap preview = QIcon::fromTheme(db.mimeTypeForName(item.mimetype()).iconName()).pixmap(128);
         d->previews[previewJob] = preview;
+        d->jobCompletion[previewJob] = true;
     }
 }
 
@@ -138,5 +139,4 @@ void PreviewImageProvider::updatePreview(const KFileItem&, const QPixmap& p)
 void PreviewImageProvider::finishedPreview(KJob* job)
 {
     d->jobCompletion[job] = true;
-    job->deleteLater();
 }
