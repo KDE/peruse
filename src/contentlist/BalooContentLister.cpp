@@ -20,12 +20,13 @@
  */
 
 #include "BalooContentLister.h"
-#include <QProcess>
 
 #include <Baloo/IndexerConfig>
 #include <Baloo/File>
 #include <kfilemetadata/propertyinfo.h>
 
+#include <QDebug>
+#include <QProcess>
 #include <QThreadPool>
 #include <QList>
 
@@ -63,7 +64,9 @@ bool BalooContentLister::balooEnabled() const
         QProcess statuscheck;
         statuscheck.start("balooctl", QStringList() << "status");
         statuscheck.waitForFinished();
-        if(statuscheck.exitStatus() == QProcess::CrashExit || statuscheck.exitCode() > 1)
+        QString output = statuscheck.readAll();
+        qDebug() << "Baloo status check says:" << output;
+        if(statuscheck.exitStatus() == QProcess::CrashExit || statuscheck.exitCode() != 0)
         {
             result = false;
         }
