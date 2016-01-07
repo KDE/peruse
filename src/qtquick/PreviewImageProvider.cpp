@@ -98,10 +98,10 @@ QImage PreviewImageProvider::requestImage(const QString& id, QSize* size, const 
                 {
                     image = d->previews[job].toImage();
                 }
-                d->previews.remove(job);
             }
-            d->jobCompletion.remove(job);
         }
+        d->previews.remove(job);
+        d->jobCompletion.remove(job);
     }
     else
     {
