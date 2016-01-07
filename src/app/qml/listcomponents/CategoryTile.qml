@@ -45,8 +45,9 @@ Item {
             margins: units.smallSpacing;
             top: parent.top;
             left: parent.left;
-            right: parent.right;
+            right: categoryCount.left;
         }
+        elide: Text.ElideRight;
     }
     PlasmaComponents.Label {
         id: categoryCount;
@@ -55,5 +56,6 @@ Item {
             verticalCenter: parent.verticalCenter;
             right: parent.right;
         }
+        width: paintedWidth;
     }
 }

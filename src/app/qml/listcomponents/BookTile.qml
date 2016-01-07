@@ -89,6 +89,7 @@ Item {
             leftMargin: units.smallSpacing;
             right: parent.right;
         }
+        elide: Text.ElideRight;
     }
     PlasmaComponents.Label {
         id: bookFile;
