@@ -27,6 +27,8 @@ import org.kde.plasma.mobilecomponents 0.2 as MobileComponents
 import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 
+import "listcomponents" as ListComponents
+
 MobileComponents.Page {
     id: root;
     color: MobileComponents.Theme.viewBackgroundColor;
@@ -37,7 +39,7 @@ MobileComponents.Page {
             left: parent.left;
             right: parent.right;
         }
-        height: mainWindow.isLoading ? (parent.height / 2) : parent.height;
+        height: mainWindow.isLoading ? (parent.height / 2) : (parent.height / 3);
         Behavior on height { PropertyAnimation { duration: mainWindow.animationDuration; easing.type: Easing.InOutQuad; } }
         PlasmaExtras.Heading {
             id: appNameLabel;
@@ -64,6 +66,124 @@ MobileComponents.Page {
             height: 1;
             color: "black";
             width: appDescriptionLabel.paintedWidth;
+        }
+    }
+    Flickable {
+        id: startWithThese;
+        property int mostRecentlyRead0: -1;
+        property int mostRecentlyRead1: -1;
+        property int mostRecentlyRead2: -1;
+        property int mostRecentlyAdded0: -1;
+        property int mostRecentlyAdded1: -1;
+        property int mostRecentlyAdded2: -1;
+        Connections {
+            target: mainWindow;
+            onIsLoadingChanged: {
+                if(mainWindow.isLoading === false) {
+                    startWithThese.mostRecentlyRead0 = 0;
+                    startWithThese.mostRecentlyRead1 = 1;
+                    startWithThese.mostRecentlyRead2 = 2;
+                    startWithThese.mostRecentlyAdded0 = 3;
+                    startWithThese.mostRecentlyAdded1 = 4;
+                    startWithThese.mostRecentlyAdded2 = 5;
+                }
+            }
+        }
+        anchors {
+            top: titleContainer.bottom;
+            left: parent.left;
+            right: parent.right;
+            bottom: parent.bottom;
+        }
+        opacity: mainWindow.isLoading ? 0 : 1;
+        Behavior on opacity { PropertyAnimation { duration: mainWindow.animationDuration; } }
+        Column {
+            width: parent.width;
+            height: childrenRect.height;
+            PlasmaComponents.Label {
+                text: "Recently read";
+                width: startWithThese.width;
+                height: paintedHeight;
+            }
+            ListComponents.BookTile {
+                height: neededHeight;
+                width: startWithThese.width;
+                property QtObject book: contentList.get(startWithThese.mostRecentlyRead0);
+                author: book.readProperty("author");
+                title: book.readProperty("title");
+                filename: book.readProperty("filename");
+                categoryEntriesCount: 0;
+                currentPage: book.readProperty("currentPage");
+                onBookSelected: root.bookSelected(filename, currentPage);
+            }
+            Row {
+                width: startWithThese.width;
+                height: childrenRect.height;
+                ListComponents.BookTile {
+                    height: neededHeight;
+                    width: startWithThese.width / 2;
+                    property QtObject book: contentList.get(startWithThese.mostRecentlyRead1);
+                    author: book.readProperty("author");
+                    title: book.readProperty("title");
+                    filename: book.readProperty("filename");
+                    categoryEntriesCount: 0;
+                    currentPage: book.readProperty("currentPage");
+                    onBookSelected: root.bookSelected(filename, currentPage);
+                }
+                ListComponents.BookTile {
+                    height: neededHeight;
+                    width: startWithThese.width / 2;
+                    property QtObject book: contentList.get(startWithThese.mostRecentlyRead2);
+                    author: book.readProperty("author");
+                    title: book.readProperty("title");
+                    filename: book.readProperty("filename");
+                    categoryEntriesCount: 0;
+                    currentPage: book.readProperty("currentPage");
+                    onBookSelected: root.bookSelected(filename, currentPage);
+                }
+            }
+            PlasmaComponents.Label {
+                text: "Recently added";
+                width: startWithThese.width;
+                height: paintedHeight;
+            }
+            ListComponents.BookTile {
+                height: neededHeight;
+                width: startWithThese.width;
+                property QtObject book: contentList.get(startWithThese.mostRecentlyAdded0);
+                author: book.readProperty("author");
+                title: book.readProperty("title");
+                filename: book.readProperty("filename");
+                categoryEntriesCount: 0;
+                currentPage: book.readProperty("currentPage");
+                onBookSelected: root.bookSelected(filename, currentPage);
+            }
+            Row {
+                width: startWithThese.width;
+                height: childrenRect.height;
+                ListComponents.BookTile {
+                    height: neededHeight;
+                    width: startWithThese.width / 2;
+                    property QtObject book: contentList.get(startWithThese.mostRecentlyAdded1);
+                    author: book.readProperty("author");
+                    title: book.readProperty("title");
+                    filename: book.readProperty("filename");
+                    categoryEntriesCount: 0;
+                    currentPage: book.readProperty("currentPage");
+                    onBookSelected: root.bookSelected(filename, currentPage);
+                }
+                ListComponents.BookTile {
+                    height: neededHeight;
+                    width: startWithThese.width / 2;
+                    property QtObject book: contentList.get(startWithThese.mostRecentlyAdded2);
+                    author: book.readProperty("author");
+                    title: book.readProperty("title");
+                    filename: book.readProperty("filename");
+                    categoryEntriesCount: 0;
+                    currentPage: book.readProperty("currentPage");
+                    onBookSelected: root.bookSelected(filename, currentPage);
+                }
+            }
         }
     }
     Item {
