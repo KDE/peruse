@@ -84,7 +84,9 @@ MobileComponents.ApplicationWindow {
 
     Component {
         id: welcomePage;
-        WelcomePage { }
+        WelcomePage {
+            onBookSelected: mainWindow.pageStack.push(bookViewer, { focus: true, file: filename, currentPage: currentPage });
+        }
     }
 
     Component {

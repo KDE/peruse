@@ -32,6 +32,7 @@ import "listcomponents" as ListComponents
 MobileComponents.Page {
     id: root;
     color: MobileComponents.Theme.viewBackgroundColor;
+    signal bookSelected(string filename, int currentPage);
     Item {
         id: titleContainer;
         anchors {
