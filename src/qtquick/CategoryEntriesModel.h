@@ -69,6 +69,8 @@ public:
 
     void append(BookEntry* entry);
     void addCategoryEntry(const QString& categoryName, BookEntry* entry);
+
+    Q_INVOKABLE QObject* get(int index);
 protected:
     QString name() const;
     void setName(const QString& newName);

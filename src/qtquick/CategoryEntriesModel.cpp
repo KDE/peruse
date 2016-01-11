@@ -20,6 +20,7 @@
  */
 
 #include "CategoryEntriesModel.h"
+#include "PropertyContainer.h"
 #include <QDir>
 #include <QDebug>
 
@@ -202,4 +203,30 @@ void CategoryEntriesModel::addCategoryEntry(const QString& categoryName, BookEnt
         categoryModel->append(entry);
         categoryModel->addCategoryEntry(splitName.join(QDir::separator()), entry);
     }
+}
+
+QObject* CategoryEntriesModel::get(int index)
+{
+    PropertyContainer* obj = new PropertyContainer("book", this);
+    BookEntry* entry = new BookEntry();
+    bool deleteEntry = true;
+    if(index > -1 && index < d->entries.count())
+    {
+        entry = d->entries.at(index);
+        deleteEntry = false;
+    }
+    obj->setProperty("author", entry->author);
+    obj->setProperty("currentPage", entry->currentPage);
+    obj->setProperty("filename", entry->filename);
+    obj->setProperty("filetitle", entry->filetitle);
+    obj->setProperty("lastOpenedTime", entry->lastOpenedTime);
+    obj->setProperty("publisher", entry->publisher);
+    obj->setProperty("series", entry->series);
+    obj->setProperty("title", entry->title);
+    obj->setProperty("totalPages", entry->totalPages);
+    if(deleteEntry)
+    {
+        delete entry;
+    }
+    return obj;
 }
