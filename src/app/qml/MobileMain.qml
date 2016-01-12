@@ -40,6 +40,7 @@ MobileComponents.ApplicationWindow {
 
     function showBook(filename, currentPage) {
         mainWindow.pageStack.push(bookViewer, { focus: true, file: filename, currentPage: currentPage })
+        peruseConfig.bookOpened(filename);
     }
 
     Peruse.BookListModel {
@@ -50,6 +51,11 @@ MobileComponents.ApplicationWindow {
             }
         }
     }
+
+    Peruse.Config {
+        id: peruseConfig;
+    }
+
     contextDrawer: MobileComponents.ContextDrawer {
         id: contextDrawer;
     }
@@ -89,7 +95,7 @@ MobileComponents.ApplicationWindow {
     Component {
         id: welcomePage;
         WelcomePage {
-            onBookSelected: ;
+            onBookSelected: mainWindow.showBook(filename, currentPage);
         }
     }
 
