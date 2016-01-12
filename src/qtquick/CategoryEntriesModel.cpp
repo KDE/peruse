@@ -230,3 +230,18 @@ QObject* CategoryEntriesModel::get(int index)
     }
     return obj;
 }
+
+int CategoryEntriesModel::indexOfFile(QString filename)
+{
+    int index = -1, i = 0;
+    Q_FOREACH(BookEntry* entry, d->entries)
+    {
+        if(entry->filename == filename)
+        {
+            index = i;
+            break;
+        }
+        ++i;
+    }
+    return index;
+}

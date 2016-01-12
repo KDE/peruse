@@ -71,6 +71,7 @@ public:
     void addCategoryEntry(const QString& categoryName, BookEntry* entry);
 
     Q_INVOKABLE QObject* get(int index);
+    Q_INVOKABLE int indexOfFile(QString filename);
 protected:
     QString name() const;
     void setName(const QString& newName);
