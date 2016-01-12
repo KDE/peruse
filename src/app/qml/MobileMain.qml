@@ -38,6 +38,10 @@ MobileComponents.ApplicationWindow {
     height: 1100;
     visible: true;
 
+    function showBook(filename, currentPage) {
+        mainWindow.pageStack.push(bookViewer, { focus: true, file: filename, currentPage: currentPage })
+    }
+
     Peruse.BookListModel {
         id: contentList;
         contentModel: ContentList {
@@ -85,7 +89,7 @@ MobileComponents.ApplicationWindow {
     Component {
         id: welcomePage;
         WelcomePage {
-            onBookSelected: mainWindow.pageStack.push(bookViewer, { focus: true, file: filename, currentPage: currentPage });
+            onBookSelected: ;
         }
     }
 
@@ -99,7 +103,7 @@ MobileComponents.ApplicationWindow {
         Bookshelf {
             model: contentList;
             headerText: "All Comics";
-            onBookSelected: mainWindow.pageStack.push(bookViewer, { focus: true, file: filename, currentPage: currentPage });
+            onBookSelected: mainWindow.showBook(filename, currentPage);
         }
     }
 
@@ -108,7 +112,7 @@ MobileComponents.ApplicationWindow {
         Categoryshelf {
             model: contentList.seriesCategoryModel;
             headerText: "Comics by Series";
-            onBookSelected: mainWindow.pageStack.push(bookViewer, { focus: true, file: filename, currentPage: currentPage });
+            onBookSelected: mainWindow.showBook(filename, currentPage);
         }
     }
 
@@ -117,7 +121,7 @@ MobileComponents.ApplicationWindow {
         Categoryshelf {
             model: contentList.authorCategoryModel;
             headerText: "Comics by Author";
-            onBookSelected: mainWindow.pageStack.push(bookViewer, { focus: true, file: filename, currentPage: currentPage });
+            onBookSelected: mainWindow.showBook(filename, currentPage);
         }
     }
 
@@ -126,7 +130,7 @@ MobileComponents.ApplicationWindow {
         Bookshelf {
             model: contentList;
             headerText: "Comics by Publisher";
-            onBookSelected: mainWindow.pageStack.push(bookViewer, { focus: true, file: filename, currentPage: currentPage });
+            onBookSelected: mainWindow.showBook(filename, currentPage);
         }
     }
 
@@ -135,14 +139,14 @@ MobileComponents.ApplicationWindow {
         Categoryshelf {
             model: contentList.folderCategoryModel;
             headerText: "Comics by Folder";
-            onBookSelected: mainWindow.pageStack.push(bookViewer, { focus: true, file: filename, currentPage: currentPage });
+            onBookSelected: mainWindow.showBook(filename, currentPage);
         }
     }
 
     Component {
         id: bookshelf;
         Bookshelf {
-            onBookSelected: mainWindow.pageStack.push(bookViewer, { focus: true, file: filename, currentPage: currentPage });
+            onBookSelected: mainWindow.showBook(filename, currentPage);
         }
     }
 
