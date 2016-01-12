@@ -81,12 +81,12 @@ MobileComponents.Page {
             target: mainWindow;
             onIsLoadingChanged: {
                 if(mainWindow.isLoading === false) {
-                    startWithThese.mostRecentlyRead0 = 0;
-                    startWithThese.mostRecentlyRead1 = 1;
-                    startWithThese.mostRecentlyRead2 = 2;
-                    startWithThese.mostRecentlyAdded0 = 3;
-                    startWithThese.mostRecentlyAdded1 = 4;
-                    startWithThese.mostRecentlyAdded2 = 5;
+                    startWithThese.mostRecentlyRead0 = contentList.indexOfFile(peruseConfig.recentlyOpened[0]);
+                    startWithThese.mostRecentlyRead1 = contentList.indexOfFile(peruseConfig.recentlyOpened[1]);
+                    startWithThese.mostRecentlyRead2 = contentList.indexOfFile(peruseConfig.recentlyOpened[2]);
+                    startWithThese.mostRecentlyAdded0 = 0;
+                    startWithThese.mostRecentlyAdded1 = 1;
+                    startWithThese.mostRecentlyAdded2 = 2;
                 }
             }
         }
@@ -104,10 +104,12 @@ MobileComponents.Page {
             PlasmaComponents.Label {
                 text: "Recently read";
                 width: startWithThese.width;
-                height: paintedHeight;
+                height: rread0.height > 0 ? paintedHeight : 0;
+                visible: height > 0;
             }
             ListComponents.BookTile {
-                height: neededHeight;
+                id: rread0;
+                height: startWithThese.mostRecentlyRead0 > -1 ? neededHeight : 0;
                 width: startWithThese.width;
                 property QtObject book: contentList.get(startWithThese.mostRecentlyRead0);
                 author: book.readProperty("author");
@@ -121,8 +123,9 @@ MobileComponents.Page {
                 width: startWithThese.width;
                 height: childrenRect.height;
                 ListComponents.BookTile {
-                    height: neededHeight;
-                    width: startWithThese.width / 2;
+                    id: rread1;
+                    height: startWithThese.mostRecentlyRead1 > -1 ? neededHeight : 0;
+                    width: rread2.visible ? startWithThese.width / 2 : startWithThese.width;
                     property QtObject book: contentList.get(startWithThese.mostRecentlyRead1);
                     author: book.readProperty("author");
                     title: book.readProperty("title");
@@ -132,7 +135,8 @@ MobileComponents.Page {
                     onBookSelected: root.bookSelected(filename, currentPage);
                 }
                 ListComponents.BookTile {
-                    height: neededHeight;
+                    id: rread2;
+                    height: startWithThese.mostRecentlyRead2 > -1 ? neededHeight : 0;
                     width: startWithThese.width / 2;
                     property QtObject book: contentList.get(startWithThese.mostRecentlyRead2);
                     author: book.readProperty("author");
