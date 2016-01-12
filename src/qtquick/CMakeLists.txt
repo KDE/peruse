@@ -7,6 +7,7 @@ set(qmlplugin_SRCS
     BookModel.cpp
     BookListModel.cpp
     FolderBookModel.cpp
+    PeruseConfig.cpp
     PreviewImageProvider.cpp
     PropertyContainer.cpp
 )
@@ -19,6 +20,7 @@ target_link_libraries (peruseqmlplugin
     Qt5::Quick
     KF5::Archive
     KF5::IconThemes
+    KF5::ConfigCore
     KF5::KIOWidgets
 )
 

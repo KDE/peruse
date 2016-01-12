@@ -26,6 +26,7 @@
 #include "BookListModel.h"
 #include "BookModel.h"
 #include "FolderBookModel.h"
+#include "PeruseConfig.h"
 #include "PreviewImageProvider.h"
 
 #include <QtQml/qqml.h>
@@ -41,4 +42,5 @@ void QmlPlugins::registerTypes(const char *uri)
     qmlRegisterType<BookModel>(uri, 0, 1, "BookModel");
     qmlRegisterType<ArchiveBookModel>(uri, 0, 1, "ArchiveBookModel");
     qmlRegisterType<FolderBookModel>(uri, 0, 1, "FolderBookModel");
+    qmlRegisterType<PeruseConfig>(uri, 0, 1, "Config");
 }
