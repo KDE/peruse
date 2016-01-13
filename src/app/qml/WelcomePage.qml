@@ -27,6 +27,7 @@ import org.kde.plasma.mobilecomponents 0.2 as MobileComponents
 import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 
+import org.kde.peruse 0.1 as Peruse
 import "listcomponents" as ListComponents
 
 MobileComponents.Page {
@@ -75,8 +76,6 @@ MobileComponents.Page {
         property int mostRecentlyRead1: -1;
         property int mostRecentlyRead2: -1;
         property int mostRecentlyAdded0: -1;
-        property int mostRecentlyAdded1: -1;
-        property int mostRecentlyAdded2: -1;
         Connections {
             target: mainWindow;
             onIsLoadingChanged: {
@@ -85,8 +84,7 @@ MobileComponents.Page {
                     startWithThese.mostRecentlyRead1 = contentList.indexOfFile(peruseConfig.recentlyOpened[1]);
                     startWithThese.mostRecentlyRead2 = contentList.indexOfFile(peruseConfig.recentlyOpened[2]);
                     startWithThese.mostRecentlyAdded0 = 0;
-                    startWithThese.mostRecentlyAdded1 = 1;
-                    startWithThese.mostRecentlyAdded2 = 2;
+                    newItemsRepeater.model = Math.min(10, Math.floor((contentList.newlyAddedCategoryModel.rowCount() - 1)));
                 }
             }
         }
@@ -98,10 +96,14 @@ MobileComponents.Page {
         }
         opacity: mainWindow.isLoading ? 0 : 1;
         Behavior on opacity { PropertyAnimation { duration: mainWindow.animationDuration; } }
+        contentWidth: width;
+        contentHeight: recentItemsColumn.height;
+        clip: true;
         Column {
+            id: recentItemsColumn;
             width: parent.width;
             height: childrenRect.height;
-            PlasmaComponents.Label {
+            ListComponents.Section {
                 text: "Recently read";
                 width: startWithThese.width;
                 height: rread0.height > 0 ? paintedHeight : 0;
@@ -147,7 +149,7 @@ MobileComponents.Page {
                     onBookSelected: root.bookSelected(filename, currentPage);
                 }
             }
-            PlasmaComponents.Label {
+            ListComponents.Section {
                 text: "Recently added";
                 width: startWithThese.width;
                 height: paintedHeight;
@@ -155,7 +157,7 @@ MobileComponents.Page {
             ListComponents.BookTile {
                 height: neededHeight;
                 width: startWithThese.width;
-                property QtObject book: contentList.get(startWithThese.mostRecentlyAdded0);
+                property QtObject book: contentList.newlyAddedCategoryModel ? contentList.newlyAddedCategoryModel.get(startWithThese.mostRecentlyAdded0) : fakeBook;
                 author: book.readProperty("author");
                 title: book.readProperty("title");
                 filename: book.readProperty("filename");
@@ -163,33 +165,44 @@ MobileComponents.Page {
                 currentPage: book.readProperty("currentPage");
                 onBookSelected: root.bookSelected(filename, currentPage);
             }
-            Row {
-                width: startWithThese.width;
-                height: childrenRect.height;
-                ListComponents.BookTile {
-                    height: neededHeight;
-                    width: startWithThese.width / 2;
-                    property QtObject book: contentList.get(startWithThese.mostRecentlyAdded1);
-                    author: book.readProperty("author");
-                    title: book.readProperty("title");
-                    filename: book.readProperty("filename");
-                    categoryEntriesCount: 0;
-                    currentPage: book.readProperty("currentPage");
-                    onBookSelected: root.bookSelected(filename, currentPage);
-                }
-                ListComponents.BookTile {
-                    height: neededHeight;
-                    width: startWithThese.width / 2;
-                    property QtObject book: contentList.get(startWithThese.mostRecentlyAdded2);
-                    author: book.readProperty("author");
-                    title: book.readProperty("title");
-                    filename: book.readProperty("filename");
-                    categoryEntriesCount: 0;
-                    currentPage: book.readProperty("currentPage");
-                    onBookSelected: root.bookSelected(filename, currentPage);
+            Repeater {
+                id: newItemsRepeater;
+                model: 0;
+                Row {
+                    width: startWithThese.width;
+                    height: childrenRect.height;
+                    ListComponents.BookTile {
+                        height: neededHeight;
+                        width: startWithThese.width / 2;
+                        property QtObject book: contentList.newlyAddedCategoryModel ? contentList.newlyAddedCategoryModel.get((index * 2) + 1) : fakeBook;
+                        author: book.readProperty("author");
+                        title: book.readProperty("title");
+                        filename: book.readProperty("filename");
+                        categoryEntriesCount: 0;
+                        currentPage: book.readProperty("currentPage");
+                        onBookSelected: root.bookSelected(filename, currentPage);
+                    }
+                    ListComponents.BookTile {
+                        height: neededHeight;
+                        width: startWithThese.width / 2;
+                        property QtObject book: contentList.newlyAddedCategoryModel ? contentList.newlyAddedCategoryModel.get((index * 2) + 2) : fakeBook;
+                        author: book.readProperty("author");
+                        title: book.readProperty("title");
+                        filename: book.readProperty("filename");
+                        categoryEntriesCount: 0;
+                        currentPage: book.readProperty("currentPage");
+                        onBookSelected: root.bookSelected(filename, currentPage);
+                    }
                 }
             }
         }
+    }
+    Peruse.PropertyContainer {
+        id: fakeBook;
+        property string author: "unnamed";
+        property string title: "unnamed";
+        property string filename: "none";
+        property string currentPage: "0";
     }
     Item {
         id: loadingProgress;
