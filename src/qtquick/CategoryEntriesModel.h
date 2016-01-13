@@ -37,6 +37,7 @@ struct BookEntry {
     QString series;
     QString author;
     QString publisher;
+    QDateTime created;
     QDateTime lastOpenedTime;
     int totalPages;
     int currentPage;
@@ -56,6 +57,7 @@ public:
         SeriesRole,
         AuthorRole,
         PublisherRole,
+        CreatedRole,
         LastOpenedTimeRole,
         TotalPagesRole,
         CurrentPageRole,
@@ -67,7 +69,7 @@ public:
     virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
     virtual int rowCount(const QModelIndex& parent = QModelIndex()) const;
 
-    void append(BookEntry* entry);
+    void append(BookEntry* entry, Roles compareRole = TitleRole);
     void addCategoryEntry(const QString& categoryName, BookEntry* entry);
 
     Q_INVOKABLE QObject* get(int index);

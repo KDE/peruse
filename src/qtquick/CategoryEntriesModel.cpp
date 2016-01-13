@@ -56,6 +56,7 @@ QHash<int, QByteArray> CategoryEntriesModel::roleNames() const
     roles[SeriesRole] = "series";
     roles[AuthorRole] = "author";
     roles[PublisherRole] = "publisher";
+    roles[CreatedRole] = "created";
     roles[LastOpenedTimeRole] = "lastOpenedTime";
     roles[TotalPagesRole] = "totalPages";
     roles[CurrentPageRole] = "currentPage";
@@ -111,6 +112,9 @@ QVariant CategoryEntriesModel::data(const QModelIndex& index, int role) const
                 case PublisherRole:
                     result.setValue(entry->publisher);
                     break;
+                case CreatedRole:
+                    result.setValue(entry->created);
+                    break;
                 case LastOpenedTimeRole:
                     result.setValue(entry->lastOpenedTime);
                     break;
@@ -142,14 +146,21 @@ int CategoryEntriesModel::rowCount(const QModelIndex& parent) const
     return d->categoryModels.count() + d->entries.count();
 }
 
-void CategoryEntriesModel::append(BookEntry* entry)
+void CategoryEntriesModel::append(BookEntry* entry, Roles compareRole)
 {
     int insertionIndex = 0;
     for(; insertionIndex < d->entries.count(); ++insertionIndex)
     {
-        if(QString::localeAwareCompare(d->entries.at(insertionIndex)->title, entry->title) > 0)
+        if(compareRole == CreatedRole)
         {
+            if(entry->created <= d->entries.at(insertionIndex)->created)
+            { continue; }
             break;
+        }
+        else
+        {
+            if(QString::localeAwareCompare(d->entries.at(insertionIndex)->title, entry->title) > 0)
+            { break; }
         }
     }
     beginInsertRows(QModelIndex(), insertionIndex, insertionIndex);
@@ -219,6 +230,7 @@ QObject* CategoryEntriesModel::get(int index)
     obj->setProperty("currentPage", entry->currentPage);
     obj->setProperty("filename", entry->filename);
     obj->setProperty("filetitle", entry->filetitle);
+    obj->setProperty("created", entry->created);
     obj->setProperty("lastOpenedTime", entry->lastOpenedTime);
     obj->setProperty("publisher", entry->publisher);
     obj->setProperty("series", entry->series);
