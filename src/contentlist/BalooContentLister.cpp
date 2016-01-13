@@ -20,12 +20,14 @@
  */
 
 #include "BalooContentLister.h"
+#include <QFileInfo>
 
 #include <Baloo/IndexerConfig>
 #include <Baloo/File>
 #include <kfilemetadata/propertyinfo.h>
 
 #include <QDebug>
+#include <QDateTime>
 #include <QProcess>
 #include <QThreadPool>
 #include <QList>
@@ -143,5 +145,9 @@ void BalooContentLister::queryResult(Baloo::QueryRunnable* query, QString file)
 //             qDebug() << KFileMetaData::PropertyInfo(it.key()).name() << " --> "
 //                 << it.value().toString() << " (" << it.value().typeName() << ")\n";
     }
+    QFileInfo info(file);
+    metadata["lastModified"] = info.lastModified();
+    metadata["created"] = info.created();
+    metadata["lastRead"] = info.lastRead();
     emit fileFound(file, metadata);
 }

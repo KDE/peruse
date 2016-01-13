@@ -22,6 +22,7 @@
 #include "FilesystemContentLister.h"
 #include <QCoreApplication>
 
+#include <QDateTime>
 #include <QDirIterator>
 #include <QMimeDatabase>
 #include <QVariantHash>
@@ -74,8 +75,9 @@ void FilesystemContentLister::startSearch()
         while (it.hasNext())
         {
             QString filePath = it.next();
+            QFileInfo info(filePath);
 
-            if(QFileInfo(filePath).isDir())
+            if(info.isDir())
             {
                 qApp->processEvents();
                 continue;
@@ -93,6 +95,8 @@ void FilesystemContentLister::startSearch()
 
             if(useThis)
             {
+                QVariantHash metadata;
+                metadata["created"] = info.created();
                 emit fileFound(filePath, QVariantHash());
             }
             qApp->processEvents();
