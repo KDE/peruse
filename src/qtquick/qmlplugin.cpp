@@ -20,6 +20,7 @@
  */
 
 #include "qmlplugin.h"
+#include "PropertyContainer.h"
 #include <QQmlEngine>
 
 #include "ArchiveBookModel.h"
@@ -43,4 +44,5 @@ void QmlPlugins::registerTypes(const char *uri)
     qmlRegisterType<ArchiveBookModel>(uri, 0, 1, "ArchiveBookModel");
     qmlRegisterType<FolderBookModel>(uri, 0, 1, "FolderBookModel");
     qmlRegisterType<PeruseConfig>(uri, 0, 1, "Config");
+    qmlRegisterType<PropertyContainer>(uri, 0, 1, "PropertyContainer");
 }

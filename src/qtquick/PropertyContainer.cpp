@@ -18,6 +18,13 @@
 
 #include "PropertyContainer.h"
 
+PropertyContainer::PropertyContainer::PropertyContainer(QObject* parent)
+    : QObject(parent)
+{
+    m_name = "unnamed";
+}
+
+
 PropertyContainer::PropertyContainer(QString name, QObject* parent)
     : QObject(parent)
     , m_name(name)
