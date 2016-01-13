@@ -70,6 +70,11 @@ MobileComponents.ApplicationWindow {
                 onTriggered: changeCategory(bookshelfTitle);
             },
             Action {
+                text: "Recently Added Comics";
+                iconName: "system-search";
+                onTriggered: changeCategory(bookshelfAdded);
+            },
+            Action {
                 text: "Group by Authors";
                 iconName: "system-search";
                 onTriggered: changeCategory(bookshelfAuthor);
@@ -109,6 +114,17 @@ MobileComponents.ApplicationWindow {
         Bookshelf {
             model: contentList;
             headerText: "All Comics";
+            onBookSelected: mainWindow.showBook(filename, currentPage);
+        }
+    }
+
+    Component {
+        id: bookshelfAdded;
+        Bookshelf {
+            model: contentList.newlyAddedCategoryModel;
+            headerText: "Recently Added Comics";
+            sectionRole: "created";
+            sectionCriteria: ViewSection.FullString;
             onBookSelected: mainWindow.showBook(filename, currentPage);
         }
     }
