@@ -36,6 +36,8 @@ MobileComponents.Page {
     color: MobileComponents.Theme.viewBackgroundColor;
     objectName: "bookshelf";
     property alias model: shelfList.model;
+    property string sectionRole: "title";
+    property int sectionCriteria: ViewSection.FirstCharacter;
     signal bookSelected(string filename, int currentPage);
     property alias headerText: shelfTitle.text;
     PlasmaExtras.Heading {
@@ -56,8 +58,8 @@ MobileComponents.Page {
             bottom: parent.bottom;
         }
         section {
-            property: "title";
-            criteria: ViewSection.FirstCharacter;
+            property: root.sectionRole;
+            criteria: root.sectionCriteria;
             delegate: ListComponents.Section { text: section; }
         }
         delegate: Item {
