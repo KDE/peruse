@@ -33,6 +33,7 @@ class BookListModel::Private {
 public:
     Private()
         : contentModel(0)
+        , newlyAddedCategoryModel(0)
         , authorCategoryModel(0)
         , seriesCategoryModel(0)
         , folderCategoryModel(0)
@@ -44,6 +45,7 @@ public:
     QList<BookEntry*> entries;
 
     QAbstractListModel* contentModel;
+    CategoryEntriesModel* newlyAddedCategoryModel;
     CategoryModel* authorCategoryModel;
     CategoryModel* seriesCategoryModel;
     CategoryModel* folderCategoryModel;
@@ -81,6 +83,11 @@ QObject * BookListModel::contentModel() const
 
 void BookListModel::contentModelItemsInserted(QModelIndex index, int first, int last)
 {
+    if(!d->newlyAddedCategoryModel)
+    {
+        d->newlyAddedCategoryModel = new CategoryEntriesModel(this);
+        emit newlyAddedCategoryModelChanged();
+    }
     if(!d->authorCategoryModel)
     {
         d->authorCategoryModel = new CategoryModel(this);
@@ -121,6 +128,8 @@ void BookListModel::contentModelItemsInserted(QModelIndex index, int first, int 
             { entry->title = it.value().toString().trimmed(); }
             else if(it.key() == QLatin1String("publisher"))
             { entry->publisher = it.value().toString().trimmed(); }
+            else if(it.key() == QLatin1String("created"))
+            { entry->created = it.value().toDateTime(); }
         }
 
         d->entries.append(entry);
@@ -128,12 +137,18 @@ void BookListModel::contentModelItemsInserted(QModelIndex index, int first, int 
         append(entry);
         d->authorCategoryModel->addCategoryEntry(entry->author, entry);
         d->seriesCategoryModel->addCategoryEntry(entry->series, entry);
+        d->newlyAddedCategoryModel->append(entry, CreatedRole);
         QUrl url(entry->filename.left(entry->filename.lastIndexOf(QDir::separator())));
         d->folderCategoryModel->addCategoryEntry(url.path().mid(1), entry);
     }
     endInsertRows();
     emit countChanged();
     qApp->processEvents();
+}
+
+QObject * BookListModel::newlyAddedCategoryModel() const
+{
+    return d->newlyAddedCategoryModel;
 }
 
 QObject * BookListModel::authorCategoryModel() const
