@@ -82,6 +82,7 @@ ListView {
                 sourceSize.height: imageHeight * 2
                 MouseArea {
                     anchors.fill: parent
+                    onClicked: actionButton.toggleVisibility();
                     onDoubleClicked: {
                         if (flick.interactive) {
                             flick.resizeContent(imageWidth, imageHeight, {x: imageWidth/2, y: imageHeight/2});
