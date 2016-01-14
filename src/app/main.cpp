@@ -87,7 +87,9 @@ int main(int argc, char** argv)
     engine.rootContext()->setContextProperty("globalQmlEngine", &engine);
 
     QString path;
-    if (platformEnv.startsWith("phone")) {
+//     if (platformEnv.startsWith("phone")) {
+    // Once we've got a functional desktop version, restore this check. Right now it doesn't make a lot of sense.
+    if(true) {
         path = QStandardPaths::locate(QStandardPaths::DataLocation, "qml/MobileMain.qml");
     } else {
         path = QStandardPaths::locate(QStandardPaths::DataLocation, "qml/Main.qml");
