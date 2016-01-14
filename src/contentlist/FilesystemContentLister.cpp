@@ -20,6 +20,7 @@
  */
 
 #include "FilesystemContentLister.h"
+#include <QTimer>
 #include <QCoreApplication>
 
 #include <QDateTime>
@@ -97,11 +98,15 @@ void FilesystemContentLister::startSearch()
             {
                 QVariantHash metadata;
                 metadata["created"] = info.created();
-                emit fileFound(filePath, QVariantHash());
+                emit fileFound(filePath, metadata);
             }
             qApp->processEvents();
         }
     }
 
-    emit searchCompleted();
+    // Not entirely happy about this, but it makes things not break...
+    // Previously, the welcome page in Peruse would end up unpopulated because a signal
+    // was unreceived from the main window upon search completion (and consequently
+    // application readiness)
+    QTimer::singleShot(0, this, SIGNAL(searchCompleted()));
 }
