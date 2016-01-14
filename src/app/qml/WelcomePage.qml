@@ -193,7 +193,7 @@ MobileComponents.Page {
                         onBookSelected: root.bookSelected(filename, currentPage);
                     }
                     ListComponents.BookTile {
-                        visible: filename == "";
+                        visible: filename != "";
                         height: neededHeight;
                         width: startWithThese.width / 2;
                         property QtObject book: contentList.newlyAddedCategoryModel ? contentList.newlyAddedCategoryModel.get((index * 2) + 2) : fakeBook;
