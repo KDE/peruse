@@ -94,17 +94,34 @@ int main(int argc, char** argv)
     } else {
         path = QStandardPaths::locate(QStandardPaths::DataLocation, "qml/Main.qml");
     }
+    int rt = 0;
     QQmlComponent component(&engine, path);
-    if (component.isError()) {
-        std::cout << component.errorString().toUtf8().constData() << std::endl;
-        Q_ASSERT(0);
+    if (component.isError())
+    {
+        qCritical() << "Failed to load the component from disk. Reported error was:" << component.errorString();
+        rt = -1;
     }
-    Q_ASSERT(component.status() == QQmlComponent::Ready);
-
-    QObject* obj = component.create(objectContext);
-    Q_ASSERT(obj);
-
-    int rt = app.exec();
-//     trackerThread.quit();
+    else
+    {
+        if(component.status() == QQmlComponent::Ready)
+        {
+            QObject* obj = component.create(objectContext);
+            if(obj)
+            {
+                rt = app.exec();
+            }
+            else
+            {
+                qCritical() << "Failed to create an object from our component";
+                rt = -2;
+            }
+        }
+        else
+        {
+            qCritical() << "Failed to make the Qt Quick component ready. Status is:" << component.status();
+            rt = -3;
+        }
+    }
+    //     trackerThread.quit();
     return rt;
 }
