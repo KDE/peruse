@@ -27,7 +27,13 @@ import org.kde.peruse 0.1 as Peruse
 
 ViewerBase {
     id: root;
+    onCurrentIndexChanged: {
+        if(imageBrowser.currentIndex !== currentIndex) {
+            imageBrowser.currentIndex = currentIndex;
+        }
+    }
     ImageBrowser {
+        id: imageBrowser;
         anchors.fill: parent;
         model: Peruse.ArchiveBookModel { filename: root.file; qmlEngine: globalQmlEngine; }
         onCurrentIndexChanged: root.currentIndex = currentIndex;
