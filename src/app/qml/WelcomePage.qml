@@ -154,8 +154,18 @@ MobileComponents.Page {
                 width: startWithThese.width;
                 height: paintedHeight;
             }
+            PlasmaComponents.Label {
+                visible: !firstRecentlyAddedBook.visible;
+                height: visible ? paintedHeight : 0;
+                width: startWithThese.width;
+                text: "You have no comics on your device. Please put some into your Documents or Downloads folder (for example by downloading some) and they will show up here!";
+                wrapMode: Text.WordWrap;
+                horizontalAlignment: Text.AlignHCenter;
+            }
             ListComponents.BookTile {
-                height: neededHeight;
+                id: firstRecentlyAddedBook;
+                visible: book !== fakeBook;
+                height: visible ? neededHeight : 0;
                 width: startWithThese.width;
                 property QtObject book: contentList.newlyAddedCategoryModel ? contentList.newlyAddedCategoryModel.get(startWithThese.mostRecentlyAdded0) : fakeBook;
                 author: book.readProperty("author");
