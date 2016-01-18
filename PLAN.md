@@ -4,9 +4,9 @@
 
 
 * Create desktop UX (mouse/keyboard focus, complementing the touch UX)
+* Add search option
 * Adding rar support to karchive (based on the The Unarchiver backend built for Ark?)
 * File metadata extraction enhancements (page count support for pdf, cbr et al)
-* Add search option
 * Resume reading from where you left off
 * Tap/click based navigation in addition to flicking, also keyboard shortcuts for navigation
 * Thumbnail page selector
