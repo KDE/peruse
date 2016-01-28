@@ -90,7 +90,7 @@ MobileComponents.ApplicationWindow {
                 onTriggered: changeCategory(bookshelfPublisher);
             },
             Action {
-                text: "Group by Folder";
+                text: "Filter by Folder";
                 iconName: "system-search";
                 onTriggered: changeCategory(bookshelfFolder);
             }
