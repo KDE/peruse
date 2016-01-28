@@ -20,6 +20,7 @@
  */
 
 #include "ContentList.h"
+#include <QTimer>
 #include "FilesystemContentLister.h"
 
 #include "BalooContentLister.h"
@@ -90,7 +91,7 @@ void ContentList::setSearchString(const QString& searchString)
 
 void ContentList::startSearch()
 {
-    d->actualContentList->startSearch();
+    QTimer::singleShot(1, d->actualContentList, SLOT(startSearch()));
 }
 
 void ContentList::fileFound(const QString& filePath, const QVariantHash& metadata)
