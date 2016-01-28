@@ -66,7 +66,7 @@ MobileComponents.Page {
         Rectangle {
             anchors.centerIn: parent;
             height: 1;
-            color: "black";
+            color: theme.textColor;
             width: appDescriptionLabel.paintedWidth;
         }
     }
@@ -75,6 +75,8 @@ MobileComponents.Page {
         property int mostRecentlyRead0: -1;
         property int mostRecentlyRead1: -1;
         property int mostRecentlyRead2: -1;
+        property int mostRecentlyRead3: -1;
+        property int mostRecentlyRead4: -1;
         property int mostRecentlyAdded0: -1;
         Connections {
             target: mainWindow;
@@ -83,11 +85,13 @@ MobileComponents.Page {
                     startWithThese.mostRecentlyRead0 = contentList.indexOfFile(peruseConfig.recentlyOpened[0]);
                     startWithThese.mostRecentlyRead1 = contentList.indexOfFile(peruseConfig.recentlyOpened[1]);
                     startWithThese.mostRecentlyRead2 = contentList.indexOfFile(peruseConfig.recentlyOpened[2]);
+                    startWithThese.mostRecentlyRead3 = contentList.indexOfFile(peruseConfig.recentlyOpened[3]);
+                    startWithThese.mostRecentlyRead4 = contentList.indexOfFile(peruseConfig.recentlyOpened[4]);
                     // the model might be null, if we haven't actually got any entries... so, let's check that
                     // and just leave the whole thing empty in that case :)
                     if(contentList.newlyAddedCategoryModel) {
                         startWithThese.mostRecentlyAdded0 = 0;
-                        newItemsRepeater.model = Math.min(10, Math.floor((contentList.newlyAddedCategoryModel.rowCount() - 1)));
+                        newItemsRepeater.model = Math.min(10, Math.floor((contentList.newlyAddedCategoryModel.rowCount() - 5)));
                     }
                 }
             }
@@ -108,30 +112,30 @@ MobileComponents.Page {
             width: parent.width;
             height: childrenRect.height;
             ListComponents.Section {
-                text: "Recently read";
+                text: "Continue reading";
                 width: startWithThese.width;
                 height: rread0.height > 0 ? paintedHeight : 0;
                 visible: height > 0;
             }
-            ListComponents.BookTile {
-                id: rread0;
-                height: startWithThese.mostRecentlyRead0 > -1 ? neededHeight : 0;
-                width: startWithThese.width;
-                property QtObject book: contentList.get(startWithThese.mostRecentlyRead0);
-                author: book.readProperty("author");
-                title: book.readProperty("title");
-                filename: book.readProperty("filename");
-                categoryEntriesCount: 0;
-                currentPage: book.readProperty("currentPage");
-                onBookSelected: root.bookSelected(filename, currentPage);
-            }
             Row {
-                width: startWithThese.width;
+                anchors.horizontalCenter: parent.horizontalCenter;
+                width: childrenRect.width;
                 height: childrenRect.height;
-                ListComponents.BookTile {
-                    id: rread1;
+                ListComponents.BookTileTall {
+                    id: rread0;
+                    height: startWithThese.mostRecentlyRead0 > -1 ? neededHeight : 0;
+                    width: startWithThese.width / 2;
+                    property QtObject book: contentList.get(startWithThese.mostRecentlyRead0);
+                    author: book.readProperty("author");
+                    title: book.readProperty("title");
+                    filename: book.readProperty("filename");
+                    categoryEntriesCount: 0;
+                    currentPage: book.readProperty("currentPage");
+                    onBookSelected: root.bookSelected(filename, currentPage);
+                }
+                ListComponents.BookTileTall {
                     height: startWithThese.mostRecentlyRead1 > -1 ? neededHeight : 0;
-                    width: rread2.visible ? startWithThese.width / 2 : startWithThese.width;
+                    width: startWithThese.width / 2;
                     property QtObject book: contentList.get(startWithThese.mostRecentlyRead1);
                     author: book.readProperty("author");
                     title: book.readProperty("title");
@@ -140,11 +144,48 @@ MobileComponents.Page {
                     currentPage: book.readProperty("currentPage");
                     onBookSelected: root.bookSelected(filename, currentPage);
                 }
-                ListComponents.BookTile {
-                    id: rread2;
+            }
+            Row {
+                anchors.horizontalCenter: parent.horizontalCenter;
+                width: childrenRect.width;
+                height: childrenRect.height;
+                ListComponents.BookTileTall {
                     height: startWithThese.mostRecentlyRead2 > -1 ? neededHeight : 0;
-                    width: startWithThese.width / 2;
+                    width: startWithThese.width / 4;
                     property QtObject book: contentList.get(startWithThese.mostRecentlyRead2);
+                    author: book.readProperty("author");
+                    title: book.readProperty("title");
+                    filename: book.readProperty("filename");
+                    categoryEntriesCount: 0;
+                    currentPage: book.readProperty("currentPage");
+                    onBookSelected: root.bookSelected(filename, currentPage);
+                }
+                ListComponents.BookTileTall {
+                    height: startWithThese.mostRecentlyRead3 > -1 ? neededHeight : 0;
+                    width: startWithThese.width / 4;
+                    property QtObject book: contentList.get(startWithThese.mostRecentlyRead3);
+                    author: book.readProperty("author");
+                    title: book.readProperty("title");
+                    filename: book.readProperty("filename");
+                    categoryEntriesCount: 0;
+                    currentPage: book.readProperty("currentPage");
+                    onBookSelected: root.bookSelected(filename, currentPage);
+                }
+                ListComponents.BookTileTall {
+                    height: startWithThese.mostRecentlyRead4 > -1 ? neededHeight : 0;
+                    width: startWithThese.width / 4;
+                    property QtObject book: contentList.get(startWithThese.mostRecentlyRead4);
+                    author: book.readProperty("author");
+                    title: book.readProperty("title");
+                    filename: book.readProperty("filename");
+                    categoryEntriesCount: 0;
+                    currentPage: book.readProperty("currentPage");
+                    onBookSelected: root.bookSelected(filename, currentPage);
+                }
+                ListComponents.BookTileTall {
+                    height: startWithThese.mostRecentlyRead5 > -1 ? neededHeight : 0;
+                    width: startWithThese.width / 4;
+                    property QtObject book: contentList.get(startWithThese.mostRecentlyRead5);
                     author: book.readProperty("author");
                     title: book.readProperty("title");
                     filename: book.readProperty("filename");
@@ -166,29 +207,88 @@ MobileComponents.Page {
                 wrapMode: Text.WordWrap;
                 horizontalAlignment: Text.AlignHCenter;
             }
-            ListComponents.BookTile {
-                id: firstRecentlyAddedBook;
-                visible: book !== fakeBook;
-                height: visible ? neededHeight : 0;
-                width: startWithThese.width;
-                property QtObject book: contentList.newlyAddedCategoryModel ? contentList.newlyAddedCategoryModel.get(startWithThese.mostRecentlyAdded0) : fakeBook;
-                author: book.readProperty("author");
-                title: book.readProperty("title");
-                filename: book.readProperty("filename");
-                categoryEntriesCount: 0;
-                currentPage: book.readProperty("currentPage");
-                onBookSelected: root.bookSelected(filename, currentPage);
+            Row {
+                height: childrenRect.height;
+                width: childrenRect.width;
+                anchors.horizontalCenter: parent.horizontalCenter;
+                ListComponents.BookTileTall {
+                    id: firstRecentlyAddedBook;
+                    visible: book !== fakeBook;
+                    height: visible ? neededHeight : 0;
+                    width: startWithThese.width / 2;
+                    property QtObject book: contentList.newlyAddedCategoryModel ? contentList.newlyAddedCategoryModel.get(startWithThese.mostRecentlyAdded0) : fakeBook;
+                    author: book.readProperty("author");
+                    title: book.readProperty("title");
+                    filename: book.readProperty("filename");
+                    categoryEntriesCount: 0;
+                    currentPage: book.readProperty("currentPage");
+                    onBookSelected: root.bookSelected(filename, currentPage);
+                }
+                ListComponents.BookTileTall {
+                    visible: title !== "";
+                    height: visible ? neededHeight : 0;
+                    width: startWithThese.width / 2;
+                    property QtObject book: contentList.newlyAddedCategoryModel ? contentList.newlyAddedCategoryModel.get(startWithThese.mostRecentlyAdded0 + 1) : fakeBook;
+                    author: book.readProperty("author");
+                    title: book.readProperty("title");
+                    filename: book.readProperty("filename");
+                    categoryEntriesCount: 0;
+                    currentPage: book.readProperty("currentPage");
+                    onBookSelected: root.bookSelected(filename, currentPage);
+                }
+            }
+            Row {
+                height: childrenRect.height;
+                width: childrenRect.width;
+                anchors.horizontalCenter: parent.horizontalCenter;
+                ListComponents.BookTileTall {
+                    visible: title !== "";
+                    height: visible ? neededHeight : 0;
+                    width: startWithThese.width / 3;
+                    property QtObject book: contentList.newlyAddedCategoryModel ? contentList.newlyAddedCategoryModel.get(startWithThese.mostRecentlyAdded0 + 2) : fakeBook;
+                    author: book.readProperty("author");
+                    title: book.readProperty("title");
+                    filename: book.readProperty("filename");
+                    categoryEntriesCount: 0;
+                    currentPage: book.readProperty("currentPage");
+                    onBookSelected: root.bookSelected(filename, currentPage);
+                }
+                ListComponents.BookTileTall {
+                    visible: title !== "";
+                    height: visible ? neededHeight : 0;
+                    width: startWithThese.width / 3;
+                    property QtObject book: contentList.newlyAddedCategoryModel ? contentList.newlyAddedCategoryModel.get(startWithThese.mostRecentlyAdded0 + 3) : fakeBook;
+                    author: book.readProperty("author");
+                    title: book.readProperty("title");
+                    filename: book.readProperty("filename");
+                    categoryEntriesCount: 0;
+                    currentPage: book.readProperty("currentPage");
+                    onBookSelected: root.bookSelected(filename, currentPage);
+                }
+                ListComponents.BookTileTall {
+                    visible: title !== "";
+                    height: visible ? neededHeight : 0;
+                    width: startWithThese.width / 3;
+                    property QtObject book: contentList.newlyAddedCategoryModel ? contentList.newlyAddedCategoryModel.get(startWithThese.mostRecentlyAdded0 + 4) : fakeBook;
+                    author: book.readProperty("author");
+                    title: book.readProperty("title");
+                    filename: book.readProperty("filename");
+                    categoryEntriesCount: 0;
+                    currentPage: book.readProperty("currentPage");
+                    onBookSelected: root.bookSelected(filename, currentPage);
+                }
             }
             Repeater {
                 id: newItemsRepeater;
                 model: 0;
                 Row {
-                    width: startWithThese.width;
+                    width: childrenRect.width;
                     height: childrenRect.height;
-                    ListComponents.BookTile {
+                    anchors.horizontalCenter: parent.horizontalCenter;
+                    ListComponents.BookTileTall {
                         height: neededHeight;
-                        width: startWithThese.width / 2;
-                        property QtObject book: contentList.newlyAddedCategoryModel ? contentList.newlyAddedCategoryModel.get((index * 2) + 1) : fakeBook;
+                        width: startWithThese.width / 4;
+                        property QtObject book: contentList.newlyAddedCategoryModel ? contentList.newlyAddedCategoryModel.get((index * 4) + 5) : fakeBook;
                         author: book.readProperty("author");
                         title: book.readProperty("title");
                         filename: book.readProperty("filename");
@@ -196,11 +296,34 @@ MobileComponents.Page {
                         currentPage: book.readProperty("currentPage");
                         onBookSelected: root.bookSelected(filename, currentPage);
                     }
-                    ListComponents.BookTile {
+                    ListComponents.BookTileTall {
                         visible: filename != "";
                         height: neededHeight;
-                        width: startWithThese.width / 2;
-                        property QtObject book: contentList.newlyAddedCategoryModel ? contentList.newlyAddedCategoryModel.get((index * 2) + 2) : fakeBook;
+                        width: startWithThese.width / 4;
+                        property QtObject book: contentList.newlyAddedCategoryModel ? contentList.newlyAddedCategoryModel.get((index * 4) + 6) : fakeBook;
+                        author: book.readProperty("author");
+                        title: book.readProperty("title");
+                        filename: book.readProperty("filename");
+                        categoryEntriesCount: 0;
+                        currentPage: book.readProperty("currentPage");
+                        onBookSelected: root.bookSelected(filename, currentPage);
+                    }
+                    ListComponents.BookTileTall {
+                        height: neededHeight;
+                        width: startWithThese.width / 4;
+                        property QtObject book: contentList.newlyAddedCategoryModel ? contentList.newlyAddedCategoryModel.get((index * 4) + 7) : fakeBook;
+                        author: book.readProperty("author");
+                        title: book.readProperty("title");
+                        filename: book.readProperty("filename");
+                        categoryEntriesCount: 0;
+                        currentPage: book.readProperty("currentPage");
+                        onBookSelected: root.bookSelected(filename, currentPage);
+                    }
+                    ListComponents.BookTileTall {
+                        visible: filename != "";
+                        height: neededHeight;
+                        width: startWithThese.width / 4;
+                        property QtObject book: contentList.newlyAddedCategoryModel ? contentList.newlyAddedCategoryModel.get((index * 4) + 8) : fakeBook;
                         author: book.readProperty("author");
                         title: book.readProperty("title");
                         filename: book.readProperty("filename");
