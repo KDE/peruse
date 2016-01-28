@@ -29,6 +29,6 @@ Item {
     // Success is true if this was successful, and false otherwise.
     signal loadingCompleted(bool success);
     property string file;
-    property int currentIndex;
+    property int currentPage;
+    property int pageCount;
 }
-
