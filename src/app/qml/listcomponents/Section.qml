@@ -23,19 +23,29 @@ import QtQuick 2.1
 
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 
-PlasmaExtras.Heading {
-    anchors.leftMargin: units.smallSpacing;
-    width: root.width;
-    text: section;
+Row {
+    width: parent.width;
+    height: headerText.paintedHeight;
+    property alias text: headerText.text;
+    property alias paintedHeight: headerText.paintedHeight;
+    Item {
+        width: units.largeSpacing;
+        height: 1;
+    }
+    PlasmaExtras.Heading {
+        id: headerText;
+        width: paintedWidth;
+        text: section;
+    }
+    Item {
+        width: units.smallSpacing;
+        height: 1;
+    }
     Rectangle {
-        anchors {
-            right: parent.right;
-            rightMargin: units.smallSpacing;
-            verticalCenter: parent.verticalCenter;
-        }
+        anchors.verticalCenter: headerText.verticalCenter;
         height: 2;
+        width: parent.width - headerText.width - units.smallSpacing - units.largeSpacing * 2;
         radius: 2;
-        width: parent.width - parent.paintedWidth - units.smallSpacing * 2;
-        color: parent.color;
+        color: headerText.color;
     }
 }
