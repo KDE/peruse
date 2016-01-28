@@ -30,6 +30,7 @@ class BookModel : public QAbstractListModel
     Q_PROPERTY(QString filename READ filename WRITE setFilename NOTIFY filenameChanged)
     Q_PROPERTY(QString author READ author WRITE setAuthor NOTIFY authorChanged)
     Q_PROPERTY(QString publisher READ publisher WRITE setPublisher NOTIFY publisherChanged)
+    Q_PROPERTY(int pageCount READ pageCount NOTIFY pageCountChanged)
 public:
     explicit BookModel(QObject* parent = 0);
     virtual ~BookModel();
@@ -54,6 +55,8 @@ public:
     virtual QString publisher() const;
     void setPublisher(QString newPublisher);
     Q_SIGNAL void publisherChanged();
+    virtual int pageCount() const;
+    Q_SIGNAL void pageCountChanged();
 
 private:
     class Private;

@@ -92,6 +92,7 @@ void BookModel::addPage(QString url, QString title)
 
     beginInsertRows(QModelIndex(), d->entries.count(), d->entries.count());
     d->entries.append(page);
+    emit pageCountChanged();
     endInsertRows();
 }
 
@@ -126,4 +127,9 @@ void BookModel::setPublisher(QString newPublisher)
 {
     d->publisher = newPublisher;
     emit publisherChanged();
+}
+
+int BookModel::pageCount() const
+{
+    return d->entries.count();
 }
