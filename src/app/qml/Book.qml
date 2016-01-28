@@ -19,7 +19,7 @@
  *
  */
 
-import QtQuick 2.1
+import QtQuick 2.2
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.0
 
@@ -32,20 +32,43 @@ MobileComponents.Page {
     color: MobileComponents.Theme.viewBackgroundColor;
     property string file;
     property int currentPage;
+    onCurrentPageChanged: {
+        // set off a timer to slightly postpone saving the current page, so it doesn't happen during animations etc
+    }
+
+    function nextPage() {
+        if(viewLoader.item.currentPage < viewLoader.item.pageCount - 1) {
+            viewLoader.item.currentPage++;
+        }
+    }
+    function previousPage() {
+        if(viewLoader.item.currentPage > 0) {
+            viewLoader.item.currentPage--;
+        }
+    }
+    function closeBook() {
+        // also for storing current page (otherwise postponed a bit after page change, done here as well to ensure it really happens)
+        mainWindow.pageStack.pop();
+    }
 
     contextualActions: [
         Action {
             text: "Close book";
+            shortcut: StandardKey.Close;
             iconName: "action-close";
-            onTriggered: mainWindow.pageStack.pop();
+            onTriggered: closeBook();
         },
         Action {
             text: "Previous page";
+            shortcut: StandardKey.MoveToPreviousChar
             iconName: "action-previous";
+            onTriggered: previousPage();
         },
         Action {
             text: "Next page";
+            shortcut: StandardKey.MoveToNextChar;
             iconName: "action-next";
+            onTriggered: nextPage();
         }
     ]
 
@@ -64,11 +87,31 @@ MobileComponents.Page {
             target: viewLoader.item;
             onLoadingCompleted: {
                 if(success) {
-                    viewLoader.item.currentIndex = root.currentPage;
+                    viewLoader.item.currentPage = root.currentPage;
                 }
             }
         }
     }
+
+    MouseArea {
+        anchors {
+            top: parent.top;
+            left: parent.left;
+            bottom: parent.bottom;
+        }
+        width: parent.width / 6;
+        onClicked: previousPage();
+    }
+    MouseArea {
+        anchors {
+            top: parent.top;
+            right: parent.right;
+            bottom: parent.bottom;
+        }
+        width: parent.width / 6;
+        onClicked: nextPage();
+    }
+
     onFileChanged: {
         // The idea is to have a number of specialised options as relevant to various
         // types of comic books, and then finally fall back to Okular as a catch-all
