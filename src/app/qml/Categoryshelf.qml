@@ -34,33 +34,18 @@ MobileComponents.Page {
     color: MobileComponents.Theme.viewBackgroundColor;
     property alias model: shelfList.model;
     signal bookSelected(string filename, int currentPage);
-    property alias headerText: shelfTitle.text;
-    PlasmaExtras.Heading {
-        id: shelfTitle;
-        anchors {
-            top: parent.top;
-            left: parent.left;
-            right: parent.right;
-        }
-    }
-    ListView {
+    property string headerText;
+    GridView {
         id: shelfList;
         clip: true;
-        anchors {
-            top: shelfTitle.bottom;
-            left: parent.left;
-            right: parent.right;
-            bottom: parent.bottom;
-        }
-        section {
-            property: "categoryName";
-            criteria: ViewSection.FirstCharacter;
-            delegate: ListComponents.Section { text: section; }
-        }
-        delegate: ListComponents.CategoryTile {
+        anchors.fill: parent;
+        cellWidth: width / 3;
+        cellHeight: root.height / 4;
+        header: ListComponents.ListPageHeader { text: root.headerText; }
+        delegate: ListComponents.CategoryTileTall {
             id: categoryTile;
             height: neededHeight;
-            width: root.width;
+            width: root.width / 3;
             count: model.entryCount;
             title: model.categoryName === "" ? "(unknown)" : model.categoryName;
             entriesModel: model.entriesModel ? model.entriesModel : null;

@@ -39,33 +39,18 @@ MobileComponents.Page {
     property string sectionRole: "title";
     property int sectionCriteria: ViewSection.FirstCharacter;
     signal bookSelected(string filename, int currentPage);
-    property alias headerText: shelfTitle.text;
-    PlasmaExtras.Heading {
-        id: shelfTitle;
-        anchors {
-            top: parent.top;
-            left: parent.left;
-            right: parent.right;
-        }
-    }
-    ListView {
+    property string headerText
+    GridView {
         id: shelfList;
         clip: true;
-        anchors {
-            top: shelfTitle.bottom;
-            left: parent.left;
-            right: parent.right;
-            bottom: parent.bottom;
-        }
-        section {
-            property: root.sectionRole;
-            criteria: root.sectionCriteria;
-            delegate: ListComponents.Section { text: section; }
-        }
+        anchors.fill: parent;
+        cellWidth: width / 2;
+        cellHeight: root.height / 4;
+        header: ListComponents.ListPageHeader { text: root.headerText; }
         delegate: Item {
             height: model.categoryEntriesCount === 0 ? bookTile.neededHeight : categoryTile.neededHeight;
-            width: root.width;
-            ListComponents.CategoryTile {
+            width: root.width / 2;
+            ListComponents.CategoryTileTall {
                 id: categoryTile;
                 height: model.categoryEntriesCount > 0 ? neededHeight : 0;
                 width: parent.width;
@@ -73,7 +58,7 @@ MobileComponents.Page {
                 title: model.title;
                 entriesModel: model.categoryEntriesModel ? model.categoryEntriesModel : null;
             }
-            ListComponents.BookTile {
+            ListComponents.BookTileTall {
                 id: bookTile;
                 height: model.categoryEntriesCount < 1 ? neededHeight : 0;
                 width: parent.width;
