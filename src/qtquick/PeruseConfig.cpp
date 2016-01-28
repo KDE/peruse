@@ -62,6 +62,9 @@ void PeruseConfig::bookOpened(QString path)
     }
     else
     {
+        recent[5] = recent[4];
+        recent[4] = recent[3];
+        recent[3] = recent[2];
         recent[2] = recent[1];
         recent[1] = recent[0];
         recent[0] = path;
@@ -73,5 +76,5 @@ void PeruseConfig::bookOpened(QString path)
 
 QStringList PeruseConfig::recentlyOpened() const
 {
-    return d->config.group("general").readEntry("recently opened", QStringList() << "" << "" << "");
+    return d->config.group("general").readEntry("recently opened", QStringList() << "" << "" << "" << "" << "" << "");
 }
