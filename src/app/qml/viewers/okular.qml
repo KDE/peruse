@@ -27,11 +27,12 @@ import org.kde.okular 2.0 as Okular
 ViewerBase {
     id: root;
     onFileChanged: documentItem.path = file;
-    onCurrentIndexChanged: {
-        if(pageArea.currentPage !== currentIndex) {
-            pageArea.currentPage = currentIndex;
+    onCurrentPageChanged: {
+        if(documentItem.currentPage !== currentPage) {
+            documentItem.currentPage = currentPage;
         }
     }
+    pageCount: documentItem.pageCount;
     Okular.DocumentItem {
         id: documentItem
 //         onWindowTitleForDocumentChanged: {
@@ -40,6 +41,11 @@ ViewerBase {
         onOpenedChanged: {
             if(opened === true) {
                 root.loadingCompleted(true);
+            }
+        }
+        onCurrentPageChanged: {
+            if(root.currentPage !== currentPage) {
+                root.currentPage = currentPage;
             }
         }
     }
