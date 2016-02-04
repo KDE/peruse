@@ -35,7 +35,6 @@ Item {
     signal bookSelected(string filename, int currentPage);
 
     property int neededHeight: bookCover.height + bookTitle.height + units.largeSpacing;
-    property int minimumWidth: bookCover.width + units.largeSpacing * 2;
     visible: height > 0;
     enabled: visible;
     clip: true;
@@ -56,7 +55,7 @@ Item {
             horizontalCenter: parent.horizontalCenter;
             margins: units.largeSpacing;
         }
-        width: units.iconSizes.enormous + units.largeSpacing * 2;
+        width: Math.min(parent.width - units.largeSpacing * 2, units.iconSizes.enormous + units.largeSpacing * 2);
         height: width;
         Rectangle {
             anchors.centerIn: coverImage;

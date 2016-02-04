@@ -53,7 +53,7 @@ Item {
             horizontalCenter: parent.horizontalCenter;
             margins: units.largeSpacing;
         }
-        width: units.iconSizes.enormous + units.largeSpacing * 2;
+        width: Math.min(parent.width - units.largeSpacing * 2, units.iconSizes.enormous + units.largeSpacing * 2);
         height: width;
         Rectangle {
             anchors.centerIn: coverImage;
