@@ -98,12 +98,6 @@ MobileComponents.Page {
         delegate: Item {
             height: categoryTile.neededHeight;
             width: root.width / 2;
-            Rectangle {
-                anchors.fill: parent;
-                opacity: shelfList.currentIndex === index ? 1 : 0;
-                Behavior on opacity { PropertyAnimation { duration: units.shortDuration; } }
-                color: theme.highlightColor;
-            }
             ListComponents.CategoryTileTall {
                 id: categoryTile;
                 height: neededHeight;
@@ -111,6 +105,7 @@ MobileComponents.Page {
                 count: model.entryCount;
                 title: model.categoryName === "" ? "(unknown)" : model.categoryName;
                 entriesModel: model.entriesModel ? model.entriesModel : null;
+                selected: shelfList.currentIndex === index;
             }
         }
     }

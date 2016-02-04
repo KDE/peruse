@@ -26,6 +26,7 @@ import org.kde.plasma.extras 2.0 as PlasmaExtras
 
 Item {
     id: root;
+    property bool selected: false;
     property alias count: categoryCount.text;
     property alias title: categoryTitle.text
     property QtObject entriesModel;
@@ -38,6 +39,12 @@ Item {
         onClicked: {
             mainWindow.pageStack.push(bookshelf, { focus: true, headerText: "Comics in folder: " + root.title, model: root.entriesModel })
         }
+    }
+    Rectangle {
+        anchors.fill: parent;
+        color: theme.highlightColor;
+        opacity: root.selected ? 1 : 0;
+        Behavior on opacity { NumberAnimation { duration: units.shortDuration; } }
     }
     PlasmaExtras.Title {
         id: categoryTitle;

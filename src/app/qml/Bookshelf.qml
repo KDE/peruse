@@ -108,12 +108,6 @@ MobileComponents.Page {
         delegate: Item {
             height: model.categoryEntriesCount === 0 ? bookTile.neededHeight : categoryTile.neededHeight;
             width: root.width / 2;
-            Rectangle {
-                anchors.fill: parent;
-                opacity: shelfList.currentIndex === index ? 1 : 0;
-                Behavior on opacity { PropertyAnimation { duration: units.shortDuration; } }
-                color: theme.highlightColor;
-            }
             ListComponents.CategoryTileTall {
                 id: categoryTile;
                 height: model.categoryEntriesCount > 0 ? neededHeight : 0;
@@ -121,6 +115,7 @@ MobileComponents.Page {
                 count: model.categoryEntriesCount;
                 title: model.title;
                 entriesModel: model.categoryEntriesModel ? model.categoryEntriesModel : null;
+                selected: shelfList.currentIndex === index;
             }
             ListComponents.BookTileTall {
                 id: bookTile;
@@ -132,6 +127,7 @@ MobileComponents.Page {
                 categoryEntriesCount: model.categoryEntriesCount;
                 currentPage: model.currentPage;
                 onBookSelected: root.bookSelected(filename, currentPage);
+                selected: shelfList.currentIndex === index;
             }
         }
     }
