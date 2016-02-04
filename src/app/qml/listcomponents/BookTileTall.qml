@@ -26,6 +26,7 @@ import org.kde.plasma.extras 2.0 as PlasmaExtras
 
 Item {
     id: root;
+    property bool selected: false;
     property alias title: bookTitle.text;
     property string author;
     property string filename;
@@ -41,6 +42,12 @@ Item {
     MouseArea {
         anchors.fill: parent;
         onClicked: root.bookSelected(root.filename, root.currentPage);
+    }
+    Rectangle {
+        anchors.fill: parent;
+        color: theme.highlightColor;
+        opacity: root.selected ? 1 : 0;
+        Behavior on opacity { NumberAnimation { duration: units.shortDuration; } }
     }
     Item {
         id: bookCover;
