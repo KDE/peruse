@@ -45,6 +45,8 @@ public:
     virtual int rowCount(const QModelIndex& parent = QModelIndex()) const;
 
     void addCategoryEntry(const QString& categoryName, BookEntry* entry);
+
+    Q_INVOKABLE QObject* get(int index);
 private:
     class Private;
     Private* d;

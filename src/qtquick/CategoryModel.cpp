@@ -23,6 +23,8 @@
 #include <QDir>
 #include <QDebug>
 
+#include "PropertyContainer.h"
+
 struct CategoryEntry
 {
 public:
@@ -138,4 +140,17 @@ void CategoryModel::addCategoryEntry(const QString& categoryName, BookEntry* boo
     {
         entry->entries->addCategoryEntry(splitName.join(QDir::separator()), bookEntry);
     }
+}
+
+QObject * CategoryModel::get(int index)
+{
+    PropertyContainer* obj = new PropertyContainer("book", this);
+    if(index > -1 && index < rowCount())
+    {
+        CategoryEntry* catEntry = d->entries.at(index);
+        obj->setProperty("title", catEntry->name);
+        obj->setProperty("categoryEntriesCount", catEntry->entries->rowCount());
+        obj->setProperty("entriesModel", QVariant::fromValue(catEntry->entries));
+    }
+    return obj;
 }
