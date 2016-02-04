@@ -73,7 +73,10 @@ public:
     void addCategoryEntry(const QString& categoryName, BookEntry* entry);
 
     Q_INVOKABLE QObject* get(int index);
+    // This is backwards... need to fox this to make get return the actual thing, not just a book, and create a getter for books...
+    Q_INVOKABLE QObject* getEntry(int index);
     Q_INVOKABLE int indexOfFile(QString filename);
+    Q_INVOKABLE bool indexIsBook(int index);
 protected:
     QString name() const;
     void setName(const QString& newName);

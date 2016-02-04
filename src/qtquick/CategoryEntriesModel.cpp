@@ -257,3 +257,30 @@ int CategoryEntriesModel::indexOfFile(QString filename)
     }
     return index;
 }
+
+bool CategoryEntriesModel::indexIsBook(int index)
+{
+    if(index < d->categoryModels.count() || index >= rowCount()) {
+        return false;
+    }
+    return true;
+}
+
+QObject* CategoryEntriesModel::getEntry(int index)
+{
+    PropertyContainer* obj = new PropertyContainer("book", this);
+    if(index < 0 && index > rowCount() -1) {
+        // don't be a silly person, you can't get a nothing...
+    }
+    else if(index > d->categoryModels.count()) {
+        // This is a book - get a book!
+        obj = qobject_cast<PropertyContainer*>(get(index - d->categoryModels.count()));
+    }
+    else {
+        CategoryEntriesModel* catEntry = d->categoryModels.at(index);
+        obj->setProperty("title", catEntry->name());
+        obj->setProperty("categoryEntriesCount", catEntry->rowCount());
+        obj->setProperty("entriesModel", QVariant::fromValue(catEntry));
+    }
+    return obj;
+}
