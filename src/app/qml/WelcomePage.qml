@@ -19,7 +19,7 @@
  *
  */
 
-import QtQuick 2.1
+import QtQuick 2.2
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.0
 
@@ -34,6 +34,30 @@ MobileComponents.Page {
     id: root;
     color: MobileComponents.Theme.viewBackgroundColor;
     signal bookSelected(string filename, int currentPage);
+    contextualActions: [
+        Action {
+            text: "Open selected book";
+            shortcut: "Return";
+            iconName: "action-close";
+            onTriggered: bookSelected(startWithThese.currentItem.filename, startWithThese.currentItem.currentPage);
+            enabled: mainWindow.pageStack.currentPage == root;
+        },
+        Action {
+            text: "Previous book";
+            shortcut: StandardKey.MoveToPreviousChar
+            iconName: "action-previous";
+            onTriggered: startWithThese.selectPrevious();
+            enabled: mainWindow.pageStack.currentPage == root;
+        },
+        Action {
+            text: "Next book";
+            shortcut: StandardKey.MoveToNextChar;
+            iconName: "action-next";
+            onTriggered: startWithThese.selectNext();
+            enabled: mainWindow.pageStack.currentPage == root;
+        }
+    ]
+
     Item {
         id: titleContainer;
         anchors {
@@ -70,6 +94,7 @@ MobileComponents.Page {
             width: appDescriptionLabel.paintedWidth;
         }
     }
+
     Flickable {
         id: startWithThese;
         property int mostRecentlyRead0: -1;
@@ -107,6 +132,24 @@ MobileComponents.Page {
         contentWidth: width;
         contentHeight: recentItemsColumn.height;
         clip: true;
+
+        property Item currentItem;
+        property var itemArray: [rread0, rread1, rread2, rread3, rread4, rread5];
+        function selectNext() {
+            var index = itemArray.indexOf(currentItem);
+            if(index < itemArray.length) {
+                var nextItem = itemArray[index + 1];
+                if(nextItem.height > 0) {
+                    currentItem = nextItem;
+                }
+            }
+        }
+        function selectPrevious() {
+            var index = itemArray.indexOf(currentItem);
+            if(index > 0) {
+                currentItem = itemArray[index - 1];
+            }
+        }
         Column {
             id: recentItemsColumn;
             width: parent.width;
@@ -132,8 +175,10 @@ MobileComponents.Page {
                     categoryEntriesCount: 0;
                     currentPage: book.readProperty("currentPage");
                     onBookSelected: root.bookSelected(filename, currentPage);
+                    selected: startWithThese.currentItem === this;
                 }
                 ListComponents.BookTileTall {
+                    id: rread1;
                     height: startWithThese.mostRecentlyRead1 > -1 ? neededHeight : 0;
                     width: startWithThese.width / 2;
                     property QtObject book: contentList.get(startWithThese.mostRecentlyRead1);
@@ -143,6 +188,7 @@ MobileComponents.Page {
                     categoryEntriesCount: 0;
                     currentPage: book.readProperty("currentPage");
                     onBookSelected: root.bookSelected(filename, currentPage);
+                    selected: startWithThese.currentItem === this;
                 }
             }
             Row {
@@ -150,6 +196,7 @@ MobileComponents.Page {
                 width: childrenRect.width;
                 height: childrenRect.height;
                 ListComponents.BookTileTall {
+                    id: rread2;
                     height: startWithThese.mostRecentlyRead2 > -1 ? neededHeight : 0;
                     width: startWithThese.width / 4;
                     property QtObject book: contentList.get(startWithThese.mostRecentlyRead2);
@@ -159,8 +206,10 @@ MobileComponents.Page {
                     categoryEntriesCount: 0;
                     currentPage: book.readProperty("currentPage");
                     onBookSelected: root.bookSelected(filename, currentPage);
+                    selected: startWithThese.currentItem === this;
                 }
                 ListComponents.BookTileTall {
+                    id: rread3;
                     height: startWithThese.mostRecentlyRead3 > -1 ? neededHeight : 0;
                     width: startWithThese.width / 4;
                     property QtObject book: contentList.get(startWithThese.mostRecentlyRead3);
@@ -170,8 +219,10 @@ MobileComponents.Page {
                     categoryEntriesCount: 0;
                     currentPage: book.readProperty("currentPage");
                     onBookSelected: root.bookSelected(filename, currentPage);
+                    selected: startWithThese.currentItem === this;
                 }
                 ListComponents.BookTileTall {
+                    id: rread4;
                     height: startWithThese.mostRecentlyRead4 > -1 ? neededHeight : 0;
                     width: startWithThese.width / 4;
                     property QtObject book: contentList.get(startWithThese.mostRecentlyRead4);
@@ -181,8 +232,10 @@ MobileComponents.Page {
                     categoryEntriesCount: 0;
                     currentPage: book.readProperty("currentPage");
                     onBookSelected: root.bookSelected(filename, currentPage);
+                    selected: startWithThese.currentItem === this;
                 }
                 ListComponents.BookTileTall {
+                    id: rread5;
                     height: startWithThese.mostRecentlyRead5 > -1 ? neededHeight : 0;
                     width: startWithThese.width / 4;
                     property QtObject book: contentList.get(startWithThese.mostRecentlyRead5);
@@ -192,6 +245,7 @@ MobileComponents.Page {
                     categoryEntriesCount: 0;
                     currentPage: book.readProperty("currentPage");
                     onBookSelected: root.bookSelected(filename, currentPage);
+                    selected: startWithThese.currentItem === this;
                 }
             }
             ListComponents.Section {
