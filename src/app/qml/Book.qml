@@ -54,21 +54,24 @@ MobileComponents.Page {
     contextualActions: [
         Action {
             text: "Close book";
-            shortcut: StandardKey.Close;
+            shortcut: "Esc";
             iconName: "action-close";
             onTriggered: closeBook();
+            enabled: mainWindow.pageStack.currentPage == root;
         },
         Action {
             text: "Previous page";
             shortcut: StandardKey.MoveToPreviousChar
             iconName: "action-previous";
             onTriggered: previousPage();
+            enabled: mainWindow.pageStack.currentPage == root;
         },
         Action {
             text: "Next page";
             shortcut: StandardKey.MoveToNextChar;
             iconName: "action-next";
             onTriggered: nextPage();
+            enabled: mainWindow.pageStack.currentPage == root;
         }
     ]
 
