@@ -19,7 +19,7 @@
  *
  */
 
-import QtQuick 2.1
+import QtQuick 2.2
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.0
 
@@ -35,20 +35,83 @@ MobileComponents.Page {
     property alias model: shelfList.model;
     signal bookSelected(string filename, int currentPage);
     property string headerText;
+
+    function closeShelf() {
+        mainWindow.pageStack.pop();
+    }
+    contextualActions: [
+        Action {
+            text: "Back";
+            shortcut: "Esc";
+            iconName: "action-close";
+            onTriggered: closeShelf();
+            enabled: mainWindow.pageStack.currentPage == root;
+        },
+        Action {
+            text: "Select previous category";
+            shortcut: StandardKey.MoveToPreviousChar
+            iconName: "action-previous";
+            onTriggered: shelfList.previousEntry();
+            enabled: mainWindow.pageStack.currentPage == root;
+        },
+        Action {
+            text: "Select next category";
+            shortcut: StandardKey.MoveToNextChar;
+            iconName: "action-next";
+            onTriggered: shelfList.nextEntry();
+            enabled: mainWindow.pageStack.currentPage == root;
+        },
+        Action {
+            text: "Open selected category";
+            shortcut: "Return";
+            iconName: "action-open";
+            onTriggered: {
+                if(shelfList.currentIndex === -1) {
+                    return;
+                }
+                var catEntry = shelfList.model.get(shelfList.currentIndex);
+                mainWindow.pageStack.push(bookshelf, { focus: true, headerText: "Comics in folder: " + catEntry.readProperty("title"), model: catEntry.readProperty("entriesModel") });
+            }
+            enabled: mainWindow.pageStack.currentPage == root;
+        }
+    ]
+
     GridView {
         id: shelfList;
         clip: true;
         anchors.fill: parent;
-        cellWidth: width / 3;
+        cellWidth: width / 2;
         cellHeight: root.height / 4;
         header: ListComponents.ListPageHeader { text: root.headerText; }
-        delegate: ListComponents.CategoryTileTall {
-            id: categoryTile;
-            height: neededHeight;
-            width: root.width / 3;
-            count: model.entryCount;
-            title: model.categoryName === "" ? "(unknown)" : model.categoryName;
-            entriesModel: model.entriesModel ? model.entriesModel : null;
+        currentIndex: -1;
+
+        function previousEntry() {
+            if(currentIndex > 0) {
+                currentIndex--;
+            }
+        }
+        function nextEntry() {
+            if(currentIndex < model.rowCount() - 1) {
+                currentIndex++;
+            }
+        }
+        delegate: Item {
+            height: categoryTile.neededHeight;
+            width: root.width / 2;
+            Rectangle {
+                anchors.fill: parent;
+                opacity: shelfList.currentIndex === index ? 1 : 0;
+                Behavior on opacity { PropertyAnimation { duration: units.shortDuration; } }
+                color: theme.highlightColor;
+            }
+            ListComponents.CategoryTileTall {
+                id: categoryTile;
+                height: neededHeight;
+                width: root.width / 2;
+                count: model.entryCount;
+                title: model.categoryName === "" ? "(unknown)" : model.categoryName;
+                entriesModel: model.entriesModel ? model.entriesModel : null;
+            }
         }
     }
 }
