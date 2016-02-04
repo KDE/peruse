@@ -19,7 +19,7 @@
  *
  */
 
-import QtQuick 2.1
+import QtQuick 2.2
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.0
 
@@ -39,7 +39,53 @@ MobileComponents.Page {
     property string sectionRole: "title";
     property int sectionCriteria: ViewSection.FirstCharacter;
     signal bookSelected(string filename, int currentPage);
-    property string headerText
+    property string headerText;
+
+    function openBook(index) {
+        if(shelfList.model.indexIsBook(index)) {
+            var book = shelfList.model.get(index);
+            root.bookSelected(book.readProperty("filename"), book.readProperty("currentPage"));
+        }
+        else {
+            var catEntry = shelfList.model.getEntry(index);
+            mainWindow.pageStack.push(bookshelf, { focus: true, headerText: "Comics in folder: " + catEntry.readProperty("title"), model: catEntry.readProperty("entriesModel") });
+        }
+    }
+
+    function closeShelf() {
+        mainWindow.pageStack.pop();
+    }
+    contextualActions: [
+        Action {
+            text: "Back";
+            shortcut: "Esc";
+            iconName: "action-close";
+            onTriggered: closeShelf();
+            enabled: mainWindow.pageStack.currentPage == root;
+        },
+        Action {
+            text: "Select previous book";
+            shortcut: StandardKey.MoveToPreviousChar
+            iconName: "action-previous";
+            onTriggered: shelfList.previousEntry();
+            enabled: mainWindow.pageStack.currentPage == root;
+        },
+        Action {
+            text: "Select next book";
+            shortcut: StandardKey.MoveToNextChar;
+            iconName: "action-next";
+            onTriggered: shelfList.nextEntry();
+            enabled: mainWindow.pageStack.currentPage == root;
+        },
+        Action {
+            text: "Open selected book";
+            shortcut: "Return";
+            iconName: "action-open";
+            onTriggered: openBook(shelfList.currentIndex);
+            enabled: mainWindow.pageStack.currentPage == root;
+        }
+    ]
+
     GridView {
         id: shelfList;
         clip: true;
@@ -47,9 +93,27 @@ MobileComponents.Page {
         cellWidth: width / 2;
         cellHeight: root.height / 4;
         header: ListComponents.ListPageHeader { text: root.headerText; }
+        currentIndex: -1;
+
+        function previousEntry() {
+            if(currentIndex > 0) {
+                currentIndex--;
+            }
+        }
+        function nextEntry() {
+            if(currentIndex < model.rowCount() - 1) {
+                currentIndex++;
+            }
+        }
         delegate: Item {
             height: model.categoryEntriesCount === 0 ? bookTile.neededHeight : categoryTile.neededHeight;
             width: root.width / 2;
+            Rectangle {
+                anchors.fill: parent;
+                opacity: shelfList.currentIndex === index ? 1 : 0;
+                Behavior on opacity { PropertyAnimation { duration: units.shortDuration; } }
+                color: theme.highlightColor;
+            }
             ListComponents.CategoryTileTall {
                 id: categoryTile;
                 height: model.categoryEntriesCount > 0 ? neededHeight : 0;
