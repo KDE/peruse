@@ -22,7 +22,7 @@
 #include "BookListModel.h"
 #include <QUrl>
 
-#include "CategoryModel.h"
+#include "CategoryEntriesModel.h"
 
 #include <QCoreApplication>
 #include <QDir>
@@ -46,9 +46,9 @@ public:
 
     QAbstractListModel* contentModel;
     CategoryEntriesModel* newlyAddedCategoryModel;
-    CategoryModel* authorCategoryModel;
-    CategoryModel* seriesCategoryModel;
-    CategoryModel* folderCategoryModel;
+    CategoryEntriesModel* authorCategoryModel;
+    CategoryEntriesModel* seriesCategoryModel;
+    CategoryEntriesModel* folderCategoryModel;
 };
 
 BookListModel::BookListModel(QObject* parent)
@@ -90,17 +90,17 @@ void BookListModel::contentModelItemsInserted(QModelIndex index, int first, int 
     }
     if(!d->authorCategoryModel)
     {
-        d->authorCategoryModel = new CategoryModel(this);
+        d->authorCategoryModel = new CategoryEntriesModel(this);
         emit authorCategoryModelChanged();
     }
     if(!d->seriesCategoryModel)
     {
-        d->seriesCategoryModel = new CategoryModel(this);
+        d->seriesCategoryModel = new CategoryEntriesModel(this);
         emit seriesCategoryModelChanged();
     }
     if(!d->folderCategoryModel)
     {
-        d->folderCategoryModel = new CategoryModel(this);
+        d->folderCategoryModel = new CategoryEntriesModel(this);
         emit folderCategoryModel();
     }
 
@@ -140,6 +140,7 @@ void BookListModel::contentModelItemsInserted(QModelIndex index, int first, int 
         d->newlyAddedCategoryModel->append(entry, CreatedRole);
         QUrl url(entry->filename.left(entry->filename.lastIndexOf(QDir::separator())));
         d->folderCategoryModel->addCategoryEntry(url.path().mid(1), entry);
+        d->folderCategoryModel->append(entry);
     }
     endInsertRows();
     emit countChanged();
