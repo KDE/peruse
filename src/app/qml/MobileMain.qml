@@ -131,7 +131,7 @@ MobileComponents.ApplicationWindow {
 
     Component {
         id: bookshelfSeries;
-        Categoryshelf {
+        Bookshelf {
             model: contentList.seriesCategoryModel;
             headerText: "Comics by Series";
             onBookSelected: mainWindow.showBook(filename, currentPage);
@@ -140,7 +140,7 @@ MobileComponents.ApplicationWindow {
 
     Component {
         id: bookshelfAuthor;
-        Categoryshelf {
+        Bookshelf {
             model: contentList.authorCategoryModel;
             headerText: "Comics by Author";
             onBookSelected: mainWindow.showBook(filename, currentPage);
@@ -158,7 +158,7 @@ MobileComponents.ApplicationWindow {
 
     Component {
         id: bookshelfFolder;
-        Categoryshelf {
+        Bookshelf {
             model: contentList.folderCategoryModel;
             headerText: "Comics by Folder";
             onBookSelected: mainWindow.showBook(filename, currentPage);
