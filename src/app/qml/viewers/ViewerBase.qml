@@ -31,4 +31,5 @@ Item {
     property string file;
     property int currentPage;
     property int pageCount;
+    property var pagesModel;
 }
