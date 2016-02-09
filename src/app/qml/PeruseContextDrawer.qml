@@ -32,7 +32,7 @@ OverlayDrawer {
     property string title: typeof i18n !== "undefined" ? i18n("Actions") : "Actions"
 
     // This can be any list of objects which can be a child of a column
-    property var topContent: pageStack.lastVisiblePage && pageStack.lastVisiblePage.contextualTopItems ? pageStack.lastVisiblePage.contextualTopItems : null;
+    property Item topContent: pageStack.lastVisiblePage && pageStack.lastVisiblePage.contextualTopItems ? pageStack.lastVisiblePage.contextualTopItems : null;
 
     //This can be any type of object that a ListView can accept as model. It expects items compatible with either QAction or QQC Action
     property var actions: pageStack.lastVisiblePage ? pageStack.lastVisiblePage.contextualActions : null
@@ -41,6 +41,12 @@ OverlayDrawer {
 
     contentItem: QtControls.ScrollView {
         implicitWidth: Units.gridUnit * 20
+        Item {
+            id: topContainer;
+            height: menu.topMargin;
+            width: menu.width;
+            children: root.topContent;
+        }
         ListView {
             id: menu
             interactive: contentHeight > height
@@ -59,14 +65,8 @@ OverlayDrawer {
             }
             topMargin: menu.height - menu.contentHeight
             header: Column {
-                height: heading.height + topContainer.height;
+                height: heading.height;
                 width: menu.width;
-                Column {
-                    id: topContainer;
-                    height: childrenRect.height;
-                    width: menu.width;
-                    children: root.topContent;
-                }
                 Heading {
                     id: heading
                     anchors {

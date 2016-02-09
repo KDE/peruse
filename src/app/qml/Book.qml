@@ -53,52 +53,49 @@ MobileComponents.Page {
         mainWindow.pageStack.pop();
     }
 
-    property list<QtObject> contextualTopItems: [
-        ListView {
-            id: thumbnailNavigator;
+    property Item contextualTopItems: ListView {
+        id: thumbnailNavigator;
+        anchors.fill: parent;
+        clip: true;
+        delegate: Item {
             width: units.gridUnit * 20;
-            height: units.gridUnit * 40;
-            clip: true;
-            delegate: Item {
-                width: units.gridUnit * 20;
-                height: units.gridUnit * 6;
-                MouseArea {
-                    anchors.fill: parent;
-                    onClicked: viewLoader.item.currentPage = model.index;
+            height: units.gridUnit * 6;
+            MouseArea {
+                anchors.fill: parent;
+                onClicked: viewLoader.item.currentPage = model.index;
+            }
+            Rectangle {
+                anchors.fill: parent;
+                color: theme.highlightColor;
+                opacity: root.currentPage === model.index ? 1 : 0;
+                Behavior on opacity { NumberAnimation { duration: units.shortDuration; } }
+            }
+            Image {
+                anchors {
+                    top: parent.top;
+                    left: parent.left;
+                    right: parent.right;
+                    margins: units.smallSpacing;
                 }
-                Rectangle {
-                    anchors.fill: parent;
-                    color: theme.highlightColor;
-                    opacity: root.currentPage === model.index ? 1 : 0;
-                    Behavior on opacity { NumberAnimation { duration: units.shortDuration; } }
+                height: parent.height - pageTitle.height - units.smallSpacing * 2;
+                asynchronous: true;
+                fillMode: Image.PreserveAspectFit;
+                source: model.url;
+            }
+            PlasmaComponents.Label {
+                id: pageTitle;
+                anchors {
+                    left: parent.left;
+                    right: parent.right;
+                    bottom: parent.bottom;
                 }
-                Image {
-                    anchors {
-                        top: parent.top;
-                        left: parent.left;
-                        right: parent.right;
-                        margins: units.smallSpacing;
-                    }
-                    height: parent.height - pageTitle.height - units.smallSpacing * 2;
-                    asynchronous: true;
-                    fillMode: Image.PreserveAspectFit;
-                    source: model.url;
-                }
-                PlasmaComponents.Label {
-                    id: pageTitle;
-                    anchors {
-                        left: parent.left;
-                        right: parent.right;
-                        bottom: parent.bottom;
-                    }
-                    height: paintedHeight;
-                    text: model.title;
-                    elide: Text.ElideMiddle;
-                    horizontalAlignment: Text.AlignHCenter;
-                }
+                height: paintedHeight;
+                text: model.title;
+                elide: Text.ElideMiddle;
+                horizontalAlignment: Text.AlignHCenter;
             }
         }
-    ]
+    }
 
     contextualActions: [
         Action {
