@@ -27,6 +27,7 @@ import org.kde.peruse 0.1 as Peruse
 
 ViewerBase {
     id: root;
+    pagesModel: imageBrowser.model;
     onCurrentPageChanged: {
         if(currentPage !== imageBrowser.currentIndex) {
             imageBrowser.positionViewAtIndex(currentPage, ListView.Center);
@@ -37,7 +38,10 @@ ViewerBase {
     ImageBrowser {
         id: imageBrowser;
         anchors.fill: parent;
-        model: Peruse.FolderBookModel { filename: root.file; }
+        model: Peruse.FolderBookModel {
+            filename: root.file;
+            onLoadingCompleted: root.loadingCompleted(success);
+        }
         onCurrentIndexChanged: {
             if(root.currentPage !== currentIndex) {
                 root.currentPage = currentIndex;
