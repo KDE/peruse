@@ -23,6 +23,7 @@ import QtQuick 2.2
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.0
 
+import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.plasma.mobilecomponents 0.2 as MobileComponents
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 import org.kde.peruse 0.1 as Peruse
@@ -33,6 +34,7 @@ MobileComponents.Page {
     property string file;
     property int currentPage;
     onCurrentPageChanged: {
+        thumbnailNavigator.positionViewAtIndex(currentPage, ListView.Center);
         // set off a timer to slightly postpone saving the current page, so it doesn't happen during animations etc
     }
 
@@ -50,6 +52,53 @@ MobileComponents.Page {
         // also for storing current page (otherwise postponed a bit after page change, done here as well to ensure it really happens)
         mainWindow.pageStack.pop();
     }
+
+    property list<QtObject> contextualTopItems: [
+        ListView {
+            id: thumbnailNavigator;
+            width: units.gridUnit * 20;
+            height: units.gridUnit * 40;
+            clip: true;
+            delegate: Item {
+                width: units.gridUnit * 20;
+                height: units.gridUnit * 6;
+                MouseArea {
+                    anchors.fill: parent;
+                    onClicked: viewLoader.item.currentPage = model.index;
+                }
+                Rectangle {
+                    anchors.fill: parent;
+                    color: theme.highlightColor;
+                    opacity: root.currentPage === model.index ? 1 : 0;
+                    Behavior on opacity { NumberAnimation { duration: units.shortDuration; } }
+                }
+                Image {
+                    anchors {
+                        top: parent.top;
+                        left: parent.left;
+                        right: parent.right;
+                        margins: units.smallSpacing;
+                    }
+                    height: parent.height - pageTitle.height - units.smallSpacing * 2;
+                    asynchronous: true;
+                    fillMode: Image.PreserveAspectFit;
+                    source: model.url;
+                }
+                PlasmaComponents.Label {
+                    id: pageTitle;
+                    anchors {
+                        left: parent.left;
+                        right: parent.right;
+                        bottom: parent.bottom;
+                    }
+                    height: paintedHeight;
+                    text: model.title;
+                    elide: Text.ElideMiddle;
+                    horizontalAlignment: Text.AlignHCenter;
+                }
+            }
+        }
+    ]
 
     contextualActions: [
         Action {
@@ -91,6 +140,12 @@ MobileComponents.Page {
             onLoadingCompleted: {
                 if(success) {
                     viewLoader.item.currentPage = root.currentPage;
+                    thumbnailNavigator.model = viewLoader.item.pagesModel;
+                }
+            }
+            onCurrentPageChanged: {
+                if(root.currentPage !== viewLoader.item.currentPage) {
+                    root.currentPage = viewLoader.item.currentPage;
                 }
             }
         }
