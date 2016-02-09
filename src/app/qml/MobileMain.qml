@@ -56,7 +56,7 @@ MobileComponents.ApplicationWindow {
         id: peruseConfig;
     }
 
-    contextDrawer: MobileComponents.ContextDrawer {
+    contextDrawer: PeruseContextDrawer {
         id: contextDrawer;
     }
 
