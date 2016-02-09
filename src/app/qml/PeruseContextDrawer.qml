@@ -39,17 +39,21 @@ OverlayDrawer {
     enabled: menu.count > 0
     edge: Qt.RightEdge
 
-    contentItem: QtControls.ScrollView {
+    contentItem: Item {
         implicitWidth: Units.gridUnit * 20
         Item {
             id: topContainer;
-            height: menu.topMargin;
-            width: menu.width;
+            anchors {
+                top: parent.top;
+                left: parent.left;
+                right: parent.right;
+            }
+            height: parent.height - menu.contentHeight;
             children: root.topContent;
         }
         ListView {
             id: menu
-            interactive: contentHeight > height
+            interactive: menu.contentHeight > menu.height
             model: {
                 if (typeof root.actions == "undefined") {
                     return null;
@@ -63,17 +67,22 @@ OverlayDrawer {
                             root.actions[0];
                 }
             }
-            topMargin: menu.height - menu.contentHeight
-            header: Column {
-                height: heading.height;
-                width: menu.width;
+            anchors {
+                left: parent.left;
+                right: parent.right;
+                bottom: parent.bottom;
+            }
+            height: (menu.count > 0 && parent.height > 1 && parent.height > menu.contentHeight) ? menu.contentHeight : parent.height;
+            header: Item {
+                height: heading.height
+                width: menu.width
                 Heading {
                     id: heading
                     anchors {
                         left: parent.left
-                        right: parent.right
                         margins: Units.largeSpacing
                     }
+                    width: root.width;
                     elide: Text.ElideRight
                     level: 2
                     text: root.title
