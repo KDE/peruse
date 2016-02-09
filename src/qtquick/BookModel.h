@@ -58,6 +58,8 @@ public:
     virtual int pageCount() const;
     Q_SIGNAL void pageCountChanged();
 
+    Q_SIGNAL void loadingCompleted(bool success);
+
 private:
     class Private;
     Private* d;

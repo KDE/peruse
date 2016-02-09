@@ -97,6 +97,7 @@ void ArchiveBookModel::setFilename(QString newFilename)
 //         archive = new KRar(newFilename);
 //     }
 
+    bool success = false;
     if(d->archive)
     {
         QString prefix = QString("archivebookpage%1").arg(QString::number(Private::counter()));
@@ -119,6 +120,7 @@ void ArchiveBookModel::setFilename(QString newFilename)
                 }
             }
         }
+        success = true;
     }
 
 //     QDir dir(newFilename);
@@ -131,6 +133,7 @@ void ArchiveBookModel::setFilename(QString newFilename)
 //         }
 //     }
     BookModel::setFilename(newFilename);
+    emit loadingCompleted(success);
 }
 
 QObject * ArchiveBookModel::qmlEngine() const

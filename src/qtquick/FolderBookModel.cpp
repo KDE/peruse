@@ -43,5 +43,6 @@ void FolderBookModel::setFilename(QString newFilename)
         }
     }
     BookModel::setFilename(newFilename);
+    emit loadingCompleted(true);
 }
 
