@@ -32,4 +32,5 @@ Item {
     property int currentPage;
     property int pageCount;
     property var pagesModel;
+    property Component thumbnailComponent;
 }
