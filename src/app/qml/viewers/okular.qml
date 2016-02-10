@@ -22,6 +22,8 @@
 import QtQuick 2.1
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.0
+
+import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.okular 2.0 as Okular
 
 ViewerBase {
@@ -33,6 +35,54 @@ ViewerBase {
         }
     }
     pageCount: documentItem.pageCount;
+    thumbnailComponent: thumbnailComponent;
+    pagesModel: documentItem.matchingPages;
+    Component {
+        id: thumbnailComponent;
+        Item {
+            width: parent.width;
+            height: units.gridUnit * 6;
+            MouseArea {
+                anchors.fill: parent;
+                onClicked: viewLoader.item.currentPage = model.index;
+            }
+            Rectangle {
+                anchors.fill: parent;
+                color: theme.highlightColor;
+                opacity: root.currentPage === model.index ? 1 : 0;
+                Behavior on opacity { NumberAnimation { duration: units.shortDuration; } }
+            }
+            Okular.ThumbnailItem {
+                id: thumbnail
+                anchors {
+                    top: parent.top;
+                    horizontalCenter: parent.horizontalCenter;
+                    margins: units.smallSpacing;
+                }
+                document: documentItem
+                pageNumber: modelData
+                height: parent.height - pageTitle.height - units.smallSpacing * 2;
+                function updateWidth() {
+                    width = Math.round(height * (implicitWidth / implicitHeight));
+                }
+                Component.onCompleted: updateWidth();
+                onHeightChanged: updateWidth();
+                onImplicitHeightChanged: updateWidth();
+            }
+            PlasmaComponents.Label {
+                id: pageTitle;
+                anchors {
+                    left: parent.left;
+                    right: parent.right;
+                    bottom: parent.bottom;
+                }
+                height: paintedHeight;
+                text: modelData + 1;
+                elide: Text.ElideMiddle;
+                horizontalAlignment: Text.AlignHCenter;
+            }
+        }
+    }
     Okular.DocumentItem {
         id: documentItem
 //         onWindowTitleForDocumentChanged: {
