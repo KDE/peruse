@@ -57,8 +57,12 @@ MobileComponents.Page {
         id: thumbnailNavigator;
         anchors.fill: parent;
         clip: true;
-        delegate: Item {
-            width: units.gridUnit * 20;
+        delegate: thumbnailComponent;
+    }
+    Component {
+        id: thumbnailComponent;
+        Item {
+            width: parent.width;
             height: units.gridUnit * 6;
             MouseArea {
                 anchors.fill: parent;
@@ -138,6 +142,12 @@ MobileComponents.Page {
                 if(success) {
                     viewLoader.item.currentPage = root.currentPage;
                     thumbnailNavigator.model = viewLoader.item.pagesModel;
+                    if(viewLoader.item.thumbnailComponent) {
+                        thumbnailNavigator.delegate = viewLoader.item.thumbnailComponent;
+                    }
+                    else {
+                        thumbnailNavigator.delegate = thumbnailComponent;
+                    }
                 }
             }
             onCurrentPageChanged: {
