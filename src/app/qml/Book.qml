@@ -34,9 +34,17 @@ MobileComponents.Page {
     property string file;
     property int currentPage;
     onCurrentPageChanged: {
+        thumbnailMovementAnimation.false;
+        var currentPos = thumbnailNavigator.contentY;
+        var newPos;
         thumbnailNavigator.positionViewAtIndex(currentPage, ListView.Center);
+        newPos = thumbnailNavigator.contentY;
+        thumbnailMovementAnimation.from = currentPos;
+        thumbnailMovementAnimation.to = newPos;
+        thumbnailMovementAnimation.running = true;
         // set off a timer to slightly postpone saving the current page, so it doesn't happen during animations etc
     }
+    NumberAnimation { id: thumbnailMovementAnimation; target: thumbnailNavigator; property: "contentY"; duration: mainWindow.animationDuration; easing.type: Easing.InOutQuad; }
 
     function nextPage() {
         if(viewLoader.item.currentPage < viewLoader.item.pageCount - 1) {

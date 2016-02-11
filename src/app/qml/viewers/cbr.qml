@@ -28,13 +28,23 @@ import org.kde.peruse 0.1 as Peruse
 ViewerBase {
     id: root;
     pagesModel: imageBrowser.model;
+    pageCount: imageBrowser.model.pageCount;
+
     onCurrentPageChanged: {
         if(currentPage !== imageBrowser.currentIndex) {
+            pageChangeAnimation.false;
+            var currentPos = imageBrowser.contentX;
+            var newPos;
             imageBrowser.positionViewAtIndex(currentPage, ListView.Center);
             imageBrowser.currentIndex = currentPage;
+            newPos = imageBrowser.contentX;
+            pageChangeAnimation.from = currentPos;
+            pageChangeAnimation.to = newPos;
+            pageChangeAnimation.running = true;
         }
     }
-    pageCount: imageBrowser.model.pageCount;
+    NumberAnimation { id: pageChangeAnimation; target: imageBrowser; property: "contentX"; duration: mainWindow.animationDuration; easing.type: Easing.InOutQuad; }
+
     ImageBrowser {
         id: imageBrowser;
         anchors.fill: parent;
