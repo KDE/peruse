@@ -246,14 +246,17 @@ QObject* CategoryEntriesModel::get(int index)
 int CategoryEntriesModel::indexOfFile(QString filename)
 {
     int index = -1, i = 0;
-    Q_FOREACH(BookEntry* entry, d->entries)
+    if(QFile::exists(filename))
     {
-        if(entry->filename == filename)
+        Q_FOREACH(BookEntry* entry, d->entries)
         {
-            index = i;
-            break;
+            if(entry->filename == filename)
+            {
+                index = i;
+                break;
+            }
+            ++i;
         }
-        ++i;
     }
     return index;
 }
