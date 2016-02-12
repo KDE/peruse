@@ -227,7 +227,7 @@ QObject* CategoryEntriesModel::get(int index)
         deleteEntry = false;
     }
     obj->setProperty("author", entry->author);
-    obj->setProperty("currentPage", entry->currentPage);
+    obj->setProperty("currentPage", QString::number(entry->currentPage));
     obj->setProperty("filename", entry->filename);
     obj->setProperty("filetitle", entry->filetitle);
     obj->setProperty("created", entry->created);
