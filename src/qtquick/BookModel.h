@@ -31,6 +31,7 @@ class BookModel : public QAbstractListModel
     Q_PROPERTY(QString author READ author WRITE setAuthor NOTIFY authorChanged)
     Q_PROPERTY(QString publisher READ publisher WRITE setPublisher NOTIFY publisherChanged)
     Q_PROPERTY(int pageCount READ pageCount NOTIFY pageCountChanged)
+    Q_PROPERTY(int currentPage READ currentPage WRITE setCurrentPage NOTIFY currentPageChanged)
 public:
     explicit BookModel(QObject* parent = 0);
     virtual ~BookModel();
@@ -57,6 +58,14 @@ public:
     Q_SIGNAL void publisherChanged();
     virtual int pageCount() const;
     Q_SIGNAL void pageCountChanged();
+
+    int currentPage() const;
+    /**
+     *
+     * @param updateFilesystem If this is set to false, the attributes do not get written back to the filesystem. Useful for when the information is first filled out
+     */
+    virtual void setCurrentPage(int newCurrentPage, bool updateFilesystem = true);
+    Q_SIGNAL void currentPageChanged();
 
     Q_SIGNAL void loadingCompleted(bool success);
 

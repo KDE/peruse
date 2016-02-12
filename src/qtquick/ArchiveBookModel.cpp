@@ -20,6 +20,7 @@
  */
 
 #include "ArchiveBookModel.h"
+#include <KFileMetaData/UserMetaData>
 #include "ArchiveImageProvider.h"
 
 #include <QDir>
@@ -133,6 +134,10 @@ void ArchiveBookModel::setFilename(QString newFilename)
 //         }
 //     }
     BookModel::setFilename(newFilename);
+
+    KFileMetaData::UserMetaData data(newFilename);
+    BookModel::setCurrentPage(data.attribute("peruse.currentPage").toInt(), false);
+
     emit loadingCompleted(success);
 }
 

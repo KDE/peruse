@@ -21,6 +21,8 @@
 
 #include "BookModel.h"
 
+#include "KFileMetaData/UserMetaData"
+
 struct BookPage {
     BookPage() {}
     QString url;
@@ -29,11 +31,14 @@ struct BookPage {
 
 class BookModel::Private {
 public:
-    Private() {}
+    Private()
+        : currentPage(-1)
+    {}
     QString filename;
     QString author;
     QString publisher;
     QList<BookPage*> entries;
+    int currentPage;
 };
 
 BookModel::BookModel(QObject* parent)
@@ -132,4 +137,21 @@ void BookModel::setPublisher(QString newPublisher)
 int BookModel::pageCount() const
 {
     return d->entries.count();
+}
+
+int BookModel::currentPage() const
+{
+    return d->currentPage;
+}
+#include "QDebug"
+void BookModel::setCurrentPage(int newCurrentPage, bool updateFilesystem)
+{
+//     qDebug() << Q_FUNC_INFO << d->filename << newCurrentPage << updateFilesystem;
+    if(updateFilesystem)
+    {
+        KFileMetaData::UserMetaData data(d->filename);
+        data.setAttribute("peruse.currentPage", QString::number(newCurrentPage));
+    }
+    d->currentPage = newCurrentPage;
+    emit currentPageChanged();
 }
