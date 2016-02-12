@@ -102,6 +102,7 @@ MobileComponents.Page {
         property int mostRecentlyRead2: -1;
         property int mostRecentlyRead3: -1;
         property int mostRecentlyRead4: -1;
+        property int mostRecentlyRead5: -1;
         property int mostRecentlyAdded0: -1;
         Connections {
             target: mainWindow;
@@ -112,6 +113,7 @@ MobileComponents.Page {
                     startWithThese.mostRecentlyRead2 = contentList.indexOfFile(peruseConfig.recentlyOpened[2]);
                     startWithThese.mostRecentlyRead3 = contentList.indexOfFile(peruseConfig.recentlyOpened[3]);
                     startWithThese.mostRecentlyRead4 = contentList.indexOfFile(peruseConfig.recentlyOpened[4]);
+                    startWithThese.mostRecentlyRead5 = contentList.indexOfFile(peruseConfig.recentlyOpened[5]);
                     // the model might be null, if we haven't actually got any entries... so, let's check that
                     // and just leave the whole thing empty in that case :)
                     if(contentList.newlyAddedCategoryModel) {
@@ -267,7 +269,7 @@ MobileComponents.Page {
                 anchors.horizontalCenter: parent.horizontalCenter;
                 ListComponents.BookTileTall {
                     id: firstRecentlyAddedBook;
-                    visible: book !== fakeBook;
+                    visible: filename !== "";
                     height: visible ? neededHeight : 0;
                     width: startWithThese.width / 2;
                     property QtObject book: contentList.newlyAddedCategoryModel ? contentList.newlyAddedCategoryModel.get(startWithThese.mostRecentlyAdded0) : fakeBook;
@@ -279,7 +281,7 @@ MobileComponents.Page {
                     onBookSelected: root.bookSelected(filename, currentPage);
                 }
                 ListComponents.BookTileTall {
-                    visible: title !== "";
+                    visible: filename !== "";
                     height: visible ? neededHeight : 0;
                     width: startWithThese.width / 2;
                     property QtObject book: contentList.newlyAddedCategoryModel ? contentList.newlyAddedCategoryModel.get(startWithThese.mostRecentlyAdded0 + 1) : fakeBook;
@@ -308,7 +310,7 @@ MobileComponents.Page {
                     onBookSelected: root.bookSelected(filename, currentPage);
                 }
                 ListComponents.BookTileTall {
-                    visible: title !== "";
+                    visible: filename !== "";
                     height: visible ? neededHeight : 0;
                     width: startWithThese.width / 3;
                     property QtObject book: contentList.newlyAddedCategoryModel ? contentList.newlyAddedCategoryModel.get(startWithThese.mostRecentlyAdded0 + 3) : fakeBook;
@@ -320,7 +322,7 @@ MobileComponents.Page {
                     onBookSelected: root.bookSelected(filename, currentPage);
                 }
                 ListComponents.BookTileTall {
-                    visible: title !== "";
+                    visible: filename !== "";
                     height: visible ? neededHeight : 0;
                     width: startWithThese.width / 3;
                     property QtObject book: contentList.newlyAddedCategoryModel ? contentList.newlyAddedCategoryModel.get(startWithThese.mostRecentlyAdded0 + 4) : fakeBook;
@@ -393,7 +395,7 @@ MobileComponents.Page {
         id: fakeBook;
         property string author: "unnamed";
         property string title: "unnamed";
-        property string filename: "none";
+        property string filename: "";
         property string currentPage: "0";
     }
     Item {
