@@ -34,6 +34,8 @@ MobileComponents.Page {
     property string file;
     property int currentPage;
     onCurrentPageChanged: {
+        // set off a timer to slightly postpone saving the current page, so it doesn't happen during animations etc
+        updateCurrent.start();
         thumbnailMovementAnimation.false;
         var currentPos = thumbnailNavigator.contentY;
         var newPos;
@@ -42,7 +44,17 @@ MobileComponents.Page {
         thumbnailMovementAnimation.from = currentPos;
         thumbnailMovementAnimation.to = newPos;
         thumbnailMovementAnimation.running = true;
-        // set off a timer to slightly postpone saving the current page, so it doesn't happen during animations etc
+    }
+    Timer {
+        id: updateCurrent;
+        interval: mainWindow.animationDuration;
+        running: false;
+        repeat: false;
+        onTriggered: {
+            if(viewLoader.item && viewLoader.item.pagesModel && viewLoader.item.pagesModel.currentPage !== undefined) {
+                viewLoader.item.pagesModel.currentPage = root.currentPage;
+            }
+        }
     }
     NumberAnimation { id: thumbnailMovementAnimation; target: thumbnailNavigator; property: "contentY"; duration: mainWindow.animationDuration; easing.type: Easing.InOutQuad; }
 
@@ -136,6 +148,7 @@ MobileComponents.Page {
     Loader {
         id: viewLoader;
         anchors.fill: parent;
+        property bool loadingCompleted: false;
         onLoaded: {
             if(status === Loader.Error) {
                 // huh! problem...
@@ -148,7 +161,6 @@ MobileComponents.Page {
             target: viewLoader.item;
             onLoadingCompleted: {
                 if(success) {
-                    viewLoader.item.currentPage = root.currentPage;
                     thumbnailNavigator.model = viewLoader.item.pagesModel;
                     if(viewLoader.item.thumbnailComponent) {
                         thumbnailNavigator.delegate = viewLoader.item.thumbnailComponent;
@@ -156,10 +168,12 @@ MobileComponents.Page {
                     else {
                         thumbnailNavigator.delegate = thumbnailComponent;
                     }
+                    viewLoader.item.currentPage = root.currentPage;
+                    viewLoader.loadingCompleted = true;
                 }
             }
             onCurrentPageChanged: {
-                if(root.currentPage !== viewLoader.item.currentPage) {
+                if(root.currentPage !== viewLoader.item.currentPage && viewLoader.loadingCompleted) {
                     root.currentPage = viewLoader.item.currentPage;
                 }
             }
