@@ -20,17 +20,18 @@
  */
 
 #include "BalooContentLister.h"
-#include <QFileInfo>
 
 #include <Baloo/IndexerConfig>
 #include <Baloo/File>
-#include <kfilemetadata/propertyinfo.h>
+#include <KFileMetaData/PropertyInfo>
+#include <KFileMetaData/UserMetaData>
 
-#include <QDebug>
 #include <QDateTime>
+#include <QDebug>
+#include <QList>
+#include <QFileInfo>
 #include <QProcess>
 #include <QThreadPool>
-#include <QList>
 
 class BalooContentLister::Private
 {
@@ -149,5 +150,10 @@ void BalooContentLister::queryResult(Baloo::QueryRunnable* query, QString file)
     metadata["lastModified"] = info.lastModified();
     metadata["created"] = info.created();
     metadata["lastRead"] = info.lastRead();
+
+    KFileMetaData::UserMetaData data(file);
+    int currentPage = data.attribute("peruse.currentPage").toInt();
+    metadata["currentPage"] = QVariant::fromValue<int>(currentPage);
+
     emit fileFound(file, metadata);
 }

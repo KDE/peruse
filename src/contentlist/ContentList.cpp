@@ -20,13 +20,13 @@
  */
 
 #include "ContentList.h"
-#include <QTimer>
 #include "FilesystemContentLister.h"
 
 #include "BalooContentLister.h"
 
-#include <QMimeDatabase>
 #include <QDebug>
+#include <QMimeDatabase>
+#include <QTimer>
 
 struct ContentEntry {
     QString filename;

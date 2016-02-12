@@ -20,14 +20,16 @@
  */
 
 #include "FilesystemContentLister.h"
-#include <QTimer>
-#include <QCoreApplication>
 
+#include <KFileMetaData/UserMetaData>
+
+#include <QCoreApplication>
 #include <QDateTime>
+#include <QDebug>
 #include <QDirIterator>
 #include <QMimeDatabase>
+#include <QTimer>
 #include <QVariantHash>
-#include <QDebug>
 
 class FilesystemContentLister::Private
 {
@@ -98,6 +100,11 @@ void FilesystemContentLister::startSearch()
             {
                 QVariantHash metadata;
                 metadata["created"] = info.created();
+
+                KFileMetaData::UserMetaData data(filePath);
+                int currentPage = data.attribute("peruse.currentPage").toInt();
+                metadata["currentPage"] = QVariant::fromValue<int>(currentPage);
+
                 emit fileFound(filePath, metadata);
             }
             qApp->processEvents();
