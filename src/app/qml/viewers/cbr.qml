@@ -45,13 +45,23 @@ ViewerBase {
     }
     NumberAnimation { id: pageChangeAnimation; target: imageBrowser; property: "contentX"; duration: mainWindow.animationDuration; easing.type: Easing.InOutQuad; }
 
+    Timer {
+        id: initialPageChange;
+        interval: mainWindow.animationDuration;
+        running: false;
+        repeat: false;
+        onTriggered: root.currentPage = imageBrowser.model.currentPage;
+    }
     ImageBrowser {
         id: imageBrowser;
         anchors.fill: parent;
         model: Peruse.ArchiveBookModel {
             filename: root.file;
             qmlEngine: globalQmlEngine;
-            onLoadingCompleted: root.loadingCompleted(success);
+            onLoadingCompleted: {
+                root.loadingCompleted(success);
+               initialPageChange.start();
+            }
         }
         onCurrentIndexChanged: {
             if(root.currentPage !== currentIndex) {
