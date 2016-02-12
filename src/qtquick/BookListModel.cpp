@@ -130,6 +130,8 @@ void BookListModel::contentModelItemsInserted(QModelIndex index, int first, int 
             { entry->publisher = it.value().toString().trimmed(); }
             else if(it.key() == QLatin1String("created"))
             { entry->created = it.value().toDateTime(); }
+            else if(it.key() == QLatin1String("currentPage"))
+            { entry->currentPage = it.value().toInt(); }
         }
 
         d->entries.append(entry);
