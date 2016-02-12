@@ -21,6 +21,7 @@ target_link_libraries (peruseqmlplugin
     KF5::IconThemes
     KF5::ConfigCore
     KF5::KIOWidgets
+    KF5::FileMetaData
 )
 
 install (TARGETS peruseqmlplugin DESTINATION ${QML_INSTALL_DIR}/org/kde/peruse)
