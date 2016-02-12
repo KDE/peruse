@@ -78,6 +78,31 @@ Item {
             asynchronous: true;
             fillMode: Image.PreserveAspectFit;
         }
+        Rectangle {
+            anchors {
+                fill: bookCurrentPage;
+                margins: -units.smallSpacing;
+            }
+            border {
+                width: 2;
+                color: theme.viewTextColor;
+            }
+            radius: height/2 - 1;
+            color: theme.viewBackgroundColor;
+            visible: bookCurrentPage.visible;
+        }
+        PlasmaComponents.Label {
+            id: bookCurrentPage;
+            anchors {
+                top: parent.top;
+                left: coverImage.right;
+                margins: units.smallSpacing;
+            }
+            color: theme.viewTextColor;
+            text: parseInt(root.currentPage, 10) + 1;
+            visible: text > 1
+            // TODO this should be a progressy thing, but we lack page count information in the metadata we have for books. Fix when that is done.
+        }
     }
     PlasmaComponents.Label {
         id: bookTitle;
