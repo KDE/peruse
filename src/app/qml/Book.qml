@@ -207,7 +207,7 @@ MobileComponents.Page {
 
         var mimetype = contentList.contentModel.getMimetype(file);
         console.debug("Mimetype is " + mimetype);
-        if(mimetype == "application/x-cbz") {
+        if(mimetype == "application/x-cbz" || mimetype == "application/x-cbr") {
             viewLoader.source = "viewers/cbr.qml";
             attemptFallback = false;
         }
