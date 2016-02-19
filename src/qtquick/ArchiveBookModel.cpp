@@ -30,6 +30,7 @@
 
 #include <karchive.h>
 #include <kzip.h>
+#include "KRar.h" // "" because it's a custom thing for now
 
 class ArchiveBookModel::Private
 {
@@ -93,10 +94,10 @@ void ArchiveBookModel::setFilename(QString newFilename)
     {
         d->archive = new KZip(newFilename);
     }
-//     else if (mime.inherits("application/x-rar"))
-//     {
-//         archive = new KRar(newFilename);
-//     }
+    else if (mime.inherits("application/x-rar"))
+    {
+        d->archive = new KRar(newFilename);
+    }
 
     bool success = false;
     if(d->archive)
