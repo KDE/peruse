@@ -26,6 +26,7 @@
 #include <karchivefile.h>
 
 #include <QDebug>
+#include <QIcon>
 
 class ArchiveImageProvider::Private
 {
@@ -58,6 +59,8 @@ QImage ArchiveImageProvider::requestImage(const QString& id, QSize* size, const 
     {
         bool success = img.loadFromData(entry->data());
         if(!success) {
+            QIcon oops = QIcon::fromTheme("unknown");
+            img = oops.pixmap(oops.availableSizes().last()).toImage();
             qDebug() << "Failed to load image with id:" << id;
         }
     }
