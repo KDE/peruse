@@ -1,3 +1,5 @@
+add_subdirectory(karchive-rar)
+
 set(qmlplugin_SRCS
     qmlplugin.cpp
     ArchiveBookModel.cpp
@@ -12,8 +14,12 @@ set(qmlplugin_SRCS
 )
 
 add_library (peruseqmlplugin SHARED ${qmlplugin_SRCS})
-
+target_include_directories(peruseqmlplugin
+    PRIVATE
+    karchive-rar
+)
 target_link_libraries (peruseqmlplugin
+    karchive-rar
     Qt5::Core
     Qt5::Qml
     Qt5::Quick
