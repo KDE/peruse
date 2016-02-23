@@ -20,24 +20,28 @@
  */
 
 #include "KRar.h"
-#include <QDir>
 #include "KRarFileEntry.h"
 
+#include <QtCore/QDir>
 #include <QtCore/QFile>
 #include <QtCore/QIODevice>
 #include <QDebug>
 
 #include <KFilterDev>
 
-#include <archive.h>
-#include <archive_entry.h>
+extern "C"
+{
+    #include <unarr.h>
+}
 
 class KRar::Private {
 public:
     Private()
         : archive(0)
+        , stream(0)
     {}
-    struct archive* archive;
+    ar_archive* archive;
+    ar_stream* stream;
     QList<KRarFileEntry*> files;
 };
 
@@ -103,44 +107,52 @@ bool KRar::openArchive(QIODevice::OpenMode mode)
         return false;
     }
 
-    d->archive = archive_read_new();
-    archive_read_support_format_rar(d->archive); // require a rar file...
-    int r = archive_read_open_filename(d->archive, fileName().toLocal8Bit(), 1024);
-    if(r != ARCHIVE_OK) {
+    d->stream = ar_open_file(fileName().toLocal8Bit());
+    if (!d->stream)
+    {
+        qDebug() << "Failed to open" << fileName() << "into a stream for unarr";
+        return false;
+    }
+
+    d->archive = ar_open_rar_archive(d->stream);
+    if (!d->archive)
+    {
+        qDebug() << "Failed to open" << fileName() << "as a rar archive. Are we sure this is a rar archive?";
         return false;
     }
 
     // Iterate through all entries and get a KRarFileEntry out of them
-    struct archive_entry* entry;
-    while (archive_read_next_header(d->archive, &entry) == ARCHIVE_OK) {
-        QString pathname(archive_entry_pathname(entry));
+    while (ar_parse_entry(d->archive)) {
+        QString pathname(ar_entry_get_name(d->archive));
         int splitPos = pathname.lastIndexOf("/");
         QString path = pathname.left(splitPos);
         QString name = pathname.mid(splitPos + 1);
-        QDateTime mtime = QDateTime::fromTime_t(archive_entry_mtime(entry));
-        bool isDir = archive_entry_filetype(entry) == AE_IFDIR;
-        quint64 start = archive_read_header_position(d->archive);
-        quint64 size = archive_entry_size(entry);
+        QDateTime mtime = QDateTime::fromTime_t(ar_entry_get_filetime(d->archive));
+        quint64 start = ar_entry_get_offset(d->archive);
+        quint64 size = ar_entry_get_size(d->archive);
+        // So, funny thing - unarr ignores directory entries in rar files entirely (see unarr/rar/rar.c:65)
+        // Leaving the code in, in case we feel like reintroducing this at a later point in time
+//         bool isDir = size < 1;//archive_entry_filetype(entry) == AE_IFDIR;
 
         KArchiveEntry* kaentry = 0;
-        if(isDir)
-        {
-            QString path = QDir::cleanPath(pathname);
-            const KArchiveEntry *ent = rootDir()->entry(path);
-            if (ent && ent->isDirectory()) {
+//         if(isDir)
+//         {
+//             QString path = QDir::cleanPath(pathname);
+//             const KArchiveEntry *ent = rootDir()->entry(path);
+//             if (ent && ent->isDirectory()) {
 //                 qDebug() << "Directory already exists, NOT going to add it again";
-                kaentry = 0;
-            } else {
-                kaentry = new KArchiveDirectory(this, name, 0755, mtime, rootDir()->user(), rootDir()->group(), QString());
+//                 kaentry = 0;
+//             } else {
+//                 kaentry = new KArchiveDirectory(this, name, 0755, mtime, rootDir()->user(), rootDir()->group(), QString());
 //                 qDebug() << "KArchiveDirectory created, name=" << name;
-            }
-        }
-        else
-        {
-            KRarFileEntry* fileEntry = new KRarFileEntry(this, name, 0100644, mtime, rootDir()->user(), rootDir()->group(), "", path, start, size, entry);
+//             }
+//         }
+//         else
+//         {
+            KRarFileEntry* fileEntry = new KRarFileEntry(this, name, 0100644, mtime, rootDir()->user(), rootDir()->group(), "", path, start, size, d->archive);
             kaentry = fileEntry;
             d->files.append(fileEntry);
-        }
+//         }
 
         if(kaentry)
         {
@@ -155,8 +167,6 @@ bool KRar::openArchive(QIODevice::OpenMode mode)
                 rootDir()->addEntry(kaentry);
             }
         }
-
-        archive_read_data_skip(d->archive);  // Note 2
     }
 
     return true;
@@ -164,20 +174,13 @@ bool KRar::openArchive(QIODevice::OpenMode mode)
 
 bool KRar::closeArchive()
 {
-    // Close the archive
-    int r = archive_read_free(d->archive);  // Note 3
+    ar_close_archive(d->archive);
+    ar_close(d->stream);
     d->archive = 0;
-    if (r != ARCHIVE_OK) {
-        qDeleteAll(d->files);
-        d->files.clear();
-        return false;
-    }
+    d->stream = 0;
+    qDeleteAll(d->files);
+    d->files.clear();
     return true;
-}
-
-struct archive * KRar::archive() const
-{
-    return d->archive;
 }
 
 void KRar::virtual_hook(int id, void* data)

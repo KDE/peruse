@@ -34,7 +34,7 @@ public:
      */
     KRarFileEntry(KRar *rar, const QString &name, int access, const QDateTime &date,
                   const QString &user, const QString &group, const QString &symlink,
-                  const QString &path, qint64 start, qint64 uncompressedSize, struct archive_entry* entry);
+                  const QString &path, qint64 start, qint64 uncompressedSize, struct ar_archive_s* archive);
 
     /**
      * Destructor. Do not call this.

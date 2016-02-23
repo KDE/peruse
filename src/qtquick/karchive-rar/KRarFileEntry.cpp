@@ -23,32 +23,35 @@
 
 #include <QDebug>
 
-#include <archive.h>
-#include <archive_entry.h>
+extern "C"
+{
+    #include <unarr.h>
+}
 
 class KRarFileEntry::Private {
 public:
     Private()
         : crc(0)
         , headerStart(0)
-        , entry(0)
+        , archive(0)
         , rar(0)
     {
     }
     unsigned long crc;
     qint64        headerStart;
     QString       path;
-    struct archive_entry* entry;
+    ar_archive* archive;
     KRar* rar;
 };
 
-KRarFileEntry::KRarFileEntry(KRar* rar, const QString& name, int access, const QDateTime& date, const QString& user, const QString& group, const QString& symlink, const QString& path, qint64 start, qint64 uncompressedSize, struct archive_entry* entry)
+KRarFileEntry::KRarFileEntry(KRar* rar, const QString& name, int access, const QDateTime& date, const QString& user, const QString& group, const QString& symlink, const QString& path, qint64 start, qint64 uncompressedSize, struct ar_archive_s* archive)
     : KArchiveFile(rar, name, access, date, user, group, symlink, start, uncompressedSize)
     , d(new Private)
 {
+    d->headerStart = start;
     d->path = path;
-    d->entry = entry;
     d->rar = rar;
+    d->archive = archive;
 //     qDebug() << "New entry for file" << name << "in path" << path;
 }
 
@@ -86,34 +89,16 @@ QByteArray KRarFileEntry::data() const
 //     qDebug() << "Attempting to grab data from" << name() << "in" << path();
     QByteArray data;
 
-    struct archive* archive = archive_read_new();
-    archive_read_support_format_rar(archive); // require a rar file...
-    int r = archive_read_open_filename(archive, d->rar->fileName().toLocal8Bit(), 1024);
-    if(r != ARCHIVE_OK)
-    {
-        qDebug() << "Failed to open archive!";
-        return data;
-    }
+    ar_archive* archive = d->archive;
     QString pathname = QString("%1/%2").arg(path()).arg(name());
-    struct archive_entry* entry;
-    while (archive_read_next_header(archive, &entry) == ARCHIVE_OK)
+    if(ar_parse_entry_at(archive, d->headerStart))
     {
-        QString thisName = archive_entry_pathname(entry);
-        if (pathname == thisName)
+        data.resize(size());
+        if(!ar_entry_uncompress(archive, data.data(), size()))
         {
-            data.resize(size());
-            r = archive_read_data(archive, data.data(), size());
-            if(r != size()) {
-                qDebug() << "We got an error reading the data" << r << archive_error_string(archive);
-            }
-            break;
-        }
-        else
-        {
-            archive_read_data_skip(archive); // Skip this entry 
+            qDebug() << "We got an error reading the data attempting to read" << pathname << " - error will be reported by unarr, see above";// << r << archive_error_string(archive);
         }
     }
-    archive_read_free(archive);
     return data;
 }
 

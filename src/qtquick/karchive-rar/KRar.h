@@ -90,12 +90,6 @@ protected:
     bool openArchive(QIODevice::OpenMode mode) Q_DECL_OVERRIDE;
     bool closeArchive() Q_DECL_OVERRIDE;
 
-    /**
-     * Get the underlying archive - should only be used by the fileentry class
-     */
-    friend class KRarFileEntry;
-    struct archive* archive() const;
-
 protected:
     void virtual_hook(int id, void *data) Q_DECL_OVERRIDE;
 
