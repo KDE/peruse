@@ -4,6 +4,10 @@
 cmake_minimum_required(VERSION 2.6)
 project(unarr C)
 
+if(POLICY CMP0063)
+    cmake_policy (SET CMP0063 NEW)
+endif(POLICY CMP0063)
+
 #Set up api and release version for later use.
 #Increase in major api version indicates api
 #breakage!! For non-breaking changes, use
@@ -14,38 +18,37 @@ set (UNARR_API_VERSION_MINOR 0)
 #set build type to default if unset
 if( NOT CMAKE_BUILD_TYPE )
   set( CMAKE_BUILD_TYPE Release CACHE STRING
-       "Choose the type of build, options are: None Debug Release RelWithDebInfo
-MinSizeRel."
+       "Choose the type of build, options are: None Debug Release RelWithDebInfo MinSizeRel."
        FORCE )
 endif()
 
-# find_package(ZLIB)
+find_package(ZLIB)
 # find_package(BZip2)
 
 if (UNIX OR MINGW)
-    add_compile_options(-fomit-frame-pointer -D_FILE_OFFSET_BITS=64)
+    add_compile_options(-fomit-frame-pointer -D_FILE_OFFSET_BITS=64 -fPIC)
 endif (UNIX OR MINGW)
 
 #sources
 
-set (HEADERS
-    unarr/common/allocator.h
-    unarr/common/unarr-imp.h
-    unarr/rar/rar.h
-    unarr/rar/lzss.h
-    unarr/rar/rarvm.h
-    unarr/lzmasdk/LzmaDec.h
-    unarr/lzmasdk/Ppmd7.h
-    unarr/lzmasdk/CpuArch.h
-    unarr/lzmasdk/Ppmd.h
-    unarr/lzmasdk/7zTypes.h
-    unarr/lzmasdk/Ppmd8.h
-    unarr/lzmasdk/Precomp.h
+# set (HEADERS
+#     unarr/common/allocator.h
+#     unarr/common/unarr-imp.h
+#     unarr/rar/rar.h
+#     unarr/rar/lzss.h
+#     unarr/rar/rarvm.h
+#     unarr/lzmasdk/LzmaDec.h
+#     unarr/lzmasdk/Ppmd7.h
+#     unarr/lzmasdk/CpuArch.h
+#     unarr/lzmasdk/Ppmd.h
+#     unarr/lzmasdk/7zTypes.h
+#     unarr/lzmasdk/Ppmd8.h
+#     unarr/lzmasdk/Precomp.h
 #     _7z/_7z.h
 #     zip/zip.h
 #     zip/inflate.h
 #     tar/tar.h
-    )
+#     )
 
 set (SOURCES
     unarr/rar/uncompress-rar.c
@@ -75,13 +78,19 @@ set (SOURCES
     )
 
 #build targets
-if(POLICY CMP0063)
-    cmake_policy (SET CMP0063 NEW)
-endif(POLICY CMP0063)
 
-add_library(unarr STATIC unarr/unarr.h ${HEADERS} ${SOURCES})
+add_library(unarr STATIC ${SOURCES})
 target_include_directories(unarr
     PUBLIC
     unarr/
 )
-set_target_properties(unarr PROPERTIES VERSION ${UNARR_API_VERSION_MAJOR}.${UNARR_API_VERSION_MINOR} SOVERSION ${UNARR_API_VERSION_MAJOR})
+
+#library detection macros
+
+if (ZLIB_FOUND)
+    target_include_directories(unarr PRIVATE ${ZLIB_INCLUDE_DIRS})
+    target_link_libraries(unarr ${ZLIB_LIBRARIES})
+    add_definitions(-DHAVE_ZLIB)
+endif(ZLIB_FOUND)
+
+set_target_properties(unarr PROPERTIES C_STANDARD 99)
