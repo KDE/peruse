@@ -10,6 +10,6 @@ set(karchive_rar_SRCS
 
 add_library(karchive-rar STATIC ${karchive_rar_SRCS})
 target_link_libraries(karchive-rar
-    unarr
-    KF5::Archive
+    PRIVATE unarr
+    PUBLIC KF5::Archive
 )
