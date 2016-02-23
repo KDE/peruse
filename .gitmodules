@@ -1,0 +1,3 @@
+[submodule "src/qtquick/karchive-rar/external/unrarr"]
+	path = src/qtquick/karchive-rar/external/unrarr
+	url = https://github.com/zeniko/unarr.git
