@@ -1,5 +1,8 @@
 project(karchive-rar)
 
+# For unarr
+add_subdirectory(external)
+
 set(karchive_rar_SRCS
     KRar.cpp
     KRarFileEntry.cpp
@@ -7,6 +10,6 @@ set(karchive_rar_SRCS
 
 add_library(karchive-rar STATIC ${karchive_rar_SRCS})
 target_link_libraries(karchive-rar
-    archive
+    unarr
     KF5::Archive
 )
