@@ -57,11 +57,8 @@ int main(int argc, char** argv)
 //         ImageStorage::reset();
     }
 
-    QThread trackerThread;
+//     QThread trackerThread;
 
-    QStringList locations = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation);
-    locations << QStandardPaths::standardLocations(QStandardPaths::DownloadLocation);
-    Q_ASSERT(locations.size() >= 1);
 //     qDebug() << locations;
 //     FileSystemTracker tracker;
 //     tracker.setFolder(locations.first());
@@ -81,7 +78,7 @@ int main(int argc, char** argv)
     QQmlContext* objectContext = engine.rootContext();
     QString platformEnv(qgetenv("PLASMA_PLATFORM"));
     engine.rootContext()->setContextProperty("PLASMA_PLATFORM", platformEnv);
-    engine.rootContext()->setContextProperty("bookLocations", locations);
+//     engine.rootContext()->setContextProperty("bookLocations", locations);
     // Yes, i realise this is a touch on the ugly side. I have found no better way to allow for
     // things like the archive book model to create imageproviders for the archives
     engine.rootContext()->setContextProperty("globalQmlEngine", &engine);

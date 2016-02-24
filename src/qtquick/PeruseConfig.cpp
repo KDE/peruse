@@ -86,3 +86,33 @@ QStringList PeruseConfig::recentlyOpened() const
     }
     return recent;
 }
+
+void PeruseConfig::addBookLocation(const QString& location)
+{
+    QStringList locations = d->config.group("general").readEntry("book locations", QStringList());
+    locations.append(location);
+    d->config.group("general").writeEntry("book locations", locations);
+    d->config.sync();
+    emit bookLocationsChanged();
+}
+
+void PeruseConfig::removeBookLocation(const QString& location)
+{
+    QStringList locations = d->config.group("general").readEntry("book locations", QStringList());
+    locations.removeAll(location);
+    d->config.group("general").writeEntry("book locations", locations);
+    d->config.sync();
+    emit bookLocationsChanged();
+}
+
+QStringList PeruseConfig::bookLocations() const
+{
+    QStringList locations = d->config.group("general").readEntry("book locations", QStringList());
+    if(locations.count() < 1)
+    {
+        locations = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation);
+        locations << QStandardPaths::standardLocations(QStandardPaths::DownloadLocation);
+    }
+
+    return locations;
+}

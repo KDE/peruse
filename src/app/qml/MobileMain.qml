@@ -61,8 +61,8 @@ MobileComponents.ApplicationWindow {
     }
 
     globalDrawer: MobileComponents.GlobalDrawer {
-        title: "Navigation";
-        titleIcon: "system-search";
+        title: "Peruse Comic Viewer";
+        titleIcon: "peruse";
         actions: [
             Action {
                 text: "All Comics";
@@ -93,6 +93,13 @@ MobileComponents.ApplicationWindow {
                 text: "Filter by Folder";
                 iconName: "system-search";
                 onTriggered: changeCategory(bookshelfFolder);
+            },
+            Action {
+            },
+            Action {
+                text: "Settings"
+                iconName: "configure"
+                onTriggered: mainWindow.pageStack.push(settingsPage);
             }
         ]
     }
@@ -172,6 +179,12 @@ MobileComponents.ApplicationWindow {
         }
     }
 
+    Component {
+        id: settingsPage;
+        Settings {
+        }
+    }
+
     function changeCategory(categoryItem) {
         // Clear all the way to the welcome page if we change the category...
         mainWindow.pageStack.pop(welcomePage);
@@ -180,6 +193,7 @@ MobileComponents.ApplicationWindow {
     }
 
     Component.onCompleted: {
+        var bookLocations = peruseConfig.bookLocations;
         for(var i = 0; i < bookLocations.length; ++i) {
             contentList.contentModel.addLocation(bookLocations[i]);
         }

@@ -28,6 +28,7 @@ class PeruseConfig : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QStringList recentlyOpened READ recentlyOpened NOTIFY recentlyOpenedChanged)
+    Q_PROPERTY(QStringList bookLocations READ bookLocations NOTIFY bookLocationsChanged)
 public:
     explicit PeruseConfig(QObject* parent = 0);
     virtual ~PeruseConfig();
@@ -35,6 +36,11 @@ public:
     Q_INVOKABLE void bookOpened(QString path);
     QStringList recentlyOpened() const;
     Q_SIGNAL void recentlyOpenedChanged();
+
+    Q_INVOKABLE void addBookLocation(const QString& location);
+    Q_INVOKABLE void removeBookLocation(const QString& location);
+    QStringList bookLocations() const;
+    Q_SIGNAL void bookLocationsChanged();
 private:
     class Private;
     Private* d;
