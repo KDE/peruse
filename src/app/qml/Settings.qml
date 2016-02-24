@@ -22,6 +22,7 @@
 import QtQuick 2.2
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.0
+import QtQuick.Dialogs 1.2
 
 import org.kde.plasma.mobilecomponents 0.2 as MobileComponents
 import org.kde.plasma.components 2.0 as PlasmaComponents
@@ -50,6 +51,7 @@ MobileComponents.Page {
             ToolButton {
                 id: folderAdd;
                 iconName: "list-add";
+                onClicked: folderDlg.open();
                 anchors {
                     verticalCenter: parent.verticalCenter;
                     left: parent.right;
@@ -82,5 +84,16 @@ MobileComponents.Page {
             }
         }
 
+    }
+
+    FileDialog {
+        id: folderDlg;
+        title: "New Search Folder";
+        folder: shortcuts.home;
+        selectFolder: true;
+        onAccepted: {
+            console.log("selected " + folderDlg.fileUrl);
+            peruseConfig.addBookLocation(folderDlg.fileUrl);
+        }
     }
 }

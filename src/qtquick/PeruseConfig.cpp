@@ -89,11 +89,34 @@ QStringList PeruseConfig::recentlyOpened() const
 
 void PeruseConfig::addBookLocation(const QString& location)
 {
-    QStringList locations = bookLocations();
-    locations.append(location);
-    d->config.group("general").writeEntry("book locations", locations);
-    d->config.sync();
-    emit bookLocationsChanged();
+    if(location.startsWith("file://"))
+    {
+        QString newLocation = location.mid(7);
+        QStringList locations = bookLocations();
+        // First, get rid of all the entries which start with the newly added location, because that's silly
+        QStringList newLocations;
+        bool alreadyInThere = false;
+        Q_FOREACH(QString entry, locations) {
+            if(!entry.startsWith(newLocation))
+            {
+                newLocations.append(entry);
+            }
+            if(newLocation.startsWith(entry))
+            {
+                alreadyInThere = true;
+            }
+        }
+        if(alreadyInThere)
+        {
+            // Don't be silly, don't add a new location if it's already covered by something more high level...
+            emit showMessage("Attempted to add a new location to the list of search folders which is a sub-folder to something already in the list.");
+            return;
+        }
+        newLocations.append(newLocation);
+        d->config.group("general").writeEntry("book locations", newLocations);
+        d->config.sync();
+        emit bookLocationsChanged();
+    }
 }
 
 void PeruseConfig::removeBookLocation(const QString& location)

@@ -41,6 +41,8 @@ public:
     Q_INVOKABLE void removeBookLocation(const QString& location);
     QStringList bookLocations() const;
     Q_SIGNAL void bookLocationsChanged();
+
+    Q_SIGNAL void showMessage(QString message);
 private:
     class Private;
     Private* d;
