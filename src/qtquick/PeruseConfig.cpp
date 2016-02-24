@@ -89,7 +89,7 @@ QStringList PeruseConfig::recentlyOpened() const
 
 void PeruseConfig::addBookLocation(const QString& location)
 {
-    QStringList locations = d->config.group("general").readEntry("book locations", QStringList());
+    QStringList locations = bookLocations();
     locations.append(location);
     d->config.group("general").writeEntry("book locations", locations);
     d->config.sync();
@@ -98,7 +98,7 @@ void PeruseConfig::addBookLocation(const QString& location)
 
 void PeruseConfig::removeBookLocation(const QString& location)
 {
-    QStringList locations = d->config.group("general").readEntry("book locations", QStringList());
+    QStringList locations = bookLocations();
     locations.removeAll(location);
     d->config.group("general").writeEntry("book locations", locations);
     d->config.sync();
