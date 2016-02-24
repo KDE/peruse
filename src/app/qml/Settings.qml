@@ -35,5 +35,52 @@ MobileComponents.Page {
     id: root;
     color: MobileComponents.Theme.viewBackgroundColor;
 
-    ListComponents.ListPageHeader { text: "Settings"; }
+    Column {
+        width: parent.width;
+        height: childrenRect.height;
+        ListComponents.ListPageHeader { text: "Settings"; }
+        Item {
+            width: parent.width;
+            height: units.largeSpacing;
+        }
+        Item {
+            height: folderHeader.height;
+            width: parent.width - folderAdd.width - units.smallSpacing;
+            ListComponents.Section { id: folderHeader; text: "Search Folders"; }
+            ToolButton {
+                id: folderAdd;
+                iconName: "list-add";
+                anchors {
+                    verticalCenter: parent.verticalCenter;
+                    left: parent.right;
+                }
+            }
+        }
+        Repeater {
+            model: peruseConfig.bookLocations;
+            delegate: MobileComponents.ListItemWithActions {
+                actions: [
+                    Action {
+                        text: "Delete";
+                        iconName: "list-remove"
+                        onTriggered: peruseConfig.removeBookLocation(peruseConfig.bookLocations[index]);
+                    }
+                ]
+                MobileComponents.Label {
+                    anchors {
+                        left: parent.left;
+                        leftMargin: units.largeSpacing;
+                        top: parent.top;
+                        topMargin: units.smallSpacing;
+                    }
+                    text: peruseConfig.bookLocations[index];
+                    height: paintedHeight + units.smallSpacing * 2;
+                    width: root.width - units.largeSpacing * 2;
+                    elide: Text.ElideMiddle;
+                    verticalAlignment: Text.AlignVCenter;
+                }
+            }
+        }
+
+    }
 }
