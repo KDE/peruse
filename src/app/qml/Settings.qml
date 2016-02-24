@@ -91,9 +91,6 @@ MobileComponents.Page {
         title: "New Search Folder";
         folder: shortcuts.home;
         selectFolder: true;
-        onAccepted: {
-            console.log("selected " + folderDlg.fileUrl);
-            peruseConfig.addBookLocation(folderDlg.fileUrl);
-        }
+        onAccepted: peruseConfig.addBookLocation(folderDlg.fileUrl);
     }
 }
