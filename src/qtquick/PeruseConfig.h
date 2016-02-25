@@ -43,6 +43,9 @@ public:
     Q_SIGNAL void bookLocationsChanged();
 
     Q_SIGNAL void showMessage(QString message);
+
+    // This should go somewhere more sensible, really... like a static on Qt. or something :P
+    Q_INVOKABLE QString homeDir() const;
 private:
     class Private;
     Private* d;

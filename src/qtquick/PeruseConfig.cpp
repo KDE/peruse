@@ -139,3 +139,8 @@ QStringList PeruseConfig::bookLocations() const
 
     return locations;
 }
+
+QString PeruseConfig::homeDir() const
+{
+    return QStandardPaths::standardLocations(QStandardPaths::HomeLocation).first();
+}
