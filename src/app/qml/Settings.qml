@@ -22,7 +22,6 @@
 import QtQuick 2.2
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.0
-import QtQuick.Dialogs 1.2
 
 import org.kde.plasma.mobilecomponents 0.2 as MobileComponents
 import org.kde.plasma.components 2.0 as PlasmaComponents
@@ -39,6 +38,7 @@ MobileComponents.Page {
     Column {
         width: parent.width;
         height: childrenRect.height;
+        clip: true;
         ListComponents.ListPageHeader { text: "Settings"; }
         Item {
             width: parent.width;
@@ -51,7 +51,7 @@ MobileComponents.Page {
             ToolButton {
                 id: folderAdd;
                 iconName: "list-add";
-                onClicked: folderDlg.open();
+                onClicked: mainWindow.pageStack.push(folderDlg);
                 anchors {
                     verticalCenter: parent.verticalCenter;
                     left: parent.right;
@@ -73,10 +73,9 @@ MobileComponents.Page {
                         left: parent.left;
                         leftMargin: units.largeSpacing;
                         top: parent.top;
-                        topMargin: units.smallSpacing;
                     }
                     text: peruseConfig.bookLocations[index];
-                    height: paintedHeight + units.smallSpacing * 2;
+                    height: paintedHeight + units.largeSpacing * 2;
                     width: root.width - units.largeSpacing * 2;
                     elide: Text.ElideMiddle;
                     verticalAlignment: Text.AlignVCenter;
@@ -86,11 +85,20 @@ MobileComponents.Page {
 
     }
 
-    FileDialog {
+    Component {
         id: folderDlg;
-        title: "New Search Folder";
-        folder: shortcuts.home;
-        selectFolder: true;
-        onAccepted: peruseConfig.addBookLocation(folderDlg.fileUrl);
+        MobileComponents.Page {
+            color: MobileComponents.Theme.viewBackgroundColor;
+            FileFinder {
+                anchors.fill: parent;
+                folder: peruseConfig.homeDir();
+                showFiles: false;
+                onAccepted: {
+                    peruseConfig.addBookLocation(selectedItem());
+                    mainWindow.pageStack.pop();
+                }
+                onAborted: mainWindow.pageStack.pop();
+            }
+        }
     }
 }
