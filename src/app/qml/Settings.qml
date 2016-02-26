@@ -82,7 +82,50 @@ MobileComponents.Page {
                 }
             }
         }
+    }
 
+    Rectangle {
+        id: addingNewBooksProgress;
+        color: MobileComponents.Theme.viewBackgroundColor;
+        anchors.fill: parent;
+        opacity: 0;
+        Behavior on opacity { PropertyAnimation { duration: mainWindow.animationDuration; } }
+        enabled: opacity > 0;
+        MouseArea {
+            enabled: parent.enabled;
+            anchors.fill: parent;
+        }
+        PlasmaComponents.Label {
+            anchors {
+                bottom: parent.verticalCenter;
+                left: parent.left;
+                right: parent.right;
+            }
+            horizontalAlignment: Text.AlignHCenter;
+            text: "Please wait while we find your comics...";
+        }
+        PlasmaComponents.BusyIndicator {
+            id: loadingSpinner;
+            anchors {
+                top: parent.verticalCenter;
+                left: parent.left;
+                right: parent.right;
+            }
+            running: addingNewBooksProgress.enabled;
+        }
+        PlasmaComponents.Label {
+            anchors {
+                top: loadingSpinner.bottom;
+                left: parent.left;
+                right: parent.right;
+            }
+            horizontalAlignment: Text.AlignHCenter;
+            text: contentList.count;
+        }
+    }
+    Connections {
+        target: contentList.contentModel;
+        onSearchCompleted: addingNewBooksProgress.opacity = 0;
     }
 
     Component {
@@ -96,6 +139,12 @@ MobileComponents.Page {
                 onAccepted: {
                     peruseConfig.addBookLocation(selectedItem());
                     mainWindow.pageStack.pop();
+
+                    // Now search for new items in that locations...
+                    var locations = peruseConfig.bookLocations;
+                    addingNewBooksProgress.opacity = 1;
+                    contentList.contentModel.addLocation(locations[locations.length - 1]);
+                    contentList.contentModel.startSearch();
                 }
                 onAborted: mainWindow.pageStack.pop();
             }
