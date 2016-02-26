@@ -110,6 +110,8 @@ void BalooContentLister::startSearch()
 
         d->queries.append(runnable);
     }
+    // This ensures that, should we decide to search more stuff later, we can do so granularly
+    d->locations.clear();
 
     if(!d->queries.empty())
     {

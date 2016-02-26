@@ -110,6 +110,8 @@ void FilesystemContentLister::startSearch()
             qApp->processEvents();
         }
     }
+    // This ensures that, should we decide to search more stuff later, we can do so granularly
+    d->locations.clear();
 
     // Not entirely happy about this, but it makes things not break...
     // Previously, the welcome page in Peruse would end up unpopulated because a signal
