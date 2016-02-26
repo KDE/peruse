@@ -82,6 +82,7 @@ Item {
         }
         clip: true;
         model: folderModel;
+        Component.onCompleted: folderView.currentIndex = -1;
         header: MobileComponents.ListItem {
             enabled: true;
             clip: true;
