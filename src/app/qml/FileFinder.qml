@@ -86,6 +86,7 @@ Item {
         header: MobileComponents.ListItem {
             enabled: true;
             clip: true;
+            width: folderView.width;
             onClicked: folderModel.folder = folderModel.parentFolder;
             MobileComponents.Label {
                 anchors {
@@ -95,12 +96,14 @@ Item {
                 }
                 text: "(go up one level)";
                 height: paintedHeight + units.largeSpacing * 2;
-                width: root.width - units.largeSpacing * 2;
+                width: folderView.width - units.largeSpacing * 2;
                 verticalAlignment: Text.AlignVCenter;
             }
         }
         delegate: MobileComponents.ListItem {
             enabled: true;
+            height: fileNameLbl.height + units.smallSpacing * 2;
+            width: folderView.width;
             onClicked: {
                 if(fileIsDir) {
                     folderView.currentIndex = -1;
@@ -112,6 +115,7 @@ Item {
             }
             checked: folderView.currentIndex === index;
             MobileComponents.Label {
+                id: fileNameLbl;
                 anchors {
                     left: parent.left;
                     leftMargin: units.largeSpacing;
