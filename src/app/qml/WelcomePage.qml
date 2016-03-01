@@ -176,6 +176,7 @@ MobileComponents.Page {
                     filename: book.readProperty("filename");
                     categoryEntriesCount: 0;
                     currentPage: book.readProperty("currentPage");
+                    totalPages: book.readProperty("totalPages");
                     onBookSelected: root.bookSelected(filename, currentPage);
                     selected: startWithThese.currentItem === this;
                 }
@@ -189,6 +190,7 @@ MobileComponents.Page {
                     filename: book.readProperty("filename");
                     categoryEntriesCount: 0;
                     currentPage: book.readProperty("currentPage");
+                    totalPages: book.readProperty("totalPages");
                     onBookSelected: root.bookSelected(filename, currentPage);
                     selected: startWithThese.currentItem === this;
                 }
@@ -207,6 +209,7 @@ MobileComponents.Page {
                     filename: book.readProperty("filename");
                     categoryEntriesCount: 0;
                     currentPage: book.readProperty("currentPage");
+                    totalPages: book.readProperty("totalPages");
                     onBookSelected: root.bookSelected(filename, currentPage);
                     selected: startWithThese.currentItem === this;
                 }
@@ -220,6 +223,7 @@ MobileComponents.Page {
                     filename: book.readProperty("filename");
                     categoryEntriesCount: 0;
                     currentPage: book.readProperty("currentPage");
+                    totalPages: book.readProperty("totalPages");
                     onBookSelected: root.bookSelected(filename, currentPage);
                     selected: startWithThese.currentItem === this;
                 }
@@ -233,6 +237,7 @@ MobileComponents.Page {
                     filename: book.readProperty("filename");
                     categoryEntriesCount: 0;
                     currentPage: book.readProperty("currentPage");
+                    totalPages: book.readProperty("totalPages");
                     onBookSelected: root.bookSelected(filename, currentPage);
                     selected: startWithThese.currentItem === this;
                 }
@@ -246,6 +251,7 @@ MobileComponents.Page {
                     filename: book.readProperty("filename");
                     categoryEntriesCount: 0;
                     currentPage: book.readProperty("currentPage");
+                    totalPages: book.readProperty("totalPages");
                     onBookSelected: root.bookSelected(filename, currentPage);
                     selected: startWithThese.currentItem === this;
                 }
@@ -278,6 +284,7 @@ MobileComponents.Page {
                     filename: book.readProperty("filename");
                     categoryEntriesCount: 0;
                     currentPage: book.readProperty("currentPage");
+                    totalPages: book.readProperty("totalPages");
                     onBookSelected: root.bookSelected(filename, currentPage);
                 }
                 ListComponents.BookTileTall {
@@ -290,6 +297,7 @@ MobileComponents.Page {
                     filename: book.readProperty("filename");
                     categoryEntriesCount: 0;
                     currentPage: book.readProperty("currentPage");
+                    totalPages: book.readProperty("totalPages");
                     onBookSelected: root.bookSelected(filename, currentPage);
                 }
             }
@@ -307,6 +315,7 @@ MobileComponents.Page {
                     filename: book.readProperty("filename");
                     categoryEntriesCount: 0;
                     currentPage: book.readProperty("currentPage");
+                    totalPages: book.readProperty("totalPages");
                     onBookSelected: root.bookSelected(filename, currentPage);
                 }
                 ListComponents.BookTileTall {
@@ -319,6 +328,7 @@ MobileComponents.Page {
                     filename: book.readProperty("filename");
                     categoryEntriesCount: 0;
                     currentPage: book.readProperty("currentPage");
+                    totalPages: book.readProperty("totalPages");
                     onBookSelected: root.bookSelected(filename, currentPage);
                 }
                 ListComponents.BookTileTall {
@@ -331,6 +341,7 @@ MobileComponents.Page {
                     filename: book.readProperty("filename");
                     categoryEntriesCount: 0;
                     currentPage: book.readProperty("currentPage");
+                    totalPages: book.readProperty("totalPages");
                     onBookSelected: root.bookSelected(filename, currentPage);
                 }
             }
@@ -350,6 +361,7 @@ MobileComponents.Page {
                         filename: book.readProperty("filename");
                         categoryEntriesCount: 0;
                         currentPage: book.readProperty("currentPage");
+                        totalPages: book.readProperty("totalPages");
                         onBookSelected: root.bookSelected(filename, currentPage);
                     }
                     ListComponents.BookTileTall {
@@ -362,6 +374,7 @@ MobileComponents.Page {
                         filename: book.readProperty("filename");
                         categoryEntriesCount: 0;
                         currentPage: book.readProperty("currentPage");
+                        totalPages: book.readProperty("totalPages");
                         onBookSelected: root.bookSelected(filename, currentPage);
                     }
                     ListComponents.BookTileTall {
@@ -373,6 +386,7 @@ MobileComponents.Page {
                         filename: book.readProperty("filename");
                         categoryEntriesCount: 0;
                         currentPage: book.readProperty("currentPage");
+                        totalPages: book.readProperty("totalPages");
                         onBookSelected: root.bookSelected(filename, currentPage);
                     }
                     ListComponents.BookTileTall {
@@ -385,6 +399,7 @@ MobileComponents.Page {
                         filename: book.readProperty("filename");
                         categoryEntriesCount: 0;
                         currentPage: book.readProperty("currentPage");
+                        totalPages: book.readProperty("totalPages");
                         onBookSelected: root.bookSelected(filename, currentPage);
                     }
                 }
@@ -397,6 +412,7 @@ MobileComponents.Page {
         property string title: "unnamed";
         property string filename: "";
         property string currentPage: "0";
+        property string totalPages: "0";
     }
     Item {
         id: loadingProgress;

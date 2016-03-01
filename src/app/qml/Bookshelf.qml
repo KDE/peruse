@@ -126,6 +126,7 @@ MobileComponents.Page {
                 filename: model.filename;
                 categoryEntriesCount: model.categoryEntriesCount;
                 currentPage: model.currentPage;
+                totalPages: model.totalPages;
                 onBookSelected: root.bookSelected(filename, currentPage);
                 selected: shelfList.currentIndex === index;
             }
