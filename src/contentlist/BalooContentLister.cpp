@@ -156,6 +156,8 @@ void BalooContentLister::queryResult(Baloo::QueryRunnable* query, QString file)
     KFileMetaData::UserMetaData data(file);
     int currentPage = data.attribute("peruse.currentPage").toInt();
     metadata["currentPage"] = QVariant::fromValue<int>(currentPage);
+    int totalPages = data.attribute("peruse.totalPages").toInt();
+    metadata["totalPages"] = QVariant::fromValue<int>(totalPages);
 
     emit fileFound(file, metadata);
 }
