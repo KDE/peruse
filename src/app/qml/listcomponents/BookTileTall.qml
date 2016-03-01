@@ -69,15 +69,6 @@ Item {
                 color: theme.viewTextColor;
             }
             radius: 2;
-            PlasmaComponents.ProgressBar {
-                anchors {
-                    left: parent.left;
-                    right: parent.right;
-                    top: parent.bottom;
-                }
-                visible: value > 0;
-                value: root.progress > 0 && root.progress <= 1 ? root.progress : 0;
-            }
         }
         Image {
             id: coverImage;
@@ -104,5 +95,14 @@ Item {
         wrapMode: Text.WrapAtWordBoundaryOrAnywhere;
         elide: Text.ElideMiddle;
         horizontalAlignment: Text.AlignHCenter;
+    }
+    PlasmaComponents.ProgressBar {
+        anchors {
+            left: bookCover.left;
+            right: bookCover.right;
+            bottom: bookTitle.top;
+        }
+        visible: value > 0;
+        value: root.progress > 0 && root.progress <= 1 ? root.progress : 0;
     }
 }
