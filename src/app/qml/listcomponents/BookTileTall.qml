@@ -32,6 +32,8 @@ Item {
     property string filename;
     property int categoryEntriesCount;
     property string currentPage;
+    property string totalPages;
+    property double progress: currentPage / totalPages;
     signal bookSelected(string filename, int currentPage);
 
     property int neededHeight: bookCover.height + bookTitle.height + units.largeSpacing;
@@ -67,6 +69,15 @@ Item {
                 color: theme.viewTextColor;
             }
             radius: 2;
+            PlasmaComponents.ProgressBar {
+                anchors {
+                    left: parent.left;
+                    right: parent.right;
+                    top: parent.bottom;
+                }
+                visible: value > 0;
+                value: root.progress > 0 && root.progress <= 1 ? root.progress : 0;
+            }
         }
         Image {
             id: coverImage;
@@ -77,31 +88,6 @@ Item {
             source: "image://preview/" + root.filename
             asynchronous: true;
             fillMode: Image.PreserveAspectFit;
-        }
-        Rectangle {
-            anchors {
-                fill: bookCurrentPage;
-                margins: -units.smallSpacing;
-            }
-            border {
-                width: 2;
-                color: theme.viewTextColor;
-            }
-            radius: height/2 - 1;
-            color: theme.viewBackgroundColor;
-            visible: bookCurrentPage.visible;
-        }
-        PlasmaComponents.Label {
-            id: bookCurrentPage;
-            anchors {
-                top: parent.top;
-                left: coverImage.right;
-                margins: units.smallSpacing;
-            }
-            color: theme.viewTextColor;
-            text: parseInt(root.currentPage, 10) + 1;
-            visible: text > 1
-            // TODO this should be a progressy thing, but we lack page count information in the metadata we have for books. Fix when that is done.
         }
     }
     PlasmaComponents.Label {
