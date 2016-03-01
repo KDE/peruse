@@ -65,6 +65,9 @@ public:
 
     QObject* folderCategoryModel() const;
     Q_SIGNAL void folderCategoryModelChanged();
+
+    // Update the data of a book at runtime - in particular, we need to update totalPages and currentPage
+    Q_INVOKABLE void setBookData(QString fileName, QString property, QString value);
 private:
     class Private;
     Private* d;

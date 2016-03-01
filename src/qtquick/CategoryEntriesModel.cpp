@@ -40,6 +40,7 @@ CategoryEntriesModel::CategoryEntriesModel(QObject* parent)
     : QAbstractListModel(parent)
     , d(new Private)
 {
+    connect(this, SIGNAL(entryDataUpdated(BookEntry*)), this, SLOT(entryDataChanged(BookEntry*)));
 }
 
 CategoryEntriesModel::~CategoryEntriesModel()
@@ -197,6 +198,7 @@ void CategoryEntriesModel::addCategoryEntry(const QString& categoryName, BookEnt
         if(!categoryModel)
         {
             categoryModel = new CategoryEntriesModel(this);
+            connect(this, SIGNAL(entryDataUpdated(BookEntry*)), categoryModel, SIGNAL(entryDataUpdated(BookEntry*)));
             categoryModel->setName(nextCategory);
 
             int insertionIndex = 0;
@@ -286,4 +288,11 @@ QObject* CategoryEntriesModel::getEntry(int index)
         obj->setProperty("entriesModel", QVariant::fromValue(catEntry));
     }
     return obj;
+}
+
+void CategoryEntriesModel::entryDataChanged(BookEntry* entry)
+{
+    int entryIndex = d->entries.indexOf(entry) + d->categoryModels.count();
+    QModelIndex changed = index(entryIndex);
+    dataChanged(changed, changed);
 }

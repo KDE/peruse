@@ -77,6 +77,9 @@ public:
     Q_INVOKABLE QObject* getEntry(int index);
     Q_INVOKABLE int indexOfFile(QString filename);
     Q_INVOKABLE bool indexIsBook(int index);
+
+    Q_SIGNAL void entryDataUpdated(BookEntry* entry);
+    Q_SLOT void entryDataChanged(BookEntry* entry);
 protected:
     QString name() const;
     void setName(const QString& newName);

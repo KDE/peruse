@@ -86,21 +86,25 @@ void BookListModel::contentModelItemsInserted(QModelIndex index, int first, int 
     if(!d->newlyAddedCategoryModel)
     {
         d->newlyAddedCategoryModel = new CategoryEntriesModel(this);
+        connect(this, SIGNAL(entryDataUpdated(BookEntry*)), d->newlyAddedCategoryModel, SIGNAL(entryDataUpdated(BookEntry*)));
         emit newlyAddedCategoryModelChanged();
     }
     if(!d->authorCategoryModel)
     {
         d->authorCategoryModel = new CategoryEntriesModel(this);
+        connect(this, SIGNAL(entryDataUpdated(BookEntry*)), d->authorCategoryModel, SIGNAL(entryDataUpdated(BookEntry*)));
         emit authorCategoryModelChanged();
     }
     if(!d->seriesCategoryModel)
     {
         d->seriesCategoryModel = new CategoryEntriesModel(this);
+        connect(this, SIGNAL(entryDataUpdated(BookEntry*)), d->seriesCategoryModel, SIGNAL(entryDataUpdated(BookEntry*)));
         emit seriesCategoryModelChanged();
     }
     if(!d->folderCategoryModel)
     {
         d->folderCategoryModel = new CategoryEntriesModel(this);
+        connect(this, SIGNAL(entryDataUpdated(BookEntry*)), d->folderCategoryModel, SIGNAL(entryDataUpdated(BookEntry*)));
         emit folderCategoryModel();
     }
 
@@ -132,6 +136,8 @@ void BookListModel::contentModelItemsInserted(QModelIndex index, int first, int 
             { entry->created = it.value().toDateTime(); }
             else if(it.key() == QLatin1String("currentPage"))
             { entry->currentPage = it.value().toInt(); }
+            else if(it.key() == QLatin1String("totalPages"))
+            { entry->totalPages = it.value().toInt(); }
         }
 
         d->entries.append(entry);
@@ -172,4 +178,24 @@ QObject * BookListModel::folderCategoryModel() const
 int BookListModel::count() const
 {
     return d->entries.count();
+}
+
+void BookListModel::setBookData(QString fileName, QString property, QString value)
+{
+    Q_FOREACH(BookEntry* entry, d->entries)
+    {
+        if(entry->filename == fileName)
+        {
+            if(property == "totalPages")
+            {
+                entry->totalPages = value.toInt();
+            }
+            else if(property == "currentPage")
+            {
+                entry->currentPage = value.toInt();
+            }
+            break;
+        }
+        emit entryDataUpdated(entry);
+    }
 }
