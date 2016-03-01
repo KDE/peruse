@@ -113,7 +113,15 @@ MobileComponents.ApplicationWindow {
 
     Component {
         id: bookViewer;
-        Book { }
+        Book {
+            id: viewerRoot;
+            onCurrentPageChanged: {
+                contentList.setBookData(viewerRoot.file, "currentPage", viewerRoot.currentPage);
+            }
+            onTotalPagesChanged: {
+                contentList.setBookData(viewerRoot.file, "totalPages", viewerRoot.totalPages);
+            }
+        }
     }
 
     Component {
