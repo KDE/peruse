@@ -59,7 +59,7 @@ ViewerBase {
             filename: root.file;
             onLoadingCompleted: {
                 root.loadingCompleted(success);
-               initialPageChange.start();
+                initialPageChange.start();
             }
         }
         onCurrentIndexChanged: {

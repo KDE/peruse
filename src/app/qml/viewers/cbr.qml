@@ -60,7 +60,7 @@ ViewerBase {
             qmlEngine: globalQmlEngine;
             onLoadingCompleted: {
                 root.loadingCompleted(success);
-               initialPageChange.start();
+                initialPageChange.start();
             }
         }
         onCurrentIndexChanged: {
