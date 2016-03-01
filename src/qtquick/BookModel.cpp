@@ -143,7 +143,7 @@ int BookModel::currentPage() const
 {
     return d->currentPage;
 }
-#include "QDebug"
+
 void BookModel::setCurrentPage(int newCurrentPage, bool updateFilesystem)
 {
 //     qDebug() << Q_FUNC_INFO << d->filename << newCurrentPage << updateFilesystem;
