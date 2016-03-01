@@ -20,6 +20,7 @@
  */
 
 #include "PeruseConfig.h"
+#include <KFileMetaData/UserMetaData>
 
 #include <KConfig>
 #include <KConfigGroup>
@@ -143,4 +144,10 @@ QStringList PeruseConfig::bookLocations() const
 QString PeruseConfig::homeDir() const
 {
     return QStandardPaths::standardLocations(QStandardPaths::HomeLocation).first();
+}
+
+void PeruseConfig::setFilesystemProperty(QString fileName, QString propertyName, QString value)
+{
+    KFileMetaData::UserMetaData data(fileName);
+    data.setAttribute(QString("peruse.").append(propertyName), value);
 }

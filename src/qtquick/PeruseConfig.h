@@ -46,6 +46,7 @@ public:
 
     // This should go somewhere more sensible, really... like a static on Qt. or something :P
     Q_INVOKABLE QString homeDir() const;
+    Q_INVOKABLE void setFilesystemProperty(QString fileName, QString propertyName, QString value);
 private:
     class Private;
     Private* d;
