@@ -33,6 +33,7 @@ MobileComponents.Page {
     color: MobileComponents.Theme.viewBackgroundColor;
     property string file;
     property int currentPage;
+    property int totalPages;
     onCurrentPageChanged: {
         // set off a timer to slightly postpone saving the current page, so it doesn't happen during animations etc
         updateCurrent.start();
@@ -167,6 +168,10 @@ MobileComponents.Page {
                     }
                     else {
                         thumbnailNavigator.delegate = thumbnailComponent;
+                    }
+                    peruseConfig.setFilesystemProperty(root.file, "totalPages", viewLoader.item.pageCount);
+                    if(root.totalPages !== viewLoader.item.pageCount) {
+                        root.totalPages = viewLoader.item.pageCount;
                     }
                     viewLoader.item.currentPage = root.currentPage;
                     viewLoader.loadingCompleted = true;
