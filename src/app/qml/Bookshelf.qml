@@ -91,7 +91,7 @@ MobileComponents.Page {
         clip: true;
         anchors.fill: parent;
         cellWidth: width / 2;
-        cellHeight: root.height / 4;
+        cellHeight: root.height * 2 / 7;
         header: ListComponents.ListPageHeader { text: root.headerText; }
         currentIndex: -1;
 
