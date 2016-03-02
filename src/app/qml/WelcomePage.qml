@@ -59,9 +59,31 @@ MobileComponents.Page {
     ]
 
     Item {
-        id: titleContainer;
+        id: searchContainer;
         anchors {
             top: parent.top;
+            left: parent.left;
+            right: parent.right;
+        }
+        clip: true;
+        height: mainWindow.isLoading ? 0 : searchHeight;
+        Behavior on height { PropertyAnimation { duration: mainWindow.animationDuration; easing.type: Easing.InOutQuad; } }
+        property int searchHeight: searchField.text.length > 0 ? parent.height * 2 / 3 : searchField.height;
+        PlasmaComponents.TextField {
+            id: searchField;
+            anchors {
+                top: parent.top;
+                left: parent.left;
+                right: parent.right;
+            }
+            placeholderText: "Tap and type to search";
+        }
+    }
+
+    Item {
+        id: titleContainer;
+        anchors {
+            top: searchContainer.bottom;
             left: parent.left;
             right: parent.right;
         }
