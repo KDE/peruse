@@ -76,6 +76,7 @@ QVariant CategoryEntriesModel::data(const QModelIndex& index, int role) const
             CategoryEntriesModel* model = d->categoryModels[index.row()];
             switch(role)
             {
+                case Qt::DisplayRole:
                 case TitleRole:
                     result.setValue(model->name());
                     break;
@@ -95,6 +96,7 @@ QVariant CategoryEntriesModel::data(const QModelIndex& index, int role) const
             const BookEntry* entry = d->entries[index.row() - d->categoryModels.count()];
             switch(role)
             {
+                case Qt::DisplayRole:
                 case FilenameRole:
                     result.setValue(entry->filename);
                     break;
