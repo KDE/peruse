@@ -55,20 +55,10 @@ void PeruseConfig::bookOpened(QString path)
         // This is already first, don't do work we don't need to, because that's just silly
         return;
     }
-    else if(i > 0)
-    {
-        QString oldFirst = recent[0];
-        recent[0] = recent[i];
-        recent[i] = oldFirst;
-    }
     else
     {
-        recent[5] = recent[4];
-        recent[4] = recent[3];
-        recent[3] = recent[2];
-        recent[2] = recent[1];
-        recent[1] = recent[0];
-        recent[0] = path;
+        recent.removeAll(path);
+        recent.prepend(path);
     }
     d->config.group("general").writeEntry("recently opened", recent);
     d->config.sync();
