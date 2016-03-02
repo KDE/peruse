@@ -104,22 +104,30 @@ MobileComponents.Page {
         property int mostRecentlyRead4: -1;
         property int mostRecentlyRead5: -1;
         property int mostRecentlyAdded0: -1;
+        function updateRecentlyRead() {
+            mostRecentlyAdded0 = mostRecentlyRead0 = mostRecentlyRead1 = mostRecentlyRead2 = mostRecentlyRead3 = mostRecentlyRead4 = mostRecentlyRead5 = -1;
+            startWithThese.mostRecentlyRead0 = contentList.indexOfFile(peruseConfig.recentlyOpened[0]);
+            startWithThese.mostRecentlyRead1 = contentList.indexOfFile(peruseConfig.recentlyOpened[1]);
+            startWithThese.mostRecentlyRead2 = contentList.indexOfFile(peruseConfig.recentlyOpened[2]);
+            startWithThese.mostRecentlyRead3 = contentList.indexOfFile(peruseConfig.recentlyOpened[3]);
+            startWithThese.mostRecentlyRead4 = contentList.indexOfFile(peruseConfig.recentlyOpened[4]);
+            startWithThese.mostRecentlyRead5 = contentList.indexOfFile(peruseConfig.recentlyOpened[5]);
+            // the model might be null, if we haven't actually got any entries... so, let's check that
+            // and just leave the whole thing empty in that case :)
+            if(contentList.newlyAddedCategoryModel) {
+                startWithThese.mostRecentlyAdded0 = 0;
+                newItemsRepeater.model = Math.min(10, Math.floor((contentList.newlyAddedCategoryModel.rowCount() - 5)));
+            }
+        }
+        Connections {
+            target: peruseConfig;
+            onRecentlyOpenedChanged: startWithThese.updateRecentlyRead();
+        }
         Connections {
             target: mainWindow;
             onIsLoadingChanged: {
                 if(mainWindow.isLoading === false) {
-                    startWithThese.mostRecentlyRead0 = contentList.indexOfFile(peruseConfig.recentlyOpened[0]);
-                    startWithThese.mostRecentlyRead1 = contentList.indexOfFile(peruseConfig.recentlyOpened[1]);
-                    startWithThese.mostRecentlyRead2 = contentList.indexOfFile(peruseConfig.recentlyOpened[2]);
-                    startWithThese.mostRecentlyRead3 = contentList.indexOfFile(peruseConfig.recentlyOpened[3]);
-                    startWithThese.mostRecentlyRead4 = contentList.indexOfFile(peruseConfig.recentlyOpened[4]);
-                    startWithThese.mostRecentlyRead5 = contentList.indexOfFile(peruseConfig.recentlyOpened[5]);
-                    // the model might be null, if we haven't actually got any entries... so, let's check that
-                    // and just leave the whole thing empty in that case :)
-                    if(contentList.newlyAddedCategoryModel) {
-                        startWithThese.mostRecentlyAdded0 = 0;
-                        newItemsRepeater.model = Math.min(10, Math.floor((contentList.newlyAddedCategoryModel.rowCount() - 5)));
-                    }
+                    startWithThese.updateRecentlyRead();
                 }
             }
         }
