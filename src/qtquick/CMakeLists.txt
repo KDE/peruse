@@ -7,6 +7,7 @@ set(qmlplugin_SRCS
     CategoryEntriesModel.cpp
     BookModel.cpp
     BookListModel.cpp
+    FilterProxy.cpp
     FolderBookModel.cpp
     PeruseConfig.cpp
     PreviewImageProvider.cpp

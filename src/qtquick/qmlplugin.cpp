@@ -20,8 +20,6 @@
  */
 
 #include "qmlplugin.h"
-#include "PropertyContainer.h"
-#include <QQmlEngine>
 
 #include "ArchiveBookModel.h"
 #include "BookListModel.h"
@@ -29,7 +27,10 @@
 #include "FolderBookModel.h"
 #include "PeruseConfig.h"
 #include "PreviewImageProvider.h"
+#include "FilterProxy.h"
+#include "PropertyContainer.h"
 
+#include <QQmlEngine>
 #include <QtQml/qqml.h>
 
 void QmlPlugins::initializeEngine(QQmlEngine *engine, const char *)
@@ -45,4 +46,5 @@ void QmlPlugins::registerTypes(const char *uri)
     qmlRegisterType<FolderBookModel>(uri, 0, 1, "FolderBookModel");
     qmlRegisterType<PeruseConfig>(uri, 0, 1, "Config");
     qmlRegisterType<PropertyContainer>(uri, 0, 1, "PropertyContainer");
+    qmlRegisterType<FilterProxy>(uri, 0, 1, "FilterProxy");
 }
