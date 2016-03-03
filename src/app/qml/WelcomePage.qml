@@ -103,7 +103,7 @@ MobileComponents.Page {
                 bottom: parent.bottom;
             }
             cellWidth: width / 2;
-            cellHeight: root.height * 2 / 7;
+            cellHeight: Math.min((root.height * 2 / 7), cellWidth);
             currentIndex: -1;
             model: Peruse.FilterProxy {
                 id: searchFilterProxy;
