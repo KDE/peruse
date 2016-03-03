@@ -105,7 +105,7 @@ MobileComponents.Page {
             cellWidth: width / 2;
             cellHeight: Math.max(
                 (root.height * 2 / 7),
-                (units.iconSizes.enormous + units.largeSpacing * 3 + MobileComponents.Theme.defaultFont.pixelSize)
+                Math.min(cellWidth, (units.iconSizes.enormous + units.largeSpacing * 3 + MobileComponents.Theme.defaultFont.pixelSize))
             );
             currentIndex: -1;
             model: Peruse.FilterProxy {
