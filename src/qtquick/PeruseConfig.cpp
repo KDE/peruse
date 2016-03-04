@@ -67,15 +67,7 @@ void PeruseConfig::bookOpened(QString path)
 
 QStringList PeruseConfig::recentlyOpened() const
 {
-    QStringList recent = QStringList() << "" << "" << "" << "" << "" << "";
-    QStringList saved = d->config.group("general").readEntry("recently opened", QStringList() << "" << "" << "" << "" << "" << "");
-    int i = 0;
-    Q_FOREACH(QString entry, saved)
-    {
-        recent[i] = entry;
-        ++i;
-    }
-    return recent;
+    return d->config.group("general").readEntry("recently opened", QStringList());
 }
 
 void PeruseConfig::addBookLocation(const QString& location)
