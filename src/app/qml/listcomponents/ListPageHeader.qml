@@ -22,6 +22,7 @@
 import QtQuick 2.1
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 
+/// FIXME Switch this to using the Kirigami page header/breadcrumbs component instead
 Row {
     id: root;
     property string text;
