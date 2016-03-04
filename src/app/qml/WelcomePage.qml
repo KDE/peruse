@@ -159,7 +159,7 @@ MobileComponents.Page {
             left: parent.left;
             right: parent.right;
         }
-        height: mainWindow.isLoading ? (parent.height / 2) : (parent.height / 3);
+        height: mainWindow.isLoading ? (parent.height / 2) : (parent.height / 4);
         Behavior on height { PropertyAnimation { duration: mainWindow.animationDuration; easing.type: Easing.InOutQuad; } }
         PlasmaExtras.Heading {
             id: appNameLabel;
