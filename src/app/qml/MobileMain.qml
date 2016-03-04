@@ -61,6 +61,9 @@ MobileComponents.ApplicationWindow {
     }
 
     globalDrawer: MobileComponents.GlobalDrawer {
+        /// FIXME This causes the text to get cut off on the phone, however if the text is shorter
+        /// it fails to expand the sidebar sufficiently to see all the action labels fully. Revisit
+        /// this when switching to Kirigami
         title: "Peruse Comic Viewer";
         titleIcon: "peruse";
         actions: [
