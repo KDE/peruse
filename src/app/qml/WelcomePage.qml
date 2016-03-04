@@ -68,7 +68,7 @@ MobileComponents.Page {
         clip: true;
         height: mainWindow.isLoading ? 0 : searchHeight;
         Behavior on height { PropertyAnimation { duration: mainWindow.animationDuration; easing.type: Easing.InOutQuad; } }
-        property int searchHeight: searchField.text.length > 0 ? parent.height * 3 / 4 : searchField.height;
+        property int searchHeight: searchField.text.length > 0 ? parent.height - titleContainer.height / 2 : searchField.height;
         PlasmaComponents.TextField {
             id: searchField;
             anchors {
@@ -159,7 +159,7 @@ MobileComponents.Page {
             left: parent.left;
             right: parent.right;
         }
-        height: mainWindow.isLoading ? (parent.height / 2) : (parent.height / 4);
+        height: mainWindow.isLoading ? (parent.height / 2) : (appNameLabel.height + appDescriptionLabel.height + units.largeSpacing);
         Behavior on height { PropertyAnimation { duration: mainWindow.animationDuration; easing.type: Easing.InOutQuad; } }
         PlasmaExtras.Heading {
             id: appNameLabel;
