@@ -174,6 +174,7 @@ MobileComponents.Page {
                         root.totalPages = viewLoader.item.pageCount;
                     }
                     viewLoader.item.currentPage = root.currentPage;
+                    thumbnailNavigator.positionViewAtIndex(root.currentPage, ListView.Center);
                     viewLoader.loadingCompleted = true;
                 }
             }
