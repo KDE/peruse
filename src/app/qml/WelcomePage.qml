@@ -60,7 +60,10 @@ MobileComponents.Page {
     mainAction: Action {
         text: "Search Books";
         iconName: "system-search";
-        onTriggered: searchField.forceActiveFocus();
+        onTriggered: {
+            searchField.forceActiveFocus();
+            Qt.inputMethod.show(); // Would be nice if this happened automatically, but... no such luck
+        }
     }
 
     Item {
