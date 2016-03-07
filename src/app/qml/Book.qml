@@ -122,7 +122,15 @@ MobileComponents.Page {
         }
     }
 
-    property list<QtObject> mobileActions;
+    property list<QtObject> mobileActions: [
+        Action {
+            text: "Close book";
+            shortcut: "Esc";
+            iconName: "action-close";
+            onTriggered: closeBook();
+            enabled: mainWindow.pageStack.currentPage == root;
+        }
+    ]
     property list<QtObject> desktopActions: [
         Action {
             text: "Close book";
