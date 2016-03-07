@@ -34,29 +34,34 @@ MobileComponents.Page {
     id: root;
     color: MobileComponents.Theme.viewBackgroundColor;
     signal bookSelected(string filename, int currentPage);
-    contextualActions: [
-        Action {
-            text: "Open selected book";
-            shortcut: "Return";
-            iconName: "action-close";
-            onTriggered: bookSelected(startWithThese.currentItem.filename, startWithThese.currentItem.currentPage);
-            enabled: mainWindow.pageStack.currentPage == root;
-        },
-        Action {
-            text: "Previous book";
-            shortcut: StandardKey.MoveToPreviousChar
-            iconName: "action-previous";
-            onTriggered: startWithThese.selectPrevious();
-            enabled: mainWindow.pageStack.currentPage == root;
-        },
-        Action {
-            text: "Next book";
-            shortcut: StandardKey.MoveToNextChar;
-            iconName: "action-next";
-            onTriggered: startWithThese.selectNext();
-            enabled: mainWindow.pageStack.currentPage == root;
-        }
-    ]
+//     contextualActions: [
+//         Action {
+//             text: "Open selected book";
+//             shortcut: "Return";
+//             iconName: "action-close";
+//             onTriggered: bookSelected(startWithThese.currentItem.filename, startWithThese.currentItem.currentPage);
+//             enabled: mainWindow.pageStack.currentPage == root;
+//         },
+//         Action {
+//             text: "Previous book";
+//             shortcut: StandardKey.MoveToPreviousChar
+//             iconName: "action-previous";
+//             onTriggered: startWithThese.selectPrevious();
+//             enabled: mainWindow.pageStack.currentPage == root;
+//         },
+//         Action {
+//             text: "Next book";
+//             shortcut: StandardKey.MoveToNextChar;
+//             iconName: "action-next";
+//             onTriggered: startWithThese.selectNext();
+//             enabled: mainWindow.pageStack.currentPage == root;
+//         }
+//     ]
+    mainAction: Action {
+        text: "Search Books";
+        iconName: "system-search";
+        onTriggered: searchField.forceActiveFocus();
+    }
 
     Item {
         id: searchContainer;
@@ -66,7 +71,7 @@ MobileComponents.Page {
             right: parent.right;
         }
         clip: true;
-        height: mainWindow.isLoading ? 0 : searchHeight;
+        height: mainWindow.isLoading || !searchField.focus ? 0 : searchHeight;
         Behavior on height { PropertyAnimation { duration: mainWindow.animationDuration; easing.type: Easing.InOutQuad; } }
         property int searchHeight: searchField.text.length > 0 ? parent.height - titleContainer.height / 2 : searchField.height;
         PlasmaComponents.TextField {
