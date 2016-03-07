@@ -55,7 +55,8 @@ MobileComponents.Page {
     function closeShelf() {
         mainWindow.pageStack.pop();
     }
-    contextualActions: [
+    property list<QtObject> mobileActions;
+    property list<QtObject> desktopActions: [
         Action {
             text: "Back";
             shortcut: "Esc";
@@ -85,6 +86,7 @@ MobileComponents.Page {
             enabled: mainWindow.pageStack.currentPage == root;
         }
     ]
+    contextualActions: PLASMA_PLATFORM.substring(0, 5) === "phone" ? mobileActions : desktopActions;
 
     GridView {
         id: shelfList;

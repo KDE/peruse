@@ -122,7 +122,8 @@ MobileComponents.Page {
         }
     }
 
-    contextualActions: [
+    property list<QtObject> mobileActions;
+    property list<QtObject> desktopActions: [
         Action {
             text: "Close book";
             shortcut: "Esc";
@@ -145,6 +146,7 @@ MobileComponents.Page {
             enabled: mainWindow.pageStack.currentPage == root;
         }
     ]
+    contextualActions: PLASMA_PLATFORM.substring(0, 5) === "phone" ? mobileActions : desktopActions;
 
     Loader {
         id: viewLoader;

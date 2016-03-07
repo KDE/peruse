@@ -34,29 +34,33 @@ MobileComponents.Page {
     id: root;
     color: MobileComponents.Theme.viewBackgroundColor;
     signal bookSelected(string filename, int currentPage);
-//     contextualActions: [
-//         Action {
-//             text: "Open selected book";
-//             shortcut: "Return";
-//             iconName: "action-close";
-//             onTriggered: bookSelected(startWithThese.currentItem.filename, startWithThese.currentItem.currentPage);
-//             enabled: mainWindow.pageStack.currentPage == root;
-//         },
-//         Action {
-//             text: "Previous book";
-//             shortcut: StandardKey.MoveToPreviousChar
-//             iconName: "action-previous";
-//             onTriggered: startWithThese.selectPrevious();
-//             enabled: mainWindow.pageStack.currentPage == root;
-//         },
-//         Action {
-//             text: "Next book";
-//             shortcut: StandardKey.MoveToNextChar;
-//             iconName: "action-next";
-//             onTriggered: startWithThese.selectNext();
-//             enabled: mainWindow.pageStack.currentPage == root;
-//         }
-//     ]
+
+    property list<QtObject> mobileActions;
+    property list<QtObject> desktopActions: [
+        Action {
+            text: "Open selected book";
+            shortcut: "Return";
+            iconName: "action-close";
+            onTriggered: bookSelected(startWithThese.currentItem.filename, startWithThese.currentItem.currentPage);
+            enabled: mainWindow.pageStack.currentPage == root;
+        },
+        Action {
+            text: "Previous book";
+            shortcut: StandardKey.MoveToPreviousChar
+            iconName: "action-previous";
+            onTriggered: startWithThese.selectPrevious();
+            enabled: mainWindow.pageStack.currentPage == root;
+        },
+        Action {
+            text: "Next book";
+            shortcut: StandardKey.MoveToNextChar;
+            iconName: "action-next";
+            onTriggered: startWithThese.selectNext();
+            enabled: mainWindow.pageStack.currentPage == root;
+        }
+    ]
+    contextualActions: PLASMA_PLATFORM.substring(0, 5) === "phone" ? mobileActions : desktopActions;
+
     mainAction: Action {
         text: "Search Books";
         iconName: "system-search";
