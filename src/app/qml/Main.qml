@@ -20,79 +20,9 @@
  */
 
 import QtQuick 2.1
-import QtQuick.Layouts 1.1
-import QtQuick.Controls 1.0
-import QtQuick.Window 2.1
+import QtQuick.Window 2.2
 
-import org.kde.plasma.components 2.0 as PlasmaComponents
-import org.kde.plasma.extras 2.0 as PlasmaExtras
-
-ApplicationWindow {
-    id: mainWindow;
-    property int animationDuration: 200;
-
-    SystemPalette { id: sysPal; }
-
-    toolBar: ToolBar {
-        RowLayout {
-            PlasmaComponents.ToolButton {
-                iconName: "format-justify-fill"
-                onClicked: mainWindow.toggleSidebar();
-            }
-            PlasmaComponents.ToolButton {
-                iconName: "draw-arrow-back"
-                text: "Back"
-                enabled: view.depth > 1
-
-                onClicked: goUp();
-            }
-        }
-    }
-
-    leftSidebar: ColumnLayout {
-        spacing: 0
-        PlasmaExtras.Heading {
-            text: "Navigation"
-            font.bold: true
-            level: 2
-        }
-        PlasmaComponents.ToolButton {
-            text: "All Comics"
-            iconName: "system-search"
-            Layout.fillWidth: true
-            onClicked: {
-                view.clear()
-                view.push({
-                    item: allComics,
-                    properties: { focus: true }
-                })
-                mainWindow.toggleSidebar();
-            }
-        }
-    }
-    mainItem: StackView {
-        id: view
-        focus: true
-
-        delegate: StackViewDelegate {
-            pushTransition: StackViewTransition {
-                PropertyAnimation {
-                    duration: mainWindow.animationDuration;
-                    target: enterItem
-                    property: "x"
-                    from: exitItem.height
-                    to: 0
-                }
-            }
-            popTransition: StackViewTransition {
-                PropertyAnimation {
-                    duration: mainWindow.animationDuration;
-                    target: exitItem
-                    property: "x"
-                    from: 0
-                    to: enterItem.height
-                }
-            }
-        }
-    }
+PeruseMain {
+    width: Screen.desktopAvailableWidth * 0.7;
+    height: Screen.desktopAvailableHeight * 0.7;
 }
