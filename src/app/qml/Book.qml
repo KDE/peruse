@@ -37,14 +37,6 @@ MobileComponents.Page {
     onCurrentPageChanged: {
         // set off a timer to slightly postpone saving the current page, so it doesn't happen during animations etc
         updateCurrent.start();
-        thumbnailMovementAnimation.false;
-        var currentPos = thumbnailNavigator.contentY;
-        var newPos;
-        thumbnailNavigator.positionViewAtIndex(currentPage, ListView.Center);
-        newPos = thumbnailNavigator.contentY;
-        thumbnailMovementAnimation.from = currentPos;
-        thumbnailMovementAnimation.to = newPos;
-        thumbnailMovementAnimation.running = true;
     }
     Timer {
         id: updateCurrent;
@@ -184,7 +176,6 @@ MobileComponents.Page {
                         root.totalPages = viewLoader.item.pageCount;
                     }
                     viewLoader.item.currentPage = root.currentPage;
-                    thumbnailNavigator.positionViewAtIndex(root.currentPage, ListView.Center);
                     viewLoader.loadingCompleted = true;
                 }
             }
@@ -192,6 +183,14 @@ MobileComponents.Page {
                 if(root.currentPage !== viewLoader.item.currentPage && viewLoader.loadingCompleted) {
                     root.currentPage = viewLoader.item.currentPage;
                 }
+                thumbnailMovementAnimation.false;
+                var currentPos = thumbnailNavigator.contentY;
+                var newPos;
+                thumbnailNavigator.positionViewAtIndex(viewLoader.item.currentPage, ListView.Center);
+                newPos = thumbnailNavigator.contentY;
+                thumbnailMovementAnimation.from = currentPos;
+                thumbnailMovementAnimation.to = newPos;
+                thumbnailMovementAnimation.running = true;
             }
         }
     }
