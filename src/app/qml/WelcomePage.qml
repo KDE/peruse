@@ -64,110 +64,24 @@ MobileComponents.Page {
     mainAction: Action {
         text: "Search Books";
         iconName: "system-search";
-        onTriggered: {
-            searchField.forceActiveFocus();
-            Qt.inputMethod.show(); // Would be nice if this happened automatically, but... no such luck
-        }
+        onTriggered: searchBox.activate();
     }
 
-    Item {
-        id: searchContainer;
+    SearchBox {
+        id: searchBox;
         anchors {
             top: parent.top;
             left: parent.left;
             right: parent.right;
         }
-        clip: true;
-        height: mainWindow.isLoading || !searchField.focus ? 0 : searchHeight;
-        Behavior on height { PropertyAnimation { duration: mainWindow.animationDuration; easing.type: Easing.InOutQuad; } }
-        property int searchHeight: searchField.text.length > 0 ? parent.height - titleContainer.height / 2 : searchField.height;
-        PlasmaComponents.TextField {
-            id: searchField;
-            anchors {
-                top: parent.top;
-                left: parent.left;
-                right: parent.right;
-            }
-            placeholderText: "Tap and type to search";
-            onTextChanged: {
-                if(text.length > 0) {
-                    searchTimer.start();
-                }
-                else {
-                    searchTimer.stop();
-                }
-            }
-        }
-        Timer {
-            id: searchTimer;
-            interval: 250;
-            repeat: false;
-            running: false;
-            onTriggered: searchFilterProxy.setFilterFixedString(searchField.text);
-        }
-        GridView {
-            id: shelfList;
-            clip: true;
-            anchors {
-                top: searchField.bottom;
-                left: parent.left;
-                right: parent.right;
-                bottom: parent.bottom;
-            }
-            cellWidth: width / 2;
-            cellHeight: Math.max(
-                (root.height * 2 / 7),
-                Math.min(cellWidth, (units.iconSizes.enormous + units.largeSpacing * 3 + MobileComponents.Theme.defaultFont.pixelSize))
-            );
-            currentIndex: -1;
-            model: Peruse.FilterProxy {
-                id: searchFilterProxy;
-                sourceModel: contentList.newlyAddedCategoryModel;
-            }
-
-            function previousEntry() {
-                if(currentIndex > 0) {
-                    currentIndex--;
-                }
-            }
-            function nextEntry() {
-                if(currentIndex < model.rowCount() - 1) {
-                    currentIndex++;
-                }
-            }
-            delegate: Item {
-                height: model.categoryEntriesCount === 0 ? bookTile.neededHeight : categoryTile.neededHeight;
-                width: root.width / 2;
-                ListComponents.CategoryTileTall {
-                    id: categoryTile;
-                    height: model.categoryEntriesCount > 0 ? neededHeight : 0;
-                    width: parent.width;
-                    count: model.categoryEntriesCount;
-                    title: model.title;
-                    entriesModel: model.categoryEntriesModel ? model.categoryEntriesModel : null;
-                    selected: shelfList.currentIndex === index;
-                }
-                ListComponents.BookTileTall {
-                    id: bookTile;
-                    height: model.categoryEntriesCount < 1 ? neededHeight : 0;
-                    width: parent.width;
-                    author: model.author ? model.author : "(unknown)";
-                    title: model.title;
-                    filename: model.filename;
-                    categoryEntriesCount: model.categoryEntriesCount;
-                    currentPage: model.currentPage;
-                    totalPages: model.totalPages;
-                    onBookSelected: root.bookSelected(filename, currentPage);
-                    selected: shelfList.currentIndex === index;
-                }
-            }
-        }
+        model: contentList.newlyAddedCategoryModel;
+        maxHeight: parent.height - titleContainer.height / 2;
     }
 
     Item {
         id: titleContainer;
         anchors {
-            top: searchContainer.bottom;
+            top: searchBox.bottom;
             left: parent.left;
             right: parent.right;
         }
