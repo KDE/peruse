@@ -23,6 +23,6 @@ import QtQuick 2.1
 import QtQuick.Window 2.2
 
 PeruseMain {
-    width: Screen.desktopAvailableWidth * 0.7;
+    width: Screen.desktopAvailableWidth * 0.6;
     height: Screen.desktopAvailableHeight * 0.7;
 }
