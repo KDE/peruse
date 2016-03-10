@@ -76,7 +76,7 @@ Item {
                 fill: parent;
                 margins: units.largeSpacing;
             }
-            source: "image://preview/" + root.filename
+            source: (contentList.contentModel.getMimetype(root.filename) === "application/x-cbr") ? "image://comiccover/" + root.filename : "image://preview/" + root.filename
             asynchronous: true;
             fillMode: Image.PreserveAspectFit;
         }
