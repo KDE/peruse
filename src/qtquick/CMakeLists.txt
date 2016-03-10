@@ -4,9 +4,10 @@ set(qmlplugin_SRCS
     qmlplugin.cpp
     ArchiveBookModel.cpp
     ArchiveImageProvider.cpp
-    CategoryEntriesModel.cpp
     BookModel.cpp
     BookListModel.cpp
+    CategoryEntriesModel.cpp
+    ComicCoverImageProvider.cpp
     FilterProxy.cpp
     FolderBookModel.cpp
     PeruseConfig.cpp

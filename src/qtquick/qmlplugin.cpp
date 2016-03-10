@@ -24,6 +24,7 @@
 #include "ArchiveBookModel.h"
 #include "BookListModel.h"
 #include "BookModel.h"
+#include "ComicCoverImageProvider.h"
 #include "FolderBookModel.h"
 #include "PeruseConfig.h"
 #include "PreviewImageProvider.h"
@@ -36,6 +37,7 @@
 void QmlPlugins::initializeEngine(QQmlEngine *engine, const char *)
 {
     engine->addImageProvider("preview", new PreviewImageProvider());
+    engine->addImageProvider("comiccover", new ComicCoverImageProvider());
 }
 
 void QmlPlugins::registerTypes(const char *uri)
