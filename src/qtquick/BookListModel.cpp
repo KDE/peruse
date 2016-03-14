@@ -33,6 +33,7 @@ class BookListModel::Private {
 public:
     Private()
         : contentModel(0)
+        , titleCategoryModel(0)
         , newlyAddedCategoryModel(0)
         , authorCategoryModel(0)
         , seriesCategoryModel(0)
@@ -45,6 +46,7 @@ public:
     QList<BookEntry*> entries;
 
     QAbstractListModel* contentModel;
+    CategoryEntriesModel* titleCategoryModel;
     CategoryEntriesModel* newlyAddedCategoryModel;
     CategoryEntriesModel* authorCategoryModel;
     CategoryEntriesModel* seriesCategoryModel;
@@ -83,6 +85,12 @@ QObject * BookListModel::contentModel() const
 
 void BookListModel::contentModelItemsInserted(QModelIndex index, int first, int last)
 {
+    if(!d->titleCategoryModel)
+    {
+        d->titleCategoryModel = new CategoryEntriesModel(this);
+        connect(this, SIGNAL(entryDataUpdated(BookEntry*)), d->titleCategoryModel, SIGNAL(entryDataUpdated(BookEntry*)));
+        emit titleCategoryModelChanged();
+    }
     if(!d->newlyAddedCategoryModel)
     {
         d->newlyAddedCategoryModel = new CategoryEntriesModel(this);
@@ -143,6 +151,7 @@ void BookListModel::contentModelItemsInserted(QModelIndex index, int first, int 
         d->entries.append(entry);
 
         append(entry);
+        d->titleCategoryModel->addCategoryEntry(entry->title.left(1).toUpper(), entry);
         d->authorCategoryModel->addCategoryEntry(entry->author, entry);
         d->seriesCategoryModel->addCategoryEntry(entry->series, entry);
         d->newlyAddedCategoryModel->append(entry, CreatedRole);
@@ -153,6 +162,11 @@ void BookListModel::contentModelItemsInserted(QModelIndex index, int first, int 
     endInsertRows();
     emit countChanged();
     qApp->processEvents();
+}
+
+QObject * BookListModel::titleCategoryModel() const
+{
+    return d->titleCategoryModel;
 }
 
 QObject * BookListModel::newlyAddedCategoryModel() const

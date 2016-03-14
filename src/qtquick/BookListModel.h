@@ -30,6 +30,7 @@ class BookListModel : public CategoryEntriesModel
     Q_PROPERTY(int count READ count NOTIFY countChanged)
     Q_PROPERTY(QObject* contentModel READ contentModel WRITE setContentModel NOTIFY contentModelChanged)
     Q_PROPERTY(QObject* newlyAddedCategoryModel READ newlyAddedCategoryModel NOTIFY newlyAddedCategoryModelChanged)
+    Q_PROPERTY(QObject* titleCategoryModel READ titleCategoryModel NOTIFY titleCategoryModelChanged)
     Q_PROPERTY(QObject* authorCategoryModel READ authorCategoryModel NOTIFY authorCategoryModelChanged)
     Q_PROPERTY(QObject* seriesCategoryModel READ seriesCategoryModel NOTIFY seriesCategoryModelChanged)
     Q_PROPERTY(QObject* folderCategoryModel READ folderCategoryModel NOTIFY folderCategoryModelChanged)
@@ -53,6 +54,9 @@ public:
 
     int count() const;
     Q_SIGNAL void countChanged();
+
+    QObject* titleCategoryModel() const;
+    Q_SIGNAL void titleCategoryModelChanged();
 
     QObject* newlyAddedCategoryModel() const;
     Q_SIGNAL void newlyAddedCategoryModelChanged();
