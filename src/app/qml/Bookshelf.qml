@@ -153,7 +153,12 @@ MobileComponents.Page {
                 totalPages: model.totalPages;
                 onBookSelected: root.bookSelected(filename, currentPage);
                 selected: shelfList.currentIndex === index;
+                onPressAndHold: mainWindow.pageStack.push(bookDetails, { focus: true, file: model.filename });
             }
         }
+    }
+    Component {
+        id: bookDetails;
+        BookDetails { }
     }
 }
