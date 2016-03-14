@@ -183,7 +183,7 @@ void CategoryEntriesModel::setName(const QString& newName)
 
 void CategoryEntriesModel::addCategoryEntry(const QString& categoryName, BookEntry* entry)
 {
-    if(categoryName.length() > 1)
+    if(categoryName.length() > 0)
     {
         QStringList splitName = categoryName.split(QDir::separator());
 //         qDebug() << "Parsing" << categoryName;
