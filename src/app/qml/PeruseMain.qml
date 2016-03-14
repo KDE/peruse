@@ -66,33 +66,33 @@ MobileComponents.ApplicationWindow {
         titleIcon: "peruse";
         actions: [
             Action {
-                text: "All Comics";
-                iconName: "system-search";
-                onTriggered: changeCategory(bookshelfTitle);
-            },
-            Action {
                 text: "Recently Added Comics";
-                iconName: "system-search";
+                iconName: "appointment-new";
                 onTriggered: changeCategory(bookshelfAdded);
             },
             Action {
+                text: "Group by Title";
+                iconName: "view-media-title";
+                onTriggered: changeCategory(bookshelfTitle);
+            },
+            Action {
                 text: "Group by Authors";
-                iconName: "system-search";
+                iconName: "actor";
                 onTriggered: changeCategory(bookshelfAuthor);
             },
             Action {
                 text: "Group by Series";
-                iconName: "system-search";
+                iconName: "edit-group";
                 onTriggered: changeCategory(bookshelfSeries);
             },
             Action {
                 text: "Group by Publisher";
-                iconName: "system-search";
+                iconName: "view-media-publisher";
                 onTriggered: changeCategory(bookshelfPublisher);
             },
             Action {
                 text: "Filter by Folder";
-                iconName: "system-search";
+                iconName: "tag-folder";
                 onTriggered: changeCategory(bookshelfFolder);
             },
             Action {
@@ -128,8 +128,8 @@ MobileComponents.ApplicationWindow {
     Component {
         id: bookshelfTitle;
         Bookshelf {
-            model: contentList;
-            headerText: "All Comics";
+            model: contentList.titleCategoryModel;
+            headerText: "Group by Title";
             onBookSelected: mainWindow.showBook(filename, currentPage);
         }
     }
