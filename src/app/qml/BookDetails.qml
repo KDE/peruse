@@ -71,6 +71,36 @@ MobileComponents.Page {
             width: root.width;
             text: root.title;
         }
+        Item {
+            id: bookCover;
+            anchors {
+                horizontalCenter: parent.horizontalCenter;
+                margins: units.largeSpacing;
+            }
+            width: Math.min(parent.width - units.largeSpacing * 2, units.iconSizes.enormous + units.largeSpacing * 2);
+            height: width;
+            Rectangle {
+                anchors.centerIn: coverImage;
+                width: coverImage.paintedWidth + units.smallSpacing * 2;
+                height: coverImage.paintedHeight + units.smallSpacing * 2;
+                color: theme.viewBackgroundColor;
+                border {
+                    width: 2;
+                    color: theme.viewTextColor;
+                }
+                radius: 2;
+            }
+            Image {
+                id: coverImage;
+                anchors {
+                    fill: parent;
+                    margins: units.largeSpacing;
+                }
+                source: (contentList.contentModel.getMimetype(root.filename) === "application/x-cbr") ? "image://comiccover/" + root.filename : "image://preview/" + root.filename
+                asynchronous: true;
+                fillMode: Image.PreserveAspectFit;
+            }
+        }
         Repeater {
             id: dataRepeater;
             model: ListModel {}
