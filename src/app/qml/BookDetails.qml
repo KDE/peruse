@@ -34,12 +34,145 @@ MobileComponents.Page {
     id: root;
     color: MobileComponents.Theme.viewBackgroundColor;
     property string file;
+    onFileChanged: {
+        var book = contentList.get(contentList.indexOfFile(file));
+        filename = book.readProperty("filename");
+        filetitle = book.readProperty("filetitle");
+        title = book.readProperty("title");
+        series = book.readProperty("series");
+        author = book.readProperty("author");
+        publisher = book.readProperty("publisher");
+        created = book.readProperty("created");
+        lastOpenedTime = book.readProperty("lastOpenedTime");
+        totalPages = book.readProperty("totalPages");
+        currentPage = book.readProperty("currentPage");
+
+        dataRepeater.model.clear();
+        dataRepeater.model.append({"label": "Author:", value: root.author});
+        dataRepeater.model.append({"label": "Publisher:", value: root.publisher});
+        dataRepeater.model.append({"label": "Series:", value: root.series});
+        dataRepeater.model.append({"label": "Filename:", value: root.filename});
+    }
+    property string filename;
+    property string filetitle;
+    property string title;
+    property string series;
+    property string author;
+    property string publisher;
+    property date created;
+    property date lastOpenedTime;
+    property int totalPages;
+    property int currentPage;
 
     Column {
         width: root.width;
+        height: childrenRect.height;
         ListComponents.ListPageHeader {
             width: root.width;
-            text: root.file;
+            text: root.title;
+        }
+        Repeater {
+            id: dataRepeater;
+            model: ListModel {}
+            delegate: Item {
+                id: base;
+                width: root.width;
+                height: valueLabel.height;
+                MobileComponents.Label {
+                    anchors {
+                        top: parent.top;
+                        left: parent.left;
+                        right: parent.horizontalCenter;
+                        bottom: parent.bottom;
+                    }
+                    verticalAlignment: Text.AlignTop;
+                    text: model.label;
+                }
+                MobileComponents.Label {
+                    id: valueLabel;
+                    anchors {
+                        top: parent.top;
+                        left: parent.horizontalCenter;
+                        right: parent.right;
+                    }
+                    verticalAlignment: Text.AlignTop;
+                    height: paintedHeight;
+                    wrapMode: Text.WordWrap;
+                    text: model.value;
+                }
+            }
+        }
+        Item {
+            id: deleteBase;
+            width: root.width;
+            height: deleteButton.height + units.largeSpacing * 2;
+            Behavior on height { PropertyAnimation { duration: mainWindow.animationDuration; } }
+            states: [
+                State {
+                    name: "confirmDelete";
+                    PropertyChanges { target: deleteButton; opacity: 0; }
+                    PropertyChanges { target: deleteConfirmBase; opacity: 1; }
+                    PropertyChanges { target: deleteBase; height: deleteConfirmBase.height; }
+                }
+            ]
+            PlasmaComponents.Button {
+                id: deleteButton;
+                text: "Delete from device";
+                anchors {
+                    top: parent.top;
+                    topMargin: units.largeSpacing;
+                    horizontalCenter: parent.horizontalCenter;
+                }
+                iconName: "edit-delete";
+                onClicked: deleteBase.state = "confirmDelete";
+                Behavior on opacity { PropertyAnimation { duration: mainWindow.animationDuration; } }
+            }
+            Item {
+                id: deleteConfirmBase;
+                opacity: 0;
+                width: root.width;
+                Behavior on opacity { PropertyAnimation { duration: mainWindow.animationDuration; } }
+                height: yesDelete.height + confirmDeleteLabel.height + units.largeSpacing * 2 + units.smallSpacing;
+                MobileComponents.Label {
+                    id: confirmDeleteLabel;
+                    anchors {
+                        top: parent.top;
+                        topMargin: units.largeSpacing;
+                        left: parent.left;
+                        right: parent.right;
+                    }
+                    height: paintedHeight;
+                    wrapMode: Text.WordWrap;
+                    horizontalAlignment: Text.AlignHCenter;
+                    text: "Are you sure you want to delete this from your device?";
+                }
+                PlasmaComponents.Button {
+                    id: yesDelete;
+                    anchors {
+                        top: confirmDeleteLabel.bottom;
+                        topMargin: units.smallSpacing;
+                        right: parent.horizontalCenter;
+                        rightMargin: (parent.width - width) / 4;
+                    }
+                    text: "Yes, really delete";
+                    iconName: "dialog-ok";
+                    onClicked: {
+                        contentList.removeBook(root.file, true);
+                        mainWindow.pageStack.pop();
+                    }
+                }
+                PlasmaComponents.Button {
+                    anchors {
+                        top: confirmDeleteLabel.bottom;
+                        topMargin: units.smallSpacing;
+                        left: parent.horizontalCenter;
+                        leftMargin: (parent.width - width) / 4;
+                    }
+                    text: "No, cancel delete";
+                    iconName: "dialog-cancel";
+                    onClicked: deleteBase.state = "";
+                }
+            }
         }
     }
 }
