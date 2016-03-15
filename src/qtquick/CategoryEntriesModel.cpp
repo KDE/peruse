@@ -41,6 +41,7 @@ CategoryEntriesModel::CategoryEntriesModel(QObject* parent)
     , d(new Private)
 {
     connect(this, SIGNAL(entryDataUpdated(BookEntry*)), this, SLOT(entryDataChanged(BookEntry*)));
+    connect(this, SIGNAL(entryRemoved(BookEntry*)), this, SLOT(entryRemove(BookEntry*)));
 }
 
 CategoryEntriesModel::~CategoryEntriesModel()
@@ -201,6 +202,7 @@ void CategoryEntriesModel::addCategoryEntry(const QString& categoryName, BookEnt
         {
             categoryModel = new CategoryEntriesModel(this);
             connect(this, SIGNAL(entryDataUpdated(BookEntry*)), categoryModel, SIGNAL(entryDataUpdated(BookEntry*)));
+            connect(this, SIGNAL(entryRemoved(BookEntry*)), categoryModel, SIGNAL(entryRemoved(BookEntry*)));
             categoryModel->setName(nextCategory);
 
             int insertionIndex = 0;
@@ -297,4 +299,15 @@ void CategoryEntriesModel::entryDataChanged(BookEntry* entry)
     int entryIndex = d->entries.indexOf(entry) + d->categoryModels.count();
     QModelIndex changed = index(entryIndex);
     dataChanged(changed, changed);
+}
+
+void CategoryEntriesModel::entryRemove(BookEntry* entry)
+{
+    int listIndex = d->entries.indexOf(entry);
+    if(listIndex > -1) {
+        int entryIndex = listIndex + d->categoryModels.count();
+        beginRemoveRows(QModelIndex(), entryIndex, entryIndex);
+        d->entries.removeAll(entry);
+        endRemoveRows();
+    }
 }

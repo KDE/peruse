@@ -80,6 +80,8 @@ public:
 
     Q_SIGNAL void entryDataUpdated(BookEntry* entry);
     Q_SLOT void entryDataChanged(BookEntry* entry);
+    Q_SIGNAL void entryRemoved(BookEntry* entry);
+    Q_SLOT void entryRemove(BookEntry* entry);
 protected:
     QString name() const;
     void setName(const QString& newName);
