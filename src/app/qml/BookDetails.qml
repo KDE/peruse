@@ -65,7 +65,9 @@ MobileComponents.Page {
     property int currentPage;
 
     Column {
-        width: root.width;
+        anchors.horizontalCenter: parent.horizontalCenter;
+        width: root.width - units.largeSpacing * 2;
+        spacing: units.smallSpacing;
         height: childrenRect.height;
         ListComponents.ListPageHeader {
             width: root.width;
