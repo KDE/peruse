@@ -20,14 +20,16 @@
  */
 
 #include "BookListModel.h"
-#include <QUrl>
 
 #include "CategoryEntriesModel.h"
+
+#include <kio/deletejob.h>
 
 #include <QCoreApplication>
 #include <QDir>
 #include <QDebug>
 #include <QMimeDatabase>
+#include <QUrl>
 
 class BookListModel::Private {
 public:
@@ -89,30 +91,35 @@ void BookListModel::contentModelItemsInserted(QModelIndex index, int first, int 
     {
         d->titleCategoryModel = new CategoryEntriesModel(this);
         connect(this, SIGNAL(entryDataUpdated(BookEntry*)), d->titleCategoryModel, SIGNAL(entryDataUpdated(BookEntry*)));
+        connect(this, SIGNAL(entryRemoved(BookEntry*)), d->titleCategoryModel, SIGNAL(entryRemoved(BookEntry*)));
         emit titleCategoryModelChanged();
     }
     if(!d->newlyAddedCategoryModel)
     {
         d->newlyAddedCategoryModel = new CategoryEntriesModel(this);
         connect(this, SIGNAL(entryDataUpdated(BookEntry*)), d->newlyAddedCategoryModel, SIGNAL(entryDataUpdated(BookEntry*)));
+        connect(this, SIGNAL(entryRemoved(BookEntry*)), d->newlyAddedCategoryModel, SIGNAL(entryRemoved(BookEntry*)));
         emit newlyAddedCategoryModelChanged();
     }
     if(!d->authorCategoryModel)
     {
         d->authorCategoryModel = new CategoryEntriesModel(this);
         connect(this, SIGNAL(entryDataUpdated(BookEntry*)), d->authorCategoryModel, SIGNAL(entryDataUpdated(BookEntry*)));
+        connect(this, SIGNAL(entryRemoved(BookEntry*)), d->authorCategoryModel, SIGNAL(entryRemoved(BookEntry*)));
         emit authorCategoryModelChanged();
     }
     if(!d->seriesCategoryModel)
     {
         d->seriesCategoryModel = new CategoryEntriesModel(this);
         connect(this, SIGNAL(entryDataUpdated(BookEntry*)), d->seriesCategoryModel, SIGNAL(entryDataUpdated(BookEntry*)));
+        connect(this, SIGNAL(entryRemoved(BookEntry*)), d->seriesCategoryModel, SIGNAL(entryRemoved(BookEntry*)));
         emit seriesCategoryModelChanged();
     }
     if(!d->folderCategoryModel)
     {
         d->folderCategoryModel = new CategoryEntriesModel(this);
         connect(this, SIGNAL(entryDataUpdated(BookEntry*)), d->folderCategoryModel, SIGNAL(entryDataUpdated(BookEntry*)));
+        connect(this, SIGNAL(entryRemoved(BookEntry*)), d->folderCategoryModel, SIGNAL(entryRemoved(BookEntry*)));
         emit folderCategoryModel();
     }
 
@@ -208,8 +215,26 @@ void BookListModel::setBookData(QString fileName, QString property, QString valu
             {
                 entry->currentPage = value.toInt();
             }
+            emit entryDataUpdated(entry);
             break;
         }
-        emit entryDataUpdated(entry);
+    }
+}
+
+void BookListModel::removeBook(QString fileName, bool deleteFile)
+{
+    if(deleteFile) {
+        KIO::DeleteJob* job = KIO::del(QUrl::fromLocalFile(fileName), KIO::HideProgressInfo);
+        job->start();
+    }
+
+    Q_FOREACH(BookEntry* entry, d->entries)
+    {
+        if(entry->filename == fileName)
+        {
+            emit entryRemoved(entry);
+            delete entry;
+            break;
+        }
     }
 }

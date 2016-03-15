@@ -72,6 +72,9 @@ public:
 
     // Update the data of a book at runtime - in particular, we need to update totalPages and currentPage
     Q_INVOKABLE void setBookData(QString fileName, QString property, QString value);
+
+    // Delete a book from the model, and optionally delete the entry from file storage
+    Q_INVOKABLE void removeBook(QString fileName, bool deleteFile = false);
 private:
     class Private;
     Private* d;
