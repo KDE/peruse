@@ -28,6 +28,7 @@ target_link_libraries (peruseqmlplugin
     KF5::Archive
     KF5::IconThemes
     KF5::ConfigCore
+    KF5::KIOCore
     KF5::KIOWidgets
     KF5::FileMetaData
 )
