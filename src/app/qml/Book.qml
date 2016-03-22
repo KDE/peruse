@@ -24,13 +24,15 @@ import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.0
 
 import org.kde.plasma.components 2.0 as PlasmaComponents
-import org.kde.plasma.mobilecomponents 0.2 as MobileComponents
+import org.kde.kirigami 1.0 as Kirigami
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 import org.kde.peruse 0.1 as Peruse
 
-MobileComponents.Page {
+Kirigami.Page {
     id: root;
-    color: MobileComponents.Theme.viewBackgroundColor;
+    clip: true;
+    implicitWidth: applicationWindow().width;
+
     property string file;
     property int currentPage;
     property int totalPages;
@@ -38,18 +40,6 @@ MobileComponents.Page {
         // set off a timer to slightly postpone saving the current page, so it doesn't happen during animations etc
         updateCurrent.start();
     }
-    Timer {
-        id: updateCurrent;
-        interval: mainWindow.animationDuration;
-        running: false;
-        repeat: false;
-        onTriggered: {
-            if(viewLoader.item && viewLoader.item.pagesModel && viewLoader.item.pagesModel.currentPage !== undefined) {
-                viewLoader.item.pagesModel.currentPage = root.currentPage;
-            }
-        }
-    }
-    NumberAnimation { id: thumbnailMovementAnimation; target: thumbnailNavigator; property: "contentY"; duration: mainWindow.animationDuration; easing.type: Easing.InOutQuad; }
 
     function nextPage() {
         if(viewLoader.item.currentPage < viewLoader.item.pageCount - 1) {
@@ -63,6 +53,7 @@ MobileComponents.Page {
     }
     function closeBook() {
         // also for storing current page (otherwise postponed a bit after page change, done here as well to ensure it really happens)
+        applicationWindow().controlsVisible = true;
         mainWindow.pageStack.pop();
     }
 
@@ -115,106 +106,126 @@ MobileComponents.Page {
     }
 
     property list<QtObject> mobileActions: [
-        Action {
+        Kirigami.Action {
             text: "Close book";
             shortcut: "Esc";
             iconName: "action-close";
             onTriggered: closeBook();
-            enabled: mainWindow.pageStack.currentPage == root;
+            enabled: mainWindow.pageStack.currentItem == root;
         }
     ]
     property list<QtObject> desktopActions: [
-        Action {
+        Kirigami.Action {
             text: "Close book";
             shortcut: "Esc";
             iconName: "action-close";
             onTriggered: closeBook();
-            enabled: mainWindow.pageStack.currentPage == root;
+            enabled: mainWindow.pageStack.currentItem == root;
         },
-        Action {
+        Kirigami.Action {
             text: "Previous page";
             shortcut: StandardKey.MoveToPreviousChar
             iconName: "action-previous";
             onTriggered: previousPage();
-            enabled: mainWindow.pageStack.currentPage == root;
+            enabled: mainWindow.pageStack.currentItem == root;
         },
-        Action {
+        Kirigami.Action {
             text: "Next page";
             shortcut: StandardKey.MoveToNextChar;
             iconName: "action-next";
             onTriggered: nextPage();
-            enabled: mainWindow.pageStack.currentPage == root;
+            enabled: mainWindow.pageStack.currentItem == root;
         }
     ]
     contextualActions: PLASMA_PLATFORM.substring(0, 5) === "phone" ? mobileActions : desktopActions;
 
-    Loader {
-        id: viewLoader;
-        anchors.fill: parent;
-        property bool loadingCompleted: false;
-        onLoaded: {
-            if(status === Loader.Error) {
-                // huh! problem...
-            }
-            else {
-                item.file = root.file;
-            }
-        }
-        Connections {
-            target: viewLoader.item;
-            onLoadingCompleted: {
-                if(success) {
-                    thumbnailNavigator.model = viewLoader.item.pagesModel;
-                    if(viewLoader.item.thumbnailComponent) {
-                        thumbnailNavigator.delegate = viewLoader.item.thumbnailComponent;
-                    }
-                    else {
-                        thumbnailNavigator.delegate = thumbnailComponent;
-                    }
-                    peruseConfig.setFilesystemProperty(root.file, "totalPages", viewLoader.item.pageCount);
-                    if(root.totalPages !== viewLoader.item.pageCount) {
-                        root.totalPages = viewLoader.item.pageCount;
-                    }
-                    viewLoader.item.currentPage = root.currentPage;
-                    viewLoader.loadingCompleted = true;
+    Item {
+        width: root.width;
+        height: root.height - applicationWindow().header.height;
+        Timer {
+            id: updateCurrent;
+            interval: mainWindow.animationDuration;
+            running: false;
+            repeat: false;
+            onTriggered: {
+                if(viewLoader.item && viewLoader.item.pagesModel && viewLoader.item.pagesModel.currentPage !== undefined) {
+                    viewLoader.item.pagesModel.currentPage = root.currentPage;
                 }
             }
-            onCurrentPageChanged: {
-                if(root.currentPage !== viewLoader.item.currentPage && viewLoader.loadingCompleted) {
-                    root.currentPage = viewLoader.item.currentPage;
+        }
+        NumberAnimation { id: thumbnailMovementAnimation; target: thumbnailNavigator; property: "contentY"; duration: mainWindow.animationDuration; easing.type: Easing.InOutQuad; }
+        Loader {
+            id: viewLoader;
+            anchors.fill: parent;
+            property bool loadingCompleted: false;
+            onLoaded: {
+                if(status === Loader.Error) {
+                    // huh! problem...
                 }
-                thumbnailMovementAnimation.false;
-                var currentPos = thumbnailNavigator.contentY;
-                var newPos;
-                thumbnailNavigator.positionViewAtIndex(viewLoader.item.currentPage, ListView.Center);
-                newPos = thumbnailNavigator.contentY;
-                thumbnailMovementAnimation.from = currentPos;
-                thumbnailMovementAnimation.to = newPos;
-                thumbnailMovementAnimation.running = true;
+                else {
+                    item.file = root.file;
+                }
+            }
+            Connections {
+                target: viewLoader.item;
+                onLoadingCompleted: {
+                    if(success) {
+                        thumbnailNavigator.model = viewLoader.item.pagesModel;
+                        if(viewLoader.item.thumbnailComponent) {
+                            thumbnailNavigator.delegate = viewLoader.item.thumbnailComponent;
+                        }
+                        else {
+                            thumbnailNavigator.delegate = thumbnailComponent;
+                        }
+                        peruseConfig.setFilesystemProperty(root.file, "totalPages", viewLoader.item.pageCount);
+                        if(root.totalPages !== viewLoader.item.pageCount) {
+                            root.totalPages = viewLoader.item.pageCount;
+                        }
+                        viewLoader.item.currentPage = root.currentPage;
+                        viewLoader.loadingCompleted = true;
+                    }
+                }
+                onCurrentPageChanged: {
+                    if(root.currentPage !== viewLoader.item.currentPage && viewLoader.loadingCompleted) {
+                        root.currentPage = viewLoader.item.currentPage;
+                    }
+                    thumbnailMovementAnimation.false;
+                    var currentPos = thumbnailNavigator.contentY;
+                    var newPos;
+                    thumbnailNavigator.positionViewAtIndex(viewLoader.item.currentPage, ListView.Center);
+                    newPos = thumbnailNavigator.contentY;
+                    thumbnailMovementAnimation.from = currentPos;
+                    thumbnailMovementAnimation.to = newPos;
+                    thumbnailMovementAnimation.running = true;
+                }
             }
         }
-    }
 
-    MouseArea {
-        anchors {
-            top: parent.top;
-            left: parent.left;
-            bottom: parent.bottom;
+        MouseArea {
+            anchors {
+                top: parent.top;
+                left: parent.left;
+                bottom: parent.bottom;
+            }
+            width: parent.width / 6;
+            onClicked: previousPage();
         }
-        width: parent.width / 6;
-        onClicked: previousPage();
-    }
-    MouseArea {
-        anchors {
-            top: parent.top;
-            right: parent.right;
-            bottom: parent.bottom;
+        MouseArea {
+            anchors {
+                top: parent.top;
+                right: parent.right;
+                bottom: parent.bottom;
+            }
+            width: parent.width / 6;
+            onClicked: nextPage();
         }
-        width: parent.width / 6;
-        onClicked: nextPage();
     }
 
     onFileChanged: {
+        // Let's set the page title to something useful
+        var book = contentList.get(contentList.indexOfFile(file));
+        title = book.readProperty("title");
+
         // The idea is to have a number of specialised options as relevant to various
         // types of comic books, and then finally fall back to Okular as a catch-all
         // but generic viewer component.
