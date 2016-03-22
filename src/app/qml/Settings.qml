@@ -23,7 +23,7 @@ import QtQuick 2.2
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.0
 
-import org.kde.plasma.mobilecomponents 0.2 as MobileComponents
+import org.kde.kirigami 1.0 as Kirigami
 import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 
@@ -31,122 +31,115 @@ import org.kde.peruse 0.1 as Peruse
 
 import "listcomponents" as ListComponents
 
-MobileComponents.Page {
+Kirigami.Page {
     id: root;
-    color: MobileComponents.Theme.viewBackgroundColor;
+    title: "Settings";
 
-    Column {
-        width: parent.width;
-        height: childrenRect.height;
-        clip: true;
-        ListComponents.ListPageHeader { text: "Settings"; }
-        Item {
+    Item {
+        width: root.width;
+        height: root.height;
+        Column {
             width: parent.width;
-            height: units.largeSpacing;
-        }
-        Item {
-            height: folderHeader.height;
-            width: parent.width - folderAdd.width - units.smallSpacing;
-            ListComponents.Section { id: folderHeader; text: "Search Folders"; }
-            ToolButton {
-                id: folderAdd;
-                iconName: "list-add";
-                onClicked: mainWindow.pageStack.push(folderDlg);
-                anchors {
-                    verticalCenter: parent.verticalCenter;
-                    left: parent.right;
-                }
+            height: childrenRect.height;
+            clip: true;
+            Item {
+                width: parent.width;
+                height: units.largeSpacing;
             }
-        }
-        Repeater {
-            model: peruseConfig.bookLocations;
-            delegate: MobileComponents.ListItemWithActions {
-                actions: [
-                    Action {
-                        text: "Delete";
-                        iconName: "list-remove"
-                        onTriggered: peruseConfig.removeBookLocation(peruseConfig.bookLocations[index]);
-                    }
-                ]
-                MobileComponents.Label {
+            Item {
+                height: folderHeader.height;
+                width: parent.width - folderAdd.width - units.smallSpacing;
+                ListComponents.Section { id: folderHeader; text: "Search Folders"; }
+                ToolButton {
+                    id: folderAdd;
+                    iconName: "list-add";
+                    onClicked: mainWindow.pageStack.push(folderDlg);
                     anchors {
-                        left: parent.left;
-                        leftMargin: units.largeSpacing;
-                        top: parent.top;
+                        verticalCenter: parent.verticalCenter;
+                        left: parent.right;
                     }
-                    text: peruseConfig.bookLocations[index];
-                    height: paintedHeight + units.largeSpacing * 2;
-                    width: root.width - units.largeSpacing * 2;
-                    elide: Text.ElideMiddle;
-                    verticalAlignment: Text.AlignVCenter;
+                }
+            }
+            Repeater {
+                model: peruseConfig.bookLocations;
+                delegate: Kirigami.SwipeListItem {
+                    actions: [
+                        Kirigami.Action {
+                            text: "Delete";
+                            iconName: "list-remove"
+                            onTriggered: peruseConfig.removeBookLocation(peruseConfig.bookLocations[index]);
+                        }
+                    ]
+                    Kirigami.BasicListItem {
+                        label: peruseConfig.bookLocations[index];
+                    }
                 }
             }
         }
-    }
 
-    Rectangle {
-        id: addingNewBooksProgress;
-        color: MobileComponents.Theme.viewBackgroundColor;
-        anchors.fill: parent;
-        opacity: 0;
-        Behavior on opacity { PropertyAnimation { duration: mainWindow.animationDuration; } }
-        enabled: opacity > 0;
-        MouseArea {
-            enabled: parent.enabled;
+        Rectangle {
+            id: addingNewBooksProgress;
+            color: Kirigami.Theme.viewBackgroundColor;
             anchors.fill: parent;
-        }
-        PlasmaComponents.Label {
-            anchors {
-                bottom: parent.verticalCenter;
-                left: parent.left;
-                right: parent.right;
+            opacity: 0;
+            Behavior on opacity { PropertyAnimation { duration: mainWindow.animationDuration; } }
+            Connections {
+                target: contentList.contentModel;
+                onSearchCompleted: addingNewBooksProgress.opacity = 0;
             }
-            horizontalAlignment: Text.AlignHCenter;
-            text: "Please wait while we find your comics...";
-        }
-        PlasmaComponents.BusyIndicator {
-            id: loadingSpinner;
-            anchors {
-                top: parent.verticalCenter;
-                left: parent.left;
-                right: parent.right;
-            }
-            running: addingNewBooksProgress.enabled;
-        }
-        PlasmaComponents.Label {
-            anchors {
-                top: loadingSpinner.bottom;
-                left: parent.left;
-                right: parent.right;
-            }
-            horizontalAlignment: Text.AlignHCenter;
-            text: contentList.count;
-        }
-    }
-    Connections {
-        target: contentList.contentModel;
-        onSearchCompleted: addingNewBooksProgress.opacity = 0;
-    }
-
-    Component {
-        id: folderDlg;
-        MobileComponents.Page {
-            color: MobileComponents.Theme.viewBackgroundColor;
-            FileFinder {
+            enabled: opacity > 0;
+            MouseArea {
+                enabled: parent.enabled;
                 anchors.fill: parent;
-                folder: peruseConfig.homeDir();
-                showFiles: false;
-                onAccepted: {
-                    peruseConfig.addBookLocation(selectedItem());
-                    mainWindow.pageStack.pop();
-
-                    // Now search for new items in that locations...
-                    var locations = peruseConfig.bookLocations;
-                    addingNewBooksProgress.opacity = 1;
-                    contentList.contentModel.addLocation(locations[locations.length - 1]);
-                    contentList.contentModel.startSearch();
+            }
+            PlasmaComponents.Label {
+                anchors {
+                    bottom: parent.verticalCenter;
+                    left: parent.left;
+                    right: parent.right;
                 }
-                onAborted: mainWindow.pageStack.pop();
+                horizontalAlignment: Text.AlignHCenter;
+                text: "Please wait while we find your comics...";
+            }
+            PlasmaComponents.BusyIndicator {
+                id: loadingSpinner;
+                anchors {
+                    top: parent.verticalCenter;
+                    left: parent.left;
+                    right: parent.right;
+                }
+                running: addingNewBooksProgress.enabled;
+            }
+            PlasmaComponents.Label {
+                anchors {
+                    top: loadingSpinner.bottom;
+                    left: parent.left;
+                    right: parent.right;
+                }
+                horizontalAlignment: Text.AlignHCenter;
+                text: contentList.count;
+            }
+        }
+
+        Component {
+            id: folderDlg;
+            Kirigami.Page {
+                FileFinder {
+                    anchors.fill: parent;
+                    folder: peruseConfig.homeDir();
+                    showFiles: false;
+                    onAccepted: {
+                        peruseConfig.addBookLocation(selectedItem());
+                        mainWindow.pageStack.pop();
+
+                        // Now search for new items in that locations...
+                        var locations = peruseConfig.bookLocations;
+                        addingNewBooksProgress.opacity = 1;
+                        contentList.contentModel.addLocation(locations[locations.length - 1]);
+                        contentList.contentModel.startSearch();
+                    }
+                    onAborted: mainWindow.pageStack.pop();
+                }
             }
         }
     }
