@@ -23,7 +23,7 @@ import QtQuick 2.2
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.0
 
-import org.kde.plasma.mobilecomponents 0.2 as MobileComponents
+import org.kde.kirigami 1.0 as Kirigami
 import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 
@@ -31,9 +31,9 @@ import org.kde.peruse 0.1 as Peruse
 
 import "listcomponents" as ListComponents
 
-MobileComponents.Page {
+Kirigami.Page {
     id: root;
-    color: MobileComponents.Theme.viewBackgroundColor;
+    title: headerText;
     objectName: "bookshelf";
     property alias model: shelfList.model;
     property string sectionRole: "title";
@@ -57,108 +57,112 @@ MobileComponents.Page {
     }
     property list<QtObject> mobileActions;
     property list<QtObject> desktopActions: [
-        Action {
+        Kirigami.Action {
             text: "Back";
             shortcut: "Esc";
             iconName: "action-close";
             onTriggered: closeShelf();
-            enabled: mainWindow.pageStack.currentPage == root;
+            enabled: mainWindow.pageStack.currentItem == root;
         },
-        Action {
+        Kirigami.Action {
             text: "Select previous book";
             shortcut: StandardKey.MoveToPreviousChar
             iconName: "action-previous";
             onTriggered: shelfList.previousEntry();
-            enabled: mainWindow.pageStack.currentPage == root;
+            enabled: mainWindow.pageStack.currentItem == root;
         },
-        Action {
+        Kirigami.Action {
             text: "Select next book";
             shortcut: StandardKey.MoveToNextChar;
             iconName: "action-next";
             onTriggered: shelfList.nextEntry();
-            enabled: mainWindow.pageStack.currentPage == root;
+            enabled: mainWindow.pageStack.currentItem == root;
         },
-        Action {
+        Kirigami.Action {
             text: "Open selected book";
             shortcut: "Return";
             iconName: "action-open";
             onTriggered: openBook(shelfList.currentIndex);
-            enabled: mainWindow.pageStack.currentPage == root;
+            enabled: mainWindow.pageStack.currentItem == root;
         }
     ]
     contextualActions: PLASMA_PLATFORM.substring(0, 5) === "phone" ? mobileActions : desktopActions;
 
-    mainAction: Action {
+    mainAction: Kirigami.Action {
         text: "Search Books";
         iconName: "system-search";
         onTriggered: searchBox.activate();
     }
 
-    SearchBox {
-        id: searchBox;
-        anchors {
-            top: parent.top;
-            left: parent.left;
-            right: parent.right;
+    Item {
+        width: root.width;
+        height: root.height;
+        SearchBox {
+            id: searchBox;
+            anchors {
+                top: parent.top;
+                left: parent.left;
+                right: parent.right;
+            }
+            maxHeight: parent.height;
+            model: root.model;
         }
-        maxHeight: parent.height;
-        model: root.model;
-    }
 
-    GridView {
-        id: shelfList;
-        clip: true;
-        anchors {
-            top: searchBox.bottom;
-            left: parent.left;
-            right: parent.right;
-        }
-        height: parent.height;
-        cellWidth: width / 2;
-        cellHeight: root.height * 2 / 7;
-        header: ListComponents.ListPageHeader { text: root.headerText; }
-        currentIndex: -1;
+        GridView {
+            id: shelfList;
+            clip: true;
+            anchors {
+                top: searchBox.bottom;
+                left: parent.left;
+                right: parent.right;
+            }
+            height: parent.height;
+            cellWidth: width / 2;
+            cellHeight: root.height * 2 / 7;
+//             header: ListComponents.ListPageHeader { text: root.headerText; }
+            currentIndex: -1;
 
-        function previousEntry() {
-            if(currentIndex > 0) {
-                currentIndex--;
+            function previousEntry() {
+                if(currentIndex > 0) {
+                    currentIndex--;
+                }
+            }
+            function nextEntry() {
+                if(currentIndex < model.rowCount() - 1) {
+                    currentIndex++;
+                }
+            }
+            delegate: Item {
+                height: model.categoryEntriesCount === 0 ? bookTile.neededHeight : categoryTile.neededHeight;
+                width: root.width / 2;
+                ListComponents.CategoryTileTall {
+                    id: categoryTile;
+                    height: model.categoryEntriesCount > 0 ? neededHeight : 0;
+                    width: parent.width;
+                    count: model.categoryEntriesCount;
+                    title: model.title;
+                    entriesModel: model.categoryEntriesModel ? model.categoryEntriesModel : null;
+                    selected: shelfList.currentIndex === index;
+                }
+                ListComponents.BookTileTall {
+                    id: bookTile;
+                    height: model.categoryEntriesCount < 1 ? neededHeight : 0;
+                    width: parent.width;
+                    author: model.author ? model.author : "(unknown)";
+                    title: model.title;
+                    filename: model.filename;
+                    categoryEntriesCount: model.categoryEntriesCount;
+                    currentPage: model.currentPage;
+                    totalPages: model.totalPages;
+                    onBookSelected: root.bookSelected(filename, currentPage);
+                    selected: shelfList.currentIndex === index;
+                    onPressAndHold: mainWindow.pageStack.push(bookDetails, { focus: true, file: model.filename });
+                }
             }
         }
-        function nextEntry() {
-            if(currentIndex < model.rowCount() - 1) {
-                currentIndex++;
-            }
+        Component {
+            id: bookDetails;
+            BookDetails { }
         }
-        delegate: Item {
-            height: model.categoryEntriesCount === 0 ? bookTile.neededHeight : categoryTile.neededHeight;
-            width: root.width / 2;
-            ListComponents.CategoryTileTall {
-                id: categoryTile;
-                height: model.categoryEntriesCount > 0 ? neededHeight : 0;
-                width: parent.width;
-                count: model.categoryEntriesCount;
-                title: model.title;
-                entriesModel: model.categoryEntriesModel ? model.categoryEntriesModel : null;
-                selected: shelfList.currentIndex === index;
-            }
-            ListComponents.BookTileTall {
-                id: bookTile;
-                height: model.categoryEntriesCount < 1 ? neededHeight : 0;
-                width: parent.width;
-                author: model.author ? model.author : "(unknown)";
-                title: model.title;
-                filename: model.filename;
-                categoryEntriesCount: model.categoryEntriesCount;
-                currentPage: model.currentPage;
-                totalPages: model.totalPages;
-                onBookSelected: root.bookSelected(filename, currentPage);
-                selected: shelfList.currentIndex === index;
-                onPressAndHold: mainWindow.pageStack.push(bookDetails, { focus: true, file: model.filename });
-            }
-        }
-    }
-    Component {
-        id: bookDetails;
-        BookDetails { }
     }
 }
