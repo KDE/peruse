@@ -153,8 +153,8 @@ Kirigami.Page {
     contextualActions: PLASMA_PLATFORM.substring(0, 5) === "phone" ? mobileActions : desktopActions;
 
     Item {
-        width: root.width;
-        height: root.height - applicationWindow().header.height;
+        width: root.width - (root.leftPadding + root.rightPadding);
+        height: root.height - (root.topPadding + root.bottomPadding);
         Timer {
             id: updateCurrent;
             interval: mainWindow.animationDuration;

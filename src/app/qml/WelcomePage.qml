@@ -68,8 +68,8 @@ Kirigami.Page {
     }
 
     Item {
-        width: root.width;
-        height: root.height;
+        width: root.width - (root.leftPadding + root.rightPadding);
+        height: root.height - (root.topPadding + root.bottomPadding);
         SearchBox {
             id: searchBox;
             anchors {

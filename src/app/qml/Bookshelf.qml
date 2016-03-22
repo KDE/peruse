@@ -48,7 +48,7 @@ Kirigami.Page {
         }
         else {
             var catEntry = shelfList.model.getEntry(index);
-            mainWindow.pageStack.push(bookshelf, { focus: true, headerText: "Comics in folder: " + catEntry.readProperty("title"), model: catEntry.readProperty("entriesModel") });
+            mainWindow.pageStack.push(bookshelf, { focus: true, headerText: catEntry.readProperty("title"), model: catEntry.readProperty("entriesModel") });
         }
     }
 
@@ -95,8 +95,8 @@ Kirigami.Page {
     }
 
     Item {
-        width: root.width;
-        height: root.height;
+        width: root.width - (root.leftPadding + root.rightPadding);
+        height: root.height - (root.topPadding + root.bottomPadding);
         SearchBox {
             id: searchBox;
             anchors {

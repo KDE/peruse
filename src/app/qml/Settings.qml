@@ -36,8 +36,8 @@ Kirigami.Page {
     title: "Settings";
 
     Item {
-        width: root.width;
-        height: root.height;
+        width: root.width - (root.leftPadding + root.rightPadding);
+        height: root.height - (root.topPadding + root.bottomPadding);
         Column {
             width: parent.width;
             height: childrenRect.height;
@@ -125,7 +125,8 @@ Kirigami.Page {
             id: folderDlg;
             Kirigami.Page {
                 FileFinder {
-                    anchors.fill: parent;
+                    width: root.width - (root.leftPadding + root.rightPadding);
+                    height: root.height - (root.topPadding + root.bottomPadding);
                     folder: peruseConfig.homeDir();
                     showFiles: false;
                     onAccepted: {

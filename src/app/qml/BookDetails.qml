@@ -64,8 +64,8 @@ Kirigami.Page {
     property int currentPage;
 
     Item {
-        width: root.width;
-        height: root.height;
+        width: root.width - (root.leftPadding + root.rightPadding);
+        height: root.height - (root.topPadding + root.bottomPadding);
         Column {
             anchors.horizontalCenter: parent.horizontalCenter;
             width: root.width - units.largeSpacing * 2;
