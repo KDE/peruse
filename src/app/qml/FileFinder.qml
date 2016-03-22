@@ -24,7 +24,7 @@ import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.0
 import Qt.labs.folderlistmodel 2.1
 
-import org.kde.plasma.mobilecomponents 0.2 as MobileComponents
+import org.kde.kirigami 1.0 as Kirigami
 import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 
@@ -83,12 +83,12 @@ Item {
         clip: true;
         model: folderModel;
         Component.onCompleted: folderView.currentIndex = -1;
-        header: MobileComponents.ListItem {
+        header: Kirigami.BasicListItem {
             enabled: true;
             clip: true;
             width: folderView.width;
             onClicked: folderModel.folder = folderModel.parentFolder;
-            MobileComponents.Label {
+            Kirigami.Label {
                 anchors {
                     left: parent.left;
                     leftMargin: units.largeSpacing;
@@ -100,7 +100,7 @@ Item {
                 verticalAlignment: Text.AlignVCenter;
             }
         }
-        delegate: MobileComponents.ListItem {
+        delegate: Kirigami.BasicListItem {
             enabled: true;
             height: fileNameLbl.height + units.smallSpacing * 2;
             width: folderView.width;
@@ -114,7 +114,7 @@ Item {
                 }
             }
             checked: folderView.currentIndex === index;
-            MobileComponents.Label {
+            Kirigami.Label {
                 id: fileNameLbl;
                 anchors {
                     left: parent.left;
