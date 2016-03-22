@@ -109,6 +109,13 @@ ViewerBase {
 //             bookmarkConnection.target = page
 //             actionButton.checked = page.bookmarked
         }
-        onClicked: actionButton.toggleVisibility();
+        onClicked: {
+            if(applicationWindow().controlsVisible === true) {
+                applicationWindow().controlsVisible = false;
+            }
+            else {
+                applicationWindow().controlsVisible = true;
+            }
+        }
     }
 }
