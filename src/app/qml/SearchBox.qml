@@ -21,7 +21,7 @@
 
 import QtQuick 2.2
 
-import org.kde.plasma.mobilecomponents 0.2 as MobileComponents
+import org.kde.kirigami 1.0 as Kirigami
 import org.kde.plasma.components 2.0 as PlasmaComponents
 
 import org.kde.peruse 0.1 as Peruse
@@ -75,7 +75,7 @@ Item {
         cellWidth: width / 2;
         cellHeight: Math.max(
             (root.height * 2 / 7),
-            Math.min(cellWidth, (units.iconSizes.enormous + units.largeSpacing * 3 + MobileComponents.Theme.defaultFont.pixelSize))
+            Math.min(cellWidth, (units.iconSizes.enormous + units.largeSpacing * 3 + Kirigami.Theme.defaultFont.pixelSize))
         );
         currentIndex: -1;
         model: Peruse.FilterProxy {
