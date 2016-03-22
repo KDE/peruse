@@ -33,6 +33,19 @@ Kirigami.Page {
     clip: true;
     implicitWidth: applicationWindow().width;
 
+    // Perhaps we should store and restore this?
+    property bool showControls: true;
+    property Item pageStackItem: applicationWindow().pageStack.currentItem;
+    onPageStackItemChanged: {
+        if(mainWindow.pageStack.currentItem == root) {
+            applicationWindow().controlsVisible = root.showControls;
+        }
+        else {
+            root.showControls = applicationWindow().controlsVisible;
+            applicationWindow().controlsVisible = true;
+        }
+    }
+
     property string file;
     property int currentPage;
     property int totalPages;
