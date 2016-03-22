@@ -37,7 +37,7 @@ Item {
     MouseArea {
         anchors.fill: parent;
         onClicked: {
-            mainWindow.pageStack.push(bookshelf, { focus: true, headerText: "Comics in folder: " + root.title, model: root.entriesModel })
+            mainWindow.pageStack.push(bookshelf, { focus: true, headerText: root.title, model: root.entriesModel })
         }
     }
     Rectangle {
