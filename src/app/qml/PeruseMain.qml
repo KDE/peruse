@@ -23,17 +23,17 @@ import QtQuick 2.1
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.0
 
-import org.kde.plasma.mobilecomponents 0.2 as MobileComponents
+import org.kde.kirigami 1.0 as Kirigami
 import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 import org.kde.peruse 0.1 as Peruse
 import org.kde.contentlist 0.1
 
-MobileComponents.ApplicationWindow {
+Kirigami.ApplicationWindow {
     id: mainWindow;
     property int animationDuration: 200;
     property bool isLoading: true;
-    initialPage: welcomePage;
+    pageStack.initialPage: welcomePage;
     visible: true;
 
     function showBook(filename, currentPage) {
@@ -58,46 +58,46 @@ MobileComponents.ApplicationWindow {
         id: contextDrawer;
     }
 
-    globalDrawer: MobileComponents.GlobalDrawer {
+    globalDrawer: Kirigami.GlobalDrawer {
         /// FIXME This causes the text to get cut off on the phone, however if the text is shorter
         /// it fails to expand the sidebar sufficiently to see all the action labels fully. Revisit
         /// this when switching to Kirigami
         title: "Peruse Comic Viewer";
         titleIcon: "peruse";
         actions: [
-            Action {
+            Kirigami.Action {
                 text: "Recently Added Comics";
                 iconName: "appointment-new";
                 onTriggered: changeCategory(bookshelfAdded);
             },
-            Action {
+            Kirigami.Action {
                 text: "Group by Title";
                 iconName: "view-media-title";
                 onTriggered: changeCategory(bookshelfTitle);
             },
-            Action {
+            Kirigami.Action {
                 text: "Group by Authors";
                 iconName: "actor";
                 onTriggered: changeCategory(bookshelfAuthor);
             },
-            Action {
+            Kirigami.Action {
                 text: "Group by Series";
                 iconName: "edit-group";
                 onTriggered: changeCategory(bookshelfSeries);
             },
-            Action {
+            Kirigami.Action {
                 text: "Group by Publisher";
                 iconName: "view-media-publisher";
                 onTriggered: changeCategory(bookshelfPublisher);
             },
-            Action {
+            Kirigami.Action {
                 text: "Filter by Folder";
                 iconName: "tag-folder";
                 onTriggered: changeCategory(bookshelfFolder);
             },
-            Action {
+            Kirigami.Action {
             },
-            Action {
+            Kirigami.Action {
                 text: "Settings"
                 iconName: "configure"
                 onTriggered: mainWindow.pageStack.push(settingsPage);
