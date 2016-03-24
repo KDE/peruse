@@ -22,7 +22,9 @@
 #include "ContentList.h"
 #include "FilesystemContentLister.h"
 
-#include "BalooContentLister.h"
+#ifdef BALOO_FOUND
+    #include "BalooContentLister.h"
+#endif
 
 #include <QDebug>
 #include <QMimeDatabase>
@@ -46,6 +48,7 @@ ContentList::ContentList(QObject* parent)
     : QAbstractListModel(parent)
     , d(new Private)
 {
+#ifdef BALOO_FOUND
     BalooContentLister* baloo = new BalooContentLister(this);
     if(baloo->balooEnabled())
     {
@@ -58,6 +61,9 @@ ContentList::ContentList(QObject* parent)
         d->actualContentList = new FilesystemContentLister(this);
         qDebug() << "Baloo is disabled for the system, use the filesystem scraper";
     }
+#else
+    d->actualContentList = new FilesystemContentLister(this);
+#endif
     connect(d->actualContentList, SIGNAL(fileFound(QString,QVariantHash)), this, SLOT(fileFound(QString,QVariantHash)));
     connect(d->actualContentList, SIGNAL(searchCompleted()), this, SIGNAL(searchCompleted()));
 }
