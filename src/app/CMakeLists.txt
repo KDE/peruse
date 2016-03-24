@@ -9,7 +9,6 @@ target_link_libraries(peruse
     Qt5::Gui
     Qt5::Qml
     Qt5::Widgets
-    KF5::DBusAddons
     KF5::I18n
 )
 
