@@ -24,7 +24,7 @@ else()
     find_package(KF5 5.5 REQUIRED COMPONENTS Plasma I18n Declarative Config DBusAddons FileMetaData IconThemes KIO)
 endif()
 
-# find_package(KF5Baloo) # optional - we'll just let it pass if it's missing
+find_package(KF5Baloo) # optional - we'll just let it pass if it's missing
 find_package(KF5Archive ${KF5_VERSION} REQUIRED)
 
 include(FeatureSummary)
