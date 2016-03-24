@@ -25,7 +25,6 @@
 #include <QDebug>
 #include <QThread>
 
-#include <KDBusService>
 #include <KLocalizedString>
 
 #include <QApplication>
@@ -39,10 +38,8 @@ int main(int argc, char** argv)
     QApplication app(argc, argv);
     app.setApplicationDisplayName("Peruse");
 
-    KDBusService service(KDBusService::Unique);
-
     QCommandLineParser parser;
-    parser.addOption(QCommandLineOption("reset", i18n("Reset the database")));
+    // TODO file option for opening comics by passing them through on the command line
     parser.addHelpOption();
     parser.process(app);
 
@@ -50,43 +47,16 @@ int main(int argc, char** argv)
         parser.showHelp(1);
     }
 
-    if (parser.isSet("reset")) {
-//         KokoConfig config;
-//         config.reset();
-
-//         ImageStorage::reset();
-    }
-
-//     QThread trackerThread;
-
-//     qDebug() << locations;
-//     FileSystemTracker tracker;
-//     tracker.setFolder(locations.first());
-//     tracker.moveToThread(&trackerThread);
-
-//     Koko::Processor processor;
-//     QObject::connect(&tracker, &FileSystemTracker::imageAdded, &processor, &Koko::Processor::addFile);
-//     QObject::connect(&tracker, &FileSystemTracker::imageRemoved, &processor, &Koko::Processor::removeFile);
-//     QObject::connect(&tracker, &FileSystemTracker::initialScanComplete, &processor, &Koko::Processor::initialScanCompleted);
-// 
-//     trackerThread.start();
-//     tracker.init();
-// 
-//     KokoConfig config;
-
     QQmlEngine engine;
     QQmlContext* objectContext = engine.rootContext();
     QString platformEnv(qgetenv("PLASMA_PLATFORM"));
     engine.rootContext()->setContextProperty("PLASMA_PLATFORM", platformEnv);
-//     engine.rootContext()->setContextProperty("bookLocations", locations);
     // Yes, i realise this is a touch on the ugly side. I have found no better way to allow for
     // things like the archive book model to create imageproviders for the archives
     engine.rootContext()->setContextProperty("globalQmlEngine", &engine);
 
     QString path;
     if (platformEnv.startsWith("phone")) {
-    // Once we've got a functional desktop version, restore this check. Right now it doesn't make a lot of sense.
-//     if(true) {
         path = QStandardPaths::locate(QStandardPaths::DataLocation, "qml/MobileMain.qml");
     } else {
         path = QStandardPaths::locate(QStandardPaths::DataLocation, "qml/Main.qml");
@@ -119,6 +89,5 @@ int main(int argc, char** argv)
             rt = -3;
         }
     }
-    //     trackerThread.quit();
     return rt;
 }
