@@ -35,6 +35,14 @@ Kirigami.ApplicationWindow {
     property bool isLoading: true;
     pageStack.initialPage: welcomePage;
     visible: true;
+    onControlsVisibleChanged: {
+        if(controlsVisible === false) {
+            visibility = Window.FullScreen;
+        }
+        else {
+            visibility = Window.AutomaticVisibility;
+        }
+    }
 
     function showBook(filename, currentPage) {
         mainWindow.pageStack.push(bookViewer, { focus: true, file: filename, currentPage: currentPage })
