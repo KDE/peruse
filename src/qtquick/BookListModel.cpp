@@ -131,8 +131,10 @@ void BookListModel::contentModelItemsInserted(QModelIndex index, int first, int 
         BookEntry* entry = new BookEntry();
         entry->filename = filename.toString();
         QStringList splitName = entry->filename.split(QDir::separator());
-        entry->filetitle = splitName.takeLast();
-        entry->series = splitName.takeLast(); // hahahaheuristics (dumb assumptions about filesystems, go!)
+        if (!splitName.isEmpty())
+            entry->filetitle = splitName.takeLast();
+        if(!splitName.isEmpty())
+            entry->series = splitName.takeLast(); // hahahaheuristics (dumb assumptions about filesystems, go!)
         // just in case we end up without a title... using complete basename here,
         // as we would rather have "book one. part two" and the odd "book one - part two.tar"
         QFileInfo fileinfo(entry->filename);
