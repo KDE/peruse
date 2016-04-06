@@ -22,6 +22,7 @@
 #include <QQmlComponent>
 
 #include <QStandardPaths>
+#include <QDir>
 #include <QDebug>
 #include <QThread>
 
@@ -48,6 +49,14 @@ int main(int argc, char** argv)
     }
 
     QQmlEngine engine;
+
+#ifdef Q_OS_WIN
+    // Because windows is a bit funny with paths and whatnot, just so the thing with the lib paths...
+    QDir appdir(qApp->applicationDirPath());
+    appdir.cdUp();
+    engine.addImportPath(appdir.canonicalPath() + "/lib/qml");
+#endif
+
     QQmlContext* objectContext = engine.rootContext();
     QString platformEnv(qgetenv("PLASMA_PLATFORM"));
     engine.rootContext()->setContextProperty("PLASMA_PLATFORM", platformEnv);
