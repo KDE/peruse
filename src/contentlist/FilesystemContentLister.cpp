@@ -102,10 +102,14 @@ void FilesystemContentLister::startSearch()
                 metadata["created"] = info.created();
 
                 KFileMetaData::UserMetaData data(filePath);
-                int currentPage = data.attribute("peruse.currentPage").toInt();
-                metadata["currentPage"] = QVariant::fromValue<int>(currentPage);
-                int totalPages = data.attribute("peruse.totalPages").toInt();
-                metadata["totalPages"] = QVariant::fromValue<int>(totalPages);
+                if (data.hasAttribute("peruse.currentPage")) {
+                    int currentPage = data.attribute("peruse.currentPage").toInt();
+                    metadata["currentPage"] = QVariant::fromValue<int>(currentPage);
+                }
+                if (data.hasAttribute("peruse.totalPages")) {
+                    int totalPages = data.attribute("peruse.totalPages").toInt();
+                    metadata["totalPages"] = QVariant::fromValue<int>(totalPages);
+                }
 
                 emit fileFound(filePath, metadata);
             }
