@@ -72,7 +72,7 @@ QImage PreviewImageProvider::requestImage(const QString& id, QSize* size, const 
         }
 
         const QStringList* allPlugins = new QStringList(KIO::PreviewJob::availablePlugins());
-        KIO::PreviewJob* job = new KIO::PreviewJob(KFileItemList() << KFileItem(QUrl(QString("file://").append(id)), mimetype, 0), ourSize, allPlugins);
+        KIO::PreviewJob* job = new KIO::PreviewJob(KFileItemList() << KFileItem(QUrl::fromLocalFile(id), mimetype, 0), ourSize, allPlugins);
         job->setIgnoreMaximumSize(true);
         job->setScaleType(KIO::PreviewJob::ScaledAndCached);
         connect(job, SIGNAL(gotPreview(KFileItem,QPixmap)), SLOT(updatePreview(KFileItem,QPixmap)));
