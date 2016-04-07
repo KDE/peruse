@@ -137,7 +137,8 @@ void ArchiveBookModel::setFilename(QString newFilename)
     BookModel::setFilename(newFilename);
 
     KFileMetaData::UserMetaData data(newFilename);
-    BookModel::setCurrentPage(data.attribute("peruse.currentPage").toInt(), false);
+	if(data.hasAttribute("peruse.currentPage"))
+	    BookModel::setCurrentPage(data.attribute("peruse.currentPage").toInt(), false);
 
     emit loadingCompleted(success);
 }
