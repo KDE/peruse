@@ -30,6 +30,7 @@ include(KDECMakeSettings)
 include(KDECompilerSettings)
 include(GenerateExportHeader)
 include(ECMInstallIcons)
+include(ECMAddAppIcon)
 
 kde_enable_exceptions()
 

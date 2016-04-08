@@ -2,6 +2,8 @@ set(APP_SRCS
     main.cpp
 )
 
+ecm_add_app_icon(APP_SRCS ICONS "icon/128-apps-peruse.png")
+
 add_executable(peruse ${APP_SRCS})
 target_link_libraries(peruse
     Qt5::Core
