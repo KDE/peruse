@@ -186,7 +186,7 @@ void CategoryEntriesModel::addCategoryEntry(const QString& categoryName, BookEnt
 {
     if(categoryName.length() > 0)
     {
-        QStringList splitName = categoryName.split(QDir::separator());
+        QStringList splitName = categoryName.split("/");
 //         qDebug() << "Parsing" << categoryName;
         QString nextCategory = splitName.takeFirst();
         CategoryEntriesModel* categoryModel = 0;
@@ -218,7 +218,7 @@ void CategoryEntriesModel::addCategoryEntry(const QString& categoryName, BookEnt
             endInsertRows();
         }
         categoryModel->append(entry);
-        categoryModel->addCategoryEntry(splitName.join(QDir::separator()), entry);
+        categoryModel->addCategoryEntry(splitName.join("/"), entry);
     }
 }
 

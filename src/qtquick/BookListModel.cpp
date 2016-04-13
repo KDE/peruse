@@ -130,7 +130,7 @@ void BookListModel::contentModelItemsInserted(QModelIndex index, int first, int 
         QVariant filename = d->contentModel->data(d->contentModel->index(first, 0, index), Qt::UserRole + 1);
         BookEntry* entry = new BookEntry();
         entry->filename = filename.toString();
-        QStringList splitName = entry->filename.split(QDir::separator());
+        QStringList splitName = entry->filename.split("/");
         if (!splitName.isEmpty())
             entry->filetitle = splitName.takeLast();
         if(!splitName.isEmpty())
@@ -164,7 +164,7 @@ void BookListModel::contentModelItemsInserted(QModelIndex index, int first, int 
         d->authorCategoryModel->addCategoryEntry(entry->author, entry);
         d->seriesCategoryModel->addCategoryEntry(entry->series, entry);
         d->newlyAddedCategoryModel->append(entry, CreatedRole);
-        QUrl url(entry->filename.left(entry->filename.lastIndexOf(QDir::separator())));
+        QUrl url(entry->filename.left(entry->filename.lastIndexOf("/")));
         d->folderCategoryModel->addCategoryEntry(url.path().mid(1), entry);
         d->folderCategoryModel->append(entry);
     }

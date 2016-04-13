@@ -71,10 +71,10 @@ QStringList recursiveEntries(const KArchiveDirectory* dir, const QString& dirNam
         if(entry->isDirectory())
         {
             const KArchiveDirectory* subDir = static_cast<const KArchiveDirectory*>(entry);
-            QStringList subEntries = recursiveEntries(subDir, dirName + entryName + QDir::separator());
+            QStringList subEntries = recursiveEntries(subDir, dirName + entryName + "/");
             Q_FOREACH(const QString& subEntry, subEntries)
             {
-                entries.append(dirName + entryName + QDir::separator() + subEntry);
+                entries.append(dirName + entryName + "/" + subEntry);
             }
         }
     }
@@ -112,13 +112,13 @@ void ArchiveBookModel::setFilename(QString newFilename)
 
             QStringList entries = recursiveEntries(d->archive->directory());
             entries.sort();
-            QString undesired = QString("%1").arg(QDir::separator()).append("Thumbs.db");
+            QString undesired = QString("%1").arg("/").append("Thumbs.db");
             Q_FOREACH(const QString& entry, entries)
             {
                 const KArchiveEntry* archEntry = d->archive->directory()->entry(entry);
                 if(archEntry->isFile() && !entry.endsWith(undesired))
                 {
-                    addPage(QString("image://%1/%2").arg(prefix).arg(entry), entry.split(QDir::separator()).last());
+                    addPage(QString("image://%1/%2").arg(prefix).arg(entry), entry.split("/").last());
                 }
             }
         }
