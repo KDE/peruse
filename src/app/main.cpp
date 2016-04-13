@@ -55,6 +55,8 @@ int main(int argc, char** argv)
     QDir appdir(qApp->applicationDirPath());
     appdir.cdUp();
     engine.addImportPath(appdir.canonicalPath() + "/lib/qml");
+    // Hey, let's try and avoid all those extra stale processes, right?
+    qputenv("KDE_FORK_SLAVES", "true");
 #endif
 
     QQmlContext* objectContext = engine.rootContext();
@@ -98,5 +100,6 @@ int main(int argc, char** argv)
             rt = -3;
         }
     }
+
     return rt;
 }
