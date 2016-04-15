@@ -34,6 +34,37 @@
 
 #include <iostream>
 
+#include <QOpenGLContext>
+#include <QOffscreenSurface>
+#include <QOpenGLFunctions>
+
+int getMaxTextureSize()
+{
+    // Create a temp context - required if this is called from another thread
+    QOpenGLContext ctx;
+    if ( !ctx.create() )
+    {
+        // TODO handle the error
+        qDebug() << "No OpenGL context could be created, this is clearly bad...";
+        exit(-1);
+    }
+
+    // rather than using a QWindow - which actually dosen't seem to work in this case either!
+    QOffscreenSurface surface;
+    surface.setFormat( ctx.format() );
+    surface.create();
+
+    ctx.makeCurrent(&surface);
+
+    // Now the call works
+    QOpenGLFunctions glFuncs(QOpenGLContext::currentContext());
+    int maxSize = 0;
+    glFuncs.glEnable(GL_TEXTURE_2D);
+    glFuncs.glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxSize);
+
+    return maxSize;
+}
+
 int main(int argc, char** argv)
 {
     QApplication app(argc, argv);
@@ -65,6 +96,7 @@ int main(int argc, char** argv)
     // Yes, i realise this is a touch on the ugly side. I have found no better way to allow for
     // things like the archive book model to create imageproviders for the archives
     engine.rootContext()->setContextProperty("globalQmlEngine", &engine);
+    engine.rootContext()->setContextProperty("maxTextureSize", getMaxTextureSize());
 
     QString path;
     if (platformEnv.startsWith("phone")) {
