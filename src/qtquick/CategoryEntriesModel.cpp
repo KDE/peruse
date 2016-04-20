@@ -21,6 +21,7 @@
 
 #include "CategoryEntriesModel.h"
 #include "PropertyContainer.h"
+#include <KFileMetaData/UserMetaData>
 #include <QDir>
 #include <QFileInfo>
 #include <QDebug>
@@ -300,6 +301,19 @@ QObject* CategoryEntriesModel::bookFromFile(QString filename)
     PropertyContainer* obj = qobject_cast<PropertyContainer*>(get(indexOfFile(filename)));
     if(obj->property("filename").toString().isEmpty()) {
         if(QFileInfo::exists(filename)) {
+            QFileInfo info(filename);
+            obj->setProperty("title", info.completeBaseName());
+            obj->setProperty("created", info.created());
+
+            KFileMetaData::UserMetaData data(filename);
+            if (data.hasAttribute("peruse.currentPage")) {
+                int currentPage = data.attribute("peruse.currentPage").toInt();
+                obj->setProperty("currentPage", QVariant::fromValue<int>(currentPage));
+            }
+            if (data.hasAttribute("peruse.totalPages")) {
+                int totalPages = data.attribute("peruse.totalPages").toInt();
+                obj->setProperty("totalPages", QVariant::fromValue<int>(totalPages));
+            }
             obj->setProperty("filename", filename);
         }
     }
