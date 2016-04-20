@@ -85,25 +85,17 @@ Item {
         Component.onCompleted: folderView.currentIndex = -1;
         header: Kirigami.BasicListItem {
             enabled: true;
+            supportsMouseEvents: enabled;
             clip: true;
             width: folderView.width;
             onClicked: folderModel.folder = folderModel.parentFolder;
-            Kirigami.Label {
-                anchors {
-                    left: parent.left;
-                    leftMargin: units.largeSpacing;
-                    top: parent.top;
-                }
-                text: "(go up one level)";
-                height: paintedHeight + units.largeSpacing * 2;
-                width: folderView.width - units.largeSpacing * 2;
-                verticalAlignment: Text.AlignVCenter;
-            }
+            label: "(go up one level)";
         }
         delegate: Kirigami.BasicListItem {
             enabled: true;
-            height: fileNameLbl.height + units.smallSpacing * 2;
+            supportsMouseEvents: enabled;
             width: folderView.width;
+            label: fileName;
             onClicked: {
                 if(fileIsDir) {
                     folderView.currentIndex = -1;
@@ -114,19 +106,6 @@ Item {
                 }
             }
             checked: folderView.currentIndex === index;
-            Kirigami.Label {
-                id: fileNameLbl;
-                anchors {
-                    left: parent.left;
-                    leftMargin: units.largeSpacing;
-                    top: parent.top;
-                }
-                text: fileName;
-                height: paintedHeight + units.largeSpacing * 2;
-                width: root.width - units.largeSpacing * 2;
-                elide: Text.ElideMiddle;
-                verticalAlignment: Text.AlignVCenter;
-            }
         }
     }
 }
