@@ -43,9 +43,10 @@ PeruseMain {
                 height: root.height - (root.topPadding + root.bottomPadding);
                 folder: root.folder;
                 showFiles: true;
+                property int splitPos: osIsWindows ? 8 : 7;
                 onAccepted: {
                     if(selectedItem().substring(0, 7) === "file://") {
-                        showBook(selectedItem().substring(7), 0);
+                        showBook(selectedItem().substring(splitPos), 0);
                     }
                 }
                 onAborted: pageStack.pop();

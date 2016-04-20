@@ -36,9 +36,10 @@ PeruseMain {
         id: openDlg;
         title: "Please choose a comic to open";
         folder: root.homeDir();
+        property int splitPos: osIsWindows ? 8 : 7;
         onAccepted: {
             if(openDlg.fileUrl.toString().substring(0, 7) === "file://") {
-                root.showBook(openDlg.fileUrl.toString().substring(7), 0);
+                root.showBook(openDlg.fileUrl.toString().substring(splitPos), 0);
             }
         }
         onRejected: {

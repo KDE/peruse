@@ -86,6 +86,7 @@ int main(int argc, char** argv)
     QDir appdir(qApp->applicationDirPath());
     appdir.cdUp();
     engine.addImportPath(appdir.canonicalPath() + "/lib/qml");
+    engine.rootContext()->setContextProperty("osIsWindows", true);
     // Hey, let's try and avoid all those extra stale processes, right?
     qputenv("KDE_FORK_SLAVES", "true");
 #endif
