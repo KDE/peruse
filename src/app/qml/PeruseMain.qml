@@ -62,6 +62,9 @@ Kirigami.ApplicationWindow {
     Peruse.Config {
         id: peruseConfig;
     }
+    function homeDir() {
+        return peruseConfig.homeDir();
+    }
 
     contextDrawer: PeruseContextDrawer {
         id: contextDrawer;
@@ -103,6 +106,13 @@ Kirigami.ApplicationWindow {
                 text: "Filter by Folder";
                 iconName: "tag-folder";
                 onTriggered: changeCategory(bookshelfFolder);
+            },
+            Kirigami.Action {
+            },
+            Kirigami.Action {
+                text: "Open other...";
+                iconName: "document-open";
+                onTriggered: openOther();
             },
             Kirigami.Action {
             },
