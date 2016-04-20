@@ -124,6 +124,8 @@ Kirigami.Page {
         Component {
             id: folderDlg;
             Kirigami.Page {
+                id: root;
+                title: "Select a folder"
                 FileFinder {
                     width: root.width - (root.leftPadding + root.rightPadding);
                     height: root.height - (root.topPadding + root.bottomPadding);
