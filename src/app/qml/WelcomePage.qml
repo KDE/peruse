@@ -122,21 +122,23 @@ Kirigami.Page {
 
         Flickable {
             id: startWithThese;
-            property int mostRecentlyRead0: -1;
-            property int mostRecentlyRead1: -1;
-            property int mostRecentlyRead2: -1;
-            property int mostRecentlyRead3: -1;
-            property int mostRecentlyRead4: -1;
-            property int mostRecentlyRead5: -1;
+            property QtObject mostRecentlyRead0: fakeBook;
+            property QtObject mostRecentlyRead1: fakeBook;
+            property QtObject mostRecentlyRead2: fakeBook;
+            property QtObject mostRecentlyRead3: fakeBook;
+            property QtObject mostRecentlyRead4: fakeBook;
+            property QtObject mostRecentlyRead5: fakeBook;
+
             property int mostRecentlyAdded0: -1;
             function updateRecentlyRead() {
-                mostRecentlyAdded0 = mostRecentlyRead0 = mostRecentlyRead1 = mostRecentlyRead2 = mostRecentlyRead3 = mostRecentlyRead4 = mostRecentlyRead5 = -1;
-                startWithThese.mostRecentlyRead0 = contentList.indexOfFile(peruseConfig.recentlyOpened[0]);
-                startWithThese.mostRecentlyRead1 = contentList.indexOfFile(peruseConfig.recentlyOpened[1]);
-                startWithThese.mostRecentlyRead2 = contentList.indexOfFile(peruseConfig.recentlyOpened[2]);
-                startWithThese.mostRecentlyRead3 = contentList.indexOfFile(peruseConfig.recentlyOpened[3]);
-                startWithThese.mostRecentlyRead4 = contentList.indexOfFile(peruseConfig.recentlyOpened[4]);
-                startWithThese.mostRecentlyRead5 = contentList.indexOfFile(peruseConfig.recentlyOpened[5]);
+                mostRecentlyAdded0 = -1;
+                mostRecentlyRead0 = mostRecentlyRead1 = mostRecentlyRead2 = mostRecentlyRead3 = mostRecentlyRead4 = mostRecentlyRead5 = fakeBook;
+                startWithThese.mostRecentlyRead0 = contentList.bookFromFile(peruseConfig.recentlyOpened[0]);
+                startWithThese.mostRecentlyRead1 = contentList.bookFromFile(peruseConfig.recentlyOpened[1]);
+                startWithThese.mostRecentlyRead2 = contentList.bookFromFile(peruseConfig.recentlyOpened[2]);
+                startWithThese.mostRecentlyRead3 = contentList.bookFromFile(peruseConfig.recentlyOpened[3]);
+                startWithThese.mostRecentlyRead4 = contentList.bookFromFile(peruseConfig.recentlyOpened[4]);
+                startWithThese.mostRecentlyRead5 = contentList.bookFromFile(peruseConfig.recentlyOpened[5]);
                 // the model might be null, if we haven't actually got any entries... so, let's check that
                 // and just leave the whole thing empty in that case :)
                 if(contentList.newlyAddedCategoryModel) {
@@ -209,29 +211,27 @@ Kirigami.Page {
                     height: childrenRect.height;
                     ListComponents.BookTileTall {
                         id: rread0;
-                        height: startWithThese.mostRecentlyRead0 > -1 ? neededHeight : 0;
+                        height: startWithThese.mostRecentlyRead0.readProperty("filename") != "" ? neededHeight : 0;
                         width: startWithThese.width / 2;
-                        property QtObject book: contentList.get(startWithThese.mostRecentlyRead0);
-                        author: book.readProperty("author");
-                        title: book.readProperty("title");
-                        filename: book.readProperty("filename");
+                        author: startWithThese.mostRecentlyRead0.readProperty("author");
+                        title: startWithThese.mostRecentlyRead0.readProperty("title");
+                        filename: startWithThese.mostRecentlyRead0.readProperty("filename");
                         categoryEntriesCount: 0;
-                        currentPage: book.readProperty("currentPage");
-                        totalPages: book.readProperty("totalPages");
+                        currentPage: startWithThese.mostRecentlyRead0.readProperty("currentPage");
+                        totalPages: startWithThese.mostRecentlyRead0.readProperty("totalPages");
                         onBookSelected: root.bookSelected(filename, currentPage);
                         selected: startWithThese.currentItem === this;
                     }
                     ListComponents.BookTileTall {
                         id: rread1;
-                        height: startWithThese.mostRecentlyRead1 > -1 ? neededHeight : 0;
+                        height: startWithThese.mostRecentlyRead1.readProperty("filename") != "" ? neededHeight : 0;
                         width: startWithThese.width / 2;
-                        property QtObject book: contentList.get(startWithThese.mostRecentlyRead1);
-                        author: book.readProperty("author");
-                        title: book.readProperty("title");
-                        filename: book.readProperty("filename");
+                        author: startWithThese.mostRecentlyRead1.readProperty("author");
+                        title: startWithThese.mostRecentlyRead1.readProperty("title");
+                        filename: startWithThese.mostRecentlyRead1.readProperty("filename");
                         categoryEntriesCount: 0;
-                        currentPage: book.readProperty("currentPage");
-                        totalPages: book.readProperty("totalPages");
+                        currentPage: startWithThese.mostRecentlyRead1.readProperty("currentPage");
+                        totalPages: startWithThese.mostRecentlyRead1.readProperty("totalPages");
                         onBookSelected: root.bookSelected(filename, currentPage);
                         selected: startWithThese.currentItem === this;
                     }
@@ -242,57 +242,53 @@ Kirigami.Page {
                     height: childrenRect.height;
                     ListComponents.BookTileTall {
                         id: rread2;
-                        height: startWithThese.mostRecentlyRead2 > -1 ? neededHeight : 0;
+                        height: startWithThese.mostRecentlyRead2.readProperty("filename") != "" ? neededHeight : 0;
                         width: startWithThese.width / 4;
-                        property QtObject book: contentList.get(startWithThese.mostRecentlyRead2);
-                        author: book.readProperty("author");
-                        title: book.readProperty("title");
-                        filename: book.readProperty("filename");
+                        author: startWithThese.mostRecentlyRead2.readProperty("author");
+                        title: startWithThese.mostRecentlyRead2.readProperty("title");
+                        filename: startWithThese.mostRecentlyRead2.readProperty("filename");
                         categoryEntriesCount: 0;
-                        currentPage: book.readProperty("currentPage");
-                        totalPages: book.readProperty("totalPages");
+                        currentPage: startWithThese.mostRecentlyRead2.readProperty("currentPage");
+                        totalPages: startWithThese.mostRecentlyRead2.readProperty("totalPages");
                         onBookSelected: root.bookSelected(filename, currentPage);
                         selected: startWithThese.currentItem === this;
                     }
                     ListComponents.BookTileTall {
                         id: rread3;
-                        height: startWithThese.mostRecentlyRead3 > -1 ? neededHeight : 0;
+                        height: startWithThese.mostRecentlyRead3.readProperty("filename") != "" ? neededHeight : 0;
                         width: startWithThese.width / 4;
-                        property QtObject book: contentList.get(startWithThese.mostRecentlyRead3);
-                        author: book.readProperty("author");
-                        title: book.readProperty("title");
-                        filename: book.readProperty("filename");
+                        author: startWithThese.mostRecentlyRead3.readProperty("author");
+                        title: startWithThese.mostRecentlyRead3.readProperty("title");
+                        filename: startWithThese.mostRecentlyRead3.readProperty("filename");
                         categoryEntriesCount: 0;
-                        currentPage: book.readProperty("currentPage");
-                        totalPages: book.readProperty("totalPages");
+                        currentPage: startWithThese.mostRecentlyRead3.readProperty("currentPage");
+                        totalPages: startWithThese.mostRecentlyRead3.readProperty("totalPages");
                         onBookSelected: root.bookSelected(filename, currentPage);
                         selected: startWithThese.currentItem === this;
                     }
                     ListComponents.BookTileTall {
                         id: rread4;
-                        height: startWithThese.mostRecentlyRead4 > -1 ? neededHeight : 0;
+                        height: startWithThese.mostRecentlyRead4.readProperty("filename") != "" ? neededHeight : 0;
                         width: startWithThese.width / 4;
-                        property QtObject book: contentList.get(startWithThese.mostRecentlyRead4);
-                        author: book.readProperty("author");
-                        title: book.readProperty("title");
-                        filename: book.readProperty("filename");
+                        author: startWithThese.mostRecentlyRead4.readProperty("author");
+                        title: startWithThese.mostRecentlyRead4.readProperty("title");
+                        filename: startWithThese.mostRecentlyRead4.readProperty("filename");
                         categoryEntriesCount: 0;
-                        currentPage: book.readProperty("currentPage");
-                        totalPages: book.readProperty("totalPages");
+                        currentPage: startWithThese.mostRecentlyRead4.readProperty("currentPage");
+                        totalPages: startWithThese.mostRecentlyRead4.readProperty("totalPages");
                         onBookSelected: root.bookSelected(filename, currentPage);
                         selected: startWithThese.currentItem === this;
                     }
                     ListComponents.BookTileTall {
                         id: rread5;
-                        height: startWithThese.mostRecentlyRead5 > -1 ? neededHeight : 0;
+                        height: startWithThese.mostRecentlyRead5.readProperty("filename") != "" ? neededHeight : 0;
                         width: startWithThese.width / 4;
-                        property QtObject book: contentList.get(startWithThese.mostRecentlyRead5);
-                        author: book.readProperty("author");
-                        title: book.readProperty("title");
-                        filename: book.readProperty("filename");
+                        author: startWithThese.mostRecentlyRead5.readProperty("author");
+                        title: startWithThese.mostRecentlyRead5.readProperty("title");
+                        filename: startWithThese.mostRecentlyRead5.readProperty("filename");
                         categoryEntriesCount: 0;
-                        currentPage: book.readProperty("currentPage");
-                        totalPages: book.readProperty("totalPages");
+                        currentPage: startWithThese.mostRecentlyRead5.readProperty("currentPage");
+                        totalPages: startWithThese.mostRecentlyRead5.readProperty("totalPages");
                         onBookSelected: root.bookSelected(filename, currentPage);
                         selected: startWithThese.currentItem === this;
                     }
