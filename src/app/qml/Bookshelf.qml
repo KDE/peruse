@@ -86,12 +86,13 @@ Kirigami.Page {
             enabled: mainWindow.pageStack.currentItem == root;
         }
     ]
-    contextualActions: PLASMA_PLATFORM.substring(0, 5) === "phone" ? mobileActions : desktopActions;
-
-    mainAction: Kirigami.Action {
-        text: "Search Books";
-        iconName: "system-search";
-        onTriggered: searchBox.activate();
+    actions {
+        contextualActions: PLASMA_PLATFORM.substring(0, 5) === "phone" ? mobileActions : desktopActions;
+        main: Kirigami.Action {
+            text: "Search Books";
+            iconName: "system-search";
+            onTriggered: searchBox.activate();
+        }
     }
 
     Item {

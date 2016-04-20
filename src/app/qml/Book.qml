@@ -150,7 +150,9 @@ Kirigami.Page {
             enabled: mainWindow.pageStack.currentItem == root;
         }
     ]
-    contextualActions: PLASMA_PLATFORM.substring(0, 5) === "phone" ? mobileActions : desktopActions;
+    actions {
+        contextualActions: PLASMA_PLATFORM.substring(0, 5) === "phone" ? mobileActions : desktopActions;
+    }
 
     Item {
         width: root.width - (root.leftPadding + root.rightPadding);
