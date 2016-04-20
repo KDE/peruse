@@ -20,8 +20,36 @@
  */
 
 import QtQuick 2.1
+import org.kde.kirigami 1.0 as Kirigami
+import org.kde.peruse 0.1 as Peruse
 
 PeruseMain {
+    id: root;
     width: 750;
     height: 1100;
+
+    function openOther() {
+        pageStack.push(openDlg, { folder: root.homeDir() } );
+    }
+
+    Component {
+        id: openDlg;
+        Kirigami.Page {
+            id: root;
+            property string folder;
+            title: "Open comics not in your collection";
+            FileFinder {
+                width: root.width - (root.leftPadding + root.rightPadding);
+                height: root.height - (root.topPadding + root.bottomPadding);
+                folder: root.folder;
+                showFiles: true;
+                onAccepted: {
+                    if(selectedItem().substring(0, 7) === "file://") {
+                        showBook(selectedItem().substring(7), 0);
+                    }
+                }
+                onAborted: pageStack.pop();
+            }
+        }
+    }
 }

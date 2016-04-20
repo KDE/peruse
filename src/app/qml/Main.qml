@@ -19,10 +19,30 @@
  *
  */
 
-import QtQuick 2.1
+import QtQuick 2.2
 import QtQuick.Window 2.2
+import QtQuick.Dialogs 1.2
 
 PeruseMain {
+    id: root;
     width: Screen.desktopAvailableWidth * 0.6;
     height: Screen.desktopAvailableHeight * 0.7;
+
+    function openOther() {
+        openDlg.open();
+    }
+
+    FileDialog {
+        id: openDlg;
+        title: "Please choose a comic to open";
+        folder: root.homeDir();
+        onAccepted: {
+            if(openDlg.fileUrl.toString().substring(0, 7) === "file://") {
+                root.showBook(openDlg.fileUrl.toString().substring(7), 0);
+            }
+        }
+        onRejected: {
+            // Just do nothing, we don't really care...
+        }
+    }
 }
