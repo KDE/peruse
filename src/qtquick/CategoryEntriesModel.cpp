@@ -22,6 +22,7 @@
 #include "CategoryEntriesModel.h"
 #include "PropertyContainer.h"
 #include <QDir>
+#include <QFileInfo>
 #include <QDebug>
 
 class CategoryEntriesModel::Private {
@@ -290,6 +291,17 @@ QObject* CategoryEntriesModel::getEntry(int index)
         obj->setProperty("title", catEntry->name());
         obj->setProperty("categoryEntriesCount", catEntry->rowCount());
         obj->setProperty("entriesModel", QVariant::fromValue(catEntry));
+    }
+    return obj;
+}
+
+QObject* CategoryEntriesModel::bookFromFile(QString filename)
+{
+    PropertyContainer* obj = qobject_cast<PropertyContainer*>(get(indexOfFile(filename)));
+    if(obj->property("filename").toString().isEmpty()) {
+        if(QFileInfo::exists(filename)) {
+            obj->setProperty("filename", filename);
+        }
     }
     return obj;
 }
