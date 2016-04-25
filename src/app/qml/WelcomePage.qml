@@ -391,7 +391,7 @@ Kirigami.Page {
                         anchors.horizontalCenter: parent.horizontalCenter;
                         ListComponents.BookTileTall {
                             visible: filename != "";
-                            height: neededHeight;
+                            height: visible ? neededHeight : 0;
                             width: startWithThese.width / 4;
                             property QtObject book: contentList.newlyAddedCategoryModel ? contentList.newlyAddedCategoryModel.get((index * 4) + 5) : fakeBook;
                             author: book.readProperty("author");
@@ -404,7 +404,7 @@ Kirigami.Page {
                         }
                         ListComponents.BookTileTall {
                             visible: filename != "";
-                            height: neededHeight;
+                            height: visible ? neededHeight : 0;
                             width: startWithThese.width / 4;
                             property QtObject book: contentList.newlyAddedCategoryModel ? contentList.newlyAddedCategoryModel.get((index * 4) + 6) : fakeBook;
                             author: book.readProperty("author");
@@ -417,7 +417,7 @@ Kirigami.Page {
                         }
                         ListComponents.BookTileTall {
                             visible: filename != "";
-                            height: neededHeight;
+                            height: visible ? neededHeight : 0;
                             width: startWithThese.width / 4;
                             property QtObject book: contentList.newlyAddedCategoryModel ? contentList.newlyAddedCategoryModel.get((index * 4) + 7) : fakeBook;
                             author: book.readProperty("author");
@@ -430,7 +430,7 @@ Kirigami.Page {
                         }
                         ListComponents.BookTileTall {
                             visible: filename != "";
-                            height: neededHeight;
+                            height: visible ? neededHeight : 0;
                             width: startWithThese.width / 4;
                             property QtObject book: contentList.newlyAddedCategoryModel ? contentList.newlyAddedCategoryModel.get((index * 4) + 8) : fakeBook;
                             author: book.readProperty("author");
