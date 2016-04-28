@@ -96,8 +96,8 @@ Item {
         Rectangle {
             id: tileBg;
             anchors.centerIn: coverImage;
-            width: coverImage.paintedWidth + units.smallSpacing * 2;
-            height: coverImage.paintedHeight + units.smallSpacing * 2;
+            width: Math.max(coverImage.paintedWidth, units.iconSizes.large) + units.smallSpacing * 2;
+            height: Math.max(coverImage.paintedHeight, units.iconSizes.large) + units.smallSpacing * 2;
             color: theme.viewBackgroundColor;
             border {
                 width: 2;
