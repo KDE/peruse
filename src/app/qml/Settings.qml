@@ -22,6 +22,7 @@
 import QtQuick 2.2
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.0
+import QtQuick.Dialogs 1.0
 
 import org.kde.kirigami 1.0 as Kirigami
 import org.kde.plasma.components 2.0 as PlasmaComponents
@@ -53,7 +54,14 @@ Kirigami.Page {
                 ToolButton {
                     id: folderAdd;
                     iconName: "list-add";
-                    onClicked: mainWindow.pageStack.push(folderDlg);
+                    onClicked: {
+                        if(PLASMA_PLATFORM.substring(0, 5) === "phone") {
+                            mainWindow.pageStack.push(folderDlg);
+                        }
+                        else {
+                            desktopFolderDlg.open();
+                        }
+                    }
                     anchors {
                         verticalCenter: parent.verticalCenter;
                         left: parent.right;
@@ -142,16 +150,30 @@ Kirigami.Page {
                     onAccepted: {
                         peruseConfig.addBookLocation(selectedItem());
                         mainWindow.pageStack.pop();
-
-                        // Now search for new items in that locations...
-                        var locations = peruseConfig.bookLocations;
-                        addingNewBooksProgress.opacity = 1;
-                        contentList.contentModel.addLocation(locations[locations.length - 1]);
-                        contentList.contentModel.startSearch();
+                        root.doSearch();
                     }
                     onAborted: mainWindow.pageStack.pop();
                 }
             }
         }
+    }
+
+    FileDialog {
+        id: desktopFolderDlg;
+        title: "Select a folder";
+        selectFolder: true;
+        folder: shortcuts.home;
+        onAccepted: {
+            peruseConfig.addBookLocation(desktopFolderDlg.fileUrl);
+            root.doSearch();
+        }
+    }
+
+    function doSearch() {
+        // Now search for new items in that locations...
+        var locations = peruseConfig.bookLocations;
+        addingNewBooksProgress.opacity = 1;
+        contentList.contentModel.addLocation(locations[locations.length - 1]);
+        contentList.contentModel.startSearch();
     }
 }
