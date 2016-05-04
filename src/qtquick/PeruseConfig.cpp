@@ -38,6 +38,14 @@ PeruseConfig::PeruseConfig(QObject* parent)
     : QObject(parent)
     , d(new Private)
 {
+    QStringList locations = d->config.group("general").readEntry("book locations", QStringList());
+    if(locations.count() < 1)
+    {
+        locations = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation);
+        locations << QStandardPaths::standardLocations(QStandardPaths::DownloadLocation);
+        d->config.group("general").writeEntry("book locations", locations);
+        d->config.sync();
+    }
 }
 
 PeruseConfig::~PeruseConfig()
@@ -74,7 +82,11 @@ void PeruseConfig::addBookLocation(const QString& location)
 {
     if(location.startsWith("file://"))
     {
+#ifdef Q_OS_WIN
+        QString newLocation = location.mid(8);
+#else
         QString newLocation = location.mid(7);
+#endif
         QStringList locations = bookLocations();
         // First, get rid of all the entries which start with the newly added location, because that's silly
         QStringList newLocations;
@@ -114,12 +126,6 @@ void PeruseConfig::removeBookLocation(const QString& location)
 QStringList PeruseConfig::bookLocations() const
 {
     QStringList locations = d->config.group("general").readEntry("book locations", QStringList());
-    if(locations.count() < 1)
-    {
-        locations = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation);
-        locations << QStandardPaths::standardLocations(QStandardPaths::DownloadLocation);
-    }
-
     return locations;
 }
 
