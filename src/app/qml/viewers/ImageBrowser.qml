@@ -87,19 +87,17 @@ ListView {
                 source: model.url
                 fillMode: Image.PreserveAspectFit
                 asynchronous: true
-                sourceSize.width: imageWidth * 2
-                sourceSize.height: imageHeight * 2
+                property bool shouldCheat: imageWidth * 2 > maxTextureSize || imageHeight * 2 > maxTextureSize;
+                property bool isTall: imageHeight < imageWidth;
+                property int fixedWidth: isTall ? maxTextureSize * (imageWidth / imageHeight) : maxTextureSize;
+                property int fixedHeight: isTall ? maxTextureSize : maxTextureSize * (imageHeight / imageWidth);
+                sourceSize.width: shouldCheat ? fixedWidth : imageWidth * 2;
+                sourceSize.height: shouldCheat ? fixedHeight : imageHeight * 2;
                 MouseArea {
                     anchors.fill: parent
-                    onClicked: {
-                        if(applicationWindow().controlsVisible === true) {
-                            applicationWindow().controlsVisible = false;
-                        }
-                        else {
-                            applicationWindow().controlsVisible = true;
-                        }
-                    }
+                    onClicked: startToggleFullscreen();
                     onDoubleClicked: {
+                        abortToggleFullscreen();
                         if (flick.interactive) {
                             flick.resizeContent(imageWidth, imageHeight, {x: imageWidth/2, y: imageHeight/2});
                         } else {

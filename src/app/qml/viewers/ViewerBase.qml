@@ -33,4 +33,29 @@ Item {
     property int pageCount;
     property var pagesModel;
     property Component thumbnailComponent;
+
+    // This all looks a little silly, however, without this, we can't double-click on the
+    // page (which is, these days, used for zooming purposes). It also works around some
+    // minor small annoyances, like accidental swiping when the finger doesn't leave the
+    // surface of the page when switching occurs.
+    function startToggleFullscreen() {
+        fullscreenToggler.start();
+    }
+    function abortToggleFullscreen() {
+        fullscreenToggler.stop();
+    }
+    Timer {
+        id: fullscreenToggler;
+        interval: 900; // In short, just under a second...
+        running: false;
+        repeat: false;
+        onTriggered: {
+            if(applicationWindow().controlsVisible === true) {
+                applicationWindow().controlsVisible = false;
+            }
+            else {
+                applicationWindow().controlsVisible = true;
+            }
+        }
+    }
 }

@@ -109,13 +109,6 @@ ViewerBase {
 //             bookmarkConnection.target = page
 //             actionButton.checked = page.bookmarked
         }
-        onClicked: {
-            if(applicationWindow().controlsVisible === true) {
-                applicationWindow().controlsVisible = false;
-            }
-            else {
-                applicationWindow().controlsVisible = true;
-            }
-        }
+        onClicked: startToggleFullscreen();
     }
 }
