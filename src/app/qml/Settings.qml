@@ -60,6 +60,10 @@ Kirigami.Page {
                     }
                 }
             }
+            Item {
+                width: parent.width;
+                height: units.largeSpacing;
+            }
             Repeater {
                 model: peruseConfig.bookLocations;
                 delegate: Kirigami.SwipeListItem {
@@ -70,8 +74,13 @@ Kirigami.Page {
                             onTriggered: peruseConfig.removeBookLocation(peruseConfig.bookLocations[index]);
                         }
                     ]
-                    Kirigami.BasicListItem {
-                        label: peruseConfig.bookLocations[index];
+                    Kirigami.Label {
+                        anchors {
+                            fill: parent;
+                            margins: units.smallSpacing;
+                        }
+                        verticalAlignment: Text.AlignVCenter;
+                        text: peruseConfig.bookLocations[index];
                     }
                 }
             }
@@ -127,8 +136,7 @@ Kirigami.Page {
                 id: root;
                 title: "Select a folder"
                 FileFinder {
-                    width: root.width - (root.leftPadding + root.rightPadding);
-                    height: root.height - (root.topPadding + root.bottomPadding);
+                    anchors.fill: parent;
                     folder: peruseConfig.homeDir();
                     showFiles: false;
                     onAccepted: {

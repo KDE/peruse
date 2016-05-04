@@ -76,6 +76,7 @@ Item {
         id: folderView;
         anchors {
             top: titleContainer.bottom;
+            topMargin: units.largeSpacing;
             left: parent.left;
             right: parent.right;
             bottom: parent.bottom;
@@ -90,12 +91,14 @@ Item {
             width: folderView.width;
             onClicked: folderModel.folder = folderModel.parentFolder;
             label: "(go up one level)";
+            icon: "go-up";
         }
         delegate: Kirigami.BasicListItem {
             enabled: true;
             supportsMouseEvents: enabled;
             width: folderView.width;
             label: fileName;
+            icon: fileIsDir ? "folder" : "";
             onClicked: {
                 if(fileIsDir) {
                     folderView.currentIndex = -1;
