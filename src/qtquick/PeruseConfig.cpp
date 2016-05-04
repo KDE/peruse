@@ -20,10 +20,12 @@
  */
 
 #include "PeruseConfig.h"
-#include <KFileMetaData/UserMetaData>
 
+#include <KFileMetaData/UserMetaData>
 #include <KConfig>
 #include <KConfigGroup>
+
+#include <QTimer>
 
 class PeruseConfig::Private
 {
@@ -120,7 +122,7 @@ void PeruseConfig::removeBookLocation(const QString& location)
     locations.removeAll(location);
     d->config.group("general").writeEntry("book locations", locations);
     d->config.sync();
-    emit bookLocationsChanged();
+    QTimer::singleShot(100, this, SIGNAL(bookLocationsChanged()));
 }
 
 QStringList PeruseConfig::bookLocations() const
