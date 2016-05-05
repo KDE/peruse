@@ -81,15 +81,17 @@ int main(int argc, char** argv)
 
     QQmlEngine engine;
 
+    bool osIsWindows = false;
 #ifdef Q_OS_WIN
     // Because windows is a bit funny with paths and whatnot, just so the thing with the lib paths...
     QDir appdir(qApp->applicationDirPath());
     appdir.cdUp();
     engine.addImportPath(appdir.canonicalPath() + "/lib/qml");
-    engine.rootContext()->setContextProperty("osIsWindows", true);
+    osIsWindows = true;
     // Hey, let's try and avoid all those extra stale processes, right?
     qputenv("KDE_FORK_SLAVES", "true");
 #endif
+    engine.rootContext()->setContextProperty("osIsWindows", osIsWindows);
 
     QQmlContext* objectContext = engine.rootContext();
     QString platformEnv(qgetenv("PLASMA_PLATFORM"));
