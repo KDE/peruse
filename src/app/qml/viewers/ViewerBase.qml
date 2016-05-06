@@ -38,15 +38,15 @@ Item {
     // page (which is, these days, used for zooming purposes). It also works around some
     // minor small annoyances, like accidental swiping when the finger doesn't leave the
     // surface of the page when switching occurs.
-    function startToggleFullscreen() {
-        fullscreenToggler.start();
+    function startToggleControls() {
+        controlsToggler.start();
     }
-    function abortToggleFullscreen() {
-        fullscreenToggler.stop();
+    function abortToggleControls() {
+        controlsToggler.stop();
     }
     Timer {
-        id: fullscreenToggler;
-        interval: 900; // In short, just under a second...
+        id: controlsToggler;
+        interval: 500;
         running: false;
         repeat: false;
         onTriggered: {

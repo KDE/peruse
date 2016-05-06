@@ -95,9 +95,9 @@ ListView {
                 sourceSize.height: shouldCheat ? fixedHeight : imageHeight * 2;
                 MouseArea {
                     anchors.fill: parent
-                    onClicked: startToggleFullscreen();
+                    onClicked: startToggleControls();
                     onDoubleClicked: {
-                        abortToggleFullscreen();
+                        abortToggleControls();
                         if (flick.interactive) {
                             flick.resizeContent(imageWidth, imageHeight, {x: imageWidth/2, y: imageHeight/2});
                         } else {

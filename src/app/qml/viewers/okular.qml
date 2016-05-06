@@ -109,6 +109,6 @@ ViewerBase {
 //             bookmarkConnection.target = page
 //             actionButton.checked = page.bookmarked
         }
-        onClicked: startToggleFullscreen();
+        onClicked: startToggleControls();
     }
 }

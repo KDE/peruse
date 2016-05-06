@@ -22,6 +22,7 @@
 import QtQuick 2.2
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.0
+import QtQuick.Window 2.2
 
 import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.kirigami 1.0 as Kirigami
@@ -124,12 +125,27 @@ Kirigami.Page {
         }
     }
 
+    function toggleFullscreen() {
+        if(applicationWindow().visibility !== Window.FullScreen) {
+            applicationWindow().visibility = Window.FullScreen;
+        }
+        else {
+            applicationWindow().visibility = Window.AutomaticVisibility;
+        }
+    }
+
     property list<QtObject> mobileActions: [
         Kirigami.Action {
             text: "Close book";
             shortcut: "Esc";
             iconName: "action-close";
             onTriggered: closeBook();
+            enabled: mainWindow.pageStack.currentItem == root;
+        },
+        Kirigami.Action {
+            text: applicationWindow().visibility !== Window.FullScreen ? "Go full screen" : "Exit full screen";
+            iconName: "view-fullscreen";
+            onTriggered: toggleFullscreen();
             enabled: mainWindow.pageStack.currentItem == root;
         }
     ]
@@ -153,6 +169,12 @@ Kirigami.Page {
             shortcut: StandardKey.MoveToNextChar;
             iconName: "action-next";
             onTriggered: nextPage();
+            enabled: mainWindow.pageStack.currentItem == root;
+        },
+        Kirigami.Action {
+            text: applicationWindow().visibility !== Window.FullScreen ? "Go full screen" : "Exit full screen";
+            iconName: "view-fullscreen";
+            onTriggered: toggleFullscreen();
             enabled: mainWindow.pageStack.currentItem == root;
         }
     ]
