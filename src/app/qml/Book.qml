@@ -32,6 +32,12 @@ Kirigami.Page {
     id: root;
     clip: true;
     implicitWidth: applicationWindow().width;
+    background: Rectangle {
+        anchors.fill: parent;
+        opacity: applicationWindow().controlsVisible ? 0 : 1;
+        Behavior on opacity { NumberAnimation { duration: mainWindow.animationDuration; } }
+        color: "black";
+    }
 
     // Perhaps we should store and restore this?
     property bool showControls: true;
