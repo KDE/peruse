@@ -35,6 +35,7 @@ Item {
         searchField.forceActiveFocus();
         Qt.inputMethod.show(); // Would be nice if this happened automatically, but... no such luck
     }
+    signal bookSelected(string filename, int currentPage);
     clip: true;
     height: searchField.focus || searchField.text.length > 0 ? searchHeight : 0;
     Behavior on height { PropertyAnimation { duration: mainWindow.animationDuration; easing.type: Easing.InOutQuad; } }

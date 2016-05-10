@@ -81,6 +81,7 @@ Kirigami.Page {
             }
             model: contentList.newlyAddedCategoryModel;
             maxHeight: parent.height - titleContainer.height / 2;
+            onBookSelected: root.bookSelected(filename, currentPage);
         }
 
         Item {

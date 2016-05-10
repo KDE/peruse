@@ -107,6 +107,7 @@ Kirigami.Page {
             }
             maxHeight: parent.height;
             model: root.model;
+            onBookSelected: root.bookSelected(filename, currentPage);
         }
 
         GridView {
