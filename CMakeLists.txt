@@ -5,6 +5,8 @@ if(POLICY CMP0063)
     cmake_policy (SET CMP0063 NEW)
 endif(POLICY CMP0063)
 
+find_package(OpenGL)
+
 find_package(ECM 0.0.9 REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" ${ECM_MODULE_PATH})
 
