@@ -41,9 +41,7 @@
 int getMaxTextureSize()
 {
     int maxSize = 0;
-    // So, yes, this isn't as lovely as it should be. Will need fixing for systems
-    // without OpenGL, such as arm phones and the like
-#ifdef OPENGL_FOUND
+
     // Create a temp context - required if this is called from another thread
     QOpenGLContext ctx;
     if ( !ctx.create() )
@@ -64,9 +62,7 @@ int getMaxTextureSize()
     QOpenGLFunctions glFuncs(QOpenGLContext::currentContext());
     glFuncs.glEnable(GL_TEXTURE_2D);
     glFuncs.glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxSize);
-#else
-    maxSize = 2048;
-#endif
+
     return maxSize;
 }
 
