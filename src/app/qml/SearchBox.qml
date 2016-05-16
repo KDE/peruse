@@ -73,6 +73,7 @@ Item {
             right: parent.right;
             bottom: parent.bottom;
         }
+        footer: Item { width: parent.width; height: Kirigami.Units.iconSizes.large + Kirigami.Units.largeSpacing; }
         cellWidth: width / 2;
         cellHeight: Math.max(
             (root.height * 2 / 7),
