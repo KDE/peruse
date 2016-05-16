@@ -180,6 +180,12 @@ Kirigami.Page {
     ]
     actions {
         contextualActions: PLASMA_PLATFORM.substring(0, 5) === "phone" ? mobileActions : desktopActions;
+        main: Kirigami.Action {
+            text: applicationWindow().visibility !== Window.FullScreen ? "Go full screen" : "Exit full screen";
+            iconName: "view-fullscreen";
+            onTriggered: toggleFullscreen();
+            enabled: mainWindow.pageStack.currentItem == root;
+        }
     }
 
     Item {
