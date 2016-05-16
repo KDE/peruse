@@ -97,7 +97,7 @@ Kirigami.Page {
 
     Item {
         width: root.width - (root.leftPadding + root.rightPadding);
-        height: root.height - (root.topPadding + root.bottomPadding);
+        height: root.height - root.topPadding;
         SearchBox {
             id: searchBox;
             anchors {
@@ -119,6 +119,7 @@ Kirigami.Page {
                 right: parent.right;
             }
             height: parent.height;
+            footer: Item { width: parent.width; height: Kirigami.Units.iconSizes.large + Kirigami.Units.largeSpacing; }
             cellWidth: width / 2;
             cellHeight: root.height * 2 / 7;
 //             header: ListComponents.ListPageHeader { text: root.headerText; }
