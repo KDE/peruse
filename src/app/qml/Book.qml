@@ -33,6 +33,13 @@ Kirigami.Page {
     id: root;
     clip: true;
     implicitWidth: applicationWindow().width;
+
+    // Remove all the padding when we've hidden controls. Content is king!
+    topPadding: applicationWindow().controlsVisible ? Kirigami.Units.gridUnit + (applicationWindow() && applicationWindow().header ? applicationWindow().header.preferredHeight : 0) : 0;
+    leftPadding: applicationWindow().controlsVisible ? Kirigami.Units.gridUnit : 0;
+    rightPadding: applicationWindow().controlsVisible ? Kirigami.Units.gridUnit : 0;
+    bottomPadding: applicationWindow().controlsVisible ? Kirigami.Units.gridUnit : 0;
+
     background: Rectangle {
         anchors.fill: parent;
         opacity: applicationWindow().controlsVisible ? 0 : 1;
