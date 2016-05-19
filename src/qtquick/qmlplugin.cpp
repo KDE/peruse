@@ -28,7 +28,9 @@
 #include "FolderBookModel.h"
 #include "PeruseConfig.h"
 #include "PreviewImageProvider.h"
+#ifdef USE_PERUSE_PDFTHUMBNAILER
 #include "PDFCoverImageProvider.h"
+#endif
 #include "FilterProxy.h"
 #include "PropertyContainer.h"
 
@@ -39,7 +41,9 @@ void QmlPlugins::initializeEngine(QQmlEngine *engine, const char *)
 {
     engine->addImageProvider("preview", new PreviewImageProvider());
     engine->addImageProvider("comiccover", new ComicCoverImageProvider());
+#ifdef USE_PERUSE_PDFTHUMBNAILER
     engine->addImageProvider("pdfcover", new PDFCoverImageProvider());
+#endif
 }
 
 void QmlPlugins::registerTypes(const char *uri)

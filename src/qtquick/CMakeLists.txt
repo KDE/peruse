@@ -1,5 +1,10 @@
 add_subdirectory(karchive-rar)
 
+set(USE_PERUSE_PDFTHUMBNAILER false)
+if(WIN32)
+    set(USE_PERUSE_PDFTHUMBNAILER true)
+endif()
+
 set(qmlplugin_SRCS
     qmlplugin.cpp
     ArchiveBookModel.cpp
@@ -11,12 +16,24 @@ set(qmlplugin_SRCS
     FilterProxy.cpp
     FolderBookModel.cpp
     PeruseConfig.cpp
-    PDFCoverImageProvider.cpp
     PreviewImageProvider.cpp
     PropertyContainer.cpp
 )
 
+if(USE_PERUSE_PDFTHUMBNAILER)
+    set(qmlplugin_SRCS
+        ${qmlplugin_SRCS}
+        PDFCoverImageProvider.cpp
+    )
+endif()
+
 add_library (peruseqmlplugin SHARED ${qmlplugin_SRCS})
+if(USE_PERUSE_PDFTHUMBNAILER)
+target_compile_definitions(peruseqmlplugin
+    PRIVATE
+    -DUSE_PERUSE_PDFTHUMBNAILER
+)
+endif()
 target_include_directories(peruseqmlplugin
     PRIVATE
     karchive-rar
