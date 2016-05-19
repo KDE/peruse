@@ -21,6 +21,7 @@
 
 #include "PDFCoverImageProvider.h"
 
+#include <QCoreApplication>
 #include <QIcon>
 #include <QMimeDatabase>
 #include <QProcess>
@@ -61,7 +62,7 @@ QImage PDFCoverImageProvider::requestImage(const QString& id, QSize* size, const
     const QMimeType mime = db.mimeTypeForFile(id, QMimeDatabase::MatchContent);
     if(mime.inherits("application/pdf")) {
         //-sOutputFile=FILENAME.png FILENAME
-        QString outFile = QString("%1/%2").arg(d->thumbDir.path()).arg(QUrl(id).toString().replace("/", "-"));
+        QString outFile = QString("%1/%2.png").arg(d->thumbDir.path()).arg(QUrl(id).toString().replace("/", "-").replace(":", "-"));
         if(!QFile::exists(outFile)) {
             // then we've not already generated a thumbnail, try to make one...
             QProcess thumbnailer;
@@ -72,9 +73,9 @@ QImage PDFCoverImageProvider::requestImage(const QString& id, QSize* size, const
             #ifdef Q_OS_WIN
                 gsApp = qApp->applicationDirPath();
                 #ifdef Q_OS_WIN64
-                    gsApp += "/gswin64.exe";
+                    gsApp += "/gswin64c.exe";
                 #else
-                    gsApp += "/gswin32.exe";
+                    gsApp += "/gswin32c.exe";
                 #endif
             #else
                 gsApp = "gs";
