@@ -28,6 +28,7 @@
 #include "FolderBookModel.h"
 #include "PeruseConfig.h"
 #include "PreviewImageProvider.h"
+#include "PDFCoverImageProvider.h"
 #include "FilterProxy.h"
 #include "PropertyContainer.h"
 
@@ -38,6 +39,7 @@ void QmlPlugins::initializeEngine(QQmlEngine *engine, const char *)
 {
     engine->addImageProvider("preview", new PreviewImageProvider());
     engine->addImageProvider("comiccover", new ComicCoverImageProvider());
+    engine->addImageProvider("pdfcover", new PDFCoverImageProvider());
 }
 
 void QmlPlugins::registerTypes(const char *uri)

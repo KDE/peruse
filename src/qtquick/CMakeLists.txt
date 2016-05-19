@@ -11,6 +11,7 @@ set(qmlplugin_SRCS
     FilterProxy.cpp
     FolderBookModel.cpp
     PeruseConfig.cpp
+    PDFCoverImageProvider.cpp
     PreviewImageProvider.cpp
     PropertyContainer.cpp
 )
