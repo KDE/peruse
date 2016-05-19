@@ -140,6 +140,18 @@ void BookListModel::contentModelItemsInserted(QModelIndex index, int first, int 
         QFileInfo fileinfo(entry->filename);
         entry->title = fileinfo.completeBaseName();
 
+        if(entry->filename.toLower().endsWith("cbr")) {
+            entry->thumbnail = QString("image://comiccover/").append(entry->filename);
+        }
+#ifdef USE_PERUSE_PDFTHUMBNAILER
+        else if(entry->filename.toLower().endsWith("pdf")) {
+            entry->thumbnail = QString("image://pdfcover/").append(entry->filename);
+        }
+#endif
+        else {
+            entry->thumbnail = QString("image://preview/").append(entry->filename);
+        }
+
         QVariantHash metadata = d->contentModel->data(d->contentModel->index(first, 0, index), Qt::UserRole + 2).toHash();
         QVariantHash::const_iterator it = metadata.constBegin();
         for (; it != metadata.constEnd(); it++) {

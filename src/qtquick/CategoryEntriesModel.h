@@ -41,6 +41,7 @@ struct BookEntry {
     QDateTime lastOpenedTime;
     int totalPages;
     int currentPage;
+    QString thumbnail;
 };
 
 class CategoryEntriesModel : public QAbstractListModel
@@ -62,7 +63,8 @@ public:
         TotalPagesRole,
         CurrentPageRole,
         CategoryEntriesModelRole,
-        CategoryEntryCountRole
+        CategoryEntryCountRole,
+        ThumbnailRole
     };
 
     virtual QHash<int, QByteArray> roleNames() const;

@@ -66,6 +66,7 @@ QHash<int, QByteArray> CategoryEntriesModel::roleNames() const
     roles[CurrentPageRole] = "currentPage";
     roles[CategoryEntriesModelRole] = "categoryEntriesModel";
     roles[CategoryEntryCountRole] = "categoryEntriesCount";
+    roles[ThumbnailRole] = "thumbnail";
     return roles;
 }
 
@@ -135,6 +136,9 @@ QVariant CategoryEntriesModel::data(const QModelIndex& index, int role) const
                     break;
                 case CategoryEntryCountRole:
                     result.setValue<int>(0);
+                    break;
+                case ThumbnailRole:
+                    result.setValue(entry->thumbnail);
                     break;
                 default:
                     result.setValue(QString("Unknown role"));
@@ -244,6 +248,7 @@ QObject* CategoryEntriesModel::get(int index)
     obj->setProperty("series", entry->series);
     obj->setProperty("title", entry->title);
     obj->setProperty("totalPages", entry->totalPages);
+    obj->setProperty("thumbnail", entry->thumbnail);
     if(deleteEntry)
     {
         delete entry;
@@ -315,6 +320,20 @@ QObject* CategoryEntriesModel::bookFromFile(QString filename)
                 obj->setProperty("totalPages", QVariant::fromValue<int>(totalPages));
             }
             obj->setProperty("filename", filename);
+
+            QString thumbnail;
+            if(filename.toLower().endsWith("cbr")) {
+                thumbnail = QString("image://comiccover/").append(filename);
+            }
+#ifdef USE_PERUSE_PDFTHUMBNAILER
+            else if(filename.toLower().endsWith("pdf")) {
+                thumbnail = QString("image://pdfcover/").append(filename);
+            }
+#endif
+            else {
+                thumbnail = QString("image://preview/").append(filename);
+            }
+            obj->setProperty("thumbnail", thumbnail);
         }
     }
     return obj;
