@@ -193,6 +193,7 @@ Kirigami.Page {
                 property string author: "unnamed";
                 property string title: "unnamed";
                 property string filename: "";
+                property string thumbnail: "";
                 property string currentPage: "0";
                 property string totalPages: "0";
             }
@@ -217,6 +218,7 @@ Kirigami.Page {
                         author: startWithThese.mostRecentlyRead0.readProperty("author");
                         title: startWithThese.mostRecentlyRead0.readProperty("title");
                         filename: startWithThese.mostRecentlyRead0.readProperty("filename");
+                        thumbnail: startWithThese.mostRecentlyRead0.readProperty("thumbnail");
                         categoryEntriesCount: 0;
                         currentPage: startWithThese.mostRecentlyRead0.readProperty("currentPage");
                         totalPages: startWithThese.mostRecentlyRead0.readProperty("totalPages");
@@ -230,6 +232,7 @@ Kirigami.Page {
                         author: startWithThese.mostRecentlyRead1.readProperty("author");
                         title: startWithThese.mostRecentlyRead1.readProperty("title");
                         filename: startWithThese.mostRecentlyRead1.readProperty("filename");
+                        thumbnail: startWithThese.mostRecentlyRead1.readProperty("thumbnail");
                         categoryEntriesCount: 0;
                         currentPage: startWithThese.mostRecentlyRead1.readProperty("currentPage");
                         totalPages: startWithThese.mostRecentlyRead1.readProperty("totalPages");
@@ -248,6 +251,7 @@ Kirigami.Page {
                         author: startWithThese.mostRecentlyRead2.readProperty("author");
                         title: startWithThese.mostRecentlyRead2.readProperty("title");
                         filename: startWithThese.mostRecentlyRead2.readProperty("filename");
+                        thumbnail: startWithThese.mostRecentlyRead2.readProperty("thumbnail");
                         categoryEntriesCount: 0;
                         currentPage: startWithThese.mostRecentlyRead2.readProperty("currentPage");
                         totalPages: startWithThese.mostRecentlyRead2.readProperty("totalPages");
@@ -261,6 +265,7 @@ Kirigami.Page {
                         author: startWithThese.mostRecentlyRead3.readProperty("author");
                         title: startWithThese.mostRecentlyRead3.readProperty("title");
                         filename: startWithThese.mostRecentlyRead3.readProperty("filename");
+                        thumbnail: startWithThese.mostRecentlyRead3.readProperty("thumbnail");
                         categoryEntriesCount: 0;
                         currentPage: startWithThese.mostRecentlyRead3.readProperty("currentPage");
                         totalPages: startWithThese.mostRecentlyRead3.readProperty("totalPages");
@@ -274,6 +279,7 @@ Kirigami.Page {
                         author: startWithThese.mostRecentlyRead4.readProperty("author");
                         title: startWithThese.mostRecentlyRead4.readProperty("title");
                         filename: startWithThese.mostRecentlyRead4.readProperty("filename");
+                        thumbnail: startWithThese.mostRecentlyRead4.readProperty("thumbnail");
                         categoryEntriesCount: 0;
                         currentPage: startWithThese.mostRecentlyRead4.readProperty("currentPage");
                         totalPages: startWithThese.mostRecentlyRead4.readProperty("totalPages");
@@ -287,6 +293,7 @@ Kirigami.Page {
                         author: startWithThese.mostRecentlyRead5.readProperty("author");
                         title: startWithThese.mostRecentlyRead5.readProperty("title");
                         filename: startWithThese.mostRecentlyRead5.readProperty("filename");
+                        thumbnail: startWithThese.mostRecentlyRead5.readProperty("thumbnail");
                         categoryEntriesCount: 0;
                         currentPage: startWithThese.mostRecentlyRead5.readProperty("currentPage");
                         totalPages: startWithThese.mostRecentlyRead5.readProperty("totalPages");
@@ -320,6 +327,7 @@ Kirigami.Page {
                         author: book.readProperty("author");
                         title: book.readProperty("title");
                         filename: book.readProperty("filename");
+                        thumbnail: book.readProperty("thumbnail");
                         categoryEntriesCount: 0;
                         currentPage: book.readProperty("currentPage");
                         totalPages: book.readProperty("totalPages");
@@ -333,6 +341,7 @@ Kirigami.Page {
                         author: book.readProperty("author");
                         title: book.readProperty("title");
                         filename: book.readProperty("filename");
+                        thumbnail: book.readProperty("thumbnail");
                         categoryEntriesCount: 0;
                         currentPage: book.readProperty("currentPage");
                         totalPages: book.readProperty("totalPages");
@@ -351,6 +360,7 @@ Kirigami.Page {
                         author: book.readProperty("author");
                         title: book.readProperty("title");
                         filename: book.readProperty("filename");
+                        thumbnail: book.readProperty("thumbnail");
                         categoryEntriesCount: 0;
                         currentPage: book.readProperty("currentPage");
                         totalPages: book.readProperty("totalPages");
@@ -364,6 +374,7 @@ Kirigami.Page {
                         author: book.readProperty("author");
                         title: book.readProperty("title");
                         filename: book.readProperty("filename");
+                        thumbnail: book.readProperty("thumbnail");
                         categoryEntriesCount: 0;
                         currentPage: book.readProperty("currentPage");
                         totalPages: book.readProperty("totalPages");
@@ -377,6 +388,7 @@ Kirigami.Page {
                         author: book.readProperty("author");
                         title: book.readProperty("title");
                         filename: book.readProperty("filename");
+                        thumbnail: book.readProperty("thumbnail");
                         categoryEntriesCount: 0;
                         currentPage: book.readProperty("currentPage");
                         totalPages: book.readProperty("totalPages");
@@ -398,6 +410,7 @@ Kirigami.Page {
                             author: book.readProperty("author");
                             title: book.readProperty("title");
                             filename: book.readProperty("filename");
+                            thumbnail: book.readProperty("thumbnail");
                             categoryEntriesCount: 0;
                             currentPage: book.readProperty("currentPage");
                             totalPages: book.readProperty("totalPages");
@@ -411,6 +424,7 @@ Kirigami.Page {
                             author: book.readProperty("author");
                             title: book.readProperty("title");
                             filename: book.readProperty("filename");
+                            thumbnail: book.readProperty("thumbnail");
                             categoryEntriesCount: 0;
                             currentPage: book.readProperty("currentPage");
                             totalPages: book.readProperty("totalPages");
@@ -424,6 +438,7 @@ Kirigami.Page {
                             author: book.readProperty("author");
                             title: book.readProperty("title");
                             filename: book.readProperty("filename");
+                            thumbnail: book.readProperty("thumbnail");
                             categoryEntriesCount: 0;
                             currentPage: book.readProperty("currentPage");
                             totalPages: book.readProperty("totalPages");
@@ -437,6 +452,7 @@ Kirigami.Page {
                             author: book.readProperty("author");
                             title: book.readProperty("title");
                             filename: book.readProperty("filename");
+                            thumbnail: book.readProperty("thumbnail");
                             categoryEntriesCount: 0;
                             currentPage: book.readProperty("currentPage");
                             totalPages: book.readProperty("totalPages");

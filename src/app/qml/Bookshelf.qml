@@ -154,6 +154,7 @@ Kirigami.Page {
                     author: model.author ? model.author : "(unknown)";
                     title: model.title;
                     filename: model.filename;
+                    thumbnail: model.thumbnail;
                     categoryEntriesCount: model.categoryEntriesCount;
                     currentPage: model.currentPage;
                     totalPages: model.totalPages;

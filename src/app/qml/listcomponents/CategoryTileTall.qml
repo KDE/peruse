@@ -111,7 +111,7 @@ Item {
                 fill: parent;
                 margins: units.largeSpacing;
             }
-            source: root.entriesModel ? "image://preview/" + root.entriesModel.get(0).readProperty("filename") : "";
+            source: root.entriesModel ? root.entriesModel.get(0).readProperty("thumbnail") : "";
             asynchronous: true;
             fillMode: Image.PreserveAspectFit;
         }

@@ -34,6 +34,7 @@ Item {
     property string currentPage;
     property string totalPages;
     property double progress: currentPage / totalPages;
+    property string thumbnail;
     signal bookSelected(string filename, int currentPage);
     /// FIXME This signal will also forward the MouseEvent, but the type is not recognised, so we can't
     /// add it to the signature. Certainly would be nice if that were possible, though, right?
@@ -81,7 +82,7 @@ Item {
                 fill: parent;
                 margins: units.largeSpacing;
             }
-            source: (contentList.contentModel.getMimetype(root.filename) === "application/x-cbr") ? "image://comiccover/" + root.filename : "image://preview/" + root.filename
+            source: root.thumbnail;
             asynchronous: true;
             fillMode: Image.PreserveAspectFit;
         }
