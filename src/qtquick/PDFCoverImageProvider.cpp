@@ -22,17 +22,26 @@
 #include "PDFCoverImageProvider.h"
 
 #include <QCoreApplication>
+#include <QDir>
 #include <QIcon>
 #include <QMimeDatabase>
 #include <QProcess>
-#include <QTemporaryDir>
+#include <QStandardPaths>
 #include <QUrl>
 #include <QDebug>
 
 class PDFCoverImageProvider::Private {
 public:
-    Private() {}
-    QTemporaryDir thumbDir;
+    Private() {
+        QString path = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+        thumbDir = QDir(path);
+        QString subpath("thumbcache");
+        if(!thumbDir.exists(subpath)) {
+            thumbDir.mkpath(subpath);
+        }
+        thumbDir.cd(subpath);
+    }
+    QDir thumbDir;
 };
 
 PDFCoverImageProvider::PDFCoverImageProvider()
@@ -52,17 +61,12 @@ QImage PDFCoverImageProvider::requestImage(const QString& id, QSize* size, const
     Q_UNUSED(requestedSize)
     QImage img;
 
-    if(!d->thumbDir.isValid()) {
-        qDebug() << "WAT?! Failed to create temporary directory for storage of PDF thumbnails... bad.";
-        return img;
-    }
-
     QMimeDatabase db;
     db.mimeTypeForFile(id, QMimeDatabase::MatchContent);
     const QMimeType mime = db.mimeTypeForFile(id, QMimeDatabase::MatchContent);
     if(mime.inherits("application/pdf")) {
         //-sOutputFile=FILENAME.png FILENAME
-        QString outFile = QString("%1/%2.png").arg(d->thumbDir.path()).arg(QUrl(id).toString().replace("/", "-").replace(":", "-"));
+        QString outFile = QString("%1/%2.png").arg(d->thumbDir.absolutePath()).arg(QUrl(id).toString().replace("/", "-").replace(":", "-"));
         if(!QFile::exists(outFile)) {
             // then we've not already generated a thumbnail, try to make one...
             QProcess thumbnailer;
