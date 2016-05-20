@@ -67,7 +67,7 @@ QImage PDFCoverImageProvider::requestImage(const QString& id, QSize* size, const
             // then we've not already generated a thumbnail, try to make one...
             QProcess thumbnailer;
             QStringList args;
-            args << "-sPageList=1" << "-dSAFER" << "-dBATCH" << "-dNOPAUSE" << "-dQUIET" << "-sDEVICE=png16m" << "-dGraphicsAlphaBits=4" << "-r150";
+            args << "-sPageList=1" << "-dLastPage=1" << "-dSAFER" << "-dBATCH" << "-dNOPAUSE" << "-dQUIET" << "-sDEVICE=png16m" << "-dGraphicsAlphaBits=4" << "-r150";
             args << QString("-sOutputFile=%1").arg(outFile) << id;
             QString gsApp;
             #ifdef Q_OS_WIN
