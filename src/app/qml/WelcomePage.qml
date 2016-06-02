@@ -34,6 +34,9 @@ Kirigami.Page {
     id: root;
     title: "Welcome";
     signal bookSelected(string filename, int currentPage);
+    function updateRecent() {
+        startWithThese.updateRecentlyRead();
+    }
 
     property list<QtObject> mobileActions;
     property list<QtObject> desktopActions: [
