@@ -38,6 +38,7 @@ Kirigami.ApplicationWindow {
     visible: true;
 
     function showBook(filename, currentPage) {
+        globalDrawer.close();
         mainWindow.pageStack.push(bookViewer, { focus: true, file: filename, currentPage: currentPage })
         peruseConfig.bookOpened(filename);
     }
@@ -68,7 +69,19 @@ Kirigami.ApplicationWindow {
         /// this when switching to Kirigami
         title: "Peruse Comic Viewer";
         titleIcon: "peruse";
+        opened: PLASMA_PLATFORM.substring(0, 5) === "phone" ? false : true;
+        modal: PLASMA_PLATFORM.substring(0, 5) === "phone" ? true : false;
         actions: [
+            Kirigami.Action {
+                text: "Welcome";
+                iconName: "start-over";
+                onTriggered: {
+                    changeCategory(welcomePage);
+                    pageStack.currentItem.updateRecent();
+                }
+            },
+            Kirigami.Action {
+            },
             Kirigami.Action {
                 text: "Recently Added Comics";
                 iconName: "appointment-new";
@@ -207,9 +220,11 @@ Kirigami.ApplicationWindow {
 
     function changeCategory(categoryItem) {
         // Clear all the way to the welcome page if we change the category...
-        mainWindow.pageStack.pop(welcomePage);
+        mainWindow.pageStack.clear();
         mainWindow.pageStack.push(categoryItem);
-        globalDrawer.close();
+        if (PLASMA_PLATFORM.substring(0, 5) === "phone") {
+            globalDrawer.close();
+        }
     }
 
     Component.onCompleted: {
