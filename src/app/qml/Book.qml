@@ -239,6 +239,7 @@ Kirigami.Page {
                         }
                         viewLoader.item.currentPage = root.currentPage;
                         viewLoader.loadingCompleted = true;
+                        applicationWindow().globalDrawer.close();
                     }
                 }
                 onCurrentPageChanged: {
