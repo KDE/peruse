@@ -30,9 +30,10 @@ import org.kde.peruse 0.1 as Peruse
 
 import "listcomponents" as ListComponents
 
-Kirigami.Page {
+Item {
     id: root;
     property string file;
+    height: childrenRect.height;
     onFileChanged: {
         var book = contentList.get(contentList.indexOfFile(file));
         filename = book.readProperty("filename");
@@ -63,145 +64,141 @@ Kirigami.Page {
     property int totalPages;
     property int currentPage;
 
-    Item {
-        width: root.width - (root.leftPadding + root.rightPadding);
-        height: root.height - (root.topPadding + root.bottomPadding);
-        Column {
-            anchors.horizontalCenter: parent.horizontalCenter;
-            width: root.width - units.largeSpacing * 2;
-            spacing: units.smallSpacing;
-            height: childrenRect.height;
-            Item {
-                id: bookCover;
+    Column {
+        anchors.horizontalCenter: parent.horizontalCenter;
+        spacing: units.smallSpacing;
+        width: parent.width;
+        height: childrenRect.height;
+        Item {
+            id: bookCover;
+            anchors {
+                horizontalCenter: parent.horizontalCenter;
+                margins: units.largeSpacing;
+            }
+            width: Math.min(parent.width - units.largeSpacing * 2, units.iconSizes.enormous + units.largeSpacing * 2);
+            height: width;
+            Rectangle {
+                anchors.centerIn: coverImage;
+                width: coverImage.paintedWidth + units.smallSpacing * 2;
+                height: coverImage.paintedHeight + units.smallSpacing * 2;
+                color: theme.viewBackgroundColor;
+                border {
+                    width: 2;
+                    color: theme.viewTextColor;
+                }
+                radius: 2;
+            }
+            Image {
+                id: coverImage;
                 anchors {
-                    horizontalCenter: parent.horizontalCenter;
+                    fill: parent;
                     margins: units.largeSpacing;
                 }
-                width: Math.min(parent.width - units.largeSpacing * 2, units.iconSizes.enormous + units.largeSpacing * 2);
-                height: width;
-                Rectangle {
-                    anchors.centerIn: coverImage;
-                    width: coverImage.paintedWidth + units.smallSpacing * 2;
-                    height: coverImage.paintedHeight + units.smallSpacing * 2;
-                    color: theme.viewBackgroundColor;
-                    border {
-                        width: 2;
-                        color: theme.viewTextColor;
-                    }
-                    radius: 2;
-                }
-                Image {
-                    id: coverImage;
+                source: (contentList.contentModel.getMimetype(root.filename) === "application/x-cbr") ? "image://comiccover/" + root.filename : "image://preview/" + root.filename
+                asynchronous: true;
+                fillMode: Image.PreserveAspectFit;
+            }
+        }
+        Repeater {
+            id: dataRepeater;
+            model: ListModel {}
+            delegate: Item {
+                id: base;
+                width: root.width;
+                height: valueLabel.height;
+                Kirigami.Label {
                     anchors {
-                        fill: parent;
-                        margins: units.largeSpacing;
+                        top: parent.top;
+                        left: parent.left;
+                        right: parent.horizontalCenter;
+                        bottom: parent.bottom;
                     }
-                    source: (contentList.contentModel.getMimetype(root.filename) === "application/x-cbr") ? "image://comiccover/" + root.filename : "image://preview/" + root.filename
-                    asynchronous: true;
-                    fillMode: Image.PreserveAspectFit;
+                    verticalAlignment: Text.AlignTop;
+                    text: model.label;
+                }
+                Kirigami.Label {
+                    id: valueLabel;
+                    anchors {
+                        top: parent.top;
+                        left: parent.horizontalCenter;
+                        right: parent.right;
+                    }
+                    verticalAlignment: Text.AlignTop;
+                    height: paintedHeight;
+                    wrapMode: Text.WordWrap;
+                    text: model.value;
                 }
             }
-            Repeater {
-                id: dataRepeater;
-                model: ListModel {}
-                delegate: Item {
-                    id: base;
-                    width: root.width;
-                    height: valueLabel.height;
-                    Kirigami.Label {
-                        anchors {
-                            top: parent.top;
-                            left: parent.left;
-                            right: parent.horizontalCenter;
-                            bottom: parent.bottom;
-                        }
-                        verticalAlignment: Text.AlignTop;
-                        text: model.label;
-                    }
-                    Kirigami.Label {
-                        id: valueLabel;
-                        anchors {
-                            top: parent.top;
-                            left: parent.horizontalCenter;
-                            right: parent.right;
-                        }
-                        verticalAlignment: Text.AlignTop;
-                        height: paintedHeight;
-                        wrapMode: Text.WordWrap;
-                        text: model.value;
-                    }
+        }
+        Item {
+            id: deleteBase;
+            width: root.width;
+            height: deleteButton.height + units.largeSpacing * 2;
+            Behavior on height { PropertyAnimation { duration: mainWindow.animationDuration; } }
+            states: [
+                State {
+                    name: "confirmDelete";
+                    PropertyChanges { target: deleteButton; opacity: 0; }
+                    PropertyChanges { target: deleteConfirmBase; opacity: 1; }
+                    PropertyChanges { target: deleteBase; height: deleteConfirmBase.height; }
                 }
+            ]
+            PlasmaComponents.Button {
+                id: deleteButton;
+                text: "Delete from device";
+                anchors {
+                    top: parent.top;
+                    topMargin: units.largeSpacing;
+                    horizontalCenter: parent.horizontalCenter;
+                }
+                iconName: "edit-delete";
+                onClicked: deleteBase.state = "confirmDelete";
+                Behavior on opacity { PropertyAnimation { duration: mainWindow.animationDuration; } }
             }
             Item {
-                id: deleteBase;
+                id: deleteConfirmBase;
+                opacity: 0;
                 width: root.width;
-                height: deleteButton.height + units.largeSpacing * 2;
-                Behavior on height { PropertyAnimation { duration: mainWindow.animationDuration; } }
-                states: [
-                    State {
-                        name: "confirmDelete";
-                        PropertyChanges { target: deleteButton; opacity: 0; }
-                        PropertyChanges { target: deleteConfirmBase; opacity: 1; }
-                        PropertyChanges { target: deleteBase; height: deleteConfirmBase.height; }
-                    }
-                ]
-                PlasmaComponents.Button {
-                    id: deleteButton;
-                    text: "Delete from device";
+                Behavior on opacity { PropertyAnimation { duration: mainWindow.animationDuration; } }
+                height: yesDelete.height + confirmDeleteLabel.height + units.largeSpacing * 2 + units.smallSpacing;
+                Kirigami.Label {
+                    id: confirmDeleteLabel;
                     anchors {
                         top: parent.top;
                         topMargin: units.largeSpacing;
-                        horizontalCenter: parent.horizontalCenter;
+                        left: parent.left;
+                        right: parent.right;
                     }
-                    iconName: "edit-delete";
-                    onClicked: deleteBase.state = "confirmDelete";
-                    Behavior on opacity { PropertyAnimation { duration: mainWindow.animationDuration; } }
+                    height: paintedHeight;
+                    wrapMode: Text.WordWrap;
+                    horizontalAlignment: Text.AlignHCenter;
+                    text: "Are you sure you want to delete this from your device?";
                 }
-                Item {
-                    id: deleteConfirmBase;
-                    opacity: 0;
-                    width: root.width;
-                    Behavior on opacity { PropertyAnimation { duration: mainWindow.animationDuration; } }
-                    height: yesDelete.height + confirmDeleteLabel.height + units.largeSpacing * 2 + units.smallSpacing;
-                    Kirigami.Label {
-                        id: confirmDeleteLabel;
-                        anchors {
-                            top: parent.top;
-                            topMargin: units.largeSpacing;
-                            left: parent.left;
-                            right: parent.right;
-                        }
-                        height: paintedHeight;
-                        wrapMode: Text.WordWrap;
-                        horizontalAlignment: Text.AlignHCenter;
-                        text: "Are you sure you want to delete this from your device?";
+                PlasmaComponents.Button {
+                    id: yesDelete;
+                    anchors {
+                        top: confirmDeleteLabel.bottom;
+                        topMargin: units.smallSpacing;
+                        right: parent.horizontalCenter;
+                        rightMargin: (parent.width - width) / 4;
                     }
-                    PlasmaComponents.Button {
-                        id: yesDelete;
-                        anchors {
-                            top: confirmDeleteLabel.bottom;
-                            topMargin: units.smallSpacing;
-                            right: parent.horizontalCenter;
-                            rightMargin: (parent.width - width) / 4;
-                        }
-                        text: "Yes, really delete";
-                        iconName: "dialog-ok";
-                        onClicked: {
-                            contentList.removeBook(root.file, true);
-                            mainWindow.pageStack.pop();
-                        }
+                    text: "Yes, really delete";
+                    iconName: "dialog-ok";
+                    onClicked: {
+                        contentList.removeBook(root.file, true);
+                        mainWindow.pageStack.pop();
                     }
-                    PlasmaComponents.Button {
-                        anchors {
-                            top: confirmDeleteLabel.bottom;
-                            topMargin: units.smallSpacing;
-                            left: parent.horizontalCenter;
-                            leftMargin: (parent.width - width) / 4;
-                        }
-                        text: "No, cancel delete";
-                        iconName: "dialog-cancel";
-                        onClicked: deleteBase.state = "";
+                }
+                PlasmaComponents.Button {
+                    anchors {
+                        top: confirmDeleteLabel.bottom;
+                        topMargin: units.smallSpacing;
+                        left: parent.horizontalCenter;
+                        leftMargin: (parent.width - width) / 4;
                     }
+                    text: "No, cancel delete";
+                    iconName: "dialog-cancel";
+                    onClicked: deleteBase.state = "";
                 }
             }
         }
