@@ -166,7 +166,15 @@ Kirigami.Page {
         }
         Component {
             id: bookDetails;
-            BookDetails { }
+            Kirigami.Page {
+                id: bookDetailsRoot;
+                property string file;
+                BookDetails {
+                    file: bookDetailsRoot.file;
+                    width: root.width - (root.leftPadding + root.rightPadding);
+                    height: root.height - (root.topPadding + root.bottomPadding);
+                }
+            }
         }
     }
 }
