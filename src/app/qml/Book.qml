@@ -88,6 +88,7 @@ Kirigami.Page {
         // also for storing current page (otherwise postponed a bit after page change, done here as well to ensure it really happens)
         applicationWindow().controlsVisible = true;
         mainWindow.pageStack.pop();
+        applicationWindow().globalDrawer.open();
     }
 
     property Item contextualTopItems: ListView {
@@ -228,6 +229,13 @@ Kirigami.Page {
                     item.file = root.file;
                 }
             }
+            Timer {
+                id: drawerTimer;
+                interval: mainWindow.animationDuration * 2;
+                running: false;
+                repeat: false;
+                onTriggered: applicationWindow().globalDrawer.close();
+            }
             Connections {
                 target: viewLoader.item;
                 onLoadingCompleted: {
@@ -245,7 +253,7 @@ Kirigami.Page {
                         }
                         viewLoader.item.currentPage = root.currentPage;
                         viewLoader.loadingCompleted = true;
-                        applicationWindow().globalDrawer.close();
+                        drawerTimer.start();
                     }
                 }
                 onCurrentPageChanged: {
