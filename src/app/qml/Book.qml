@@ -29,6 +29,8 @@ import org.kde.kirigami 1.0 as Kirigami
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 import org.kde.peruse 0.1 as Peruse
 
+import "listcomponents" as ListComponents
+
 Kirigami.Page {
     id: root;
     clip: true;
@@ -71,11 +73,15 @@ Kirigami.Page {
     function nextPage() {
         if(viewLoader.item.currentPage < viewLoader.item.pageCount - 1) {
             viewLoader.item.currentPage++;
+        } else {
+            bookInfo.open();
         }
     }
     function previousPage() {
         if(viewLoader.item.currentPage > 0) {
             viewLoader.item.currentPage--;
+        } else {
+            bookInfo.open();
         }
     }
     function closeBook() {
@@ -275,6 +281,84 @@ Kirigami.Page {
             }
             width: parent.width / 6;
             onClicked: nextPage();
+        }
+    }
+
+    Kirigami.OverlaySheet {
+        id: bookInfo;
+        property QtObject previousBook;
+        property QtObject nextBook;
+        Column {
+            width: root.width - units.largeSpacing * 2;
+            height: root.height - units.largeSpacing * 2;
+            PlasmaExtras.Heading {
+                width: parent.width;
+                text: "More on this book"
+                PlasmaComponents.Button {
+                    anchors {
+                        top: parent.top;
+                        right: parent.right;
+                        margins: units.smallSpacing;
+                    }
+                    iconName: "dialog-close";
+                    onClicked: bookInfo.close();
+                }
+            }
+            BookDetails {
+                width: parent.width;
+                file: root.file;
+            }
+            // tags and ratings, comment by self
+            // store hook if previous is unknown
+            // store hook if next is unknown
+            Item {
+                width: parent.width;
+                height: units.gridUnit;
+                Kirigami.Label {
+                    text: "Previoux book";
+                    horizontalAlignment: Text.AlignLeft;
+                    verticalAlignment: Text.AlignVCenter;
+                    anchors.fill: parent;
+                    opacity: previousBookTile.height > 0 ? 1 : 0;
+                }
+                Kirigami.Label {
+                    text: "Next book";
+                    horizontalAlignment: Text.AlignRight;
+                    verticalAlignment: Text.AlignVCenter;
+                    anchors.fill: parent;
+                    opacity: nextBookTile.height > 0 ? 1 : 0;
+                }
+            }
+            Row {
+                width: parent.width;
+                height: childrenRect.height;
+                ListComponents.BookTileTall {
+                    id: previousBookTile;
+                    height: previousBook.readProperty("filename") != "" ? neededHeight : 1;
+                    width: parent.width / 2;
+                    author: previousBook.readProperty("author");
+                    title: previousBook.readProperty("title");
+                    filename: previousBook.readProperty("filename");
+                    thumbnail: previousBook.readProperty("thumbnail");
+                    categoryEntriesCount: 0;
+                    currentPage: previousBook.readProperty("currentPage");
+                    totalPages: previousBook.readProperty("totalPages");
+                    onBookSelected: applicationWindow().showBook(filename, currentPage);
+                }
+                ListComponents.BookTileTall {
+                    id: nextBookTile;
+                    height: nextBook.readProperty("filename") != "" ? neededHeight : 1;
+                    width: parent.width / 2;
+                    author: nextBook.readProperty("author");
+                    title: nextBook.readProperty("title");
+                    filename: nextBook.readProperty("filename");
+                    thumbnail: nextBook.readProperty("thumbnail");
+                    categoryEntriesCount: 0;
+                    currentPage: nextBook.readProperty("currentPage");
+                    totalPages: nextBook.readProperty("totalPages");
+                    onBookSelected: applicationWindow().showBook(filename, currentPage);
+                }
+            }
         }
     }
 
