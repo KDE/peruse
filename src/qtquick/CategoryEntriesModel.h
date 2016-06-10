@@ -30,6 +30,8 @@ struct BookEntry {
     BookEntry()
         : totalPages(0)
         , currentPage(0)
+        , seriesPrevious(-1)
+        , seriesNext(-1)
     {}
     QString filename;
     QString filetitle;
@@ -42,6 +44,9 @@ struct BookEntry {
     int totalPages;
     int currentPage;
     QString thumbnail;
+    int seriesPrevious; // Index in the series model, not in the global model.
+    int seriesNext;     // As above. This allows us to handle this in that model
+                        // but still have it globally available.
 };
 
 class CategoryEntriesModel : public QAbstractListModel
@@ -64,7 +69,9 @@ public:
         CurrentPageRole,
         CategoryEntriesModelRole,
         CategoryEntryCountRole,
-        ThumbnailRole
+        ThumbnailRole,
+        SeriesPreviousRole,
+        SeriesNextRole
     };
 
     virtual QHash<int, QByteArray> roleNames() const;
@@ -85,6 +92,9 @@ public:
     Q_SLOT void entryDataChanged(BookEntry* entry);
     Q_SIGNAL void entryRemoved(BookEntry* entry);
     Q_SLOT void entryRemove(BookEntry* entry);
+
+    // This will iterate over all sub-models and find the model which contains the entry, or null if not found
+    QObject* leafModelForEntry(BookEntry* entry);
 protected:
     QString name() const;
     void setName(const QString& newName);

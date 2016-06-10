@@ -28,19 +28,40 @@
 
 class CategoryEntriesModel::Private {
 public:
-    Private() {};
+    Private(CategoryEntriesModel* qq)
+        : q(qq)
+    {};
     ~Private()
     {
         // No deleting the entries - this is done by the master BookListModel already, so do that at your own risk
     }
+    CategoryEntriesModel* q;
     QString name;
     QList<BookEntry*> entries;
     QList<CategoryEntriesModel*> categoryModels;
+
+    QObject* wrapBookEntry(const BookEntry* entry) {
+        PropertyContainer* obj = new PropertyContainer("book", q);
+        obj->setProperty("author", entry->author);
+        obj->setProperty("currentPage", QString::number(entry->currentPage));
+        obj->setProperty("filename", entry->filename);
+        obj->setProperty("filetitle", entry->filetitle);
+        obj->setProperty("created", entry->created);
+        obj->setProperty("lastOpenedTime", entry->lastOpenedTime);
+        obj->setProperty("publisher", entry->publisher);
+        obj->setProperty("series", entry->series);
+        obj->setProperty("title", entry->title);
+        obj->setProperty("totalPages", entry->totalPages);
+        obj->setProperty("thumbnail", entry->thumbnail);
+        obj->setProperty("seriesPrevious", entry->seriesPrevious);
+        obj->setProperty("seriesNext", entry->seriesNext);
+        return obj;
+    }
 };
 
 CategoryEntriesModel::CategoryEntriesModel(QObject* parent)
     : QAbstractListModel(parent)
-    , d(new Private)
+    , d(new Private(this))
 {
     connect(this, SIGNAL(entryDataUpdated(BookEntry*)), this, SLOT(entryDataChanged(BookEntry*)));
     connect(this, SIGNAL(entryRemoved(BookEntry*)), this, SLOT(entryRemove(BookEntry*)));
@@ -67,6 +88,8 @@ QHash<int, QByteArray> CategoryEntriesModel::roleNames() const
     roles[CategoryEntriesModelRole] = "categoryEntriesModel";
     roles[CategoryEntryCountRole] = "categoryEntriesCount";
     roles[ThumbnailRole] = "thumbnail";
+    roles[SeriesPreviousRole] = "seriesPrevious";
+    roles[SeriesNextRole] = "seriesNext";
     return roles;
 }
 
@@ -140,6 +163,12 @@ QVariant CategoryEntriesModel::data(const QModelIndex& index, int role) const
                 case ThumbnailRole:
                     result.setValue(entry->thumbnail);
                     break;
+                case SeriesPreviousRole:
+                    result.setValue(entry->seriesPrevious);
+                    break;
+                case SeriesNextRole:
+                    result.setValue(entry->seriesNext);
+                    break;
                 default:
                     result.setValue(QString("Unknown role"));
                     break;
@@ -188,6 +217,28 @@ void CategoryEntriesModel::setName(const QString& newName)
     d->name = newName;
 }
 
+QObject * CategoryEntriesModel::leafModelForEntry(BookEntry* entry)
+{
+    QObject* model(0);
+    if(d->categoryModels.count() == 0)
+    {
+        if(d->entries.contains(entry)) {
+            model = this;
+        }
+    }
+    else
+    {
+        Q_FOREACH(CategoryEntriesModel* testModel, d->categoryModels)
+        {
+            model = testModel->leafModelForEntry(entry);
+            if(model) {
+                break;
+            }
+        }
+    }
+    return model;
+}
+
 void CategoryEntriesModel::addCategoryEntry(const QString& categoryName, BookEntry* entry)
 {
     if(categoryName.length() > 0)
@@ -230,7 +281,6 @@ void CategoryEntriesModel::addCategoryEntry(const QString& categoryName, BookEnt
 
 QObject* CategoryEntriesModel::get(int index)
 {
-    PropertyContainer* obj = new PropertyContainer("book", this);
     BookEntry* entry = new BookEntry();
     bool deleteEntry = true;
     if(index > -1 && index < d->entries.count())
@@ -238,17 +288,7 @@ QObject* CategoryEntriesModel::get(int index)
         entry = d->entries.at(index);
         deleteEntry = false;
     }
-    obj->setProperty("author", entry->author);
-    obj->setProperty("currentPage", QString::number(entry->currentPage));
-    obj->setProperty("filename", entry->filename);
-    obj->setProperty("filetitle", entry->filetitle);
-    obj->setProperty("created", entry->created);
-    obj->setProperty("lastOpenedTime", entry->lastOpenedTime);
-    obj->setProperty("publisher", entry->publisher);
-    obj->setProperty("series", entry->series);
-    obj->setProperty("title", entry->title);
-    obj->setProperty("totalPages", entry->totalPages);
-    obj->setProperty("thumbnail", entry->thumbnail);
+    QObject* obj = d->wrapBookEntry(entry);
     if(deleteEntry)
     {
         delete entry;
