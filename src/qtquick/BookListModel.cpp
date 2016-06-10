@@ -205,6 +205,11 @@ QObject * BookListModel::seriesCategoryModel() const
     return d->seriesCategoryModel;
 }
 
+QObject * BookListModel::seriesModelForEntry(BookEntry* entry)
+{
+    return d->seriesCategoryModel->leafModelForEntry(entry);
+}
+
 QObject * BookListModel::folderCategoryModel() const
 {
     return d->folderCategoryModel;
