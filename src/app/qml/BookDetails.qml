@@ -46,12 +46,13 @@ Item {
         lastOpenedTime = book.readProperty("lastOpenedTime");
         totalPages = book.readProperty("totalPages");
         currentPage = book.readProperty("currentPage");
+        thumbnail = book.readProperty("thumbnail");
 
         dataRepeater.model.clear();
-        dataRepeater.model.append({"label": "Author:", value: root.author});
-        dataRepeater.model.append({"label": "Publisher:", value: root.publisher});
-        dataRepeater.model.append({"label": "Series:", value: root.series});
-        dataRepeater.model.append({"label": "Filename:", value: root.filename});
+        dataRepeater.model.append({"label": i18nc("Label for the author field", "Author:"), value: root.author});
+        dataRepeater.model.append({"label": i18nc("Label for the publisher field", "Publisher:"), value: root.publisher});
+        dataRepeater.model.append({"label": i18nc("Label for the series field", "Series:"), value: root.series});
+        dataRepeater.model.append({"label": i18nc("Label for the filename field", "Filename:"), value: root.filename});
     }
     property string filename;
     property string filetitle;
@@ -63,6 +64,7 @@ Item {
     property date lastOpenedTime;
     property int totalPages;
     property int currentPage;
+    property string thumbnail;
 
     Column {
         anchors.horizontalCenter: parent.horizontalCenter;
@@ -94,7 +96,7 @@ Item {
                     fill: parent;
                     margins: units.largeSpacing;
                 }
-                source: (contentList.contentModel.getMimetype(root.filename) === "application/x-cbr") ? "image://comiccover/" + root.filename : "image://preview/" + root.filename
+                source: root.thumbnail;
                 asynchronous: true;
                 fillMode: Image.PreserveAspectFit;
             }
@@ -145,7 +147,7 @@ Item {
             ]
             PlasmaComponents.Button {
                 id: deleteButton;
-                text: "Delete from device";
+                text: i18nc("Spawn inline dialog box to confirm permanent removal of this book", "Delete from device");
                 anchors {
                     top: parent.top;
                     topMargin: units.largeSpacing;
@@ -172,7 +174,7 @@ Item {
                     height: paintedHeight;
                     wrapMode: Text.WordWrap;
                     horizontalAlignment: Text.AlignHCenter;
-                    text: "Are you sure you want to delete this from your device?";
+                    text: i18nc("Dialog text for delete book dialog", "Are you sure you want to delete this from your device?");
                 }
                 PlasmaComponents.Button {
                     id: yesDelete;
@@ -182,7 +184,7 @@ Item {
                         right: parent.horizontalCenter;
                         rightMargin: (parent.width - width) / 4;
                     }
-                    text: "Yes, really delete";
+                    text: i18nc("Confirmation button for book delete dialog", "Yes, really delete");
                     iconName: "dialog-ok";
                     onClicked: {
                         contentList.removeBook(root.file, true);
@@ -196,7 +198,7 @@ Item {
                         left: parent.horizontalCenter;
                         leftMargin: (parent.width - width) / 4;
                     }
-                    text: "No, cancel delete";
+                    text: i18nc("Cancellation button or book delete dialog", "No, cancel delete");
                     iconName: "dialog-cancel";
                     onClicked: deleteBase.state = "";
                 }

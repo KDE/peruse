@@ -151,14 +151,14 @@ Kirigami.Page {
 
     property list<QtObject> mobileActions: [
         Kirigami.Action {
-            text: "Close book";
+            text: i18nc("Action used on touch devices to close the currently open book and return to whatever page was most recently shown", "Close book");
             shortcut: "Esc";
             iconName: "action-close";
             onTriggered: closeBook();
             enabled: mainWindow.pageStack.currentItem == root;
         },
         Kirigami.Action {
-            text: applicationWindow().visibility !== Window.FullScreen ? "Go full screen" : "Exit full screen";
+            text: applicationWindow().visibility !== Window.FullScreen ? i18nc("Enter full screen mode on a touch-based device", "Go full screen") : i18nc("Exit full sceen mode on a touch based device", "Exit full screen");
             iconName: "view-fullscreen";
             onTriggered: toggleFullscreen();
             enabled: mainWindow.pageStack.currentItem == root;
@@ -166,28 +166,28 @@ Kirigami.Page {
     ]
     property list<QtObject> desktopActions: [
         Kirigami.Action {
-            text: "Close book";
+            text: i18nc("Action used on non-touch devices to close the currently open book and return to whatever page was most recently shown", "Close book");
             shortcut: "Esc";
             iconName: "action-close";
             onTriggered: closeBook();
             enabled: mainWindow.pageStack.currentItem == root;
         },
         Kirigami.Action {
-            text: "Previous page";
+            text: i18nc("Go to the previous page in the book", "Previous page");
             shortcut: StandardKey.MoveToPreviousChar
             iconName: "action-previous";
             onTriggered: previousPage();
             enabled: mainWindow.pageStack.currentItem == root;
         },
         Kirigami.Action {
-            text: "Next page";
+            text: i18nc("Go to the next page in the book", "Next page");
             shortcut: StandardKey.MoveToNextChar;
             iconName: "action-next";
             onTriggered: nextPage();
             enabled: mainWindow.pageStack.currentItem == root;
         },
         Kirigami.Action {
-            text: applicationWindow().visibility !== Window.FullScreen ? "Go full screen" : "Exit full screen";
+            text: applicationWindow().visibility !== Window.FullScreen ? i18nc("Enter full screen mode on a touch-based device", "Go full screen") : i18nc("Exit full sceen mode on a touch based device", "Exit full screen");
             iconName: "view-fullscreen";
             onTriggered: toggleFullscreen();
             enabled: mainWindow.pageStack.currentItem == root;
@@ -196,7 +196,7 @@ Kirigami.Page {
     actions {
         contextualActions: PLASMA_PLATFORM.substring(0, 5) === "phone" ? mobileActions : desktopActions;
         main: Kirigami.Action {
-            text: applicationWindow().visibility !== Window.FullScreen ? "Go full screen" : "Exit full screen";
+            text: applicationWindow().visibility !== Window.FullScreen ? i18n("Enter full screen mode on any device type", "Go full screen") : i18nc("Exit full screen mode on any device type", "Exit full screen");
             iconName: "view-fullscreen";
             onTriggered: toggleFullscreen();
             enabled: mainWindow.pageStack.currentItem == root;
@@ -339,14 +339,14 @@ Kirigami.Page {
                 width: parent.width;
                 height: units.gridUnit;
                 Kirigami.Label {
-                    text: "Previoux book";
+                    text: i18nc("Label shown above the previous book in the series to the one currently being read", "Previoux book");
                     horizontalAlignment: Text.AlignLeft;
                     verticalAlignment: Text.AlignVCenter;
                     anchors.fill: parent;
                     opacity: previousBookTile.height > 1 ? 1 : 0;
                 }
                 Kirigami.Label {
-                    text: "Next book";
+                    text: i18nc("Label shown above the next book in the series to the one currently being read", "Next book");
                     horizontalAlignment: Text.AlignRight;
                     verticalAlignment: Text.AlignVCenter;
                     anchors.fill: parent;

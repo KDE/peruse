@@ -58,28 +58,28 @@ Kirigami.Page {
     property list<QtObject> mobileActions;
     property list<QtObject> desktopActions: [
         Kirigami.Action {
-            text: "Back";
+            text: i18nc("Navigate one page back", "Back");
             shortcut: "Esc";
             iconName: "action-close";
             onTriggered: closeShelf();
             enabled: mainWindow.pageStack.currentItem == root;
         },
         Kirigami.Action {
-            text: "Select previous book";
+            text: i18nc("Select the previous book in the list", "Select previous book");
             shortcut: StandardKey.MoveToPreviousChar
             iconName: "action-previous";
             onTriggered: shelfList.previousEntry();
             enabled: mainWindow.pageStack.currentItem == root;
         },
         Kirigami.Action {
-            text: "Select next book";
+            text: i18nc("Select the next book in the list", "Select next book");
             shortcut: StandardKey.MoveToNextChar;
             iconName: "action-next";
             onTriggered: shelfList.nextEntry();
             enabled: mainWindow.pageStack.currentItem == root;
         },
         Kirigami.Action {
-            text: "Open selected book";
+            text: i18nc("Open the book which is currently selected in the list", "Open selected book");
             shortcut: "Return";
             iconName: "action-open";
             onTriggered: openBook(shelfList.currentIndex);
@@ -89,7 +89,7 @@ Kirigami.Page {
     actions {
         contextualActions: PLASMA_PLATFORM.substring(0, 5) === "phone" ? mobileActions : desktopActions;
         main: Kirigami.Action {
-            text: "Search Books";
+            text: i18nc("search in the list of books (not inside the books)", "Search Books");
             iconName: "system-search";
             onTriggered: searchBox.activate();
         }
@@ -151,7 +151,7 @@ Kirigami.Page {
                     id: bookTile;
                     height: model.categoryEntriesCount < 1 ? neededHeight : 0;
                     width: parent.width;
-                    author: model.author ? model.author : "(unknown)";
+                    author: model.author ? model.author : i18nc("used for the author data in book lists if autor is empty", "(unknown)");
                     title: model.title;
                     filename: model.filename;
                     thumbnail: model.categoryEntriesCount < 1 ? model.thumbnail : "";

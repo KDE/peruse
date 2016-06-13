@@ -69,7 +69,7 @@ Kirigami.ApplicationWindow {
         /// FIXME This causes the text to get cut off on the phone, however if the text is shorter
         /// it fails to expand the sidebar sufficiently to see all the action labels fully. Revisit
         /// this when switching to Kirigami
-        title: "Peruse Comic Viewer";
+        title: i18nc("application title for the sidebar", "Peruse Comic Viewer");
         titleIcon: "peruse";
         opened: PLASMA_PLATFORM.substring(0, 5) === "phone" ? false : true;
         modal: PLASMA_PLATFORM.substring(0, 5) === "phone" ? true : false;
@@ -85,46 +85,46 @@ Kirigami.ApplicationWindow {
             Kirigami.Action {
             },
             Kirigami.Action {
-                text: "Recently Added Comics";
+                text: i18nc("Switch to the listing page showing the most recently discovered books", "Recently Added Books");
                 iconName: "appointment-new";
                 onTriggered: changeCategory(bookshelfAdded);
             },
             Kirigami.Action {
-                text: "Group by Title";
+                text: i18nc("Switch to the listing page showing items grouped by title", "Group by Title");
                 iconName: "view-media-title";
                 onTriggered: changeCategory(bookshelfTitle);
             },
             Kirigami.Action {
-                text: "Group by Authors";
+                text: i18nc("Switch to the listing page showing items grouped by author", "Group by Author");
                 iconName: "actor";
                 onTriggered: changeCategory(bookshelfAuthor);
             },
             Kirigami.Action {
-                text: "Group by Series";
+                text: i18nc("Switch to the listing page showing items grouped by series", "Group by Series");
                 iconName: "edit-group";
                 onTriggered: changeCategory(bookshelfSeries);
             },
             Kirigami.Action {
-                text: "Group by Publisher";
+                text: i18nc("Switch to the listing page showing items grouped by publisher", "Group by Publisher");
                 iconName: "view-media-publisher";
                 onTriggered: changeCategory(bookshelfPublisher);
             },
             Kirigami.Action {
-                text: "Filter by Folder";
+                text: i18nc("Switch to the listing page showing items grouped by their filesystem folder", "Filter by Folder");
                 iconName: "tag-folder";
                 onTriggered: changeCategory(bookshelfFolder);
             },
             Kirigami.Action {
             },
             Kirigami.Action {
-                text: "Open other...";
+                text: i18nc("Open a book from somewhere on disk (uses the open dialog, or a drilldown on touch devices)", "Open other...");
                 iconName: "document-open";
                 onTriggered: openOther();
             },
             Kirigami.Action {
             },
             Kirigami.Action {
-                text: "Settings"
+                text: i18nc("Open the settings page", "Settings");
                 iconName: "configure"
                 onTriggered: mainWindow.pageStack.push(settingsPage);
             }
@@ -155,7 +155,7 @@ Kirigami.ApplicationWindow {
         id: bookshelfTitle;
         Bookshelf {
             model: contentList.titleCategoryModel;
-            headerText: "Group by Title";
+            headerText: i18nc("Title of the page with books grouped by the title start letters", "Group by Title");
             onBookSelected: mainWindow.showBook(filename, currentPage);
         }
     }
@@ -164,7 +164,7 @@ Kirigami.ApplicationWindow {
         id: bookshelfAdded;
         Bookshelf {
             model: contentList.newlyAddedCategoryModel;
-            headerText: "Recently Added Comics";
+            headerText: i18nc("Title of the page with all books ordered by which was added most recently", "Recently Added Books");
             sectionRole: "created";
             sectionCriteria: ViewSection.FullString;
             onBookSelected: mainWindow.showBook(filename, currentPage);
@@ -175,7 +175,7 @@ Kirigami.ApplicationWindow {
         id: bookshelfSeries;
         Bookshelf {
             model: contentList.seriesCategoryModel;
-            headerText: "Comics by Series";
+            headerText: i18nc("Title of the page with books grouped by what series they are in", "Group by Series");
             onBookSelected: mainWindow.showBook(filename, currentPage);
         }
     }
@@ -184,7 +184,7 @@ Kirigami.ApplicationWindow {
         id: bookshelfAuthor;
         Bookshelf {
             model: contentList.authorCategoryModel;
-            headerText: "Comics by Author";
+            headerText: i18nc("Title of the page with books grouped by author", "Group by Author");
             onBookSelected: mainWindow.showBook(filename, currentPage);
         }
     }
@@ -193,7 +193,7 @@ Kirigami.ApplicationWindow {
         id: bookshelfPublisher;
         Bookshelf {
             model: contentList;
-            headerText: "Comics by Publisher";
+            headerText: i18nc("Title of the page with books grouped by who published them", "Group by Publisher");
             onBookSelected: mainWindow.showBook(filename, currentPage);
         }
     }
@@ -202,7 +202,7 @@ Kirigami.ApplicationWindow {
         id: bookshelfFolder;
         Bookshelf {
             model: contentList.folderCategoryModel;
-            headerText: "Comics by Folder";
+            headerText: i18nc("Title of the page with books grouped by what folder they are in", "Filter by Folder");
             onBookSelected: mainWindow.showBook(filename, currentPage);
         }
     }

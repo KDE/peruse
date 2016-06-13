@@ -34,7 +34,7 @@ import "listcomponents" as ListComponents
 
 Kirigami.Page {
     id: root;
-    title: "Settings";
+    title: i18nc("title of the settings page", "Settings");
 
     Item {
         width: root.width - (root.leftPadding + root.rightPadding);
@@ -50,7 +50,7 @@ Kirigami.Page {
             Item {
                 height: folderHeader.height;
                 width: parent.width - folderAdd.width - units.smallSpacing;
-                ListComponents.Section { id: folderHeader; text: "Search Folders"; }
+                ListComponents.Section { id: folderHeader; text: i18nc("title of the list of search folders", "Search Folders"); }
                 ToolButton {
                     id: folderAdd;
                     iconName: "list-add";
@@ -77,7 +77,7 @@ Kirigami.Page {
                 delegate: Kirigami.SwipeListItem {
                     actions: [
                         Kirigami.Action {
-                            text: "Delete";
+                            text: i18nc("remove the search folder from the list", "Delete");
                             iconName: "list-remove"
                             onTriggered: peruseConfig.removeBookLocation(peruseConfig.bookLocations[index]);
                         }
@@ -116,7 +116,7 @@ Kirigami.Page {
                     right: parent.right;
                 }
                 horizontalAlignment: Text.AlignHCenter;
-                text: "Please wait while we find your comics...";
+                text: i18nc("shown with a throbber when searching for books on the device", "Please wait while we find your books...");
             }
             PlasmaComponents.BusyIndicator {
                 id: loadingSpinner;
@@ -160,7 +160,7 @@ Kirigami.Page {
 
     FileDialog {
         id: desktopFolderDlg;
-        title: "Select a folder";
+        title: i18nc("title for the dialogue used to add a new search folder", "Select a folder");
         selectFolder: true;
         folder: shortcuts.home;
         onAccepted: {

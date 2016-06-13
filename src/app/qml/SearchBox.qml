@@ -47,7 +47,7 @@ Item {
             left: parent.left;
             right: parent.right;
         }
-        placeholderText: "Tap and type to search";
+        placeholderText: i18nc("placeholder text for the search field", "Tap and type to search");
         onTextChanged: {
             if(text.length > 0) {
                 searchTimer.start();
@@ -110,7 +110,7 @@ Item {
                 id: bookTile;
                 height: model.categoryEntriesCount < 1 ? neededHeight : 0;
                 width: parent.width;
-                author: model.author ? model.author : "(unknown)";
+                author: model.author ? model.author : i18nc("used for the author data in book lists if autor is empty", "(unknown)");
                 title: model.title;
                 filename: model.filename;
                 categoryEntriesCount: model.categoryEntriesCount;

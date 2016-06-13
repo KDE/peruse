@@ -32,7 +32,7 @@ import "listcomponents" as ListComponents
 
 Kirigami.Page {
     id: root;
-    title: "Welcome";
+    title: i18nc("title of the welcome page", "Welcome");
     signal bookSelected(string filename, int currentPage);
     function updateRecent() {
         startWithThese.updateRecentlyRead();
@@ -41,21 +41,21 @@ Kirigami.Page {
     property list<QtObject> mobileActions;
     property list<QtObject> desktopActions: [
         Kirigami.Action {
-            text: "Open selected book";
+            text: i18n("Open selected book");
             shortcut: "Return";
             iconName: "action-close";
             onTriggered: bookSelected(startWithThese.currentItem.filename, startWithThese.currentItem.currentPage);
             enabled: mainWindow.pageStack.currentItem == root;
         },
         Kirigami.Action {
-            text: "Previous book";
+            text: i18nc("select the previous book entry in the list", "Previous book");
             shortcut: StandardKey.MoveToPreviousChar
             iconName: "action-previous";
             onTriggered: startWithThese.selectPrevious();
             enabled: mainWindow.pageStack.currentItem == root;
         },
         Kirigami.Action {
-            text: "Next book";
+            text: i18nc("select the next book entry in the list", "Next book");
             shortcut: StandardKey.MoveToNextChar;
             iconName: "action-next";
             onTriggered: startWithThese.selectNext();
@@ -66,7 +66,7 @@ Kirigami.Page {
     actions {
         contextualActions: PLASMA_PLATFORM.substring(0, 5) === "phone" ? mobileActions : desktopActions;
         main: Kirigami.Action {
-            text: "Search Books";
+            text: i18nc("search in the list of books (not inside the books)", "Search Books");
             iconName: "system-search";
             onTriggered: searchBox.activate();
         }
@@ -113,7 +113,7 @@ Kirigami.Page {
                     left: parent.left;
                     right: parent.right;
                 }
-                text: "Comic Book Reader";
+                text: i18nc("application subtitle", "Comic Book Reader");
                 horizontalAlignment: Text.AlignHCenter;
             }
             Rectangle {
@@ -205,7 +205,7 @@ Kirigami.Page {
                 width: parent.width;
                 height: childrenRect.height;
                 ListComponents.Section {
-                    text: "Continue reading";
+                    text: i18nc("title of list of recently opened books", "Continue reading");
                     width: startWithThese.width;
                     height: rread0.height > 0 ? paintedHeight : 0;
                     visible: height > 0;
@@ -305,7 +305,7 @@ Kirigami.Page {
                     }
                 }
                 ListComponents.Section {
-                    text: "Recently added";
+                    text: i18nc("title of list of recently discovered books", "Recently added");
                     width: startWithThese.width;
                     height: paintedHeight;
                 }
@@ -313,7 +313,7 @@ Kirigami.Page {
                     visible: !firstRecentlyAddedBook.visible;
                     height: visible ? paintedHeight : 0;
                     width: startWithThese.width;
-                    text: "You have no comics on your device. Please put some into your Documents or Downloads folder (for example by downloading some) and they will show up here!";
+                    text: i18nc("description text for the recently discovered list, shown when no items exist in the search paths", "You have no comics on your device. Please put some into your Documents or Downloads folder (for example by downloading some) and they will show up here!");
                     wrapMode: Text.WordWrap;
                     horizontalAlignment: Text.AlignHCenter;
                 }
@@ -486,7 +486,7 @@ Kirigami.Page {
                     right: parent.right;
                 }
                 horizontalAlignment: Text.AlignHCenter;
-                text: "Please wait while we find your comics...";
+                text: i18nc("shown with a throbber when searching for books on the device", "Please wait while we find your books...");
             }
             PlasmaComponents.BusyIndicator {
                 id: loadingSpinner;
