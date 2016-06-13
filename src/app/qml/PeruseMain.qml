@@ -38,6 +38,9 @@ Kirigami.ApplicationWindow {
     visible: true;
 
     function showBook(filename, currentPage) {
+        if(mainWindow.pageStack.lastItem.objectName === "bookViewer") {
+            mainWindow.pageStack.pop();
+        }
         mainWindow.pageStack.push(bookViewer, { focus: true, file: filename, currentPage: currentPage })
         peruseConfig.bookOpened(filename);
     }

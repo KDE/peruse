@@ -33,6 +33,7 @@ import "listcomponents" as ListComponents
 
 Kirigami.Page {
     id: root;
+    objectName: "bookViewer";
     clip: true;
     implicitWidth: applicationWindow().width;
 
