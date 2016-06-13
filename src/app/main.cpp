@@ -26,6 +26,7 @@
 #include <QDebug>
 #include <QThread>
 
+#include <KDeclarative/KDeclarative>
 #include <KLocalizedString>
 
 #include <QApplication>
@@ -81,7 +82,10 @@ int main(int argc, char** argv)
         parser.showHelp(1);
     }
 
+    KDeclarative::KDeclarative kdeclarative;
     QQmlEngine engine;
+    kdeclarative.setDeclarativeEngine(&engine);
+    kdeclarative.setupBindings();
 
     bool osIsWindows = false;
 #ifdef Q_OS_WIN

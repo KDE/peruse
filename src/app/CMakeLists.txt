@@ -14,6 +14,7 @@ target_link_libraries(peruse
     Qt5::Widgets
     Qt5::OpenGL
     KF5::I18n
+    KF5::Declarative
 )
 
 install(TARGETS peruse ${INSTALL_TARGETS_DEFAULT_ARGS})
