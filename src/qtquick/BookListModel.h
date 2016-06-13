@@ -66,10 +66,10 @@ public:
 
     QObject* seriesCategoryModel() const;
     Q_SIGNAL void seriesCategoryModelChanged();
-    // Returns the leaf model representing the series the passed entry is a part of
+    // Returns the leaf model representing the series the entry with the passed URL is a part of
     // Base assumption: A book is only part of one series. This is not always true, but not sure how
     // to sensibly represent that
-    Q_INVOKABLE QObject* seriesModelForEntry(BookEntry* entry);
+    Q_INVOKABLE QObject* seriesModelForEntry(QString fileName);
 
     QObject* folderCategoryModel() const;
     Q_SIGNAL void folderCategoryModelChanged();

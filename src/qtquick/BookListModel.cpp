@@ -205,9 +205,16 @@ QObject * BookListModel::seriesCategoryModel() const
     return d->seriesCategoryModel;
 }
 
-QObject * BookListModel::seriesModelForEntry(BookEntry* entry)
+QObject * BookListModel::seriesModelForEntry(QString fileName)
 {
-    return d->seriesCategoryModel->leafModelForEntry(entry);
+    Q_FOREACH(BookEntry* entry, d->entries)
+    {
+        if(entry->filename == fileName)
+        {
+            return d->seriesCategoryModel->leafModelForEntry(entry);
+        }
+    }
+    return 0;
 }
 
 QObject * BookListModel::folderCategoryModel() const
