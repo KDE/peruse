@@ -74,14 +74,14 @@ Kirigami.Page {
         if(viewLoader.item.currentPage < viewLoader.item.pageCount - 1) {
             viewLoader.item.currentPage++;
         } else {
-            bookInfo.open();
+            bookInfo.showBookInfo(file);
         }
     }
     function previousPage() {
         if(viewLoader.item.currentPage > 0) {
             viewLoader.item.currentPage--;
         } else {
-            bookInfo.open();
+            bookInfo.showBookInfo(file);
         }
     }
     function closeBook() {
@@ -294,8 +294,23 @@ Kirigami.Page {
 
     Kirigami.OverlaySheet {
         id: bookInfo;
-        property QtObject previousBook;
-        property QtObject nextBook;
+        function showBookInfo(filename) {
+            var seriesModel = contentList.seriesModelForEntry(filename);
+            var thisIndex = seriesModel.indexOfFile(filename);
+            previousBook = seriesModel.get(thisIndex - 1);
+            nextBook = seriesModel.get(thisIndex + 1);
+            open();
+        }
+        property QtObject fakeBook: Peruse.PropertyContainer {
+            property string author: "unnamed";
+            property string title: "unnamed";
+            property string filename: "";
+            property string thumbnail: "";
+            property string currentPage: "0";
+            property string totalPages: "0";
+        }
+        property QtObject previousBook: fakeBook;
+        property QtObject nextBook: fakeBook;
         Column {
             width: root.width - units.largeSpacing * 2;
             height: root.height - units.largeSpacing * 2;
@@ -327,14 +342,14 @@ Kirigami.Page {
                     horizontalAlignment: Text.AlignLeft;
                     verticalAlignment: Text.AlignVCenter;
                     anchors.fill: parent;
-                    opacity: previousBookTile.height > 0 ? 1 : 0;
+                    opacity: previousBookTile.height > 1 ? 1 : 0;
                 }
                 Kirigami.Label {
                     text: "Next book";
                     horizontalAlignment: Text.AlignRight;
                     verticalAlignment: Text.AlignVCenter;
                     anchors.fill: parent;
-                    opacity: nextBookTile.height > 0 ? 1 : 0;
+                    opacity: nextBookTile.height > 1 ? 1 : 0;
                 }
             }
             Row {
@@ -342,28 +357,28 @@ Kirigami.Page {
                 height: childrenRect.height;
                 ListComponents.BookTileTall {
                     id: previousBookTile;
-                    height: previousBook.readProperty("filename") != "" ? neededHeight : 1;
+                    height: bookInfo.previousBook.readProperty("filename") != "" ? neededHeight : 1;
                     width: parent.width / 2;
-                    author: previousBook.readProperty("author");
-                    title: previousBook.readProperty("title");
-                    filename: previousBook.readProperty("filename");
-                    thumbnail: previousBook.readProperty("thumbnail");
+                    author: bookInfo.previousBook.readProperty("author");
+                    title: bookInfo.previousBook.readProperty("title");
+                    filename: bookInfo.previousBook.readProperty("filename");
+                    thumbnail: bookInfo.previousBook.readProperty("thumbnail");
                     categoryEntriesCount: 0;
-                    currentPage: previousBook.readProperty("currentPage");
-                    totalPages: previousBook.readProperty("totalPages");
+                    currentPage: bookInfo.previousBook.readProperty("currentPage");
+                    totalPages: bookInfo.previousBook.readProperty("totalPages");
                     onBookSelected: applicationWindow().showBook(filename, currentPage);
                 }
                 ListComponents.BookTileTall {
                     id: nextBookTile;
-                    height: nextBook.readProperty("filename") != "" ? neededHeight : 1;
+                    height: bookInfo.nextBook.readProperty("filename") != "" ? neededHeight : 1;
                     width: parent.width / 2;
-                    author: nextBook.readProperty("author");
-                    title: nextBook.readProperty("title");
-                    filename: nextBook.readProperty("filename");
-                    thumbnail: nextBook.readProperty("thumbnail");
+                    author: bookInfo.nextBook.readProperty("author");
+                    title: bookInfo.nextBook.readProperty("title");
+                    filename: bookInfo.nextBook.readProperty("filename");
+                    thumbnail: bookInfo.nextBook.readProperty("thumbnail");
                     categoryEntriesCount: 0;
-                    currentPage: nextBook.readProperty("currentPage");
-                    totalPages: nextBook.readProperty("totalPages");
+                    currentPage: bookInfo.nextBook.readProperty("currentPage");
+                    totalPages: bookInfo.nextBook.readProperty("totalPages");
                     onBookSelected: applicationWindow().showBook(filename, currentPage);
                 }
             }
