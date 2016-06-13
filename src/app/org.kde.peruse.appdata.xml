@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2016 Dan Leinir Turthra Jensen <admin@leinir.dk> -->
+<component type="desktop">
+  <id>org.kde.peruse</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-2.0+</project_license>
+  <name>Peruse</name>
+  <summary>Comic Book Reader</summary>
+  <description>
+    <p>
+      There are many ways to read comic books, and one of those that has become more
+      common in recent years is on a computer. Peruse was created as a way to make
+      exactly that as easy and pleasant as possible, and to simply get out of the
+      way and let you read your comic books. One could say that it allows you to
+      peruse your comic books at your leisure, but that would be a silly way of
+      putting it - so, peruse your comic books at your leisure!
+    </p>
+    <p>
+      One of the ways in which Peruse ensures your reading experience is as pleasant
+      and effortless as possible is to allow you to simply pick up where you last left
+      off. The welcome page in the application (first screenshot below) shows you your
+      most recently read comics, and shows your progress through them. To pick up
+      where you left off, simply tap the top left item and you will be taken right to
+      the page you were reading before you had to stop.
+    </p>
+    <p>Features:</p>
+    <ul>
+        <li>Comic Book Archive (cbz, cbr, cb7, cbt, cba)</li>
+        <li>Portable Document Format (pdf)</li>
+        <li>ePub Books (epub)</li>
+        <li>DeVice Independent files (dvi)</li>
+        <li>DeJaVu (djvu)</li>
+        <li>Compiled Help (chm)</li>
+    </ul>
+  </description>
+  <screenshots>
+    <screenshot type="default">
+      <image width="1519" height="969">http://leinir.dk/apps/peruse/screenshots/peruse-welcome.png</image>
+    </screenshot>
+    <screenshot type="default">
+      <image width="1600" height="1200">http://leinir.dk/apps/peruse/screenshots/peruse-reading.png</image>
+    </screenshot>
+    <screenshot type="default">
+      <image width="1450" height="920">http://leinir.dk/apps/peruse/screenshots/peruse-drilldown.png</image>
+    </screenshot>
+  </screenshots>
+  <url type="homepage">http://peruse.kde.org/</url>
+  <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=peruse</url>
+  <project_group>KDE</project_group>
+  <provides>
+    <binary>peruse</binary>
+  </provides>
+</component>
