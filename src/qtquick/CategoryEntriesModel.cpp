@@ -53,8 +53,6 @@ public:
         obj->setProperty("title", entry->title);
         obj->setProperty("totalPages", entry->totalPages);
         obj->setProperty("thumbnail", entry->thumbnail);
-        obj->setProperty("seriesPrevious", entry->seriesPrevious);
-        obj->setProperty("seriesNext", entry->seriesNext);
         return obj;
     }
 };
@@ -88,8 +86,6 @@ QHash<int, QByteArray> CategoryEntriesModel::roleNames() const
     roles[CategoryEntriesModelRole] = "categoryEntriesModel";
     roles[CategoryEntryCountRole] = "categoryEntriesCount";
     roles[ThumbnailRole] = "thumbnail";
-    roles[SeriesPreviousRole] = "seriesPrevious";
-    roles[SeriesNextRole] = "seriesNext";
     return roles;
 }
 
@@ -162,12 +158,6 @@ QVariant CategoryEntriesModel::data(const QModelIndex& index, int role) const
                     break;
                 case ThumbnailRole:
                     result.setValue(entry->thumbnail);
-                    break;
-                case SeriesPreviousRole:
-                    result.setValue(entry->seriesPrevious);
-                    break;
-                case SeriesNextRole:
-                    result.setValue(entry->seriesNext);
                     break;
                 default:
                     result.setValue(QString("Unknown role"));

@@ -30,8 +30,6 @@ struct BookEntry {
     BookEntry()
         : totalPages(0)
         , currentPage(0)
-        , seriesPrevious(-1)
-        , seriesNext(-1)
     {}
     QString filename;
     QString filetitle;
@@ -44,9 +42,6 @@ struct BookEntry {
     int totalPages;
     int currentPage;
     QString thumbnail;
-    int seriesPrevious; // Index in the series model, not in the global model.
-    int seriesNext;     // As above. This allows us to handle this in that model
-                        // but still have it globally available.
 };
 
 class CategoryEntriesModel : public QAbstractListModel
@@ -69,9 +64,7 @@ public:
         CurrentPageRole,
         CategoryEntriesModelRole,
         CategoryEntryCountRole,
-        ThumbnailRole,
-        SeriesPreviousRole,
-        SeriesNextRole
+        ThumbnailRole
     };
 
     virtual QHash<int, QByteArray> roleNames() const;
