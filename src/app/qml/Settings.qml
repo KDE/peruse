@@ -84,10 +84,10 @@ Kirigami.Page {
                     ]
                     Kirigami.Label {
                         anchors {
-                            fill: parent;
-                            margins: units.smallSpacing;
+                            verticalCenter: parent.verticalCenter;
+                            left: parent.left;
+                            leftMargin: Kirigami.Units.largeSpacing;
                         }
-                        verticalAlignment: Text.AlignVCenter;
                         text: peruseConfig.bookLocations[index];
                     }
                 }
