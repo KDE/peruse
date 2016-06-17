@@ -195,12 +195,21 @@ Kirigami.Page {
     ]
     actions {
         contextualActions: PLASMA_PLATFORM.substring(0, 5) === "phone" ? mobileActions : desktopActions;
-        main: Kirigami.Action {
-            text: applicationWindow().visibility !== Window.FullScreen ? i18n("Enter full screen mode on any device type", "Go full screen") : i18nc("Exit full screen mode on any device type", "Exit full screen");
-            iconName: "view-fullscreen";
-            onTriggered: toggleFullscreen();
-            enabled: mainWindow.pageStack.currentItem == root;
-        }
+        main: bookInfo.opened ? bookInfoAction : mainBookAction;
+    }
+    Kirigami.Action {
+        id: mainBookAction;
+        text: applicationWindow().visibility !== Window.FullScreen ? i18n("Enter full screen mode on any device type", "Go full screen") : i18nc("Exit full screen mode on any device type", "Exit full screen");
+        iconName: "view-fullscreen";
+        onTriggered: toggleFullscreen();
+        enabled: mainWindow.pageStack.currentItem == root;
+    }
+    Kirigami.Action {
+        id: bookInfoAction;
+        text: i18n("Closes the book information drawer", "Close");
+        iconName: "dialog-cancel";
+        onTriggered: bookInfo.close();
+        enabled: mainWindow.pageStack.currentItem == root;
     }
 
     Item {
@@ -302,6 +311,16 @@ Kirigami.Page {
             nextBook = seriesModel.get(thisIndex + 1);
             open();
         }
+        onOpenedChanged: {
+            if(opened === false) {
+                applicationWindow().controlsVisible = controlsShown;
+            }
+            else {
+                controlsShown = applicationWindow().controlsVisible;
+                applicationWindow().controlsVisible = true;
+            }
+        }
+        property bool controlsShown;
         property QtObject fakeBook: Peruse.PropertyContainer {
             property string author: "unnamed";
             property string title: "unnamed";
@@ -318,15 +337,6 @@ Kirigami.Page {
             PlasmaExtras.Heading {
                 width: parent.width;
                 text: "More on this book"
-                PlasmaComponents.Button {
-                    anchors {
-                        top: parent.top;
-                        right: parent.right;
-                        margins: units.smallSpacing;
-                    }
-                    iconName: "dialog-close";
-                    onClicked: bookInfo.close();
-                }
             }
             BookDetails {
                 width: parent.width;
