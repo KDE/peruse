@@ -305,10 +305,8 @@ Kirigami.Page {
     Kirigami.OverlaySheet {
         id: bookInfo;
         function showBookInfo(filename) {
-            var seriesModel = contentList.seriesModelForEntry(filename);
-            var thisIndex = seriesModel.indexOfFile(filename);
-            previousBook = seriesModel.get(thisIndex - 1);
-            nextBook = seriesModel.get(thisIndex + 1);
+            seriesListView.model = contentList.seriesModelForEntry(filename);
+            seriesListView.currentIndex = seriesListView.model.indexOfFile(filename);
             open();
         }
         onOpenedChanged: {
@@ -321,76 +319,58 @@ Kirigami.Page {
             }
         }
         property bool controlsShown;
+        property QtObject currentBook: fakeBook;
         property QtObject fakeBook: Peruse.PropertyContainer {
-            property string author: "unnamed";
-            property string title: "unnamed";
+            property string author: "";
+            property string title: "";
             property string filename: "";
+            property string publisher: "";
             property string thumbnail: "";
             property string currentPage: "0";
             property string totalPages: "0";
         }
-        property QtObject previousBook: fakeBook;
-        property QtObject nextBook: fakeBook;
         Column {
+            clip: true;
             width: root.width - units.largeSpacing * 2;
-            height: root.height - units.largeSpacing * 2;
-            PlasmaExtras.Heading {
+            height: childrenRect.height + units.largeSpacing * 2;
+            spacing: units.largeSpacing;
+            ListComponents.BookTile {
+                id: detailsTile;
+                height: filename != "" ? neededHeight : 1;
                 width: parent.width;
-                text: "More on this book"
-            }
-            BookDetails {
-                width: parent.width;
-                file: root.file;
+                author: bookInfo.currentBook.readProperty("author");
+                publisher: bookInfo.currentBook.readProperty("publisher");
+                title: bookInfo.currentBook.readProperty("title");
+                filename: bookInfo.currentBook.readProperty("filename");
+                thumbnail: bookInfo.currentBook.readProperty("thumbnail");
+                categoryEntriesCount: 0;
+                currentPage: bookInfo.currentBook.readProperty("currentPage");
+                totalPages: bookInfo.currentBook.readProperty("totalPages");
+                onBookSelected: if(root.file !== filename) { applicationWindow().showBook(filename, currentPage); }
             }
             // tags and ratings, comment by self
             // store hook if previous is unknown
             // store hook if next is unknown
-            Item {
+            ListView {
+                id: seriesListView;
                 width: parent.width;
-                height: units.gridUnit;
-                Kirigami.Label {
-                    text: i18nc("Label shown above the previous book in the series to the one currently being read", "Previoux book");
-                    horizontalAlignment: Text.AlignLeft;
-                    verticalAlignment: Text.AlignVCenter;
-                    anchors.fill: parent;
-                    opacity: previousBookTile.height > 1 ? 1 : 0;
-                }
-                Kirigami.Label {
-                    text: i18nc("Label shown above the next book in the series to the one currently being read", "Next book");
-                    horizontalAlignment: Text.AlignRight;
-                    verticalAlignment: Text.AlignVCenter;
-                    anchors.fill: parent;
-                    opacity: nextBookTile.height > 1 ? 1 : 0;
-                }
-            }
-            Row {
-                width: parent.width;
-                height: childrenRect.height;
-                ListComponents.BookTileTall {
-                    id: previousBookTile;
-                    height: bookInfo.previousBook.readProperty("filename") != "" ? neededHeight : 1;
-                    width: parent.width / 2;
-                    author: bookInfo.previousBook.readProperty("author");
-                    title: bookInfo.previousBook.readProperty("title");
-                    filename: bookInfo.previousBook.readProperty("filename");
-                    thumbnail: bookInfo.previousBook.readProperty("thumbnail");
+                height: units.gridUnit * 12;
+                orientation: ListView.Horizontal;
+                delegate: ListComponents.BookTileTall {
+                    height: model.filename != "" ? neededHeight : 1;
+                    width: seriesListView.width / 3;
+                    author: model.author;
+                    title: model.title;
+                    filename: model.filename;
+                    thumbnail: model.thumbnail;
                     categoryEntriesCount: 0;
-                    currentPage: bookInfo.previousBook.readProperty("currentPage");
-                    totalPages: bookInfo.previousBook.readProperty("totalPages");
-                    onBookSelected: applicationWindow().showBook(filename, currentPage);
+                    currentPage: model.currentPage;
+                    totalPages: model.totalPages;
+                    onBookSelected: seriesListView.currentIndex = model.index;
+                    selected: seriesListView.currentIndex === model.index;
                 }
-                ListComponents.BookTileTall {
-                    id: nextBookTile;
-                    height: bookInfo.nextBook.readProperty("filename") != "" ? neededHeight : 1;
-                    width: parent.width / 2;
-                    author: bookInfo.nextBook.readProperty("author");
-                    title: bookInfo.nextBook.readProperty("title");
-                    filename: bookInfo.nextBook.readProperty("filename");
-                    thumbnail: bookInfo.nextBook.readProperty("thumbnail");
-                    categoryEntriesCount: 0;
-                    currentPage: bookInfo.nextBook.readProperty("currentPage");
-                    totalPages: bookInfo.nextBook.readProperty("totalPages");
-                    onBookSelected: applicationWindow().showBook(filename, currentPage);
+                onCurrentIndexChanged: {
+                    bookInfo.currentBook = model.get(currentIndex);
                 }
             }
         }
