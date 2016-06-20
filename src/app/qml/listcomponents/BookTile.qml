@@ -43,10 +43,6 @@ Item {
     visible: height > 1;
     enabled: visible;
     clip: true;
-    MouseArea {
-        anchors.fill: parent;
-        onClicked: root.bookSelected(root.filename, root.currentPage);
-    }
     Rectangle {
         anchors.fill: parent;
         color: theme.highlightColor;
@@ -70,6 +66,10 @@ Item {
             asynchronous: true;
             fillMode: Image.PreserveAspectFit;
         }
+        MouseArea {
+            anchors.fill: parent;
+            onClicked: root.bookSelected(root.filename, root.currentPage);
+        }
     }
     PlasmaExtras.Heading {
         id: bookTitle;
@@ -82,6 +82,20 @@ Item {
         maximumLineCount: 1;
         elide: Text.ElideMiddle;
         font.weight: Font.Bold;
+        MouseArea {
+            anchors.fill: parent;
+            onClicked: root.bookSelected(root.filename, root.currentPage);
+        }
+        Rectangle {
+            anchors {
+                left: parent.left;
+                top: parent.baseline;
+                topMargin: 2;
+            }
+            height: 2;
+            width: parent.paintedWidth;
+            color: Kirigami.Theme.linkColor;
+        }
     }
     PlasmaComponents.Label {
         id: bookAuthorLabel;
