@@ -88,11 +88,20 @@ Kirigami.Page {
     ]
     actions {
         contextualActions: PLASMA_PLATFORM.substring(0, 5) === "phone" ? mobileActions : desktopActions;
-        main: Kirigami.Action {
-            text: i18nc("search in the list of books (not inside the books)", "Search Books");
-            iconName: "system-search";
-            onTriggered: searchBox.activate();
-        }
+        main: bookDetails.opened ? bookDetailsAction : mainShelfAction;
+    }
+    Kirigami.Action {
+        id: mainShelfAction;
+        text: i18nc("search in the list of books (not inside the books)", "Search Books");
+        iconName: "system-search";
+        onTriggered: searchBox.activate();
+    }
+    Kirigami.Action {
+        id: bookDetailsAction;
+        text: i18n("Closes the book details drawer", "Close");
+        iconName: "dialog-cancel";
+        onTriggered: bookDetails.close();
+        enabled: mainWindow.pageStack.currentItem == root;
     }
 
     Item {
@@ -160,20 +169,46 @@ Kirigami.Page {
                     totalPages: model.totalPages;
                     onBookSelected: root.bookSelected(filename, currentPage);
                     selected: shelfList.currentIndex === index;
-                    onPressAndHold: mainWindow.pageStack.push(bookDetails, { focus: true, file: model.filename });
+                    onPressAndHold: bookDetails.showBookInfo(model.index);
                 }
             }
         }
-        Component {
-            id: bookDetails;
-            Kirigami.Page {
-                id: bookDetailsRoot;
-                property string file;
-                BookDetails {
-                    file: bookDetailsRoot.file;
-                    width: root.width - (root.leftPadding + root.rightPadding);
-                    height: root.height - (root.topPadding + root.bottomPadding);
-                }
+    }
+    Kirigami.OverlaySheet {
+        id: bookDetails;
+        function showBookInfo(index) {
+            currentBook = root.model.getEntry(index);
+            open();
+        }
+        property QtObject currentBook: fakeBook;
+        property QtObject fakeBook: Peruse.PropertyContainer {
+            property string author: "";
+            property string title: "";
+            property string filename: "";
+            property string publisher: "";
+            property string thumbnail: "";
+            property string currentPage: "0";
+            property string totalPages: "0";
+        }
+        ListComponents.BookTile {
+            id: detailsTile;
+            height: neededHeight;
+            width: shelfList.width - Kirigami.Units.largeSpacing * 2;
+            author: bookDetails.currentBook.readProperty("author");
+            publisher: bookDetails.currentBook.readProperty("publisher");
+            title: bookDetails.currentBook.readProperty("title");
+            filename: bookDetails.currentBook.readProperty("filename");
+            thumbnail: bookDetails.currentBook.readProperty("thumbnail");
+            categoryEntriesCount: 0;
+            currentPage: bookDetails.currentBook.readProperty("currentPage");
+            totalPages: bookDetails.currentBook.readProperty("totalPages");
+            onBookSelected: {
+                bookDetails.close();
+                applicationWindow().showBook(filename, currentPage);
+            }
+            onBookDeleteRequested: {
+                contentList.removeBook(detailsTile.filename, true);
+                close();
             }
         }
     }
