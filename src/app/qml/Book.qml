@@ -270,7 +270,7 @@ Kirigami.Page {
                     if(root.currentPage !== viewLoader.item.currentPage && viewLoader.loadingCompleted) {
                         root.currentPage = viewLoader.item.currentPage;
                     }
-                    thumbnailMovementAnimation.false;
+                    thumbnailMovementAnimation.running = false;
                     var currentPos = thumbnailNavigator.contentY;
                     var newPos;
                     thumbnailNavigator.positionViewAtIndex(viewLoader.item.currentPage, ListView.Center);
@@ -367,7 +367,7 @@ Kirigami.Page {
                 width: parent.width;
                 height: units.gridUnit * 12;
                 orientation: ListView.Horizontal;
-                NumberAnimation { target: seriesListView; property: "contentX"; duration: mainWindow.animationDuration; easing.type: Easing.InOutQuad; }
+                NumberAnimation { id: seriesListAnimation; target: seriesListView; property: "contentX"; duration: mainWindow.animationDuration; easing.type: Easing.InOutQuad; }
                 delegate: ListComponents.BookTileTall {
                     height: model.filename != "" ? neededHeight : 1;
                     width: seriesListView.width / 3;
@@ -379,8 +379,15 @@ Kirigami.Page {
                     currentPage: model.currentPage;
                     totalPages: model.totalPages;
                     onBookSelected: {
-                        seriesListView.currentIndex = model.index;
+                        seriesListAnimation.running = false;
+                        var currentPos = seriesListView.contentX;
+                        var newPos;
                         seriesListView.positionViewAtIndex(model.index, ListView.Center);
+                        newPos = seriesListView.contentX;
+                        seriesListAnimation.from = currentPos;
+                        seriesListAnimation.to = newPos;
+                        seriesListAnimation.running = true;
+                        seriesListView.currentIndex = model.index;
                     }
                     selected: seriesListView.currentIndex === model.index;
                 }
