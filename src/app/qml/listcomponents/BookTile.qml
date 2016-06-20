@@ -37,6 +37,7 @@ Item {
     property string currentPage;
     property string totalPages;
     signal bookSelected(string filename, int currentPage);
+    signal bookDeleteRequested();
 
     property int neededHeight: bookCover.height;// + bookAuthorLabel.height + bookFile.height + units.smallSpacing * 4;
     visible: height > 1;
@@ -86,7 +87,6 @@ Item {
         id: bookAuthorLabel;
         anchors {
             top: bookTitle.bottom;
-            topMargin: units.smallSpacing;
             left: bookCover.right;
             leftMargin: units.smallSpacing;
         }
@@ -98,7 +98,6 @@ Item {
         id: bookAuthor;
         anchors {
             top: bookTitle.bottom;
-            topMargin: units.smallSpacing;
             left: bookAuthorLabel.right;
             leftMargin: units.smallSpacing;
             right: parent.right;
@@ -111,7 +110,6 @@ Item {
         id: bookPublisherLabel;
         anchors {
             top: bookAuthorLabel.bottom;
-            topMargin: units.smallSpacing;
             left: bookCover.right;
             leftMargin: units.smallSpacing;
         }
@@ -122,9 +120,8 @@ Item {
     PlasmaComponents.Label {
         id: bookPublisher;
         anchors {
-            top: bookTitle.bottom;
-            topMargin: units.smallSpacing;
-            left: bookAuthorLabel.right;
+            top: bookAuthor.bottom;
+            left: bookPublisherLabel.right;
             leftMargin: units.smallSpacing;
             right: parent.right;
         }
@@ -136,7 +133,6 @@ Item {
         id: bookFile;
         anchors {
             top: bookPublisherLabel.bottom;
-            topMargin: units.smallSpacing;
             left: bookCover.right;
             leftMargin: units.smallSpacing;
             right: parent.right;
@@ -145,5 +141,95 @@ Item {
         opacity: 0.3;
         font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.8;
         maximumLineCount: 1;
+    }
+    Item {
+        id: descriptionContainer;
+        anchors {
+            top: bookFile.bottom;
+            left: bookCover.right;
+            right: parent.right;
+            bottom: deleteBase.top;
+            margins: units.smallSpacing;
+        }
+        PlasmaComponents.Label {
+            anchors.fill: parent;
+            verticalAlignment: Text.AlignTop;
+            text: i18nc("Placeholder text for the book description field when no description is set", "(no description available for this book)");
+            opacity: 0.3;
+        }
+    }
+    Item {
+        id: deleteBase;
+        anchors {
+            left: bookCover.right;
+            leftMargin: units.smallSpacing;
+            right: parent.right;
+            bottom: parent.bottom;
+        }
+        height: deleteButton.height + units.smallSpacing * 2;
+        Behavior on height { PropertyAnimation { duration: mainWindow.animationDuration; easing.type: Easing.InOutQuad; } }
+        states: [
+            State {
+                name: "confirmDelete";
+                PropertyChanges { target: deleteButton; opacity: 0; }
+                PropertyChanges { target: deleteConfirmBase; opacity: 1; }
+                PropertyChanges { target: deleteBase; height: deleteConfirmBase.height; }
+            }
+        ]
+        PlasmaComponents.Button {
+            id: deleteButton;
+            text: i18nc("Spawn inline dialog box to confirm permanent removal of this book", "Delete from device");
+            anchors {
+                bottom: parent.bottom;
+                right: parent.right;
+                margins: units.smallSpacing;
+            }
+            iconName: "edit-delete";
+            onClicked: deleteBase.state = "confirmDelete";
+            Behavior on opacity { PropertyAnimation { duration: mainWindow.animationDuration; easing.type: Easing.InOutQuad; } }
+        }
+        Item {
+            id: deleteConfirmBase;
+            opacity: 0;
+            width: parent.width;
+            Behavior on opacity { PropertyAnimation { duration: mainWindow.animationDuration; easing.type: Easing.InOutQuad; } }
+            height: yesDelete.height + confirmDeleteLabel.height + units.largeSpacing * 2 + units.smallSpacing;
+            Kirigami.Label {
+                id: confirmDeleteLabel;
+                anchors {
+                    top: parent.top;
+                    topMargin: units.largeSpacing;
+                    left: parent.left;
+                    right: parent.right;
+                }
+                height: paintedHeight;
+                wrapMode: Text.WordWrap;
+                horizontalAlignment: Text.AlignHCenter;
+                text: i18nc("Dialog text for delete book dialog", "Are you sure you want to delete this from your device?");
+            }
+            PlasmaComponents.Button {
+                id: yesDelete;
+                anchors {
+                    top: confirmDeleteLabel.bottom;
+                    topMargin: units.smallSpacing;
+                    right: parent.horizontalCenter;
+                    rightMargin: (parent.width - width) / 4;
+                }
+                text: i18nc("Confirmation button for book delete dialog", "Yes, really delete");
+                iconName: "dialog-ok";
+                onClicked: root.bookDeleteRequested();
+            }
+            PlasmaComponents.Button {
+                anchors {
+                    top: confirmDeleteLabel.bottom;
+                    topMargin: units.smallSpacing;
+                    left: parent.horizontalCenter;
+                    leftMargin: (parent.width - width) / 4;
+                }
+                text: i18nc("Cancellation button or book delete dialog", "No, cancel delete");
+                iconName: "dialog-cancel";
+                onClicked: deleteBase.state = "";
+            }
+        }
     }
 }
