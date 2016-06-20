@@ -50,12 +50,6 @@ Item {
         onClicked: root.bookSelected(root.filename, root.currentPage);
         onPressAndHold: root.pressAndHold(mouse);
     }
-    Rectangle {
-        anchors.fill: parent;
-        color: theme.highlightColor;
-        opacity: root.selected ? 1 : 0;
-        Behavior on opacity { NumberAnimation { duration: units.shortDuration; } }
-    }
     Item {
         id: bookCover;
         anchors {
@@ -66,6 +60,17 @@ Item {
         width: Math.min(parent.width - units.largeSpacing * 2, units.iconSizes.enormous + units.largeSpacing * 2);
         height: width;
         Rectangle {
+            anchors {
+                fill: coverOutline;
+                margins: -units.smallSpacing;
+            }
+            radius: units.smallSpacing;
+            color: theme.highlightColor;
+            opacity: root.selected ? 1 : 0;
+            Behavior on opacity { NumberAnimation { duration: units.shortDuration; } }
+        }
+        Rectangle {
+            id: coverOutline;
             anchors.centerIn: coverImage;
             width: Math.max(coverImage.paintedWidth, units.iconSizes.large) + units.smallSpacing * 2;
             height: Math.max(coverImage.paintedHeight, units.iconSizes.large) + units.smallSpacing * 2;
@@ -104,6 +109,8 @@ Item {
     }
     PlasmaComponents.ProgressBar {
         anchors {
+            top: bookCover.bottom;
+            topMargin: -units.smallSpacing;
             left: bookCover.left;
             right: bookCover.right;
             bottom: bookTitle.top;
