@@ -336,7 +336,7 @@ Kirigami.Page {
             spacing: units.largeSpacing;
             ListComponents.BookTile {
                 id: detailsTile;
-                height: filename != "" ? neededHeight : 1;
+                height: neededHeight;
                 width: parent.width;
                 author: bookInfo.currentBook.readProperty("author");
                 publisher: bookInfo.currentBook.readProperty("publisher");
@@ -346,16 +346,28 @@ Kirigami.Page {
                 categoryEntriesCount: 0;
                 currentPage: bookInfo.currentBook.readProperty("currentPage");
                 totalPages: bookInfo.currentBook.readProperty("totalPages");
-                onBookSelected: if(root.file !== filename) { applicationWindow().showBook(filename, currentPage); }
+                onBookSelected: {
+                    if(root.file !== filename) {
+                        applicationWindow().showBook(filename, currentPage);
+                    }
+                }
+                onBookDeleteRequested: {
+                    // Not strictly needed for the listview itself, but it's kind of
+                    // nice for making sure the details tile is right
+                    var oldIndex = seriesListView.currentIndex;
+                    seriesListView.currentIndex = -1;
+                    contentList.removeBook(detailsTile.filename, true);
+                    seriesListView.currentIndex = oldIndex;
+                }
             }
             // tags and ratings, comment by self
-            // store hook if previous is unknown
-            // store hook if next is unknown
+            // store hook for known series with more content
             ListView {
                 id: seriesListView;
                 width: parent.width;
                 height: units.gridUnit * 12;
                 orientation: ListView.Horizontal;
+                NumberAnimation { target: seriesListView; property: "contentX"; duration: mainWindow.animationDuration; easing.type: Easing.InOutQuad; }
                 delegate: ListComponents.BookTileTall {
                     height: model.filename != "" ? neededHeight : 1;
                     width: seriesListView.width / 3;
@@ -366,7 +378,10 @@ Kirigami.Page {
                     categoryEntriesCount: 0;
                     currentPage: model.currentPage;
                     totalPages: model.totalPages;
-                    onBookSelected: seriesListView.currentIndex = model.index;
+                    onBookSelected: {
+                        seriesListView.currentIndex = model.index;
+                        seriesListView.positionViewAtIndex(model.index, ListView.Center);
+                    }
                     selected: seriesListView.currentIndex === model.index;
                 }
                 onCurrentIndexChanged: {
