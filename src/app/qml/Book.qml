@@ -38,7 +38,7 @@ Kirigami.Page {
     implicitWidth: applicationWindow().width;
 
     // Remove all the padding when we've hidden controls. Content is king!
-    topPadding: applicationWindow().controlsVisible ? Kirigami.Units.gridUnit + (applicationWindow() && applicationWindow().header ? applicationWindow().header.preferredHeight : 0) : 0;
+    topPadding: applicationWindow().controlsVisible ? (applicationWindow() && applicationWindow().header ? applicationWindow().header.height : 0) : 0;
     leftPadding: applicationWindow().controlsVisible ? Kirigami.Units.gridUnit : 0;
     rightPadding: applicationWindow().controlsVisible ? Kirigami.Units.gridUnit : 0;
     bottomPadding: applicationWindow().controlsVisible ? Kirigami.Units.gridUnit : 0;
@@ -241,7 +241,7 @@ Kirigami.Page {
             }
             Timer {
                 id: drawerTimer;
-                interval: mainWindow.animationDuration * 2;
+                interval: mainWindow.animationDuration * 3;
                 running: false;
                 repeat: false;
                 onTriggered: applicationWindow().globalDrawer.close();
