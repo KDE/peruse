@@ -15,9 +15,9 @@ the planned features, which can be found in [the accompanying PLAN.md file](PLAN
 
 * Multiple file format support, in two tiers
   * Native support with optimised viewing for comic books
-    * cbz
+    * cbz or cbr
   * Okular based generic view support
-    * cbr and other cb* formats with archive types not supported by KArchive
+    * other cb* formats with archive types not supported by KArchive
     * pdf
     * deja-vu
     * epub
