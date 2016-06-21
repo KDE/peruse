@@ -356,7 +356,7 @@ Kirigami.Page {
                     width: childrenRect.width;
                     anchors.horizontalCenter: parent.horizontalCenter;
                     ListComponents.BookTileTall {
-                        visible: title !== "";
+                        visible: filename !== "";
                         height: visible ? neededHeight : 0;
                         width: startWithThese.width / 3;
                         property QtObject book: contentList.newlyAddedCategoryModel ? contentList.newlyAddedCategoryModel.get(startWithThese.mostRecentlyAdded0 + 2) : fakeBook;
