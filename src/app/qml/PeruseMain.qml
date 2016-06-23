@@ -36,6 +36,10 @@ Kirigami.ApplicationWindow {
     property bool isLoading: true;
     pageStack.initialPage: welcomePage;
     visible: true;
+    /// Which type of device we're running on. 0 is desktop, 1 is phone
+    property int deviceType: PLASMA_PLATFORM.substring(0, 5) === "phone" ? 1 : 0;
+    property int deviceTypeDesktop: 0;
+    property int deviceTypePhone: 1;
 
     function showBook(filename, currentPage) {
         if(mainWindow.pageStack.lastItem.objectName === "bookViewer") {
