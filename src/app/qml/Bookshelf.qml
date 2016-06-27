@@ -34,6 +34,7 @@ import "listcomponents" as ListComponents
 Kirigami.Page {
     id: root;
     title: headerText;
+    property string categoryName: "bookshelf";
     objectName: "bookshelf";
     property alias model: shelfList.model;
     property string sectionRole: "title";

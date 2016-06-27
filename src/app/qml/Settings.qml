@@ -34,6 +34,7 @@ import "listcomponents" as ListComponents
 
 Kirigami.Page {
     id: root;
+    property string categoryName: "settingsPage";
     title: i18nc("title of the settings page", "Settings");
 
     Item {

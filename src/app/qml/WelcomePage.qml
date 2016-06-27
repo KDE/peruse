@@ -32,6 +32,7 @@ import "listcomponents" as ListComponents
 
 Kirigami.Page {
     id: root;
+    property string categoryName: "welcomePage";
     title: i18nc("title of the welcome page", "Welcome");
     signal bookSelected(string filename, int currentPage);
     function updateRecent() {
