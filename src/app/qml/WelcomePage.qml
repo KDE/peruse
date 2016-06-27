@@ -45,21 +45,21 @@ Kirigami.Page {
             shortcut: "Return";
             iconName: "action-close";
             onTriggered: bookSelected(startWithThese.currentItem.filename, startWithThese.currentItem.currentPage);
-            enabled: mainWindow.pageStack.currentItem == root;
+            enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypeDesktop;
         },
         Kirigami.Action {
             text: i18nc("select the previous book entry in the list", "Previous book");
             shortcut: StandardKey.MoveToPreviousChar
             iconName: "action-previous";
             onTriggered: startWithThese.selectPrevious();
-            enabled: mainWindow.pageStack.currentItem == root;
+            enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypeDesktop;
         },
         Kirigami.Action {
             text: i18nc("select the next book entry in the list", "Next book");
             shortcut: StandardKey.MoveToNextChar;
             iconName: "action-next";
             onTriggered: startWithThese.selectNext();
-            enabled: mainWindow.pageStack.currentItem == root;
+            enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypeDesktop;
         }
     ]
 
@@ -69,6 +69,7 @@ Kirigami.Page {
             text: i18nc("search in the list of books (not inside the books)", "Search Books");
             iconName: "system-search";
             onTriggered: searchBox.activate();
+            enabled: mainWindow.pageStack.currentItem == root;
         }
     }
 

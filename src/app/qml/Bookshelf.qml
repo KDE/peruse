@@ -59,31 +59,31 @@ Kirigami.Page {
     property list<QtObject> desktopActions: [
         Kirigami.Action {
             text: i18nc("Navigate one page back", "Back");
-            shortcut: "Esc";
+            shortcut: bookDetails.opened ? "" : "Esc";
             iconName: "action-close";
             onTriggered: closeShelf();
-            enabled: mainWindow.pageStack.currentItem == root;
+            enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypeDesktop;
         },
         Kirigami.Action {
             text: i18nc("Select the previous book in the list", "Select previous book");
             shortcut: StandardKey.MoveToPreviousChar
             iconName: "action-previous";
             onTriggered: shelfList.previousEntry();
-            enabled: mainWindow.pageStack.currentItem == root;
+            enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypeDesktop;
         },
         Kirigami.Action {
             text: i18nc("Select the next book in the list", "Select next book");
             shortcut: StandardKey.MoveToNextChar;
             iconName: "action-next";
             onTriggered: shelfList.nextEntry();
-            enabled: mainWindow.pageStack.currentItem == root;
+            enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypeDesktop;
         },
         Kirigami.Action {
             text: i18nc("Open the book which is currently selected in the list", "Open selected book");
             shortcut: "Return";
             iconName: "action-open";
             onTriggered: openBook(shelfList.currentIndex);
-            enabled: mainWindow.pageStack.currentItem == root;
+            enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypeDesktop;
         }
     ]
     actions {
@@ -95,10 +95,12 @@ Kirigami.Page {
         text: i18nc("search in the list of books (not inside the books)", "Search Books");
         iconName: "system-search";
         onTriggered: searchBox.activate();
+        enabled: mainWindow.pageStack.currentItem == root;
     }
     Kirigami.Action {
         id: bookDetailsAction;
         text: i18n("Closes the book details drawer", "Close");
+        shortcut: bookDetails.opened ? "Esc" : "";
         iconName: "dialog-cancel";
         onTriggered: bookDetails.close();
         enabled: mainWindow.pageStack.currentItem == root;
