@@ -130,7 +130,7 @@ Kirigami.ApplicationWindow {
             Kirigami.Action {
                 text: i18nc("Open the settings page", "Settings");
                 iconName: "configure"
-                onTriggered: mainWindow.pageStack.push(settingsPage);
+                onTriggered: changeCategory(settingsPage);
             }
         ]
     }
