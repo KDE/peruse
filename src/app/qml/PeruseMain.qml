@@ -54,6 +54,7 @@ Kirigami.ApplicationWindow {
         contentModel: ContentList {
             onSearchCompleted: {
                 mainWindow.isLoading = false;
+                mainWindow.globalDrawer.actions = globalDrawerActions;
             }
         }
     }
@@ -77,10 +78,14 @@ Kirigami.ApplicationWindow {
         titleIcon: "peruse";
         opened: PLASMA_PLATFORM.substring(0, 5) === "phone" ? false : true;
         modal: PLASMA_PLATFORM.substring(0, 5) === "phone" ? true : false;
-        actions: [
+        actions: []
+    }
+    property list<QtObject> globalDrawerActions: [
             Kirigami.Action {
                 text: "Welcome";
                 iconName: "start-over";
+                checked: mainWindow.currentCategory === "welcomePage";
+                checkable: true;
                 onTriggered: {
                     changeCategory(welcomePage);
                     pageStack.currentItem.updateRecent();
@@ -91,31 +96,42 @@ Kirigami.ApplicationWindow {
             Kirigami.Action {
                 text: i18nc("Switch to the listing page showing the most recently discovered books", "Recently Added Books");
                 iconName: "appointment-new";
+                checked: mainWindow.currentCategory === "bookshelfAdded";
+                checkable: true;
                 onTriggered: changeCategory(bookshelfAdded);
             },
             Kirigami.Action {
                 text: i18nc("Switch to the listing page showing items grouped by title", "Group by Title");
                 iconName: "view-media-title";
+                checked: mainWindow.currentCategory === "bookshelfTitle";
+                checkable: true;
                 onTriggered: changeCategory(bookshelfTitle);
             },
             Kirigami.Action {
                 text: i18nc("Switch to the listing page showing items grouped by author", "Group by Author");
                 iconName: "actor";
+                checked: mainWindow.currentCategory === "bookshelfAuthor";
+                checkable: true;
                 onTriggered: changeCategory(bookshelfAuthor);
             },
             Kirigami.Action {
                 text: i18nc("Switch to the listing page showing items grouped by series", "Group by Series");
                 iconName: "edit-group";
+                checked: currentCategory === "bookshelfSeries";
+                checkable: true;
                 onTriggered: changeCategory(bookshelfSeries);
             },
             Kirigami.Action {
                 text: i18nc("Switch to the listing page showing items grouped by publisher", "Group by Publisher");
                 iconName: "view-media-publisher";
+                checked: mainWindow.currentCategory === "bookshelfPublisher";
                 onTriggered: changeCategory(bookshelfPublisher);
             },
             Kirigami.Action {
                 text: i18nc("Switch to the listing page showing items grouped by their filesystem folder", "Filter by Folder");
                 iconName: "tag-folder";
+                checked: mainWindow.currentCategory === "bookshelfFolder";
+                checkable: true;
                 onTriggered: changeCategory(bookshelfFolder);
             },
             Kirigami.Action {
@@ -130,10 +146,11 @@ Kirigami.ApplicationWindow {
             Kirigami.Action {
                 text: i18nc("Open the settings page", "Settings");
                 iconName: "configure"
+                checked: mainWindow.currentCategory === "settingsPage";
+                checkable: true;
                 onTriggered: changeCategory(settingsPage);
             }
         ]
-    }
 
     Component {
         id: welcomePage;
@@ -161,6 +178,7 @@ Kirigami.ApplicationWindow {
             model: contentList.titleCategoryModel;
             headerText: i18nc("Title of the page with books grouped by the title start letters", "Group by Title");
             onBookSelected: mainWindow.showBook(filename, currentPage);
+            categoryName: "bookshelfTitle";
         }
     }
 
@@ -172,6 +190,7 @@ Kirigami.ApplicationWindow {
             sectionRole: "created";
             sectionCriteria: ViewSection.FullString;
             onBookSelected: mainWindow.showBook(filename, currentPage);
+            categoryName: "bookshelfAdded";
         }
     }
 
@@ -181,6 +200,7 @@ Kirigami.ApplicationWindow {
             model: contentList.seriesCategoryModel;
             headerText: i18nc("Title of the page with books grouped by what series they are in", "Group by Series");
             onBookSelected: mainWindow.showBook(filename, currentPage);
+            categoryName: "bookshelfSeries";
         }
     }
 
@@ -190,6 +210,7 @@ Kirigami.ApplicationWindow {
             model: contentList.authorCategoryModel;
             headerText: i18nc("Title of the page with books grouped by author", "Group by Author");
             onBookSelected: mainWindow.showBook(filename, currentPage);
+            categoryName: "bookshelfAuthor";
         }
     }
 
@@ -199,6 +220,7 @@ Kirigami.ApplicationWindow {
             model: contentList;
             headerText: i18nc("Title of the page with books grouped by who published them", "Group by Publisher");
             onBookSelected: mainWindow.showBook(filename, currentPage);
+            categoryName: "bookshelfPublisher";
         }
     }
 
@@ -208,6 +230,7 @@ Kirigami.ApplicationWindow {
             model: contentList.folderCategoryModel;
             headerText: i18nc("Title of the page with books grouped by what folder they are in", "Filter by Folder");
             onBookSelected: mainWindow.showBook(filename, currentPage);
+            categoryName: "bookshelfFolder";
         }
     }
 
@@ -224,10 +247,12 @@ Kirigami.ApplicationWindow {
         }
     }
 
+    property string currentCategory: "welcomePage";
     function changeCategory(categoryItem) {
         // Clear all the way to the welcome page if we change the category...
         mainWindow.pageStack.clear();
         mainWindow.pageStack.push(categoryItem);
+        currentCategory = mainWindow.pageStack.currentItem.categoryName;
         if (PLASMA_PLATFORM.substring(0, 5) === "phone") {
             globalDrawer.close();
         }
