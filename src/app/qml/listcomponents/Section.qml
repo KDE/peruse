@@ -42,7 +42,7 @@ Row {
         height: 1;
     }
     Rectangle {
-        anchors.verticalCenter: headerText.verticalCenter;
+        anchors.bottom: headerText.baseline;
         height: 2;
         width: parent.width - headerText.width - units.smallSpacing - units.largeSpacing * 2;
         radius: 2;
