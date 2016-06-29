@@ -152,7 +152,7 @@ Kirigami.Page {
     property list<QtObject> mobileActions: [
         Kirigami.Action {
             text: i18nc("Action used on touch devices to close the currently open book and return to whatever page was most recently shown", "Close book");
-            shortcut: "Esc";
+            shortcut: (bookInfo.opened ? "" : "Esc");
             iconName: "action-close";
             onTriggered: closeBook();
             enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypePhone;
@@ -167,30 +167,50 @@ Kirigami.Page {
     property list<QtObject> desktopActions: [
         Kirigami.Action {
             text: i18nc("Action used on non-touch devices to close the currently open book and return to whatever page was most recently shown", "Close book");
-            shortcut: (applicationWindow().visibility === Window.FullScreen) ? "" : "Esc";
+            shortcut: (applicationWindow().visibility === Window.FullScreen) ? "" : (bookInfo.opened ? "" : "Esc");
             iconName: "action-close";
             onTriggered: closeBook();
             enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypeDesktop;
         },
         Kirigami.Action {
             text: i18nc("Go to the previous page in the book", "Previous page");
-            shortcut: StandardKey.MoveToPreviousChar
+            shortcut: bookInfo.opened ? "" : StandardKey.MoveToPreviousChar;
             iconName: "action-previous";
             onTriggered: previousPage();
             enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypeDesktop;
         },
         Kirigami.Action {
             text: i18nc("Go to the next page in the book", "Next page");
-            shortcut: StandardKey.MoveToNextChar;
+            shortcut: bookInfo.opened ? "" : StandardKey.MoveToNextChar;
             iconName: "action-next";
             onTriggered: nextPage();
             enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypeDesktop;
         },
         Kirigami.Action {
             text: applicationWindow().visibility !== Window.FullScreen ? i18nc("Enter full screen mode on a non-touch-based device", "Go full screen") : i18nc("Exit full sceen mode on a non-touch based device", "Exit full screen");
-            shortcut: (applicationWindow().visibility === Window.FullScreen) ? "Esc" : "f";
+            shortcut: (applicationWindow().visibility === Window.FullScreen) ? (bookInfo.opened ? "" : "Esc") : "f";
             iconName: "view-fullscreen";
             onTriggered: toggleFullscreen();
+            enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypeDesktop;
+        },
+
+        // Invisible actions, for use in bookInfo
+        Kirigami.Action {
+            visible: false;
+            shortcut: bookInfo.opened ? StandardKey.MoveToPreviousChar : "";
+            onTriggered: bookInfo.previousBook();
+            enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypeDesktop;
+        },
+        Kirigami.Action {
+            visible: false;
+            shortcut: bookInfo.opened ? StandardKey.MoveToNextChar : "";
+            onTriggered: bookInfo.nextBook();
+            enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypeDesktop;
+        },
+        Kirigami.Action {
+            visible: false;
+            shortcut: bookInfo.opened ? "Return" : "";
+            onTriggered: bookInfo.openSelected();
             enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypeDesktop;
         }
     ]
@@ -208,6 +228,7 @@ Kirigami.Page {
     Kirigami.Action {
         id: bookInfoAction;
         text: i18n("Closes the book information drawer", "Close");
+        shortcut: bookInfo.opened ? "Esc" : "";
         iconName: "dialog-cancel";
         onTriggered: bookInfo.close();
         enabled: mainWindow.pageStack.currentItem == root;
@@ -305,9 +326,36 @@ Kirigami.Page {
 
     Kirigami.OverlaySheet {
         id: bookInfo;
+        function setNewCurrentIndex(newIndex) {
+            seriesListAnimation.running = false;
+            var currentPos = seriesListView.contentX;
+            var newPos;
+            seriesListView.positionViewAtIndex(newIndex, ListView.Center);
+            newPos = seriesListView.contentX;
+            seriesListAnimation.from = currentPos;
+            seriesListAnimation.to = newPos;
+            seriesListAnimation.running = true;
+            seriesListView.currentIndex = newIndex;
+        }
+        function nextBook() {
+            if(seriesListView.currentIndex < seriesListView.model.rowCount()) {
+                setNewCurrentIndex(seriesListView.currentIndex + 1);
+            }
+        }
+        function previousBook() {
+            if(seriesListView.currentIndex > 0) {
+                setNewCurrentIndex(seriesListView.currentIndex - 1);
+            }
+        }
+        function openSelected() {
+            applicationWindow().showBook(detailsTile.filename, detailsTile.currentPage);
+        }
         function showBookInfo(filename) {
+            if(opened) {
+                return;
+            }
             seriesListView.model = contentList.seriesModelForEntry(filename);
-            seriesListView.currentIndex = seriesListView.model.indexOfFile(filename);
+            setNewCurrentIndex(seriesListView.model.indexOfFile(filename));
             open();
         }
         onOpenedChanged: {
@@ -379,17 +427,7 @@ Kirigami.Page {
                     categoryEntriesCount: 0;
                     currentPage: model.currentPage;
                     totalPages: model.totalPages;
-                    onBookSelected: {
-                        seriesListAnimation.running = false;
-                        var currentPos = seriesListView.contentX;
-                        var newPos;
-                        seriesListView.positionViewAtIndex(model.index, ListView.Center);
-                        newPos = seriesListView.contentX;
-                        seriesListAnimation.from = currentPos;
-                        seriesListAnimation.to = newPos;
-                        seriesListAnimation.running = true;
-                        seriesListView.currentIndex = model.index;
-                    }
+                    onBookSelected: bookInfo.setNewCurrentIndex(model.index);
                     selected: seriesListView.currentIndex === model.index;
                 }
                 onCurrentIndexChanged: {
