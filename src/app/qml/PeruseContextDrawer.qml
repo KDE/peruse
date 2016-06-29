@@ -19,7 +19,7 @@
 
 import QtQuick 2.1
 import QtQuick.Layouts 1.2
-import QtQuick.Controls 1.0 as QtControls
+import QtQuick.Controls 1.4 as QtControls
 import org.kde.kirigami 1.0
 
 // Modified version of the ContextDrawer component found in the Plasma Components
@@ -44,7 +44,7 @@ OverlayDrawer {
      * It expects items compatible with either QAction or Kirigami Action
      */
     property var actions: pageStack.currentItem ? pageStack.currentItem.contextualActions : null
-    enabled: menu.count > 0
+    enabled: actions !== undefined && actions.length > 0;
     edge: Qt.RightEdge
 
     handleVisible: applicationWindow() ? applicationWindow().controlsVisible : true
@@ -56,75 +56,95 @@ OverlayDrawer {
         }
     }
 
-    contentItem: Item {
+    contentItem: QtControls.StackView {
+        id: sidebarStack;
         implicitWidth: Units.gridUnit * 20
+        initialItem: sidebarPage;
+    }
+    Component {
+        id: sidebarPage;
         Item {
-            id: topContainer;
-            anchors {
-                top: parent.top;
-                left: parent.left;
-                right: parent.right;
-            }
-            height: parent.height - menu.contentHeight;
-            children: root.topContent;
-        }
-        ListView {
-            id: menu
-            interactive: contentHeight > height
-            model: {
-                if (typeof root.actions == "undefined") {
-                    return null;
+            id: localRoot;
+            implicitWidth: Units.gridUnit * 20
+            property Item topContent: root.topContent;
+            property var actions: root.actions;
+            property int level: 0
+            Item {
+                id: topContainer;
+                anchors {
+                    top: parent.top;
+                    left: parent.left;
+                    right: parent.right;
+                    bottom: menu.top;
                 }
-                if (root.actions.length == 0) {
-                    return null;
-                } else {
-                    return root.actions[0].text !== undefined &&
-                        root.actions[0].trigger !== undefined ?
-                            root.actions :
-                            root.actions[0];
+                children: localRoot.topContent;
+            }
+            Column {
+                id: menu
+                anchors {
+                    left: parent.left;
+                    right: parent.right;
+                    bottom: parent.bottom;
                 }
-            }
-            anchors {
-                top: topContainer.bottom;
-                left: parent.left;
-                right: parent.right;
-            }
-            height: (menu.count > 0 && parent.height > 1 && parent.height > menu.contentHeight) ? menu.contentHeight : parent.height;
-            header: Item {
-                height: heading.height
-                width: menu.width
-                Heading {
-                    id: heading
-                    anchors {
-                        left: parent.left
-                        margins: Units.largeSpacing
+                height: childrenRect.height;
+                Item {
+                    height: localRoot.level === 0 ? heading.height : 0;
+                    visible: height > 0;
+                    width: menu.width
+                    Heading {
+                        id: heading
+                        anchors {
+                            left: parent.left
+                            right: parent.right
+                            margins: Units.largeSpacing
+                        }
+                        elide: Text.ElideRight
+                        level: 2
+                        text: root.title
                     }
-                    width: root.width
-                    elide: Text.ElideRight
-                    level: 2
-                    text: root.title
                 }
-            }
-            delegate: BasicListItem {
-                property Item drawerRoot: root;
-                property Item listViewItem: menu;
-                checked: modelData.checked
-                icon: modelData.iconName
-                supportsMouseEvents: true
-                label: model ? model.text : modelData.text
-                enabled: model ? model.enabled : modelData.enabled
-                visible: model ? model.visible : modelData.visible
-                opacity: enabled ? 1.0 : 0.6
-                onClicked: {
-                    if (modelData && modelData.trigger !== undefined) {
-                        modelData.trigger();
-                    // assume the model is a list of QAction or Action
-                    } else if (listViewItem.model.length > index) {
-                        listViewItem.model[index].trigger();
-                    } else {
-                        console.warning("Don't know how to trigger the action")
+                Repeater {
+                    model: localRoot.actions;
+                    delegate: BasicListItem {
+                        id: listItem;
+                        width: menu.width;
+                        property Item drawerRoot: root;
+                        checked: modelData.checked
+                        icon: modelData.iconName
+                        supportsMouseEvents: true
+                        label: model ? model.text : modelData.text
+                        enabled: model ? model.enabled : modelData.enabled
+                        visible: model ? model.visible : modelData.visible
+                        opacity: enabled ? 1.0 : 0.6
+                        Icon {
+                            anchors {
+                                verticalCenter: parent.verticalCenter
+                                right: parent.right
+                            }
+                            height: Units.iconSizes.smallMedium
+                            selected: listItem.checked || listItem.pressed
+                            width: height
+                            source: "go-next"
+                            visible: modelData.children!==undefined && modelData.children.length > 0
+                        }
+                        onClicked: {
+                            if (modelData.children!==undefined && modelData.children.length > 0) {
+                                sidebarStack.push(sidebarPage, { actions: modelData.children, "level": level + 1, topContent: null });
+                            } else if (modelData && modelData.trigger !== undefined) {
+                                modelData.trigger();
+                                drawerRoot.close();
+                            } else {
+                                console.warning("Don't know how to trigger the action")
+                            }
+                        }
                     }
-                    drawerRoot.close();
+                }
+                BasicListItem {
+                    visible: level > 0
+                    supportsMouseEvents: true
+                    icon: "go-previous"
+                    label: typeof i18n !== "undefined" ? i18n("Back") : "Back"
+                    onClicked: sidebarStack.pop()
                 }
             }
         }
