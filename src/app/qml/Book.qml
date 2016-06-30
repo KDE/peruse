@@ -63,6 +63,8 @@ Kirigami.Page {
         }
     }
 
+    property bool rtlMode: false;
+
     property string file;
     property int currentPage;
     property int totalPages;
@@ -86,6 +88,7 @@ Kirigami.Page {
         }
     }
     function closeBook() {
+        mainWindow.contextDrawer.close();
         // also for storing current page (otherwise postponed a bit after page change, done here as well to ensure it really happens)
         applicationWindow().controlsVisible = true;
         mainWindow.pageStack.pop();
@@ -141,6 +144,7 @@ Kirigami.Page {
     }
 
     function toggleFullscreen() {
+        mainWindow.contextDrawer.close();
         if(applicationWindow().visibility !== Window.FullScreen) {
             applicationWindow().visibility = Window.FullScreen;
         }
@@ -151,38 +155,54 @@ Kirigami.Page {
 
     property list<QtObject> mobileActions: [
         Kirigami.Action {
-            text: i18nc("Action used on touch devices to close the currently open book and return to whatever page was most recently shown", "Close book");
-            shortcut: (bookInfo.opened ? "" : "Esc");
-            iconName: "action-close";
-            onTriggered: closeBook();
-            enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypePhone;
-        },
-        Kirigami.Action {
             text: applicationWindow().visibility !== Window.FullScreen ? i18nc("Enter full screen mode on a touch-based device", "Go full screen") : i18nc("Exit full sceen mode on a touch based device", "Exit full screen");
             iconName: "view-fullscreen";
             onTriggered: toggleFullscreen();
+            enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypePhone;
+        },
+        Kirigami.Action {
+            text: i18nc("Action used on touch devices to close the currently open book and return to whatever page was most recently shown", "Close book");
+            shortcut: (bookInfo.opened ? "" : "Esc");
+            iconName: "dialog-close";
+            onTriggered: closeBook();
             enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypePhone;
         }
     ]
     property list<QtObject> desktopActions: [
         Kirigami.Action {
-            text: i18nc("Action used on non-touch devices to close the currently open book and return to whatever page was most recently shown", "Close book");
-            shortcut: (applicationWindow().visibility === Window.FullScreen) ? "" : (bookInfo.opened ? "" : "Esc");
-            iconName: "action-close";
-            onTriggered: closeBook();
-            enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypeDesktop;
+            text: i18nc("Top level entry leading to a submenu with options for the book display", "View options");
+            iconName: "configure";
+            Kirigami.Action {
+                text: "Reading Direction"
+            }
+            Kirigami.Action {
+                text: "Left to Right"
+                iconName: "format-text-direction-ltr";
+                shortcut: rtlMode ? "r" : "";
+                enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypeDesktop && rtlMode;
+                onTriggered: rtlMode = !rtlMode;
+            }
+            Kirigami.Action {
+                text: "Right to Left"
+                iconName: "format-text-direction-rtl";
+                shortcut: rtlMode ? "" : "r";
+                enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypeDesktop && !rtlMode;
+                onTriggered: rtlMode = !rtlMode;
+            }
+            Kirigami.Action {
+            }
         },
         Kirigami.Action {
             text: i18nc("Go to the previous page in the book", "Previous page");
             shortcut: bookInfo.opened ? "" : StandardKey.MoveToPreviousChar;
-            iconName: "action-previous";
+            iconName: "go-previous";
             onTriggered: previousPage();
             enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypeDesktop;
         },
         Kirigami.Action {
             text: i18nc("Go to the next page in the book", "Next page");
             shortcut: bookInfo.opened ? "" : StandardKey.MoveToNextChar;
-            iconName: "action-next";
+            iconName: "go-next";
             onTriggered: nextPage();
             enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypeDesktop;
         },
@@ -191,6 +211,13 @@ Kirigami.Page {
             shortcut: (applicationWindow().visibility === Window.FullScreen) ? (bookInfo.opened ? "" : "Esc") : "f";
             iconName: "view-fullscreen";
             onTriggered: toggleFullscreen();
+            enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypeDesktop;
+        },
+        Kirigami.Action {
+            text: i18nc("Action used on non-touch devices to close the currently open book and return to whatever page was most recently shown", "Close book");
+            shortcut: (applicationWindow().visibility === Window.FullScreen) ? "" : (bookInfo.opened ? "" : "Esc");
+            iconName: "dialog-close";
+            onTriggered: closeBook();
             enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypeDesktop;
         },
 
@@ -267,6 +294,11 @@ Kirigami.Page {
                 running: false;
                 repeat: false;
                 onTriggered: applicationWindow().globalDrawer.close();
+            }
+            Binding {
+                target: viewLoader.item;
+                property: "rtlMode";
+                value: root.rtlMode;
             }
             Connections {
                 target: viewLoader.item;
