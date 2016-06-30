@@ -132,7 +132,6 @@ OverlayDrawer {
                                 sidebarStack.push(sidebarPage, { actions: modelData.children, "level": level + 1, topContent: null });
                             } else if (modelData && modelData.trigger !== undefined) {
                                 modelData.trigger();
-                                drawerRoot.close();
                             } else {
                                 console.warning("Don't know how to trigger the action")
                             }
