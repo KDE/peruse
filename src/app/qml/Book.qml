@@ -157,7 +157,7 @@ Kirigami.Page {
     }
     Timer {
         id: restoreViewLayoutStuff;
-        interval: mainWindow.animationDuration * 3;
+        interval: mainWindow.animationDuration * 2;
         running: false;
         repeat: false;
         onTriggered: {
