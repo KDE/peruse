@@ -34,6 +34,7 @@ Item {
     property int pageCount;
     property var pagesModel;
     property Component thumbnailComponent;
+    signal restoreCurrentPage();
 
     // This all looks a little silly, however, without this, we can't double-click on the
     // page (which is, these days, used for zooming purposes). It also works around some

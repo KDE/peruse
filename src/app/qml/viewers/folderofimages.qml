@@ -37,6 +37,14 @@ ViewerBase {
             imageBrowser.layoutDirection = Qt.LeftToRight;
         }
     }
+    onRestoreCurrentPage: {
+        // This is un-pretty, quite obviously. But thanks to the ListView's inability to
+        // stay in place when the geometry changes, well, this makes things simple.
+        var thePage = imageBrowser.currentIndex;
+        imageBrowser.currentIndex = 0;
+        imageBrowser.currentIndex = imageBrowser.count - 1;
+        imageBrowser.currentIndex = thePage;
+    }
 
     onCurrentPageChanged: {
         if(currentPage !== imageBrowser.currentIndex) {
