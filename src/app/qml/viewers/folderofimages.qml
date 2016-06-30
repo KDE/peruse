@@ -29,6 +29,14 @@ ViewerBase {
     id: root;
     pagesModel: imageBrowser.model;
     pageCount: imageBrowser.model.pageCount;
+    onRtlModeChanged: {
+        if(rtlMode === true) {
+            imageBrowser.layoutDirection = Qt.RightToLeft;
+        }
+        else {
+            imageBrowser.layoutDirection = Qt.LeftToRight;
+        }
+    }
 
     onCurrentPageChanged: {
         if(currentPage !== imageBrowser.currentIndex) {

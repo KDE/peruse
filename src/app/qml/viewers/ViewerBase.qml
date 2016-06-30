@@ -30,6 +30,7 @@ Item {
     signal loadingCompleted(bool success);
     property string file;
     property int currentPage;
+    property bool rtlMode: false;
     property int pageCount;
     property var pagesModel;
     property Component thumbnailComponent;
