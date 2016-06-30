@@ -48,7 +48,7 @@ ViewerBase {
 
     onCurrentPageChanged: {
         if(currentPage !== imageBrowser.currentIndex) {
-            pageChangeAnimation.false;
+            pageChangeAnimation.running = false;
             var currentPos = imageBrowser.contentX;
             var newPos;
             imageBrowser.positionViewAtIndex(currentPage, ListView.Center);
