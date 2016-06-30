@@ -43,6 +43,7 @@ Kirigami.Page {
     property string headerText;
 
     function openBook(index) {
+        mainWindow.contextDrawer.close();
         if(shelfList.model.indexIsBook(index)) {
             var book = shelfList.model.get(index);
             root.bookSelected(book.readProperty("filename"), book.readProperty("currentPage"));
@@ -54,6 +55,7 @@ Kirigami.Page {
     }
 
     function closeShelf() {
+        mainWindow.contextDrawer.close();
         mainWindow.pageStack.pop();
     }
     property list<QtObject> mobileActions;
@@ -61,28 +63,28 @@ Kirigami.Page {
         Kirigami.Action {
             text: i18nc("Navigate one page back", "Back");
             shortcut: bookDetails.opened ? "" : "Esc";
-            iconName: "action-close";
+            iconName: "dialog-close";
             onTriggered: closeShelf();
-            enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypeDesktop;
+            enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypeDesktop && mainWindow.pageStack.currentIndex > 0;
         },
         Kirigami.Action {
             text: i18nc("Select the previous book in the list", "Select previous book");
             shortcut: StandardKey.MoveToPreviousChar
-            iconName: "action-previous";
+            iconName: "go-previous";
             onTriggered: shelfList.previousEntry();
             enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypeDesktop;
         },
         Kirigami.Action {
             text: i18nc("Select the next book in the list", "Select next book");
             shortcut: StandardKey.MoveToNextChar;
-            iconName: "action-next";
+            iconName: "go-next";
             onTriggered: shelfList.nextEntry();
             enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypeDesktop;
         },
         Kirigami.Action {
             text: i18nc("Open the book which is currently selected in the list", "Open selected book");
             shortcut: "Return";
-            iconName: "action-open";
+            iconName: "document-open";
             onTriggered: openBook(shelfList.currentIndex);
             enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypeDesktop;
         }

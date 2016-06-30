@@ -44,21 +44,21 @@ Kirigami.Page {
         Kirigami.Action {
             text: i18n("Open selected book");
             shortcut: "Return";
-            iconName: "action-close";
+            iconName: "document-open";
             onTriggered: bookSelected(startWithThese.currentItem.filename, startWithThese.currentItem.currentPage);
             enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypeDesktop;
         },
         Kirigami.Action {
             text: i18nc("select the previous book entry in the list", "Previous book");
             shortcut: StandardKey.MoveToPreviousChar
-            iconName: "action-previous";
+            iconName: "go-previous";
             onTriggered: startWithThese.selectPrevious();
             enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypeDesktop;
         },
         Kirigami.Action {
             text: i18nc("select the next book entry in the list", "Next book");
             shortcut: StandardKey.MoveToNextChar;
-            iconName: "action-next";
+            iconName: "go-next";
             onTriggered: startWithThese.selectNext();
             enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypeDesktop;
         }
