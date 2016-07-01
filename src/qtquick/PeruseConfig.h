@@ -27,9 +27,16 @@
 class PeruseConfig : public QObject
 {
     Q_OBJECT
+    Q_ENUMS(ZoomMode)
     Q_PROPERTY(QStringList recentlyOpened READ recentlyOpened NOTIFY recentlyOpenedChanged)
     Q_PROPERTY(QStringList bookLocations READ bookLocations NOTIFY bookLocationsChanged)
 public:
+    enum ZoomMode {
+        ZoomFull = 0,
+        ZoomFitWidth = 1,
+        ZoomFitHeight = 2
+    };
+
     explicit PeruseConfig(QObject* parent = 0);
     virtual ~PeruseConfig();
 
