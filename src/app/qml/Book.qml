@@ -64,6 +64,10 @@ Kirigami.Page {
     }
 
     property bool rtlMode: false;
+    /**
+     * zoomMode: Peruse.Config.ZoomMode
+     */
+    property int zoomMode: Peruse.Config.ZoomFull;
 
     property string file;
     property int currentPage;
@@ -188,25 +192,46 @@ Kirigami.Page {
         Kirigami.Action {
             text: i18nc("Top level entry leading to a submenu with options for the book display", "View options");
             iconName: "configure";
-            Kirigami.Action {
-                text: "Reading Direction"
+            QtObject {
+                property string text: "Reading Direction"
             }
             Kirigami.Action {
                 text: "Left to Right"
                 iconName: "format-text-direction-ltr";
                 shortcut: rtlMode ? "r" : "";
-                enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypeDesktop && rtlMode;
-                onTriggered: rtlMode = !rtlMode;
+                enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypeDesktop && root.rtlMode === true;
+                onTriggered: { root.rtlMode = false; }
             }
             Kirigami.Action {
                 text: "Right to Left"
                 iconName: "format-text-direction-rtl";
                 shortcut: rtlMode ? "" : "r";
-                enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypeDesktop && !rtlMode;
-                onTriggered: rtlMode = !rtlMode;
+                enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypeDesktop && root.rtlMode === false;
+                onTriggered: { root.rtlMode = true; }
+            }
+            QtObject {}
+            QtObject {
+                property string text: "Zoom"
             }
             Kirigami.Action {
+                text: "Fit full page"
+                iconName: "zoom-fit-best";
+                enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypeDesktop && root.zoomMode !== Peruse.Config.ZoomFull;
+                onTriggered: { root.zoomMode = Peruse.Config.ZoomFull; }
             }
+            Kirigami.Action {
+                text: "Fit width"
+                iconName: "zoom-fit-width";
+                enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypeDesktop && root.zoomMode !== Peruse.Config.ZoomFitWidth;
+                onTriggered: { root.zoomMode = Peruse.Config.ZoomFitWidth; }
+            }
+            Kirigami.Action {
+                text: "Fit height"
+                iconName: "zoom-fit-height";
+                enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypeDesktop && root.zoomMode !== Peruse.Config.ZoomFitHeight;
+                onTriggered: { root.zoomMode = Peruse.Config.ZoomFitHeight; }
+            }
+            QtObject {}
         },
         Kirigami.Action {
             text: i18nc("Go to the previous page in the book", "Previous page");
