@@ -31,6 +31,7 @@ Item {
     property string file;
     property int currentPage;
     property bool rtlMode: false;
+    property int zoomMode: 0;
     property int pageCount;
     property var pagesModel;
     property Component thumbnailComponent;

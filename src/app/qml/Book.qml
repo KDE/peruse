@@ -341,6 +341,11 @@ Kirigami.Page {
                 property: "rtlMode";
                 value: root.rtlMode;
             }
+            Binding {
+                target: viewLoader.item;
+                property: "zoomMode";
+                value: root.zoomMode;
+            }
             Connections {
                 target: viewLoader.item;
                 onLoadingCompleted: {
@@ -359,6 +364,7 @@ Kirigami.Page {
                         viewLoader.item.currentPage = root.currentPage;
                         viewLoader.loadingCompleted = true;
                         drawerTimer.start();
+                        root.restoreViewLayoutStuff.start();
                     }
                 }
                 onCurrentPageChanged: {
