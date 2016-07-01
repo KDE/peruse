@@ -105,35 +105,59 @@ OverlayDrawer {
                 }
                 Repeater {
                     model: localRoot.actions;
-                    delegate: BasicListItem {
-                        id: listItem;
+                    delegate: Item {
                         width: menu.width;
-                        property Item drawerRoot: root;
-                        checked: modelData.checked
-                        icon: modelData.iconName
-                        supportsMouseEvents: true
-                        label: model ? model.text : modelData.text
-                        enabled: model ? model.enabled : modelData.enabled
-                        visible: model ? model.visible : modelData.visible
-                        opacity: enabled ? 1.0 : 0.6
-                        Icon {
-                            anchors {
-                                verticalCenter: parent.verticalCenter
-                                right: parent.right
+                        height: listItemHeader.visible ? listItemHeader.height : (listItem.visible ? listItem.height : (modelData.trigger === undefined ? Units.largeSpacing : 0));
+                        Item {
+                            id: listItemHeader;
+                            anchors { top: parent.top; left: parent.left; }
+                            visible: modelData.trigger === undefined && heading.text !== "";
+                            width: menu.width
+                            height: heading.height;
+                            Heading {
+                                id: heading
+                                anchors {
+                                    left: parent.left
+                                    right: parent.right
+                                    margins: Units.largeSpacing
+                                }
+                                elide: Text.ElideRight
+                                level: 2
+                                text: model && model.text ? model.text : (modelData.text ? modelData.text : "")
                             }
-                            height: Units.iconSizes.smallMedium
-                            selected: listItem.checked || listItem.pressed
-                            width: height
-                            source: "go-next"
-                            visible: modelData.children!==undefined && modelData.children.length > 0
                         }
-                        onClicked: {
-                            if (modelData.children!==undefined && modelData.children.length > 0) {
-                                sidebarStack.push(sidebarPage, { actions: modelData.children, "level": level + 1, topContent: null });
-                            } else if (modelData && modelData.trigger !== undefined) {
-                                modelData.trigger();
-                            } else {
-                                console.warning("Don't know how to trigger the action")
+                        BasicListItem {
+                            id: listItem;
+                            width: parent.width;
+                            anchors { top: parent.top; left: parent.left; }
+                            property Item drawerRoot: root;
+                            checked: modelData.checked ? modelData.checked : false;
+                            icon: modelData.iconName
+                            supportsMouseEvents: true
+                            label: model && model.text ? model.text : (modelData.text ? modelData.text : "")
+                            // this looks very silly - model.enabled /can/ be undefined, but enabled (and visible) only take bools, so...
+                            enabled: model ? (model.enabled ? model.enabled : false) : (modelData.enabled ? modelData.enabled : true)
+                            visible: (model ? (model.visible ? model.visible : false) : (modelData.visible ? modelData.visible : true)) && !listItemHeader.visible && text !== "";
+                            opacity: enabled ? 1.0 : 0.6
+                            Icon {
+                                anchors {
+                                    verticalCenter: parent.verticalCenter
+                                    right: parent.right
+                                }
+                                height: Units.iconSizes.smallMedium
+                                selected: listItem.checked || listItem.pressed
+                                width: height
+                                source: "go-next"
+                                visible: modelData.children!==undefined && modelData.children.length > 0
+                            }
+                            onClicked: {
+                                if (modelData.children!==undefined && modelData.children.length > 0) {
+                                    sidebarStack.push(sidebarPage, { actions: modelData.children, "level": level + 1, topContent: null });
+                                } else if (modelData && modelData.trigger !== undefined) {
+                                    modelData.trigger();
+                                } else {
+                                    console.warning("Don't know how to trigger the action")
+                                }
                             }
                         }
                     }
