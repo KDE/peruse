@@ -36,6 +36,9 @@ Kirigami.ApplicationWindow {
     property bool isLoading: true;
     pageStack.initialPage: welcomePage;
     visible: true;
+    // If the controls are not visible, being able to drag the pagestack feels really weird,
+    // so we just turn that ability off :)
+    pageStack.interactive: controlsVisible;
     /// Which type of device we're running on. 0 is desktop, 1 is phone
     property int deviceType: PLASMA_PLATFORM.substring(0, 5) === "phone" ? 1 : 0;
     property int deviceTypeDesktop: 0;
