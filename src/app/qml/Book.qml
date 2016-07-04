@@ -210,28 +210,28 @@ Kirigami.Page {
                 onTriggered: { root.rtlMode = true; }
             }
             QtObject {}
-            QtObject {
-                property string text: "Zoom"
-            }
-            Kirigami.Action {
-                text: "Fit full page"
-                iconName: "zoom-fit-best";
-                enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypeDesktop && root.zoomMode !== Peruse.Config.ZoomFull;
-                onTriggered: { root.zoomMode = Peruse.Config.ZoomFull; }
-            }
-            Kirigami.Action {
-                text: "Fit width"
-                iconName: "zoom-fit-width";
-                enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypeDesktop && root.zoomMode !== Peruse.Config.ZoomFitWidth;
-                onTriggered: { root.zoomMode = Peruse.Config.ZoomFitWidth; }
-            }
-            Kirigami.Action {
-                text: "Fit height"
-                iconName: "zoom-fit-height";
-                enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypeDesktop && root.zoomMode !== Peruse.Config.ZoomFitHeight;
-                onTriggered: { root.zoomMode = Peruse.Config.ZoomFitHeight; }
-            }
-            QtObject {}
+//             QtObject {
+//                 property string text: "Zoom"
+//             }
+//             Kirigami.Action {
+//                 text: "Fit full page"
+//                 iconName: "zoom-fit-best";
+//                 enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypeDesktop && root.zoomMode !== Peruse.Config.ZoomFull;
+//                 onTriggered: { root.zoomMode = Peruse.Config.ZoomFull; }
+//             }
+//             Kirigami.Action {
+//                 text: "Fit width"
+//                 iconName: "zoom-fit-width";
+//                 enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypeDesktop && root.zoomMode !== Peruse.Config.ZoomFitWidth;
+//                 onTriggered: { root.zoomMode = Peruse.Config.ZoomFitWidth; }
+//             }
+//             Kirigami.Action {
+//                 text: "Fit height"
+//                 iconName: "zoom-fit-height";
+//                 enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypeDesktop && root.zoomMode !== Peruse.Config.ZoomFitHeight;
+//                 onTriggered: { root.zoomMode = Peruse.Config.ZoomFitHeight; }
+//             }
+//             QtObject {}
         },
         Kirigami.Action {
             text: i18nc("Go to the previous page in the book", "Previous page");
