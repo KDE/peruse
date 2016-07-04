@@ -76,6 +76,7 @@ Kirigami.Page {
             Repeater {
                 model: peruseConfig.bookLocations;
                 delegate: Kirigami.SwipeListItem {
+                    id: listItem;
                     actions: [
                         Kirigami.Action {
                             text: i18nc("remove the search folder from the list", "Delete");
