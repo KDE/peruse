@@ -6,3 +6,6 @@ add_subdirectory(qtquick)
 
 # Base application
 add_subdirectory(app)
+
+# Creator application
+add_subdirectory(creator)
