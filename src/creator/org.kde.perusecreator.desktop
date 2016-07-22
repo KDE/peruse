@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Peruse Creator
+GenericName=Comic Book Creator
+Comment=An application for creating comic books archives
+Exec=peruse %U
+Terminal=false
+Type=Application
+Categories=Qt;KDE;Graphics;Viewer;
+Icon=peruse
