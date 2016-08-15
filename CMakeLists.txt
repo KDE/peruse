@@ -24,6 +24,12 @@ find_package(KF5 5.5 REQUIRED COMPONENTS Plasma I18n Declarative Config FileMeta
 find_package(KF5Baloo) # optional - we'll just let it pass if it's missing
 find_package(KF5Archive ${KF5_VERSION} REQUIRED)
 
+find_package(KF5Kirigami)
+set_package_properties(KF5Kirigami PROPERTIES
+    PURPOSE "Required at runtime to display the GUI"
+    TYPE RUNTIME
+)
+
 include(FeatureSummary)
 include(KDEInstallDirs)
 include(KDECMakeSettings)
