@@ -131,6 +131,11 @@ QStringList PeruseConfig::bookLocations() const
     return locations;
 }
 
+QString PeruseConfig::newstuffLocation() const
+{
+    return QStandardPaths::standardLocations(QStandardPaths::GenericConfigLocation).last().append("/peruse.knsrc");
+}
+
 QString PeruseConfig::homeDir() const
 {
     return QStandardPaths::standardLocations(QStandardPaths::HomeLocation).first();

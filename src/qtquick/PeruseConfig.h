@@ -30,6 +30,7 @@ class PeruseConfig : public QObject
     Q_ENUMS(ZoomMode)
     Q_PROPERTY(QStringList recentlyOpened READ recentlyOpened NOTIFY recentlyOpenedChanged)
     Q_PROPERTY(QStringList bookLocations READ bookLocations NOTIFY bookLocationsChanged)
+    Q_PROPERTY(QString newstuffLocation READ newstuffLocation NOTIFY newstuffLocationChanged)
 public:
     enum ZoomMode {
         ZoomFull = 0,
@@ -48,6 +49,9 @@ public:
     Q_INVOKABLE void removeBookLocation(const QString& location);
     QStringList bookLocations() const;
     Q_SIGNAL void bookLocationsChanged();
+
+    QString newstuffLocation() const;
+    Q_SIGNAL void newstuffLocationChanged();
 
     Q_SIGNAL void showMessage(QString message);
 
