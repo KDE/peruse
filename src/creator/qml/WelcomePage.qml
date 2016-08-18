@@ -71,5 +71,79 @@ Kirigami.Page {
                 width: appDescriptionLabel.paintedWidth;
             }
         }
+
+        Item {
+            id: actionsContainer;
+            anchors {
+                top: titleContainer.bottom;
+                left: parent.left;
+                right: parent.right;
+                bottom: parent.bottom;
+            }
+            Item {
+                anchors {
+                    top: parent.top;
+                    left: parent.left;
+                    right: parent.right;
+                    bottom: parent.verticalCenter;
+                    margins: units.largeSpacing;
+                }
+                PlasmaComponents.Label {
+                    anchors.fill: parent;
+                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere;
+                    horizontalAlignment: Text.AlignHCenter;
+                    verticalAlignment: Text.AlignVCenter;
+                    text: i18nc("Longer introduction text used on the welcome page", "Welcome to Peruse Creator, a tool designed to assist you in creating comic book archives which can be read with any cbz capable comic book reader app. You can either create entirely new comic book archives from scratch, create one from a set of pictures, or editing existing archives. Once you have created them, you can even publish them directly to the online comic book archive at the KDE Store from within the application, or just share the files with your friends.");
+                }
+            }
+            Row {
+                id: controlsRow;
+                anchors {
+                    top: parent.verticalCenter;
+                    left: parent.left;
+                    right: parent.right;
+                    bottom: parent.bottom;
+                }
+                property int howManyControls: continueLast.visible ? 4 : 3;
+                Item {
+                    id: continueLast;
+                    height: parent.height;
+                    width: parent.width / controlsRow.howManyControls;
+                    PlasmaComponents.Button {
+                        anchors.centerIn: parent;
+                        iconName: "go-next";
+                        text: i18nc("Button to continue working on the most recently opened comic book archive", "Continue %1").arg("archive name");
+                    }
+                    visible: true;
+                }
+                Item {
+                    height: parent.height;
+                    width: parent.width / controlsRow.howManyControls;
+                    PlasmaComponents.Button {
+                        anchors.centerIn: parent;
+                        iconName: "document-open";
+                        text: i18nc("Button to open existing comic book archive", "Open Existing...");
+                    }
+                }
+                Item {
+                    height: parent.height;
+                    width: parent.width / controlsRow.howManyControls;
+                    PlasmaComponents.Button {
+                        anchors.centerIn: parent;
+                        iconName: "document-new";
+                        text: i18nc("Button to create a new, empty comic book archive", "Create Blank");
+                    }
+                }
+                Item {
+                    height: parent.height;
+                    width: parent.width / controlsRow.howManyControls;
+                    PlasmaComponents.Button {
+                        anchors.centerIn: parent;
+                        iconName: "folder-open";
+                        text: i18nc("Button to create a new comic book archive by copying in a bunch of pictures", "Create From Images...");
+                    }
+                }
+            }
+        }
     }
 }
