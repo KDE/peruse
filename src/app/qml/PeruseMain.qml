@@ -145,6 +145,11 @@ Kirigami.ApplicationWindow {
                 onTriggered: openOther();
             },
             Kirigami.Action {
+                text: i18nc("Switch to the book store page", "Get Hot New Books");
+                iconName: "get-hot-new-stuff";
+                onTriggered: changeCategory(storePage);
+            },
+            Kirigami.Action {
             },
             Kirigami.Action {
                 text: i18nc("Open the settings page", "Settings");
@@ -241,6 +246,12 @@ Kirigami.ApplicationWindow {
         id: bookshelf;
         Bookshelf {
             onBookSelected: mainWindow.showBook(filename, currentPage);
+        }
+    }
+
+    Component {
+        id: storePage;
+        Store {
         }
     }
 
