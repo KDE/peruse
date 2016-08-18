@@ -37,6 +37,7 @@ public:
     QString filename;
     QString author;
     QString publisher;
+    QString title;
     QList<BookPage*> entries;
     int currentPage;
 };
@@ -109,7 +110,9 @@ QString BookModel::filename() const
 void BookModel::setFilename(QString newFilename)
 {
     d->filename = newFilename;
+    d->title = newFilename.split('/').last().left(newFilename.lastIndexOf('.'));
     emit filenameChanged();
+    emit titleChanged();
 }
 
 QString BookModel::author() const
@@ -134,6 +137,17 @@ void BookModel::setPublisher(QString newPublisher)
     emit publisherChanged();
 }
 
+QString BookModel::title() const
+{
+    return d->title;
+}
+
+void BookModel::setTitle(QString newTitle)
+{
+    d->title = newTitle;
+    emit titleChanged();
+}
+
 int BookModel::pageCount() const
 {
     return d->entries.count();
@@ -154,4 +168,15 @@ void BookModel::setCurrentPage(int newCurrentPage, bool updateFilesystem)
     }
     d->currentPage = newCurrentPage;
     emit currentPageChanged();
+}
+#include <QDebug>
+void BookModel::swapPages(int swapThisIndex, int withThisIndex)
+{
+    qDebug() << "swap" << swapThisIndex << "with" << withThisIndex;
+    if(swapThisIndex > -1 && withThisIndex > -1 && swapThisIndex < d->entries.count() && withThisIndex < d->entries.count()) {
+        QModelIndex firstIndex = createIndex(swapThisIndex, 0);
+        QModelIndex secondIndex = createIndex(withThisIndex, 0);
+        d->entries.swap(swapThisIndex, withThisIndex);
+        dataChanged(firstIndex, secondIndex);
+    }
 }

@@ -30,6 +30,7 @@ class BookModel : public QAbstractListModel
     Q_PROPERTY(QString filename READ filename WRITE setFilename NOTIFY filenameChanged)
     Q_PROPERTY(QString author READ author WRITE setAuthor NOTIFY authorChanged)
     Q_PROPERTY(QString publisher READ publisher WRITE setPublisher NOTIFY publisherChanged)
+    Q_PROPERTY(QString title READ title WRITE setTitle NOTIFY titleChanged)
     Q_PROPERTY(int pageCount READ pageCount NOTIFY pageCountChanged)
     Q_PROPERTY(int currentPage READ currentPage WRITE setCurrentPage NOTIFY currentPageChanged)
 public:
@@ -51,11 +52,14 @@ public:
     virtual void setFilename(QString newFilename);
     Q_SIGNAL void filenameChanged();
     virtual QString author() const;
-    void setAuthor(QString newAuthor);
+    virtual void setAuthor(QString newAuthor);
     Q_SIGNAL void authorChanged();
     virtual QString publisher() const;
-    void setPublisher(QString newPublisher);
+    virtual void setPublisher(QString newPublisher);
     Q_SIGNAL void publisherChanged();
+    virtual QString title() const;
+    virtual void setTitle(QString newTitle);
+    Q_SIGNAL void titleChanged();
     virtual int pageCount() const;
     Q_SIGNAL void pageCountChanged();
 
@@ -69,6 +73,13 @@ public:
 
     Q_SIGNAL void loadingCompleted(bool success);
 
+    /**
+     * @brief Swap the two pages at the specified indices
+     * 
+     * @param swapThisIndex The index of the first page to be swapped
+     * @param withThisIndex The index of the page you want the first to be swapped with
+     */
+    Q_INVOKABLE void swapPages(int swapThisIndex, int withThisIndex);
 private:
     class Private;
     Private* d;
