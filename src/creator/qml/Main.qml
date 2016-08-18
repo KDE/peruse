@@ -39,14 +39,18 @@ Kirigami.ApplicationWindow {
         return peruseConfig.homeDir();
     }
 
+    function openBook(bookFilename) {
+        mainWindow.pageStack.push(bookPage, { filename: bookFilename });
+    }
+
     globalDrawer: Kirigami.GlobalDrawer {
         /// FIXME This causes the text to get cut off on the phone, however if the text is shorter
         /// it fails to expand the sidebar sufficiently to see all the action labels fully. Revisit
         /// this when switching to Kirigami
         title: i18nc("application title for the sidebar", "Peruse Creator");
         titleIcon: "peruse";
-        opened: PLASMA_PLATFORM.substring(0, 5) === "phone" ? false : true;
-        modal: PLASMA_PLATFORM.substring(0, 5) === "phone" ? true : false;
+        opened: true;
+        modal: false;
         actions: [
             Kirigami.Action {
                 text: "Welcome";
@@ -83,6 +87,12 @@ Kirigami.ApplicationWindow {
     }
 
     Component {
+        id: bookPage;
+        Book {
+        }
+    }
+
+    Component {
         id: settingsPage;
         Settings {
         }
@@ -107,7 +117,7 @@ Kirigami.ApplicationWindow {
         property int splitPos: osIsWindows ? 8 : 7;
         onAccepted: {
             if(openDlg.fileUrl.toString().substring(0, 7) === "file://") {
-                mainWindow.showBook(openDlg.fileUrl.toString().substring(splitPos), 0);
+                mainWindow.openBook(openDlg.fileUrl.toString().substring(splitPos), 0);
             }
         }
         onRejected: {
