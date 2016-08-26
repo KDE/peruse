@@ -72,6 +72,7 @@ int main(int argc, char** argv)
 {
     QApplication app(argc, argv);
     app.setApplicationDisplayName("Peruse");
+    app.setOrganizationDomain("kde.org");
 
     QCommandLineParser parser;
     // TODO file option for opening comics by passing them through on the command line
