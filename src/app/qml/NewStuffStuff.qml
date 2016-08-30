@@ -20,30 +20,13 @@
  */
 
 import QtQuick 2.2
-import QtQuick.Layouts 1.1
-import QtQuick.Controls 1.0
-import QtQuick.Dialogs 1.0
+import org.kde.newstuff 1.0 as NewStuff
 
-import org.kde.kirigami 1.0 as Kirigami
-import org.kde.plasma.components 2.0 as PlasmaComponents
-import org.kde.plasma.extras 2.0 as PlasmaExtras
-
-import org.kde.peruse 0.1 as Peruse
-
-import "listcomponents" as ListComponents
-
-Kirigami.Page {
-    id: root;
-    property string categoryName: "storePage";
-    title: i18nc("title of the book store page", "Book Store");
-
-    Item {
-        width: root.width - (root.leftPadding + root.rightPadding);
-        height: root.height - (root.topPadding + root.bottomPadding);
-
-        Loader {
-            anchors.fill: parent;
-            source: "NewStuffStuff.qml";
-        }
-    }
+NewStuff.NewStuffList {
+    anchors.fill: parent;
+    configFile: peruseConfig.newstuffLocation;
+    onMessage: console.log("KNS Message: " + message);
+    onIdleMessage: console.log("KNS Idle: " + message);
+    onBusyMessage: console.log("KNS Busy: " + message);
+    onErrorMessage: console.log("KNS Error: " + message);
 }
