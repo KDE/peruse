@@ -32,6 +32,7 @@ import org.kde.contentlist 0.1
 
 Kirigami.ApplicationWindow {
     id: mainWindow;
+    title: "Comic Book Reader";
     property int animationDuration: 200;
     property bool isLoading: true;
     pageStack.initialPage: welcomePage;
@@ -77,7 +78,7 @@ Kirigami.ApplicationWindow {
         /// FIXME This causes the text to get cut off on the phone, however if the text is shorter
         /// it fails to expand the sidebar sufficiently to see all the action labels fully. Revisit
         /// this when switching to Kirigami
-        title: i18nc("application title for the sidebar", "Peruse Comic Viewer");
+        title: i18nc("application title for the sidebar", "Peruse Comic Reader");
         titleIcon: "peruse";
         opened: PLASMA_PLATFORM.substring(0, 5) === "phone" ? false : true;
         modal: PLASMA_PLATFORM.substring(0, 5) === "phone" ? true : false;
