@@ -48,7 +48,7 @@ Kirigami.ApplicationWindow {
         /// it fails to expand the sidebar sufficiently to see all the action labels fully. Revisit
         /// this when switching to Kirigami
         title: i18nc("application title for the sidebar", "Peruse Creator");
-        titleIcon: "peruse";
+        titleIcon: "peruse-creator";
         opened: true;
         modal: false;
         actions: [

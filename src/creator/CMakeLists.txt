@@ -22,4 +22,5 @@ install(FILES org.kde.perusecreator.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
 install(DIRECTORY qml DESTINATION ${DATA_INSTALL_DIR}/perusecreator)
 install(FILES org.kde.perusecreator.appdata.xml DESTINATION ${DATA_INSTALL_DIR}/appdata)
 
-# add_subdirectory(icon)
+add_subdirectory(icon)
+

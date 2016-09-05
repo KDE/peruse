@@ -6,4 +6,4 @@ Exec=peruse %U
 Terminal=false
 Type=Application
 Categories=Qt;KDE;Graphics;Viewer;
-Icon=peruse
+Icon=peruse-creator
