@@ -37,8 +37,10 @@ endif()
 target_include_directories(peruseqmlplugin
     PRIVATE
     karchive-rar
+    acbf
 )
 target_link_libraries (peruseqmlplugin
+    acbf
     karchive-rar
     Qt5::Core
     Qt5::Qml
