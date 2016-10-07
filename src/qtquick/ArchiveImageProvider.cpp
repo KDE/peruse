@@ -76,3 +76,8 @@ void ArchiveImageProvider::setPrefix(QString prefix)
 {
     d->prefix = prefix;
 }
+
+QString ArchiveImageProvider::prefix() const
+{
+    return d->prefix;
+}

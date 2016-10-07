@@ -35,6 +35,7 @@ public:
 
     void setArchiveBookModel(ArchiveBookModel* model);
     void setPrefix(QString prefix);
+    QString prefix() const;
 private:
     class Private;
     Private* d;
