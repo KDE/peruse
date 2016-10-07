@@ -22,6 +22,7 @@
 import QtQuick 2.2
 
 import org.kde.kirigami 1.0 as Kirigami
+import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.peruse 0.1 as Peruse
 
 Kirigami.Page {
@@ -30,10 +31,54 @@ Kirigami.Page {
     title: i18nc("title of the main book editor page", "Editing %1").arg(bookModel.title == "" ? root.filename : bookModel.title);
     property string filename;
 
+    actions {
+        main: editMetaInfo.opened ? closeEditMetaInfoAction : (addPageSheet.opened ? closeAddPageSheetAction : defaultMainAction);
+        right: (editMetaInfo.opened || addPageSheet.opened) ? null : addPageAction;
+    }
+    Kirigami.Action {
+        id: addPageAction;
+        text: i18nc("adds a new page at the end of the book", "Add Page");
+        iconName: "list-add";
+        onTriggered: addPage(bookModel.pageCount);
+    }
+    Kirigami.Action {
+        id: defaultMainAction;
+        text: i18nc("causes a dialog to show in which the user can edit the meta information for the entire book", "Edit Metainfo");
+        iconName: "document-edit";
+        onTriggered: editMetaInfo.open();
+    }
+    Kirigami.Action {
+        id: closeEditMetaInfoAction;
+        text: i18nc("closes the the meta information editing sheet", "Close Editor");
+        iconName: "dialog-cancel";
+        onTriggered: editMetaInfo.close();
+    }
+    Kirigami.Action {
+        id: closeAddPageSheetAction;
+        text: i18nc("closes the the add page sheet", "Do Not Add A Page");
+        iconName: "dialog-cancel";
+        onTriggered: addPageSheet.close();
+    }
+
     Peruse.ArchiveBookModel {
         id: bookModel;
         qmlEngine: globalQmlEngine;
+        readWrite: true;
         filename: root.filename;
+    }
+
+    function addPage(afterWhatIndex) {
+        addPageSheet.addPageAfter = afterWhatIndex;
+        addPageSheet.open();
+    }
+    AddPageSheet {
+        id: addPageSheet;
+        model: bookModel;
+    }
+
+    BookMetainfoSheet {
+        id: editMetaInfo;
+        model: bookModel;
     }
 
     Item {
@@ -45,6 +90,8 @@ Kirigami.Page {
             delegate: Kirigami.SwipeListItem {
                 id: listItem;
                 height: units.iconSizes.huge + units.smallSpacing * 2;
+                supportsMouseEvents: true;
+                onClicked: ;
                 actions: [
                     Kirigami.Action {
                         text: i18nc("swap the position of this page with the previous one", "Move Up");
@@ -64,6 +111,11 @@ Kirigami.Page {
                         text: i18nc("remove the page from the book", "Delete Page");
                         iconName: "list-remove"
                         onTriggered: {}
+                    },
+                    Kirigami.Action {
+                        text: i18nc("add a page to the book after this one", "Add Page After This");
+                        iconName: "list-add"
+                        onTriggered: root.addPage(model.index);
                     }
                 ]
                 Item {
@@ -85,10 +137,6 @@ Kirigami.Page {
                             asynchronous: true;
                             fillMode: Image.PreserveAspectFit;
                             source: model.url;
-                        }
-                        MouseArea {
-                            anchors.fill: parent;
-                            onClicked: root.bookSelected(root.filename, root.currentPage);
                         }
                     }
                     Kirigami.Label {
