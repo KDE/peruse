@@ -21,7 +21,9 @@
 
 #include "BookModel.h"
 
-#include "KFileMetaData/UserMetaData"
+#include <AcbfDocument.h>
+
+#include <KFileMetaData/UserMetaData>
 
 struct BookPage {
     BookPage() {}
@@ -33,6 +35,7 @@ class BookModel::Private {
 public:
     Private()
         : currentPage(-1)
+        , acbfData(0)
     {}
     QString filename;
     QString author;
@@ -40,6 +43,7 @@ public:
     QString title;
     QList<BookPage*> entries;
     int currentPage;
+    AdvancedComicBookFormat::Document* acbfData;
 };
 
 BookModel::BookModel(QObject* parent)
@@ -169,10 +173,20 @@ void BookModel::setCurrentPage(int newCurrentPage, bool updateFilesystem)
     d->currentPage = newCurrentPage;
     emit currentPageChanged();
 }
-#include <QDebug>
+
+QObject * BookModel::acbfData() const
+{
+    return d->acbfData;
+}
+
+void BookModel::setAcbfData(QObject* obj)
+{
+    d->acbfData = qobject_cast<AdvancedComicBookFormat::Document*>(obj);
+    emit acbfDataChanged();
+}
+
 void BookModel::swapPages(int swapThisIndex, int withThisIndex)
 {
-    qDebug() << "swap" << swapThisIndex << "with" << withThisIndex;
     if(swapThisIndex > -1 && withThisIndex > -1 && swapThisIndex < d->entries.count() && withThisIndex < d->entries.count()) {
         QModelIndex firstIndex = createIndex(swapThisIndex, 0);
         QModelIndex secondIndex = createIndex(withThisIndex, 0);

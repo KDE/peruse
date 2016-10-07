@@ -33,6 +33,11 @@ class BookModel : public QAbstractListModel
     Q_PROPERTY(QString title READ title WRITE setTitle NOTIFY titleChanged)
     Q_PROPERTY(int pageCount READ pageCount NOTIFY pageCountChanged)
     Q_PROPERTY(int currentPage READ currentPage WRITE setCurrentPage NOTIFY currentPageChanged)
+    /**
+     * The Advanced Comic Book Format data management instance associated with this book
+     * This may be null
+     */
+    Q_PROPERTY(QObject* acbfData READ acbfData NOTIFY acbfDataChanged)
 public:
     explicit BookModel(QObject* parent = 0);
     virtual ~BookModel();
@@ -71,6 +76,16 @@ public:
     virtual void setCurrentPage(int newCurrentPage, bool updateFilesystem = true);
     Q_SIGNAL void currentPageChanged();
 
+    QObject* acbfData() const;
+    /**
+     * This is used by subclasses who want to create one such. Until this is called
+     * with a valid object, acbfData is null. This function causes BookModel to take
+     * ownership of the object. It will further delete any previous objects set as
+     * acbfData.
+     */
+    void setAcbfData(QObject* obj);
+    Q_SIGNAL void acbfDataChanged();
+
     Q_SIGNAL void loadingCompleted(bool success);
 
     /**
@@ -79,7 +94,7 @@ public:
      * @param swapThisIndex The index of the first page to be swapped
      * @param withThisIndex The index of the page you want the first to be swapped with
      */
-    Q_INVOKABLE void swapPages(int swapThisIndex, int withThisIndex);
+    Q_INVOKABLE virtual void swapPages(int swapThisIndex, int withThisIndex);
 private:
     class Private;
     Private* d;
