@@ -29,15 +29,51 @@ class ArchiveBookModel : public BookModel
 {
     Q_OBJECT
     Q_PROPERTY(QObject* qmlEngine READ qmlEngine WRITE setQmlEngine NOTIFY qmlEngineChanged)
+    Q_PROPERTY(bool readWrite READ readWrite WRITE setReadWrite NOTIFY readWriteChanged)
+    Q_PROPERTY(bool hasUnsavedChanged READ hasUnsavedChanged NOTIFY hasUnsavedChangedChanged)
 public:
     explicit ArchiveBookModel(QObject* parent = 0);
     virtual ~ArchiveBookModel();
 
-    virtual void setFilename(QString newFilename);
+    virtual void setFilename(QString newFilename) override;
 
     QObject* qmlEngine() const;
     void setQmlEngine(QObject* newEngine);
     Q_SIGNAL void qmlEngineChanged();
+
+    bool readWrite() const;
+    void setReadWrite(bool newReadWrite);
+    Q_SIGNAL void readWriteChanged();
+
+    bool hasUnsavedChanged() const;
+    Q_SIGNAL void hasUnsavedChangedChanged();
+
+    /**
+     * Saves the archive back to disk
+     * @return True if the save was successful
+     */
+    Q_INVOKABLE bool saveBook();
+
+    virtual void addPage(QString url, QString title) override;
+    /**
+     * Adds a new page to the book archive on disk, by copying in the file
+     * passed to the function. Optionally this can be done at a specific
+     * position in the book.
+     *
+     * @param fileUrl     The URL of the file to copy into the archive
+     * @param insertAfter The index to insert the new page after. If invalid, insertion will be at the end
+     */
+    Q_INVOKABLE void addPageFromFile(QString fileUrl, int insertAfter = -1);
+
+    /**
+     * @brief Swap the two pages at the specified indices
+     *
+     * This will change the order in the archive file as well (that is, renaming the files inside the archive)
+     *
+     * @param swapThisIndex The index of the first page to be swapped
+     * @param withThisIndex The index of the page you want the first to be swapped with
+     */
+    Q_INVOKABLE virtual void swapPages(int swapThisIndex, int withThisIndex) override;
 
     friend class ArchiveImageProvider;
 protected:
