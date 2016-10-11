@@ -45,6 +45,7 @@ PeruseConfig::PeruseConfig(QObject* parent)
     {
         locations = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation);
         locations << QStandardPaths::standardLocations(QStandardPaths::DownloadLocation);
+        locations << QString("%1/comics").arg(QStandardPaths::standardLocations(QStandardPaths::GenericDataLocation).first());
         d->config.group("general").writeEntry("book locations", locations);
         d->config.sync();
     }
