@@ -364,7 +364,7 @@ Kirigami.Page {
                         viewLoader.item.currentPage = root.currentPage;
                         viewLoader.loadingCompleted = true;
                         drawerTimer.start();
-                        root.restoreViewLayoutStuff.start();
+                        restoreViewLayoutStuff.start();
                     }
                 }
                 onCurrentPageChanged: {
@@ -518,8 +518,8 @@ Kirigami.Page {
 
     onFileChanged: {
         // Let's set the page title to something useful
-        var book = contentList.get(contentList.indexOfFile(file));
-        title = book.readProperty("title");
+        var book = contentList.bookFromFile(file);
+        root.title = book.readProperty("title");
 
         // The idea is to have a number of specialised options as relevant to various
         // types of comic books, and then finally fall back to Okular as a catch-all
