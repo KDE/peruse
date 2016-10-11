@@ -32,8 +32,15 @@ Kirigami.Page {
     property string filename;
 
     actions {
+        left: (editMetaInfo.opened || addPageSheet.opened) ? null : saveBookAction;
         main: editMetaInfo.opened ? closeEditMetaInfoAction : (addPageSheet.opened ? closeAddPageSheetAction : defaultMainAction);
         right: (editMetaInfo.opened || addPageSheet.opened) ? null : addPageAction;
+    }
+    Kirigami.Action {
+        id: saveBookAction;
+        text: i18nc("Saves the book to a file on disk", "Save Book");
+        iconName: "document-save";
+        onTriggered: bookModel.saveBook();
     }
     Kirigami.Action {
         id: addPageAction;
