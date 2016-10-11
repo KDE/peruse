@@ -34,6 +34,7 @@
 #include <QQmlEngine>
 #include <QMimeDatabase>
 #include <QDebug>
+#include <QTemporaryFile>
 
 #include <KFileMetaData/UserMetaData>
 #include <karchive.h>
@@ -84,13 +85,14 @@ public:
 
         acbfDocument->metaData()->publishInfo()->setPublisher(q->publisher());
 
+        int prefixLength = QString("image://%1/").arg(imageProvider->prefix()).length();
         if(q->pageCount() > 0)
         {
             // First, let's see if we have something called "*cover*"... because that would be handy and useful
             int cover = -1;
             for(int i = q->pageCount(); i > -1; --i)
             {
-                QString url = q->data(q->index(i, 0, QModelIndex()), BookModel::UrlRole).toString();
+                QString url = q->data(q->index(i, 0, QModelIndex()), BookModel::UrlRole).toString().mid(prefixLength);
                 // Yup, this is a bit sort of naughty and stuff... but, assume index 0 is the cover if nothing else has shown up...
                 // FIXME this will also fail when there's more than one cover... say, back and front covers...
                 if(url.split('/').last().contains("cover", Qt::CaseInsensitive) || i == 0) {
@@ -108,7 +110,7 @@ public:
                     continue;
                 }
                 AdvancedComicBookFormat::Page* page = new AdvancedComicBookFormat::Page(acbfDocument);
-                page->setImageHref(q->data(q->index(i, 0, QModelIndex()), BookModel::UrlRole).toString());
+                page->setImageHref(q->data(q->index(i, 0, QModelIndex()), BookModel::UrlRole).toString().mid(prefixLength));
                 page->setTitle(q->data(q->index(i, 0, QModelIndex()), BookModel::TitleRole).toString());
                 acbfDocument->body()->addPage(page);
             }
@@ -284,12 +286,52 @@ bool ArchiveBookModel::hasUnsavedChanged() const
 bool ArchiveBookModel::saveBook()
 {
     bool success = true;
-    if(d->isDirty)
+//     if(d->isDirty)
     {
         // TODO actually save! D:
 
         // get new filenames out of acbf
         // write into archive in acbf-order
+
+        QTemporaryFile tmpFile(this);
+        tmpFile.open();
+        QString archiveFileName = tmpFile.fileName().append(".cbz");
+        QFileInfo fileInfo(tmpFile);
+        tmpFile.close();
+        qDebug() << "Creating archive in" << archiveFileName;
+        KArchive* archive = new KZip(archiveFileName);
+        archive->open(QIODevice::ReadWrite);
+
+        // We're a zip file... size isn't used
+        qDebug() << "Writing in ACBF data";
+        archive->prepareWriting("metadata.acbf", fileInfo.owner(), fileInfo.group(), 0);
+        AdvancedComicBookFormat::Document* acbfDocument = qobject_cast<AdvancedComicBookFormat::Document*>(acbfData());
+        if(!acbfDocument)
+        {
+            d->createNewAcbfDocumentFromLegacyInformation();
+            acbfDocument = qobject_cast<AdvancedComicBookFormat::Document*>(acbfData());
+        }
+        QString acbfString = acbfDocument->toXml();
+        archive->writeData(acbfString.toUtf8(), acbfString.size());
+        archive->finishWriting(acbfString.size());
+
+        qDebug() << "Copying across cover page";
+        archive->prepareWriting(acbfDocument->metaData()->bookInfo()->coverpage()->imageHref(), fileInfo.owner(), fileInfo.group(), 0);
+        const KArchiveFile* archFile = archiveFile(acbfDocument->metaData()->bookInfo()->coverpage()->imageHref());
+        archive->writeData(archFile->data(), archFile->size());
+        archive->finishWriting(archFile->size());
+
+        Q_FOREACH(AdvancedComicBookFormat::Page* page, acbfDocument->body()->pages())
+        {
+            qDebug() << "Copying over" << page->title();
+            archive->prepareWriting(page->imageHref(), fileInfo.owner(), fileInfo.group(), 0);
+            archFile = archiveFile(page->imageHref());
+            archive->writeData(archFile->data(), archFile->size());
+            archive->finishWriting(archFile->size());
+        }
+
+        archive->close();
+        qDebug() << "Archive created and closed...";
     }
     return success;
 }
