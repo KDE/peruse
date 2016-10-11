@@ -42,8 +42,20 @@ Kirigami.Page {
         height: root.height - (root.topPadding + root.bottomPadding);
 
         Loader {
+            id: newStuffLoader;
             anchors.fill: parent;
             source: "NewStuffStuff.qml";
+        }
+        Connections {
+            target: newStuffLoader.item;
+            onDownloadedItemClicked: {
+                if(Array.isArray(installedFiles) && installedFiles.length > 0) {
+                    mainWindow.showBook(installedFiles[0], 0);
+                }
+                else if(installedFiles.length > 0) {
+                    mainWindow.showBook(installedFiles, 0);
+                }
+            }
         }
     }
 }
