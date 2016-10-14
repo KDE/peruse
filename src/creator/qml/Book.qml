@@ -32,9 +32,9 @@ Kirigami.Page {
     property string filename;
 
     actions {
-        left: (editMetaInfo.opened || addPageSheet.opened) ? null : saveBookAction;
-        main: editMetaInfo.opened ? closeEditMetaInfoAction : (addPageSheet.opened ? closeAddPageSheetAction : defaultMainAction);
-        right: (editMetaInfo.opened || addPageSheet.opened) ? null : addPageAction;
+        left: addPageSheet.opened ? null : saveBookAction;
+        main: addPageSheet.opened ? closeAddPageSheetAction : defaultMainAction;
+        right: addPageSheet.opened ? null : addPageAction;
     }
     Kirigami.Action {
         id: saveBookAction;
@@ -52,13 +52,7 @@ Kirigami.Page {
         id: defaultMainAction;
         text: i18nc("causes a dialog to show in which the user can edit the meta information for the entire book", "Edit Metainfo");
         iconName: "document-edit";
-        onTriggered: editMetaInfo.open();
-    }
-    Kirigami.Action {
-        id: closeEditMetaInfoAction;
-        text: i18nc("closes the the meta information editing sheet", "Close Editor");
-        iconName: "dialog-cancel";
-        onTriggered: editMetaInfo.close();
+        onTriggered: pageStack.push(editMetaInfo);
     }
     Kirigami.Action {
         id: closeAddPageSheetAction;
@@ -83,7 +77,7 @@ Kirigami.Page {
         model: bookModel;
     }
 
-    BookMetainfoSheet {
+    BookMetainfoPage {
         id: editMetaInfo;
         model: bookModel;
     }
