@@ -33,6 +33,7 @@ class PublishInfo;
 class DocumentInfo;
 class ACBF_EXPORT Metadata : public QObject {
     Q_OBJECT
+    Q_PROPERTY(AdvancedComicBookFormat::BookInfo* bookInfo READ bookInfo NOTIFY bookInfoChanged)
 public:
     explicit Metadata(Document* parent = 0);
     virtual ~Metadata();
@@ -43,6 +44,7 @@ public:
     bool fromXml(QXmlStreamReader *xmlReader);
 
     BookInfo* bookInfo();
+    Q_SIGNAL void bookInfoChanged();
     PublishInfo* publishInfo();
     DocumentInfo* documentInfo();
 private:
@@ -50,5 +52,7 @@ private:
     Private* d;
 };
 }
+
+Q_DECLARE_METATYPE(AdvancedComicBookFormat::Metadata*)
 
 #endif//ACBFMETADATA_H

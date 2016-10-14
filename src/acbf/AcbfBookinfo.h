@@ -37,6 +37,9 @@ class ContentRating;
 class ACBF_EXPORT BookInfo : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QStringList titleLanguages READ titleLanguages NOTIFY titleChanged)
+    Q_PROPERTY(QStringList genres READ genres NOTIFY genresChanged)
+    Q_PROPERTY(QStringList characters READ characters NOTIFY charactersChanged)
 public:
     explicit BookInfo(Metadata* parent = 0);
     virtual ~BookInfo();
@@ -50,22 +53,29 @@ public:
     void addAuthor(Author* author);
     void removeAuthor(Author* author);
 
-    QStringList titleForAllLanguages();
-    QString title(QString language = "");
-    void setTitle(QString title, QString language = "");
+    Q_INVOKABLE QStringList titleForAllLanguages();
+    Q_INVOKABLE QStringList titleLanguages();
+    Q_INVOKABLE QString title(QString language = "");
+    Q_INVOKABLE void setTitle(QString title, QString language = "");
+    Q_SIGNAL void titleChanged();
 
-    QHash<QString, int> genre();
-    void setGenre(QString genre, int matchPercentage = 100);
-    void removeGenre(QString genre);
-    static QStringList availableGenres();
+    Q_INVOKABLE QHash<QString, int> genre();
+    Q_INVOKABLE QStringList genres() const;
+    Q_INVOKABLE int genrePercentage(QString genre) const;
+    Q_INVOKABLE void setGenre(QString genre, int matchPercentage = 100);
+    Q_INVOKABLE void removeGenre(QString genre);
+    Q_SIGNAL void genresChanged();
+    Q_INVOKABLE static QStringList availableGenres();
 
-    QStringList characters();
-    void addCharacter(QString name);
-    void removeCharacter(QString name);
+    Q_INVOKABLE QStringList characters();
+    Q_INVOKABLE void addCharacter(QString name);
+    Q_INVOKABLE void removeCharacter(QString name);
+    Q_SIGNAL void charactersChanged();
 
-    QHash<QString, QStringList> annotationsForAllLanguage();
-    QStringList annotation(QString language = ""); // empty string means "default language", as (un)defined by the specification...
-    void setAnnotation(QStringList annotation, QString language = "");
+    Q_INVOKABLE QList<QStringList> annotationsForAllLanguage();
+    Q_INVOKABLE QStringList annotationLanguages();
+    Q_INVOKABLE QStringList annotation(QString language = ""); // empty string means "default language", as (un)defined by the specification...
+    Q_INVOKABLE void setAnnotation(QStringList annotation, QString language = "");
 
     QHash<QString, QStringList> keywordsForAllLanguage();
     QStringList keywords(QString language = "");

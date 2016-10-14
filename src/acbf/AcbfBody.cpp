@@ -39,6 +39,7 @@ Body::Body(Document* parent)
     : QObject(parent)
     , d(new Private)
 {
+    qRegisterMetaType<Body*>("Body*");
 }
 
 Body::~Body()

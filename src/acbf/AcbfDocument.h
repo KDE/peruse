@@ -35,6 +35,7 @@ class Body;
 class ACBF_EXPORT Document : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(Metadata* metaData READ metaData NOTIFY metaDataChanged)
 public:
     explicit Document(QObject* parent = 0);
     virtual ~Document();
@@ -43,6 +44,8 @@ public:
     bool fromXml(QString xmlDocument);
 
     Metadata* metaData();
+    Q_SIGNAL void metaDataChanged();
+
     Body* body();
     // References* references();
     // Data* data();
@@ -51,7 +54,6 @@ private:
     class Private;
     Private* d;
 };
-
 }
 
 #endif//ACBFDOCUMENT_H

@@ -56,6 +56,7 @@ BookInfo::BookInfo(Metadata* parent)
     : QObject(parent)
     , d(new Private)
 {
+    qRegisterMetaType<BookInfo*>("BookInfo*");
     d->coverPage = new Page(metadata()->document());
     d->coverPage->setIsCoverPage(true);
 }
@@ -272,6 +273,11 @@ QStringList BookInfo::titleForAllLanguages()
     return d->title.values();
 }
 
+QStringList BookInfo::titleLanguages()
+{
+    return d->title.keys();
+}
+
 QString BookInfo::title(QString language)
 {
     return d->title.value(language);
@@ -279,7 +285,16 @@ QString BookInfo::title(QString language)
 
 void BookInfo::setTitle(QString title, QString language)
 {
-    d->title[language] = title;
+    // Don't allow removal of the default title, just everything else
+    if(title.isEmpty() && !language.isEmpty())
+    {
+        d->title.remove(language);
+    }
+    else
+    {
+        d->title[language] = title;
+    }
+    emit titleChanged();
 }
 
 QHash<QString, int> BookInfo::genre()
@@ -287,14 +302,30 @@ QHash<QString, int> BookInfo::genre()
     return d->genre;
 }
 
+QStringList BookInfo::genres() const
+{
+    return d->genre.keys();
+}
+
+int BookInfo::genrePercentage(QString genre) const
+{
+    return d->genre[genre];
+}
+
 void BookInfo::setGenre(QString genre, int matchPercentage)
 {
+    bool emitNewGenre = !d->genre.contains(genre);
     d->genre[genre] = matchPercentage;
+    if(emitNewGenre)
+    {
+        emit genresChanged();
+    }
 }
 
 void BookInfo::removeGenre(QString genre)
 {
     d->genre.remove(genre);
+    emit genresChanged();
 }
 
 QStringList BookInfo::availableGenres()
@@ -337,16 +368,23 @@ QStringList BookInfo::characters()
 void BookInfo::addCharacter(QString name)
 {
     d->characters.append(name);
+    emit charactersChanged();
 }
 
 void BookInfo::removeCharacter(QString name)
 {
     d->characters.removeAll(name);
+    emit charactersChanged();
 }
 
-QHash<QString, QStringList> BookInfo::annotationsForAllLanguage()
+QList<QStringList> BookInfo::annotationsForAllLanguage()
 {
-    return d->annotation;
+    return d->annotation.values();
+}
+
+QStringList BookInfo::annotationLanguages()
+{
+    return d->annotation.keys();
 }
 
 QStringList BookInfo::annotation(QString language)

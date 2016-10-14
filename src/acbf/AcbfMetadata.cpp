@@ -46,6 +46,7 @@ Metadata::Metadata(Document* parent)
     : QObject(parent)
     , d(new Private)
 {
+    qRegisterMetaType<Metadata*>("Metadata*");
     d->bookInfo = new BookInfo(this);
     d->publishInfo = new PublishInfo(this);
     d->documentInfo = new DocumentInfo(this);

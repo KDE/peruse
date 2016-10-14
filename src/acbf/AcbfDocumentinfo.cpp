@@ -43,6 +43,7 @@ DocumentInfo::DocumentInfo(Metadata* parent)
     : QObject(parent)
     , d(new Private)
 {
+    qRegisterMetaType<DocumentInfo*>("DocumentInfo*");
 }
 
 DocumentInfo::~DocumentInfo()

@@ -42,6 +42,7 @@ PublishInfo::PublishInfo(Metadata* parent)
     : QObject(parent)
     , d(new Private)
 {
+    qRegisterMetaType<PublishInfo*>("PublishInfo*");
 }
 
 PublishInfo::~PublishInfo()
