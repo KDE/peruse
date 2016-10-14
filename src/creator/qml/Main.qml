@@ -28,6 +28,7 @@ import org.kde.peruse 0.1 as Peruse
 
 Kirigami.ApplicationWindow {
     id: mainWindow;
+    property int animationDuration: 200;
     width: Screen.desktopAvailableWidth * 0.6;
     height: Screen.desktopAvailableHeight * 0.7;
     pageStack.initialPage: welcomePage;
