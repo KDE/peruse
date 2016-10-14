@@ -106,6 +106,15 @@ void BookModel::addPage(QString url, QString title)
     endInsertRows();
 }
 
+void BookModel::clearPages()
+{
+    beginResetModel();
+    qDeleteAll(d->entries);
+    d->entries.clear();
+    emit pageCountChanged();
+    endResetModel();
+}
+
 QString BookModel::filename() const
 {
     return d->filename;

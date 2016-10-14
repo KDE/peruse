@@ -52,6 +52,7 @@ public:
     virtual int rowCount(const QModelIndex& parent = QModelIndex()) const;
 
     virtual void addPage(QString url, QString title);
+    virtual void clearPages();
 
     QString filename() const;
     virtual void setFilename(QString newFilename);
