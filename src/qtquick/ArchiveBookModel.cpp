@@ -30,10 +30,11 @@
 #include <AcbfPage.h>
 #include <AcbfPublishinfo.h>
 
-#include <QDir>
-#include <QQmlEngine>
-#include <QMimeDatabase>
+#include <QCoreApplication>
 #include <QDebug>
+#include <QDir>
+#include <QMimeDatabase>
+#include <QQmlEngine>
 #include <QTemporaryFile>
 
 #include <KFileMetaData/UserMetaData>
@@ -155,14 +156,20 @@ QStringList recursiveEntries(const KArchiveDirectory* dir, const QString& dirNam
 void ArchiveBookModel::setFilename(QString newFilename)
 {
     d->isLoading = true;
-    QMimeDatabase db;
-    QMimeType mime = db.mimeTypeForFile(newFilename);
+
     if(d->archive)
     {
+        clearPages();
         delete d->archive;
-        // TODO clean up imageproviders...
     }
     d->archive = 0;
+    if(d->imageProvider) {
+        d->engine->removeImageProvider(d->imageProvider->prefix());
+        d->imageProvider = 0;
+    }
+
+    QMimeDatabase db;
+    QMimeType mime = db.mimeTypeForFile(newFilename);
     if(mime.inherits("application/zip"))
     {
         d->archive = new KZip(newFilename);
@@ -252,8 +259,103 @@ void ArchiveBookModel::setFilename(QString newFilename)
     if(data.hasAttribute("peruse.currentPage"))
         BookModel::setCurrentPage(data.attribute("peruse.currentPage").toInt(), false);
 
+    if(!acbfData() && d->readWrite)
+    {
+        d->createNewAcbfDocumentFromLegacyInformation();
+    }
+
     d->isLoading = false;
     emit loadingCompleted(success);
+}
+
+QString ArchiveBookModel::author() const
+{
+    AdvancedComicBookFormat::Document* acbfDocument = qobject_cast<AdvancedComicBookFormat::Document*>(acbfData());
+    if(acbfDocument)
+    {
+        if(acbfDocument->metaData()->bookInfo()->author().count() > 0)
+        {
+            return acbfDocument->metaData()->bookInfo()->author().at(0)->nickName();
+        }
+    }
+    return BookModel::author();
+}
+
+void ArchiveBookModel::setAuthor(QString newAuthor)
+{
+    if(!d->isLoading)
+    {
+        AdvancedComicBookFormat::Document* acbfDocument = qobject_cast<AdvancedComicBookFormat::Document*>(acbfData());
+        if(!acbfDocument)
+        {
+            d->createNewAcbfDocumentFromLegacyInformation();
+        }
+        if(acbfDocument->metaData()->bookInfo()->author().count() == 0)
+        {
+            AdvancedComicBookFormat::Author* author = new AdvancedComicBookFormat::Author(acbfDocument->metaData());
+            author->setNickName(newAuthor);
+            acbfDocument->metaData()->bookInfo()->addAuthor(author);
+        }
+        else
+        {
+            acbfDocument->metaData()->bookInfo()->author().at(0)->setNickName(newAuthor);
+        }
+    }
+    BookModel::setAuthor(newAuthor);
+}
+
+QString ArchiveBookModel::publisher() const
+{
+    AdvancedComicBookFormat::Document* acbfDocument = qobject_cast<AdvancedComicBookFormat::Document*>(acbfData());
+    if(acbfDocument)
+    {
+        if(acbfDocument->metaData()->publishInfo()->publisher().length() > 0)
+        {
+            return acbfDocument->metaData()->publishInfo()->publisher();
+        }
+    }
+    return BookModel::publisher();
+}
+
+void ArchiveBookModel::setPublisher(QString newPublisher)
+{
+    if(!d->isLoading)
+    {
+        AdvancedComicBookFormat::Document* acbfDocument = qobject_cast<AdvancedComicBookFormat::Document*>(acbfData());
+        if(!acbfDocument)
+        {
+            d->createNewAcbfDocumentFromLegacyInformation();
+        }
+        acbfDocument->metaData()->publishInfo()->setPublisher(newPublisher);
+    }
+    BookModel::setAuthor(newPublisher);
+}
+
+QString ArchiveBookModel::title() const
+{
+    AdvancedComicBookFormat::Document* acbfDocument = qobject_cast<AdvancedComicBookFormat::Document*>(acbfData());
+    if(acbfDocument)
+    {
+        if(acbfDocument->metaData()->bookInfo()->title().length() > 0)
+        {
+            return acbfDocument->metaData()->bookInfo()->title();
+        }
+    }
+    return BookModel::title();
+}
+
+void ArchiveBookModel::setTitle(QString newTitle)
+{
+    if(!d->isLoading)
+    {
+        AdvancedComicBookFormat::Document* acbfDocument = qobject_cast<AdvancedComicBookFormat::Document*>(acbfData());
+        if(!acbfDocument)
+        {
+            d->createNewAcbfDocumentFromLegacyInformation();
+        }
+        acbfDocument->metaData()->bookInfo()->setTitle(newTitle);
+    }
+    BookModel::setTitle(newTitle);
 }
 
 QObject * ArchiveBookModel::qmlEngine() const
@@ -288,10 +390,7 @@ bool ArchiveBookModel::saveBook()
     bool success = true;
 //     if(d->isDirty)
     {
-        // TODO actually save! D:
-
-        // get new filenames out of acbf
-        // write into archive in acbf-order
+        // TODO get new filenames out of acbf
 
         QTemporaryFile tmpFile(this);
         tmpFile.open();
@@ -299,7 +398,7 @@ bool ArchiveBookModel::saveBook()
         QFileInfo fileInfo(tmpFile);
         tmpFile.close();
         qDebug() << "Creating archive in" << archiveFileName;
-        KArchive* archive = new KZip(archiveFileName);
+        KZip* archive = new KZip(archiveFileName);
         archive->open(QIODevice::ReadWrite);
 
         // We're a zip file... size isn't used
@@ -323,6 +422,7 @@ bool ArchiveBookModel::saveBook()
 
         Q_FOREACH(AdvancedComicBookFormat::Page* page, acbfDocument->body()->pages())
         {
+            qApp->processEvents();
             qDebug() << "Copying over" << page->title();
             archive->prepareWriting(page->imageHref(), fileInfo.owner(), fileInfo.group(), 0);
             archFile = archiveFile(page->imageHref());
@@ -332,6 +432,25 @@ bool ArchiveBookModel::saveBook()
 
         archive->close();
         qDebug() << "Archive created and closed...";
+
+        // swap out the two files, tell model we're about to swap things out...
+        beginResetModel();
+
+        QString actualFile = d->archive->fileName();
+        d->archive->close();
+        if(QFile(actualFile).remove())
+        {
+            // FIXME get all the old extended attributes and put them back onto the new file...
+            qDebug() << "Renaming" << archiveFileName << "to" << actualFile;
+            if(QFile::rename(archiveFileName, actualFile))
+            {
+                qDebug() << "Success! Now loading the new archive...";
+                // now load the new thing...
+                setFilename(actualFile);
+            }
+        }
+
+        endResetModel();
     }
     return success;
 }

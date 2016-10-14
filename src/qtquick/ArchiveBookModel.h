@@ -37,6 +37,13 @@ public:
 
     virtual void setFilename(QString newFilename) override;
 
+    virtual QString author() const override;
+    virtual void setAuthor(QString newAuthor) override;
+    virtual QString publisher() const override;
+    virtual void setPublisher(QString newPublisher) override;
+    virtual QString title() const override;
+    virtual void setTitle(QString newTitle) override;
+
     QObject* qmlEngine() const;
     void setQmlEngine(QObject* newEngine);
     Q_SIGNAL void qmlEngineChanged();
