@@ -38,6 +38,7 @@ class BookModel : public QAbstractListModel
      * This may be null
      */
     Q_PROPERTY(QObject* acbfData READ acbfData NOTIFY acbfDataChanged)
+    Q_PROPERTY(bool processing READ processing WRITE setProcessing NOTIFY processingChanged)
 public:
     explicit BookModel(QObject* parent = 0);
     virtual ~BookModel();
@@ -87,6 +88,10 @@ public:
     void setAcbfData(QObject* obj);
     Q_SIGNAL void acbfDataChanged();
 
+    // Whether or not the any processing is currently going on
+    bool processing() const;
+    void setProcessing(bool processing);
+    Q_SIGNAL void processingChanged();
     Q_SIGNAL void loadingCompleted(bool success);
 
     /**

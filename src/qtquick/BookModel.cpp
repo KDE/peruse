@@ -36,6 +36,7 @@ public:
     Private()
         : currentPage(-1)
         , acbfData(0)
+        , processing(false)
     {}
     QString filename;
     QString author;
@@ -44,6 +45,7 @@ public:
     QList<BookPage*> entries;
     int currentPage;
     AdvancedComicBookFormat::Document* acbfData;
+    bool processing;
 };
 
 BookModel::BookModel(QObject* parent)
@@ -192,6 +194,17 @@ void BookModel::setAcbfData(QObject* obj)
 {
     d->acbfData = qobject_cast<AdvancedComicBookFormat::Document*>(obj);
     emit acbfDataChanged();
+}
+
+bool BookModel::processing() const
+{
+    return d->processing;
+}
+
+void BookModel::setProcessing(bool processing)
+{
+    d->processing = processing;
+    emit processingChanged();
 }
 
 void BookModel::swapPages(int swapThisIndex, int withThisIndex)
