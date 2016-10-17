@@ -41,6 +41,7 @@ Kirigami.Page {
         text: i18nc("Saves the book to a file on disk", "Save Book");
         iconName: "document-save";
         onTriggered: bookModel.saveBook();
+        enabled: bookModel.hasUnsavedChanges;
     }
     Kirigami.Action {
         id: addPageAction;
