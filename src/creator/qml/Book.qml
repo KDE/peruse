@@ -152,5 +152,16 @@ Kirigami.Page {
                 }
             }
         }
+        Rectangle {
+            id: processingBackground;
+            anchors.fill: parent;
+            opacity: bookModel.processing ? 0.5 : 0;
+            Behavior on opacity { PropertyAnimation { duration: mainWindow.animationDuration; } }
+        }
+        PlasmaComponents.BusyIndicator {
+            anchors.centerIn: processingBackground;
+            running: processingBackground.opacity > 0;
+            visible: running;
+        }
     }
 }
