@@ -53,6 +53,7 @@ public:
     Q_SIGNAL void readWriteChanged();
 
     bool hasUnsavedChanged() const;
+    Q_INVOKABLE void setDirty(bool isDirty = true);
     Q_SIGNAL void hasUnsavedChangedChanged();
 
     /**

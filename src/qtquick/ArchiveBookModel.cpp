@@ -385,10 +385,16 @@ bool ArchiveBookModel::hasUnsavedChanged() const
     return d->isDirty;
 }
 
+void ArchiveBookModel::setDirty(bool isDirty)
+{
+    d->isDirty = isDirty;
+    emit hasUnsavedChangedChanged();
+}
+
 bool ArchiveBookModel::saveBook()
 {
     bool success = true;
-//     if(d->isDirty)
+    if(d->isDirty)
     {
         // TODO get new filenames out of acbf
 
@@ -438,15 +444,28 @@ bool ArchiveBookModel::saveBook()
 
         QString actualFile = d->archive->fileName();
         d->archive->close();
-        if(QFile(actualFile).remove())
+
+        // This seems roundabout... but it retains ctime and xattrs, which would be gone
+        // if we just did a delete+rename
+        QFile destinationFile(actualFile);
+        if(destinationFile.open(QIODevice::WriteOnly))
         {
-            // FIXME get all the old extended attributes and put them back onto the new file...
-            qDebug() << "Renaming" << archiveFileName << "to" << actualFile;
-            if(QFile::rename(archiveFileName, actualFile))
-            {
-                qDebug() << "Success! Now loading the new archive...";
-                // now load the new thing...
-                setFilename(actualFile);
+            QFile originFile(archiveFileName);
+            if(originFile.open(QIODevice::ReadOnly)) {
+                qDebug() << "Copying all content from" << archiveFileName << "to" << actualFile;
+                while(!originFile.atEnd())
+                {
+                    destinationFile.write(originFile.read(65536));
+                    qApp->processEvents();
+                }
+                destinationFile.close();
+                originFile.close();
+                if(originFile.remove())
+                {
+                    qDebug() << "Success! Now loading the new archive...";
+                    // now load the new thing...
+                    setFilename(actualFile);
+                }
             }
         }
 
