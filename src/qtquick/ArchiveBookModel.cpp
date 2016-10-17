@@ -155,6 +155,7 @@ QStringList recursiveEntries(const KArchiveDirectory* dir, const QString& dirNam
 
 void ArchiveBookModel::setFilename(QString newFilename)
 {
+    setProcessing(true);
     d->isLoading = true;
 
     if(d->archive)
@@ -266,6 +267,7 @@ void ArchiveBookModel::setFilename(QString newFilename)
 
     d->isLoading = false;
     emit loadingCompleted(success);
+    setProcessing(false);
 }
 
 QString ArchiveBookModel::author() const
@@ -398,6 +400,9 @@ bool ArchiveBookModel::saveBook()
     {
         // TODO get new filenames out of acbf
 
+        setProcessing(true);
+        qApp->processEvents();
+
         QTemporaryFile tmpFile(this);
         tmpFile.open();
         QString archiveFileName = tmpFile.fileName().append(".cbz");
@@ -430,8 +435,8 @@ bool ArchiveBookModel::saveBook()
         {
             qApp->processEvents();
             qDebug() << "Copying over" << page->title();
-            archive->prepareWriting(page->imageHref(), fileInfo.owner(), fileInfo.group(), 0);
             archFile = archiveFile(page->imageHref());
+            archive->prepareWriting(page->imageHref(), archFile->user(), archFile->group(), 0);
             archive->writeData(archFile->data(), archFile->size());
             archive->finishWriting(archFile->size());
         }
@@ -471,6 +476,8 @@ bool ArchiveBookModel::saveBook()
 
         endResetModel();
     }
+    setProcessing(false);
+    setDirty(false);
     return success;
 }
 
