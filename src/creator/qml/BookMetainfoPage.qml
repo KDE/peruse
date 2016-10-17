@@ -39,6 +39,7 @@ Kirigami.Page {
         text: i18nc("Saves the remaining unsaved edited fields and closes the metainfo editor", "Save and Close Editor");
         iconName: "dialog-ok";
         onTriggered: {
+            root.model.setDirty();
             pageStack.pop();
         }
     }
@@ -59,8 +60,14 @@ Kirigami.Page {
                 width: contentColumn.width;
                 title: modelData === "" ? i18nc("label text for the the book title with no language (default)", "Default title") : modelData;
                 text: root.model.acbfData.metaData.bookInfo.title(modelData);
-                onSaveRequested: { root.model.acbfData.metaData.bookInfo.setTitle(text, modelData); }
-                onRemoveRequested: { root.model.acbfData.metaData.bookInfo.setTitle("", modelData); }
+                onSaveRequested: {
+                    root.model.acbfData.metaData.bookInfo.setTitle(text, modelData);
+                    root.model.setDirty();
+                }
+                onRemoveRequested: {
+                    root.model.acbfData.metaData.bookInfo.setTitle("", modelData);
+                    root.model.setDirty();
+                }
                 removePossible: title === modelData;
             }
         }
@@ -94,7 +101,10 @@ Kirigami.Page {
                         iconName: "list-remove";
                         height: parent.height;
                         width: height;
-                        onClicked: root.model.acbfData.metaData.bookInfo.removeGenre(modelData);
+                        onClicked: {
+                            root.model.acbfData.metaData.bookInfo.removeGenre(modelData);
+                            root.model.setDirty();
+                        }
                     }
                 }
                 PlasmaComponents.Slider {
@@ -108,7 +118,12 @@ Kirigami.Page {
                     width: genreText.width;
                     valueIndicatorVisible: true;
                     value: root.model.acbfData.metaData.bookInfo.genrePercentage(modelData);
-                    onValueChanged: if(value > 0) { root.model.acbfData.metaData.bookInfo.setGenre(modelData, value); }
+                    onValueChanged: {
+                        if(value > 0 && value !== root.model.acbfData.metaData.bookInfo.genrePercentage(modelData)) {
+                            root.model.acbfData.metaData.bookInfo.setGenre(modelData, value);
+                            root.model.setDirty();
+                        }
+                    }
                 }
             }
         }
@@ -128,6 +143,7 @@ Kirigami.Page {
                 onClicked: {
                     if(parent.text !== "") {
                         root.model.acbfData.metaData.bookInfo.setGenre(parent.text);
+                        root.model.setDirty();
                         parent.text = "";
                     }
                 }
@@ -153,7 +169,10 @@ Kirigami.Page {
                     iconName: "list-remove";
                     height: parent.height;
                     width: height;
-                    onClicked: root.model.acbfData.metaData.bookInfo.removeCharacter(modelData);
+                    onClicked: {
+                        root.model.acbfData.metaData.bookInfo.removeCharacter(modelData);
+                        root.model.setDirty();
+                    }
                 }
             }
         }
@@ -173,6 +192,7 @@ Kirigami.Page {
                 onClicked: {
                     if(parent.text !== "") {
                         root.model.acbfData.metaData.bookInfo.addCharacter(parent.text);
+                        root.model.setDirty();
                         parent.text = "";
                     }
                 }
