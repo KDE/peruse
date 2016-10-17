@@ -30,7 +30,7 @@ class ArchiveBookModel : public BookModel
     Q_OBJECT
     Q_PROPERTY(QObject* qmlEngine READ qmlEngine WRITE setQmlEngine NOTIFY qmlEngineChanged)
     Q_PROPERTY(bool readWrite READ readWrite WRITE setReadWrite NOTIFY readWriteChanged)
-    Q_PROPERTY(bool hasUnsavedChanged READ hasUnsavedChanged NOTIFY hasUnsavedChangedChanged)
+    Q_PROPERTY(bool hasUnsavedChanges READ hasUnsavedChanges NOTIFY hasUnsavedChangesChanged)
 public:
     explicit ArchiveBookModel(QObject* parent = 0);
     virtual ~ArchiveBookModel();
@@ -52,9 +52,9 @@ public:
     void setReadWrite(bool newReadWrite);
     Q_SIGNAL void readWriteChanged();
 
-    bool hasUnsavedChanged() const;
+    bool hasUnsavedChanges() const;
     Q_INVOKABLE void setDirty(bool isDirty = true);
-    Q_SIGNAL void hasUnsavedChangedChanged();
+    Q_SIGNAL void hasUnsavedChangesChanged();
 
     /**
      * Saves the archive back to disk

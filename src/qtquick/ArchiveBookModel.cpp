@@ -71,7 +71,7 @@ public:
     void setDirty()
     {
         isDirty = true;
-        emit q->hasUnsavedChangedChanged();
+        emit q->hasUnsavedChangesChanged();
     }
 
     void createNewAcbfDocumentFromLegacyInformation()
@@ -380,7 +380,7 @@ void ArchiveBookModel::setReadWrite(bool newReadWrite)
     emit readWriteChanged();
 }
 
-bool ArchiveBookModel::hasUnsavedChanged() const
+bool ArchiveBookModel::hasUnsavedChanges() const
 {
     return d->isDirty;
 }
@@ -388,7 +388,7 @@ bool ArchiveBookModel::hasUnsavedChanged() const
 void ArchiveBookModel::setDirty(bool isDirty)
 {
     d->isDirty = isDirty;
-    emit hasUnsavedChangedChanged();
+    emit hasUnsavedChangesChanged();
 }
 
 bool ArchiveBookModel::saveBook()
