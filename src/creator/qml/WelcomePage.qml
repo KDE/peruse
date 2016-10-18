@@ -113,6 +113,7 @@ Kirigami.Page {
                         anchors.centerIn: parent;
                         iconName: "go-next";
                         text: i18nc("Button to continue working on the most recently opened comic book archive", "Continue %1").arg(continueLast.mostRecentBook.split('/').pop());
+                        onClicked: mainWindow.openBook(continueLast.mostRecentBook);
                     }
                     property string mostRecentBook: "";
                     Component.onCompleted: {
