@@ -96,19 +96,21 @@ Kirigami.Page {
                     text: i18nc("Longer introduction text used on the welcome page", "Welcome to Peruse Creator, a tool designed to assist you in creating comic book archives which can be read with any cbz capable comic book reader app. You can either create entirely new comic book archives from scratch, create one from a set of pictures, or editing existing archives. Once you have created them, you can even publish them directly to the online comic book archive at the KDE Store from within the application, or just share the files with your friends.");
                 }
             }
-            Row {
-                id: controlsRow;
+            Item {
                 anchors {
                     top: parent.verticalCenter;
                     left: parent.left;
                     right: parent.right;
                     bottom: parent.bottom;
                 }
-                property int howManyControls: continueLast.visible ? 4 : 3;
                 Item {
                     id: continueLast;
-                    height: parent.height;
-                    width: parent.width / controlsRow.howManyControls;
+                    anchors {
+                        top: parent.top;
+                        left: parent.left;
+                        right: parent.horizontalCenter;
+                        bottom: parent.verticalCenter;
+                    }
                     PlasmaComponents.Button {
                         anchors.centerIn: parent;
                         iconName: "go-next";
@@ -129,8 +131,12 @@ Kirigami.Page {
                     visible: mostRecentBook.length > 0;
                 }
                 Item {
-                    height: parent.height;
-                    width: parent.width / controlsRow.howManyControls;
+                    anchors {
+                        top: parent.top;
+                        left: continueLast.visible ? parent.horizontalCenter : parent.left;
+                        right: parent.right;
+                        bottom: parent.verticalCenter;
+                    }
                     PlasmaComponents.Button {
                         anchors.centerIn: parent;
                         iconName: "document-open";
@@ -139,8 +145,12 @@ Kirigami.Page {
                     }
                 }
                 Item {
-                    height: parent.height;
-                    width: parent.width / controlsRow.howManyControls;
+                    anchors {
+                        top: parent.verticalCenter;
+                        left: parent.left;
+                        right: parent.horizontalCenter;
+                        bottom: parent.bottom;
+                    }
                     PlasmaComponents.Button {
                         anchors.centerIn: parent;
                         iconName: "document-new";
@@ -148,8 +158,12 @@ Kirigami.Page {
                     }
                 }
                 Item {
-                    height: parent.height;
-                    width: parent.width / controlsRow.howManyControls;
+                    anchors {
+                        top: parent.verticalCenter;
+                        left: parent.horizontalCenter;
+                        right: parent.right;
+                        bottom: parent.bottom;
+                    }
                     PlasmaComponents.Button {
                         anchors.centerIn: parent;
                         iconName: "folder-open";
