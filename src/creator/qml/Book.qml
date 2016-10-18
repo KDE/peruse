@@ -157,6 +157,11 @@ Kirigami.Page {
             anchors.fill: parent;
             opacity: bookModel.processing ? 0.5 : 0;
             Behavior on opacity { PropertyAnimation { duration: mainWindow.animationDuration; } }
+            MouseArea {
+                anchors.fill: parent;
+                enabled: parent.opacity > 0;
+                onClicked: { }
+            }
         }
         PlasmaComponents.BusyIndicator {
             anchors.centerIn: processingBackground;
