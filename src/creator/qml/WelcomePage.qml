@@ -112,9 +112,20 @@ Kirigami.Page {
                     PlasmaComponents.Button {
                         anchors.centerIn: parent;
                         iconName: "go-next";
-                        text: i18nc("Button to continue working on the most recently opened comic book archive", "Continue %1").arg("archive name");
+                        text: i18nc("Button to continue working on the most recently opened comic book archive", "Continue %1").arg(continueLast.mostRecentBook.split('/').pop());
                     }
-                    visible: true;
+                    property string mostRecentBook: "";
+                    Component.onCompleted: {
+                        if(peruseConfig.recentlyOpened.length > 0) {
+                            for(var i = 0; i < peruseConfig.recentlyOpened.length; ++i) {
+                                if(peruseConfig.recentlyOpened[i].toLowerCase().slice(-4) === ".cbz") {
+                                    continueLast.mostRecentBook = peruseConfig.recentlyOpened[i];
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    visible: mostRecentBook.length > 0;
                 }
                 Item {
                     height: parent.height;
@@ -123,6 +134,7 @@ Kirigami.Page {
                         anchors.centerIn: parent;
                         iconName: "document-open";
                         text: i18nc("Button to open existing comic book archive", "Open Existing...");
+                        onClicked: mainWindow.openOther();
                     }
                 }
                 Item {
