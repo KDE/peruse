@@ -66,6 +66,11 @@ Kirigami.ApplicationWindow {
             Kirigami.Action {
             },
             Kirigami.Action {
+                text: i18nc("Create a book", "Create a new book...");
+                iconName: "document-new";
+                onTriggered: changeCategory(createNewBookPage);
+            },
+            Kirigami.Action {
                 text: i18nc("Open a book from somewhere on disk (uses the open dialog, or a drilldown on touch devices)", "Open other...");
                 iconName: "document-open";
                 onTriggered: openOther();
@@ -85,6 +90,12 @@ Kirigami.ApplicationWindow {
     Component {
         id: welcomePage;
         WelcomePage {
+        }
+    }
+
+    Component {
+        id: createNewBookPage;
+        CreateNewBook {
         }
     }
 
@@ -114,10 +125,10 @@ Kirigami.ApplicationWindow {
 
     FileDialog {
         id: openDlg;
-        title: i18nc("Title of a standard file open dialog used to open a book not in the collection", "Please choose a comic to open");
+        title: i18nc("Title of a standard file open dialog used to open a book not in the collection", "Please choose a book to open");
         folder: mainWindow.homeDir();
-        property int splitPos: osIsWindows ? 8 : 7;
         nameFilters: [ "Comic Book Archive zip format (*.cbz)", "All files (*)" ]
+        property int splitPos: osIsWindows ? 8 : 7;
         onAccepted: {
             if(openDlg.fileUrl.toString().substring(0, 7) === "file://") {
                 mainWindow.openBook(openDlg.fileUrl.toString().substring(splitPos), 0);

@@ -155,6 +155,7 @@ Kirigami.Page {
                         anchors.centerIn: parent;
                         iconName: "document-new";
                         text: i18nc("Button to create a new, empty comic book archive", "Create Blank");
+                        onClicked: mainWindow.createNew();
                     }
                 }
                 Item {
