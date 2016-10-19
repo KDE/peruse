@@ -137,7 +137,8 @@ QString PeruseConfig::newstuffLocation() const
     QString knsrc = QStandardPaths::standardLocations(QStandardPaths::GenericConfigLocation).last().append("/peruse.knsrc");
     if(qEnvironmentVariableIsSet("APPDIR"))
     {
-        knsrc = knsrc.prepend(qgetenv("APPDIR"));
+        // Because appimage install happens into /app/usr...
+        knsrc = knsrc.prepend("/usr").prepend(qgetenv("APPDIR"));
     }
     return knsrc;
 }
