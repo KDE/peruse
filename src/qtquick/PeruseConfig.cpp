@@ -134,7 +134,12 @@ QStringList PeruseConfig::bookLocations() const
 
 QString PeruseConfig::newstuffLocation() const
 {
-    return QStandardPaths::standardLocations(QStandardPaths::GenericConfigLocation).last().append("/peruse.knsrc");
+    QString knsrc = QStandardPaths::standardLocations(QStandardPaths::GenericConfigLocation).last().append("/peruse.knsrc");
+    if(qEnvironmentVariableIsSet("APPDIR"))
+    {
+        knsrc = knsrc.prepend(qgetenv("APPDIR"));
+    }
+    return knsrc;
 }
 
 QString PeruseConfig::homeDir() const
