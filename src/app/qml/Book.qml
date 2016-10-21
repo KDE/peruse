@@ -528,7 +528,7 @@ Kirigami.Page {
 
         var mimetype = contentList.contentModel.getMimetype(file);
         console.debug("Mimetype is " + mimetype);
-        if(mimetype == "application/x-cbz" || mimetype == "application/x-cbr") {
+        if(mimetype == "application/x-cbz" || mimetype == "application/x-cbr" || mimetype == "application/vnd.comicbook+zip" || mimetype == "application/vnd.comicbook+rar") {
             viewLoader.source = "viewers/cbr.qml";
             attemptFallback = false;
         }
