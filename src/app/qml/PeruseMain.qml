@@ -284,6 +284,8 @@ Kirigami.ApplicationWindow {
         contentList.contentModel.addMimetype("application/x-cb7");
         contentList.contentModel.addMimetype("application/x-cbt");
         contentList.contentModel.addMimetype("application/x-cba");
+        contentList.contentModel.addMimetype("application/vnd.comicbook+zip");
+        contentList.contentModel.addMimetype("application/vnd.comicbook+rar");
         contentList.contentModel.addMimetype("application/vnd.ms-htmlhelp");
         contentList.contentModel.addMimetype("image/vnd.djvu");
         contentList.contentModel.addMimetype("image/x-djvu");
