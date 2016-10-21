@@ -133,7 +133,7 @@ ArchiveBookModel::~ArchiveBookModel()
     delete d;
 }
 
-QStringList recursiveEntries(const KArchiveDirectory* dir, const QString& dirName = "")
+QStringList recursiveEntries(const KArchiveDirectory* dir)
 {
     QStringList entries = dir->entries();
     QStringList allEntries = entries;
@@ -143,10 +143,10 @@ QStringList recursiveEntries(const KArchiveDirectory* dir, const QString& dirNam
         if(entry->isDirectory())
         {
             const KArchiveDirectory* subDir = static_cast<const KArchiveDirectory*>(entry);
-            QStringList subEntries = recursiveEntries(subDir, dirName + entryName + "/");
+            QStringList subEntries = recursiveEntries(subDir);
             Q_FOREACH(const QString& subEntry, subEntries)
             {
-                entries.append(dirName + entryName + "/" + subEntry);
+                entries.append(entryName + "/" + subEntry);
             }
         }
     }
