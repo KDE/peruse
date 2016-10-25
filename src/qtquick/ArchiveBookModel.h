@@ -83,6 +83,13 @@ public:
      */
     Q_INVOKABLE virtual void swapPages(int swapThisIndex, int withThisIndex) override;
 
+    /**
+     * Creates a new book in the folder, with the given title and cover.
+     * A filename will be constructed to fit the title, and which does not already exist in the
+     * directory.
+     */
+    Q_INVOKABLE QString createBook(QString folder, QString title, QString coverUrl);
+
     friend class ArchiveImageProvider;
 protected:
     const KArchiveFile* archiveFile(const QString& filePath);

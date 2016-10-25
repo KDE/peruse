@@ -74,7 +74,7 @@ public:
         emit q->hasUnsavedChangesChanged();
     }
 
-    void createNewAcbfDocumentFromLegacyInformation()
+    AdvancedComicBookFormat::Document* createNewAcbfDocumentFromLegacyInformation()
     {
         AdvancedComicBookFormat::Document* acbfDocument = new AdvancedComicBookFormat::Document(q);
 
@@ -119,6 +119,7 @@ public:
 
         q->setAcbfData(acbfDocument);
         setDirty();
+        return acbfDocument;
     }
 };
 
@@ -166,8 +167,8 @@ void ArchiveBookModel::setFilename(QString newFilename)
     d->archive = 0;
     if(d->imageProvider) {
         d->engine->removeImageProvider(d->imageProvider->prefix());
-        d->imageProvider = 0;
     }
+    d->imageProvider = 0;
 
     QMimeDatabase db;
     QMimeType mime = db.mimeTypeForFile(newFilename);
@@ -260,7 +261,7 @@ void ArchiveBookModel::setFilename(QString newFilename)
     if(data.hasAttribute("peruse.currentPage"))
         BookModel::setCurrentPage(data.attribute("peruse.currentPage").toInt(), false);
 
-    if(!acbfData() && d->readWrite)
+    if(!acbfData() && d->readWrite && d->imageProvider)
     {
         d->createNewAcbfDocumentFromLegacyInformation();
     }
@@ -290,7 +291,7 @@ void ArchiveBookModel::setAuthor(QString newAuthor)
         AdvancedComicBookFormat::Document* acbfDocument = qobject_cast<AdvancedComicBookFormat::Document*>(acbfData());
         if(!acbfDocument)
         {
-            d->createNewAcbfDocumentFromLegacyInformation();
+            acbfDocument = d->createNewAcbfDocumentFromLegacyInformation();
         }
         if(acbfDocument->metaData()->bookInfo()->author().count() == 0)
         {
@@ -326,7 +327,7 @@ void ArchiveBookModel::setPublisher(QString newPublisher)
         AdvancedComicBookFormat::Document* acbfDocument = qobject_cast<AdvancedComicBookFormat::Document*>(acbfData());
         if(!acbfDocument)
         {
-            d->createNewAcbfDocumentFromLegacyInformation();
+            acbfDocument = d->createNewAcbfDocumentFromLegacyInformation();
         }
         acbfDocument->metaData()->publishInfo()->setPublisher(newPublisher);
     }
@@ -353,7 +354,7 @@ void ArchiveBookModel::setTitle(QString newTitle)
         AdvancedComicBookFormat::Document* acbfDocument = qobject_cast<AdvancedComicBookFormat::Document*>(acbfData());
         if(!acbfDocument)
         {
-            d->createNewAcbfDocumentFromLegacyInformation();
+            acbfDocument = d->createNewAcbfDocumentFromLegacyInformation();
         }
         acbfDocument->metaData()->bookInfo()->setTitle(newTitle);
     }
@@ -418,27 +419,32 @@ bool ArchiveBookModel::saveBook()
         AdvancedComicBookFormat::Document* acbfDocument = qobject_cast<AdvancedComicBookFormat::Document*>(acbfData());
         if(!acbfDocument)
         {
-            d->createNewAcbfDocumentFromLegacyInformation();
-            acbfDocument = qobject_cast<AdvancedComicBookFormat::Document*>(acbfData());
+            acbfDocument = d->createNewAcbfDocumentFromLegacyInformation();
         }
         QString acbfString = acbfDocument->toXml();
         archive->writeData(acbfString.toUtf8(), acbfString.size());
         archive->finishWriting(acbfString.size());
 
         qDebug() << "Copying across cover page";
-        archive->prepareWriting(acbfDocument->metaData()->bookInfo()->coverpage()->imageHref(), fileInfo.owner(), fileInfo.group(), 0);
         const KArchiveFile* archFile = archiveFile(acbfDocument->metaData()->bookInfo()->coverpage()->imageHref());
-        archive->writeData(archFile->data(), archFile->size());
-        archive->finishWriting(archFile->size());
+        if(archFile)
+        {
+            archive->prepareWriting(acbfDocument->metaData()->bookInfo()->coverpage()->imageHref(), fileInfo.owner(), fileInfo.group(), 0);
+            archive->writeData(archFile->data(), archFile->size());
+            archive->finishWriting(archFile->size());
+        }
 
         Q_FOREACH(AdvancedComicBookFormat::Page* page, acbfDocument->body()->pages())
         {
             qApp->processEvents();
             qDebug() << "Copying over" << page->title();
             archFile = archiveFile(page->imageHref());
-            archive->prepareWriting(page->imageHref(), archFile->user(), archFile->group(), 0);
-            archive->writeData(archFile->data(), archFile->size());
-            archive->finishWriting(archFile->size());
+            if(archFile)
+            {
+                archive->prepareWriting(page->imageHref(), archFile->user(), archFile->group(), 0);
+                archive->writeData(archFile->data(), archFile->size());
+                archive->finishWriting(archFile->size());
+            }
         }
 
         archive->close();
@@ -471,11 +477,22 @@ bool ArchiveBookModel::saveBook()
                     // now load the new thing...
                     setFilename(actualFile);
                 }
+                else
+                {
+                    qWarning() << "Failed to delete" << originFile.fileName();
+                }
+            }
+            else
+            {
+                qWarning() << "Failed to open" << originFile.fileName() << "for reading";
             }
         }
-
-        endResetModel();
+        else
+        {
+            qWarning() << "Failed to open" << destinationFile.fileName() << "for writing";
+        }
     }
+    endResetModel();
     setProcessing(false);
     setDirty(false);
     return success;
@@ -489,14 +506,21 @@ void ArchiveBookModel::addPage(QString url, QString title)
         AdvancedComicBookFormat::Document* acbfDocument = qobject_cast<AdvancedComicBookFormat::Document*>(acbfData());
         if(!acbfDocument)
         {
-            d->createNewAcbfDocumentFromLegacyInformation();
-            acbfDocument = qobject_cast<AdvancedComicBookFormat::Document*>(acbfData());
+            acbfDocument = d->createNewAcbfDocumentFromLegacyInformation();
         }
-        AdvancedComicBookFormat::Page* page = new AdvancedComicBookFormat::Page(acbfDocument);
-        page->setTitle(title);
         QUrl imageUrl(url);
-        page->setImageHref(QString("%1/%2").arg(imageUrl.path().mid(1)).arg(imageUrl.fileName()));
-        acbfDocument->body()->addPage(page);
+        if(pageCount() == 0)
+        {
+            acbfDocument->metaData()->bookInfo()->coverpage()->setTitle(title);
+            acbfDocument->metaData()->bookInfo()->coverpage()->setImageHref(QString("%1/%2").arg(imageUrl.path().mid(1)).arg(imageUrl.fileName()));
+        }
+        else
+        {
+            AdvancedComicBookFormat::Page* page = new AdvancedComicBookFormat::Page(acbfDocument);
+            page->setTitle(title);
+            page->setImageHref(QString("%1/%2").arg(imageUrl.path().mid(1)).arg(imageUrl.fileName()));
+            acbfDocument->body()->addPage(page);
+        }
     }
     BookModel::addPage(url, title);
 }
@@ -558,6 +582,44 @@ void ArchiveBookModel::swapPages(int swapThisIndex, int withThisIndex)
     // FIXME only treat things which have sequential numbers in as pages, split out chapters automatically?
 
     BookModel::swapPages(swapThisIndex, withThisIndex);
+}
+
+QString ArchiveBookModel::createBook(QString folder, QString title, QString coverUrl)
+{
+    bool success = true;
+
+    QString fileTitle = title.replace( QRegExp("\\W"),QString("")).simplified();
+    QString filename = QString("%1/%2.cbz").arg(folder).arg(fileTitle);
+    int i = 1;
+    while(QFile(filename).exists())
+    {
+        filename = QString("%1/%2 (%3).cbz").arg(folder).arg(fileTitle).arg(QString::number(i++));
+    }
+
+    ArchiveBookModel* model = new ArchiveBookModel(0);
+    model->setQmlEngine(qmlEngine());
+    model->setReadWrite(true);
+    QString prefix = QString("archivebookpage%1").arg(QString::number(Private::counter()));
+    model->d->imageProvider = new ArchiveImageProvider();
+    model->d->imageProvider->setArchiveBookModel(model);
+    model->d->imageProvider->setPrefix(prefix);
+    model->d->archive = new KZip(filename);
+    model->BookModel::setFilename(filename);
+    model->setTitle(title);
+    AdvancedComicBookFormat::Document* acbfDocument = qobject_cast<AdvancedComicBookFormat::Document*>(model->acbfData());
+    acbfDocument->metaData()->bookInfo()->coverpage()->setImageHref("cover.jpg");
+    success = model->saveBook();
+
+    model->d->archive->close();
+    model->d->archive->open(QIODevice::ReadWrite);
+    model->d->archive->addLocalFile(coverUrl, "cover.jpg");
+    model->d->archive->close();
+
+    model->deleteLater();
+
+    if(!success)
+        return QLatin1String();
+    return filename;
 }
 
 const KArchiveFile * ArchiveBookModel::archiveFile(const QString& filePath)
