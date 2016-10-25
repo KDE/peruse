@@ -78,9 +78,11 @@ Kirigami.Page {
         model: bookModel;
     }
 
-    BookMetainfoPage {
+    Component {
         id: editMetaInfo;
-        model: bookModel;
+        BookMetainfoPage {
+            model: bookModel;
+        }
     }
 
     Item {
