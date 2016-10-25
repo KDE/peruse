@@ -24,6 +24,7 @@ import QtQuick.Dialogs 1.2
 
 import org.kde.kirigami 1.0 as Kirigami
 import org.kde.plasma.components 2.0 as PlasmaComponents
+import org.kde.peruse 0.1 as Peruse
 
 Kirigami.Page {
     id: root;
@@ -34,8 +35,19 @@ Kirigami.Page {
         main: Kirigami.Action {
             text: i18nc("Accept button which will create a new book", "Create Book");
             iconName: "dialog-ok";
-            onTriggered: {}
+            property int splitPos: osIsWindows ? 8 : 7;
+            onTriggered: {
+                var filename = newBookModel.createBook(getFolderDlg.folder.toString().substring(splitPos), titleEdit.text, getCoverDlg.fileUrl.toString().substring(splitPos));
+                if(filename.length > 0)
+                {
+                    mainWindow.openBook(filename);
+                }
+            }
         }
+    }
+    Peruse.ArchiveBookModel {
+        id: newBookModel;
+        qmlEngine: globalQmlEngine;
     }
 
     Column {
