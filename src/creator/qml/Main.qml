@@ -41,7 +41,9 @@ Kirigami.ApplicationWindow {
     }
 
     function openBook(bookFilename) {
+        currentCategory = "";
         peruseConfig.bookOpened(bookFilename);
+        mainWindow.pageStack.clear();
         mainWindow.pageStack.push(bookPage, { filename: bookFilename });
     }
 
