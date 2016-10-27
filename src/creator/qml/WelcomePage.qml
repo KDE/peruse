@@ -25,7 +25,6 @@ import QtQuick.Controls 1.0
 
 import org.kde.kirigami 1.0 as Kirigami
 import org.kde.plasma.components 2.0 as PlasmaComponents
-import org.kde.plasma.extras 2.0 as PlasmaExtras
 
 Kirigami.Page {
     id: root;
@@ -44,7 +43,7 @@ Kirigami.Page {
                 right: parent.right;
             }
             height: appNameLabel.height + appDescriptionLabel.height + units.largeSpacing;
-            PlasmaExtras.Heading {
+            Kirigami.Heading {
                 id: appNameLabel;
                 anchors {
                     left: parent.left;
@@ -54,7 +53,7 @@ Kirigami.Page {
                 text: "Peruse Creator";
                 horizontalAlignment: Text.AlignHCenter;
             }
-            PlasmaComponents.Label {
+            Kirigami.Label {
                 id: appDescriptionLabel;
                 anchors {
                     top: parent.verticalCenter;
@@ -67,7 +66,7 @@ Kirigami.Page {
             Rectangle {
                 anchors.centerIn: parent;
                 height: 1;
-                color: theme.textColor;
+                color: Kirigami.Theme.textColor;
                 width: appDescriptionLabel.paintedWidth;
             }
         }
@@ -88,7 +87,7 @@ Kirigami.Page {
                     bottom: parent.verticalCenter;
                     margins: units.largeSpacing;
                 }
-                PlasmaComponents.Label {
+                Kirigami.Label {
                     anchors.fill: parent;
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere;
                     horizontalAlignment: Text.AlignHCenter;

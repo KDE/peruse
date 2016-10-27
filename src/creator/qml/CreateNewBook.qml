@@ -71,7 +71,7 @@ Kirigami.Page {
             height: paintedHeight + units.smallSpacing * 2;
             text: i18nc("label text for the edit field for the file system location for the book", "Folder");
         }
-        PlasmaComponents.Label {
+        Kirigami.Label {
             width: parent.width - getFolderButton.width;
             text: getFolderDlg.folder;
             PlasmaComponents.Button {
