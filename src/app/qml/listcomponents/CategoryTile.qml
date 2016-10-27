@@ -21,8 +21,7 @@
 
 import QtQuick 2.1
 
-import org.kde.plasma.components 2.0 as PlasmaComponents
-import org.kde.plasma.extras 2.0 as PlasmaExtras
+import org.kde.kirigami 1.0 as Kirigami
 
 Item {
     id: root;
@@ -42,11 +41,11 @@ Item {
     }
     Rectangle {
         anchors.fill: parent;
-        color: theme.highlightColor;
+        color: Kirigami.Theme.highlightColor;
         opacity: root.selected ? 1 : 0;
         Behavior on opacity { NumberAnimation { duration: units.shortDuration; } }
     }
-    PlasmaExtras.Title {
+    Kirigami.Header {
         id: categoryTitle;
         anchors {
             margins: units.smallSpacing;
@@ -56,7 +55,7 @@ Item {
         }
         elide: Text.ElideRight;
     }
-    PlasmaComponents.Label {
+    Kirigami.Label {
         id: categoryCount;
         anchors {
             margins: units.smallSpacing;

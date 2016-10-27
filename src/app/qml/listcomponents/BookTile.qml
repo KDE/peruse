@@ -21,9 +21,8 @@
 
 import QtQuick 2.1
 
-import org.kde.plasma.components 2.0 as PlasmaComponents
-import org.kde.plasma.extras 2.0 as PlasmaExtras
 import org.kde.kirigami 1.0 as Kirigami
+import org.kde.plasma.components 2.0 as PlasmaComponents
 
 Item {
     id: root;
@@ -45,7 +44,7 @@ Item {
     clip: true;
     Rectangle {
         anchors.fill: parent;
-        color: theme.highlightColor;
+        color: Kirigami.Theme.highlightColor;
         opacity: root.selected ? 1 : 0;
         Behavior on opacity { NumberAnimation { duration: units.shortDuration; } }
     }
@@ -71,7 +70,7 @@ Item {
             onClicked: root.bookSelected(root.filename, root.currentPage);
         }
     }
-    PlasmaExtras.Heading {
+    Kirigami.Heading {
         id: bookTitle;
         anchors {
             top: parent.top;
@@ -97,7 +96,7 @@ Item {
             color: Kirigami.Theme.linkColor;
         }
     }
-    PlasmaComponents.Label {
+    Kirigami.Label {
         id: bookAuthorLabel;
         anchors {
             top: bookTitle.bottom;
@@ -108,7 +107,7 @@ Item {
         text: "Author";
         font.bold: true;
     }
-    PlasmaComponents.Label {
+    Kirigami.Label {
         id: bookAuthor;
         anchors {
             top: bookTitle.bottom;
@@ -120,7 +119,7 @@ Item {
         text: root.author === "" ? "(unknown)" : root.author;
         opacity: (text === "(unknown)" || text === "") ? 0.3 : 1;
     }
-    PlasmaComponents.Label {
+    Kirigami.Label {
         id: bookPublisherLabel;
         anchors {
             top: bookAuthorLabel.bottom;
@@ -131,7 +130,7 @@ Item {
         text: "Publisher";
         font.bold: true;
     }
-    PlasmaComponents.Label {
+    Kirigami.Label {
         id: bookPublisher;
         anchors {
             top: bookAuthor.bottom;
@@ -143,7 +142,7 @@ Item {
         text: root.publisher === "" ? "(unknown)" : root.publisher;
         opacity: (text === "(unknown)" || text === "") ? 0.3 : 1;
     }
-    PlasmaComponents.Label {
+    Kirigami.Label {
         id: bookFile;
         anchors {
             top: bookPublisherLabel.bottom;
@@ -165,7 +164,7 @@ Item {
             bottom: deleteBase.top;
             margins: units.smallSpacing;
         }
-        PlasmaComponents.Label {
+        Kirigami.Label {
             anchors.fill: parent;
             verticalAlignment: Text.AlignTop;
             text: i18nc("Placeholder text for the book description field when no description is set", "(no description available for this book)");

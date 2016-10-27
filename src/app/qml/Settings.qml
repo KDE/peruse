@@ -26,7 +26,6 @@ import QtQuick.Dialogs 1.0
 
 import org.kde.kirigami 1.0 as Kirigami
 import org.kde.plasma.components 2.0 as PlasmaComponents
-import org.kde.plasma.extras 2.0 as PlasmaExtras
 
 import org.kde.peruse 0.1 as Peruse
 
@@ -111,7 +110,7 @@ Kirigami.Page {
                 enabled: parent.enabled;
                 anchors.fill: parent;
             }
-            PlasmaComponents.Label {
+            Kirigami.Label {
                 anchors {
                     bottom: parent.verticalCenter;
                     left: parent.left;
@@ -129,7 +128,7 @@ Kirigami.Page {
                 }
                 running: addingNewBooksProgress.enabled;
             }
-            PlasmaComponents.Label {
+            Kirigami.Label {
                 anchors {
                     top: loadingSpinner.bottom;
                     left: parent.left;

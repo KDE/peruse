@@ -21,8 +21,7 @@
 
 import QtQuick 2.1
 
-import org.kde.plasma.components 2.0 as PlasmaComponents
-import org.kde.plasma.extras 2.0 as PlasmaExtras
+import org.kde.kirigami 1.0 as Kirigami
 
 Item {
     id: root;
@@ -42,7 +41,7 @@ Item {
     }
     Rectangle {
         anchors.fill: parent;
-        color: theme.highlightColor;
+        color: Kirigami.Theme.highlightColor;
         opacity: root.selected ? 1 : 0;
         Behavior on opacity { NumberAnimation { duration: units.shortDuration; } }
     }
@@ -59,10 +58,10 @@ Item {
             anchors.centerIn: coverImage;
             width: tileBg.width;
             height: tileBg.height;
-            color: theme.viewBackgroundColor;
+            color: Kirigami.Theme.viewBackgroundColor;
             border {
                 width: 2;
-                color: theme.viewTextColor;
+                color: Kirigami.Theme.viewTextColor;
             }
             rotation: 16;
             radius: 2;
@@ -71,17 +70,17 @@ Item {
                     fill: parent;
                     margins: units.smallSpacing;
                 }
-                color: theme.textColor;
+                color: Kirigami.Theme.textColor;
             }
         }
         Rectangle {
             anchors.centerIn: coverImage;
             width: tileBg.width;
             height: tileBg.height;
-            color: theme.viewBackgroundColor;
+            color: Kirigami.Theme.viewBackgroundColor;
             border {
                 width: 2;
-                color: theme.viewTextColor;
+                color: Kirigami.Theme.viewTextColor;
             }
             rotation: 8;
             radius: 2;
@@ -90,7 +89,7 @@ Item {
                     fill: parent;
                     margins: units.smallSpacing;
                 }
-                color: theme.textColor;
+                color: Kirigami.Theme.textColor;
             }
         }
         Rectangle {
@@ -98,10 +97,10 @@ Item {
             anchors.centerIn: coverImage;
             width: Math.max(coverImage.paintedWidth, units.iconSizes.large) + units.smallSpacing * 2;
             height: Math.max(coverImage.paintedHeight, units.iconSizes.large) + units.smallSpacing * 2;
-            color: theme.viewBackgroundColor;
+            color: Kirigami.Theme.viewBackgroundColor;
             border {
                 width: 2;
-                color: theme.viewTextColor;
+                color: Kirigami.Theme.viewTextColor;
             }
             radius: 2;
         }
@@ -121,9 +120,9 @@ Item {
                 margins: -units.smallSpacing;
             }
             radius: height / 2;
-            color: theme.complementaryBackgroundColor;
+            color: Kirigami.Theme.highlightColor;
         }
-        PlasmaComponents.Label {
+        Kirigami.Label {
             id: categoryCount;
             anchors {
                 bottom: tileBg.bottom;
@@ -131,10 +130,10 @@ Item {
             }
             height: paintedHeight;
             width: paintedWidth;
-            color: theme.complementaryTextColor;
+            color: Kirigami.Theme.highlightedTextColor;
         }
     }
-    PlasmaComponents.Label {
+    Kirigami.Label {
         id: categoryTitle;
         anchors {
             top: categoryImage.bottom;

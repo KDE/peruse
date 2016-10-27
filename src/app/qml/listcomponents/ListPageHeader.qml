@@ -20,7 +20,8 @@
  */
 
 import QtQuick 2.1
-import org.kde.plasma.extras 2.0 as PlasmaExtras
+
+import org.kde.kirigami 1.0 as Kirigami
 
 /// FIXME Switch this to using the Kirigami page header/breadcrumbs component instead
 Row {
@@ -32,7 +33,7 @@ Row {
         width: units.largeSpacing;
         height: 1;
     }
-    PlasmaExtras.Heading {
+    Kirigami.Heading {
         width: parent.width - units.largeSpacing;
         text: root.text;
         height: paintedHeight;

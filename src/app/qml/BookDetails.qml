@@ -25,7 +25,6 @@ import QtQuick.Controls 1.0
 
 import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.kirigami 1.0 as Kirigami
-import org.kde.plasma.extras 2.0 as PlasmaExtras
 import org.kde.peruse 0.1 as Peruse
 
 import "listcomponents" as ListComponents
@@ -83,10 +82,10 @@ Item {
                 anchors.centerIn: coverImage;
                 width: coverImage.paintedWidth + units.smallSpacing * 2;
                 height: coverImage.paintedHeight + units.smallSpacing * 2;
-                color: theme.viewBackgroundColor;
+                color: Kirigami.Theme.viewBackgroundColor;
                 border {
                     width: 2;
-                    color: theme.viewTextColor;
+                    color: Kirigami.Theme.viewTextColor;
                 }
                 radius: 2;
             }

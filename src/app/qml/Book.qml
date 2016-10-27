@@ -24,9 +24,7 @@ import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.0
 import QtQuick.Window 2.2
 
-import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.kirigami 1.0 as Kirigami
-import org.kde.plasma.extras 2.0 as PlasmaExtras
 import org.kde.peruse 0.1 as Peruse
 
 import "listcomponents" as ListComponents
@@ -116,7 +114,7 @@ Kirigami.Page {
             }
             Rectangle {
                 anchors.fill: parent;
-                color: theme.highlightColor;
+                color: Kirigami.Theme.highlightColor;
                 opacity: root.currentPage === model.index ? 1 : 0;
                 Behavior on opacity { NumberAnimation { duration: units.shortDuration; } }
             }
@@ -132,7 +130,7 @@ Kirigami.Page {
                 fillMode: Image.PreserveAspectFit;
                 source: model.url;
             }
-            PlasmaComponents.Label {
+            Kirigami.Label {
                 id: pageTitle;
                 anchors {
                     left: parent.left;

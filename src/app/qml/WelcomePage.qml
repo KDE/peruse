@@ -25,7 +25,6 @@ import QtQuick.Controls 1.0
 
 import org.kde.kirigami 1.0 as Kirigami
 import org.kde.plasma.components 2.0 as PlasmaComponents
-import org.kde.plasma.extras 2.0 as PlasmaExtras
 
 import org.kde.peruse 0.1 as Peruse
 import "listcomponents" as ListComponents
@@ -98,7 +97,7 @@ Kirigami.Page {
             }
             height: mainWindow.isLoading ? (parent.height / 2) : (appNameLabel.height + appDescriptionLabel.height + units.largeSpacing);
             Behavior on height { PropertyAnimation { duration: mainWindow.animationDuration; easing.type: Easing.InOutQuad; } }
-            PlasmaExtras.Heading {
+            Kirigami.Heading {
                 id: appNameLabel;
                 anchors {
                     left: parent.left;
@@ -108,7 +107,7 @@ Kirigami.Page {
                 text: "Peruse";
                 horizontalAlignment: Text.AlignHCenter;
             }
-            PlasmaComponents.Label {
+            Kirigami.Label {
                 id: appDescriptionLabel;
                 anchors {
                     top: parent.verticalCenter;
@@ -121,7 +120,7 @@ Kirigami.Page {
             Rectangle {
                 anchors.centerIn: parent;
                 height: 1;
-                color: theme.textColor;
+                color: Kirigami.Theme.textColor;
                 width: appDescriptionLabel.paintedWidth;
             }
         }
@@ -311,7 +310,7 @@ Kirigami.Page {
                     width: startWithThese.width;
                     height: paintedHeight;
                 }
-                PlasmaComponents.Label {
+                Kirigami.Label {
                     visible: !firstRecentlyAddedBook.visible;
                     height: visible ? paintedHeight : 0;
                     width: startWithThese.width;
@@ -481,7 +480,7 @@ Kirigami.Page {
             }
             opacity: mainWindow.isLoading ? 1 : 0;
             Behavior on opacity { PropertyAnimation { duration: mainWindow.animationDuration; } }
-            PlasmaComponents.Label {
+            Kirigami.Label {
                 anchors {
                     bottom: parent.verticalCenter;
                     left: parent.left;
@@ -499,7 +498,7 @@ Kirigami.Page {
                 }
                 running: mainWindow.isLoading;
             }
-            PlasmaComponents.Label {
+            Kirigami.Label {
                 anchors {
                     top: loadingSpinner.bottom;
                     left: parent.left;

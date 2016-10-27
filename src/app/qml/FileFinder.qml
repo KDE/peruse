@@ -25,8 +25,6 @@ import QtQuick.Controls 1.0
 import Qt.labs.folderlistmodel 2.1
 
 import org.kde.kirigami 1.0 as Kirigami
-import org.kde.plasma.components 2.0 as PlasmaComponents
-import org.kde.plasma.extras 2.0 as PlasmaExtras
 
 import "listcomponents" as ListComponents
 

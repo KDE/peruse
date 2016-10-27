@@ -21,8 +21,8 @@
 
 import QtQuick 2.1
 
+import org.kde.kirigami 1.0 as Kirigami
 import org.kde.plasma.components 2.0 as PlasmaComponents
-import org.kde.plasma.extras 2.0 as PlasmaExtras
 
 Item {
     id: root;
@@ -65,7 +65,7 @@ Item {
                 margins: -units.smallSpacing;
             }
             radius: units.smallSpacing;
-            color: theme.highlightColor;
+            color: Kirigami.Theme.highlightColor;
             opacity: root.selected ? 1 : 0;
             Behavior on opacity { NumberAnimation { duration: units.shortDuration; } }
         }
@@ -74,10 +74,10 @@ Item {
             anchors.centerIn: coverImage;
             width: Math.max(coverImage.paintedWidth, units.iconSizes.large) + units.smallSpacing * 2;
             height: Math.max(coverImage.paintedHeight, units.iconSizes.large) + units.smallSpacing * 2;
-            color: theme.viewBackgroundColor;
+            color: Kirigami.Theme.viewBackgroundColor;
             border {
                 width: 2;
-                color: theme.viewTextColor;
+                color: Kirigami.Theme.viewTextColor;
             }
             radius: 2;
         }
@@ -92,7 +92,7 @@ Item {
             fillMode: Image.PreserveAspectFit;
         }
     }
-    PlasmaComponents.Label {
+    Kirigami.Label {
         id: bookTitle;
         anchors {
             top: bookCover.bottom;

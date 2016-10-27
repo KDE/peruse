@@ -21,7 +21,7 @@
 
 import QtQuick 2.1
 
-import org.kde.plasma.extras 2.0 as PlasmaExtras
+import org.kde.kirigami 1.0 as Kirigami
 
 Row {
     width: parent.width;
@@ -32,7 +32,7 @@ Row {
         width: units.largeSpacing;
         height: 1;
     }
-    PlasmaExtras.Heading {
+    Kirigami.Heading {
         id: headerText;
         width: paintedWidth;
         text: section;
