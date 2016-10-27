@@ -21,10 +21,9 @@
 
 import QtQuick 2.2
 import QtQuick.Layouts 1.1
-import QtQuick.Controls 1.0
+import QtQuick.Controls 1.4 as QtControls
 
 import org.kde.kirigami 1.0 as Kirigami
-import org.kde.plasma.components 2.0 as PlasmaComponents
 
 Kirigami.Page {
     id: root;
@@ -42,7 +41,7 @@ Kirigami.Page {
                 left: parent.left;
                 right: parent.right;
             }
-            height: appNameLabel.height + appDescriptionLabel.height + units.largeSpacing;
+            height: appNameLabel.height + appDescriptionLabel.height + Kirigami.Units.largeSpacing;
             Kirigami.Heading {
                 id: appNameLabel;
                 anchors {
@@ -85,7 +84,7 @@ Kirigami.Page {
                     left: parent.left;
                     right: parent.right;
                     bottom: parent.verticalCenter;
-                    margins: units.largeSpacing;
+                    margins: Kirigami.Units.largeSpacing;
                 }
                 Kirigami.Label {
                     anchors.fill: parent;
@@ -110,7 +109,7 @@ Kirigami.Page {
                         right: parent.horizontalCenter;
                         bottom: parent.verticalCenter;
                     }
-                    PlasmaComponents.Button {
+                    QtControls.Button {
                         anchors.centerIn: parent;
                         iconName: "go-next";
                         text: i18nc("Button to continue working on the most recently opened comic book archive", "Continue %1").arg(continueLast.mostRecentBook.split('/').pop());
@@ -136,7 +135,7 @@ Kirigami.Page {
                         right: parent.right;
                         bottom: parent.verticalCenter;
                     }
-                    PlasmaComponents.Button {
+                    QtControls.Button {
                         anchors.centerIn: parent;
                         iconName: "document-open";
                         text: i18nc("Button to open existing comic book archive", "Open Existing...");
@@ -150,7 +149,7 @@ Kirigami.Page {
                         right: parent.horizontalCenter;
                         bottom: parent.bottom;
                     }
-                    PlasmaComponents.Button {
+                    QtControls.Button {
                         anchors.centerIn: parent;
                         iconName: "document-new";
                         text: i18nc("Button to create a new, empty comic book archive", "Create Blank");
@@ -164,7 +163,7 @@ Kirigami.Page {
                         right: parent.right;
                         bottom: parent.bottom;
                     }
-                    PlasmaComponents.Button {
+                    QtControls.Button {
                         anchors.centerIn: parent;
                         iconName: "folder-open";
                         text: i18nc("Button to create a new comic book archive by copying in a bunch of pictures", "Create From Images...");

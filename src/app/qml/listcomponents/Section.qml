@@ -29,7 +29,7 @@ Row {
     property alias text: headerText.text;
     property alias paintedHeight: headerText.paintedHeight;
     Item {
-        width: units.largeSpacing;
+        width: Kirigami.Units.largeSpacing;
         height: 1;
     }
     Kirigami.Heading {
@@ -38,13 +38,13 @@ Row {
         text: section;
     }
     Item {
-        width: units.smallSpacing;
+        width: Kirigami.Units.smallSpacing;
         height: 1;
     }
     Rectangle {
         anchors.bottom: headerText.baseline;
         height: 2;
-        width: parent.width - headerText.width - units.smallSpacing - units.largeSpacing * 2;
+        width: parent.width - headerText.width - Kirigami.Units.smallSpacing - Kirigami.Units.largeSpacing * 2;
         radius: 2;
         color: headerText.color;
     }

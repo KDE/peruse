@@ -20,9 +20,9 @@
  */
 
 import QtQuick 2.2
+import QtQuick.Controls 1.4 as QtControls
 
 import org.kde.kirigami 1.0 as Kirigami
-import org.kde.plasma.components 2.0 as PlasmaComponents
 
 import org.kde.peruse 0.1 as Peruse
 import "listcomponents" as ListComponents
@@ -40,7 +40,7 @@ Item {
     height: searchField.focus || searchField.text.length > 0 ? searchHeight : 0;
     Behavior on height { PropertyAnimation { duration: mainWindow.animationDuration; easing.type: Easing.InOutQuad; } }
     property int searchHeight: searchField.text.length > 0 ? maxHeight : searchField.height;
-    PlasmaComponents.TextField {
+    QtControls.TextField {
         id: searchField;
         anchors {
             top: parent.top;
@@ -77,7 +77,7 @@ Item {
         cellWidth: width / 2;
         cellHeight: Math.max(
             (root.height * 2 / 7),
-            Math.min(cellWidth, (units.iconSizes.enormous + units.largeSpacing * 3 + Kirigami.Theme.defaultFont.pixelSize))
+            Math.min(cellWidth, (Kirigami.Units.iconSizes.enormous + Kirigami.Units.largeSpacing * 3 + Kirigami.Theme.defaultFont.pixelSize))
         );
         currentIndex: -1;
         model: Peruse.FilterProxy {

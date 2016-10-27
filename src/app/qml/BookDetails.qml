@@ -21,9 +21,8 @@
 
 import QtQuick 2.2
 import QtQuick.Layouts 1.1
-import QtQuick.Controls 1.0
+import QtQuick.Controls 1.4 as QtControls
 
-import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.kirigami 1.0 as Kirigami
 import org.kde.peruse 0.1 as Peruse
 
@@ -67,21 +66,21 @@ Item {
 
     Column {
         anchors.horizontalCenter: parent.horizontalCenter;
-        spacing: units.smallSpacing;
+        spacing: Kirigami.Units.smallSpacing;
         width: parent.width;
         height: childrenRect.height;
         Item {
             id: bookCover;
             anchors {
                 horizontalCenter: parent.horizontalCenter;
-                margins: units.largeSpacing;
+                margins: Kirigami.Units.largeSpacing;
             }
-            width: Math.min(parent.width - units.largeSpacing * 2, units.iconSizes.enormous + units.largeSpacing * 2);
+            width: Math.min(parent.width - Kirigami.Units.largeSpacing * 2, Kirigami.Units.iconSizes.enormous + Kirigami.Units.largeSpacing * 2);
             height: width;
             Rectangle {
                 anchors.centerIn: coverImage;
-                width: coverImage.paintedWidth + units.smallSpacing * 2;
-                height: coverImage.paintedHeight + units.smallSpacing * 2;
+                width: coverImage.paintedWidth + Kirigami.Units.smallSpacing * 2;
+                height: coverImage.paintedHeight + Kirigami.Units.smallSpacing * 2;
                 color: Kirigami.Theme.viewBackgroundColor;
                 border {
                     width: 2;
@@ -93,7 +92,7 @@ Item {
                 id: coverImage;
                 anchors {
                     fill: parent;
-                    margins: units.largeSpacing;
+                    margins: Kirigami.Units.largeSpacing;
                 }
                 source: root.thumbnail;
                 asynchronous: true;
@@ -134,7 +133,7 @@ Item {
         Item {
             id: deleteBase;
             width: root.width;
-            height: deleteButton.height + units.largeSpacing * 2;
+            height: deleteButton.height + Kirigami.Units.largeSpacing * 2;
             Behavior on height { PropertyAnimation { duration: mainWindow.animationDuration; } }
             states: [
                 State {
@@ -144,12 +143,12 @@ Item {
                     PropertyChanges { target: deleteBase; height: deleteConfirmBase.height; }
                 }
             ]
-            PlasmaComponents.Button {
+            QtControls.Button {
                 id: deleteButton;
                 text: i18nc("Spawn inline dialog box to confirm permanent removal of this book", "Delete from device");
                 anchors {
                     top: parent.top;
-                    topMargin: units.largeSpacing;
+                    topMargin: Kirigami.Units.largeSpacing;
                     horizontalCenter: parent.horizontalCenter;
                 }
                 iconName: "edit-delete";
@@ -161,12 +160,12 @@ Item {
                 opacity: 0;
                 width: root.width;
                 Behavior on opacity { PropertyAnimation { duration: mainWindow.animationDuration; } }
-                height: yesDelete.height + confirmDeleteLabel.height + units.largeSpacing * 2 + units.smallSpacing;
+                height: yesDelete.height + confirmDeleteLabel.height + Kirigami.Units.largeSpacing * 2 + Kirigami.Units.smallSpacing;
                 Kirigami.Label {
                     id: confirmDeleteLabel;
                     anchors {
                         top: parent.top;
-                        topMargin: units.largeSpacing;
+                        topMargin: Kirigami.Units.largeSpacing;
                         left: parent.left;
                         right: parent.right;
                     }
@@ -175,11 +174,11 @@ Item {
                     horizontalAlignment: Text.AlignHCenter;
                     text: i18nc("Dialog text for delete book dialog", "Are you sure you want to delete this from your device?");
                 }
-                PlasmaComponents.Button {
+                QtControls.Button {
                     id: yesDelete;
                     anchors {
                         top: confirmDeleteLabel.bottom;
-                        topMargin: units.smallSpacing;
+                        topMargin: Kirigami.Units.smallSpacing;
                         right: parent.horizontalCenter;
                         rightMargin: (parent.width - width) / 4;
                     }
@@ -190,10 +189,10 @@ Item {
                         mainWindow.pageStack.pop();
                     }
                 }
-                PlasmaComponents.Button {
+                QtControls.Button {
                     anchors {
                         top: confirmDeleteLabel.bottom;
-                        topMargin: units.smallSpacing;
+                        topMargin: Kirigami.Units.smallSpacing;
                         left: parent.horizontalCenter;
                         leftMargin: (parent.width - width) / 4;
                     }

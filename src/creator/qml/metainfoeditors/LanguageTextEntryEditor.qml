@@ -43,7 +43,7 @@ Item {
     Kirigami.Label {
         id: titleLabel;
         width: parent.width;
-        height: paintedHeight + units.smallSpacing * 2;
+        height: paintedHeight + Kirigami.Units.smallSpacing * 2;
         text: root.title;
         PlasmaComponents.Button {
             id: removeButton;
@@ -61,7 +61,7 @@ Item {
             anchors {
                 top: parent.top;
                 right: removeButton.visible ? removeButton.left : parent.right;
-                rightMargin: removeButton.visible ? units.smallSpacing : 0;
+                rightMargin: removeButton.visible ? Kirigami.Units.smallSpacing : 0;
             }
             height: parent.height;
             width: height;

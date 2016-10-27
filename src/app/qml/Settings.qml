@@ -21,11 +21,10 @@
 
 import QtQuick 2.2
 import QtQuick.Layouts 1.1
-import QtQuick.Controls 1.0
+import QtQuick.Controls 1.4 as QtControls
 import QtQuick.Dialogs 1.0
 
 import org.kde.kirigami 1.0 as Kirigami
-import org.kde.plasma.components 2.0 as PlasmaComponents
 
 import org.kde.peruse 0.1 as Peruse
 
@@ -45,13 +44,13 @@ Kirigami.Page {
             clip: true;
             Item {
                 width: parent.width;
-                height: units.largeSpacing;
+                height: Kirigami.Units.largeSpacing;
             }
             Item {
                 height: folderHeader.height;
-                width: parent.width - folderAdd.width - units.smallSpacing;
+                width: parent.width - folderAdd.width - Kirigami.Units.smallSpacing;
                 ListComponents.Section { id: folderHeader; text: i18nc("title of the list of search folders", "Search Folders"); }
-                ToolButton {
+                QtControls.ToolButton {
                     id: folderAdd;
                     iconName: "list-add";
                     onClicked: {
@@ -70,7 +69,7 @@ Kirigami.Page {
             }
             Item {
                 width: parent.width;
-                height: units.largeSpacing;
+                height: Kirigami.Units.largeSpacing;
             }
             Repeater {
                 model: peruseConfig.bookLocations;
@@ -119,7 +118,7 @@ Kirigami.Page {
                 horizontalAlignment: Text.AlignHCenter;
                 text: i18nc("shown with a throbber when searching for books on the device", "Please wait while we find your books...");
             }
-            PlasmaComponents.BusyIndicator {
+        QtControls.BusyIndicator {
                 id: loadingSpinner;
                 anchors {
                     top: parent.verticalCenter;

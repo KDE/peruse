@@ -20,9 +20,9 @@
  */
 
 import QtQuick 2.1
+import QtQuick.Controls 1.4 as QtControls
 
 import org.kde.kirigami 1.0 as Kirigami
-import org.kde.plasma.components 2.0 as PlasmaComponents
 
 Item {
     id: root;
@@ -38,7 +38,7 @@ Item {
     signal bookSelected(string filename, int currentPage);
     signal bookDeleteRequested();
 
-    property int neededHeight: bookCover.height;// + bookAuthorLabel.height + bookFile.height + units.smallSpacing * 4;
+    property int neededHeight: bookCover.height;// + bookAuthorLabel.height + bookFile.height + Kirigami.Units.smallSpacing * 4;
     visible: height > 1;
     enabled: visible;
     clip: true;
@@ -46,7 +46,7 @@ Item {
         anchors.fill: parent;
         color: Kirigami.Theme.highlightColor;
         opacity: root.selected ? 1 : 0;
-        Behavior on opacity { NumberAnimation { duration: units.shortDuration; } }
+        Behavior on opacity { NumberAnimation { duration: Kirigami.Units.shortDuration; } }
     }
     Item {
         id: bookCover;
@@ -60,7 +60,7 @@ Item {
             id: coverImage;
             anchors {
                 fill: parent;
-                margins: units.smallSpacing;
+                margins: Kirigami.Units.smallSpacing;
             }
             asynchronous: true;
             fillMode: Image.PreserveAspectFit;
@@ -74,7 +74,7 @@ Item {
         id: bookTitle;
         anchors {
             top: parent.top;
-            leftMargin: units.smallSpacing;
+            leftMargin: Kirigami.Units.smallSpacing;
             left: bookCover.right;
             right: parent.right;
         }
@@ -101,7 +101,7 @@ Item {
         anchors {
             top: bookTitle.bottom;
             left: bookCover.right;
-            leftMargin: units.smallSpacing;
+            leftMargin: Kirigami.Units.smallSpacing;
         }
         width: paintedWidth;
         text: "Author";
@@ -112,7 +112,7 @@ Item {
         anchors {
             top: bookTitle.bottom;
             left: bookAuthorLabel.right;
-            leftMargin: units.smallSpacing;
+            leftMargin: Kirigami.Units.smallSpacing;
             right: parent.right;
         }
         elide: Text.ElideRight;
@@ -124,7 +124,7 @@ Item {
         anchors {
             top: bookAuthorLabel.bottom;
             left: bookCover.right;
-            leftMargin: units.smallSpacing;
+            leftMargin: Kirigami.Units.smallSpacing;
         }
         width: paintedWidth;
         text: "Publisher";
@@ -135,7 +135,7 @@ Item {
         anchors {
             top: bookAuthor.bottom;
             left: bookPublisherLabel.right;
-            leftMargin: units.smallSpacing;
+            leftMargin: Kirigami.Units.smallSpacing;
             right: parent.right;
         }
         elide: Text.ElideRight;
@@ -147,7 +147,7 @@ Item {
         anchors {
             top: bookPublisherLabel.bottom;
             left: bookCover.right;
-            leftMargin: units.smallSpacing;
+            leftMargin: Kirigami.Units.smallSpacing;
             right: parent.right;
         }
         elide: Text.ElideMiddle;
@@ -162,7 +162,7 @@ Item {
             left: bookCover.right;
             right: parent.right;
             bottom: deleteBase.top;
-            margins: units.smallSpacing;
+            margins: Kirigami.Units.smallSpacing;
         }
         Kirigami.Label {
             anchors.fill: parent;
@@ -175,11 +175,11 @@ Item {
         id: deleteBase;
         anchors {
             left: bookCover.right;
-            leftMargin: units.smallSpacing;
+            leftMargin: Kirigami.Units.smallSpacing;
             right: parent.right;
             bottom: parent.bottom;
         }
-        height: deleteButton.height + units.smallSpacing * 2;
+        height: deleteButton.height + Kirigami.Units.smallSpacing * 2;
         Behavior on height { PropertyAnimation { duration: mainWindow.animationDuration; easing.type: Easing.InOutQuad; } }
         states: [
             State {
@@ -189,13 +189,13 @@ Item {
                 PropertyChanges { target: deleteBase; height: deleteConfirmBase.height; }
             }
         ]
-        PlasmaComponents.Button {
+        QtControls.Button {
             id: deleteButton;
             text: i18nc("Spawn inline dialog box to confirm permanent removal of this book", "Delete from device");
             anchors {
                 bottom: parent.bottom;
                 right: parent.right;
-                margins: units.smallSpacing;
+                margins: Kirigami.Units.smallSpacing;
             }
             iconName: "edit-delete";
             onClicked: deleteBase.state = "confirmDelete";
@@ -206,12 +206,12 @@ Item {
             opacity: 0;
             width: parent.width;
             Behavior on opacity { PropertyAnimation { duration: mainWindow.animationDuration; easing.type: Easing.InOutQuad; } }
-            height: yesDelete.height + confirmDeleteLabel.height + units.largeSpacing * 2 + units.smallSpacing;
+            height: yesDelete.height + confirmDeleteLabel.height + Kirigami.Units.largeSpacing * 2 + Kirigami.Units.smallSpacing;
             Kirigami.Label {
                 id: confirmDeleteLabel;
                 anchors {
                     top: parent.top;
-                    topMargin: units.largeSpacing;
+                    topMargin: Kirigami.Units.largeSpacing;
                     left: parent.left;
                     right: parent.right;
                 }
@@ -220,11 +220,11 @@ Item {
                 horizontalAlignment: Text.AlignHCenter;
                 text: i18nc("Dialog text for delete book dialog", "Are you sure you want to delete this from your device?");
             }
-            PlasmaComponents.Button {
+            QtControls.Button {
                 id: yesDelete;
                 anchors {
                     top: confirmDeleteLabel.bottom;
-                    topMargin: units.smallSpacing;
+                    topMargin: Kirigami.Units.smallSpacing;
                     right: parent.horizontalCenter;
                     rightMargin: (parent.width - width) / 4;
                 }
@@ -232,10 +232,10 @@ Item {
                 iconName: "dialog-ok";
                 onClicked: root.bookDeleteRequested();
             }
-            PlasmaComponents.Button {
+            QtControls.Button {
                 anchors {
                     top: confirmDeleteLabel.bottom;
-                    topMargin: units.smallSpacing;
+                    topMargin: Kirigami.Units.smallSpacing;
                     left: parent.horizontalCenter;
                     leftMargin: (parent.width - width) / 4;
                 }

@@ -21,6 +21,7 @@
 
 import QtQuick 2.2
 import QtQuick.Dialogs 1.2
+import QtQuick.Controls 1.4 as QtControls
 
 import org.kde.kirigami 1.0 as Kirigami
 import org.kde.plasma.components 2.0 as PlasmaComponents
@@ -31,7 +32,7 @@ Kirigami.OverlaySheet {
     property QtObject model;
     Column {
         height: childrenRect.height;
-        spacing: units.smallSpacing;
+        spacing: Kirigami.Units.smallSpacing;
         Kirigami.Heading {
             width: parent.width;
             height: paintedHeight;
@@ -45,9 +46,9 @@ Kirigami.OverlaySheet {
         }
         Item {
             width: parent.width;
-            height: units.largeSpacing;
+            height: Kirigami.Units.largeSpacing;
         }
-        PlasmaComponents.Button {
+        QtControls.Button {
             anchors.horizontalCenter: parent.horizontalCenter;
             iconName: "document-open";
             text: i18nc("button to add a page by finding an image on the filesystem and copying it into the book", "Copy an image from your device");
@@ -68,12 +69,12 @@ Kirigami.OverlaySheet {
                 }
             }
         }
-        PlasmaComponents.Button {
+        QtControls.Button {
             anchors.horizontalCenter: parent.horizontalCenter;
             iconName: "document-new";
             text: i18nc("button to add a page by creating a new image using an image editor", "Create a new image using an image editor");
         }
-        PlasmaComponents.Button {
+        QtControls.Button {
             anchors.horizontalCenter: parent.horizontalCenter;
             iconName: "camera";
             text: i18nc("button to add a page by taking a photo with a camera", "Take a photo and add that");

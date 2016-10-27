@@ -30,11 +30,11 @@ Row {
     width: parent.width;
     height: childrenRect.height;
     Item {
-        width: units.largeSpacing;
+        width: Kirigami.Units.largeSpacing;
         height: 1;
     }
     Kirigami.Heading {
-        width: parent.width - units.largeSpacing;
+        width: parent.width - Kirigami.Units.largeSpacing;
         text: root.text;
         height: paintedHeight;
     }

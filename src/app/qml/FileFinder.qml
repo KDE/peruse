@@ -58,13 +58,13 @@ Item {
             right: parent.right;
         }
         clip: true;
-        height: units.gridUnit * 2;
+        height: Kirigami.Units.gridUnit * 2;
     }
     ToolButton {
         anchors {
             top: parent.top;
             right: parent.right;
-            margins: units.smallSpacing;
+            margins: Kirigami.Units.smallSpacing;
         }
         iconName: "dialog-ok-apply";
         onClicked: root.accepted();
@@ -74,7 +74,7 @@ Item {
         id: folderView;
         anchors {
             top: titleContainer.bottom;
-            topMargin: units.largeSpacing;
+            topMargin: Kirigami.Units.largeSpacing;
             left: parent.left;
             right: parent.right;
             bottom: parent.bottom;

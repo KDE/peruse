@@ -21,10 +21,9 @@
 
 import QtQuick 2.2
 import QtQuick.Layouts 1.1
-import QtQuick.Controls 1.0
+import QtQuick.Controls 1.4 as QtControls
 
 import org.kde.kirigami 1.0 as Kirigami
-import org.kde.plasma.components 2.0 as PlasmaComponents
 
 import org.kde.peruse 0.1 as Peruse
 import "listcomponents" as ListComponents
@@ -95,7 +94,7 @@ Kirigami.Page {
                 left: parent.left;
                 right: parent.right;
             }
-            height: mainWindow.isLoading ? (parent.height / 2) : (appNameLabel.height + appDescriptionLabel.height + units.largeSpacing);
+            height: mainWindow.isLoading ? (parent.height / 2) : (appNameLabel.height + appDescriptionLabel.height + Kirigami.Units.largeSpacing);
             Behavior on height { PropertyAnimation { duration: mainWindow.animationDuration; easing.type: Easing.InOutQuad; } }
             Kirigami.Heading {
                 id: appNameLabel;
@@ -489,7 +488,7 @@ Kirigami.Page {
                 horizontalAlignment: Text.AlignHCenter;
                 text: i18nc("shown with a throbber when searching for books on the device", "Please wait while we find your books...");
             }
-            PlasmaComponents.BusyIndicator {
+            QtControls.BusyIndicator {
                 id: loadingSpinner;
                 anchors {
                     top: parent.verticalCenter;

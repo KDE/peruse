@@ -20,9 +20,9 @@
  */
 
 import QtQuick 2.2
+import QtQuick.Controls 1.4 as QtControls
 
 import org.kde.kirigami 1.0 as Kirigami
-import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.peruse 0.1 as Peruse
 
 Kirigami.Page {
@@ -93,7 +93,7 @@ Kirigami.Page {
             model: bookModel;
             delegate: Kirigami.SwipeListItem {
                 id: listItem;
-                height: units.iconSizes.huge + units.smallSpacing * 2;
+                height: Kirigami.Units.iconSizes.huge + Kirigami.Units.smallSpacing * 2;
                 supportsMouseEvents: true;
                 onClicked: ;
                 actions: [
@@ -136,7 +136,7 @@ Kirigami.Page {
                             id: coverImage;
                             anchors {
                                 fill: parent;
-                                margins: units.smallSpacing;
+                                margins: Kirigami.Units.smallSpacing;
                             }
                             asynchronous: true;
                             fillMode: Image.PreserveAspectFit;
@@ -165,7 +165,7 @@ Kirigami.Page {
                 onClicked: { }
             }
         }
-        PlasmaComponents.BusyIndicator {
+        QtControls.BusyIndicator {
             anchors.centerIn: processingBackground;
             running: processingBackground.opacity > 0;
             visible: running;

@@ -20,9 +20,9 @@
  */
 
 import QtQuick 2.2
+import QtQuick.Controls 1.4 as QtControls
 
 import org.kde.kirigami 1.0 as Kirigami
-import org.kde.plasma.components 2.0 as PlasmaComponents
 
 import "metainfoeditors"
 
@@ -48,10 +48,10 @@ Kirigami.Page {
         id: contentColumn;
         width: root.width - (root.leftPadding + root.rightPadding);
         height: childrenRect.height;
-        spacing: units.smallSpacing;
+        spacing: Kirigami.Units.smallSpacing;
         Kirigami.Heading {
             width: parent.width;
-            height: paintedHeight + units.smallSpacing * 2;
+            height: paintedHeight + Kirigami.Units.smallSpacing * 2;
             text: i18nc("label text for the edit field for the book title", "Titles");
         }
         Repeater {
@@ -71,7 +71,7 @@ Kirigami.Page {
                 removePossible: title === modelData;
             }
         }
-        PlasmaComponents.Button {
+        QtControls.Button {
             anchors.right: parent.right;
             width: parent.with;
             iconName: "list-add";
@@ -80,7 +80,7 @@ Kirigami.Page {
 
         Kirigami.Heading {
             width: parent.width;
-            height: paintedHeight + units.smallSpacing * 2;
+            height: paintedHeight + Kirigami.Units.smallSpacing * 2;
             text: i18nc("label text for the edit field for the genre list", "Genres");
         }
         Repeater {
@@ -88,15 +88,15 @@ Kirigami.Page {
             delegate: Item {
                 width: parent.width;
                 height: childrenRect.height;
-                PlasmaComponents.TextField {
+                QtControls.TextField {
                     id: genreText;
-                    width: parent.width - removeGenreButton.width - units.smallSpacing;
+                    width: parent.width - removeGenreButton.width - Kirigami.Units.smallSpacing;
                     text: modelData;
-                    PlasmaComponents.Button {
+                    QtControls.Button {
                         id: removeGenreButton;
                         anchors {
                             left: parent.right;
-                            leftMargin: units.smallSpacing;
+                            leftMargin: Kirigami.Units.smallSpacing;
                         }
                         iconName: "list-remove";
                         height: parent.height;
@@ -107,16 +107,15 @@ Kirigami.Page {
                         }
                     }
                 }
-                PlasmaComponents.Slider {
+                QtControls.Slider {
                     anchors {
                         top: genreText.bottom;
-                        topMargin: units.smallSpacing;
+                        topMargin: Kirigami.Units.smallSpacing;
                     }
                     minimumValue: 0;
                     maximumValue: 100;
                     stepSize: 1.0;
                     width: genreText.width;
-                    valueIndicatorVisible: true;
                     value: root.model.acbfData.metaData.bookInfo.genrePercentage(modelData);
                     onValueChanged: {
                         if(value > 0 && value !== root.model.acbfData.metaData.bookInfo.genrePercentage(modelData)) {
@@ -127,15 +126,15 @@ Kirigami.Page {
                 }
             }
         }
-        Item { width: parent.width; height: units.smallSpacing; }
-        PlasmaComponents.TextField {
-            width: parent.width - addCharacterButton.width - units.smallSpacing;
+        Item { width: parent.width; height: Kirigami.Units.smallSpacing; }
+        QtControls.TextField {
+            width: parent.width - addCharacterButton.width - Kirigami.Units.smallSpacing;
             placeholderText: i18nc("placeholder text for the add new genre text entry", "Write to add new genre");
-            PlasmaComponents.Button {
+            QtControls.Button {
                 id: addGenreButton;
                 anchors {
                     left: parent.right;
-                    leftMargin: units.smallSpacing;
+                    leftMargin: Kirigami.Units.smallSpacing;
                 }
                 iconName: "list-add";
                 height: parent.height;
@@ -152,19 +151,19 @@ Kirigami.Page {
 
         Kirigami.Heading {
             width: parent.width;
-            height: paintedHeight + units.smallSpacing * 2;
+            height: paintedHeight + Kirigami.Units.smallSpacing * 2;
             text: i18nc("label text for the edit field for the character list", "Characters");
         }
         Repeater {
             model: root.model.acbfData ? root.model.acbfData.metaData.bookInfo.characters : 0;
-            delegate: PlasmaComponents.TextField {
-                width: parent.width - removeCharacterButton.width - units.smallSpacing;
+            delegate: QtControls.TextField {
+                width: parent.width - removeCharacterButton.width - Kirigami.Units.smallSpacing;
                 text: modelData;
-                PlasmaComponents.Button {
+                QtControls.Button {
                     id: removeCharacterButton;
                     anchors {
                         left: parent.right;
-                        leftMargin: units.smallSpacing;
+                        leftMargin: Kirigami.Units.smallSpacing;
                     }
                     iconName: "list-remove";
                     height: parent.height;
@@ -176,15 +175,15 @@ Kirigami.Page {
                 }
             }
         }
-        Item { width: parent.width; height: units.smallSpacing; }
-        PlasmaComponents.TextField {
-            width: parent.width - addCharacterButton.width - units.smallSpacing;
+        Item { width: parent.width; height: Kirigami.Units.smallSpacing; }
+        QtControls.TextField {
+            width: parent.width - addCharacterButton.width - Kirigami.Units.smallSpacing;
             placeholderText: i18nc("placeholder text for the add new character text entry", "Write to add new character");
-            PlasmaComponents.Button {
+            QtControls.Button {
                 id: addCharacterButton;
                 anchors {
                     left: parent.right;
-                    leftMargin: units.smallSpacing;
+                    leftMargin: Kirigami.Units.smallSpacing;
                 }
                 iconName: "list-add";
                 height: parent.height;

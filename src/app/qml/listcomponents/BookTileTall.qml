@@ -20,9 +20,9 @@
  */
 
 import QtQuick 2.1
+import QtQuick.Controls 1.4 as QtControls
 
 import org.kde.kirigami 1.0 as Kirigami
-import org.kde.plasma.components 2.0 as PlasmaComponents
 
 Item {
     id: root;
@@ -41,7 +41,7 @@ Item {
     /// @see https://bugreports.qt.io/browse/QTBUG-41441
     signal pressAndHold();
 
-    property int neededHeight: bookCover.height + bookTitle.height + units.largeSpacing;
+    property int neededHeight: bookCover.height + bookTitle.height + Kirigami.Units.largeSpacing;
     visible: height > 0;
     enabled: visible;
     clip: true;
@@ -55,25 +55,25 @@ Item {
         anchors {
             top: parent.top;
             horizontalCenter: parent.horizontalCenter;
-            margins: units.largeSpacing;
+            margins: Kirigami.Units.largeSpacing;
         }
-        width: Math.min(parent.width - units.largeSpacing * 2, units.iconSizes.enormous + units.largeSpacing * 2);
+        width: Math.min(parent.width - Kirigami.Units.largeSpacing * 2, Kirigami.Units.iconSizes.enormous + Kirigami.Units.largeSpacing * 2);
         height: width;
         Rectangle {
             anchors {
                 fill: coverOutline;
-                margins: -units.smallSpacing;
+                margins: -Kirigami.Units.smallSpacing;
             }
-            radius: units.smallSpacing;
+            radius: Kirigami.Units.smallSpacing;
             color: Kirigami.Theme.highlightColor;
             opacity: root.selected ? 1 : 0;
-            Behavior on opacity { NumberAnimation { duration: units.shortDuration; } }
+            Behavior on opacity { NumberAnimation { duration: Kirigami.Units.shortDuration; } }
         }
         Rectangle {
             id: coverOutline;
             anchors.centerIn: coverImage;
-            width: Math.max(coverImage.paintedWidth, units.iconSizes.large) + units.smallSpacing * 2;
-            height: Math.max(coverImage.paintedHeight, units.iconSizes.large) + units.smallSpacing * 2;
+            width: Math.max(coverImage.paintedWidth, Kirigami.Units.iconSizes.large) + Kirigami.Units.smallSpacing * 2;
+            height: Math.max(coverImage.paintedHeight, Kirigami.Units.iconSizes.large) + Kirigami.Units.smallSpacing * 2;
             color: Kirigami.Theme.viewBackgroundColor;
             border {
                 width: 2;
@@ -85,7 +85,7 @@ Item {
             id: coverImage;
             anchors {
                 fill: parent;
-                margins: units.largeSpacing;
+                margins: Kirigami.Units.largeSpacing;
             }
             source: root.thumbnail;
             asynchronous: true;
@@ -98,7 +98,7 @@ Item {
             top: bookCover.bottom;
             left: parent.left;
             right: parent.right;
-            margins: units.smallSpacing;
+            margins: Kirigami.Units.smallSpacing;
             topMargin: 0;
         }
         height: paintedHeight;
@@ -107,10 +107,10 @@ Item {
         elide: Text.ElideMiddle;
         horizontalAlignment: Text.AlignHCenter;
     }
-    PlasmaComponents.ProgressBar {
+    QtControls.ProgressBar {
         anchors {
             top: bookCover.bottom;
-            topMargin: -units.smallSpacing;
+            topMargin: -Kirigami.Units.smallSpacing;
             left: bookCover.left;
             right: bookCover.right;
             bottom: bookTitle.top;

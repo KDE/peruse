@@ -23,7 +23,7 @@ import QtQuick 2.1
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.0
 
-import org.kde.plasma.components 2.0 as PlasmaComponents
+import org.kde.kirigami 1.0 as Kirigami
 import org.kde.okular 2.0 as Okular
 
 ViewerBase {
@@ -41,7 +41,7 @@ ViewerBase {
         id: thumbnailComponent;
         Item {
             width: parent.width;
-            height: units.gridUnit * 6;
+            height: Kirigami.Units.gridUnit * 6;
             MouseArea {
                 anchors.fill: parent;
                 onClicked: viewLoader.item.currentPage = model.index;
@@ -50,18 +50,18 @@ ViewerBase {
                 anchors.fill: parent;
                 color: theme.highlightColor;
                 opacity: root.currentPage === model.index ? 1 : 0;
-                Behavior on opacity { NumberAnimation { duration: units.shortDuration; } }
+                Behavior on opacity { NumberAnimation { duration: Kirigami.Units.shortDuration; } }
             }
             Okular.ThumbnailItem {
                 id: thumbnail
                 anchors {
                     top: parent.top;
                     horizontalCenter: parent.horizontalCenter;
-                    margins: units.smallSpacing;
+                    margins: Kirigami.Units.smallSpacing;
                 }
                 document: documentItem
                 pageNumber: modelData
-                height: parent.height - pageTitle.height - units.smallSpacing * 2;
+                height: parent.height - pageTitle.height - Kirigami.Units.smallSpacing * 2;
                 function updateWidth() {
                     width = Math.round(height * (implicitWidth / implicitHeight));
                 }
@@ -69,7 +69,7 @@ ViewerBase {
                 onHeightChanged: updateWidth();
                 onImplicitHeightChanged: updateWidth();
             }
-            PlasmaComponents.Label {
+            Kirigami.Label {
                 id: pageTitle;
                 anchors {
                     left: parent.left;

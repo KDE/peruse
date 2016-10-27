@@ -29,7 +29,7 @@ Item {
     property alias count: categoryCount.text;
     property alias title: categoryTitle.text
     property QtObject entriesModel;
-    property int neededHeight: categoryImage.height + categoryTitle.height + units.largeSpacing;
+    property int neededHeight: categoryImage.height + categoryTitle.height + Kirigami.Units.largeSpacing;
     visible: height > 0;
     enabled: visible;
     clip: true;
@@ -43,16 +43,16 @@ Item {
         anchors.fill: parent;
         color: Kirigami.Theme.highlightColor;
         opacity: root.selected ? 1 : 0;
-        Behavior on opacity { NumberAnimation { duration: units.shortDuration; } }
+        Behavior on opacity { NumberAnimation { duration: Kirigami.Units.shortDuration; } }
     }
     Item {
         id: categoryImage;
         anchors {
             top: parent.top;
             horizontalCenter: parent.horizontalCenter;
-            margins: units.largeSpacing;
+            margins: Kirigami.Units.largeSpacing;
         }
-        width: Math.min(parent.width - units.largeSpacing * 2, units.iconSizes.enormous + units.largeSpacing * 2);
+        width: Math.min(parent.width - Kirigami.Units.largeSpacing * 2, Kirigami.Units.iconSizes.enormous + Kirigami.Units.largeSpacing * 2);
         height: width;
         Rectangle {
             anchors.centerIn: coverImage;
@@ -68,7 +68,7 @@ Item {
             Rectangle {
                 anchors {
                     fill: parent;
-                    margins: units.smallSpacing;
+                    margins: Kirigami.Units.smallSpacing;
                 }
                 color: Kirigami.Theme.textColor;
             }
@@ -87,7 +87,7 @@ Item {
             Rectangle {
                 anchors {
                     fill: parent;
-                    margins: units.smallSpacing;
+                    margins: Kirigami.Units.smallSpacing;
                 }
                 color: Kirigami.Theme.textColor;
             }
@@ -95,8 +95,8 @@ Item {
         Rectangle {
             id: tileBg;
             anchors.centerIn: coverImage;
-            width: Math.max(coverImage.paintedWidth, units.iconSizes.large) + units.smallSpacing * 2;
-            height: Math.max(coverImage.paintedHeight, units.iconSizes.large) + units.smallSpacing * 2;
+            width: Math.max(coverImage.paintedWidth, Kirigami.Units.iconSizes.large) + Kirigami.Units.smallSpacing * 2;
+            height: Math.max(coverImage.paintedHeight, Kirigami.Units.iconSizes.large) + Kirigami.Units.smallSpacing * 2;
             color: Kirigami.Theme.viewBackgroundColor;
             border {
                 width: 2;
@@ -108,7 +108,7 @@ Item {
             id: coverImage;
             anchors {
                 fill: parent;
-                margins: units.largeSpacing;
+                margins: Kirigami.Units.largeSpacing;
             }
             source: root.entriesModel ? root.entriesModel.get(0).readProperty("thumbnail") : "";
             asynchronous: true;
@@ -117,7 +117,7 @@ Item {
         Rectangle {
             anchors {
                 fill: categoryCount;
-                margins: -units.smallSpacing;
+                margins: -Kirigami.Units.smallSpacing;
             }
             radius: height / 2;
             color: Kirigami.Theme.highlightColor;
@@ -139,7 +139,7 @@ Item {
             top: categoryImage.bottom;
             left: parent.left;
             right: parent.right;
-            margins: units.smallSpacing;
+            margins: Kirigami.Units.smallSpacing;
             topMargin: 0;
         }
         height: paintedHeight;

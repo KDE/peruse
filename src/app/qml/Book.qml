@@ -21,7 +21,7 @@
 
 import QtQuick 2.2
 import QtQuick.Layouts 1.1
-import QtQuick.Controls 1.0
+import QtQuick.Controls 1.4 as QtControls
 import QtQuick.Window 2.2
 
 import org.kde.kirigami 1.0 as Kirigami
@@ -107,7 +107,7 @@ Kirigami.Page {
         id: thumbnailComponent;
         Item {
             width: parent.width;
-            height: units.gridUnit * 6;
+            height: Kirigami.Units.gridUnit * 6;
             MouseArea {
                 anchors.fill: parent;
                 onClicked: viewLoader.item.currentPage = model.index;
@@ -116,16 +116,16 @@ Kirigami.Page {
                 anchors.fill: parent;
                 color: Kirigami.Theme.highlightColor;
                 opacity: root.currentPage === model.index ? 1 : 0;
-                Behavior on opacity { NumberAnimation { duration: units.shortDuration; } }
+                Behavior on opacity { NumberAnimation { duration: Kirigami.Units.shortDuration; } }
             }
             Image {
                 anchors {
                     top: parent.top;
                     left: parent.left;
                     right: parent.right;
-                    margins: units.smallSpacing;
+                    margins: Kirigami.Units.smallSpacing;
                 }
-                height: parent.height - pageTitle.height - units.smallSpacing * 2;
+                height: parent.height - pageTitle.height - Kirigami.Units.smallSpacing * 2;
                 asynchronous: true;
                 fillMode: Image.PreserveAspectFit;
                 source: model.url;
@@ -457,9 +457,9 @@ Kirigami.Page {
         }
         Column {
             clip: true;
-            width: root.width - units.largeSpacing * 2;
-            height: childrenRect.height + units.largeSpacing * 2;
-            spacing: units.largeSpacing;
+            width: root.width - Kirigami.Units.largeSpacing * 2;
+            height: childrenRect.height + Kirigami.Units.largeSpacing * 2;
+            spacing: Kirigami.Units.largeSpacing;
             ListComponents.BookTile {
                 id: detailsTile;
                 height: neededHeight;
@@ -491,7 +491,7 @@ Kirigami.Page {
             ListView {
                 id: seriesListView;
                 width: parent.width;
-                height: units.gridUnit * 12;
+                height: Kirigami.Units.gridUnit * 12;
                 orientation: ListView.Horizontal;
                 NumberAnimation { id: seriesListAnimation; target: seriesListView; property: "contentX"; duration: mainWindow.animationDuration; easing.type: Easing.InOutQuad; }
                 delegate: ListComponents.BookTileTall {

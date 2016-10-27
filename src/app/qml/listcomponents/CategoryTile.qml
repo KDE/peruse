@@ -29,7 +29,7 @@ Item {
     property alias count: categoryCount.text;
     property alias title: categoryTitle.text
     property QtObject entriesModel;
-    property int neededHeight: categoryTitle.height + units.smallSpacing * 2;
+    property int neededHeight: categoryTitle.height + Kirigami.Units.smallSpacing * 2;
     visible: height > 0;
     enabled: visible;
     clip: true;
@@ -43,12 +43,12 @@ Item {
         anchors.fill: parent;
         color: Kirigami.Theme.highlightColor;
         opacity: root.selected ? 1 : 0;
-        Behavior on opacity { NumberAnimation { duration: units.shortDuration; } }
+        Behavior on opacity { NumberAnimation { duration: Kirigami.Units.shortDuration; } }
     }
     Kirigami.Header {
         id: categoryTitle;
         anchors {
-            margins: units.smallSpacing;
+            margins: Kirigami.Units.smallSpacing;
             top: parent.top;
             left: parent.left;
             right: categoryCount.left;
@@ -58,7 +58,7 @@ Item {
     Kirigami.Label {
         id: categoryCount;
         anchors {
-            margins: units.smallSpacing;
+            margins: Kirigami.Units.smallSpacing;
             verticalCenter: parent.verticalCenter;
             right: parent.right;
         }

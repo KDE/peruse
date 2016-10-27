@@ -21,9 +21,9 @@
 
 import QtQuick 2.2
 import QtQuick.Dialogs 1.2
+import QtQuick.Controls 1.4 as QtControls
 
 import org.kde.kirigami 1.0 as Kirigami
-import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.peruse 0.1 as Peruse
 
 Kirigami.Page {
@@ -54,13 +54,13 @@ Kirigami.Page {
         id: contentColumn;
         width: root.width - (root.leftPadding + root.rightPadding);
         height: childrenRect.height;
-        spacing: units.smallSpacing;
+        spacing: Kirigami.Units.smallSpacing;
         Kirigami.Heading {
             width: parent.width;
-            height: paintedHeight + units.smallSpacing * 2;
+            height: paintedHeight + Kirigami.Units.smallSpacing * 2;
             text: i18nc("label text for the edit field for the book title", "Title");
         }
-        PlasmaComponents.TextField {
+        QtControls.TextField {
             id: titleEdit;
             width: parent.width;
             text: i18nc("Default name for new books", "Untitled");
@@ -68,13 +68,13 @@ Kirigami.Page {
 
         Kirigami.Heading {
             width: parent.width;
-            height: paintedHeight + units.smallSpacing * 2;
+            height: paintedHeight + Kirigami.Units.smallSpacing * 2;
             text: i18nc("label text for the edit field for the file system location for the book", "Folder");
         }
         Kirigami.Label {
             width: parent.width - getFolderButton.width;
             text: getFolderDlg.folder;
-            PlasmaComponents.Button {
+            QtControls.Button {
                 id: getFolderButton;
                 anchors.left: parent.right;
                 height: parent.height;
@@ -92,9 +92,9 @@ Kirigami.Page {
 
         Kirigami.Heading {
             width: parent.width - getCoverButton.width;
-            height: paintedHeight + units.smallSpacing * 2;
+            height: paintedHeight + Kirigami.Units.smallSpacing * 2;
             text: i18nc("label text for the edit field for the cover image for the book", "Cover Image");
-            PlasmaComponents.Button {
+            QtControls.Button {
                 id: getCoverButton;
                 anchors.left: parent.right;
                 height: getFolderButton.height;
@@ -111,11 +111,11 @@ Kirigami.Page {
         }
         Item {
             width: parent.width;
-            height: units.iconSizes.enormous + units.smallSpacing;
+            height: Kirigami.Units.iconSizes.enormous + Kirigami.Units.smallSpacing;
             Image {
                 anchors.centerIn: parent;
-                height: units.iconSizes.enormous;
-                width: units.iconSizes.enormous;
+                height: Kirigami.Units.iconSizes.enormous;
+                width: Kirigami.Units.iconSizes.enormous;
                 asynchronous: true;
                 fillMode: Image.PreserveAspectFit;
                 source: getCoverDlg.fileUrl;
