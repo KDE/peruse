@@ -378,26 +378,9 @@ Kirigami.Page {
                     thumbnailMovementAnimation.to = newPos;
                     thumbnailMovementAnimation.running = true;
                 }
+                onGoNextPage: root.nextPage();
+                onGoPreviousPage: root.previousPage();
             }
-        }
-
-        MouseArea {
-            anchors {
-                top: parent.top;
-                left: parent.left;
-                bottom: parent.bottom;
-            }
-            width: parent.width / 6;
-            onClicked: previousPage();
-        }
-        MouseArea {
-            anchors {
-                top: parent.top;
-                right: parent.right;
-                bottom: parent.bottom;
-            }
-            width: parent.width / 6;
-            onClicked: nextPage();
         }
     }
 
