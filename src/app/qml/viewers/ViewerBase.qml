@@ -25,6 +25,8 @@ import QtQuick.Controls 1.0
 
 Item {
     id: root;
+    signal goNextPage();
+    signal goPreviousPage();
     // Fired when the viewer has completed loading the file.
     // Success is true if this was successful, and false otherwise.
     signal loadingCompleted(bool success);
