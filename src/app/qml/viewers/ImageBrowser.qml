@@ -25,6 +25,8 @@ import QtQuick 2.3
 
 ListView {
     id: root
+    signal goNextPage();
+    signal goPreviousPage();
 
     property int imageWidth
     property int imageHeight
@@ -102,6 +104,24 @@ ListView {
                             flick.resizeContent(imageWidth * 2, imageHeight * 2, {x: mouse.x, y: mouse.y});
                         }
                     }
+                }
+                MouseArea {
+                    anchors {
+                        top: parent.top;
+                        left: parent.left;
+                        bottom: parent.bottom;
+                    }
+                    width: parent.width / 6;
+                    onClicked: root.goPreviousPage();
+                }
+                MouseArea {
+                    anchors {
+                        top: parent.top;
+                        right: parent.right;
+                        bottom: parent.bottom;
+                    }
+                    width: parent.width / 6;
+                    onClicked: root.goNextPage();
                 }
             }
         }

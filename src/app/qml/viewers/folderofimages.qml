@@ -80,6 +80,8 @@ ViewerBase {
                 root.currentPage = currentIndex;
             }
         }
+        onGoNextPage: root.goNextPage();
+        onGoPreviousPage: root.goPreviousPage();
         imageWidth: root.width;
         imageHeight: root.height;
     }
