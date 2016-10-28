@@ -33,6 +33,33 @@ ViewerBase {
         if(documentItem.currentPage !== currentPage) {
             documentItem.currentPage = currentPage;
         }
+        if(currentPage !== imageBrowser.currentIndex) {
+            pageChangeAnimation.running = false;
+            var currentPos = imageBrowser.contentX;
+            var newPos;
+            imageBrowser.positionViewAtIndex(currentPage, ListView.Center);
+            imageBrowser.currentIndex = currentPage;
+            newPos = imageBrowser.contentX;
+            pageChangeAnimation.from = currentPos;
+            pageChangeAnimation.to = newPos;
+            pageChangeAnimation.running = true;
+        }
+    }
+    NumberAnimation { id: pageChangeAnimation; target: imageBrowser; property: "contentX"; duration: mainWindow.animationDuration; easing.type: Easing.InOutQuad; }
+    onRtlModeChanged: {
+        if(rtlMode === true) {
+            imageBrowser.layoutDirection = Qt.RightToLeft;
+        }
+        else {
+            imageBrowser.layoutDirection = Qt.LeftToRight;
+        }
+        root.restoreCurrentPage();
+    }
+    onRestoreCurrentPage: {
+        // This is un-pretty, quite obviously. But thanks to the ListView's inability to
+        // stay in place when the geometry changes, well, this makes things simple.
+        imageBrowser.positionViewAtIndex(imageBrowser.currentIndex, ListView.Center);
+
     }
     pageCount: documentItem.pageCount;
     thumbnailComponent: thumbnailComponent;
@@ -48,7 +75,7 @@ ViewerBase {
             }
             Rectangle {
                 anchors.fill: parent;
-                color: theme.highlightColor;
+                color: Kirigami.Theme.highlightColor;
                 opacity: root.currentPage === model.index ? 1 : 0;
                 Behavior on opacity { NumberAnimation { duration: Kirigami.Units.shortDuration; } }
             }
@@ -100,15 +127,125 @@ ViewerBase {
         }
     }
 
-    Okular.DocumentView {
-        id: pageArea
-        document: documentItem
-        anchors.fill: parent
+    Timer {
+        id: initialPageChange;
+        interval: mainWindow.animationDuration;
+        running: false;
+        repeat: false;
+        onTriggered: root.currentPage = imageBrowser.model.currentPage;
+    }
+    ListView {
+        id: imageBrowser
+        anchors.fill: parent;
+        model: documentItem.pageCount;
 
-        onPageChanged: {
-//             bookmarkConnection.target = page
-//             actionButton.checked = page.bookmarked
+        property int imageWidth: root.width;
+        property int imageHeight: root.height;
+
+        orientation: ListView.Horizontal
+        snapMode: ListView.SnapOneItem
+        cacheBuffer: 3000
+
+        // This ensures that the current index is always up to date, which we need to ensure we can track the current page
+        // as required by the thumbnail navigator, and the resume-reading-from functionality
+        onMovementEnded: {
+            var indexHere = indexAt(contentX + width / 2, contentY + height / 2);
+            if(currentIndex !== indexHere) {
+                currentIndex = indexHere;
+            }
         }
-        onClicked: startToggleControls();
+
+        delegate: Flickable {
+            id: flick
+            width: imageBrowser.imageWidth
+            height: imageBrowser.imageHeight
+            contentWidth: imageBrowser.imageWidth
+            contentHeight: imageBrowser.imageHeight
+            interactive: contentWidth > width || contentHeight > height
+            onInteractiveChanged: imageBrowser.interactive = !interactive;
+            z: interactive ? 1000 : 0
+            PinchArea {
+                width: Math.max(flick.contentWidth, flick.width)
+                height: Math.max(flick.contentHeight, flick.height)
+
+                property real initialWidth
+                property real initialHeight
+
+                onPinchStarted: {
+                    initialWidth = flick.contentWidth
+                    initialHeight = flick.contentHeight
+                }
+
+                onPinchUpdated: {
+                    // adjust content pos due to drag
+                    flick.contentX += pinch.previousCenter.x - pinch.center.x
+                    flick.contentY += pinch.previousCenter.y - pinch.center.y
+
+                    // resize content
+                    flick.resizeContent(Math.max(imageBrowser.imageWidth, initialWidth * pinch.scale), Math.max(imageBrowser.imageHeight, initialHeight * pinch.scale), pinch.center)
+                }
+
+                onPinchFinished: {
+                    // Move its content within bounds.
+                    flick.returnToBounds();
+                }
+
+
+                Item {
+                    Okular.PageItem {
+                        document: documentItem;
+                        pageNumber: index;
+                        anchors {
+                            top: parent.top;
+                            horizontalCenter: parent.horizontalCenter;
+                            margins: Kirigami.Units.smallSpacing;
+                        }
+                        height: parent.height;
+                        function updateWidth() {
+                            width = Math.round(height * (implicitWidth / implicitHeight));
+                        }
+                        Component.onCompleted: updateWidth();
+                        onHeightChanged: updateWidth();
+                        onImplicitHeightChanged: updateWidth();
+                    }
+                    width: flick.contentWidth
+                    height: flick.contentHeight
+                    property bool shouldCheat: imageBrowser.imageWidth * 2 > maxTextureSize || imageBrowser.imageHeight * 2 > maxTextureSize;
+                    property bool isTall: imageBrowser.imageHeight < imageBrowser.imageWidth;
+                    property int fixedWidth: isTall ? maxTextureSize * (imageBrowser.imageWidth / imageBrowser.imageHeight) : maxTextureSize;
+                    property int fixedHeight: isTall ? maxTextureSize : maxTextureSize * (imageBrowser.imageHeight / imageBrowser.imageWidth);
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: startToggleControls();
+                        onDoubleClicked: {
+                            abortToggleControls();
+                            if (flick.interactive) {
+                                flick.resizeContent(imageBrowser.imageWidth, imageBrowser.imageHeight, {x: imageBrowser.imageWidth/2, y: imageBrowser.imageHeight/2});
+                            } else {
+                                flick.resizeContent(imageBrowser.imageWidth * 2, imageBrowser.imageHeight * 2, {x: mouse.x, y: mouse.y});
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    MouseArea {
+        anchors {
+            top: parent.top;
+            left: parent.left;
+            bottom: parent.bottom;
+        }
+        width: parent.width / 6;
+        onClicked: root.goPreviousPage();
+    }
+    MouseArea {
+        anchors {
+            top: parent.top;
+            right: parent.right;
+            bottom: parent.bottom;
+        }
+        width: parent.width / 6;
+        onClicked: root.goNextPage();
     }
 }
