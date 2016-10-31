@@ -26,6 +26,7 @@
 #include <KConfigGroup>
 
 #include <QTimer>
+#include <QFile>
 
 class PeruseConfig::Private
 {
@@ -78,7 +79,15 @@ void PeruseConfig::bookOpened(QString path)
 
 QStringList PeruseConfig::recentlyOpened() const
 {
-    return d->config.group("general").readEntry("recently opened", QStringList());
+    QStringList recent = d->config.group("general").readEntry("recently opened", QStringList());
+    QStringList actualRecent;
+    while(recent.count() > 0) {
+        QString current = recent.takeFirst();
+        if(QFile::exists(current)) {
+            actualRecent.append(current);
+        }
+    }
+    return actualRecent;
 }
 
 void PeruseConfig::addBookLocation(const QString& location)
