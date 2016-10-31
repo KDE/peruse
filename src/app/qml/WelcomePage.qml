@@ -180,7 +180,7 @@ Kirigami.Page {
                 var index = itemArray.indexOf(currentItem);
                 if(index < itemArray.length) {
                     var nextItem = itemArray[index + 1];
-                    if(nextItem.height > 0) {
+                    if(nextItem !== undefined && nextItem.height > 0) {
                         currentItem = nextItem;
                     }
                 }
