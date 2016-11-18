@@ -144,7 +144,6 @@ ViewerBase {
 
         orientation: ListView.Horizontal
         snapMode: ListView.SnapOneItem
-        cacheBuffer: 3000
 
         // This ensures that the current index is always up to date, which we need to ensure we can track the current page
         // as required by the thumbnail navigator, and the resume-reading-from functionality
