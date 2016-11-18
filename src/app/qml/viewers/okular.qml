@@ -137,7 +137,7 @@ ViewerBase {
     ListView {
         id: imageBrowser
         anchors.fill: parent;
-        model: documentItem.pageCount;
+        model: documentItem.matchingPages;
 
         property int imageWidth: root.width;
         property int imageHeight: root.height;
@@ -190,7 +190,6 @@ ViewerBase {
                     flick.returnToBounds();
                 }
 
-
                 Item {
                     Okular.PageItem {
                         document: documentItem;
@@ -204,16 +203,12 @@ ViewerBase {
                         function updateWidth() {
                             width = Math.round(height * (implicitWidth / implicitHeight));
                         }
-                        Component.onCompleted: updateWidth();
+                        Component.onCompleted: { if(height < implicitHeight) { height = implicitHeight; }; updateWidth(); }
                         onHeightChanged: updateWidth();
                         onImplicitHeightChanged: updateWidth();
                     }
                     width: flick.contentWidth
                     height: flick.contentHeight
-                    property bool shouldCheat: imageBrowser.imageWidth * 2 > maxTextureSize || imageBrowser.imageHeight * 2 > maxTextureSize;
-                    property bool isTall: imageBrowser.imageHeight < imageBrowser.imageWidth;
-                    property int fixedWidth: isTall ? maxTextureSize * (imageBrowser.imageWidth / imageBrowser.imageHeight) : maxTextureSize;
-                    property int fixedHeight: isTall ? maxTextureSize : maxTextureSize * (imageBrowser.imageHeight / imageBrowser.imageWidth);
                     MouseArea {
                         anchors.fill: parent
                         onClicked: startToggleControls();
