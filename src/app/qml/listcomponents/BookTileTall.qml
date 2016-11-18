@@ -91,6 +91,12 @@ Item {
             asynchronous: true;
             fillMode: Image.PreserveAspectFit;
         }
+        QtControls.BusyIndicator {
+            id: loadingSpinner;
+            anchors.centerIn: parent;
+            visible: running;
+            running: coverImage.status === Image.Loading;
+        }
     }
     Kirigami.Label {
         id: bookTitle;
