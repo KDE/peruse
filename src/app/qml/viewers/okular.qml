@@ -139,7 +139,7 @@ ViewerBase {
         anchors.fill: parent;
         model: documentItem.matchingPages;
 
-        property int imageWidth: root.width;
+        property int imageWidth: root.width + Kirigami.Units.largeSpacing;
         property int imageHeight: root.height;
 
         orientation: ListView.Horizontal
