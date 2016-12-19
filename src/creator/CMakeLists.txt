@@ -2,7 +2,7 @@ set(CREATOR_SRCS
     main.cpp
 )
 
-# ecm_add_app_icon(CREATOR_SRCS ICONS "icon/128-apps-peruse.png")
+ecm_add_app_icon(CREATOR_SRCS ICONS "icon/128-apps-peruse-creator.png")
 
 add_executable(perusecreator ${CREATOR_SRCS})
 target_link_libraries(perusecreator
