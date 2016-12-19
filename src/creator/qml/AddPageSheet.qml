@@ -24,7 +24,6 @@ import QtQuick.Dialogs 1.2
 import QtQuick.Controls 1.4 as QtControls
 
 import org.kde.kirigami 1.0 as Kirigami
-import org.kde.plasma.components 2.0 as PlasmaComponents
 
 Kirigami.OverlaySheet {
     id: root;

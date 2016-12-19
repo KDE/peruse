@@ -22,7 +22,7 @@
 import QtQuick 2.2
 
 import org.kde.kirigami 1.0 as Kirigami
-import org.kde.plasma.components 2.0 as PlasmaComponents
+import QtQuick.Controls 1.4 as QtControls
 
 Item {
     id: root;
@@ -45,7 +45,7 @@ Item {
         width: parent.width;
         height: paintedHeight + Kirigami.Units.smallSpacing * 2;
         text: root.title;
-        PlasmaComponents.Button {
+        QtControls.Button {
             id: removeButton;
             anchors {
                 top: parent.top;
@@ -57,7 +57,7 @@ Item {
             visible: root.removePossible;
             onClicked: root.removeRequested();
         }
-        PlasmaComponents.Button {
+        QtControls.Button {
             anchors {
                 top: parent.top;
                 right: removeButton.visible ? removeButton.left : parent.right;
@@ -75,7 +75,7 @@ Item {
             }
         }
     }
-    PlasmaComponents.TextField {
+    QtControls.TextField {
         id: editor;
         width: parent.width;
         anchors.top: titleLabel.bottom;
