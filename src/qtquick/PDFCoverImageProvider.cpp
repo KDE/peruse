@@ -75,11 +75,15 @@ QImage PDFCoverImageProvider::requestImage(const QString& id, QSize* size, const
             args << QString("-sOutputFile=%1").arg(outFile) << id;
             QString gsApp;
             #ifdef Q_OS_WIN
-                gsApp = qApp->applicationDirPath();
-                #ifdef Q_OS_WIN64
-                    gsApp += "/gswin64c.exe";
+                #ifdef __MINGW32__
+                    gsApp = qApp->applicationDirPath() + "/gsc.exe";
                 #else
-                    gsApp += "/gswin32c.exe";
+                    gsApp = qApp->applicationDirPath();
+                    #ifdef Q_OS_WIN64
+                        gsApp += "/gswin64c.exe";
+                    #else
+                        gsApp += "/gswin32c.exe";
+                    #endif
                 #endif
             #else
                 gsApp = "gs";
