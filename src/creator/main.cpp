@@ -93,6 +93,8 @@ int main(int argc, char** argv)
     QDir appdir(qApp->applicationDirPath());
     appdir.cdUp();
     engine.addImportPath(appdir.canonicalPath() + "/lib/qml");
+    engine.addImportPath(appdir.canonicalPath() + "/lib/qml");
+    engine.addImportPath(appdir.canonicalPath() + "/qml");
     osIsWindows = true;
     // Hey, let's try and avoid all those extra stale processes, right?
     qputenv("KDE_FORK_SLAVES", "true");
@@ -108,6 +110,10 @@ int main(int argc, char** argv)
     engine.rootContext()->setContextProperty("maxTextureSize", getMaxTextureSize());
 
     QString path= QStandardPaths::locate(QStandardPaths::DataLocation, "qml/Main.qml");
+    if(path.isEmpty()) {
+        qCritical() << "The file structure is not set up currectly, and our data is somewhere weird.";
+        path = QString("%1/data/perusecreator/qml/Main.qml").arg(qApp->applicationDirPath());
+    }
     int rt = 0;
     QQmlComponent component(&engine, path);
     if (component.isError())

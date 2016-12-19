@@ -93,7 +93,9 @@ int main(int argc, char** argv)
     // Because windows is a bit funny with paths and whatnot, just so the thing with the lib paths...
     QDir appdir(qApp->applicationDirPath());
     appdir.cdUp();
+    qApp->addLibraryPath(appdir.canonicalPath() + "/lib");
     engine.addImportPath(appdir.canonicalPath() + "/lib/qml");
+    engine.addImportPath(appdir.canonicalPath() + "/qml");
     osIsWindows = true;
     // Hey, let's try and avoid all those extra stale processes, right?
     qputenv("KDE_FORK_SLAVES", "true");
@@ -110,9 +112,13 @@ int main(int argc, char** argv)
 
     QString path;
     if (platformEnv.startsWith("phone")) {
-        path = QStandardPaths::locate(QStandardPaths::DataLocation, "qml/MobileMain.qml");
+        path = QStandardPaths::locate(QStandardPaths::AppDataLocation, "qml/MobileMain.qml");
     } else {
-        path = QStandardPaths::locate(QStandardPaths::DataLocation, "qml/Main.qml");
+        path = QStandardPaths::locate(QStandardPaths::AppDataLocation, "qml/Main.qml");
+    }
+    if(path.isEmpty()) {
+        qCritical() << "The file structure is not set up currectly, and our data is somewhere weird.";
+        path = QString("%1/data/peruse/qml/Main.qml").arg(qApp->applicationDirPath());
     }
     int rt = 0;
     QQmlComponent component(&engine, path);
