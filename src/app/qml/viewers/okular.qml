@@ -118,6 +118,7 @@ ViewerBase {
         onOpenedChanged: {
             if(opened === true) {
                 root.loadingCompleted(true);
+                initialPageChange.start();
             }
         }
         onCurrentPageChanged: {
@@ -132,7 +133,7 @@ ViewerBase {
         interval: mainWindow.animationDuration;
         running: false;
         repeat: false;
-        onTriggered: root.currentPage = imageBrowser.model.currentPage;
+        onTriggered: root.currentPage = imageBrowser.model.currentIndex;
     }
     ListView {
         id: imageBrowser
@@ -191,21 +192,17 @@ ViewerBase {
 
                 Item {
                     Okular.PageItem {
+                        id: page;
                         document: documentItem;
                         pageNumber: index;
-                        anchors {
-                            top: parent.top;
-                            horizontalCenter: parent.horizontalCenter;
-                            margins: Kirigami.Units.smallSpacing;
-                        }
-                        height: parent.height;
-                        function updateWidth() {
-                            width = Math.round(height * (implicitWidth / implicitHeight));
-                        }
-                        Component.onCompleted: { if(height < implicitHeight) { height = implicitHeight; }; updateWidth(); }
-                        onHeightChanged: updateWidth();
-                        onImplicitHeightChanged: updateWidth();
+                        anchors.centerIn: parent;
+                        property real pageRatio: implicitWidth / implicitHeight
+                        property bool sameOrientation: root.width / root.height > pageRatio
+                        width: sameOrientation ? parent.height * pageRatio : parent.width
+                        height: !sameOrientation ? parent.width / pageRatio : parent.height
                     }
+                    implicitWidth: page.implicitWidth
+                    implicitHeight: page.implicitHeight
                     width: flick.contentWidth
                     height: flick.contentHeight
                     MouseArea {
