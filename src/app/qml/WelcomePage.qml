@@ -143,6 +143,9 @@ Kirigami.Page {
                 startWithThese.mostRecentlyRead3 = contentList.bookFromFile(peruseConfig.recentlyOpened[3]);
                 startWithThese.mostRecentlyRead4 = contentList.bookFromFile(peruseConfig.recentlyOpened[4]);
                 startWithThese.mostRecentlyRead5 = contentList.bookFromFile(peruseConfig.recentlyOpened[5]);
+                if(startWithThese.currentItem != null) {
+                    startWithThese.currentItem = rread0;
+                }
                 // the model might be null, if we haven't actually got any entries... so, let's check that
                 // and just leave the whole thing empty in that case :)
                 if(contentList.newlyAddedCategoryModel) {
@@ -174,7 +177,7 @@ Kirigami.Page {
             contentHeight: recentItemsColumn.height;
             clip: true;
 
-            property Item currentItem;
+            property Item currentItem: null;
             property var itemArray: [rread0, rread1, rread2, rread3, rread4, rread5];
             function selectNext() {
                 var index = itemArray.indexOf(currentItem);
