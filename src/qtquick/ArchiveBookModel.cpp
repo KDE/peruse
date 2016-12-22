@@ -618,7 +618,7 @@ QString ArchiveBookModel::createBook(QString folder, QString title, QString cove
     model->deleteLater();
 
     if(!success)
-        return QLatin1String();
+        return QLatin1String("");
     return filename;
 }
 
