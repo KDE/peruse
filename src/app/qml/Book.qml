@@ -153,9 +153,7 @@ Kirigami.Page {
         else {
             applicationWindow().visibility = Window.AutomaticVisibility;
         }
-        if(viewLoader.item.restoreCurrentPage !== undefined) {
-            restoreViewLayoutStuff.start();
-        }
+        restoreViewLayoutStuff.start();
     }
     Timer {
         id: restoreViewLayoutStuff;
@@ -163,11 +161,10 @@ Kirigami.Page {
         running: false;
         repeat: false;
         onTriggered: {
-            viewLoader.item.restoreCurrentPage();
-            if(applicationWindow().visibility === Window.FullScreen) {
-                applicationWindow().pageStack.currentIndex = 0;
-                applicationWindow().pageStack.currentIndex = applicationWindow().pageStack.depth - 1;
+            if(viewLoader.item.restoreCurrentPage !== undefined) {
+                viewLoader.item.restoreCurrentPage();
             }
+            applicationWindow().pageStack.currentIndex = applicationWindow().pageStack.depth - 1;
         }
     }
 
