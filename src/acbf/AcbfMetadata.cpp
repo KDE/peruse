@@ -73,8 +73,19 @@ void Metadata::toXml(QXmlStreamWriter *writer)
 
 bool Metadata::fromXml(QXmlStreamReader *xmlReader)
 {
-    while(xmlReader->readNextStartElement())
+    while(xmlReader->readNext())
     {
+        if(xmlReader->tokenType() == QXmlStreamReader::EndElement) {
+            if(xmlReader->name() == "meta-data") {
+                break;
+            }
+            else {
+                continue;
+            }
+        }
+        if(xmlReader->tokenType() == QXmlStreamReader::Characters) {
+            continue;
+        }
         if(xmlReader->name() == "book-info")
         {
             if(!d->bookInfo->fromXml(xmlReader)) {
@@ -98,13 +109,11 @@ bool Metadata::fromXml(QXmlStreamReader *xmlReader)
             qWarning() << Q_FUNC_INFO << "currently unsupported subsection:" << xmlReader->name();
             xmlReader->skipCurrentElement();
         }
-        if(xmlReader->readNext() == QXmlStreamReader::EndElement && xmlReader->name() == "meta-data") {
-            break;
-        }
     }
     if (xmlReader->hasError()) {
         qWarning() << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader->name() << "(" << xmlReader->lineNumber() << ":" << xmlReader->columnNumber() << ") The reported error was:" << xmlReader->errorString();
     }
+    qDebug() << Q_FUNC_INFO << "Created meta information section";
     return !xmlReader->hasError();
 }
 

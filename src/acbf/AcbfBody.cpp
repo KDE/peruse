@@ -66,8 +66,19 @@ void Body::toXml(QXmlStreamWriter *writer)
 bool Body::fromXml(QXmlStreamReader *xmlReader)
 {
     setBgcolor(xmlReader->attributes().value("bgcolor").toString());
-    while(xmlReader->readNextStartElement())
+    while(xmlReader->readNext())
     {
+        if(xmlReader->tokenType() == QXmlStreamReader::EndElement) {
+            if(xmlReader->name() == "body") {
+                break;
+            }
+            else {
+                continue;
+            }
+        }
+        if(xmlReader->tokenType() == QXmlStreamReader::Characters) {
+            continue;
+        }
         if(xmlReader->name() == "page")
         {
             Page* newPage = new Page(document());
@@ -81,13 +92,11 @@ bool Body::fromXml(QXmlStreamReader *xmlReader)
             qWarning() << Q_FUNC_INFO << "currently unsupported subsection:" << xmlReader->name();
             xmlReader->skipCurrentElement();
         }
-        if(xmlReader->readNext() == QXmlStreamReader::EndElement && xmlReader->name() == "body") {
-            break;
-        }
     }
     if (xmlReader->hasError()) {
         qWarning() << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader->name() << "(" << xmlReader->lineNumber() << ":" << xmlReader->columnNumber() << ") The reported error was:" << xmlReader->errorString();
     }
+    qDebug() << Q_FUNC_INFO << "Created body with" << d->pages.count() << "pages";
     return !xmlReader->hasError();
 }
 

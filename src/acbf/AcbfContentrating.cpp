@@ -22,6 +22,7 @@
 #include "AcbfContentrating.h"
 
 #include <QXmlStreamWriter>
+#include <QDebug>
 
 using namespace AdvancedComicBookFormat;
 
@@ -56,6 +57,7 @@ bool ContentRating::fromXml(QXmlStreamReader *xmlReader)
 {
     setType(xmlReader->attributes().value("type").toString());
     setRating(xmlReader->readElementText(QXmlStreamReader::IncludeChildElements));
+    qDebug() << Q_FUNC_INFO << "Created a content rating for" << type() << "with rating" << rating();
     return true;
 }
 

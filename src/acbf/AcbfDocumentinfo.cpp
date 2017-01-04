@@ -99,6 +99,17 @@ bool DocumentInfo::fromXml(QXmlStreamReader *xmlReader)
 {
     while(xmlReader->readNextStartElement())
     {
+        if(xmlReader->tokenType() == QXmlStreamReader::EndElement) {
+            if(xmlReader->name() == "document-info") {
+                break;
+            }
+            else {
+                continue;
+            }
+        }
+        if(xmlReader->tokenType() == QXmlStreamReader::Characters) {
+            continue;
+        }
         if(xmlReader->name() == "author")
         {
             Author* newAuthor = new Author(metadata());
@@ -146,13 +157,11 @@ bool DocumentInfo::fromXml(QXmlStreamReader *xmlReader)
             qWarning() << Q_FUNC_INFO << "currently unsupported subsection:" << xmlReader->name();
             xmlReader->skipCurrentElement();
         }
-        if(xmlReader->readNext() == QXmlStreamReader::EndElement && xmlReader->name() == "document-info") {
-            break;
-        }
     }
     if (xmlReader->hasError()) {
         qWarning() << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader->name() << "(" << xmlReader->lineNumber() << ":" << xmlReader->columnNumber() << ") The reported error was:" << xmlReader->errorString();
     }
+    qDebug() << Q_FUNC_INFO << "Created document information for a document created on" << creationDate() << "at version" << version();
     return !xmlReader->hasError();
 }
 

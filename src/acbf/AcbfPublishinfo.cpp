@@ -80,8 +80,19 @@ void PublishInfo::toXml(QXmlStreamWriter *writer)
 
 bool PublishInfo::fromXml(QXmlStreamReader *xmlReader)
 {
-    while(xmlReader->readNextStartElement())
+    while(xmlReader->readNext())
     {
+        if(xmlReader->tokenType() == QXmlStreamReader::EndElement) {
+            if(xmlReader->name() == "publish-info") {
+                break;
+            }
+            else {
+                continue;
+            }
+        }
+        if(xmlReader->tokenType() == QXmlStreamReader::Characters) {
+            continue;
+        }
         if(xmlReader->name() == "publisher")
         {
             setPublisher(xmlReader->readElementText());
@@ -111,13 +122,11 @@ bool PublishInfo::fromXml(QXmlStreamReader *xmlReader)
             qWarning() << Q_FUNC_INFO << "currently unsupported subsection:" << xmlReader->name();
             xmlReader->skipCurrentElement();
         }
-        if(xmlReader->readNext() == QXmlStreamReader::EndElement && xmlReader->name() == "publish-info") {
-            break;
-        }
     }
     if (xmlReader->hasError()) {
         qWarning() << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader->name() << "(" << xmlReader->lineNumber() << ":" << xmlReader->columnNumber() << ") The reported error was:" << xmlReader->errorString();
     }
+    qDebug() << Q_FUNC_INFO << "Created publisher information for" << publisher();
     return !xmlReader->hasError();
 }
 

@@ -69,8 +69,19 @@ bool Textlayer::fromXml(QXmlStreamReader *xmlReader)
 {
     setBgcolor(xmlReader->attributes().value("bgcolor").toString());
     setLanguage(xmlReader->attributes().value("lang").toString());
-    while(xmlReader->readNextStartElement())
+    while(xmlReader->readNext())
     {
+        if(xmlReader->tokenType() == QXmlStreamReader::EndElement) {
+            if(xmlReader->name() == "text-layer") {
+                break;
+            }
+            else {
+                continue;
+            }
+        }
+        if(xmlReader->tokenType() == QXmlStreamReader::Characters) {
+            continue;
+        }
         if(xmlReader->name() == "text-area")
         {
             Textarea* newArea = new Textarea(this);
@@ -84,13 +95,11 @@ bool Textlayer::fromXml(QXmlStreamReader *xmlReader)
             qWarning() << Q_FUNC_INFO << "currently unsupported subsection:" << xmlReader->name();
             xmlReader->skipCurrentElement();
         }
-        if(xmlReader->readNext() == QXmlStreamReader::EndElement && xmlReader->name() == "text-layer") {
-            break;
-        }
     }
     if (xmlReader->hasError()) {
         qWarning() << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader->name() << "(" << xmlReader->lineNumber() << ":" << xmlReader->columnNumber() << ") The reported error was:" << xmlReader->errorString();
     }
+    qDebug() << Q_FUNC_INFO << "Created a text layer with" << d->textareas.count() << "text areas";
     return !xmlReader->hasError();
 }
 

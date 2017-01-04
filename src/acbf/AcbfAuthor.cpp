@@ -77,6 +77,17 @@ bool Author::fromXml(QXmlStreamReader *xmlReader)
     setLanguage(xmlReader->attributes().value("lang").toString());
     while(xmlReader->readNextStartElement())
     {
+        if(xmlReader->tokenType() == QXmlStreamReader::EndElement) {
+            if(xmlReader->name() == "author") {
+                break;
+            }
+            else {
+                continue;
+            }
+        }
+        if(xmlReader->tokenType() == QXmlStreamReader::Characters) {
+            continue;
+        }
         if(xmlReader->name() == "first-name")
         {
             setFirstName(xmlReader->readElementText());
@@ -106,13 +117,11 @@ bool Author::fromXml(QXmlStreamReader *xmlReader)
             qWarning() << Q_FUNC_INFO << "currently unsupported subsection:" << xmlReader->name();
             xmlReader->skipCurrentElement();
         }
-        if(xmlReader->readNext() == QXmlStreamReader::EndElement && xmlReader->name() == "author") {
-            break;
-        }
     }
     if (xmlReader->hasError()) {
         qWarning() << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader->name() << "(" << xmlReader->lineNumber() << ":" << xmlReader->columnNumber() << ") The reported error was:" << xmlReader->errorString();
     }
+    qDebug() << Q_FUNC_INFO << "Created author" << firstName() << lastName() << nickName() << "responsible for" << activity() << "for language" << language();
     return !xmlReader->hasError();
 }
 

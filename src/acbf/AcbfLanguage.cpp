@@ -59,6 +59,7 @@ bool Language::fromXml(QXmlStreamReader *xmlReader)
 {
     setShow(xmlReader->attributes().value("show").toString().toLower() == "true");
     setLanguage(xmlReader->attributes().value("lang").toString());
+    qDebug() << Q_FUNC_INFO << "Created language" << language();
     return true;
 }
 

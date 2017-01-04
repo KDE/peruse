@@ -22,6 +22,7 @@
 #include "AcbfDocument.h"
 #include "AcbfBody.h"
 #include "AcbfMetadata.h"
+#include "AcbfBookinfo.h"
 
 #include <QDebug>
 #include <QXmlStreamReader>
@@ -99,6 +100,7 @@ bool Document::fromXml(QString xmlDocument)
     if (xmlReader.hasError()) {
         qWarning() << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader.name() << "(" << xmlReader.lineNumber() << ":" << xmlReader.columnNumber() << ") The reported error was:" << xmlReader.errorString();
     }
+    qDebug() << Q_FUNC_INFO << "Completed ACBF document creation for" << d->metaData->bookInfo()->title();
     return !xmlReader.hasError();
 }
 

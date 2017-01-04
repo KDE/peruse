@@ -111,8 +111,19 @@ bool Textarea::fromXml(QXmlStreamReader *xmlReader)
         }
     }
 
-    while(xmlReader->readNextStartElement())
+    while(xmlReader->readNext())
     {
+        if(xmlReader->tokenType() == QXmlStreamReader::EndElement) {
+            if(xmlReader->name() == "text-area") {
+                break;
+            }
+            else {
+                continue;
+            }
+        }
+        if(xmlReader->tokenType() == QXmlStreamReader::Characters) {
+            continue;
+        }
         if(xmlReader->name() == "p")
         {
             d->paragraphs.append(xmlReader->readElementText(QXmlStreamReader::IncludeChildElements));
@@ -122,13 +133,11 @@ bool Textarea::fromXml(QXmlStreamReader *xmlReader)
             qWarning() << Q_FUNC_INFO << "currently unsupported subsection in text-area:" << xmlReader->name();
             xmlReader->skipCurrentElement();
         }
-        if(xmlReader->readNext() == QXmlStreamReader::EndElement && xmlReader->name() == "text-area") {
-            break;
-        }
     }
     if (xmlReader->hasError()) {
         qWarning() << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader->name() << "(" << xmlReader->lineNumber() << ":" << xmlReader->columnNumber() << ") The reported error was:" << xmlReader->errorString();
     }
+    qDebug() << Q_FUNC_INFO << "Created a text area of type" << type();
     return !xmlReader->hasError();
 }
 
@@ -195,7 +204,7 @@ int Textarea::textRotation()
 
 QString Textarea::type()
 {
-    return d->type;
+    return d->type.isEmpty() ? "speech" : d->type;
 }
 
 void Textarea::setType(QString type)

@@ -151,8 +151,19 @@ void BookInfo::toXml(QXmlStreamWriter* writer)
 
 bool BookInfo::fromXml(QXmlStreamReader *xmlReader)
 {
-    while(xmlReader->readNextStartElement())
+    while(xmlReader->readNext())
     {
+        if(xmlReader->tokenType() == QXmlStreamReader::EndElement) {
+            if(xmlReader->name() == "book-info") {
+                break;
+            }
+            else {
+                continue;
+            }
+        }
+        if(xmlReader->tokenType() == QXmlStreamReader::Characters) {
+            continue;
+        }
         if(xmlReader->name() == "author")
         {
             Author* newAuthor = new Author(metadata());
@@ -160,6 +171,7 @@ bool BookInfo::fromXml(QXmlStreamReader *xmlReader)
                 return false;
             }
             d->author.append(newAuthor);
+            xmlReader->readNext();
         }
         else if(xmlReader->name() == "book-title")
         {
@@ -171,16 +183,18 @@ bool BookInfo::fromXml(QXmlStreamReader *xmlReader)
             int match = xmlReader->attributes().value("match").toInt();
             d->genre[xmlReader->readElementText(QXmlStreamReader::IncludeChildElements)] = match;
         }
-        else if(xmlReader->name() == "character")
+        else if(xmlReader->name() == "characters" || xmlReader->name() == "character")
         {
             while(xmlReader->readNextStartElement()) {
                 if(xmlReader->name() == "name") {
                     d->characters.append(xmlReader->readElementText(QXmlStreamReader::IncludeChildElements));
+                    continue;
                 }
-                if(xmlReader->readNext() == QXmlStreamReader::EndElement && xmlReader->name() == "character") {
+                if(xmlReader->readNext() == QXmlStreamReader::EndElement && (xmlReader->name() == "characters" || xmlReader->name() == "character")) {
                     break;
                 }
             }
+            qDebug() << "Created character entries, we now have" << d->characters.count() << "characters";
         }
         else if(xmlReader->name() == "annotation")
         {
@@ -189,6 +203,7 @@ bool BookInfo::fromXml(QXmlStreamReader *xmlReader)
             while(xmlReader->readNextStartElement()) {
                 if(xmlReader->name() == "p") {
                     paragraphs.append(xmlReader->readElementText(QXmlStreamReader::IncludeChildElements));
+                    continue;
                 }
                 if(xmlReader->readNext() == QXmlStreamReader::EndElement && xmlReader->name() == "character") {
                     break;
@@ -243,13 +258,11 @@ bool BookInfo::fromXml(QXmlStreamReader *xmlReader)
             qWarning() << Q_FUNC_INFO << "currently unsupported subsection:" << xmlReader->name();
             xmlReader->skipCurrentElement();
         }
-        if(xmlReader->readNext() == QXmlStreamReader::EndElement && xmlReader->name() == "book-info") {
-            break;
-        }
     }
     if (xmlReader->hasError()) {
         qWarning() << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader->name() << "(" << xmlReader->lineNumber() << ":" << xmlReader->columnNumber() << ") The reported error was:" << xmlReader->errorString();
     }
+    qDebug() << Q_FUNC_INFO << "Created book information for the book with the titles" << d->title.values();;
     return !xmlReader->hasError();
 }
 
@@ -280,6 +293,9 @@ QStringList BookInfo::titleLanguages()
 
 QString BookInfo::title(QString language)
 {
+    if(language.isEmpty()) {
+        language = "en";
+    }
     return d->title.value(language);
 }
 
