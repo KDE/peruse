@@ -28,6 +28,7 @@ import org.kde.okular 2.0 as Okular
 
 ViewerBase {
     id: root;
+    property string title: documentItem.windowTitleForDocument;
     onFileChanged: documentItem.path = file;
     onCurrentPageChanged: {
         if(documentItem.currentPage !== currentPage) {

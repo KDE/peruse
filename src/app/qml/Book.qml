@@ -358,6 +358,7 @@ Kirigami.Page {
                         }
                         viewLoader.item.currentPage = root.currentPage;
                         viewLoader.loadingCompleted = true;
+                        root.title = viewLoader.item.title;
                         drawerTimer.start();
                         restoreViewLayoutStuff.start();
                     }
