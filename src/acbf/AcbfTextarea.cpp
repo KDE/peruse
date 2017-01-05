@@ -111,19 +111,8 @@ bool Textarea::fromXml(QXmlStreamReader *xmlReader)
         }
     }
 
-    while(xmlReader->readNext())
+    while(xmlReader->readNextStartElement())
     {
-        if(xmlReader->tokenType() == QXmlStreamReader::EndElement) {
-            if(xmlReader->name() == "text-area") {
-                break;
-            }
-            else {
-                continue;
-            }
-        }
-        if(xmlReader->tokenType() == QXmlStreamReader::Characters) {
-            continue;
-        }
         if(xmlReader->name() == "p")
         {
             d->paragraphs.append(xmlReader->readElementText(QXmlStreamReader::IncludeChildElements));

@@ -99,17 +99,6 @@ bool DocumentInfo::fromXml(QXmlStreamReader *xmlReader)
 {
     while(xmlReader->readNextStartElement())
     {
-        if(xmlReader->tokenType() == QXmlStreamReader::EndElement) {
-            if(xmlReader->name() == "document-info") {
-                break;
-            }
-            else {
-                continue;
-            }
-        }
-        if(xmlReader->tokenType() == QXmlStreamReader::Characters) {
-            continue;
-        }
         if(xmlReader->name() == "author")
         {
             Author* newAuthor = new Author(metadata());
@@ -120,7 +109,13 @@ bool DocumentInfo::fromXml(QXmlStreamReader *xmlReader)
         }
         else if(xmlReader->name() == "creation-date")
         {
-            setCreationDate(QDate::fromString(xmlReader->readElementText()));
+            QString date = xmlReader->attributes().value("value").toString();
+            if(date.isEmpty()) {
+                date = xmlReader->readElementText();
+            } else {
+                xmlReader->skipCurrentElement();
+            }
+            setCreationDate(QDate::fromString(date));
         }
         else if(xmlReader->name() == "source")
         {
@@ -128,8 +123,8 @@ bool DocumentInfo::fromXml(QXmlStreamReader *xmlReader)
                 if(xmlReader->name() == "p") {
                     d->source.append(xmlReader->readElementText(QXmlStreamReader::IncludeChildElements));
                 }
-                if(xmlReader->readNext() == QXmlStreamReader::EndElement && xmlReader->name() == "source") {
-                    break;
+                else {
+                    xmlReader->skipCurrentElement();
                 }
             }
         }
@@ -147,8 +142,8 @@ bool DocumentInfo::fromXml(QXmlStreamReader *xmlReader)
                 if(xmlReader->name() == "p") {
                     d->history.append(xmlReader->readElementText(QXmlStreamReader::IncludeChildElements));
                 }
-                if(xmlReader->readNext() == QXmlStreamReader::EndElement && xmlReader->name() == "history") {
-                    break;
+                else {
+                    xmlReader->skipCurrentElement();
                 }
             }
         }

@@ -77,15 +77,15 @@ bool Document::fromXml(QString xmlDocument)
         {
             while(xmlReader.readNextStartElement())
             {
-                if(xmlReader.name() == "body")
+                if(xmlReader.name() == "meta-data")
                 {
-                    if(!d->body->fromXml(&xmlReader)) {
+                    if(!d->metaData->fromXml(&xmlReader)) {
                         break;
                     }
                 }
-                else if(xmlReader.name() == "meta-data")
+                else if(xmlReader.name() == "body")
                 {
-                    if(!d->metaData->fromXml(&xmlReader)) {
+                    if(!d->body->fromXml(&xmlReader)) {
                         break;
                     }
                 }
@@ -95,6 +95,10 @@ bool Document::fromXml(QString xmlDocument)
                     xmlReader.skipCurrentElement();
                 }
             }
+        }
+        else {
+            qWarning() << Q_FUNC_INFO << "not an ACBF XML document";
+            return false;
         }
     }
     if (xmlReader.hasError()) {

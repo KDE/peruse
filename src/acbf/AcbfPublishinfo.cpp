@@ -80,19 +80,8 @@ void PublishInfo::toXml(QXmlStreamWriter *writer)
 
 bool PublishInfo::fromXml(QXmlStreamReader *xmlReader)
 {
-    while(xmlReader->readNext())
+    while(xmlReader->readNextStartElement())
     {
-        if(xmlReader->tokenType() == QXmlStreamReader::EndElement) {
-            if(xmlReader->name() == "publish-info") {
-                break;
-            }
-            else {
-                continue;
-            }
-        }
-        if(xmlReader->tokenType() == QXmlStreamReader::Characters) {
-            continue;
-        }
         if(xmlReader->name() == "publisher")
         {
             setPublisher(xmlReader->readElementText());
@@ -102,6 +91,8 @@ bool PublishInfo::fromXml(QXmlStreamReader *xmlReader)
             QString date = xmlReader->attributes().value("value").toString();
             if(date.isEmpty()) {
                 date = xmlReader->readElementText();
+            } else {
+                xmlReader->skipCurrentElement();
             }
             setPublishDate(QDate::fromString(date));
         }

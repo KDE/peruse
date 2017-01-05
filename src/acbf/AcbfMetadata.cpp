@@ -73,19 +73,8 @@ void Metadata::toXml(QXmlStreamWriter *writer)
 
 bool Metadata::fromXml(QXmlStreamReader *xmlReader)
 {
-    while(xmlReader->readNext())
+    while(xmlReader->readNextStartElement())
     {
-        if(xmlReader->tokenType() == QXmlStreamReader::EndElement) {
-            if(xmlReader->name() == "meta-data") {
-                break;
-            }
-            else {
-                continue;
-            }
-        }
-        if(xmlReader->tokenType() == QXmlStreamReader::Characters) {
-            continue;
-        }
         if(xmlReader->name() == "book-info")
         {
             if(!d->bookInfo->fromXml(xmlReader)) {

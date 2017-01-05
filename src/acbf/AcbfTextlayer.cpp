@@ -69,19 +69,8 @@ bool Textlayer::fromXml(QXmlStreamReader *xmlReader)
 {
     setBgcolor(xmlReader->attributes().value("bgcolor").toString());
     setLanguage(xmlReader->attributes().value("lang").toString());
-    while(xmlReader->readNext())
+    while(xmlReader->readNextStartElement())
     {
-        if(xmlReader->tokenType() == QXmlStreamReader::EndElement) {
-            if(xmlReader->name() == "text-layer") {
-                break;
-            }
-            else {
-                continue;
-            }
-        }
-        if(xmlReader->tokenType() == QXmlStreamReader::Characters) {
-            continue;
-        }
         if(xmlReader->name() == "text-area")
         {
             Textarea* newArea = new Textarea(this);

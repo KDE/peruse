@@ -103,19 +103,8 @@ bool Page::fromXml(QXmlStreamReader *xmlReader)
 {
     setBgcolor(xmlReader->attributes().value("bgcolor").toString());
     setTransition(xmlReader->attributes().value("transition").toString());
-    while(xmlReader->readNext())
+    while(xmlReader->readNextStartElement())
     {
-        if(xmlReader->tokenType() == QXmlStreamReader::EndElement) {
-            if(xmlReader->name() == "page" || xmlReader->name() == "coverpage") {
-                break;
-            }
-            else {
-                continue;
-            }
-        }
-        if(xmlReader->tokenType() == QXmlStreamReader::Characters) {
-            continue;
-        }
         if(xmlReader->name() == "title")
         {
             d->title[xmlReader->attributes().value("lang").toString()] = xmlReader->readElementText();
@@ -123,6 +112,7 @@ bool Page::fromXml(QXmlStreamReader *xmlReader)
         else if(xmlReader->name() == "image")
         {
             setImageHref(xmlReader->attributes().value("href").toString());
+            xmlReader->skipCurrentElement();
         }
         else if(xmlReader->name() == "text-layer")
         {

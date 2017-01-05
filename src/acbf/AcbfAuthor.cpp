@@ -77,17 +77,6 @@ bool Author::fromXml(QXmlStreamReader *xmlReader)
     setLanguage(xmlReader->attributes().value("lang").toString());
     while(xmlReader->readNextStartElement())
     {
-        if(xmlReader->tokenType() == QXmlStreamReader::EndElement) {
-            if(xmlReader->name() == "author") {
-                break;
-            }
-            else {
-                continue;
-            }
-        }
-        if(xmlReader->tokenType() == QXmlStreamReader::Characters) {
-            continue;
-        }
         if(xmlReader->name() == "first-name")
         {
             setFirstName(xmlReader->readElementText());
