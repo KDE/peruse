@@ -20,6 +20,6 @@ target_link_libraries(peruse
 install(TARGETS peruse ${INSTALL_TARGETS_DEFAULT_ARGS})
 install(FILES org.kde.peruse.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
 install(DIRECTORY qml DESTINATION ${DATA_INSTALL_DIR}/peruse)
-install(FILES org.kde.peruse.appdata.xml DESTINATION ${DATA_INSTALL_DIR}/appdata)
+install(FILES org.kde.peruse.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
 
 add_subdirectory(icon)

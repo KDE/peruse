@@ -20,7 +20,7 @@ target_link_libraries(perusecreator
 install(TARGETS perusecreator ${INSTALL_TARGETS_DEFAULT_ARGS})
 install(FILES org.kde.perusecreator.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
 install(DIRECTORY qml DESTINATION ${DATA_INSTALL_DIR}/perusecreator)
-install(FILES org.kde.perusecreator.appdata.xml DESTINATION ${DATA_INSTALL_DIR}/appdata)
+install(FILES org.kde.perusecreator.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
 
 add_subdirectory(icon)
 
