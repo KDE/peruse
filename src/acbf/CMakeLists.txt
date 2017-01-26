@@ -2,9 +2,11 @@ project(acbf)
 
 set(acbf_SRCS
     AcbfAuthor.cpp
+    AcbfBinary.cpp
     AcbfBody.cpp
     AcbfBookinfo.cpp
     AcbfContentrating.cpp
+    AcbfData.cpp
     AcbfDatabaseref.cpp
     AcbfDocument.cpp
     AcbfDocumentinfo.cpp

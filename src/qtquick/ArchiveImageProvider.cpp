@@ -28,6 +28,10 @@
 #include <QDebug>
 #include <QIcon>
 
+#include <AcbfDocument.h>
+#include <AcbfBinary.h>
+#include <AcbfData.h>
+
 class ArchiveImageProvider::Private
 {
 public:
@@ -54,16 +58,39 @@ QImage ArchiveImageProvider::requestImage(const QString& id, QSize* size, const 
     Q_UNUSED(size)
     Q_UNUSED(requestedSize)
     QImage img;
-    const KArchiveFile* entry = d->bookModel->archiveFile(id);
-    if(entry)
-    {
-        bool success = img.loadFromData(entry->data());
-        if(!success) {
-            QIcon oops = QIcon::fromTheme("unknown");
-            img = oops.pixmap(oops.availableSizes().last()).toImage();
-            qDebug() << "Failed to load image with id:" << id;
+    bool success = false;
+
+    /*
+     * In ACBF, image references starting with a '#' refer to files embedded
+     * in the <data> section of the .acbf file.
+     * see: http://acbf.wikia.com/wiki/Body_Section_Definition#Image
+     */
+    if (id.startsWith('#')) {
+        auto document = qobject_cast<AdvancedComicBookFormat::Document*>(d->bookModel->acbfData());
+
+        if (document) {
+            AdvancedComicBookFormat::Binary* binary = document->data()->binary(id.mid(1));
+
+            if (binary) {
+                success = img.loadFromData(binary->data());
+            }
         }
     }
+
+    if (!success) {
+        const KArchiveFile* entry = d->bookModel->archiveFile(id);
+
+        if(entry) {
+            success = img.loadFromData(entry->data());
+        }
+    }
+
+    if (!success) {
+        QIcon oops = QIcon::fromTheme("unknown");
+        img = oops.pixmap(oops.availableSizes().last()).toImage();
+        qDebug() << "Failed to load image with id:" << id;
+    }
+
     return img;
 }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 Dan Leinir Turthra Jensen <admin@leinir.dk>
+ * Copyright (C) 2017 Jesse Pullinen <jesse12p@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,41 +19,41 @@
  *
  */
 
-#ifndef ACBFDOCUMENT_H
-#define ACBFDOCUMENT_H
+#ifndef ACBFBINARY_H
+#define ACBFBINARY_H
 
 #include <QObject>
+
 #include "acbf_export.h"
+
+class QXmlStreamReader;
+class QXmlStreamWriter;
 
 namespace AdvancedComicBookFormat
 {
-class Metadata;
-class Body;
-// class References;
 class Data;
-// class Stylesheet;
-class ACBF_EXPORT Document : public QObject
+class ACBF_EXPORT Binary : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(Metadata* metaData READ metaData NOTIFY metaDataChanged)
 public:
-    explicit Document(QObject* parent = 0);
-    virtual ~Document();
+    explicit Binary(Data* parent = 0);
+    virtual ~Binary();
 
-    QString toXml();
-    bool fromXml(QString xmlDocument);
+    void toXml(QXmlStreamWriter *writer);
+    bool fromXml(QXmlStreamReader *xmlReader);
 
-    Metadata* metaData();
-    Q_SIGNAL void metaDataChanged();
+    QString id();
+    void setId(QString newId);
 
-    Body* body();
-    // References* references();
-    Data* data();
-    // Stylesheet* stylesheet();
+    QString contentType();
+    void setContentType(QString newContentType);
+
+    QByteArray data();
+    void setData(QByteArray newData);
 private:
     class Private;
     Private* d;
 };
 }
 
-#endif//ACBFDOCUMENT_H
+#endif // ACBFBINARY_H

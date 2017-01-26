@@ -23,6 +23,7 @@
 #include "AcbfBody.h"
 #include "AcbfMetadata.h"
 #include "AcbfBookinfo.h"
+#include "AcbfData.h"
 
 #include <QDebug>
 #include <QXmlStreamReader>
@@ -34,9 +35,11 @@ public:
     Private()
         : metaData(0)
         , body(0)
+        , data(0)
     {}
     Metadata* metaData;
     Body* body;
+    Data* data;
 };
 
 Document::Document(QObject* parent)
@@ -45,6 +48,7 @@ Document::Document(QObject* parent)
 {
     d->metaData = new Metadata(this);
     d->body = new Body(this);
+    d->data = new Data(this);
 }
 
 Document::~Document()
@@ -89,6 +93,12 @@ bool Document::fromXml(QString xmlDocument)
                         break;
                     }
                 }
+                else if(xmlReader.name() == "data")
+                {
+                    if(!d->data->fromXml(&xmlReader)) {
+                        break;
+                    }
+                }
                 else
                 {
                     qWarning() << Q_FUNC_INFO << "currently unsupported subsection:" << xmlReader.name();
@@ -116,4 +126,9 @@ Metadata * Document::metaData()
 Body * Document::body()
 {
     return d->body;
+}
+
+Data * Document::data()
+{
+    return d->data;
 }
