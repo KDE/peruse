@@ -36,6 +36,7 @@ class FilesystemContentLister::Private
 public:
     Private() {}
     QString searchString;
+    QStringList knownFiles;
     QStringList locations;
     QStringList mimetypes;
 };
@@ -66,6 +67,11 @@ void FilesystemContentLister::setSearchString(const QString& searchString)
     d->searchString = searchString;
 }
 
+void FilesystemContentLister::setKnownFiles(QStringList knownFiles)
+{
+    d->knownFiles = knownFiles;
+}
+
 void FilesystemContentLister::startSearch()
 {
     QMimeDatabase mimeDb;
@@ -78,6 +84,10 @@ void FilesystemContentLister::startSearch()
         while (it.hasNext())
         {
             QString filePath = it.next();
+            if(d->knownFiles.contains(filePath)) {
+                continue;
+            }
+
             QFileInfo info(filePath);
 
             if(info.isDir())

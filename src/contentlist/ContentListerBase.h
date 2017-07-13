@@ -34,6 +34,7 @@ public:
     virtual void addLocation(QString path);
     virtual void addMimetype(QString mimetype);
     virtual void setSearchString(const QString& searchString);
+    virtual void setKnownFiles(QStringList knownFiles);
     Q_SLOT virtual void startSearch();
 
     Q_SIGNAL void fileFound(const QString& filePath, const QVariantHash& metadata);

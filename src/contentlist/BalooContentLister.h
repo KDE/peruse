@@ -40,6 +40,7 @@ public:
     virtual void addLocation(QString path);
     virtual void addMimetype(QString mimetype);
     virtual void setSearchString(const QString& searchString);
+    virtual void setKnownFiles(QStringList knownFiles);
     virtual void startSearch();
 private:
     class Private;

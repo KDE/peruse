@@ -100,6 +100,11 @@ void ContentList::startSearch()
     QTimer::singleShot(1, d->actualContentList, SLOT(startSearch()));
 }
 
+void ContentList::setKnownFiles(QStringList knownFiles)
+{
+    d->actualContentList->setKnownFiles(knownFiles);
+}
+
 void ContentList::fileFound(const QString& filePath, const QVariantHash& metadata)
 {
     ContentEntry* entry = new ContentEntry();

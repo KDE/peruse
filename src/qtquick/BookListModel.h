@@ -79,6 +79,9 @@ public:
 
     // Delete a book from the model, and optionally delete the entry from file storage
     Q_INVOKABLE void removeBook(QString fileName, bool deleteFile = false);
+
+    // A list of the files currently known by the applications
+    Q_INVOKABLE QStringList knownBookFiles() const;
 private:
     class Private;
     Private* d;

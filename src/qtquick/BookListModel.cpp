@@ -21,6 +21,7 @@
 
 #include "BookListModel.h"
 
+#include "BookDatabase.h"
 #include "CategoryEntriesModel.h"
 
 #include <kio/deletejob.h>
@@ -40,10 +41,13 @@ public:
         , authorCategoryModel(0)
         , seriesCategoryModel(0)
         , folderCategoryModel(0)
-    {};
+    {
+        db = new BookDatabase();
+    };
     ~Private()
     {
         qDeleteAll(entries);
+        db->deleteLater();
     }
     QList<BookEntry*> entries;
 
@@ -53,12 +57,73 @@ public:
     CategoryEntriesModel* authorCategoryModel;
     CategoryEntriesModel* seriesCategoryModel;
     CategoryEntriesModel* folderCategoryModel;
+
+    BookDatabase* db;
+
+    void initializeSubModels(BookListModel* q) {
+        if(!titleCategoryModel)
+        {
+            titleCategoryModel = new CategoryEntriesModel(q);
+            connect(q, SIGNAL(entryDataUpdated(BookEntry*)), titleCategoryModel, SIGNAL(entryDataUpdated(BookEntry*)));
+            connect(q, SIGNAL(entryRemoved(BookEntry*)), titleCategoryModel, SIGNAL(entryRemoved(BookEntry*)));
+            emit q->titleCategoryModelChanged();
+        }
+        if(!newlyAddedCategoryModel)
+        {
+            newlyAddedCategoryModel = new CategoryEntriesModel(q);
+            connect(q, SIGNAL(entryDataUpdated(BookEntry*)), newlyAddedCategoryModel, SIGNAL(entryDataUpdated(BookEntry*)));
+            connect(q, SIGNAL(entryRemoved(BookEntry*)), newlyAddedCategoryModel, SIGNAL(entryRemoved(BookEntry*)));
+            emit q->newlyAddedCategoryModelChanged();
+        }
+        if(!authorCategoryModel)
+        {
+            authorCategoryModel = new CategoryEntriesModel(q);
+            connect(q, SIGNAL(entryDataUpdated(BookEntry*)), authorCategoryModel, SIGNAL(entryDataUpdated(BookEntry*)));
+            connect(q, SIGNAL(entryRemoved(BookEntry*)), authorCategoryModel, SIGNAL(entryRemoved(BookEntry*)));
+            emit q->authorCategoryModelChanged();
+        }
+        if(!seriesCategoryModel)
+        {
+            seriesCategoryModel = new CategoryEntriesModel(q);
+            connect(q, SIGNAL(entryDataUpdated(BookEntry*)), seriesCategoryModel, SIGNAL(entryDataUpdated(BookEntry*)));
+            connect(q, SIGNAL(entryRemoved(BookEntry*)), seriesCategoryModel, SIGNAL(entryRemoved(BookEntry*)));
+            emit q->seriesCategoryModelChanged();
+        }
+        if(!folderCategoryModel)
+        {
+            folderCategoryModel = new CategoryEntriesModel(q);
+            connect(q, SIGNAL(entryDataUpdated(BookEntry*)), folderCategoryModel, SIGNAL(entryDataUpdated(BookEntry*)));
+            connect(q, SIGNAL(entryRemoved(BookEntry*)), folderCategoryModel, SIGNAL(entryRemoved(BookEntry*)));
+            emit q->folderCategoryModel();
+        }
+    }
+
+    void addEntry(BookListModel* q, BookEntry* entry) {
+        entries.append(entry);
+        q->append(entry);
+        titleCategoryModel->addCategoryEntry(entry->title.left(1).toUpper(), entry);
+        authorCategoryModel->addCategoryEntry(entry->author, entry);
+        seriesCategoryModel->addCategoryEntry(entry->series, entry);
+        newlyAddedCategoryModel->append(entry, CreatedRole);
+        QUrl url(entry->filename.left(entry->filename.lastIndexOf("/")));
+        folderCategoryModel->addCategoryEntry(url.path().mid(1), entry);
+        folderCategoryModel->append(entry);
+    }
 };
 
 BookListModel::BookListModel(QObject* parent)
     : CategoryEntriesModel(parent)
     , d(new Private)
 {
+    QList<BookEntry*> entries = d->db->loadEntries();
+    if(entries.count() > 0)
+    {
+        d->initializeSubModels(this);
+    }
+    foreach(BookEntry* entry, entries)
+    {
+        d->addEntry(this, entry);
+    }
 }
 
 BookListModel::~BookListModel()
@@ -87,42 +152,7 @@ QObject * BookListModel::contentModel() const
 
 void BookListModel::contentModelItemsInserted(QModelIndex index, int first, int last)
 {
-    if(!d->titleCategoryModel)
-    {
-        d->titleCategoryModel = new CategoryEntriesModel(this);
-        connect(this, SIGNAL(entryDataUpdated(BookEntry*)), d->titleCategoryModel, SIGNAL(entryDataUpdated(BookEntry*)));
-        connect(this, SIGNAL(entryRemoved(BookEntry*)), d->titleCategoryModel, SIGNAL(entryRemoved(BookEntry*)));
-        emit titleCategoryModelChanged();
-    }
-    if(!d->newlyAddedCategoryModel)
-    {
-        d->newlyAddedCategoryModel = new CategoryEntriesModel(this);
-        connect(this, SIGNAL(entryDataUpdated(BookEntry*)), d->newlyAddedCategoryModel, SIGNAL(entryDataUpdated(BookEntry*)));
-        connect(this, SIGNAL(entryRemoved(BookEntry*)), d->newlyAddedCategoryModel, SIGNAL(entryRemoved(BookEntry*)));
-        emit newlyAddedCategoryModelChanged();
-    }
-    if(!d->authorCategoryModel)
-    {
-        d->authorCategoryModel = new CategoryEntriesModel(this);
-        connect(this, SIGNAL(entryDataUpdated(BookEntry*)), d->authorCategoryModel, SIGNAL(entryDataUpdated(BookEntry*)));
-        connect(this, SIGNAL(entryRemoved(BookEntry*)), d->authorCategoryModel, SIGNAL(entryRemoved(BookEntry*)));
-        emit authorCategoryModelChanged();
-    }
-    if(!d->seriesCategoryModel)
-    {
-        d->seriesCategoryModel = new CategoryEntriesModel(this);
-        connect(this, SIGNAL(entryDataUpdated(BookEntry*)), d->seriesCategoryModel, SIGNAL(entryDataUpdated(BookEntry*)));
-        connect(this, SIGNAL(entryRemoved(BookEntry*)), d->seriesCategoryModel, SIGNAL(entryRemoved(BookEntry*)));
-        emit seriesCategoryModelChanged();
-    }
-    if(!d->folderCategoryModel)
-    {
-        d->folderCategoryModel = new CategoryEntriesModel(this);
-        connect(this, SIGNAL(entryDataUpdated(BookEntry*)), d->folderCategoryModel, SIGNAL(entryDataUpdated(BookEntry*)));
-        connect(this, SIGNAL(entryRemoved(BookEntry*)), d->folderCategoryModel, SIGNAL(entryRemoved(BookEntry*)));
-        emit folderCategoryModel();
-    }
-
+    d->initializeSubModels(this);
     int newRow = d->entries.count();
     beginInsertRows(QModelIndex(), newRow, newRow + (last - first));
     for(int i = first; i < last + 1; ++i)
@@ -169,16 +199,8 @@ void BookListModel::contentModelItemsInserted(QModelIndex index, int first, int 
             { entry->totalPages = it.value().toInt(); }
         }
 
-        d->entries.append(entry);
-
-        append(entry);
-        d->titleCategoryModel->addCategoryEntry(entry->title.left(1).toUpper(), entry);
-        d->authorCategoryModel->addCategoryEntry(entry->author, entry);
-        d->seriesCategoryModel->addCategoryEntry(entry->series, entry);
-        d->newlyAddedCategoryModel->append(entry, CreatedRole);
-        QUrl url(entry->filename.left(entry->filename.lastIndexOf("/")));
-        d->folderCategoryModel->addCategoryEntry(url.path().mid(1), entry);
-        d->folderCategoryModel->append(entry);
+        d->addEntry(this, entry);
+        d->db->addEntry(entry);
     }
     endInsertRows();
     emit countChanged();
@@ -263,4 +285,13 @@ void BookListModel::removeBook(QString fileName, bool deleteFile)
             break;
         }
     }
+}
+
+QStringList BookListModel::knownBookFiles() const
+{
+    QStringList files;
+    foreach(BookEntry* entry, d->entries) {
+        files.append(entry->filename);
+    }
+    return files;
 }

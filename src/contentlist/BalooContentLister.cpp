@@ -37,7 +37,8 @@ class BalooContentLister::Private
 {
 public:
     Private() {}
-    QList<QString> locations;
+    QStringList knownFiles;
+    QStringList locations;
     QString searchString;
     QList<Baloo::QueryRunnable*> queries;
 };
@@ -94,6 +95,11 @@ void BalooContentLister::setSearchString(const QString& searchString)
     d->searchString = searchString;
 }
 
+void BalooContentLister::setKnownFiles(QStringList knownFiles)
+{
+    d->knownFiles = knownFiles;
+}
+
 void BalooContentLister::startSearch()
 {
     Q_FOREACH(const QString& location, d->locations)
@@ -135,6 +141,11 @@ void BalooContentLister::queryCompleted(Baloo::QueryRunnable* query)
 void BalooContentLister::queryResult(Baloo::QueryRunnable* query, QString file)
 {
     Q_UNUSED(query)
+
+    if(d->knownFiles.contains(file)) {
+        return;
+    }
+
     QVariantHash metadata;
 
     Baloo::File balooFile(file);

@@ -36,6 +36,7 @@ public:
     Q_SLOT void addLocation(QString path);
     Q_SLOT void addMimetype(QString mimetype);
     Q_SLOT void setSearchString(const QString& searchString);
+    Q_SLOT void setKnownFiles(QStringList knownFiles);
     Q_SLOT void startSearch();
 
     enum Roles {

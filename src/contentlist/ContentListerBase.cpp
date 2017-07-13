@@ -45,6 +45,11 @@ void ContentListerBase::setSearchString(const QString& searchString)
     Q_UNUSED(searchString)
 }
 
+void ContentListerBase::setKnownFiles(QStringList knownFiles)
+{
+    Q_UNUSED(knownFiles);
+}
+
 void ContentListerBase::startSearch()
 {
 }

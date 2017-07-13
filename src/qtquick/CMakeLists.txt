@@ -9,6 +9,7 @@ set(qmlplugin_SRCS
     qmlplugin.cpp
     ArchiveBookModel.cpp
     ArchiveImageProvider.cpp
+    BookDatabase.cpp
     BookModel.cpp
     BookListModel.cpp
     CategoryEntriesModel.cpp
@@ -45,6 +46,7 @@ target_link_libraries (peruseqmlplugin
     Qt5::Core
     Qt5::Qml
     Qt5::Quick
+    Qt5::Sql
     KF5::Archive
     KF5::IconThemes
     KF5::ConfigCore
