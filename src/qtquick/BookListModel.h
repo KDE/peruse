@@ -23,8 +23,9 @@
 #define BOOKLISTMODEL_H
 
 #include "CategoryEntriesModel.h"
+#include <QQmlParserStatus>
 
-class BookListModel : public CategoryEntriesModel
+class BookListModel : public CategoryEntriesModel, public QQmlParserStatus
 {
     Q_OBJECT
     Q_PROPERTY(int count READ count NOTIFY countChanged)
@@ -34,10 +35,15 @@ class BookListModel : public CategoryEntriesModel
     Q_PROPERTY(QObject* authorCategoryModel READ authorCategoryModel NOTIFY authorCategoryModelChanged)
     Q_PROPERTY(QObject* seriesCategoryModel READ seriesCategoryModel NOTIFY seriesCategoryModelChanged)
     Q_PROPERTY(QObject* folderCategoryModel READ folderCategoryModel NOTIFY folderCategoryModelChanged)
+    Q_PROPERTY(bool cacheLoaded READ cacheLoaded NOTIFY cacheLoadedChanged)
     Q_ENUMS(Grouping)
+    Q_INTERFACES(QQmlParserStatus)
 public:
     explicit BookListModel(QObject* parent = 0);
     virtual ~BookListModel();
+
+    virtual void classBegin() override {};
+    virtual void componentComplete() override;
 
     enum Grouping {
         GroupByNone = 0,
@@ -73,6 +79,9 @@ public:
 
     QObject* folderCategoryModel() const;
     Q_SIGNAL void folderCategoryModelChanged();
+
+    bool cacheLoaded() const;
+    Q_SIGNAL void cacheLoadedChanged();
 
     // Update the data of a book at runtime - in particular, we need to update totalPages and currentPage
     Q_INVOKABLE void setBookData(QString fileName, QString property, QString value);

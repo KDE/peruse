@@ -30,6 +30,7 @@
 #include <QDir>
 #include <QDebug>
 #include <QMimeDatabase>
+#include <QTimer>
 #include <QUrl>
 
 class BookListModel::Private {
@@ -41,6 +42,7 @@ public:
         , authorCategoryModel(0)
         , seriesCategoryModel(0)
         , folderCategoryModel(0)
+        , cacheLoaded(false)
     {
         db = new BookDatabase();
     };
@@ -59,6 +61,7 @@ public:
     CategoryEntriesModel* folderCategoryModel;
 
     BookDatabase* db;
+    bool cacheLoaded;
 
     void initializeSubModels(BookListModel* q) {
         if(!titleCategoryModel)
@@ -109,26 +112,46 @@ public:
         folderCategoryModel->addCategoryEntry(url.path().mid(1), entry);
         folderCategoryModel->append(entry);
     }
+
+    void loadCache(BookListModel* q) {
+        QList<BookEntry*> entries = db->loadEntries();
+        if(entries.count() > 0)
+        {
+            initializeSubModels(q);
+        }
+        int i = 0;
+        foreach(BookEntry* entry, entries)
+        {
+            addEntry(q, entry);
+            if(++i % 100 == 0) {
+                emit q->countChanged();
+                qApp->processEvents();
+            }
+        }
+        cacheLoaded = true;
+        emit q->cacheLoadedChanged();
+    }
 };
 
 BookListModel::BookListModel(QObject* parent)
     : CategoryEntriesModel(parent)
     , d(new Private)
 {
-    QList<BookEntry*> entries = d->db->loadEntries();
-    if(entries.count() > 0)
-    {
-        d->initializeSubModels(this);
-    }
-    foreach(BookEntry* entry, entries)
-    {
-        d->addEntry(this, entry);
-    }
 }
 
 BookListModel::~BookListModel()
 {
     delete d;
+}
+
+void BookListModel::componentComplete()
+{
+    QTimer::singleShot(0, this, [this](){ d->loadCache(this); });
+}
+
+bool BookListModel::cacheLoaded() const
+{
+    return d->cacheLoaded;
 }
 
 void BookListModel::setContentModel(QObject* newModel)
