@@ -80,6 +80,7 @@ public:
     Q_INVOKABLE QObject* bookFromFile(QString filename);
     Q_INVOKABLE int indexOfFile(QString filename);
     Q_INVOKABLE bool indexIsBook(int index);
+    int bookCount() const;
 
     Q_SIGNAL void entryDataUpdated(BookEntry* entry);
     Q_SLOT void entryDataChanged(BookEntry* entry);

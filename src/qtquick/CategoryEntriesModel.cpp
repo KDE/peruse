@@ -104,7 +104,7 @@ QVariant CategoryEntriesModel::data(const QModelIndex& index, int role) const
                     result.setValue(model->name());
                     break;
                 case CategoryEntryCountRole:
-                    result.setValue(model->rowCount(QModelIndex()));
+                    result.setValue(model->bookCount());
                     break;
                 case CategoryEntriesModelRole:
                     result.setValue(model);
@@ -310,6 +310,11 @@ bool CategoryEntriesModel::indexIsBook(int index)
         return false;
     }
     return true;
+}
+
+int CategoryEntriesModel::bookCount() const
+{
+    return d->entries.count();
 }
 
 QObject* CategoryEntriesModel::getEntry(int index)
