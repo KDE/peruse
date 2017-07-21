@@ -23,7 +23,7 @@ import QtQuick 2.2
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.4 as QtControls
 
-import org.kde.kirigami 1.0 as Kirigami
+import org.kde.kirigami 2.1 as Kirigami
 
 import org.kde.peruse 0.1 as Peruse
 import "listcomponents" as ListComponents
@@ -44,21 +44,21 @@ Kirigami.Page {
             shortcut: "Return";
             iconName: "document-open";
             onTriggered: bookSelected(startWithThese.currentItem.filename, startWithThese.currentItem.currentPage);
-            enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypeDesktop;
+            enabled: applicationWindow().pageStack.currentItem == root && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
         },
         Kirigami.Action {
             text: i18nc("select the previous book entry in the list", "Previous book");
             shortcut: StandardKey.MoveToPreviousChar
             iconName: "go-previous";
             onTriggered: startWithThese.selectPrevious();
-            enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypeDesktop;
+            enabled: applicationWindow().pageStack.currentItem == root && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
         },
         Kirigami.Action {
             text: i18nc("select the next book entry in the list", "Next book");
             shortcut: StandardKey.MoveToNextChar;
             iconName: "go-next";
             onTriggered: startWithThese.selectNext();
-            enabled: mainWindow.pageStack.currentItem == root && mainWindow.deviceType === mainWindow.deviceTypeDesktop;
+            enabled: applicationWindow().pageStack.currentItem == root && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
         }
     ]
 
@@ -68,7 +68,7 @@ Kirigami.Page {
             text: i18nc("search in the list of books (not inside the books)", "Search Books");
             iconName: "system-search";
             onTriggered: searchBox.activate();
-            enabled: mainWindow.pageStack.currentItem == root;
+            enabled: applicationWindow().pageStack.currentItem == root;
         }
     }
 
@@ -94,8 +94,8 @@ Kirigami.Page {
                 left: parent.left;
                 right: parent.right;
             }
-            height: mainWindow.isLoading ? (parent.height / 2) : (appNameLabel.height + appDescriptionLabel.height + Kirigami.Units.largeSpacing);
-            Behavior on height { PropertyAnimation { duration: mainWindow.animationDuration; easing.type: Easing.InOutQuad; } }
+            height: applicationWindow().isLoading ? (parent.height / 2) : (appNameLabel.height + appDescriptionLabel.height + Kirigami.Units.largeSpacing);
+            Behavior on height { PropertyAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
             Kirigami.Heading {
                 id: appNameLabel;
                 anchors {
@@ -158,9 +158,9 @@ Kirigami.Page {
                 onRecentlyOpenedChanged: startWithThese.updateRecentlyRead();
             }
             Connections {
-                target: mainWindow;
+                target: applicationWindow();
                 onIsLoadingChanged: {
-                    if(mainWindow.isLoading === false) {
+                    if(applicationWindow().isLoading === false) {
                         startWithThese.updateRecentlyRead();
                     }
                 }
@@ -171,8 +171,8 @@ Kirigami.Page {
                 right: parent.right;
                 bottom: parent.bottom;
             }
-            opacity: mainWindow.isLoading ? 0 : 1;
-            Behavior on opacity { PropertyAnimation { duration: mainWindow.animationDuration; } }
+            opacity: applicationWindow().isLoading ? 0 : 1;
+            Behavior on opacity { PropertyAnimation { duration: applicationWindow().animationDuration; } }
             contentWidth: width;
             contentHeight: recentItemsColumn.height;
             clip: true;
@@ -480,8 +480,8 @@ Kirigami.Page {
                 right: parent.right;
                 bottom: parent.bottom;
             }
-            opacity: mainWindow.isLoading ? 1 : 0;
-            Behavior on opacity { PropertyAnimation { duration: mainWindow.animationDuration; } }
+            opacity: applicationWindow().isLoading ? 1 : 0;
+            Behavior on opacity { PropertyAnimation { duration: applicationWindow().animationDuration; } }
             Kirigami.Label {
                 anchors {
                     bottom: parent.verticalCenter;
@@ -498,7 +498,7 @@ Kirigami.Page {
                     left: parent.left;
                     right: parent.right;
                 }
-                running: mainWindow.isLoading;
+                running: applicationWindow().isLoading;
             }
             Kirigami.Label {
                 anchors {

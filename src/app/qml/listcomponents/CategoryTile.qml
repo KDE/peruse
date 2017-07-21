@@ -21,7 +21,7 @@
 
 import QtQuick 2.1
 
-import org.kde.kirigami 1.0 as Kirigami
+import org.kde.kirigami 2.1 as Kirigami
 
 Item {
     id: root;
@@ -36,7 +36,7 @@ Item {
     MouseArea {
         anchors.fill: parent;
         onClicked: {
-            mainWindow.pageStack.push(bookshelf, { focus: true, headerText: "Comics in folder: " + root.title, model: root.entriesModel })
+            applicationWindow().pageStack.push(bookshelf, { focus: true, headerText: "Comics in folder: " + root.title, model: root.entriesModel })
         }
     }
     Rectangle {

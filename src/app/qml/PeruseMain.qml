@@ -24,7 +24,7 @@ import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.4 as QtControls
 import QtQuick.Window 2.2
 
-import org.kde.kirigami 1.0 as Kirigami
+import org.kde.kirigami 2.1 as Kirigami
 import org.kde.peruse 0.1 as Peruse
 import org.kde.contentlist 0.1
 
@@ -59,6 +59,31 @@ Kirigami.ApplicationWindow {
                 mainWindow.globalDrawer.actions = globalDrawerActions;
             }
         }
+        onCacheLoadedChanged: {
+            if(!cacheLoaded) {
+                return;
+            }
+
+            var bookLocations = peruseConfig.bookLocations;
+            for(var i = 0; i < bookLocations.length; ++i) {
+                contentList.contentModel.addLocation(bookLocations[i]);
+            }
+            contentList.contentModel.setSearchString("cbz OR cbr OR cb7 OR cbt OR cba OR chm OR djvu OR epub OR pdf");
+            contentList.contentModel.addMimetype("application/x-cbz");
+            contentList.contentModel.addMimetype("application/x-cbr");
+            contentList.contentModel.addMimetype("application/x-cb7");
+            contentList.contentModel.addMimetype("application/x-cbt");
+            contentList.contentModel.addMimetype("application/x-cba");
+            contentList.contentModel.addMimetype("application/vnd.comicbook+zip");
+            contentList.contentModel.addMimetype("application/vnd.comicbook+rar");
+            contentList.contentModel.addMimetype("application/vnd.ms-htmlhelp");
+            contentList.contentModel.addMimetype("image/vnd.djvu");
+            contentList.contentModel.addMimetype("image/x-djvu");
+            contentList.contentModel.addMimetype("application/epub+zip");
+            contentList.contentModel.addMimetype("application/pdf");
+            contentList.contentModel.setKnownFiles(contentList.knownBookFiles());
+            contentList.contentModel.startSearch();
+        }
     }
 
     Peruse.Config {
@@ -68,6 +93,8 @@ Kirigami.ApplicationWindow {
         return peruseConfig.homeDir();
     }
 
+    header: Kirigami.ApplicationHeader {}
+
     contextDrawer: PeruseContextDrawer {
         id: contextDrawer;
     }
@@ -75,7 +102,7 @@ Kirigami.ApplicationWindow {
     globalDrawer: Kirigami.GlobalDrawer {
         title: i18nc("application title for the sidebar", "Peruse");
         titleIcon: "peruse";
-        opened: PLASMA_PLATFORM.substring(0, 5) === "phone" ? false : true;
+        drawerOpen: PLASMA_PLATFORM.substring(0, 5) === "phone" ? false : true;
         modal: PLASMA_PLATFORM.substring(0, 5) === "phone" ? true : false;
         actions: []
     }
@@ -266,27 +293,6 @@ Kirigami.ApplicationWindow {
         if (PLASMA_PLATFORM.substring(0, 5) === "phone") {
             globalDrawer.close();
         }
-    }
-
-    Component.onCompleted: {
-        var bookLocations = peruseConfig.bookLocations;
-        for(var i = 0; i < bookLocations.length; ++i) {
-            contentList.contentModel.addLocation(bookLocations[i]);
-        }
-        contentList.contentModel.setSearchString("cbz OR cbr OR cb7 OR cbt OR cba OR chm OR djvu OR epub OR pdf");
-        contentList.contentModel.addMimetype("application/x-cbz");
-        contentList.contentModel.addMimetype("application/x-cbr");
-        contentList.contentModel.addMimetype("application/x-cb7");
-        contentList.contentModel.addMimetype("application/x-cbt");
-        contentList.contentModel.addMimetype("application/x-cba");
-        contentList.contentModel.addMimetype("application/vnd.comicbook+zip");
-        contentList.contentModel.addMimetype("application/vnd.comicbook+rar");
-        contentList.contentModel.addMimetype("application/vnd.ms-htmlhelp");
-        contentList.contentModel.addMimetype("image/vnd.djvu");
-        contentList.contentModel.addMimetype("image/x-djvu");
-        contentList.contentModel.addMimetype("application/epub+zip");
-        contentList.contentModel.addMimetype("application/pdf");
-        contentList.contentModel.startSearch();
     }
 }
 

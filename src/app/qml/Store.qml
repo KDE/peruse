@@ -24,7 +24,7 @@ import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.4 as QtControls
 import QtQuick.Dialogs 1.0
 
-import org.kde.kirigami 1.0 as Kirigami
+import org.kde.kirigami 2.1 as Kirigami
 
 import org.kde.peruse 0.1 as Peruse
 
@@ -48,10 +48,10 @@ Kirigami.Page {
             target: newStuffLoader.item;
             onDownloadedItemClicked: {
                 if(Array.isArray(installedFiles) && installedFiles.length > 0) {
-                    mainWindow.showBook(installedFiles[0], 0);
+                    applicationWindow().showBook(installedFiles[0], 0);
                 }
                 else if(installedFiles.length > 0) {
-                    mainWindow.showBook(installedFiles, 0);
+                    applicationWindow().showBook(installedFiles, 0);
                 }
             }
         }

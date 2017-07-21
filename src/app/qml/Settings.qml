@@ -24,7 +24,7 @@ import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.4 as QtControls
 import QtQuick.Dialogs 1.0
 
-import org.kde.kirigami 1.0 as Kirigami
+import org.kde.kirigami 2.1 as Kirigami
 
 import org.kde.peruse 0.1 as Peruse
 
@@ -55,7 +55,7 @@ Kirigami.Page {
                     iconName: "list-add";
                     onClicked: {
                         if(PLASMA_PLATFORM.substring(0, 5) === "phone") {
-                            mainWindow.pageStack.push(folderDlg);
+                            applicationWindow().pageStack.push(folderDlg);
                         }
                         else {
                             desktopFolderDlg.open();
@@ -99,7 +99,7 @@ Kirigami.Page {
             color: Kirigami.Theme.viewBackgroundColor;
             anchors.fill: parent;
             opacity: 0;
-            Behavior on opacity { PropertyAnimation { duration: mainWindow.animationDuration; } }
+            Behavior on opacity { PropertyAnimation { duration: applicationWindow().animationDuration; } }
             Connections {
                 target: contentList.contentModel;
                 onSearchCompleted: addingNewBooksProgress.opacity = 0;
@@ -149,10 +149,10 @@ Kirigami.Page {
                     showFiles: false;
                     onAccepted: {
                         peruseConfig.addBookLocation(selectedItem());
-                        mainWindow.pageStack.pop();
+                        applicationWindow().pageStack.pop();
                         root.doSearch();
                     }
-                    onAborted: mainWindow.pageStack.pop();
+                    onAborted: applicationWindow().pageStack.pop();
                 }
             }
         }

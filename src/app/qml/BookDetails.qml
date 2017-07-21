@@ -23,7 +23,7 @@ import QtQuick 2.2
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.4 as QtControls
 
-import org.kde.kirigami 1.0 as Kirigami
+import org.kde.kirigami 2.1 as Kirigami
 import org.kde.peruse 0.1 as Peruse
 
 import "listcomponents" as ListComponents
@@ -134,7 +134,7 @@ Item {
             id: deleteBase;
             width: root.width;
             height: deleteButton.height + Kirigami.Units.largeSpacing * 2;
-            Behavior on height { PropertyAnimation { duration: mainWindow.animationDuration; } }
+            Behavior on height { PropertyAnimation { duration: applicationWindow().animationDuration; } }
             states: [
                 State {
                     name: "confirmDelete";
@@ -153,13 +153,13 @@ Item {
                 }
                 iconName: "edit-delete";
                 onClicked: deleteBase.state = "confirmDelete";
-                Behavior on opacity { PropertyAnimation { duration: mainWindow.animationDuration; } }
+                Behavior on opacity { PropertyAnimation { duration: applicationWindow().animationDuration; } }
             }
             Item {
                 id: deleteConfirmBase;
                 opacity: 0;
                 width: root.width;
-                Behavior on opacity { PropertyAnimation { duration: mainWindow.animationDuration; } }
+                Behavior on opacity { PropertyAnimation { duration: applicationWindow().animationDuration; } }
                 height: yesDelete.height + confirmDeleteLabel.height + Kirigami.Units.largeSpacing * 2 + Kirigami.Units.smallSpacing;
                 Kirigami.Label {
                     id: confirmDeleteLabel;
@@ -186,7 +186,7 @@ Item {
                     iconName: "dialog-ok";
                     onClicked: {
                         contentList.removeBook(root.file, true);
-                        mainWindow.pageStack.pop();
+                        applicationWindow().pageStack.pop();
                     }
                 }
                 QtControls.Button {

@@ -20,7 +20,7 @@
  */
 
 import QtQuick 2.1
-import org.kde.kirigami 1.0 as Kirigami
+import org.kde.kirigami 2.1 as Kirigami
 import org.kde.peruse 0.1 as Peruse
 
 PeruseMain {

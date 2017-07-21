@@ -22,7 +22,7 @@
 import QtQuick 2.1
 import QtQuick.Controls 1.4 as QtControls
 
-import org.kde.kirigami 1.0 as Kirigami
+import org.kde.kirigami 2.1 as Kirigami
 
 Item {
     id: root;
@@ -180,7 +180,7 @@ Item {
             bottom: parent.bottom;
         }
         height: deleteButton.height + Kirigami.Units.smallSpacing * 2;
-        Behavior on height { PropertyAnimation { duration: mainWindow.animationDuration; easing.type: Easing.InOutQuad; } }
+        Behavior on height { PropertyAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
         states: [
             State {
                 name: "confirmDelete";
@@ -199,13 +199,13 @@ Item {
             }
             iconName: "edit-delete";
             onClicked: deleteBase.state = "confirmDelete";
-            Behavior on opacity { PropertyAnimation { duration: mainWindow.animationDuration; easing.type: Easing.InOutQuad; } }
+            Behavior on opacity { PropertyAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
         }
         Item {
             id: deleteConfirmBase;
             opacity: 0;
             width: parent.width;
-            Behavior on opacity { PropertyAnimation { duration: mainWindow.animationDuration; easing.type: Easing.InOutQuad; } }
+            Behavior on opacity { PropertyAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
             height: yesDelete.height + confirmDeleteLabel.height + Kirigami.Units.largeSpacing * 2 + Kirigami.Units.smallSpacing;
             Kirigami.Label {
                 id: confirmDeleteLabel;

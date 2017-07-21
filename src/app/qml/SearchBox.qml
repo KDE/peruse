@@ -22,7 +22,7 @@
 import QtQuick 2.2
 import QtQuick.Controls 1.4 as QtControls
 
-import org.kde.kirigami 1.0 as Kirigami
+import org.kde.kirigami 2.1 as Kirigami
 
 import org.kde.peruse 0.1 as Peruse
 import "listcomponents" as ListComponents
@@ -38,7 +38,7 @@ Item {
     signal bookSelected(string filename, int currentPage);
     clip: true;
     height: searchField.focus || searchField.text.length > 0 ? searchHeight : 0;
-    Behavior on height { PropertyAnimation { duration: mainWindow.animationDuration; easing.type: Easing.InOutQuad; } }
+    Behavior on height { PropertyAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
     property int searchHeight: searchField.text.length > 0 ? maxHeight : searchField.height;
     QtControls.TextField {
         id: searchField;

@@ -20,7 +20,7 @@
 import QtQuick 2.1
 import QtQuick.Layouts 1.2
 import QtQuick.Controls 1.4 as QtControls
-import org.kde.kirigami 1.0
+import org.kde.kirigami 2.1
 
 // Modified version of the ContextDrawer component found in the Plasma Components
 // In addition to the original drawer, this will allow you to optionally insert an item
@@ -46,13 +46,20 @@ OverlayDrawer {
     property var actions: pageStack.currentItem ? pageStack.currentItem.contextualActions : null
     enabled: actions !== undefined && actions.length > 0;
     edge: Qt.RightEdge
+    drawerOpen: false
 
-    handleVisible: applicationWindow() ? applicationWindow().controlsVisible : true
+    //list items go to edges, have their own padding
+    leftPadding: 0
+    rightPadding: 0
+    bottomPadding: 0
+
+    handleVisible: applicationWindow == undefined || applicationWindow().wideScreen == true ? false : applicationWindow().controlsVisible
 
     Connections {
         target: pageStack
         onCurrentItemChanged: {
-            actions = pageStack.currentItem.contextualActions
+            if (pageStack.currentItem)
+                actions = pageStack.currentItem.contextualActions
         }
     }
 
@@ -128,17 +135,26 @@ OverlayDrawer {
                         }
                         BasicListItem {
                             id: listItem;
-                            width: parent.width;
-                            anchors { top: parent.top; left: parent.left; }
-                            property Item drawerRoot: root;
-                            checked: modelData.checked ? modelData.checked : false;
+                            checked: modelData.checked
                             icon: modelData.iconName
                             supportsMouseEvents: true
-                            label: model && model.text ? model.text : (modelData.text ? modelData.text : "")
-                            // this looks very silly - model.enabled /can/ be undefined, but enabled (and visible) only take bools, so...
-                            enabled: model ? (model.enabled ? model.enabled : false) : (modelData.enabled ? modelData.enabled : true)
-                            visible: (model ? (model.visible ? model.visible : false) : (modelData.visible ? modelData.visible : true)) && !listItemHeader.visible && text !== "";
+                            separatorVisible: false
+                            label: model ? (model.tooltip ? model.tooltip : model.text) : (modelData.tooltip ? modelData.tooltip : modelData.text)
+                            enabled: model ? model.enabled : modelData.enabled
+                            visible: model ? model.visible : modelData.visible
                             opacity: enabled ? 1.0 : 0.6
+                            onClicked: {
+                                if (modelData.children!==undefined && modelData.children.length > 0) {
+                                    sidebarStack.push(sidebarPage, { actions: modelData.children, "level": level + 1, topContent: null });
+                                } else if (modelData && modelData.trigger !== undefined) {
+                                    modelData.trigger();
+                                // assume the model is a list of QAction or Action
+                                } else if (menu.model.length > index) {
+                                    menu.model[index].trigger();
+                                } else {
+                                    console.warning("Don't know how to trigger the action")
+                                }
+                            }
                             Icon {
                                 anchors {
                                     verticalCenter: parent.verticalCenter
@@ -149,15 +165,6 @@ OverlayDrawer {
                                 width: height
                                 source: "go-next"
                                 visible: modelData.children!==undefined && modelData.children.length > 0
-                            }
-                            onClicked: {
-                                if (modelData.children!==undefined && modelData.children.length > 0) {
-                                    sidebarStack.push(sidebarPage, { actions: modelData.children, "level": level + 1, topContent: null });
-                                } else if (modelData && modelData.trigger !== undefined) {
-                                    modelData.trigger();
-                                } else {
-                                    console.warning("Don't know how to trigger the action")
-                                }
                             }
                         }
                     }

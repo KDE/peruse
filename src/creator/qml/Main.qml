@@ -23,7 +23,7 @@ import QtQuick 2.2
 import QtQuick.Window 2.2
 import QtQuick.Dialogs 1.2
 
-import org.kde.kirigami 1.0 as Kirigami
+import org.kde.kirigami 2.1 as Kirigami
 import org.kde.peruse 0.1 as Peruse
 
 Kirigami.ApplicationWindow {
@@ -53,7 +53,7 @@ Kirigami.ApplicationWindow {
         /// this when switching to Kirigami
         title: i18nc("application title for the sidebar", "Peruse Creator");
         titleIcon: "peruse-creator";
-        opened: true;
+        drawerOpen: true;
         modal: false;
         actions: [
             Kirigami.Action {

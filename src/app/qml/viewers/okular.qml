@@ -23,7 +23,7 @@ import QtQuick 2.1
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.0
 
-import org.kde.kirigami 1.0 as Kirigami
+import org.kde.kirigami 2.1 as Kirigami
 import org.kde.okular 2.0 as Okular
 
 ViewerBase {
@@ -46,7 +46,7 @@ ViewerBase {
             pageChangeAnimation.running = true;
         }
     }
-    NumberAnimation { id: pageChangeAnimation; target: imageBrowser; property: "contentX"; duration: mainWindow.animationDuration; easing.type: Easing.InOutQuad; }
+    NumberAnimation { id: pageChangeAnimation; target: imageBrowser; property: "contentX"; duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; }
     onRtlModeChanged: {
         if(rtlMode === true) {
             imageBrowser.layoutDirection = Qt.RightToLeft;
@@ -131,7 +131,7 @@ ViewerBase {
 
     Timer {
         id: initialPageChange;
-        interval: mainWindow.animationDuration;
+        interval: applicationWindow().animationDuration;
         running: false;
         repeat: false;
         onTriggered: root.currentPage = imageBrowser.model.currentIndex;

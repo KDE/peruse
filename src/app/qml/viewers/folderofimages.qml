@@ -57,11 +57,11 @@ ViewerBase {
             pageChangeAnimation.running = true;
         }
     }
-    NumberAnimation { id: pageChangeAnimation; target: imageBrowser; property: "contentX"; duration: mainWindow.animationDuration; easing.type: Easing.InOutQuad; }
+    NumberAnimation { id: pageChangeAnimation; target: imageBrowser; property: "contentX"; duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; }
 
     Timer {
         id: initialPageChange;
-        interval: mainWindow.animationDuration;
+        interval: applicationWindow().animationDuration;
         running: false;
         repeat: false;
         onTriggered: root.currentPage = imageBrowser.model.currentPage;
