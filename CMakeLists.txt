@@ -18,7 +18,7 @@ elseif(WIN32)
     add_definitions(-DWINDOWS)
 endif()
 
-find_package(Qt5 REQUIRED NO_MODULE COMPONENTS Qml Quick Gui Widgets OpenGL)
+find_package(Qt5 REQUIRED NO_MODULE COMPONENTS Qml Quick Gui Widgets OpenGL Sql)
 find_package(KF5 5.5 REQUIRED COMPONENTS I18n Declarative Config FileMetaData IconThemes KIO)
 
 find_package(KF5Baloo) # optional - we'll just let it pass if it's missing
@@ -30,8 +30,8 @@ set_package_properties(KF5NewStuffQuick PROPERTIES
     TYPE RUNTIME
 )
 
-find_package(KF5Kirigami)
-set_package_properties(KF5Kirigami PROPERTIES
+find_package(KF5Kirigami2 2.1.0)
+set_package_properties(KF5Kirigami2 PROPERTIES
     PURPOSE "Required at runtime to display the GUI"
     TYPE RUNTIME
 )
