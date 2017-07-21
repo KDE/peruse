@@ -330,7 +330,7 @@ QObject* CategoryEntriesModel::getEntry(int index)
     else {
         CategoryEntriesModel* catEntry = d->categoryModels.at(index);
         obj->setProperty("title", catEntry->name());
-        obj->setProperty("categoryEntriesCount", catEntry->rowCount());
+        obj->setProperty("categoryEntriesCount", catEntry->bookCount());
         obj->setProperty("entriesModel", QVariant::fromValue(catEntry));
     }
     return obj;
