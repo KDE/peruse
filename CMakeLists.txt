@@ -30,7 +30,7 @@ set_package_properties(KF5NewStuffQuick PROPERTIES
     TYPE RUNTIME
 )
 
-find_package(KF5Kirigami2 2.1.0)
+find_package(KF5Kirigami2 5.37.0)
 set_package_properties(KF5Kirigami2 PROPERTIES
     PURPOSE "Required at runtime to display the GUI"
     TYPE RUNTIME

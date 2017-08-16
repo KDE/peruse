@@ -33,7 +33,6 @@ Kirigami.Page {
     id: root;
     objectName: "bookViewer";
     clip: true;
-    implicitWidth: applicationWindow().width;
 
     // Remove all the padding when we've hidden controls. Content is king!
     topPadding: applicationWindow().controlsVisible ? (applicationWindow() && applicationWindow().header ? applicationWindow().header.height : 0) : 0;
@@ -50,9 +49,9 @@ Kirigami.Page {
 
     // Perhaps we should store and restore this?
     property bool showControls: true;
-    property Item pageStackItem: applicationWindow().pageStack.currentItem;
+    property Item pageStackItem: applicationWindow().pageStack.layers.currentItem;
     onPageStackItemChanged: {
-        if(applicationWindow().pageStack.currentItem == root) {
+        if(applicationWindow().pageStack.layers.currentItem == root) {
             applicationWindow().controlsVisible = root.showControls;
         }
         else {
@@ -93,7 +92,7 @@ Kirigami.Page {
         applicationWindow().contextDrawer.close();
         // also for storing current page (otherwise postponed a bit after page change, done here as well to ensure it really happens)
         applicationWindow().controlsVisible = true;
-        applicationWindow().pageStack.pop();
+        applicationWindow().pageStack.layers.pop();
         applicationWindow().globalDrawer.open();
     }
 
@@ -153,19 +152,6 @@ Kirigami.Page {
         else {
             applicationWindow().visibility = Window.AutomaticVisibility;
         }
-        restoreViewLayoutStuff.start();
-    }
-    Timer {
-        id: restoreViewLayoutStuff;
-        interval: applicationWindow().animationDuration * 2;
-        running: false;
-        repeat: false;
-        onTriggered: {
-            if(viewLoader.item.restoreCurrentPage !== undefined) {
-                viewLoader.item.restoreCurrentPage();
-            }
-            applicationWindow().pageStack.currentIndex = applicationWindow().pageStack.depth - 1;
-        }
     }
 
     property list<QtObject> mobileActions: [
@@ -173,14 +159,14 @@ Kirigami.Page {
             text: applicationWindow().visibility !== Window.FullScreen ? i18nc("Enter full screen mode on a touch-based device", "Go full screen") : i18nc("Exit full sceen mode on a touch based device", "Exit full screen");
             iconName: "view-fullscreen";
             onTriggered: toggleFullscreen();
-            enabled: applicationWindow().pageStack.currentItem == root && applicationWindow().deviceType === applicationWindow().deviceTypePhone;
+            enabled: applicationWindow().pageStack.layers.currentItem == root && applicationWindow().deviceType === applicationWindow().deviceTypePhone;
         },
         Kirigami.Action {
             text: i18nc("Action used on touch devices to close the currently open book and return to whatever page was most recently shown", "Close book");
             shortcut: (bookInfo.sheetOpen ? "" : "Esc");
             iconName: "dialog-close";
             onTriggered: closeBook();
-            enabled: applicationWindow().pageStack.currentItem == root && applicationWindow().deviceType === applicationWindow().deviceTypePhone;
+            enabled: applicationWindow().pageStack.layers.currentItem == root && applicationWindow().deviceType === applicationWindow().deviceTypePhone;
         }
     ]
     property list<QtObject> desktopActions: [
@@ -194,14 +180,14 @@ Kirigami.Page {
                 text: "Left to Right"
                 iconName: "format-text-direction-ltr";
                 shortcut: rtlMode ? "r" : "";
-                enabled: applicationWindow().pageStack.currentItem == root && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop && root.rtlMode === true;
+                enabled: applicationWindow().pageStack.layers.currentItem == root && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop && root.rtlMode === true;
                 onTriggered: { root.rtlMode = false; }
             }
             Kirigami.Action {
                 text: "Right to Left"
                 iconName: "format-text-direction-rtl";
                 shortcut: rtlMode ? "" : "r";
-                enabled: applicationWindow().pageStack.currentItem == root && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop && root.rtlMode === false;
+                enabled: applicationWindow().pageStack.layers.currentItem == root && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop && root.rtlMode === false;
                 onTriggered: { root.rtlMode = true; }
             }
             QtObject {}
@@ -211,19 +197,19 @@ Kirigami.Page {
 //             Kirigami.Action {
 //                 text: "Fit full page"
 //                 iconName: "zoom-fit-best";
-//                 enabled: applicationWindow().pageStack.currentItem == root && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop && root.zoomMode !== Peruse.Config.ZoomFull;
+//                 enabled: applicationWindow().pageStack.layers.currentItem == root && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop && root.zoomMode !== Peruse.Config.ZoomFull;
 //                 onTriggered: { root.zoomMode = Peruse.Config.ZoomFull; }
 //             }
 //             Kirigami.Action {
 //                 text: "Fit width"
 //                 iconName: "zoom-fit-width";
-//                 enabled: applicationWindow().pageStack.currentItem == root && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop && root.zoomMode !== Peruse.Config.ZoomFitWidth;
+//                 enabled: applicationWindow().pageStack.layers.currentItem == root && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop && root.zoomMode !== Peruse.Config.ZoomFitWidth;
 //                 onTriggered: { root.zoomMode = Peruse.Config.ZoomFitWidth; }
 //             }
 //             Kirigami.Action {
 //                 text: "Fit height"
 //                 iconName: "zoom-fit-height";
-//                 enabled: applicationWindow().pageStack.currentItem == root && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop && root.zoomMode !== Peruse.Config.ZoomFitHeight;
+//                 enabled: applicationWindow().pageStack.layers.currentItem == root && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop && root.zoomMode !== Peruse.Config.ZoomFitHeight;
 //                 onTriggered: { root.zoomMode = Peruse.Config.ZoomFitHeight; }
 //             }
 //             QtObject {}
@@ -233,28 +219,28 @@ Kirigami.Page {
             shortcut: bookInfo.sheetOpen ? "" : StandardKey.MoveToPreviousChar;
             iconName: "go-previous";
             onTriggered: previousPage();
-            enabled: applicationWindow().pageStack.currentItem == root && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
+            enabled: applicationWindow().pageStack.layers.currentItem == root && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
         },
         Kirigami.Action {
             text: i18nc("Go to the next page in the book", "Next page");
             shortcut: bookInfo.sheetOpen ? "" : StandardKey.MoveToNextChar;
             iconName: "go-next";
             onTriggered: nextPage();
-            enabled: applicationWindow().pageStack.currentItem == root && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
+            enabled: applicationWindow().pageStack.layers.currentItem == root && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
         },
         Kirigami.Action {
             text: applicationWindow().visibility !== Window.FullScreen ? i18nc("Enter full screen mode on a non-touch-based device", "Go full screen") : i18nc("Exit full sceen mode on a non-touch based device", "Exit full screen");
             shortcut: (applicationWindow().visibility === Window.FullScreen) ? (bookInfo.sheetOpen ? "" : "Esc") : "f";
             iconName: "view-fullscreen";
             onTriggered: toggleFullscreen();
-            enabled: applicationWindow().pageStack.currentItem == root && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
+            enabled: applicationWindow().pageStack.layers.currentItem == root && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
         },
         Kirigami.Action {
             text: i18nc("Action used on non-touch devices to close the currently open book and return to whatever page was most recently shown", "Close book");
             shortcut: (applicationWindow().visibility === Window.FullScreen) ? "" : (bookInfo.sheetOpen ? "" : "Esc");
             iconName: "dialog-close";
             onTriggered: closeBook();
-            enabled: applicationWindow().pageStack.currentItem == root && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
+            enabled: applicationWindow().pageStack.layers.currentItem == root && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
         },
 
         // Invisible actions, for use in bookInfo
@@ -262,19 +248,19 @@ Kirigami.Page {
             visible: false;
             shortcut: bookInfo.sheetOpen ? StandardKey.MoveToPreviousChar : "";
             onTriggered: bookInfo.previousBook();
-            enabled: applicationWindow().pageStack.currentItem == root && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
+            enabled: applicationWindow().pageStack.layers.currentItem == root && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
         },
         Kirigami.Action {
             visible: false;
             shortcut: bookInfo.sheetOpen ? StandardKey.MoveToNextChar : "";
             onTriggered: bookInfo.nextBook();
-            enabled: applicationWindow().pageStack.currentItem == root && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
+            enabled: applicationWindow().pageStack.layers.currentItem == root && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
         },
         Kirigami.Action {
             visible: false;
             shortcut: bookInfo.sheetOpen ? "Return" : "";
             onTriggered: bookInfo.openSelected();
-            enabled: applicationWindow().pageStack.currentItem == root && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
+            enabled: applicationWindow().pageStack.layers.currentItem == root && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
         }
     ]
     actions {
@@ -286,7 +272,7 @@ Kirigami.Page {
         text: applicationWindow().visibility !== Window.FullScreen ? i18n("Enter full screen mode on any device type", "Go full screen") : i18nc("Exit full screen mode on any device type", "Exit full screen");
         iconName: "view-fullscreen";
         onTriggered: toggleFullscreen();
-        enabled: applicationWindow().pageStack.currentItem == root;
+        enabled: applicationWindow().pageStack.layers.currentItem == root;
     }
     Kirigami.Action {
         id: bookInfoAction;
@@ -294,7 +280,7 @@ Kirigami.Page {
         shortcut: bookInfo.sheetOpen ? "Esc" : "";
         iconName: "dialog-cancel";
         onTriggered: bookInfo.close();
-        enabled: applicationWindow().pageStack.currentItem == root;
+        enabled: applicationWindow().pageStack.layers.currentItem == root;
     }
 
     Item {
@@ -322,15 +308,6 @@ Kirigami.Page {
                 }
                 else {
                     item.file = root.file;
-                }
-            }
-            Timer {
-                id: drawerTimer;
-                interval: applicationWindow().animationDuration * 3;
-                running: false;
-                repeat: false;
-                onTriggered: {
-                    applicationWindow().globalDrawer.close();
                 }
             }
             Binding {
@@ -361,8 +338,7 @@ Kirigami.Page {
                         viewLoader.item.currentPage = root.currentPage;
                         viewLoader.loadingCompleted = true;
                         root.title = viewLoader.item.title;
-                        drawerTimer.start();
-                        restoreViewLayoutStuff.start();
+                        applicationWindow().globalDrawer.close();
                     }
                 }
                 onCurrentPageChanged: {
