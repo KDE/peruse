@@ -323,7 +323,7 @@ QObject* CategoryEntriesModel::getEntry(int index)
     if(index < 0 && index > rowCount() -1) {
         // don't be a silly person, you can't get a nothing...
     }
-    else if(index > d->categoryModels.count()) {
+    else if(index > d->categoryModels.count() - 1) {
         // This is a book - get a book!
         obj = qobject_cast<PropertyContainer*>(get(index - d->categoryModels.count()));
     }
