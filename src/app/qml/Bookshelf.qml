@@ -29,7 +29,7 @@ import org.kde.peruse 0.1 as Peruse
 
 import "listcomponents" as ListComponents
 
-Kirigami.Page {
+Kirigami.ScrollablePage {
     id: root;
     title: headerText;
     property string categoryName: "bookshelf";
@@ -60,31 +60,31 @@ Kirigami.Page {
     property list<QtObject> desktopActions: [
         Kirigami.Action {
             text: i18nc("Navigate one page back", "Back");
-            shortcut: bookDetails.sheetOpen ? "" : "Esc";
+            shortcut: enabled ? (bookDetails.sheetOpen ? "" : "Esc") : "";
             iconName: "dialog-close";
             onTriggered: closeShelf();
-            enabled: applicationWindow().pageStack.currentItem == root && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop && applicationWindow().pageStack.currentIndex > 0;
+            enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop && applicationWindow().pageStack.currentIndex > 0;
         },
-        Kirigami.Action {
-            text: i18nc("Select the previous book in the list", "Select previous book");
-            shortcut: StandardKey.MoveToPreviousChar
-            iconName: "go-previous";
-            onTriggered: shelfList.previousEntry();
-            enabled: applicationWindow().pageStack.currentItem == root && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
-        },
-        Kirigami.Action {
-            text: i18nc("Select the next book in the list", "Select next book");
-            shortcut: StandardKey.MoveToNextChar;
-            iconName: "go-next";
-            onTriggered: shelfList.nextEntry();
-            enabled: applicationWindow().pageStack.currentItem == root && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
-        },
+//         Kirigami.Action {
+//             text: i18nc("Select the previous book in the list", "Select previous book");
+//             shortcut: enabled ? StandardKey.MoveToPreviousChar : ""
+//             iconName: "go-previous";
+//             onTriggered: shelfList.previousEntry();
+//             enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
+//         },
+//         Kirigami.Action {
+//             text: i18nc("Select the next book in the list", "Select next book");
+//             shortcut: enabled ? StandardKey.MoveToNextChar : "";
+//             iconName: "go-next";
+//             onTriggered: shelfList.nextEntry();
+//             enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
+//         },
         Kirigami.Action {
             text: i18nc("Open the book which is currently selected in the list", "Open selected book");
-            shortcut: "Return";
+            shortcut: enabled ? "Return" : "";
             iconName: "document-open";
             onTriggered: openBook(shelfList.currentIndex);
-            enabled: applicationWindow().pageStack.currentItem == root && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
+            enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
         }
     ]
     actions {
@@ -96,20 +96,19 @@ Kirigami.Page {
         text: i18nc("search in the list of books (not inside the books)", "Search Books");
         iconName: "system-search";
         onTriggered: searchBox.activate();
-        enabled: applicationWindow().pageStack.currentItem == root;
+        enabled: root.isCurrentPage;
     }
     Kirigami.Action {
         id: bookDetailsAction;
         text: i18n("Closes the book details drawer", "Close");
-        shortcut: bookDetails.sheetOpen ? "Esc" : "";
+        shortcut: enabled ? (bookDetails.sheetOpen ? "Esc" : "") : "";
         iconName: "dialog-cancel";
         onTriggered: bookDetails.close();
-        enabled: applicationWindow().pageStack.currentItem == root;
+        enabled: root.isCurrentPage;
     }
 
-    Item {
-        width: root.width - (root.leftPadding + root.rightPadding);
-        height: root.height - root.topPadding;
+    GridView {
+        id: shelfList;
         SearchBox {
             id: searchBox;
             anchors {
@@ -121,62 +120,52 @@ Kirigami.Page {
             model: root.model;
             onBookSelected: root.bookSelected(filename, currentPage);
         }
+        clip: true;
+        footer: Item { width: parent.width; height: Kirigami.Units.iconSizes.large + Kirigami.Units.largeSpacing; }
+        cellWidth: width / 2;
+        cellHeight: root.height * 3 / 8;
+        currentIndex: -1;
 
-        GridView {
-            id: shelfList;
-            clip: true;
-            anchors {
-                top: searchBox.bottom;
-                left: parent.left;
-                right: parent.right;
+        function previousEntry() {
+            if(currentIndex > 0) {
+                currentIndex--;
             }
-            height: parent.height;
-            footer: Item { width: parent.width; height: Kirigami.Units.iconSizes.large + Kirigami.Units.largeSpacing; }
-            cellWidth: width / 2;
-            cellHeight: root.height * 2 / 7;
-//             header: ListComponents.ListPageHeader { text: root.headerText; }
-            currentIndex: -1;
-
-            function previousEntry() {
-                if(currentIndex > 0) {
-                    currentIndex--;
-                }
+        }
+        function nextEntry() {
+            if(currentIndex < model.rowCount() - 1) {
+                currentIndex++;
             }
-            function nextEntry() {
-                if(currentIndex < model.rowCount() - 1) {
-                    currentIndex++;
-                }
+        }
+        delegate: Item {
+            height: model.categoryEntriesCount === 0 ? bookTile.neededHeight : categoryTile.neededHeight;
+            width: root.width / 2;
+            ListComponents.CategoryTileTall {
+                id: categoryTile;
+                height: model.categoryEntriesCount > 0 ? neededHeight : 0;
+                width: parent.width;
+                count: model.categoryEntriesCount;
+                title: model.title;
+                entriesModel: model.categoryEntriesModel ? model.categoryEntriesModel : null;
+                selected: shelfList.currentIndex === index;
             }
-            delegate: Item {
-                height: model.categoryEntriesCount === 0 ? bookTile.neededHeight : categoryTile.neededHeight;
-                width: root.width / 2;
-                ListComponents.CategoryTileTall {
-                    id: categoryTile;
-                    height: model.categoryEntriesCount > 0 ? neededHeight : 0;
-                    width: parent.width;
-                    count: model.categoryEntriesCount;
-                    title: model.title;
-                    entriesModel: model.categoryEntriesModel ? model.categoryEntriesModel : null;
-                    selected: shelfList.currentIndex === index;
-                }
-                ListComponents.BookTileTall {
-                    id: bookTile;
-                    height: model.categoryEntriesCount < 1 ? neededHeight : 0;
-                    width: parent.width;
-                    author: model.author ? model.author : i18nc("used for the author data in book lists if autor is empty", "(unknown)");
-                    title: model.title;
-                    filename: model.filename;
-                    thumbnail: model.categoryEntriesCount < 1 ? model.thumbnail : "";
-                    categoryEntriesCount: model.categoryEntriesCount;
-                    currentPage: model.currentPage;
-                    totalPages: model.totalPages;
-                    onBookSelected: root.bookSelected(filename, currentPage);
-                    selected: shelfList.currentIndex === index;
-                    onPressAndHold: bookDetails.showBookInfo(model.index);
-                }
+            ListComponents.BookTileTall {
+                id: bookTile;
+                height: model.categoryEntriesCount < 1 ? neededHeight : 0;
+                width: parent.width;
+                author: model.author ? model.author : i18nc("used for the author data in book lists if autor is empty", "(unknown)");
+                title: model.title;
+                filename: model.filename;
+                thumbnail: model.categoryEntriesCount < 1 ? model.thumbnail : "";
+                categoryEntriesCount: model.categoryEntriesCount;
+                currentPage: model.currentPage;
+                totalPages: model.totalPages;
+                onBookSelected: root.bookSelected(filename, currentPage);
+                selected: shelfList.currentIndex === index;
+                onPressAndHold: bookDetails.showBookInfo(model.index);
             }
         }
     }
+
     Kirigami.OverlaySheet {
         id: bookDetails;
         function showBookInfo(index) {

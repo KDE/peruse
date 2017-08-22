@@ -41,24 +41,24 @@ Kirigami.Page {
     property list<QtObject> desktopActions: [
         Kirigami.Action {
             text: i18n("Open selected book");
-            shortcut: "Return";
+            shortcut: enabled ? "Return" : "";
             iconName: "document-open";
             onTriggered: bookSelected(startWithThese.currentItem.filename, startWithThese.currentItem.currentPage);
-            enabled: applicationWindow().pageStack.currentItem == root && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
+            enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
         },
         Kirigami.Action {
             text: i18nc("select the previous book entry in the list", "Previous book");
-            shortcut: StandardKey.MoveToPreviousChar
+            shortcut: enabled ? StandardKey.MoveToPreviousChar : "";
             iconName: "go-previous";
             onTriggered: startWithThese.selectPrevious();
-            enabled: applicationWindow().pageStack.currentItem == root && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
+            enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
         },
         Kirigami.Action {
             text: i18nc("select the next book entry in the list", "Next book");
-            shortcut: StandardKey.MoveToNextChar;
+            shortcut: enabled ? StandardKey.MoveToNextChar : "";
             iconName: "go-next";
             onTriggered: startWithThese.selectNext();
-            enabled: applicationWindow().pageStack.currentItem == root && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
+            enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
         }
     ]
 
@@ -68,7 +68,7 @@ Kirigami.Page {
             text: i18nc("search in the list of books (not inside the books)", "Search Books");
             iconName: "system-search";
             onTriggered: searchBox.activate();
-            enabled: applicationWindow().pageStack.currentItem == root;
+            enabled: root.isCurrentPage;
         }
     }
 
