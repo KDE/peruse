@@ -27,10 +27,11 @@ import org.kde.kirigami 2.1 as Kirigami
 import org.kde.peruse 0.1 as Peruse
 import "listcomponents" as ListComponents
 
-Item {
+Rectangle {
     id: root;
     property int maxHeight: parent.height;
     property alias model: searchFilterProxy.sourceModel;
+    color: Kirigami.Theme.viewBackgroundColor;
     function activate() {
         searchField.forceActiveFocus();
         Qt.inputMethod.show(); // Would be nice if this happened automatically, but... no such luck
