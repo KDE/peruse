@@ -75,12 +75,21 @@ int main(int argc, char** argv)
     app.setOrganizationDomain("kde.org");
 
     QCommandLineParser parser;
+    parser.addOption(QCommandLineOption(QStringLiteral("clear-db"), i18n("Remove all the cached comics.")));
     // TODO file option for opening comics by passing them through on the command line
     parser.addHelpOption();
     parser.process(app);
 
     if (parser.positionalArguments().size() > 1) {
         parser.showHelp(1);
+    }
+
+    if (parser.isSet(QStringLiteral("clear-db"))) {
+        QString dbfile = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/library.sqlite";
+        if(QFile::exists(dbfile)) {
+            qDebug() << "Remove database at" << dbfile;
+            QFile::remove(dbfile);
+        }
     }
 
     KDeclarative::KDeclarative kdeclarative;
