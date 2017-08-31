@@ -165,7 +165,7 @@ void ArchiveBookModel::setFilename(QString newFilename)
         delete d->archive;
     }
     d->archive = 0;
-    if(d->imageProvider) {
+    if(d->imageProvider && d->engine) {
         d->engine->removeImageProvider(d->imageProvider->prefix());
     }
     d->imageProvider = 0;
@@ -190,7 +190,9 @@ void ArchiveBookModel::setFilename(QString newFilename)
             d->imageProvider = new ArchiveImageProvider();
             d->imageProvider->setArchiveBookModel(this);
             d->imageProvider->setPrefix(prefix);
-            d->engine->addImageProvider(prefix, d->imageProvider);
+            if(d->engine) {
+                d->engine->addImageProvider(prefix, d->imageProvider);
+            }
 
             QStringList entries = recursiveEntries(d->archive->directory());
 
