@@ -44,11 +44,29 @@ Author::Author(Metadata* parent)
     : QObject(parent)
     , d(new Private)
 {
+    qRegisterMetaType<Author*>("Author*");
 }
 
 Author::~Author()
 {
     delete d;
+}
+
+QString Author::displayName()
+{
+    if(!d->nickName.isEmpty()) {
+        return d->nickName;
+    }
+    else if(!d->firstName.isEmpty() || !d->middleName.isEmpty() || !d->lastName.isEmpty()) {
+        return QString("%1 %2 %3").arg(d->firstName).arg(d->middleName).arg(d->lastName).simplified();
+    }
+    else if(!d->email.isEmpty()) {
+        return d->email;
+    }
+    else if(!d->homePage.isEmpty()) {
+        return d->homePage;
+    }
+    return QLatin1String("");
 }
 
 void Author::toXml(QXmlStreamWriter* writer)

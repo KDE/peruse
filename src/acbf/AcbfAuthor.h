@@ -37,26 +37,28 @@ public:
     void toXml(QXmlStreamWriter* writer);
     bool fromXml(QXmlStreamReader *xmlReader);
 
-    QString activity();
-    void setActivity(QString activity);
-    static QStringList availableActivities();
+    Q_INVOKABLE QString displayName();
+
+    Q_INVOKABLE QString activity();
+    Q_INVOKABLE void setActivity(QString activity);
+    Q_INVOKABLE static QStringList availableActivities();
 
     // The language this author worked in for this book. Activity dependent (writer, translator, letterer...)
-    QString language();
-    void setLanguage(QString language = "");
+    Q_INVOKABLE QString language();
+    Q_INVOKABLE void setLanguage(QString language = "");
 
-    QString firstName();
-    void setFirstName(QString name);
-    QString middleName();
-    void setMiddleName(QString name);
-    QString lastName();
-    void setLastName(QString name);
-    QString nickName();
-    void setNickName(QString name);
-    QString homePage();
-    void setHomePage(QString homepage);
-    QString email();
-    void setEmail(QString email);
+    Q_INVOKABLE QString firstName();
+    Q_INVOKABLE void setFirstName(QString name);
+    Q_INVOKABLE QString middleName();
+    Q_INVOKABLE void setMiddleName(QString name);
+    Q_INVOKABLE QString lastName();
+    Q_INVOKABLE void setLastName(QString name);
+    Q_INVOKABLE QString nickName();
+    Q_INVOKABLE void setNickName(QString name);
+    Q_INVOKABLE QString homePage();
+    Q_INVOKABLE void setHomePage(QString homepage);
+    Q_INVOKABLE QString email();
+    Q_INVOKABLE void setEmail(QString email);
 private:
     class Private;
     Private* d;
