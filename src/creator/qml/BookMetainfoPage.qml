@@ -81,6 +81,70 @@ Kirigami.Page {
         Kirigami.Heading {
             width: parent.width;
             height: paintedHeight + Kirigami.Units.smallSpacing * 2;
+            text: i18nc("label text for the edit field for the author list", "Authors (" + authorRepeater.count + ")");
+        }
+        Repeater {
+            id: authorRepeater;
+            model: root.model.acbfData ? root.model.acbfData.metaData.bookInfo.authorNames : 0;
+            delegate: Kirigami.Label {
+                width: parent.width - removeAuthorButton.width - Kirigami.Units.smallSpacing;
+                text: modelData.length > 0 ? modelData : "(unnamed)";
+                QtControls.Button {
+                    id: editAuthorButton;
+                    anchors {
+                        right: removeAuthorButton.left;
+                        leftMargin: Kirigami.Units.smallSpacing;
+                    }
+                    iconName: "document-edit";
+                    height: parent.height;
+                    width: height;
+                    onClicked: {
+                        authorEditor.index = model.index;
+                        authorEditor.open();
+                    }
+                }
+                QtControls.Button {
+                    id: removeAuthorButton;
+                    anchors {
+                        left: parent.right;
+                        leftMargin: Kirigami.Units.smallSpacing;
+                    }
+                    iconName: "list-remove";
+                    height: parent.height;
+                    width: height;
+                    onClicked: {
+                        root.model.acbfData.metaData.bookInfo.removeAuthor(modelData);
+                        root.model.setDirty();
+                    }
+                }
+            }
+        }
+        Item { width: parent.width; height: Kirigami.Units.smallSpacing; }
+        QtControls.TextField {
+            width: parent.width - addAuthorButton.width - Kirigami.Units.smallSpacing;
+            placeholderText: i18nc("placeholder text for the add new author text entry", "Write to add new author");
+            QtControls.Button {
+                id: addAuthorButton;
+                anchors {
+                    left: parent.right;
+                    leftMargin: Kirigami.Units.smallSpacing;
+                }
+                iconName: "list-add";
+                height: parent.height;
+                width: height;
+                onClicked: {
+                    if(parent.text !== "") {
+                        root.model.acbfData.metaData.bookInfo.addAuthor(parent.text);
+                        root.model.setDirty();
+                        parent.text = "";
+                    }
+                }
+            }
+        }
+
+        Kirigami.Heading {
+            width: parent.width;
+            height: paintedHeight + Kirigami.Units.smallSpacing * 2;
             text: i18nc("label text for the edit field for the genre list", "Genres");
         }
         Repeater {
@@ -195,6 +259,15 @@ Kirigami.Page {
                         parent.text = "";
                     }
                 }
+            }
+        }
+
+        AuthorEntryEditor {
+            id: authorEditor;
+            bookinfo: root.model.acbfData.metaData.bookInfo;
+            onSave: {
+                root.model.acbfData.metaData.bookInfo.setAuthor(index, activity, language, firstName, middleName, lastName, nickName, homePage, email);
+                root.model.setDirty();
             }
         }
     }
