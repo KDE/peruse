@@ -34,6 +34,13 @@ Kirigami.OverlaySheet {
         root.author = bookinfo.getAuthor(index);
         activityField.model = root.author.availableActivities();
         activityField.currentIndex = activityField.find(author.activity());
+        languageField.text = root.author.language();
+        firstNameField.text = root.author.firstName();
+        middleNameField.text = root.author.middleName();
+        lastNameField.text = root.author.lastName();
+        nickNameField.text = root.author.nickName();
+        homePageField.text = root.author.homePage();
+        emailField.text = root.author.email();
     }
     property QtObject author: null;
 
@@ -56,7 +63,7 @@ Kirigami.OverlaySheet {
             QtControls.Button {
                 id: saveButton;
                 anchors {
-                    left: parent.right;
+                    right: parent.right;
                     leftMargin: Kirigami.Units.smallSpacing;
                 }
                 iconName: "dialog-ok";
