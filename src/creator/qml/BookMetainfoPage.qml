@@ -122,7 +122,7 @@ Kirigami.Page {
         Item { width: parent.width; height: Kirigami.Units.smallSpacing; }
         QtControls.TextField {
             width: parent.width - addAuthorButton.width - Kirigami.Units.smallSpacing;
-            placeholderText: i18nc("placeholder text for the add new author text entry", "Write to add new author");
+            placeholderText: i18nc("placeholder text for the add new author text entry", "Write to add new author (nickname)");
             QtControls.Button {
                 id: addAuthorButton;
                 anchors {
@@ -134,7 +134,8 @@ Kirigami.Page {
                 width: height;
                 onClicked: {
                     if(parent.text !== "") {
-                        root.model.acbfData.metaData.bookInfo.addAuthor(parent.text);
+                        // Just add an author where only the nickname is defined
+                        root.model.acbfData.metaData.bookInfo.addAuthor("", "", "", "", "", parent.text, "", "");
                         root.model.setDirty();
                         parent.text = "";
                     }
