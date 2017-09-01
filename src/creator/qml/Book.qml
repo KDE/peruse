@@ -25,7 +25,7 @@ import QtQuick.Controls 1.4 as QtControls
 import org.kde.kirigami 2.1 as Kirigami
 import org.kde.peruse 0.1 as Peruse
 
-Kirigami.Page {
+Kirigami.ScrollablePage {
     id: root;
     property string categoryName: "book";
     title: i18nc("title of the main book editor page", "Editing %1").arg(bookModel.title == "" ? root.filename : bookModel.title);
@@ -62,95 +62,85 @@ Kirigami.Page {
         onTriggered: addPageSheet.close();
     }
 
-    Peruse.ArchiveBookModel {
-        id: bookModel;
-        qmlEngine: globalQmlEngine;
-        readWrite: true;
-        filename: root.filename;
-    }
-
     function addPage(afterWhatIndex) {
         addPageSheet.addPageAfter = afterWhatIndex;
         addPageSheet.open();
     }
-    AddPageSheet {
-        id: addPageSheet;
-        model: bookModel;
-    }
 
-    Component {
-        id: editMetaInfo;
-        BookMetainfoPage {
-            model: bookModel;
+    ListView {
+        id: bookList;
+        model: Peruse.ArchiveBookModel {
+            id: bookModel;
+            qmlEngine: globalQmlEngine;
+            readWrite: true;
+            filename: root.filename;
         }
-    }
+        Component {
+            id: editMetaInfo;
+            BookMetainfoPage {
+                model: bookModel;
+            }
+        }
 
-    Item {
-        width: root.width - (root.leftPadding + root.rightPadding);
-        height: root.height - (root.topPadding + root.bottomPadding);
-        ListView {
-            anchors.fill: parent;
-            model: bookModel;
-            delegate: Kirigami.SwipeListItem {
-                id: listItem;
-                height: Kirigami.Units.iconSizes.huge + Kirigami.Units.smallSpacing * 2;
-                supportsMouseEvents: true;
-                onClicked: ;
-                actions: [
-                    Kirigami.Action {
-                        text: i18nc("swap the position of this page with the previous one", "Move Up");
-                        iconName: "go-up"
-                        onTriggered: { bookModel.swapPages(model.index, model.index - 1); }
-                        enabled: model.index > 0;
-                        visible: enabled;
-                    },
-                    Kirigami.Action {
-                        text: i18nc("swap the position of this page with the next one", "Move Down");
-                        iconName: "go-down"
-                        onTriggered: { bookModel.swapPages(model.index, model.index + 1); }
-                        enabled: model.index < bookModel.pageCount - 1;
-                        visible: enabled;
-                    },
-                    Kirigami.Action {
-                        text: i18nc("remove the page from the book", "Delete Page");
-                        iconName: "list-remove"
-                        onTriggered: {}
-                    },
-                    Kirigami.Action {
-                        text: i18nc("add a page to the book after this one", "Add Page After This");
-                        iconName: "list-add"
-                        onTriggered: root.addPage(model.index);
-                    }
-                ]
+        delegate: Kirigami.SwipeListItem {
+            id: listItem;
+            height: Kirigami.Units.iconSizes.huge + Kirigami.Units.smallSpacing * 2;
+            supportsMouseEvents: true;
+            onClicked: ;
+            actions: [
+                Kirigami.Action {
+                    text: i18nc("swap the position of this page with the previous one", "Move Up");
+                    iconName: "go-up"
+                    onTriggered: { bookModel.swapPages(model.index, model.index - 1); }
+                    enabled: model.index > 0;
+                    visible: enabled;
+                },
+                Kirigami.Action {
+                    text: i18nc("swap the position of this page with the next one", "Move Down");
+                    iconName: "go-down"
+                    onTriggered: { bookModel.swapPages(model.index, model.index + 1); }
+                    enabled: model.index < bookModel.pageCount - 1;
+                    visible: enabled;
+                },
+                Kirigami.Action {
+                    text: i18nc("remove the page from the book", "Delete Page");
+                    iconName: "list-remove"
+                    onTriggered: {}
+                },
+                Kirigami.Action {
+                    text: i18nc("add a page to the book after this one", "Add Page After This");
+                    iconName: "list-add"
+                    onTriggered: root.addPage(model.index);
+                }
+            ]
+            Item {
+                anchors.fill: parent;
                 Item {
-                    anchors.fill: parent;
-                    Item {
-                        id: bookCover;
-                        anchors {
-                            top: parent.top;
-                            left: parent.left;
-                            bottom: parent.bottom;
-                        }
-                        width: height;
-                        Image {
-                            id: coverImage;
-                            anchors {
-                                fill: parent;
-                                margins: Kirigami.Units.smallSpacing;
-                            }
-                            asynchronous: true;
-                            fillMode: Image.PreserveAspectFit;
-                            source: model.url;
-                        }
+                    id: bookCover;
+                    anchors {
+                        top: parent.top;
+                        left: parent.left;
+                        bottom: parent.bottom;
                     }
-                    Kirigami.Label {
+                    width: height;
+                    Image {
+                        id: coverImage;
                         anchors {
-                            verticalCenter: parent.verticalCenter;
-                            left: bookCover.right;
-                            leftMargin: Kirigami.Units.largeSpacing;
+                            fill: parent;
+                            margins: Kirigami.Units.smallSpacing;
                         }
-                        text: model.title;
+                        asynchronous: true;
+                        fillMode: Image.PreserveAspectFit;
+                        source: model.url;
                     }
+                }
+                Kirigami.Label {
+                    anchors {
+                        verticalCenter: parent.verticalCenter;
+                        left: bookCover.right;
+                        leftMargin: Kirigami.Units.largeSpacing;
+                    }
+                    text: model.title;
                 }
             }
         }
@@ -166,9 +156,18 @@ Kirigami.Page {
             }
         }
         QtControls.BusyIndicator {
-            anchors.centerIn: processingBackground;
+            anchors {
+                horizontalCenter: processingBackground.horizontalCenter;
+                top: parent.top
+                topMargin: x;
+            }
             running: processingBackground.opacity > 0;
             visible: running;
         }
+    }
+
+    AddPageSheet {
+        id: addPageSheet;
+        model: bookModel;
     }
 }
