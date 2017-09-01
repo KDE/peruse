@@ -23,6 +23,7 @@
 
 #include "BookDatabase.h"
 #include "CategoryEntriesModel.h"
+#include "ArchiveBookModel.h"
 
 #include <kio/deletejob.h>
 
@@ -220,6 +221,18 @@ void BookListModel::contentModelItemsInserted(QModelIndex index, int first, int 
             { entry->currentPage = it.value().toInt(); }
             else if(it.key() == QLatin1String("totalPages"))
             { entry->totalPages = it.value().toInt(); }
+        }
+        // ACBF information is always preferred for CBRs, so let's just use that if it's there
+        QMimeDatabase db;
+        QString mimetype = db.mimeTypeForFile(entry->filename).name();
+        if(mimetype == "application/x-cbz" || mimetype == "application/x-cbr" || mimetype == "application/vnd.comicbook+zip" || mimetype == "application/vnd.comicbook+rar") {
+            ArchiveBookModel* bookModel = new ArchiveBookModel(this);
+            bookModel->setFilename(entry->filename);
+            entry->author = bookModel->author();
+            entry->title = bookModel->title();
+            entry->publisher = bookModel->publisher();
+            entry->totalPages = bookModel->pageCount();
+            bookModel->deleteLater();
         }
 
         d->addEntry(this, entry);
