@@ -252,19 +252,70 @@ bool BookInfo::fromXml(QXmlStreamReader *xmlReader)
     return !xmlReader->hasError();
 }
 
-QList<Author *> BookInfo::author()
+QList<Author*> BookInfo::author()
 {
     return d->author;
+}
+
+QStringList BookInfo::authorNames() const
+{
+    QStringList names;
+    for(Author* author : d->author) {
+        names.append(author->displayName());
+    }
+    return names;
+}
+
+Author * BookInfo::getAuthor(int index) const
+{
+    return d->author.at(index);
+}
+
+void BookInfo::addAuthor(QString activity, QString language, QString firstName, QString middleName, QString lastName, QString nickName, QString homePage, QString email)
+{
+    Author* author = new Author(metadata());
+    author->setActivity(activity);
+    author->setLanguage(language);
+    author->setFirstName(firstName);
+    author->setMiddleName(middleName);
+    author->setLastName(lastName);
+    author->setNickName(nickName);
+    author->setHomePage(homePage);
+    author->setEmail(email);
+    d->author.append(author);
+    emit authorsChanged();
+}
+
+void BookInfo::setAuthor(int index, QString activity, QString language, QString firstName, QString middleName, QString lastName, QString nickName, QString homePage, QString email)
+{
+    Author* author = d->author.at(index);
+    author->setActivity(activity);
+    author->setLanguage(language);
+    author->setFirstName(firstName);
+    author->setMiddleName(middleName);
+    author->setLastName(lastName);
+    author->setNickName(nickName);
+    author->setHomePage(homePage);
+    author->setEmail(email);
+    emit authorsChanged();
+}
+
+void BookInfo::removeAuthor(int index)
+{
+    d->author.removeAt(index);
+    emit authorsChanged();
 }
 
 void BookInfo::addAuthor(Author* author)
 {
     d->author.append(author);
+    emit authorsChanged();
 }
 
 void BookInfo::removeAuthor(Author* author)
 {
     d->author.removeAll(author);
+    emit authorsChanged();
 }
 
 QStringList BookInfo::titleForAllLanguages()

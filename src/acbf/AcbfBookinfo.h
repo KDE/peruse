@@ -37,6 +37,7 @@ class ContentRating;
 class ACBF_EXPORT BookInfo : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QStringList authorNames READ authorNames NOTIFY authorsChanged)
     Q_PROPERTY(QStringList titleLanguages READ titleLanguages NOTIFY titleChanged)
     Q_PROPERTY(QStringList genres READ genres NOTIFY genresChanged)
     Q_PROPERTY(QStringList characters READ characters NOTIFY charactersChanged)
@@ -50,8 +51,14 @@ public:
     bool fromXml(QXmlStreamReader *xmlReader);
 
     QList<Author*> author();
+    QStringList authorNames() const;
+    Q_INVOKABLE Author* getAuthor(int index) const;
+    Q_INVOKABLE void addAuthor(QString activity, QString language, QString firstName, QString middleName, QString lastName, QString nickName, QString homePage, QString email);
+    Q_INVOKABLE void setAuthor(int index, QString activity, QString language, QString firstName, QString middleName, QString lastName, QString nickName, QString homePage, QString email);
+    Q_INVOKABLE void removeAuthor(int index);
     void addAuthor(Author* author);
     void removeAuthor(Author* author);
+    Q_SIGNAL void authorsChanged();
 
     Q_INVOKABLE QStringList titleForAllLanguages();
     Q_INVOKABLE QStringList titleLanguages();
