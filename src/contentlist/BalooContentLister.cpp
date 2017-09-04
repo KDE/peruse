@@ -41,6 +41,7 @@ public:
     QStringList locations;
     QString searchString;
     QList<Baloo::QueryRunnable*> queries;
+    QList<QString> queryLocations;
 };
 
 BalooContentLister::BalooContentLister(QObject* parent)
@@ -115,6 +116,7 @@ void BalooContentLister::startSearch()
                 this, SLOT(queryCompleted(Baloo::QueryRunnable*)));
 
         d->queries.append(runnable);
+        d->queryLocations.append(location);
     }
     // This ensures that, should we decide to search more stuff later, we can do so granularly
     d->locations.clear();
@@ -128,6 +130,7 @@ void BalooContentLister::startSearch()
 void BalooContentLister::queryCompleted(Baloo::QueryRunnable* query)
 {
     d->queries.removeAll(query);
+    d->queryLocations.takeFirst();
     if(d->queries.empty())
     {
         emit searchCompleted();
@@ -143,6 +146,11 @@ void BalooContentLister::queryResult(Baloo::QueryRunnable* query, QString file)
     Q_UNUSED(query)
 
     if(d->knownFiles.contains(file)) {
+        return;
+    }
+
+    // wow, this isn't nice... why is baloo not limiting searches like it's supposed to?
+    if(!file.startsWith(d->queryLocations.first())) {
         return;
     }
 
