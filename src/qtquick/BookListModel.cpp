@@ -25,6 +25,9 @@
 #include "CategoryEntriesModel.h"
 #include "ArchiveBookModel.h"
 
+#include "AcbfAuthor.h"
+#include "AcbfSequence.h"
+
 #include <kio/deletejob.h>
 
 #include <QCoreApplication>
@@ -228,6 +231,15 @@ void BookListModel::contentModelItemsInserted(QModelIndex index, int first, int 
         if(mimetype == "application/x-cbz" || mimetype == "application/x-cbr" || mimetype == "application/vnd.comicbook+zip" || mimetype == "application/vnd.comicbook+rar") {
             ArchiveBookModel* bookModel = new ArchiveBookModel(this);
             bookModel->setFilename(entry->filename);
+
+            AdvancedComicBookFormat::Document* acbfDocument = qobject_cast<AdvancedComicBookFormat::Document*>(bookModel->acbfData());
+            if(acbfDocument) {
+                for(AdvancedComicBookFormat::Sequence* sequence : acbfDocument->metaData()->bookInfo()->sequence()) {
+                    entry->series = sequence->title();
+                    break;
+                }
+            }
+            // TODO extend the model to support multiple authors per book, ditto series/sequences
             entry->author = bookModel->author();
             entry->title = bookModel->title();
             entry->publisher = bookModel->publisher();
