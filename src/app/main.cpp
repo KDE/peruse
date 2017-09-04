@@ -75,7 +75,7 @@ int main(int argc, char** argv)
     app.setOrganizationDomain("kde.org");
 
     QCommandLineParser parser;
-    parser.addOption(QCommandLineOption(QStringLiteral("clear-db"), i18n("Remove all the cached comics.")));
+    parser.addOption(QCommandLineOption(QStringLiteral("clear-db"), i18n("Clear the metainfo cache and perform a full rescan.")));
     // TODO file option for opening comics by passing them through on the command line
     parser.addHelpOption();
     parser.process(app);
