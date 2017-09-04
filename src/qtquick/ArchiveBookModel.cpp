@@ -280,7 +280,7 @@ QString ArchiveBookModel::author() const
     {
         if(acbfDocument->metaData()->bookInfo()->author().count() > 0)
         {
-            return acbfDocument->metaData()->bookInfo()->author().at(0)->nickName();
+            return acbfDocument->metaData()->bookInfo()->author().at(0)->displayName();
         }
     }
     return BookModel::author();
