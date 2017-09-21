@@ -163,7 +163,7 @@ Kirigami.Page {
         },
         Kirigami.Action {
             text: i18nc("Action used on touch devices to close the currently open book and return to whatever page was most recently shown", "Close book");
-            shortcut: enabled ? (bookInfo.sheetOpen ? "" : "Esc") : "";
+            shortcut: bookInfo.sheetOpen ? "" : "Esc";
             iconName: "dialog-close";
             onTriggered: closeBook();
             enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypePhone;
@@ -179,14 +179,14 @@ Kirigami.Page {
             Kirigami.Action {
                 text: "Left to Right"
                 iconName: "format-text-direction-ltr";
-                shortcut: enabled ? (rtlMode ? "r" : "") : "";
+                shortcut: rtlMode ? "r" : "";
                 enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop && root.rtlMode === true;
                 onTriggered: { root.rtlMode = false; }
             }
             Kirigami.Action {
                 text: "Right to Left"
                 iconName: "format-text-direction-rtl";
-                shortcut: enabled ? (rtlMode ? "" : "r") : "";
+                shortcut: rtlMode ? "" : "r";
                 enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop && root.rtlMode === false;
                 onTriggered: { root.rtlMode = true; }
             }
@@ -216,28 +216,28 @@ Kirigami.Page {
         },
         Kirigami.Action {
             text: i18nc("Go to the previous page in the book", "Previous page");
-            shortcut: enabled ? (root.isCurrentPage && bookInfo.sheetOpen ? "" : StandardKey.MoveToPreviousChar) : "";
+            shortcut: root.isCurrentPage && bookInfo.sheetOpen ? "" : StandardKey.MoveToPreviousChar;
             iconName: "go-previous";
             onTriggered: previousPage();
             enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
         },
         Kirigami.Action {
             text: i18nc("Go to the next page in the book", "Next page");
-            shortcut: enabled ? (bookInfo.sheetOpen ? "" : StandardKey.MoveToNextChar) : "";
+            shortcut: bookInfo.sheetOpen ? "" : StandardKey.MoveToNextChar;
             iconName: "go-next";
             onTriggered: nextPage();
             enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
         },
         Kirigami.Action {
             text: applicationWindow().visibility !== Window.FullScreen ? i18nc("Enter full screen mode on a non-touch-based device", "Go full screen") : i18nc("Exit full sceen mode on a non-touch based device", "Exit full screen");
-            shortcut: enabled ? ((applicationWindow().visibility === Window.FullScreen) ? (bookInfo.sheetOpen ? "" : "Esc") : "f") : "";
+            shortcut: (applicationWindow().visibility === Window.FullScreen) ? (bookInfo.sheetOpen ? "" : "Esc") : "f";
             iconName: "view-fullscreen";
             onTriggered: toggleFullscreen();
             enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
         },
         Kirigami.Action {
             text: i18nc("Action used on non-touch devices to close the currently open book and return to whatever page was most recently shown", "Close book");
-            shortcut: enabled ? ((applicationWindow().visibility === Window.FullScreen) ? "" : (bookInfo.sheetOpen ? "" : "Esc")) : "";
+            shortcut: (applicationWindow().visibility === Window.FullScreen) ? "" : (bookInfo.sheetOpen ? "" : "Esc");
             iconName: "dialog-close";
             onTriggered: closeBook();
             enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
@@ -246,19 +246,19 @@ Kirigami.Page {
         // Invisible actions, for use in bookInfo
         Kirigami.Action {
             visible: false;
-            shortcut: enabled ? (bookInfo.sheetOpen ? StandardKey.MoveToPreviousChar : "") : "";
+            shortcut: bookInfo.sheetOpen ? StandardKey.MoveToPreviousChar : "";
             onTriggered: bookInfo.previousBook();
             enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
         },
         Kirigami.Action {
             visible: false;
-            shortcut: enabled ? (bookInfo.sheetOpen ? StandardKey.MoveToNextChar : "") : "";
+            shortcut: bookInfo.sheetOpen ? StandardKey.MoveToNextChar : "";
             onTriggered: bookInfo.nextBook();
             enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
         },
         Kirigami.Action {
             visible: false;
-            shortcut: enabled ? (bookInfo.sheetOpen ? "Return" : "") : "";
+            shortcut: bookInfo.sheetOpen ? "Return" : "";
             onTriggered: bookInfo.openSelected();
             enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
         }
@@ -277,7 +277,7 @@ Kirigami.Page {
     Kirigami.Action {
         id: bookInfoAction;
         text: i18n("Closes the book information drawer", "Close");
-        shortcut: enabled ? (bookInfo.sheetOpen ? "Esc" : "") : "";
+        shortcut: bookInfo.sheetOpen ? "Esc" : "";
         iconName: "dialog-cancel";
         onTriggered: bookInfo.close();
         enabled: root.isCurrentPage;

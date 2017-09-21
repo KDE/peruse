@@ -41,21 +41,21 @@ Kirigami.Page {
     property list<QtObject> desktopActions: [
         Kirigami.Action {
             text: i18n("Open selected book");
-            shortcut: enabled ? "Return" : "";
+            shortcut: "Return";
             iconName: "document-open";
             onTriggered: bookSelected(startWithThese.currentItem.filename, startWithThese.currentItem.currentPage);
             enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
         },
         Kirigami.Action {
             text: i18nc("select the previous book entry in the list", "Previous book");
-            shortcut: enabled ? StandardKey.MoveToPreviousChar : "";
+            shortcut: StandardKey.MoveToPreviousChar;
             iconName: "go-previous";
             onTriggered: startWithThese.selectPrevious();
             enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
         },
         Kirigami.Action {
             text: i18nc("select the next book entry in the list", "Next book");
-            shortcut: enabled ? StandardKey.MoveToNextChar : "";
+            shortcut: StandardKey.MoveToNextChar;
             iconName: "go-next";
             onTriggered: startWithThese.selectNext();
             enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;

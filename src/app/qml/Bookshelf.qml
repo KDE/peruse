@@ -60,28 +60,28 @@ Kirigami.ScrollablePage {
     property list<QtObject> desktopActions: [
         Kirigami.Action {
             text: i18nc("Navigate one page back", "Back");
-            shortcut: enabled ? (bookDetails.sheetOpen ? "" : "Esc") : "";
+            shortcut: bookDetails.sheetOpen ? "" : "Esc";
             iconName: "dialog-close";
             onTriggered: closeShelf();
             enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop && applicationWindow().pageStack.currentIndex > 0;
         },
 //         Kirigami.Action {
 //             text: i18nc("Select the previous book in the list", "Select previous book");
-//             shortcut: enabled ? StandardKey.MoveToPreviousChar : ""
+//             shortcut: StandardKey.MoveToPreviousChar
 //             iconName: "go-previous";
 //             onTriggered: shelfList.previousEntry();
 //             enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
 //         },
 //         Kirigami.Action {
 //             text: i18nc("Select the next book in the list", "Select next book");
-//             shortcut: enabled ? StandardKey.MoveToNextChar : "";
+//             shortcut: StandardKey.MoveToNextChar;
 //             iconName: "go-next";
 //             onTriggered: shelfList.nextEntry();
 //             enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
 //         },
         Kirigami.Action {
             text: i18nc("Open the book which is currently selected in the list", "Open selected book");
-            shortcut: enabled ? "Return" : "";
+            shortcut: "Return";
             iconName: "document-open";
             onTriggered: openBook(shelfList.currentIndex);
             enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
@@ -101,7 +101,7 @@ Kirigami.ScrollablePage {
     Kirigami.Action {
         id: bookDetailsAction;
         text: i18n("Closes the book details drawer", "Close");
-        shortcut: enabled ? (bookDetails.sheetOpen ? "Esc" : "") : "";
+        shortcut: bookDetails.sheetOpen ? "Esc" : "";
         iconName: "dialog-cancel";
         onTriggered: bookDetails.close();
         enabled: root.isCurrentPage;
