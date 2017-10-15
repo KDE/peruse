@@ -20,7 +20,7 @@
  */
 
 import QtQuick 2.1
-import QtQuick.Controls 1.4 as QtControls
+import QtQuick.Controls 2.2 as QtControls
 
 import org.kde.kirigami 2.1 as Kirigami
 
@@ -96,7 +96,7 @@ Item {
             color: Kirigami.Theme.linkColor;
         }
     }
-    Kirigami.Label {
+    QtControls.Label {
         id: bookAuthorLabel;
         anchors {
             top: bookTitle.bottom;
@@ -107,7 +107,7 @@ Item {
         text: "Author";
         font.bold: true;
     }
-    Kirigami.Label {
+    QtControls.Label {
         id: bookAuthor;
         anchors {
             top: bookTitle.bottom;
@@ -119,7 +119,7 @@ Item {
         text: root.author === "" ? "(unknown)" : root.author;
         opacity: (text === "(unknown)" || text === "") ? 0.3 : 1;
     }
-    Kirigami.Label {
+    QtControls.Label {
         id: bookPublisherLabel;
         anchors {
             top: bookAuthorLabel.bottom;
@@ -130,7 +130,7 @@ Item {
         text: "Publisher";
         font.bold: true;
     }
-    Kirigami.Label {
+    QtControls.Label {
         id: bookPublisher;
         anchors {
             top: bookAuthor.bottom;
@@ -142,7 +142,7 @@ Item {
         text: root.publisher === "" ? "(unknown)" : root.publisher;
         opacity: (text === "(unknown)" || text === "") ? 0.3 : 1;
     }
-    Kirigami.Label {
+    QtControls.Label {
         id: bookFile;
         anchors {
             top: bookPublisherLabel.bottom;
@@ -164,7 +164,7 @@ Item {
             bottom: deleteBase.top;
             margins: Kirigami.Units.smallSpacing;
         }
-        Kirigami.Label {
+        QtControls.Label {
             anchors.fill: parent;
             verticalAlignment: Text.AlignTop;
             text: i18nc("Placeholder text for the book description field when no description is set", "(no description available for this book)");
@@ -197,7 +197,7 @@ Item {
                 right: parent.right;
                 margins: Kirigami.Units.smallSpacing;
             }
-            iconName: "edit-delete";
+//             iconName: "edit-delete";
             onClicked: deleteBase.state = "confirmDelete";
             Behavior on opacity { PropertyAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
         }
@@ -207,7 +207,7 @@ Item {
             width: parent.width;
             Behavior on opacity { PropertyAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
             height: yesDelete.height + confirmDeleteLabel.height + Kirigami.Units.largeSpacing * 2 + Kirigami.Units.smallSpacing;
-            Kirigami.Label {
+            QtControls.Label {
                 id: confirmDeleteLabel;
                 anchors {
                     top: parent.top;
@@ -229,7 +229,7 @@ Item {
                     rightMargin: (parent.width - width) / 4;
                 }
                 text: i18nc("Confirmation button for book delete dialog", "Yes, really delete");
-                iconName: "dialog-ok";
+//                 iconName: "dialog-ok";
                 onClicked: root.bookDeleteRequested();
             }
             QtControls.Button {
@@ -240,7 +240,7 @@ Item {
                     leftMargin: (parent.width - width) / 4;
                 }
                 text: i18nc("Cancellation button or book delete dialog", "No, cancel delete");
-                iconName: "dialog-cancel";
+//                 iconName: "dialog-cancel";
                 onClicked: deleteBase.state = "";
             }
         }

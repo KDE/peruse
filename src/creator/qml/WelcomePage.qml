@@ -21,7 +21,7 @@
 
 import QtQuick 2.2
 import QtQuick.Layouts 1.1
-import QtQuick.Controls 1.4 as QtControls
+import QtQuick.Controls 2.2 as QtControls
 
 import org.kde.kirigami 2.1 as Kirigami
 
@@ -52,7 +52,7 @@ Kirigami.Page {
                 text: "Peruse Creator";
                 horizontalAlignment: Text.AlignHCenter;
             }
-            Kirigami.Label {
+            QtControls.Label {
                 id: appDescriptionLabel;
                 anchors {
                     top: parent.verticalCenter;
@@ -86,7 +86,7 @@ Kirigami.Page {
                     bottom: parent.verticalCenter;
                     margins: Kirigami.Units.largeSpacing;
                 }
-                Kirigami.Label {
+                QtControls.Label {
                     anchors.fill: parent;
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere;
                     horizontalAlignment: Text.AlignHCenter;
@@ -111,7 +111,7 @@ Kirigami.Page {
                     }
                     QtControls.Button {
                         anchors.centerIn: parent;
-                        iconName: "go-next";
+//                         iconName: "go-next";
                         text: i18nc("Button to continue working on the most recently opened comic book archive", "Continue %1").arg(continueLast.mostRecentBook.split('/').pop());
                         onClicked: mainWindow.openBook(continueLast.mostRecentBook);
                     }
@@ -137,7 +137,7 @@ Kirigami.Page {
                     }
                     QtControls.Button {
                         anchors.centerIn: parent;
-                        iconName: "document-open";
+//                         iconName: "document-open";
                         text: i18nc("Button to open existing comic book archive", "Open Existing...");
                         onClicked: mainWindow.openOther();
                     }
@@ -151,7 +151,7 @@ Kirigami.Page {
                     }
                     QtControls.Button {
                         anchors.centerIn: parent;
-                        iconName: "document-new";
+//                         iconName: "document-new";
                         text: i18nc("Button to create a new, empty comic book archive", "Create Blank");
                         onClicked: mainWindow.createNew();
                     }
@@ -165,7 +165,7 @@ Kirigami.Page {
                     }
                     QtControls.Button {
                         anchors.centerIn: parent;
-                        iconName: "folder-open";
+//                         iconName: "folder-open";
                         text: i18nc("Button to create a new comic book archive by copying in a bunch of pictures", "Create From Images...");
                     }
                 }

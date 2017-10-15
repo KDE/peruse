@@ -20,7 +20,7 @@
  */
 
 import QtQuick 2.1
-import QtQuick.Controls 1.4 as QtControls
+import QtQuick.Controls 2.2 as QtControls
 
 import org.kde.kirigami 2.1 as Kirigami
 
@@ -98,7 +98,7 @@ Item {
             running: coverImage.status === Image.Loading;
         }
     }
-    Kirigami.Label {
+    QtControls.Label {
         id: bookTitle;
         anchors {
             top: bookCover.bottom;

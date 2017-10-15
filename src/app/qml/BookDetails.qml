@@ -21,7 +21,7 @@
 
 import QtQuick 2.2
 import QtQuick.Layouts 1.1
-import QtQuick.Controls 1.4 as QtControls
+import QtQuick.Controls 2.2 as QtControls
 
 import org.kde.kirigami 2.1 as Kirigami
 import org.kde.peruse 0.1 as Peruse
@@ -106,7 +106,7 @@ Item {
                 id: base;
                 width: root.width;
                 height: valueLabel.height;
-                Kirigami.Label {
+                QtControls.Label {
                     anchors {
                         top: parent.top;
                         left: parent.left;
@@ -116,7 +116,7 @@ Item {
                     verticalAlignment: Text.AlignTop;
                     text: model.label;
                 }
-                Kirigami.Label {
+                QtControls.Label {
                     id: valueLabel;
                     anchors {
                         top: parent.top;
@@ -161,7 +161,7 @@ Item {
                 width: root.width;
                 Behavior on opacity { PropertyAnimation { duration: applicationWindow().animationDuration; } }
                 height: yesDelete.height + confirmDeleteLabel.height + Kirigami.Units.largeSpacing * 2 + Kirigami.Units.smallSpacing;
-                Kirigami.Label {
+                QtControls.Label {
                     id: confirmDeleteLabel;
                     anchors {
                         top: parent.top;

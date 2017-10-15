@@ -21,7 +21,7 @@
 
 import QtQuick 2.2
 import QtQuick.Layouts 1.1
-import QtQuick.Controls 1.4 as QtControls
+import QtQuick.Controls 2.2 as QtControls
 
 import org.kde.kirigami 2.1 as Kirigami
 
@@ -106,7 +106,7 @@ Kirigami.Page {
                 text: "Peruse";
                 horizontalAlignment: Text.AlignHCenter;
             }
-            Kirigami.Label {
+            QtControls.Label {
                 id: appDescriptionLabel;
                 anchors {
                     top: parent.verticalCenter;
@@ -312,7 +312,7 @@ Kirigami.Page {
                     width: startWithThese.width;
                     height: paintedHeight;
                 }
-                Kirigami.Label {
+                QtControls.Label {
                     visible: !firstRecentlyAddedBook.visible;
                     height: visible ? paintedHeight : 0;
                     width: startWithThese.width;
@@ -482,7 +482,7 @@ Kirigami.Page {
             }
             opacity: applicationWindow().isLoading ? 1 : 0;
             Behavior on opacity { PropertyAnimation { duration: applicationWindow().animationDuration; } }
-            Kirigami.Label {
+            QtControls.Label {
                 anchors {
                     bottom: parent.verticalCenter;
                     left: parent.left;
@@ -500,7 +500,7 @@ Kirigami.Page {
                 }
                 running: applicationWindow().isLoading;
             }
-            Kirigami.Label {
+            QtControls.Label {
                 anchors {
                     top: loadingSpinner.bottom;
                     left: parent.left;

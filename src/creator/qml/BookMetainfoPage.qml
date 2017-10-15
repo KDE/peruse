@@ -20,7 +20,7 @@
  */
 
 import QtQuick 2.2
-import QtQuick.Controls 1.4 as QtControls
+import QtQuick.Controls 2.2 as QtControls
 
 import org.kde.kirigami 2.1 as Kirigami
 
@@ -74,7 +74,9 @@ Kirigami.Page {
         QtControls.Button {
             anchors.right: parent.right;
             width: parent.with;
-            iconName: "list-add";
+            contentItem: Kirigami.Icon {
+                source: "list-add";
+            }
             text: i18nc("Text on the button for adding new titles", "Add a title in another language");
         }
 
@@ -86,7 +88,7 @@ Kirigami.Page {
         Repeater {
             id: authorRepeater;
             model: root.model.acbfData ? root.model.acbfData.metaData.bookInfo.authorNames : 0;
-            delegate: Kirigami.Label {
+            delegate: QtControls.Label {
                 width: parent.width - removeAuthorButton.width - Kirigami.Units.smallSpacing;
                 text: modelData.length > 0 ? modelData : "(unnamed)";
                 QtControls.Button {
@@ -95,7 +97,9 @@ Kirigami.Page {
                         right: removeAuthorButton.left;
                         leftMargin: Kirigami.Units.smallSpacing;
                     }
-                    iconName: "document-edit";
+                    contentItem: Kirigami.Icon {
+                        source: "document-edit";
+                    }
                     height: parent.height;
                     width: height;
                     onClicked: {
@@ -109,7 +113,9 @@ Kirigami.Page {
                         left: parent.right;
                         leftMargin: Kirigami.Units.smallSpacing;
                     }
-                    iconName: "list-remove";
+                    contentItem: Kirigami.Icon {
+                        source: "list-remove";
+                    }
                     height: parent.height;
                     width: height;
                     onClicked: {
@@ -129,7 +135,9 @@ Kirigami.Page {
                     left: parent.right;
                     leftMargin: Kirigami.Units.smallSpacing;
                 }
-                iconName: "list-add";
+                contentItem: Kirigami.Icon {
+                    source: "list-add";
+                }
                 height: parent.height;
                 width: height;
                 onClicked: {
@@ -163,7 +171,9 @@ Kirigami.Page {
                             left: parent.right;
                             leftMargin: Kirigami.Units.smallSpacing;
                         }
-                        iconName: "list-remove";
+                        contentItem: Kirigami.Icon {
+                            source: "list-remove";
+                        }
                         height: parent.height;
                         width: height;
                         onClicked: {
@@ -177,8 +187,8 @@ Kirigami.Page {
                         top: genreText.bottom;
                         topMargin: Kirigami.Units.smallSpacing;
                     }
-                    minimumValue: 0;
-                    maximumValue: 100;
+                    from: 0;
+                    to: 100;
                     stepSize: 1.0;
                     width: genreText.width;
                     value: root.model.acbfData.metaData.bookInfo.genrePercentage(modelData);
@@ -201,7 +211,9 @@ Kirigami.Page {
                     left: parent.right;
                     leftMargin: Kirigami.Units.smallSpacing;
                 }
-                iconName: "list-add";
+                contentItem: Kirigami.Icon {
+                    source: "list-add";
+                }
                 height: parent.height;
                 width: height;
                 onClicked: {
@@ -230,7 +242,9 @@ Kirigami.Page {
                         left: parent.right;
                         leftMargin: Kirigami.Units.smallSpacing;
                     }
-                    iconName: "list-remove";
+                    contentItem: Kirigami.Icon {
+                        source: "list-remove";
+                    }
                     height: parent.height;
                     width: height;
                     onClicked: {
@@ -250,7 +264,9 @@ Kirigami.Page {
                     left: parent.right;
                     leftMargin: Kirigami.Units.smallSpacing;
                 }
-                iconName: "list-add";
+                contentItem: Kirigami.Icon {
+                    source: "list-add";
+                }
                 height: parent.height;
                 width: height;
                 onClicked: {

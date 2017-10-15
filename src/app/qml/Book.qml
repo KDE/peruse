@@ -21,7 +21,7 @@
 
 import QtQuick 2.2
 import QtQuick.Layouts 1.1
-import QtQuick.Controls 1.4 as QtControls
+import QtQuick.Controls 2.2 as QtControls
 import QtQuick.Window 2.2
 
 import org.kde.kirigami 2.1 as Kirigami
@@ -129,7 +129,7 @@ Kirigami.Page {
                 fillMode: Image.PreserveAspectFit;
                 source: model.url;
             }
-            Kirigami.Label {
+            QtControls.Label {
                 id: pageTitle;
                 anchors {
                     left: parent.left;

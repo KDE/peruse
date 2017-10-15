@@ -20,6 +20,7 @@
  */
 
 import QtQuick 2.1
+import QtQuick.Controls 2.2 as QtControls
 
 import org.kde.kirigami 2.1 as Kirigami
 
@@ -55,7 +56,7 @@ Item {
         }
         elide: Text.ElideRight;
     }
-    Kirigami.Label {
+    QtControls.Label {
         id: categoryCount;
         anchors {
             margins: Kirigami.Units.smallSpacing;

@@ -20,7 +20,7 @@
  */
 
 import QtQuick 2.2
-import QtQuick.Controls 1.4 as QtControls
+import QtQuick.Controls 2.2 as QtControls
 
 import org.kde.kirigami 2.1 as Kirigami
 import org.kde.peruse 0.1 as Peruse
@@ -134,7 +134,7 @@ Kirigami.ScrollablePage {
                         source: model.url;
                     }
                 }
-                Kirigami.Label {
+                QtControls.Label {
                     anchors {
                         verticalCenter: parent.verticalCenter;
                         left: bookCover.right;

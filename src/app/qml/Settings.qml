@@ -21,7 +21,7 @@
 
 import QtQuick 2.2
 import QtQuick.Layouts 1.1
-import QtQuick.Controls 1.4 as QtControls
+import QtQuick.Controls 2.2 as QtControls
 import QtQuick.Dialogs 1.0
 
 import org.kde.kirigami 2.1 as Kirigami
@@ -52,7 +52,9 @@ Kirigami.Page {
                 ListComponents.Section { id: folderHeader; text: i18nc("title of the list of search folders", "Search Folders"); }
                 QtControls.ToolButton {
                     id: folderAdd;
-                    iconName: "list-add";
+                    contentItem: Kirigami.Icon {
+                        source: "list-add";
+                    }
                     onClicked: {
                         if(PLASMA_PLATFORM.substring(0, 5) === "phone") {
                             applicationWindow().pageStack.push(folderDlg);
@@ -82,7 +84,7 @@ Kirigami.Page {
                             onTriggered: peruseConfig.removeBookLocation(peruseConfig.bookLocations[index]);
                         }
                     ]
-                    Kirigami.Label {
+                    QtControls.Label {
                         anchors {
                             verticalCenter: parent.verticalCenter;
                             left: parent.left;
@@ -109,7 +111,7 @@ Kirigami.Page {
                 enabled: parent.enabled;
                 anchors.fill: parent;
             }
-            Kirigami.Label {
+            QtControls.Label {
                 anchors {
                     bottom: parent.verticalCenter;
                     left: parent.left;
@@ -127,7 +129,7 @@ Kirigami.Page {
                 }
                 running: addingNewBooksProgress.enabled;
             }
-            Kirigami.Label {
+            QtControls.Label {
                 anchors {
                     top: loadingSpinner.bottom;
                     left: parent.left;

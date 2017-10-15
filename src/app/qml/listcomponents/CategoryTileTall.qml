@@ -20,6 +20,7 @@
  */
 
 import QtQuick 2.1
+import QtQuick.Controls 2.2 as QtControls
 
 import org.kde.kirigami 2.1 as Kirigami
 
@@ -122,7 +123,7 @@ Item {
             radius: height / 2;
             color: Kirigami.Theme.highlightColor;
         }
-        Kirigami.Label {
+        QtControls.Label {
             id: categoryCount;
             anchors {
                 bottom: tileBg.bottom;
@@ -133,7 +134,7 @@ Item {
             color: Kirigami.Theme.highlightedTextColor;
         }
     }
-    Kirigami.Label {
+    QtControls.Label {
         id: categoryTitle;
         anchors {
             top: categoryImage.bottom;

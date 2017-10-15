@@ -22,7 +22,7 @@
 import QtQuick 2.2
 
 import org.kde.kirigami 2.1 as Kirigami
-import QtQuick.Controls 1.4 as QtControls
+import QtQuick.Controls 2.2 as QtControls
 
 Item {
     id: root;
@@ -40,7 +40,7 @@ Item {
         }
     }
 
-    Kirigami.Label {
+    QtControls.Label {
         id: titleLabel;
         width: parent.width;
         height: paintedHeight + Kirigami.Units.smallSpacing * 2;
@@ -53,7 +53,9 @@ Item {
             }
             height: parent.height;
             width: height;
-            iconName: "list-remove";
+            contentItem: Kirigami.Icon {
+                source: "list-remove";
+            }
             visible: root.removePossible;
             onClicked: root.removeRequested();
         }
@@ -65,7 +67,9 @@ Item {
             }
             height: parent.height;
             width: height;
-            iconName: "document-save";
+            contentItem: Kirigami.Icon {
+                source: "document-save";
+            }
             opacity: editor.text !== root.text;
             Behavior on opacity { PropertyAnimation { duration: mainWindow.animationDuration; } }
             enabled: opacity > 0;

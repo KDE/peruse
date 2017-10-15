@@ -21,7 +21,7 @@
 
 import QtQuick 2.1
 import QtQuick.Layouts 1.1
-import QtQuick.Controls 1.0
+import QtQuick.Controls 2.2 as QtControls
 
 import org.kde.kirigami 2.1 as Kirigami
 import org.kde.okular 2.0 as Okular
@@ -97,7 +97,7 @@ ViewerBase {
                 onHeightChanged: updateWidth();
                 onImplicitHeightChanged: updateWidth();
             }
-            Kirigami.Label {
+            QtControls.Label {
                 id: pageTitle;
                 anchors {
                     left: parent.left;

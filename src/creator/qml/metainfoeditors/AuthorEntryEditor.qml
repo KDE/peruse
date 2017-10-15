@@ -22,7 +22,7 @@
 import QtQuick 2.2
 
 import org.kde.kirigami 2.1 as Kirigami
-import QtQuick.Controls 1.4 as QtControls
+import QtQuick.Controls 2.2 as QtControls
 
 Kirigami.OverlaySheet {
     id: root;
@@ -66,7 +66,9 @@ Kirigami.OverlaySheet {
                     right: parent.right;
                     leftMargin: Kirigami.Units.smallSpacing;
                 }
-                iconName: "dialog-ok";
+                contentItem: Kirigami.Icon {
+                    source: "dialog-ok";
+                }
                 height: parent.height;
                 width: height;
                 onClicked: {
@@ -75,7 +77,7 @@ Kirigami.OverlaySheet {
                 }
             }
         }
-        Kirigami.Label {
+        QtControls.Label {
             width: parent.width;
             height: paintedHeight;
             text: i18nc("help text for the edit author sheet", "Please coplete the information for this author.");
@@ -86,7 +88,7 @@ Kirigami.OverlaySheet {
             height: Kirigami.Units.largeSpacing;
         }
 
-        Kirigami.Label {
+        QtControls.Label {
             width: parent.width;
             height: paintedHeight;
             text: i18nc("label for the activity field", "Activity:");
@@ -98,7 +100,7 @@ Kirigami.OverlaySheet {
         }
         Item { width: parent.width; height: Kirigami.Units.smallSpacing; }
 
-        Kirigami.Label {
+        QtControls.Label {
             width: parent.width;
             height: paintedHeight;
             text: i18nc("label for the language field", "Language:");
@@ -111,7 +113,7 @@ Kirigami.OverlaySheet {
         }
         Item { width: parent.width; height: Kirigami.Units.smallSpacing; }
 
-        Kirigami.Label {
+        QtControls.Label {
             width: parent.width;
             height: paintedHeight;
             text: i18nc("label for the first name field", "First name:");
@@ -124,7 +126,7 @@ Kirigami.OverlaySheet {
         }
         Item { width: parent.width; height: Kirigami.Units.smallSpacing; }
 
-        Kirigami.Label {
+        QtControls.Label {
             width: parent.width;
             height: paintedHeight;
             text: i18nc("label for the middle name field", "Middle name:");
@@ -137,7 +139,7 @@ Kirigami.OverlaySheet {
         }
         Item { width: parent.width; height: Kirigami.Units.smallSpacing; }
 
-        Kirigami.Label {
+        QtControls.Label {
             width: parent.width;
             height: paintedHeight;
             text: i18nc("label for the last name field", "Last name:");
@@ -150,7 +152,7 @@ Kirigami.OverlaySheet {
         }
         Item { width: parent.width; height: Kirigami.Units.smallSpacing; }
 
-        Kirigami.Label {
+        QtControls.Label {
             width: parent.width;
             height: paintedHeight;
             text: i18nc("label for the nickname field", "Nickname:");
@@ -163,7 +165,7 @@ Kirigami.OverlaySheet {
         }
         Item { width: parent.width; height: Kirigami.Units.smallSpacing; }
 
-        Kirigami.Label {
+        QtControls.Label {
             width: parent.width;
             height: paintedHeight;
             text: i18nc("label for the homepage field", "Homepage address:");
@@ -176,7 +178,7 @@ Kirigami.OverlaySheet {
         }
         Item { width: parent.width; height: Kirigami.Units.smallSpacing; }
 
-        Kirigami.Label {
+        QtControls.Label {
             width: parent.width;
             height: paintedHeight;
             text: i18nc("label for the email field", "Email address:");

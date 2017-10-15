@@ -21,7 +21,7 @@
 
 import QtQuick 2.2
 import QtQuick.Dialogs 1.2
-import QtQuick.Controls 1.4 as QtControls
+import QtQuick.Controls 2.2 as QtControls
 
 import org.kde.kirigami 2.1 as Kirigami
 
@@ -37,7 +37,7 @@ Kirigami.OverlaySheet {
             height: paintedHeight;
             text: i18nc("title text for the add page sheet", "Add A Page?");
         }
-        Kirigami.Label {
+        QtControls.Label {
             width: parent.width;
             height: paintedHeight;
             text: i18nc("help text for the add page sheet", "Please select the method you want to add the new page. No changes will be made outside of the project by performing these actions.");
@@ -49,7 +49,7 @@ Kirigami.OverlaySheet {
         }
         QtControls.Button {
             anchors.horizontalCenter: parent.horizontalCenter;
-            iconName: "document-open";
+//             iconName: "document-open";
             text: i18nc("button to add a page by finding an image on the filesystem and copying it into the book", "Copy an image from your device");
             onClicked: openDlg.open();
             FileDialog {
@@ -70,12 +70,12 @@ Kirigami.OverlaySheet {
         }
         QtControls.Button {
             anchors.horizontalCenter: parent.horizontalCenter;
-            iconName: "document-new";
+//             iconName: "document-new";
             text: i18nc("button to add a page by creating a new image using an image editor", "Create a new image using an image editor");
         }
         QtControls.Button {
             anchors.horizontalCenter: parent.horizontalCenter;
-            iconName: "camera";
+//             iconName: "camera";
             text: i18nc("button to add a page by taking a photo with a camera", "Take a photo and add that");
         }
     }

@@ -21,7 +21,7 @@
 
 import QtQuick 2.2
 import QtQuick.Dialogs 1.2
-import QtQuick.Controls 1.4 as QtControls
+import QtQuick.Controls 2.2 as QtControls
 
 import org.kde.kirigami 2.1 as Kirigami
 import org.kde.peruse 0.1 as Peruse
@@ -71,7 +71,7 @@ Kirigami.Page {
             height: paintedHeight + Kirigami.Units.smallSpacing * 2;
             text: i18nc("label text for the edit field for the file system location for the book", "Folder");
         }
-        Kirigami.Label {
+        QtControls.Label {
             width: parent.width - getFolderButton.width;
             text: getFolderDlg.folder;
             QtControls.Button {
@@ -79,7 +79,9 @@ Kirigami.Page {
                 anchors.left: parent.right;
                 height: parent.height;
                 width: height;
-                iconName: "folder-open"
+                contentItem: Kirigami.Icon {
+                    source: "folder-open"
+                }
                 onClicked: getFolderDlg.open();
             }
             FileDialog {
@@ -99,7 +101,9 @@ Kirigami.Page {
                 anchors.left: parent.right;
                 height: getFolderButton.height;
                 width: height;
-                iconName: "folder-open"
+                contentItem: Kirigami.Icon {
+                    source: "folder-open"
+                }
                 onClicked: getCoverDlg.open();
             }
             FileDialog {
