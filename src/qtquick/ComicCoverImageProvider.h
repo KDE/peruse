@@ -35,9 +35,9 @@ class ComicCoverImageProvider : public QQuickImageProvider
 {
 public:
     explicit ComicCoverImageProvider();
-    virtual ~ComicCoverImageProvider();
+    ~ComicCoverImageProvider() override;
 
-    virtual QImage requestImage(const QString& id, QSize* size, const QSize& requestedSize);
+    QImage requestImage(const QString& id, QSize* size, const QSize& requestedSize) override;
 private:
     class Private;
     Private* d;

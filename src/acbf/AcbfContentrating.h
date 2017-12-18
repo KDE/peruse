@@ -31,7 +31,7 @@ class ACBF_EXPORT ContentRating : public QObject
     Q_OBJECT
 public:
     explicit ContentRating(BookInfo* parent = 0);
-    virtual ~ContentRating();
+    ~ContentRating() override;
 
     void toXml(QXmlStreamWriter* writer);
     bool fromXml(QXmlStreamReader *xmlReader);

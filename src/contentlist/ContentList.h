@@ -29,7 +29,7 @@ class ContentList : public QAbstractListModel
     Q_OBJECT
 public:
     explicit ContentList(QObject* parent = 0);
-    virtual ~ContentList();
+    ~ContentList() override;
 
     Q_INVOKABLE static QString getMimetype(QString filePath);
 
@@ -44,9 +44,9 @@ public:
         MetadataRole
     };
 
-    virtual QHash<int, QByteArray> roleNames() const;
-    virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
-    virtual int rowCount(const QModelIndex& parent = QModelIndex()) const;
+    QHash<int, QByteArray> roleNames() const override;
+    QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
+    int rowCount(const QModelIndex& parent = QModelIndex()) const override;
 
     Q_SLOT void fileFound(const QString& filePath, const QVariantHash& metaData);
     Q_SIGNAL void searchCompleted();

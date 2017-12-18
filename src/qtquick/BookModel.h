@@ -41,16 +41,16 @@ class BookModel : public QAbstractListModel
     Q_PROPERTY(bool processing READ processing WRITE setProcessing NOTIFY processingChanged)
 public:
     explicit BookModel(QObject* parent = 0);
-    virtual ~BookModel();
+    ~BookModel() override;
 
     enum Roles {
         UrlRole = Qt::UserRole + 1,
         TitleRole,
     };
 
-    virtual QHash<int, QByteArray> roleNames() const;
-    virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
-    virtual int rowCount(const QModelIndex& parent = QModelIndex()) const;
+    QHash<int, QByteArray> roleNames() const override;
+    QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
+    int rowCount(const QModelIndex& parent = QModelIndex()) const override;
 
     virtual void addPage(QString url, QString title);
     virtual void clearPages();

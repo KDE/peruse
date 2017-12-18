@@ -33,7 +33,7 @@ class ACBF_EXPORT Textarea : public QObject
     Q_OBJECT
 public:
     explicit Textarea(Textlayer* parent = 0);
-    virtual ~Textarea();
+    ~Textarea() override;
 
     void toXml(QXmlStreamWriter* writer);
     bool fromXml(QXmlStreamReader *xmlReader);

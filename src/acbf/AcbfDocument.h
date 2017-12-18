@@ -38,7 +38,7 @@ class ACBF_EXPORT Document : public QObject
     Q_PROPERTY(Metadata* metaData READ metaData NOTIFY metaDataChanged)
 public:
     explicit Document(QObject* parent = 0);
-    virtual ~Document();
+    ~Document() override;
 
     QString toXml();
     bool fromXml(QString xmlDocument);

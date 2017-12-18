@@ -39,7 +39,7 @@ public:
     /**
      * Destructor. Do not call this.
      */
-    ~KRarFileEntry();
+    ~KRarFileEntry() override;
 
     /// Header start: only used when writing, consequently not used (as we don't support writing)
     void setHeaderStart(qint64 headerstart);
@@ -56,7 +56,7 @@ public:
      * @return the content of this file.
      * Call data() with care (only once per file), this data isn't cached.
      */
-    QByteArray data() const Q_DECL_OVERRIDE;
+    QByteArray data() const override;
 
     /**
      * This method returns a QIODevice to read the file contents.
@@ -65,7 +65,7 @@ public:
      * who will have to delete it.
      * The returned device auto-opens (in readonly mode), no need to open it.
      */
-    QIODevice *createDevice() const Q_DECL_OVERRIDE;
+    QIODevice *createDevice() const override;
 
 private:
     class Private;

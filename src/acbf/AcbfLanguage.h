@@ -33,7 +33,7 @@ class ACBF_EXPORT Language : public QObject
     Q_OBJECT
 public:
     explicit Language(BookInfo* parent = 0);
-    virtual ~Language();
+    ~Language() override;
 
     void toXml(QXmlStreamWriter* writer);
     bool fromXml(QXmlStreamReader *xmlReader);

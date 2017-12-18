@@ -39,7 +39,7 @@ public:
     };
 
     explicit PeruseConfig(QObject* parent = 0);
-    virtual ~PeruseConfig();
+    ~PeruseConfig() override;
 
     Q_INVOKABLE void bookOpened(QString path);
     QStringList recentlyOpened() const;

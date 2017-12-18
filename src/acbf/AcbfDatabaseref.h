@@ -31,7 +31,7 @@ class ACBF_EXPORT DatabaseRef : public QObject
     Q_OBJECT
 public:
     explicit DatabaseRef(BookInfo* parent = 0);
-    virtual ~DatabaseRef();
+    ~DatabaseRef() override;
 
     void toXml(QXmlStreamWriter* writer);
     bool fromXml(QXmlStreamReader *xmlReader);

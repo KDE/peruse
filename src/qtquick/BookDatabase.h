@@ -30,7 +30,7 @@ class BookDatabase : public QObject
     Q_OBJECT
 public:
     explicit BookDatabase(QObject* parent = 0);
-    virtual ~BookDatabase();
+    ~BookDatabase() override;
 
     QList<BookEntry*> loadEntries();
     void addEntry(BookEntry* entry);

@@ -31,7 +31,7 @@ class ACBF_EXPORT Sequence : public QObject
     Q_OBJECT
 public:
     explicit Sequence(BookInfo * parent = 0);
-    virtual ~Sequence();
+    ~Sequence() override;
 
     void toXml(QXmlStreamWriter* writer);
     bool fromXml(QXmlStreamReader *xmlReader);

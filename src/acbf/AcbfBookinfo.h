@@ -43,7 +43,7 @@ class ACBF_EXPORT BookInfo : public QObject
     Q_PROPERTY(QStringList characters READ characters NOTIFY charactersChanged)
 public:
     explicit BookInfo(Metadata* parent = 0);
-    virtual ~BookInfo();
+    ~BookInfo() override;
 
     Metadata* metadata();
 

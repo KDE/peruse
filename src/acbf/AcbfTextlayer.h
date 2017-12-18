@@ -32,7 +32,7 @@ class ACBF_EXPORT Textlayer : public QObject
     Q_OBJECT
 public:
     explicit Textlayer(Page* parent = 0);
-    virtual ~Textlayer();
+    ~Textlayer() override;
 
     void toXml(QXmlStreamWriter* writer);
     bool fromXml(QXmlStreamReader *xmlReader);

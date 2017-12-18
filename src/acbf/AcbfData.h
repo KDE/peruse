@@ -35,7 +35,7 @@ class ACBF_EXPORT Data : public QObject
     Q_OBJECT
 public:
     explicit Data(Document* parent = 0);
-    virtual ~Data();
+    ~Data() override;
 
     void toXml(QXmlStreamWriter *writer);
     bool fromXml(QXmlStreamReader *xmlReader);

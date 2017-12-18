@@ -29,9 +29,9 @@ class ArchiveImageProvider : public QQuickImageProvider
 {
 public:
     explicit ArchiveImageProvider();
-    virtual ~ArchiveImageProvider();
+    ~ArchiveImageProvider() override;
 
-    virtual QImage requestImage(const QString& id, QSize* size, const QSize& requestedSize);
+    QImage requestImage(const QString& id, QSize* size, const QSize& requestedSize) override;
 
     void setArchiveBookModel(ArchiveBookModel* model);
     void setPrefix(QString prefix);

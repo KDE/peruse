@@ -33,7 +33,7 @@ class ACBF_EXPORT PublishInfo : public QObject
     Q_OBJECT
 public:
     explicit PublishInfo(Metadata* parent = 0);
-    virtual ~PublishInfo();
+    ~PublishInfo() override;
 
     void toXml(QXmlStreamWriter *writer);
     bool fromXml(QXmlStreamReader *xmlReader);

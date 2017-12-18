@@ -37,7 +37,7 @@ class PropertyContainer : public QObject
 public:
     explicit PropertyContainer(QObject* parent = 0);
     explicit PropertyContainer(QString name, QObject* parent = 0);
-    virtual ~PropertyContainer();
+    ~PropertyContainer() override;
 
     // As QObject already as setProperty and property() functions, we must
     // name ours differently

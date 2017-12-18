@@ -49,7 +49,7 @@ class CategoryEntriesModel : public QAbstractListModel
     Q_OBJECT
 public:
     explicit CategoryEntriesModel(QObject* parent = 0);
-    virtual ~CategoryEntriesModel();
+    ~CategoryEntriesModel() override;
 
     enum Roles {
         FilenameRole = Qt::UserRole + 1,
@@ -67,9 +67,9 @@ public:
         ThumbnailRole
     };
 
-    virtual QHash<int, QByteArray> roleNames() const;
-    virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
-    virtual int rowCount(const QModelIndex& parent = QModelIndex()) const;
+    QHash<int, QByteArray> roleNames() const override;
+    QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
+    int rowCount(const QModelIndex& parent = QModelIndex()) const override;
 
     void append(BookEntry* entry, Roles compareRole = TitleRole);
     void addCategoryEntry(const QString& categoryName, BookEntry* entry);

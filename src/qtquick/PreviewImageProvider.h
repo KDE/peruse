@@ -36,9 +36,9 @@ class PreviewImageProvider : public QObject, public QQuickImageProvider
     Q_OBJECT
 public:
     explicit PreviewImageProvider(QObject* parent = 0);
-    virtual ~PreviewImageProvider();
+    ~PreviewImageProvider() override;
 
-    virtual QImage requestImage(const QString& id, QSize* size, const QSize& requestedSize);
+    QImage requestImage(const QString& id, QSize* size, const QSize& requestedSize) override;
 
     Q_SLOT void updatePreview(const KFileItem&, const QPixmap& p);
     Q_SLOT void fallbackPreview(const KFileItem& item);

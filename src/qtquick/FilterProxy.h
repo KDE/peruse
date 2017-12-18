@@ -29,7 +29,7 @@ class FilterProxy : public QSortFilterProxyModel
     Q_OBJECT
 public:
     explicit FilterProxy(QObject* parent = 0);
-    virtual ~FilterProxy();
+    ~FilterProxy() override;
 };
 
 #endif//FILTERPROXY_H

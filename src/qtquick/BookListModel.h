@@ -40,10 +40,10 @@ class BookListModel : public CategoryEntriesModel, public QQmlParserStatus
     Q_INTERFACES(QQmlParserStatus)
 public:
     explicit BookListModel(QObject* parent = 0);
-    virtual ~BookListModel();
+    ~BookListModel() override;
 
-    virtual void classBegin() override {};
-    virtual void componentComplete() override;
+    void classBegin() override {};
+    void componentComplete() override;
 
     enum Grouping {
         GroupByNone = 0,

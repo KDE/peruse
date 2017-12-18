@@ -33,16 +33,16 @@ class ArchiveBookModel : public BookModel
     Q_PROPERTY(bool hasUnsavedChanges READ hasUnsavedChanges NOTIFY hasUnsavedChangesChanged)
 public:
     explicit ArchiveBookModel(QObject* parent = 0);
-    virtual ~ArchiveBookModel();
+    ~ArchiveBookModel() override;
 
-    virtual void setFilename(QString newFilename) override;
+    void setFilename(QString newFilename) override;
 
-    virtual QString author() const override;
-    virtual void setAuthor(QString newAuthor) override;
-    virtual QString publisher() const override;
-    virtual void setPublisher(QString newPublisher) override;
-    virtual QString title() const override;
-    virtual void setTitle(QString newTitle) override;
+    QString author() const override;
+    void setAuthor(QString newAuthor) override;
+    QString publisher() const override;
+    void setPublisher(QString newPublisher) override;
+    QString title() const override;
+    void setTitle(QString newTitle) override;
 
     QObject* qmlEngine() const;
     void setQmlEngine(QObject* newEngine);
@@ -62,7 +62,7 @@ public:
      */
     Q_INVOKABLE bool saveBook();
 
-    virtual void addPage(QString url, QString title) override;
+    void addPage(QString url, QString title) override;
     /**
      * Adds a new page to the book archive on disk, by copying in the file
      * passed to the function. Optionally this can be done at a specific
@@ -81,7 +81,7 @@ public:
      * @param swapThisIndex The index of the first page to be swapped
      * @param withThisIndex The index of the page you want the first to be swapped with
      */
-    Q_INVOKABLE virtual void swapPages(int swapThisIndex, int withThisIndex) override;
+    Q_INVOKABLE void swapPages(int swapThisIndex, int withThisIndex) override;
 
     /**
      * Creates a new book in the folder, with the given title and cover.

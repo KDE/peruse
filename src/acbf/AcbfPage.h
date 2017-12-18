@@ -37,7 +37,7 @@ class ACBF_EXPORT Page : public QObject
 public:
     // Pages can also be cover pages, which means they can also be children of BookInfo
     explicit Page(Document* parent = 0);
-    virtual ~Page();
+    ~Page() override;
 
     void toXml(QXmlStreamWriter* writer);
     bool fromXml(QXmlStreamReader *xmlReader);

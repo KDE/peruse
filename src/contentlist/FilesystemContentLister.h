@@ -29,13 +29,13 @@ class FilesystemContentLister : public ContentListerBase
     Q_OBJECT
 public:
     explicit FilesystemContentLister(QObject* parent = 0);
-    virtual ~FilesystemContentLister();
+    ~FilesystemContentLister() override;
 
-    virtual void addLocation(QString path);
-    virtual void addMimetype(QString mimetype);
-    virtual void setSearchString(const QString& searchString);
-    virtual void setKnownFiles(QStringList knownFiles);
-    virtual void startSearch();
+    void addLocation(QString path) override;
+    void addMimetype(QString mimetype) override;
+    void setSearchString(const QString& searchString) override;
+    void setKnownFiles(QStringList knownFiles) override;
+    void startSearch() override;
 private:
     class Private;
     Private* d;

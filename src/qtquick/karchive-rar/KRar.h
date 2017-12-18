@@ -54,7 +54,7 @@ public:
      * If the rar file is still opened, then it will be
      * closed automatically by the destructor.
      */
-    virtual ~KRar();
+    ~KRar() override;
 
 protected:
     /*
@@ -62,24 +62,24 @@ protected:
      * @return always false
      */
     bool doPrepareWriting(const QString &name, const QString &user, const QString &group, qint64 size,
-                          mode_t perm, const QDateTime &atime, const QDateTime &mtime, const QDateTime &ctime) Q_DECL_OVERRIDE;
+                          mode_t perm, const QDateTime &atime, const QDateTime &mtime, const QDateTime &ctime) override;
 
     /*
      * Writing is not supported by this class, will always fail.
      * @return always false
      */
-    bool doFinishWriting(qint64 size) Q_DECL_OVERRIDE;
+    bool doFinishWriting(qint64 size) override;
 
     /*
      * Writing is not supported by this class, will always fail.
      * @return always false
      */
     bool doWriteDir(const QString &name, const QString &user, const QString &group,
-                    mode_t perm, const QDateTime &atime, const QDateTime &mtime, const QDateTime &ctime) Q_DECL_OVERRIDE;
+                    mode_t perm, const QDateTime &atime, const QDateTime &mtime, const QDateTime &ctime) override;
 
     bool doWriteSymLink(const QString &name, const QString &target,
                         const QString &user, const QString &group, mode_t perm,
-                        const QDateTime &atime, const QDateTime &mtime, const QDateTime &ctime) Q_DECL_OVERRIDE;
+                        const QDateTime &atime, const QDateTime &mtime, const QDateTime &ctime) override;
 
     /**
      * Opens the archive for reading.
@@ -87,11 +87,11 @@ protected:
      * and creates the KArchiveDirectory/KArchiveFile entries.
      *
      */
-    bool openArchive(QIODevice::OpenMode mode) Q_DECL_OVERRIDE;
-    bool closeArchive() Q_DECL_OVERRIDE;
+    bool openArchive(QIODevice::OpenMode mode) override;
+    bool closeArchive() override;
 
 protected:
-    void virtual_hook(int id, void *data) Q_DECL_OVERRIDE;
+    void virtual_hook(int id, void *data) override;
 
 private:
     class Private;

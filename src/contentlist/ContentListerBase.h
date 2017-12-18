@@ -29,7 +29,7 @@ class ContentListerBase : public QObject
     Q_OBJECT
 public:
     explicit ContentListerBase(QObject* parent = 0);
-    virtual ~ContentListerBase();
+    ~ContentListerBase() override;
 
     virtual void addLocation(QString path);
     virtual void addMimetype(QString mimetype);

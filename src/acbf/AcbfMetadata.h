@@ -36,7 +36,7 @@ class ACBF_EXPORT Metadata : public QObject {
     Q_PROPERTY(AdvancedComicBookFormat::BookInfo* bookInfo READ bookInfo NOTIFY bookInfoChanged)
 public:
     explicit Metadata(Document* parent = 0);
-    virtual ~Metadata();
+    ~Metadata() override;
 
     Document* document();
 
