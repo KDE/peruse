@@ -28,7 +28,7 @@ class FilterProxy : public QSortFilterProxyModel
 {
     Q_OBJECT
 public:
-    explicit FilterProxy(QObject* parent = 0);
+    explicit FilterProxy(QObject* parent = nullptr);
     ~FilterProxy() override;
 };
 

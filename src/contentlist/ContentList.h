@@ -28,7 +28,7 @@ class ContentList : public QAbstractListModel
 {
     Q_OBJECT
 public:
-    explicit ContentList(QObject* parent = 0);
+    explicit ContentList(QObject* parent = nullptr);
     ~ContentList() override;
 
     Q_INVOKABLE static QString getMimetype(QString filePath);

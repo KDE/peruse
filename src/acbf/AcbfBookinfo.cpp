@@ -37,7 +37,7 @@ class BookInfo::Private
 {
 public:
     Private()
-        : coverPage(0)
+        : coverPage(nullptr)
     {}
     QList<Author*> author;
     QHash<QString, QString> title;

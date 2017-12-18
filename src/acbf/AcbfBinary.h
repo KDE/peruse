@@ -36,7 +36,7 @@ class ACBF_EXPORT Binary : public QObject
 {
     Q_OBJECT
 public:
-    explicit Binary(Data* parent = 0);
+    explicit Binary(Data* parent = nullptr);
     ~Binary() override;
 
     void toXml(QXmlStreamWriter *writer);

@@ -28,7 +28,7 @@ class ContentListerBase : public QObject
 {
     Q_OBJECT
 public:
-    explicit ContentListerBase(QObject* parent = 0);
+    explicit ContentListerBase(QObject* parent = nullptr);
     ~ContentListerBase() override;
 
     virtual void addLocation(QString path);

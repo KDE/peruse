@@ -40,7 +40,7 @@ class BookModel : public QAbstractListModel
     Q_PROPERTY(QObject* acbfData READ acbfData NOTIFY acbfDataChanged)
     Q_PROPERTY(bool processing READ processing WRITE setProcessing NOTIFY processingChanged)
 public:
-    explicit BookModel(QObject* parent = 0);
+    explicit BookModel(QObject* parent = nullptr);
     ~BookModel() override;
 
     enum Roles {

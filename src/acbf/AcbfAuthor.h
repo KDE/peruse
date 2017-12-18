@@ -31,7 +31,7 @@ class ACBF_EXPORT Author : public QObject
     Q_OBJECT
 public:
     // Author is used in both Bookinfo and Documentinfo, and as such it is parented to Metadata
-    explicit Author(Metadata* parent = 0);
+    explicit Author(Metadata* parent = nullptr);
     ~Author() override;
 
     void toXml(QXmlStreamWriter* writer);

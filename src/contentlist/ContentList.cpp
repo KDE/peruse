@@ -38,7 +38,7 @@ struct ContentEntry {
 class ContentList::Private {
 public:
     Private()
-        : actualContentList(0)
+        : actualContentList(nullptr)
     {}
     QList<ContentEntry*> entries;
     ContentListerBase* actualContentList;

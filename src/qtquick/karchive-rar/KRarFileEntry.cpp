@@ -33,8 +33,8 @@ public:
     Private()
         : crc(0)
         , headerStart(0)
-        , archive(0)
-        , rar(0)
+        , archive(nullptr)
+        , rar(nullptr)
     {
     }
     unsigned long crc;
@@ -104,5 +104,5 @@ QByteArray KRarFileEntry::data() const
 
 QIODevice * KRarFileEntry::createDevice() const
 {
-    return 0;
+    return nullptr;
 }

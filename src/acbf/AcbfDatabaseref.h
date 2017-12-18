@@ -30,7 +30,7 @@ class ACBF_EXPORT DatabaseRef : public QObject
 {
     Q_OBJECT
 public:
-    explicit DatabaseRef(BookInfo* parent = 0);
+    explicit DatabaseRef(BookInfo* parent = nullptr);
     ~DatabaseRef() override;
 
     void toXml(QXmlStreamWriter* writer);

@@ -29,7 +29,7 @@ class BookDatabase : public QObject
 {
     Q_OBJECT
 public:
-    explicit BookDatabase(QObject* parent = 0);
+    explicit BookDatabase(QObject* parent = nullptr);
     ~BookDatabase() override;
 
     QList<BookEntry*> loadEntries();

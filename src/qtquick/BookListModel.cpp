@@ -40,12 +40,12 @@
 class BookListModel::Private {
 public:
     Private()
-        : contentModel(0)
-        , titleCategoryModel(0)
-        , newlyAddedCategoryModel(0)
-        , authorCategoryModel(0)
-        , seriesCategoryModel(0)
-        , folderCategoryModel(0)
+        : contentModel(nullptr)
+        , titleCategoryModel(nullptr)
+        , newlyAddedCategoryModel(nullptr)
+        , authorCategoryModel(nullptr)
+        , seriesCategoryModel(nullptr)
+        , folderCategoryModel(nullptr)
         , cacheLoaded(false)
     {
         db = new BookDatabase();
@@ -284,7 +284,7 @@ QObject * BookListModel::seriesModelForEntry(QString fileName)
             return d->seriesCategoryModel->leafModelForEntry(entry);
         }
     }
-    return 0;
+    return nullptr;
 }
 
 QObject * BookListModel::folderCategoryModel() const

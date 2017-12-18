@@ -80,7 +80,7 @@ QImage ComicCoverImageProvider::requestImage(const QString& id, QSize* size, con
     Q_UNUSED(requestedSize)
     QImage img;
 
-    KArchive* archive = 0;
+    KArchive* archive = nullptr;
     QMimeDatabase db;
     db.mimeTypeForFile(id, QMimeDatabase::MatchContent);
     const QMimeType mime = db.mimeTypeForFile(id, QMimeDatabase::MatchContent);

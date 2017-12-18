@@ -32,7 +32,7 @@ class BalooContentLister : public ContentListerBase
 {
     Q_OBJECT
 public:
-    explicit BalooContentLister(QObject* parent = 0);
+    explicit BalooContentLister(QObject* parent = nullptr);
     ~BalooContentLister() override;
 
     bool balooEnabled() const;

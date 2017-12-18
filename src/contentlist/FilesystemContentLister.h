@@ -28,7 +28,7 @@ class FilesystemContentLister : public ContentListerBase
 {
     Q_OBJECT
 public:
-    explicit FilesystemContentLister(QObject* parent = 0);
+    explicit FilesystemContentLister(QObject* parent = nullptr);
     ~FilesystemContentLister() override;
 
     void addLocation(QString path) override;

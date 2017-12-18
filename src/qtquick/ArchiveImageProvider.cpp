@@ -36,7 +36,7 @@ class ArchiveImageProvider::Private
 {
 public:
     Private()
-        : bookModel(0)
+        : bookModel(nullptr)
     {}
     ArchiveBookModel* bookModel;
     QString prefix;

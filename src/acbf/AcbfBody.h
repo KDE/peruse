@@ -35,7 +35,7 @@ class ACBF_EXPORT Body : public QObject
 {
     Q_OBJECT
 public:
-    explicit Body(Document* parent = 0);
+    explicit Body(Document* parent = nullptr);
     ~Body() override;
 
     Document* document();

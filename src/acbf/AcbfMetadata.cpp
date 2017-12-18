@@ -33,9 +33,9 @@ class Metadata::Private
 {
 public:
     Private()
-        : bookInfo(0)
-        , publishInfo(0)
-        , documentInfo(0)
+        : bookInfo(nullptr)
+        , publishInfo(nullptr)
+        , documentInfo(nullptr)
     {}
     BookInfo* bookInfo;
     PublishInfo* publishInfo;

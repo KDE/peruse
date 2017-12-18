@@ -35,7 +35,7 @@ class PreviewImageProvider : public QObject, public QQuickImageProvider
 {
     Q_OBJECT
 public:
-    explicit PreviewImageProvider(QObject* parent = 0);
+    explicit PreviewImageProvider(QObject* parent = nullptr);
     ~PreviewImageProvider() override;
 
     QImage requestImage(const QString& id, QSize* size, const QSize& requestedSize) override;

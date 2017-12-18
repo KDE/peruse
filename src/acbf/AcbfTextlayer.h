@@ -31,7 +31,7 @@ class ACBF_EXPORT Textlayer : public QObject
 {
     Q_OBJECT
 public:
-    explicit Textlayer(Page* parent = 0);
+    explicit Textlayer(Page* parent = nullptr);
     ~Textlayer() override;
 
     void toXml(QXmlStreamWriter* writer);

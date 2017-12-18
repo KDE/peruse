@@ -32,7 +32,7 @@ class ArchiveBookModel : public BookModel
     Q_PROPERTY(bool readWrite READ readWrite WRITE setReadWrite NOTIFY readWriteChanged)
     Q_PROPERTY(bool hasUnsavedChanges READ hasUnsavedChanges NOTIFY hasUnsavedChangesChanged)
 public:
-    explicit ArchiveBookModel(QObject* parent = 0);
+    explicit ArchiveBookModel(QObject* parent = nullptr);
     ~ArchiveBookModel() override;
 
     void setFilename(QString newFilename) override;

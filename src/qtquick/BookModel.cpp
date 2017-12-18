@@ -35,7 +35,7 @@ class BookModel::Private {
 public:
     Private()
         : currentPage(-1)
-        , acbfData(0)
+        , acbfData(nullptr)
         , processing(false)
     {}
     QString filename;

@@ -37,8 +37,8 @@ extern "C"
 class KRar::Private {
 public:
     Private()
-        : archive(0)
-        , stream(0)
+        : archive(nullptr)
+        , stream(nullptr)
     {}
     ar_archive* archive;
     ar_stream* stream;
@@ -134,7 +134,7 @@ bool KRar::openArchive(QIODevice::OpenMode mode)
         // Leaving the code in, in case we feel like reintroducing this at a later point in time
 //         bool isDir = size < 1;//archive_entry_filetype(entry) == AE_IFDIR;
 
-        KArchiveEntry* kaentry = 0;
+        KArchiveEntry* kaentry = nullptr;
 //         if(isDir)
 //         {
 //             QString path = QDir::cleanPath(pathname);
@@ -176,8 +176,8 @@ bool KRar::closeArchive()
 {
     ar_close_archive(d->archive);
     ar_close(d->stream);
-    d->archive = 0;
-    d->stream = 0;
+    d->archive = nullptr;
+    d->stream = nullptr;
     qDeleteAll(d->files);
     d->files.clear();
     return true;

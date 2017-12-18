@@ -209,7 +209,7 @@ void CategoryEntriesModel::setName(const QString& newName)
 
 QObject * CategoryEntriesModel::leafModelForEntry(BookEntry* entry)
 {
-    QObject* model(0);
+    QObject* model(nullptr);
     if(d->categoryModels.count() == 0)
     {
         if(d->entries.contains(entry)) {
@@ -236,7 +236,7 @@ void CategoryEntriesModel::addCategoryEntry(const QString& categoryName, BookEnt
         QStringList splitName = categoryName.split("/");
 //         qDebug() << "Parsing" << categoryName;
         QString nextCategory = splitName.takeFirst();
-        CategoryEntriesModel* categoryModel = 0;
+        CategoryEntriesModel* categoryModel = nullptr;
         Q_FOREACH(CategoryEntriesModel* existingModel, d->categoryModels)
         {
             if(existingModel->name() == nextCategory)

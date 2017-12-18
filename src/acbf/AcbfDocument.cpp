@@ -33,9 +33,9 @@ using namespace AdvancedComicBookFormat;
 class Document::Private {
 public:
     Private()
-        : metaData(0)
-        , body(0)
-        , data(0)
+        : metaData(nullptr)
+        , body(nullptr)
+        , data(nullptr)
     {}
     Metadata* metaData;
     Body* body;

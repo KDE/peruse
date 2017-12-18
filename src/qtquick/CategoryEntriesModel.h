@@ -48,7 +48,7 @@ class CategoryEntriesModel : public QAbstractListModel
 {
     Q_OBJECT
 public:
-    explicit CategoryEntriesModel(QObject* parent = 0);
+    explicit CategoryEntriesModel(QObject* parent = nullptr);
     ~CategoryEntriesModel() override;
 
     enum Roles {

@@ -38,7 +38,7 @@ public:
         ZoomFitHeight = 2
     };
 
-    explicit PeruseConfig(QObject* parent = 0);
+    explicit PeruseConfig(QObject* parent = nullptr);
     ~PeruseConfig() override;
 
     Q_INVOKABLE void bookOpened(QString path);

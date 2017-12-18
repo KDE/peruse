@@ -30,7 +30,7 @@ class ACBF_EXPORT ContentRating : public QObject
 {
     Q_OBJECT
 public:
-    explicit ContentRating(BookInfo* parent = 0);
+    explicit ContentRating(BookInfo* parent = nullptr);
     ~ContentRating() override;
 
     void toXml(QXmlStreamWriter* writer);

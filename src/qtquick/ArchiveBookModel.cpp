@@ -47,10 +47,10 @@ class ArchiveBookModel::Private
 public:
     Private(ArchiveBookModel* qq)
         : q(qq)
-        , engine(0)
-        , archive(0)
+        , engine(nullptr)
+        , archive(nullptr)
         , readWrite(false)
-        , imageProvider(0)
+        , imageProvider(nullptr)
         , isDirty(false)
         , isLoading(false)
     {}
@@ -164,11 +164,11 @@ void ArchiveBookModel::setFilename(QString newFilename)
         clearPages();
         delete d->archive;
     }
-    d->archive = 0;
+    d->archive = nullptr;
     if(d->imageProvider && d->engine) {
         d->engine->removeImageProvider(d->imageProvider->prefix());
     }
-    d->imageProvider = 0;
+    d->imageProvider = nullptr;
 
     QMimeDatabase db;
     QMimeType mime = db.mimeTypeForFile(newFilename);
@@ -223,7 +223,7 @@ void ArchiveBookModel::setFilename(QString newFilename)
                 else
                 {
                     // just in case this is, for whatever reason, being reused...
-                    setAcbfData(0);
+                    setAcbfData(nullptr);
                 }
             }
             if(!acbfData())
@@ -598,7 +598,7 @@ QString ArchiveBookModel::createBook(QString folder, QString title, QString cove
         filename = QString("%1/%2 (%3).cbz").arg(folder).arg(fileTitle).arg(QString::number(i++));
     }
 
-    ArchiveBookModel* model = new ArchiveBookModel(0);
+    ArchiveBookModel* model = new ArchiveBookModel(nullptr);
     model->setQmlEngine(qmlEngine());
     model->setReadWrite(true);
     QString prefix = QString("archivebookpage%1").arg(QString::number(Private::counter()));
@@ -630,5 +630,5 @@ const KArchiveFile * ArchiveBookModel::archiveFile(const QString& filePath)
     {
         return d->archive->directory()->file(filePath);
     }
-    return 0;
+    return nullptr;
 }

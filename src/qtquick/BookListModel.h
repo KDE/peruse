@@ -39,7 +39,7 @@ class BookListModel : public CategoryEntriesModel, public QQmlParserStatus
     Q_ENUMS(Grouping)
     Q_INTERFACES(QQmlParserStatus)
 public:
-    explicit BookListModel(QObject* parent = 0);
+    explicit BookListModel(QObject* parent = nullptr);
     ~BookListModel() override;
 
     void classBegin() override {};

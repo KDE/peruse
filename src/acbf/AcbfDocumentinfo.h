@@ -33,7 +33,7 @@ class ACBF_EXPORT DocumentInfo : public QObject
 {
     Q_OBJECT
 public:
-    explicit DocumentInfo(Metadata* parent = 0);
+    explicit DocumentInfo(Metadata* parent = nullptr);
     ~DocumentInfo() override;
 
     Metadata* metadata();

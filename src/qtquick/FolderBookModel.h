@@ -28,7 +28,7 @@ class FolderBookModel : public BookModel
 {
     Q_OBJECT
 public:
-    explicit FolderBookModel(QObject* parent = 0);
+    explicit FolderBookModel(QObject* parent = nullptr);
     ~FolderBookModel() override;
 
     void setFilename(QString newFilename) override;
