@@ -1,0 +1,5 @@
+The unarr directory contains code from the unarr project, originally
+created for use with SumatraPDF. The code is mostly unmaintained upstream
+and generally unpackaged, and as such it has been imported here.
+The specific bits of code imported here are only the parts used for
+reading and writing rar files.
