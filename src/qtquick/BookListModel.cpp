@@ -182,11 +182,12 @@ void BookListModel::contentModelItemsInserted(QModelIndex index, int first, int 
     d->initializeSubModels(this);
     int newRow = d->entries.count();
     beginInsertRows(QModelIndex(), newRow, newRow + (last - first));
+    int role = d->contentModel->roleNames().key("filePath");
     for(int i = first; i < last + 1; ++i)
     {
-        QVariant filename = d->contentModel->data(d->contentModel->index(first, 0, index), Qt::UserRole + 1);
+        QVariant filePath = d->contentModel->data(d->contentModel->index(first, 0, index), role);
         BookEntry* entry = new BookEntry();
-        entry->filename = filename.toString();
+        entry->filename = filePath.toUrl().toLocalFile();
         QStringList splitName = entry->filename.split("/");
         if (!splitName.isEmpty())
             entry->filetitle = splitName.takeLast();

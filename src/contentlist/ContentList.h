@@ -23,34 +23,56 @@
 #define CONTENTLISTBASE_H
 
 #include <QAbstractListModel>
+#include <QQmlListProperty>
+#include <QQmlParserStatus>
 
-class ContentList : public QAbstractListModel
+#include "ContentQuery.h"
+
+class ContentList : public QAbstractListModel, public QQmlParserStatus
 {
     Q_OBJECT
+    Q_CLASSINFO("DefaultProperty", "queries")
+    Q_PROPERTY(QQmlListProperty<ContentQuery> queries READ queries)
+    Q_PROPERTY(bool autoSearch READ autoSearch WRITE setAutoSearch NOTIFY autoSearchChanged)
+    Q_PROPERTY(bool cacheResults READ cacheResults WRITE setCacheResults NOTIFY cacheResultsChanged)
 public:
     explicit ContentList(QObject* parent = nullptr);
     ~ContentList() override;
 
-    Q_INVOKABLE static QString getMimetype(QString filePath);
-
-    Q_SLOT void addLocation(QString path);
-    Q_SLOT void addMimetype(QString mimetype);
-    Q_SLOT void setSearchString(const QString& searchString);
-    Q_SLOT void setKnownFiles(QStringList knownFiles);
-    Q_SLOT void startSearch();
-
     enum Roles {
         FilenameRole = Qt::UserRole + 1,
+        FilePathRole,
         MetadataRole
     };
+
+    QQmlListProperty<ContentQuery> queries();
+
+    bool autoSearch() const;
+    bool cacheResults() const;
 
     QHash<int, QByteArray> roleNames() const override;
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
     int rowCount(const QModelIndex& parent = QModelIndex()) const override;
 
-    Q_SLOT void fileFound(const QString& filePath, const QVariantHash& metaData);
+    void classBegin() override;
+    void componentComplete() override;
+
+    Q_SLOT void setAutoSearch(bool autoSearch);
+    Q_SLOT void setCacheResults(bool cacheResults);
+
+    Q_SLOT void setKnownFiles(const QStringList& results);
+    Q_SLOT void startSearch();
+
+    Q_SIGNAL void autoSearchChanged();
+    Q_SIGNAL void cacheResultsChanged();
     Q_SIGNAL void searchCompleted();
+
+    Q_INVOKABLE static QString getMimetype(QString filePath);
+
 private:
+    bool isComplete() const;
+    Q_SLOT void fileFound(const QString& filePath, const QVariantMap& metaData);
+
     class Private;
     Private* d;
 };

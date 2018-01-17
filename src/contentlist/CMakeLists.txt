@@ -3,6 +3,7 @@ set(qmlplugin_SRCS
     ContentList.cpp
     ContentListerBase.cpp
     FilesystemContentLister.cpp
+    ContentQuery.cpp
 )
 
 
@@ -15,6 +16,7 @@ endif()
 add_library (contentlistqmlplugin SHARED ${qmlplugin_SRCS} ${qmlplugin_baloo_SRCS})
 
 target_link_libraries (contentlistqmlplugin
+    Qt5::Gui
     Qt5::Qml
     KF5::FileMetaData
 )

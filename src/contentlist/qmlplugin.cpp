@@ -21,9 +21,10 @@
 
 #include "qmlplugin.h"
 
-#include "ContentList.h"
-
 #include <QtQml/qqml.h>
+
+#include "ContentList.h"
+#include "ContentQuery.h"
 
 void QmlPlugins::initializeEngine(QQmlEngine *, const char *)
 {
@@ -32,4 +33,5 @@ void QmlPlugins::initializeEngine(QQmlEngine *, const char *)
 void QmlPlugins::registerTypes(const char *uri)
 {
     qmlRegisterType<ContentList>(uri, 0, 1, "ContentList");
+    qmlRegisterType<ContentQuery>(uri, 0, 1, "ContentQuery");
 }

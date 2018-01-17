@@ -30,108 +30,105 @@
 #include <QMimeDatabase>
 #include <QTimer>
 #include <QVariantHash>
+#include <QThreadPool>
+#include <QRunnable>
+
+#include "ContentQuery.h"
+
+class FileSystemSearcher : public QObject, public QRunnable
+{
+    Q_OBJECT
+public:
+    FileSystemSearcher(ContentQuery* query) : QObject() { m_query = query; }
+
+    void run() override
+    {
+        QMimeDatabase mimeDb;
+
+        auto locations = m_query->locations();
+        if(locations.isEmpty())
+            locations.append(QDir::homePath());
+
+        for(const auto& location : locations)
+        {
+            QDirIterator it(location, QDirIterator::Subdirectories);
+            while (it.hasNext())
+            {
+                auto filePath = it.next();
+
+                if(it.fileInfo().isDir())
+                    continue;
+
+                QString mimeType = mimeDb.mimeTypeForFile(filePath).name();
+                if(!m_query->mimeTypes().isEmpty() && !m_query->mimeTypes().contains(mimeType))
+                    continue;
+
+                auto metadata = ContentListerBase::metaDataForFile(filePath);
+
+                emit fileFound(filePath, metadata);
+            }
+        }
+
+        emit finished(this);
+    }
+
+Q_SIGNALS:
+    void fileFound(const QString& path, const QVariantMap& metaData);
+    void finished(FileSystemSearcher* searcher);
+
+private:
+    ContentQuery* m_query;
+};
 
 class FilesystemContentLister::Private
 {
 public:
-    Private() {}
-    QString searchString;
-    QStringList knownFiles;
-    QStringList locations;
-    QStringList mimetypes;
+    Private() { }
+
+    QList<FileSystemSearcher*> runnables;
 };
 
 FilesystemContentLister::FilesystemContentLister(QObject* parent)
     : ContentListerBase(parent)
     , d(new Private)
 {
+
 }
 
 FilesystemContentLister::~FilesystemContentLister()
 {
+    QThreadPool::globalInstance()->waitForDone();
     delete d;
 }
 
-void FilesystemContentLister::addLocation(QString path)
+void FilesystemContentLister::startSearch(const QList<ContentQuery*>& queries)
 {
-    d->locations.append(path);
-}
-
-void FilesystemContentLister::addMimetype(QString mimetype)
-{
-    d->mimetypes.append(mimetype);
-}
-
-void FilesystemContentLister::setSearchString(const QString& searchString)
-{
-    d->searchString = searchString;
-}
-
-void FilesystemContentLister::setKnownFiles(QStringList knownFiles)
-{
-    d->knownFiles = knownFiles;
-}
-
-void FilesystemContentLister::startSearch()
-{
-    QMimeDatabase mimeDb;
-    bool useThis(false);
-
-    qDebug() << "Searching in" << d->locations;
-    Q_FOREACH(const QString& folder, d->locations)
+    for(const auto& query : queries)
     {
-        QDirIterator it(folder, QDirIterator::Subdirectories);
-        while (it.hasNext())
-        {
-            QString filePath = it.next();
-            if(d->knownFiles.contains(filePath)) {
-                continue;
-            }
+        auto runnable = new FileSystemSearcher{query};
+        connect(runnable, &FileSystemSearcher::fileFound, this, &FilesystemContentLister::fileFound);
+        connect(runnable, &FileSystemSearcher::finished, this, &FilesystemContentLister::queryFinished);
 
-            QFileInfo info(filePath);
-
-            if(info.isDir())
-            {
-                qApp->processEvents();
-                continue;
-            }
-            useThis = false;
-            QString mimetype = mimeDb.mimeTypeForFile(filePath, QMimeDatabase::MatchExtension).name();
-//             qDebug() << useThis << mimetype << filePath;
-            Q_FOREACH(const QString& type, d->mimetypes)
-            {
-                if(type == mimetype) {
-                    useThis = true;
-                    break;
-                }
-            }
-
-            if(useThis)
-            {
-                QVariantHash metadata;
-                metadata["created"] = info.created();
-
-                KFileMetaData::UserMetaData data(filePath);
-                if (data.hasAttribute("peruse.currentPage")) {
-                    int currentPage = data.attribute("peruse.currentPage").toInt();
-                    metadata["currentPage"] = QVariant::fromValue<int>(currentPage);
-                }
-                if (data.hasAttribute("peruse.totalPages")) {
-                    int totalPages = data.attribute("peruse.totalPages").toInt();
-                    metadata["totalPages"] = QVariant::fromValue<int>(totalPages);
-                }
-
-                emit fileFound(filePath, metadata);
-            }
-            qApp->processEvents();
-        }
+        d->runnables.append(runnable);
     }
-    // This ensures that, should we decide to search more stuff later, we can do so granularly
-    d->locations.clear();
 
-    // Not entirely happy about this, but it makes things not break...
-    // Previously, the welcome page in Peruse would end up unpopulated because a signal
-    // was unreceived from the main window upon search completion (and consequently
-    // application readiness)
-    QTimer::singleShot(0, this, SIGNAL(searchCompleted()));
+    if(!d->runnables.isEmpty())
+        QThreadPool::globalInstance()->start(d->runnables.first());
 }
+
+void FilesystemContentLister::queryFinished(QRunnable* runnable)
+{
+    d->runnables.removeAll(static_cast<FileSystemSearcher*>(runnable));
+
+    if(!d->runnables.isEmpty())
+    {
+        QThreadPool::globalInstance()->start(d->runnables.first());
+    }
+    else
+    {
+        emit searchCompleted();
+    }
+}
+
+// This needs to be included since we define a QObject subclass here in the C++ file.
+#include "FilesystemContentLister.moc"

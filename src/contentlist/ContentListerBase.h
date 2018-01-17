@@ -24,6 +24,8 @@
 
 #include <QObject>
 
+class ContentQuery;
+
 class ContentListerBase : public QObject
 {
     Q_OBJECT
@@ -31,14 +33,12 @@ public:
     explicit ContentListerBase(QObject* parent = nullptr);
     ~ContentListerBase() override;
 
-    virtual void addLocation(QString path);
-    virtual void addMimetype(QString mimetype);
-    virtual void setSearchString(const QString& searchString);
-    virtual void setKnownFiles(QStringList knownFiles);
-    Q_SLOT virtual void startSearch();
+    Q_SLOT virtual void startSearch(const QList<ContentQuery*>& queries);
 
-    Q_SIGNAL void fileFound(const QString& filePath, const QVariantHash& metadata);
+    Q_SIGNAL void fileFound(const QString& filePath, const QVariantMap& metadata);
     Q_SIGNAL void searchCompleted();
+
+    static QVariantMap metaDataForFile(const QString& file);
 };
 
 #endif//CONTENTLISTERBASE_H

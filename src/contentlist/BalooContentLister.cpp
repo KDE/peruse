@@ -32,26 +32,37 @@
 #include <QFileInfo>
 #include <QProcess>
 #include <QThreadPool>
+#include <QMimeDatabase>
+
+#include "ContentQuery.h"
 
 class BalooContentLister::Private
 {
 public:
-    Private() {}
+    Private(BalooContentLister* qq) : q(qq) {}
+
+    BalooContentLister* q = nullptr;
+
+    Baloo::QueryRunnable* createQuery(ContentQuery* contentQuery, const QString& location = QString{});
+
     QStringList knownFiles;
     QStringList locations;
     QString searchString;
     QList<Baloo::QueryRunnable*> queries;
     QList<QString> queryLocations;
+
+    QMimeDatabase mimeDatabase;
 };
 
 BalooContentLister::BalooContentLister(QObject* parent)
     : ContentListerBase(parent)
-    , d(new Private)
+    , d(new Private(this))
 {
 }
 
 BalooContentLister::~BalooContentLister()
 {
+    QThreadPool::globalInstance()->waitForDone();
     delete d;
 }
 
@@ -70,7 +81,6 @@ bool BalooContentLister::balooEnabled() const
         statuscheck.start("balooctl", QStringList() << "status");
         statuscheck.waitForFinished();
         QString output = statuscheck.readAll();
-        qDebug() << "Baloo status check says:" << output;
         if(statuscheck.exitStatus() == QProcess::CrashExit || statuscheck.exitCode() != 0)
         {
             result = false;
@@ -80,46 +90,18 @@ bool BalooContentLister::balooEnabled() const
     return result;
 }
 
-void BalooContentLister::addLocation(QString path)
+void BalooContentLister::startSearch(const QList<ContentQuery*>& queries)
 {
-    d->locations.append(path);
-}
-
-void BalooContentLister::addMimetype(QString mimetype)
-{
-    Q_UNUSED(mimetype)
-    // yes, unsatisfactory... we're using this to find comic books for now, and their mimetypes are terrible
-}
-
-void BalooContentLister::setSearchString(const QString& searchString)
-{
-    d->searchString = searchString;
-}
-
-void BalooContentLister::setKnownFiles(QStringList knownFiles)
-{
-    d->knownFiles = knownFiles;
-}
-
-void BalooContentLister::startSearch()
-{
-    Q_FOREACH(const QString& location, d->locations)
+    for(const auto& query : queries)
     {
-        Baloo::Query query;
-        query.setSearchString(d->searchString);
-        query.setIncludeFolder(location);
+        for(const auto& location : query->locations())
+        {
+            d->queries.append(d->createQuery(query, location));
+        }
 
-        Baloo::QueryRunnable *runnable = new Baloo::QueryRunnable(query);
-        connect(runnable, SIGNAL(queryResult(Baloo::QueryRunnable*, QString)),
-                this, SLOT(queryResult(Baloo::QueryRunnable*, QString)), Qt::QueuedConnection);
-        connect(runnable, SIGNAL(finished(Baloo::QueryRunnable*)),
-                this, SLOT(queryCompleted(Baloo::QueryRunnable*)));
-
-        d->queries.append(runnable);
-        d->queryLocations.append(location);
+        if(query->locations().isEmpty())
+            d->queries.append(d->createQuery(query));
     }
-    // This ensures that, should we decide to search more stuff later, we can do so granularly
-    d->locations.clear();
 
     if(!d->queries.empty())
     {
@@ -130,7 +112,6 @@ void BalooContentLister::startSearch()
 void BalooContentLister::queryCompleted(Baloo::QueryRunnable* query)
 {
     d->queries.removeAll(query);
-    d->queryLocations.takeFirst();
     if(d->queries.empty())
     {
         emit searchCompleted();
@@ -141,20 +122,30 @@ void BalooContentLister::queryCompleted(Baloo::QueryRunnable* query)
     }
 }
 
-void BalooContentLister::queryResult(Baloo::QueryRunnable* query, QString file)
+void BalooContentLister::queryResult(const ContentQuery* query, const QString& location, const QString& file)
 {
-    Q_UNUSED(query)
-
     if(d->knownFiles.contains(file)) {
         return;
     }
 
     // wow, this isn't nice... why is baloo not limiting searches like it's supposed to?
-    if(!file.startsWith(d->queryLocations.first())) {
+    if(!file.startsWith(location)) {
         return;
     }
 
-    QVariantHash metadata;
+    // Like the one above, this is also not nice: apparently Baloo can return results to
+    // files that no longer exist on the file system. So we have to check manually whether
+    // the results provided are actually sensible results...
+    if(!QFile::exists(file)) {
+        return;
+    }
+
+    // It would be nice if Baloo could do mime type filtering on its own...
+    auto mimeType = d->mimeDatabase.mimeTypeForFile(file).name();
+    if(!query->mimeTypes().isEmpty() && !query->mimeTypes().contains(mimeType))
+        return;
+
+    auto metadata = metaDataForFile(file);
 
     Baloo::File balooFile(file);
     balooFile.load();
@@ -164,19 +155,43 @@ void BalooContentLister::queryResult(Baloo::QueryRunnable* query, QString file)
     {
         KFileMetaData::PropertyInfo propInfo(it.key());
         metadata[propInfo.name()] = it.value();
-//             qDebug() << KFileMetaData::PropertyInfo(it.key()).name() << " --> "
-//                 << it.value().toString() << " (" << it.value().typeName() << ")\n";
     }
-    QFileInfo info(file);
-    metadata["lastModified"] = info.lastModified();
-    metadata["created"] = info.created();
-    metadata["lastRead"] = info.lastRead();
-
-    KFileMetaData::UserMetaData data(file);
-    int currentPage = data.attribute("peruse.currentPage").toInt();
-    metadata["currentPage"] = QVariant::fromValue<int>(currentPage);
-    int totalPages = data.attribute("peruse.totalPages").toInt();
-    metadata["totalPages"] = QVariant::fromValue<int>(totalPages);
 
     emit fileFound(file, metadata);
+}
+
+Baloo::QueryRunnable* BalooContentLister::Private::createQuery(ContentQuery* contentQuery, const QString& location)
+{
+    auto balooQuery = Baloo::Query{};
+    if(!location.isEmpty())
+        balooQuery.setIncludeFolder(location);
+
+    switch(contentQuery->type())
+    {
+        case ContentQuery::Audio:
+            balooQuery.setType("Audio");
+            break;
+        case ContentQuery::Documents:
+            balooQuery.setType("Document");
+            break;
+        case ContentQuery::Images:
+            balooQuery.setType("Image");
+            break;
+        case ContentQuery::Video:
+            balooQuery.setType("Video");
+            break;
+        default:
+            break;
+    }
+
+    if(!contentQuery->searchString().isEmpty())
+        balooQuery.setSearchString(contentQuery->searchString());
+
+    auto runnable = new Baloo::QueryRunnable{balooQuery};
+    connect(runnable, &Baloo::QueryRunnable::queryResult, [this, contentQuery, location](QRunnable*, const QString& file) {
+        q->queryResult(contentQuery, location, file);
+    });
+    connect(runnable, &Baloo::QueryRunnable::finished, q, &BalooContentLister::queryCompleted);
+
+    return runnable;
 }

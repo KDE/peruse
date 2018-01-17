@@ -21,6 +21,12 @@
 
 #include "ContentListerBase.h"
 
+#include <QVariantMap>
+#include <QFileInfo>
+#include <QDateTime>
+
+#include <KFileMetaData/UserMetaData>
+
 ContentListerBase::ContentListerBase(QObject* parent)
     : QObject(parent)
 {
@@ -30,27 +36,34 @@ ContentListerBase::~ContentListerBase()
 {
 }
 
-void ContentListerBase::addLocation(QString path)
+
+void ContentListerBase::startSearch(const QList<ContentQuery*>& queries)
 {
-    Q_UNUSED(path)
+    Q_UNUSED(queries);
 }
 
-void ContentListerBase::addMimetype(QString mimetype)
+QVariantMap ContentListerBase::metaDataForFile(const QString& file)
 {
-    Q_UNUSED(mimetype)
-}
+    QVariantMap metadata;
 
-void ContentListerBase::setSearchString(const QString& searchString)
-{
-    Q_UNUSED(searchString)
-}
+    //TODO: This should include the same information for both the Baloo and
+    //File searchers. Unfortunately, currently KFileMetaData does not seem able
+    //to provide this. So this needs changes at a lower level.
 
-void ContentListerBase::setKnownFiles(QStringList knownFiles)
-{
-    Q_UNUSED(knownFiles);
-}
+    QFileInfo info(file);
+    metadata["lastModified"] = info.lastModified();
+    metadata["created"] = info.created();
+    metadata["lastRead"] = info.lastRead();
 
-void ContentListerBase::startSearch()
-{
-}
+    KFileMetaData::UserMetaData data(file);
+    if (data.hasAttribute("peruse.currentPage")) {
+        int currentPage = data.attribute("peruse.currentPage").toInt();
+        metadata["currentPage"] = QVariant::fromValue<int>(currentPage);
+    }
+    if (data.hasAttribute("peruse.totalPages")) {
+        int totalPages = data.attribute("peruse.totalPages").toInt();
+        metadata["totalPages"] = QVariant::fromValue<int>(totalPages);
+    }
 
+    return metadata;
+}

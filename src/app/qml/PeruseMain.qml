@@ -54,35 +54,24 @@ Kirigami.ApplicationWindow {
     Peruse.BookListModel {
         id: contentList;
         contentModel: ContentList {
+            autoSearch: false
+
             onSearchCompleted: {
                 mainWindow.isLoading = false;
                 mainWindow.globalDrawer.actions = globalDrawerActions;
+            }
+
+            ContentQuery {
+                type: ContentQuery.Comics
+                locations: peruseConfig.bookLocations
             }
         }
         onCacheLoadedChanged: {
             if(!cacheLoaded) {
                 return;
             }
-
-            var bookLocations = peruseConfig.bookLocations;
-            for(var i = 0; i < bookLocations.length; ++i) {
-                contentList.contentModel.addLocation(bookLocations[i]);
-            }
-            contentList.contentModel.setSearchString("cbz OR cbr OR cb7 OR cbt OR cba OR chm OR djvu OR epub OR pdf");
-            contentList.contentModel.addMimetype("application/x-cbz");
-            contentList.contentModel.addMimetype("application/x-cbr");
-            contentList.contentModel.addMimetype("application/x-cb7");
-            contentList.contentModel.addMimetype("application/x-cbt");
-            contentList.contentModel.addMimetype("application/x-cba");
-            contentList.contentModel.addMimetype("application/vnd.comicbook+zip");
-            contentList.contentModel.addMimetype("application/vnd.comicbook+rar");
-            contentList.contentModel.addMimetype("application/vnd.ms-htmlhelp");
-            contentList.contentModel.addMimetype("image/vnd.djvu");
-            contentList.contentModel.addMimetype("image/x-djvu");
-            contentList.contentModel.addMimetype("application/epub+zip");
-            contentList.contentModel.addMimetype("application/pdf");
             contentList.contentModel.setKnownFiles(contentList.knownBookFiles());
-            contentList.contentModel.startSearch();
+            contentList.contentModel.startSearch()
         }
     }
 

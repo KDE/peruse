@@ -22,6 +22,8 @@
 #ifndef FILESYSTEMCONTENTLISTER_H
 #define FILESYSTEMCONTENTLISTER_H
 
+#include <QRunnable>
+
 #include "ContentListerBase.h"
 
 class FilesystemContentLister : public ContentListerBase
@@ -31,12 +33,11 @@ public:
     explicit FilesystemContentLister(QObject* parent = nullptr);
     ~FilesystemContentLister() override;
 
-    void addLocation(QString path) override;
-    void addMimetype(QString mimetype) override;
-    void setSearchString(const QString& searchString) override;
-    void setKnownFiles(QStringList knownFiles) override;
-    void startSearch() override;
+    void startSearch(const QList<ContentQuery*>& queries) override;
+
 private:
+    void queryFinished(QRunnable* runnable);
+
     class Private;
     Private* d;
 };
