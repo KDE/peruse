@@ -29,11 +29,18 @@
 #include <QSqlError>
 #include <QSqlQuery>
 
+#include <QDir>
+
 class BookDatabase::Private {
 public:
     Private() {
         db = QSqlDatabase::addDatabase("QSQLITE");
-        dbfile = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/library.sqlite";
+
+        QDir location{QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)};
+        if(!location.exists())
+            location.mkpath(".");
+
+        dbfile = location.absoluteFilePath("library.sqlite");
         db.setDatabaseName(dbfile);
     }
 
