@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2016 Dan Leinir Turthra Jensen <admin@leinir.dk> -->
 <component type="desktop">
-  <id>org.kde.perusecreator</id>
+  <id>org.kde.perusecreator.desktop</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0+</project_license>
   <name>Peruse</name>
