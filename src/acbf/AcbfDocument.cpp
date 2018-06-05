@@ -51,10 +51,7 @@ Document::Document(QObject* parent)
     d->data = new Data(this);
 }
 
-Document::~Document()
-{
-    delete d;
-}
+Document::~Document() = default;
 
 QString Document::toXml()
 {
@@ -62,8 +59,8 @@ QString Document::toXml()
     QXmlStreamWriter writer(&output);
     writer.setAutoFormatting(true);
     writer.writeStartDocument();
-    writer.writeStartElement("ACBF");
-    writer.writeAttribute("xmlns", "http://www.fictionbook-lib.org/xml/acbf/1.0");
+    writer.writeStartElement(QStringLiteral("ACBF"));
+    writer.writeAttribute(QStringLiteral("xmlns"), QStringLiteral("http://www.fictionbook-lib.org/xml/acbf/1.0"));
     d->metaData->toXml(&writer);
     d->body->toXml(&writer);
     writer.writeEndElement();
@@ -77,23 +74,24 @@ bool Document::fromXml(QString xmlDocument)
     QXmlStreamReader xmlReader(xmlDocument);
     if(xmlReader.readNextStartElement())
     {
-        if(xmlReader.name() == "ACBF" && xmlReader.namespaceUri().startsWith("http://www.fictionbook-lib.org/xml/acbf/"))
+        if(xmlReader.name() == QStringLiteral("ACBF")
+            && xmlReader.namespaceUri().startsWith(QStringLiteral("http://www.fictionbook-lib.org/xml/acbf/")))
         {
             while(xmlReader.readNextStartElement())
             {
-                if(xmlReader.name() == "meta-data")
+                if(xmlReader.name() == QStringLiteral("meta-data"))
                 {
                     if(!d->metaData->fromXml(&xmlReader)) {
                         break;
                     }
                 }
-                else if(xmlReader.name() == "body")
+                else if(xmlReader.name() == QStringLiteral("body"))
                 {
                     if(!d->body->fromXml(&xmlReader)) {
                         break;
                     }
                 }
-                else if(xmlReader.name() == "data")
+                else if(xmlReader.name() == QStringLiteral("data"))
                 {
                     if(!d->data->fromXml(&xmlReader)) {
                         break;
@@ -118,17 +116,17 @@ bool Document::fromXml(QString xmlDocument)
     return !xmlReader.hasError();
 }
 
-Metadata * Document::metaData()
+Metadata * Document::metaData() const
 {
     return d->metaData;
 }
 
-Body * Document::body()
+Body * Document::body() const
 {
     return d->body;
 }
 
-Data * Document::data()
+Data * Document::data() const
 {
     return d->data;
 }

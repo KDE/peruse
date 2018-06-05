@@ -45,33 +45,30 @@ PublishInfo::PublishInfo(Metadata* parent)
     qRegisterMetaType<PublishInfo*>("PublishInfo*");
 }
 
-PublishInfo::~PublishInfo()
-{
-    delete d;
-}
+PublishInfo::~PublishInfo() = default;
 
 void PublishInfo::toXml(QXmlStreamWriter *writer)
 {
-    writer->writeStartElement("publish-info");
+    writer->writeStartElement(QStringLiteral("publish-info"));
 
-    writer->writeStartElement("publisher");
+    writer->writeStartElement(QStringLiteral("publisher"));
     writer->writeCharacters(d->publisher);
     writer->writeEndElement();
 
-    writer->writeStartElement("publish-date");
-    writer->writeAttribute("value", d->publishDate.toString("YYYY-MM-dd"));
-    writer->writeCharacters(d->publishDate.toString("MMMM d yyyy"));
+    writer->writeStartElement(QStringLiteral("publish-date"));
+    writer->writeAttribute(QStringLiteral("value"), d->publishDate.toString(QStringLiteral("YYYY-MM-dd")));
+    writer->writeCharacters(d->publishDate.toString(QStringLiteral("MMMM d yyyy")));
     writer->writeEndElement();
 
-    writer->writeStartElement("city");
+    writer->writeStartElement(QStringLiteral("city"));
     writer->writeCharacters(d->city);
     writer->writeEndElement();
 
-    writer->writeStartElement("isbn");
+    writer->writeStartElement(QStringLiteral("isbn"));
     writer->writeCharacters(d->isbn);
     writer->writeEndElement();
 
-    writer->writeStartElement("license");
+    writer->writeStartElement(QStringLiteral("license"));
     writer->writeCharacters(d->license);
     writer->writeEndElement();
 
@@ -82,13 +79,13 @@ bool PublishInfo::fromXml(QXmlStreamReader *xmlReader)
 {
     while(xmlReader->readNextStartElement())
     {
-        if(xmlReader->name() == "publisher")
+        if(xmlReader->name() == QStringLiteral("publisher"))
         {
             setPublisher(xmlReader->readElementText());
         }
-        else if(xmlReader->name() == "publish-date")
+        else if(xmlReader->name() == QStringLiteral("publish-date"))
         {
-            QString date = xmlReader->attributes().value("value").toString();
+            QString date = xmlReader->attributes().value(QStringLiteral("value")).toString();
             if(date.isEmpty()) {
                 date = xmlReader->readElementText();
             } else {
@@ -96,15 +93,15 @@ bool PublishInfo::fromXml(QXmlStreamReader *xmlReader)
             }
             setPublishDate(QDate::fromString(date));
         }
-        else if(xmlReader->name() == "city")
+        else if(xmlReader->name() == QStringLiteral("city"))
         {
             setCity(xmlReader->readElementText());
         }
-        else if(xmlReader->name() == "isbn")
+        else if(xmlReader->name() == QStringLiteral("isbn"))
         {
             setIsbn(xmlReader->readElementText());
         }
-        else if(xmlReader->name() == "license")
+        else if(xmlReader->name() == QStringLiteral("license"))
         {
             setLicense(xmlReader->readElementText());
         }
@@ -121,52 +118,52 @@ bool PublishInfo::fromXml(QXmlStreamReader *xmlReader)
     return !xmlReader->hasError();
 }
 
-QString PublishInfo::publisher()
+QString PublishInfo::publisher() const
 {
     return d->publisher;
 }
 
-void PublishInfo::setPublisher(QString publisher)
+void PublishInfo::setPublisher(const QString& publisher)
 {
     d->publisher = publisher;
 }
 
-QDate PublishInfo::publishDate()
+QDate PublishInfo::publishDate() const
 {
     return d->publishDate;
 }
 
-void PublishInfo::setPublishDate(QDate publishDate)
+void PublishInfo::setPublishDate(const QDate& publishDate)
 {
     d->publishDate = publishDate;
 }
 
-QString PublishInfo::city()
+QString PublishInfo::city() const
 {
     return d->city;
 }
 
-void PublishInfo::setCity(QString city)
+void PublishInfo::setCity(const QString& city)
 {
     d->city = city;
 }
 
-QString PublishInfo::isbn()
+QString PublishInfo::isbn() const
 {
     return d->isbn;
 }
 
-void PublishInfo::setIsbn(QString isbn)
+void PublishInfo::setIsbn(const QString& isbn)
 {
     d->isbn = isbn;
 }
 
-QString PublishInfo::license()
+QString PublishInfo::license() const
 {
     return d->license;
 }
 
-void PublishInfo::setLicense(QString license)
+void PublishInfo::setLicense(const QString& license)
 {
     d->license = license;
 }

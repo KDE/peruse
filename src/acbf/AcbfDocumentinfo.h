@@ -22,6 +22,8 @@
 #ifndef ACBFDOCUMENTINFO_H
 #define ACBFDOCUMENTINFO_H
 
+#include <memory>
+
 #include "AcbfMetadata.h"
 
 #include <QDate>
@@ -36,30 +38,30 @@ public:
     explicit DocumentInfo(Metadata* parent = nullptr);
     ~DocumentInfo() override;
 
-    Metadata* metadata();
+    Metadata* metadata() const;
 
     void toXml(QXmlStreamWriter *writer);
     bool fromXml(QXmlStreamReader *xmlReader);
 
-    QList<Author*> author();
+    QList<Author*> author() const;
     void addAuthor(Author* author);
     void removeAuthor(Author* author);
 
-    QDate creationDate();
-    void setCreationDate(QDate creationDate);
+    QDate creationDate() const;
+    void setCreationDate(const QDate& creationDate);
 
-    QStringList source();
-    void setSource(QStringList source);
+    QStringList source() const;
+    void setSource(const QStringList& source);
 
-    QString id();
-    void setId(QString id);
+    QString id() const;
+    void setId(const QString& id);
 
-    QString version();
-    void setVersion(QString version);
+    QString version() const;
+    void setVersion(const QString& version);
 
-    QStringList history();
-    void setHistory(QStringList history);
-    void addHistoryLine(QString historyLine);
+    QStringList history() const;
+    void setHistory(const QStringList& history);
+    void addHistoryLine(const QString& historyLine);
 private:
     class Private;
     Private* d;

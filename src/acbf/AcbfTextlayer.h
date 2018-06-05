@@ -22,6 +22,8 @@
 #ifndef ACBFTEXTLAYER_H
 #define ACBFTEXTLAYER_H
 
+#include <memory>
+
 #include "AcbfPage.h"
 
 namespace AdvancedComicBookFormat
@@ -37,22 +39,23 @@ public:
     void toXml(QXmlStreamWriter* writer);
     bool fromXml(QXmlStreamReader *xmlReader);
 
-    QString language();
-    void setLanguage(QString language);
+    QString language() const;
+    void setLanguage(const QString& language);
 
-    QString bgcolor();
-    void setBgcolor(QString newColor = "");
+    QString bgcolor() const;
+    void setBgcolor(const QString& newColor = QString());
 
-    QList<Textarea*> textareas();
-    Textarea* textarea(int index);
-    int textareaIndex(Textarea* textarea);
+    QList<Textarea*> textareas() const;
+    Textarea* textarea(int index) const;
+    int textareaIndex(Textarea* textarea) const;
+
     // If afterIndex is larger than zero, the insertion will happen at that index
     void addTextarea(Textarea* textarea, int index = -1);
     void removeTextarea(Textarea* textarea);
     bool swapTextareas(Textarea* swapThis, Textarea* withThis);
 private:
     class Private;
-    Private* d;
+    std::unique_ptr<Private> d;
 };
 }
 

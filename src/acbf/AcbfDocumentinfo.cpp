@@ -46,47 +46,44 @@ DocumentInfo::DocumentInfo(Metadata* parent)
     qRegisterMetaType<DocumentInfo*>("DocumentInfo*");
 }
 
-DocumentInfo::~DocumentInfo()
-{
-    delete d;
-}
+DocumentInfo::~DocumentInfo() = default;
 
-Metadata * DocumentInfo::metadata()
+Metadata * DocumentInfo::metadata() const
 {
     return qobject_cast<Metadata*>(parent());
 }
 
 void DocumentInfo::toXml(QXmlStreamWriter *writer)
 {
-    writer->writeStartElement("document-info");
+    writer->writeStartElement(QStringLiteral("document-info"));
 
     Q_FOREACH(Author* author, d->author) {
         author->toXml(writer);
     }
 
-    writer->writeStartElement("creation-date");
-    writer->writeCharacters(d->creationDate.toString("MMMM d yyyy"));
+    writer->writeStartElement(QStringLiteral("creation-date"));
+    writer->writeCharacters(d->creationDate.toString(QStringLiteral("MMMM d yyyy")));
     writer->writeEndElement();
 
-    writer->writeStartElement("source");
+    writer->writeStartElement(QStringLiteral("source"));
     Q_FOREACH(const QString& source, d->source) {
-        writer->writeStartElement("p");
+        writer->writeStartElement(QStringLiteral("p"));
         writer->writeCharacters(source);
         writer->writeEndElement();
     }
     writer->writeEndElement();
 
-    writer->writeStartElement("id");
+    writer->writeStartElement(QStringLiteral("id"));
     writer->writeCharacters(d->id);
     writer->writeEndElement();
 
-    writer->writeStartElement("version");
+    writer->writeStartElement(QStringLiteral("version"));
     writer->writeCharacters(d->version);
     writer->writeEndElement();
 
-    writer->writeStartElement("history");
+    writer->writeStartElement(QStringLiteral("history"));
     Q_FOREACH(const QString& history, d->history) {
-        writer->writeStartElement("p");
+        writer->writeStartElement(QStringLiteral("p"));
         writer->writeCharacters(history);
         writer->writeEndElement();
     }
@@ -99,7 +96,7 @@ bool DocumentInfo::fromXml(QXmlStreamReader *xmlReader)
 {
     while(xmlReader->readNextStartElement())
     {
-        if(xmlReader->name() == "author")
+        if(xmlReader->name() == QStringLiteral("author"))
         {
             Author* newAuthor = new Author(metadata());
             if(!newAuthor->fromXml(xmlReader)) {
@@ -107,9 +104,9 @@ bool DocumentInfo::fromXml(QXmlStreamReader *xmlReader)
             }
             d->author.append(newAuthor);
         }
-        else if(xmlReader->name() == "creation-date")
+        else if(xmlReader->name() == QStringLiteral("creation-date"))
         {
-            QString date = xmlReader->attributes().value("value").toString();
+            QString date = xmlReader->attributes().value(QStringLiteral("value")).toString();
             if(date.isEmpty()) {
                 date = xmlReader->readElementText();
             } else {
@@ -117,10 +114,10 @@ bool DocumentInfo::fromXml(QXmlStreamReader *xmlReader)
             }
             setCreationDate(QDate::fromString(date));
         }
-        else if(xmlReader->name() == "source")
+        else if(xmlReader->name() == QStringLiteral("source"))
         {
             while(xmlReader->readNextStartElement()) {
-                if(xmlReader->name() == "p") {
+                if(xmlReader->name() == QStringLiteral("p")) {
                     d->source.append(xmlReader->readElementText(QXmlStreamReader::IncludeChildElements));
                 }
                 else {
@@ -128,18 +125,18 @@ bool DocumentInfo::fromXml(QXmlStreamReader *xmlReader)
                 }
             }
         }
-        else if(xmlReader->name() == "id")
+        else if(xmlReader->name() == QStringLiteral("id"))
         {
             setId(xmlReader->readElementText());
         }
-        else if(xmlReader->name() == "version")
+        else if(xmlReader->name() == QStringLiteral("version"))
         {
             setVersion(xmlReader->readElementText());
         }
-        else if(xmlReader->name() == "history")
+        else if(xmlReader->name() == QStringLiteral("history"))
         {
             while(xmlReader->readNextStartElement()) {
-                if(xmlReader->name() == "p") {
+                if(xmlReader->name() == QStringLiteral("p")) {
                     d->history.append(xmlReader->readElementText(QXmlStreamReader::IncludeChildElements));
                 }
                 else {
@@ -160,7 +157,7 @@ bool DocumentInfo::fromXml(QXmlStreamReader *xmlReader)
     return !xmlReader->hasError();
 }
 
-QList<Author *> DocumentInfo::author()
+QList<Author *> DocumentInfo::author() const
 {
     return d->author;
 }
@@ -175,57 +172,57 @@ void DocumentInfo::removeAuthor(Author* author)
     d->author.removeAll(author);
 }
 
-QDate DocumentInfo::creationDate()
+QDate DocumentInfo::creationDate() const
 {
     return d->creationDate;
 }
 
-void DocumentInfo::setCreationDate(QDate creationDate)
+void DocumentInfo::setCreationDate(const QDate& creationDate)
 {
     d->creationDate = creationDate;
 }
 
-QStringList DocumentInfo::source()
+QStringList DocumentInfo::source() const
 {
     return d->source;
 }
 
-void DocumentInfo::setSource(QStringList source)
+void DocumentInfo::setSource(const QStringList& source)
 {
     d->source = source;
 }
 
-QString DocumentInfo::id()
+QString DocumentInfo::id() const
 {
     return d->id;
 }
 
-void DocumentInfo::setId(QString id)
+void DocumentInfo::setId(const QString& id)
 {
     d->id = id;
 }
 
-QString DocumentInfo::version()
+QString DocumentInfo::version() const
 {
     return d->version;
 }
 
-void DocumentInfo::setVersion(QString version)
+void DocumentInfo::setVersion(const QString& version)
 {
     d->version = version;
 }
 
-QStringList DocumentInfo::history()
+QStringList DocumentInfo::history() const
 {
     return d->history;
 }
 
-void DocumentInfo::setHistory(QStringList history)
+void DocumentInfo::setHistory(const QStringList& history)
 {
     d->history = history;
 }
 
-void DocumentInfo::addHistoryLine(QString historyLine)
+void DocumentInfo::addHistoryLine(const QString& historyLine)
 {
     d->history.append(historyLine);
 }

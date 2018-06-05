@@ -22,6 +22,8 @@
 #ifndef ACBFPUBLISHINFO_H
 #define ACBFPUBLISHINFO_H
 
+#include <memory>
+
 #include "AcbfMetadata.h"
 
 #include <QDate>
@@ -38,23 +40,23 @@ public:
     void toXml(QXmlStreamWriter *writer);
     bool fromXml(QXmlStreamReader *xmlReader);
 
-    QString publisher();
-    void setPublisher(QString publisher);
+    QString publisher() const;
+    void setPublisher(const QString& publisher);
 
-    QDate publishDate();
-    void setPublishDate(QDate publishDate);
+    QDate publishDate() const;
+    void setPublishDate(const QDate& publishDate);
 
-    QString city();
-    void setCity(QString city = "");
+    QString city() const;
+    void setCity(const QString& city = QString());
 
-    QString isbn();
-    void setIsbn(QString isbn = "");
+    QString isbn() const;
+    void setIsbn(const QString& isbn = QString());
 
-    QString license();
-    void setLicense(QString license = "");
+    QString license() const;
+    void setLicense(const QString& license = QString());
 private:
     class Private;
-    Private* d;
+    std::unique_ptr<Private> d;
 };
 }
 

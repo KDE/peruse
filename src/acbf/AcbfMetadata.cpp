@@ -52,19 +52,16 @@ Metadata::Metadata(Document* parent)
     d->documentInfo = new DocumentInfo(this);
 }
 
-Metadata::~Metadata()
-{
-    delete d;
-}
+Metadata::~Metadata() = default;
 
-Document * Metadata::document()
+Document * Metadata::document() const
 {
     return qobject_cast<Document*>(parent());
 }
 
 void Metadata::toXml(QXmlStreamWriter *writer)
 {
-    writer->writeStartElement("meta-data");
+    writer->writeStartElement(QStringLiteral("meta-data"));
     d->bookInfo->toXml(writer);
     d->publishInfo->toXml(writer);
     d->documentInfo->toXml(writer);
@@ -75,19 +72,19 @@ bool Metadata::fromXml(QXmlStreamReader *xmlReader)
 {
     while(xmlReader->readNextStartElement())
     {
-        if(xmlReader->name() == "book-info")
+        if(xmlReader->name() == QStringLiteral("book-info"))
         {
             if(!d->bookInfo->fromXml(xmlReader)) {
                 return false;
             }
         }
-        else if(xmlReader->name() == "publish-info")
+        else if(xmlReader->name() == QStringLiteral("publish-info"))
         {
             if(!d->publishInfo->fromXml(xmlReader)) {
                 return false;
             }
         }
-        else if(xmlReader->name() == "document-info")
+        else if(xmlReader->name() == QStringLiteral("document-info"))
         {
             if(!d->documentInfo->fromXml(xmlReader)) {
                 return false;
@@ -106,17 +103,17 @@ bool Metadata::fromXml(QXmlStreamReader *xmlReader)
     return !xmlReader->hasError();
 }
 
-DocumentInfo * Metadata::documentInfo()
+DocumentInfo * Metadata::documentInfo() const
 {
     return d->documentInfo;
 }
 
-BookInfo * Metadata::bookInfo()
+BookInfo * Metadata::bookInfo() const
 {
     return d->bookInfo;
 }
 
-PublishInfo * Metadata::publishInfo()
+PublishInfo * Metadata::publishInfo() const
 {
     return d->publishInfo;
 }

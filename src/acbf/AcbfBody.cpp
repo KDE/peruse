@@ -42,19 +42,16 @@ Body::Body(Document* parent)
     qRegisterMetaType<Body*>("Body*");
 }
 
-Body::~Body()
-{
-    delete d;
-}
+Body::~Body() = default;
 
-Document * Body::document()
+Document * Body::document() const
 {
     return qobject_cast<Document*>(parent());
 }
 
 void Body::toXml(QXmlStreamWriter *writer)
 {
-    writer->writeStartElement("body");
+    writer->writeStartElement(QStringLiteral("body"));
 
     Q_FOREACH(Page* page, d->pages) {
         page->toXml(writer);
@@ -65,10 +62,10 @@ void Body::toXml(QXmlStreamWriter *writer)
 
 bool Body::fromXml(QXmlStreamReader *xmlReader)
 {
-    setBgcolor(xmlReader->attributes().value("bgcolor").toString());
+    setBgcolor(xmlReader->attributes().value(QStringLiteral("bgcolor")).toString());
     while(xmlReader->readNextStartElement())
     {
-        if(xmlReader->name() == "page")
+        if(xmlReader->name() == QStringLiteral("page"))
         {
             Page* newPage = new Page(document());
             if(!newPage->fromXml(xmlReader)) {
@@ -89,27 +86,27 @@ bool Body::fromXml(QXmlStreamReader *xmlReader)
     return !xmlReader->hasError();
 }
 
-QString Body::bgcolor()
+QString Body::bgcolor() const
 {
     return d->bgcolor;
 }
 
-void Body::setBgcolor(QString newColor)
+void Body::setBgcolor(const QString& newColor)
 {
     d->bgcolor = newColor;
 }
 
-QList<Page *> Body::pages()
+QList<Page *> Body::pages() const
 {
     return d->pages;
 }
 
-Page * Body::page(int index)
+Page * Body::page(int index) const
 {
     return d->pages.at(index);
 }
 
-int Body::pageIndex(Page* page)
+int Body::pageIndex(Page* page) const
 {
     return d->pages.indexOf(page);
 }

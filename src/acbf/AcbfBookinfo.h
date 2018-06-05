@@ -22,6 +22,8 @@
 #ifndef ACBFBOOKINFO_H
 #define ACBFBOOKINFO_H
 
+#include <memory>
+
 #include "AcbfMetadata.h"
 
 #include <QHash>
@@ -108,7 +110,7 @@ public:
     void removeContentRating(ContentRating* contentRating);
 private:
     class Private;
-    Private* d;
+    std::unique_ptr<Private> d;
 };
 }
 

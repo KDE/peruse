@@ -42,46 +42,48 @@ public:
     void toXml(QXmlStreamWriter* writer);
     bool fromXml(QXmlStreamReader *xmlReader);
 
-    QString bgcolor();
-    void setBgcolor(QString newColor = "");
+    QString bgcolor() const;
+    void setBgcolor(const QString& newColor = QString());
 
-    QString transition();
-    void setTransition(QString transition);
+    QString transition() const;
+    void setTransition(const QString& transition);
     static QStringList availableTransitions();
 
-    QStringList titleForAllLanguages();
-    QString title(QString language = "");
-    void setTitle(QString title, QString language = "");
+    QStringList titleForAllLanguages() const;
+    QString title(const QString& language = QString()) const;
+    void setTitle(const QString& title, const QString& language = QString());
 
-    QString imageHref();
-    void setImageHref(QString imageHref);
+    QString imageHref() const;
+    void setImageHref(const QString& imageHref);
 
-    QList<Textlayer*> textLayersForAllLanguages();
-    Textlayer* textLayer(QString language = "");
+    QList<Textlayer*> textLayersForAllLanguages() const;
+    Textlayer* textLayer(const QString& language = QString()) const;
     // Setting the textlayer for a language to null removes that language (as with other translated entries, though this one not being text warranted a comment)
-    void setTextLayer(Textlayer* textlayer, QString language = "");
+    void setTextLayer(Textlayer* textlayer, const QString& language = "");
 
-    QList<Frame*> frames();
-    Frame* frame(int index);
-    int frameIndex(Frame* frame);
+    QList<Frame*> frames() const;
+    Frame* frame(int index) const;
+    int frameIndex(Frame* frame) const;
+
     // If afterIndex is larger than zero, the insertion will happen at that index
     void addFrame(Frame* frame, int index = -1);
     void removeFrame(Frame* frame);
     bool swapFrames(Frame* swapThis, Frame* withThis);
 
-    QList<Jump*> jumps();
-    Jump* jump(int index);
-    int jumpIndex(Jump* jump);
+    QList<Jump*> jumps() const;
+    Jump* jump(int index) const;
+    int jumpIndex(Jump* jump) const;
+
     // If afterIndex is larger than zero, the insertion will happen at that index
     void addJump(Jump* jump, int index = -1);
     void removeJump(Jump* jump);
     bool swapJumps(Jump* swapThis, Jump* withThis);
 
-    bool isCoverPage();
+    bool isCoverPage() const;
     void setIsCoverPage(bool isCoverPage = false);
 private:
     class Private;
-    Private* d;
+    std::unique_ptr<Private> d;
 };
 }
 

@@ -41,17 +41,14 @@ DatabaseRef::DatabaseRef(BookInfo* parent)
 {
 }
 
-DatabaseRef::~DatabaseRef()
-{
-    delete d;
-}
+DatabaseRef::~DatabaseRef() = default;
 
 void DatabaseRef::toXml(QXmlStreamWriter* writer)
 {
-    writer->writeStartElement("databaseref");
-    writer->writeAttribute("dbname", d->dbname);
+    writer->writeStartElement(QStringLiteral("databaseref"));
+    writer->writeAttribute(QStringLiteral("dbname"), d->dbname);
     if(!d->type.isEmpty()) {
-        writer->writeAttribute("type", d->type);
+        writer->writeAttribute(QStringLiteral("type"), d->type);
     }
     writer->writeCharacters(d->reference);
     writer->writeEndElement();
@@ -59,39 +56,39 @@ void DatabaseRef::toXml(QXmlStreamWriter* writer)
 
 bool DatabaseRef::fromXml(QXmlStreamReader *xmlReader)
 {
-    setDbname(xmlReader->attributes().value("volume").toString());
-    setType(xmlReader->attributes().value("type").toString());
+    setDbname(xmlReader->attributes().value(QStringLiteral("volume")).toString());
+    setType(xmlReader->attributes().value(QStringLiteral("type")).toString());
     setReference(xmlReader->readElementText(QXmlStreamReader::IncludeChildElements));
     qDebug() << Q_FUNC_INFO << "Created a database reference for the database" << dbname() << "with reference" << reference();
     return true;
 }
 
-QString DatabaseRef::dbname()
+QString DatabaseRef::dbname() const
 {
     return d->dbname;
 }
 
-void DatabaseRef::setDbname(QString dbname)
+void DatabaseRef::setDbname(const QString& dbname)
 {
     d->dbname = dbname;
 }
 
-QString DatabaseRef::type()
+QString DatabaseRef::type() const
 {
     return d->type;
 }
 
-void DatabaseRef::setType(QString type)
+void DatabaseRef::setType(const QString& type)
 {
     d->type = type;
 }
 
-QString DatabaseRef::reference()
+QString DatabaseRef::reference() const
 {
     return d->reference;
 }
 
-void DatabaseRef::setReference(QString reference)
+void DatabaseRef::setReference(const QString& reference)
 {
     d->reference = reference;
 }

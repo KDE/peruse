@@ -15,6 +15,7 @@ target_link_libraries(perusecreator
     Qt5::OpenGL
     KF5::I18n
     KF5::Declarative
+    peruse_helpers
 )
 
 install(TARGETS perusecreator ${INSTALL_TARGETS_DEFAULT_ARGS})

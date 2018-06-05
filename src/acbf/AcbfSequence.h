@@ -22,6 +22,8 @@
 #ifndef ACBFSEQUENCE_H
 #define ACBFSEQUENCE_H
 
+#include <memory>
+
 #include "AcbfBookinfo.h"
 
 namespace AdvancedComicBookFormat
@@ -36,18 +38,18 @@ public:
     void toXml(QXmlStreamWriter* writer);
     bool fromXml(QXmlStreamReader *xmlReader);
 
-    QString title();
-    void setTitle(QString title);
+    QString title() const;
+    void setTitle(const QString& title);
 
     // Optional attribute - if set to 0, this is not saved
-    int volume();
+    int volume() const;
     void setVolume(int volume = 0);
 
-    int number();
+    int number() const;
     void setNumber(int number);
 private:
     class Private;
-    Private* d;
+    std::unique_ptr<Private> d;
 };
 }
 

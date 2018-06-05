@@ -22,6 +22,8 @@
 #ifndef ACBFBINARY_H
 #define ACBFBINARY_H
 
+#include <memory>
+
 #include <QObject>
 
 #include "acbf_export.h"
@@ -42,17 +44,17 @@ public:
     void toXml(QXmlStreamWriter *writer);
     bool fromXml(QXmlStreamReader *xmlReader);
 
-    QString id();
-    void setId(QString newId);
+    QString id() const;
+    void setId(const QString& newId);
 
-    QString contentType();
-    void setContentType(QString newContentType);
+    QString contentType() const;
+    void setContentType(const QString& newContentType);
 
-    QByteArray data();
-    void setData(QByteArray newData);
+    QByteArray data() const;
+    void setData(const QByteArray& newData);
 private:
     class Private;
-    Private* d;
+    std::unique_ptr<Private> d;
 };
 }
 

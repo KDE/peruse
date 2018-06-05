@@ -47,41 +47,38 @@ Textarea::Textarea(Textlayer* parent)
 {
 }
 
-Textarea::~Textarea()
-{
-    delete d;
-}
+Textarea::~Textarea() = default;
 
 void Textarea::toXml(QXmlStreamWriter* writer)
 {
-    writer->writeStartElement("text-area");
+    writer->writeStartElement(QStringLiteral("text-area"));
 
     QStringList points;
     Q_FOREACH(const QPoint& point, d->points) {
-        points << QString("%1,%2").arg(QString::number(point.x())).arg(QString::number(point.y()));
+        points << QStringLiteral("%1,%2").arg(QString::number(point.x())).arg(QString::number(point.y()));
     }
-    writer->writeAttribute("points", points.join(' '));
+    writer->writeAttribute(QStringLiteral("points"), points.join(' '));
 
     if(!d->bgcolor.isEmpty()) {
-        writer->writeAttribute("bgcolor", d->bgcolor);
+        writer->writeAttribute(QStringLiteral("bgcolor"), d->bgcolor);
     }
     if(d->textRotation != 0) {
-        writer->writeAttribute("text-rotation", QString::number(d->textRotation));
+        writer->writeAttribute(QStringLiteral("text-rotation"), QString::number(d->textRotation));
     }
     if(!d->type.isEmpty()) {
-        writer->writeAttribute("type", d->type);
+        writer->writeAttribute(QStringLiteral("type"), d->type);
     }
     if(d->inverted) {
         // because the default is false, no need to write it otherwise...
-        writer->writeAttribute("inverted", "true");
+        writer->writeAttribute(QStringLiteral("inverted"), QStringLiteral("true"));
     }
     if(d->transparent) {
         // because the default is false, no need to write it otherwise...
-        writer->writeAttribute("transparent", "true");
+        writer->writeAttribute(QStringLiteral("transparent"), QStringLiteral("true"));
     }
 
     Q_FOREACH(const QString& paragraph, d->paragraphs) {
-        writer->writeStartElement("p");
+        writer->writeStartElement(QStringLiteral("p"));
         writer->writeCharacters(paragraph);
         writer->writeEndElement();
     }
@@ -91,13 +88,13 @@ void Textarea::toXml(QXmlStreamWriter* writer)
 
 bool Textarea::fromXml(QXmlStreamReader *xmlReader)
 {
-    setBgcolor(xmlReader->attributes().value("bgcolor").toString());
-    setTextRotation(xmlReader->attributes().value("text-rotation").toInt());
-    setType(xmlReader->attributes().value("type").toString());
-    setInverted(xmlReader->attributes().value("inverted").toString().toLower() == "true");
-    setTransparent(xmlReader->attributes().value("transparent").toString().toLower() == "true");
+    setBgcolor(xmlReader->attributes().value(QStringLiteral("bgcolor")).toString());
+    setTextRotation(xmlReader->attributes().value(QStringLiteral("text-rotation")).toInt());
+    setType(xmlReader->attributes().value(QStringLiteral("type")).toString());
+    setInverted(xmlReader->attributes().value(QStringLiteral("inverted")).toString().toLower() == QStringLiteral("true"));
+    setTransparent(xmlReader->attributes().value(QStringLiteral("transparent")).toString().toLower() == QStringLiteral("true"));
 
-    QStringList points = xmlReader->attributes().value("points").toString().split(' ');
+    QStringList points = xmlReader->attributes().value(QStringLiteral("points")).toString().split(' ');
     Q_FOREACH(const QString& point, points) {
         QStringList elements = point.split(',');
         if(elements.length() == 2)
@@ -113,7 +110,7 @@ bool Textarea::fromXml(QXmlStreamReader *xmlReader)
 
     while(xmlReader->readNextStartElement())
     {
-        if(xmlReader->name() == "p")
+        if(xmlReader->name() == QStringLiteral("p"))
         {
             d->paragraphs.append(xmlReader->readElementText(QXmlStreamReader::IncludeChildElements));
         }
@@ -130,22 +127,22 @@ bool Textarea::fromXml(QXmlStreamReader *xmlReader)
     return !xmlReader->hasError();
 }
 
-QList<QPoint> Textarea::points()
+QList<QPoint> Textarea::points() const
 {
     return d->points;
 }
 
-QPoint Textarea::point(int index)
+QPoint Textarea::point(int index) const
 {
     return d->points.at(index);
 }
 
-int Textarea::pointIndex(QPoint point)
+int Textarea::pointIndex(const QPoint& point) const
 {
     return d->points.indexOf(point);
 }
 
-void Textarea::addPoint(QPoint point, int index)
+void Textarea::addPoint(const QPoint& point, int index)
 {
     if(index > -1 && d->points.count() < index) {
         d->points.insert(index, point);
@@ -155,12 +152,12 @@ void Textarea::addPoint(QPoint point, int index)
     }
 }
 
-void Textarea::removePoint(QPoint point)
+void Textarea::removePoint(const QPoint& point)
 {
     d->points.removeAll(point);
 }
 
-bool Textarea::swapPoints(QPoint swapThis, QPoint withThis)
+bool Textarea::swapPoints(const QPoint& swapThis, const QPoint& withThis)
 {
     int index1 = d->points.indexOf(swapThis);
     int index2 = d->points.indexOf(withThis);
@@ -171,12 +168,12 @@ bool Textarea::swapPoints(QPoint swapThis, QPoint withThis)
     return false;
 }
 
-QString Textarea::bgcolor()
+QString Textarea::bgcolor() const
 {
     return d->bgcolor;
 }
 
-void Textarea::setBgcolor(QString newColor)
+void Textarea::setBgcolor(const QString& newColor)
 {
     d->bgcolor = newColor;
 }
@@ -186,37 +183,37 @@ void Textarea::setTextRotation(int rotation)
     d->textRotation = rotation;
 }
 
-int Textarea::textRotation()
+int Textarea::textRotation() const
 {
     return d->textRotation;
 }
 
-QString Textarea::type()
+QString Textarea::type() const
 {
     return d->type.isEmpty() ? "speech" : d->type;
 }
 
-void Textarea::setType(QString type)
+void Textarea::setType(const QString& type)
 {
     d->type = type;
 }
 
 QStringList Textarea::availableTypes()
 {
-    QStringList types;
-    types << "speech"; // (character is speaking, text is centered)
-    types << "commentary"; // (accompanying commentary, text is aligned to left)
-    types << "formal"; // (text alignment is - justify)
-    types << "letter"; // (rendered in handwriting font)
-    types << "code"; // (rendered in monospace font)
-    types << "heading"; // (e.g. chapter title)
-    types << "audio"; // (speech emanating from an audio device, e.g., television or radio speaker, telephone, walkie-talkie, etc.)
-    types << "thought";
-    types << "sign"; // (any kind of sign/writing, text is centered)
-    return types;
+    return {
+        QStringLiteral("speech"), // (character is speaking, text is centered)
+        QStringLiteral("commentary"), // (accompanying commentary, text is aligned to left)
+        QStringLiteral("formal"), // (text alignment is - justify)
+        QStringLiteral("letter"), // (rendered in handwriting font)
+        QStringLiteral("code"), // (rendered in monospace font)
+        QStringLiteral("heading"), // (e.g. chapter title)
+        QStringLiteral("audio"), // (speech emanating from an audio device, e.g., television or radio speaker, telephone, walkie-talkie, etc.)
+        QStringLiteral("thought"),
+        QStringLiteral("sign"), // (any kind of sign/writing, text is centered)
+    };
 }
 
-bool Textarea::inverted()
+bool Textarea::inverted() const
 {
     return d->inverted;
 }
@@ -226,7 +223,7 @@ void Textarea::setInverted(bool inverted)
     d->inverted = inverted;
 }
 
-bool Textarea::transparent()
+bool Textarea::transparent() const
 {
     return d->transparent;
 }
@@ -236,12 +233,12 @@ void Textarea::setTransparent(bool transparent)
     d->transparent = transparent;
 }
 
-QStringList Textarea::paragraphs()
+QStringList Textarea::paragraphs() const
 {
     return d->paragraphs;
 }
 
-void Textarea::setParagraphs(QStringList paragraphs)
+void Textarea::setParagraphs(const QStringList& paragraphs)
 {
     d->paragraphs = paragraphs;
 }

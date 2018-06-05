@@ -22,6 +22,8 @@
 #ifndef ACBFDOCUMENT_H
 #define ACBFDOCUMENT_H
 
+#include <memory>
+
 #include <QObject>
 #include "acbf_export.h"
 
@@ -43,16 +45,16 @@ public:
     QString toXml();
     bool fromXml(QString xmlDocument);
 
-    Metadata* metaData();
+    Metadata* metaData() const;
     Q_SIGNAL void metaDataChanged();
 
-    Body* body();
+    Body* body() const;
     // References* references();
-    Data* data();
+    Data* data() const;
     // Stylesheet* stylesheet();
 private:
     class Private;
-    Private* d;
+    std::unique_ptr<Private> d;
 };
 }
 

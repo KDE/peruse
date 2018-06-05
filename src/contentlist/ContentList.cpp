@@ -196,11 +196,11 @@ void ContentList::setKnownFiles(const QStringList& results)
 
 QHash<int, QByteArray> ContentList::roleNames() const
 {
-    QHash<int, QByteArray> roles;
-    roles[FilenameRole] = "filename";
-    roles[FilePathRole] = "filePath";
-    roles[MetadataRole] = "metadata";
-    return roles;
+    return {
+        { FilenameRole, "filename"},
+        { FilePathRole, "filePath"},
+        { MetadataRole, "metadata"}
+    };
 }
 
 QVariant ContentList::data(const QModelIndex& index, int role) const

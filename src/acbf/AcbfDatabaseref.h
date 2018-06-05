@@ -22,6 +22,7 @@
 #ifndef ACBFDATABASEREF_H
 #define ACBFDATABASEREF_H
 
+#include <memory>
 #include "AcbfBookinfo.h"
 
 namespace AdvancedComicBookFormat
@@ -36,17 +37,17 @@ public:
     void toXml(QXmlStreamWriter* writer);
     bool fromXml(QXmlStreamReader *xmlReader);
 
-    QString dbname();
-    void setDbname(QString dbname);
+    QString dbname() const;
+    void setDbname(const QString& dbname);
 
-    QString type();
-    void setType(QString type);
+    QString type() const;
+    void setType(const QString& type);
 
-    QString reference();
-    void setReference(QString reference);
+    QString reference() const;
+    void setReference(const QString& reference);
 private:
     class Private;
-    Private* d;
+    std::unique_ptr<Private> d;
 };
 }
 

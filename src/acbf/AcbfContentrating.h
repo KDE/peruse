@@ -22,6 +22,8 @@
 #ifndef ACBFCONTENTRATING_H
 #define ACBFCONTENTRATING_H
 
+#include <memory>
+
 #include "AcbfBookinfo.h"
 
 namespace AdvancedComicBookFormat
@@ -36,14 +38,14 @@ public:
     void toXml(QXmlStreamWriter* writer);
     bool fromXml(QXmlStreamReader *xmlReader);
 
-    QString type();
-    void setType(QString type);
+    QString type() const;
+    void setType(const QString& type);
 
-    QString rating();
-    void setRating(QString rating);
+    QString rating() const;
+    void setRating(const QString& rating);
 private:
     class Private;
-    Private* d;
+    std::unique_ptr<Private> d;
 };
 }
 

@@ -45,17 +45,14 @@ Binary::Binary(Data* parent)
     qRegisterMetaType<Binary*>("Binary*");
 }
 
-Binary::~Binary()
-{
-    delete d;
-}
+Binary::~Binary() = default;
 
 void Binary::toXml(QXmlStreamWriter* writer)
 {
-    writer->writeStartElement("binary");
+    writer->writeStartElement(QStringLiteral("binary"));
 
-    writer->writeAttribute("id", id());
-    writer->writeAttribute("contentType", contentType());
+    writer->writeAttribute(QStringLiteral("id"), id());
+    writer->writeAttribute(QStringLiteral("contentType"), contentType());
     writer->writeCharacters(QString::fromLatin1(data().toBase64()));
 
     writer->writeEndElement();
@@ -63,39 +60,39 @@ void Binary::toXml(QXmlStreamWriter* writer)
 
 bool Binary::fromXml(QXmlStreamReader* xmlReader)
 {
-    setId(xmlReader->attributes().value("id").toString());
-    setContentType(xmlReader->attributes().value("content-type").toString());
+    setId(xmlReader->attributes().value(QStringLiteral("id")).toString());
+    setContentType(xmlReader->attributes().value(QStringLiteral("content-type")).toString());
     setData(QByteArray::fromBase64(xmlReader->readElementText().toLatin1()));
 
     return !xmlReader->hasError();
 }
 
-QString Binary::id()
+QString Binary::id() const
 {
     return d->id;
 }
 
-void Binary::setId(QString newId)
+void Binary::setId(const QString& newId)
 {
     d->id = newId;
 }
 
-QString Binary::contentType()
+QString Binary::contentType() const
 {
     return d->contentType;
 }
 
-void Binary::setContentType(QString newContentType)
+void Binary::setContentType(const QString& newContentType)
 {
     d->contentType = newContentType;
 }
 
-QByteArray Binary::data()
+QByteArray Binary::data() const
 {
     return d->data;
 }
 
-void Binary::setData(QByteArray newData)
+void Binary::setData(const QByteArray& newData)
 {
     d->data = newData;
 }

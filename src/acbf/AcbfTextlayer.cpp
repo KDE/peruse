@@ -43,19 +43,16 @@ Textlayer::Textlayer(Page* parent)
 {
 }
 
-Textlayer::~Textlayer()
-{
-    delete d;
-}
+Textlayer::~Textlayer() = default;
 
 void Textlayer::toXml(QXmlStreamWriter* writer)
 {
-    writer->writeStartElement("text-layer");
+    writer->writeStartElement(QStringLiteral("text-layer"));
     if(!d->language.isEmpty()) {
-        writer->writeAttribute("lang", d->language);
+        writer->writeAttribute(QStringLiteral("lang"), d->language);
     }
     if(!d->bgcolor.isEmpty()) {
-        writer->writeAttribute("bgcolor", d->bgcolor);
+        writer->writeAttribute(QStringLiteral("bgcolor"), d->bgcolor);
     }
 
     Q_FOREACH(Textarea* area, d->textareas) {
@@ -67,11 +64,11 @@ void Textlayer::toXml(QXmlStreamWriter* writer)
 
 bool Textlayer::fromXml(QXmlStreamReader *xmlReader)
 {
-    setBgcolor(xmlReader->attributes().value("bgcolor").toString());
-    setLanguage(xmlReader->attributes().value("lang").toString());
+    setBgcolor(xmlReader->attributes().value(QStringLiteral("bgcolor")).toString());
+    setLanguage(xmlReader->attributes().value(QStringLiteral("lang")).toString());
     while(xmlReader->readNextStartElement())
     {
-        if(xmlReader->name() == "text-area")
+        if(xmlReader->name() == QStringLiteral("text-area"))
         {
             Textarea* newArea = new Textarea(this);
             if(!newArea->fromXml(xmlReader)) {
@@ -92,37 +89,37 @@ bool Textlayer::fromXml(QXmlStreamReader *xmlReader)
     return !xmlReader->hasError();
 }
 
-QString Textlayer::language()
+QString Textlayer::language() const
 {
     return d->language;
 }
 
-void Textlayer::setLanguage(QString language)
+void Textlayer::setLanguage(const QString& language)
 {
     d->language = language;
 }
 
-QString Textlayer::bgcolor()
+QString Textlayer::bgcolor() const
 {
     return d->bgcolor;
 }
 
-void Textlayer::setBgcolor(QString newColor)
+void Textlayer::setBgcolor(const QString& newColor)
 {
     d->bgcolor = newColor;
 }
 
-QList<Textarea *> Textlayer::textareas()
+QList<Textarea *> Textlayer::textareas() const
 {
     return d->textareas;
 }
 
-Textarea * Textlayer::textarea(int index)
+Textarea * Textlayer::textarea(int index) const
 {
     return d->textareas.at(index);
 }
 
-int Textlayer::textareaIndex(Textarea* textarea)
+int Textlayer::textareaIndex(Textarea* textarea) const
 {
     return d->textareas.indexOf(textarea);
 }

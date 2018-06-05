@@ -102,74 +102,93 @@ void ContentQuery::setMimeTypes(const QStringList& mimeTypes)
     emit mimeTypesChanged();
 }
 
-QStringList ContentQuery::Private::mimeTypesForType(ContentQuery::Type type)
-{
-    QStringList result;
-    QMimeDatabase mimeDatabase;
+namespace {
+    QStringList contentQueryVideo () {
+        return {
+            QStringLiteral("video/x-matroska"),
+            QStringLiteral("video/mp4"),
+            QStringLiteral("video/mpeg"),
+            QStringLiteral("video/ogg"),
+            QStringLiteral("video/quicktime"),
+            QStringLiteral("video/webm"),
+            QStringLiteral("video/x-ms-wmv"),
+            QStringLiteral("video/x-msvideo"),
+            QStringLiteral("video/x-ogm+ogg"),
+            QStringLiteral("video/x-theora+ogg"),
+        };
+    }
 
-    //TODO: Find a better solution for this.
-    switch(type) {
-        case ContentQuery::Video:
-            result << QStringLiteral("video/x-matroska");
-            result << QStringLiteral("video/mp4");
-            result << QStringLiteral("video/mpeg");
-            result << QStringLiteral("video/ogg");
-            result << QStringLiteral("video/quicktime");
-            result << QStringLiteral("video/webm");
-            result << QStringLiteral("video/x-ms-wmv");
-            result << QStringLiteral("video/x-msvideo");
-            result << QStringLiteral("video/x-ogm+ogg");
-            result << QStringLiteral("video/x-theora+ogg");
-            break;
-        case ContentQuery::Audio:
-            result << QStringLiteral("audio/aac");
-            result << QStringLiteral("audio/flac");
-            result << QStringLiteral("audio/mp2");
-            result << QStringLiteral("audio/mp4");
-            result << QStringLiteral("audio/mpeg");
-            result << QStringLiteral("audio/ogg");
-            result << QStringLiteral("audio/webm");
-            result << QStringLiteral("audio/x-opus+ogg");
-            result << QStringLiteral("audio/x-ms-wma");
-            result << QStringLiteral("audio/x-vorbis+ogg");
-            result << QStringLiteral("audio/x-wav");
-            break;
-        case ContentQuery::Documents:
-            result << QStringLiteral("application/vnd.oasis.opendocument.text");
-            result << QStringLiteral("application/vnd.oasis.opendocument.spreadsheet");
-            result << QStringLiteral("application/vnd.oasis.opendocument.presentation");
-            result << QStringLiteral("application/vnd.ms-word");
-            result << QStringLiteral("application/vnd.ms-excel");
-            result << QStringLiteral("application/vnd.ms-powerpoint");
-            result << QStringLiteral("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.xml");
-            result << QStringLiteral("application/vnd.openxmlformats-officedocument.wordprocessingml.document.xml");
-            result << QStringLiteral("application/vnd.openxmlformats-officedocument.presentationml.presentation.xml");
-            result << QStringLiteral("text/plain");
-            result << QStringLiteral("application/pdf");
-            break;
-        case ContentQuery::Images:
+    QStringList contentQueryAudio() {
+        return {
+            QStringLiteral("audio/aac"),
+            QStringLiteral("audio/flac"),
+            QStringLiteral("audio/mp2"),
+            QStringLiteral("audio/mp4"),
+            QStringLiteral("audio/mpeg"),
+            QStringLiteral("audio/ogg"),
+            QStringLiteral("audio/webm"),
+            QStringLiteral("audio/x-opus+ogg"),
+            QStringLiteral("audio/x-ms-wma"),
+            QStringLiteral("audio/x-vorbis+ogg"),
+            QStringLiteral("audio/x-wav")
+        };
+    }
+
+    QStringList contentQueryDocuments () {
+        return {
+            QStringLiteral("application/vnd.oasis.opendocument.text"),
+            QStringLiteral("application/vnd.oasis.opendocument.spreadsheet"),
+            QStringLiteral("application/vnd.oasis.opendocument.presentation"),
+            QStringLiteral("application/vnd.ms-word"),
+            QStringLiteral("application/vnd.ms-excel"),
+            QStringLiteral("application/vnd.ms-powerpoint"),
+            QStringLiteral("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.xml"),
+            QStringLiteral("application/vnd.openxmlformats-officedocument.wordprocessingml.document.xml"),
+            QStringLiteral("application/vnd.openxmlformats-officedocument.presentationml.presentation.xml"),
+            QStringLiteral("text/plain"),
+            QStringLiteral("application/pdf")
+        };
+    }
+
+    QStringList contentQueryImages() {
+        // only popylate once.
+        static QStringList result;
+        if (result.isEmpty()) {
             for(const auto& item : QImageReader::supportedMimeTypes())
             {
                 result << QString::fromUtf8(item);
             }
-            break;
-        case ContentQuery::Comics:
-            result << QStringLiteral("application/x-cbz");
-            result << QStringLiteral("application/x-cbr");
-            result << QStringLiteral("application/x-cb7");
-            result << QStringLiteral("application/x-cbt");
-            result << QStringLiteral("application/x-cba");
-            result << QStringLiteral("application/vnd.comicbook+zip");
-            result << QStringLiteral("application/vnd.comicbook+rar");
-            result << QStringLiteral("application/vnd.ms-htmlhelp");
-            result << QStringLiteral("image/vnd.djvu");
-            result << QStringLiteral("image/x-djvu");
-            result << QStringLiteral("application/epub+zip");
-            result << QStringLiteral("application/pdf");
-            break;
-        default:
-            break;
+        }
+        return result;
     }
 
-    return result;
+    QStringList contentQueryComics() {
+        return {
+            QStringLiteral("application/x-cbz"),
+            QStringLiteral("application/x-cbr"),
+            QStringLiteral("application/x-cb7"),
+            QStringLiteral("application/x-cbt"),
+            QStringLiteral("application/x-cba"),
+            QStringLiteral("application/vnd.comicbook+zip"),
+            QStringLiteral("application/vnd.comicbook+rar"),
+            QStringLiteral("application/vnd.ms-htmlhelp"),
+            QStringLiteral("image/vnd.djvu"),
+            QStringLiteral("image/x-djvu"),
+            QStringLiteral("application/epub+zip"),
+            QStringLiteral("application/pdf")
+        };
+    }
+}
+QStringList ContentQuery::Private::mimeTypesForType(ContentQuery::Type type)
+{
+    QStringList ret{};
+    switch(type) {
+        case ContentQuery::Type::Video:     ret = contentQueryVideo(); break;
+        case ContentQuery::Type::Audio:     ret = contentQueryAudio(); break;
+        case ContentQuery::Type::Documents: ret = contentQueryDocuments(); break;
+        case ContentQuery::Type::Images:    ret = contentQueryImages(); break;
+        case ContentQuery::Type::Comics:    ret = contentQueryComics(); break;
+        case ContentQuery::Type::Any:       /* do nothing */ break;
+    }
+    return ret;
 }

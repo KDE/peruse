@@ -22,6 +22,8 @@
 #ifndef ACBFDATA_H
 #define ACBFDATA_H
 
+#include <memory>
+
 #include <QObject>
 #include <QXmlStreamReader>
 
@@ -40,10 +42,10 @@ public:
     void toXml(QXmlStreamWriter *writer);
     bool fromXml(QXmlStreamReader *xmlReader);
 
-    Binary* binary(QString id);
+    Binary* binary(const QString& id) const;
 private:
     class Private;
-    Private* d;
+    std::unique_ptr<Private> d;
 };
 }
 

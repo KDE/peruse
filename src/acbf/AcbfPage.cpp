@@ -50,38 +50,35 @@ Page::Page(Document* parent)
 {
 }
 
-Page::~Page()
-{
-    delete d;
-}
+Page::~Page() = default;
 
 void Page::toXml(QXmlStreamWriter* writer)
 {
     if(d->isCoverPage) {
-        writer->writeStartElement("coverpage");
+        writer->writeStartElement(QStringLiteral("coverpage"));
     }
     else {
-        writer->writeStartElement("page");
+        writer->writeStartElement(QStringLiteral("page"));
     }
 
     if(!d->bgcolor.isEmpty()) {
-        writer->writeAttribute("bgcolor", d->bgcolor);
+        writer->writeAttribute(QStringLiteral("bgcolor"), d->bgcolor);
     }
     if(!d->transition.isEmpty()) {
-        writer->writeAttribute("transition", d->transition);
+        writer->writeAttribute(QStringLiteral("transition"), d->transition);
     }
 
     QHashIterator<QString, QString> titles(d->title);
     while(titles.hasNext()) {
         titles.next();
-        writer->writeStartElement("title");
-        writer->writeAttribute("lang", titles.key());
+        writer->writeStartElement(QStringLiteral("title"));
+        writer->writeAttribute(QStringLiteral("lang"), titles.key());
         writer->writeCharacters(titles.value());
         writer->writeEndElement();
     }
 
-    writer->writeStartElement("image");
-    writer->writeAttribute("href", d->imageHref);
+    writer->writeStartElement(QStringLiteral("image"));
+    writer->writeAttribute(QStringLiteral("href"), d->imageHref);
     writer->writeEndElement();
 
     Q_FOREACH(Textlayer* layer, d->textLayers.values()) {
@@ -101,20 +98,20 @@ void Page::toXml(QXmlStreamWriter* writer)
 
 bool Page::fromXml(QXmlStreamReader *xmlReader)
 {
-    setBgcolor(xmlReader->attributes().value("bgcolor").toString());
-    setTransition(xmlReader->attributes().value("transition").toString());
+    setBgcolor(xmlReader->attributes().value(QStringLiteral("bgcolor")).toString());
+    setTransition(xmlReader->attributes().value(QStringLiteral("transition")).toString());
     while(xmlReader->readNextStartElement())
     {
-        if(xmlReader->name() == "title")
+        if(xmlReader->name() == QStringLiteral("title"))
         {
-            d->title[xmlReader->attributes().value("lang").toString()] = xmlReader->readElementText();
+            d->title[xmlReader->attributes().value(QStringLiteral("lang")).toString()] = xmlReader->readElementText();
         }
-        else if(xmlReader->name() == "image")
+        else if(xmlReader->name() == QStringLiteral("image"))
         {
-            setImageHref(xmlReader->attributes().value("href").toString());
+            setImageHref(xmlReader->attributes().value(QStringLiteral("href")).toString());
             xmlReader->skipCurrentElement();
         }
-        else if(xmlReader->name() == "text-layer")
+        else if(xmlReader->name() == QStringLiteral("text-layer"))
         {
             Textlayer* newLayer = new Textlayer(this);
             if(!newLayer->fromXml(xmlReader)) {
@@ -151,48 +148,48 @@ bool Page::fromXml(QXmlStreamReader *xmlReader)
     return !xmlReader->hasError();
 }
 
-QString Page::bgcolor()
+QString Page::bgcolor() const
 {
     return d->bgcolor;
 }
 
-void Page::setBgcolor(QString newColor)
+void Page::setBgcolor(const QString& newColor)
 {
     d->bgcolor = newColor;
 }
 
-QString Page::transition()
+QString Page::transition() const
 {
     return d->transition;
 }
 
-void Page::setTransition(QString transition)
+void Page::setTransition(const QString& transition)
 {
     d->transition = transition;
 }
 
 QStringList Page::availableTransitions()
 {
-    QStringList transitions;
-    transitions << "fade"; // (old page fades out into background, then new page fades in)
-    transitions << "blend"; // (new page blends in the image while old page blends out)
-    transitions << "scroll_right"; // (screen scrolls to the right to a new page; reversed behavior applies when moving to previous page)
-    transitions << "scroll_down"; // (screen scrolls down to a new page; reversed behavior applies when moving to previous page)
-    transitions << "none"; // (no transition animation happens)
-    return transitions;
+    return {
+        QStringLiteral("fade"), // (old page fades out into background, then new page fades in)
+        QStringLiteral("blend"), // (new page blends in the image while old page blends out)
+        QStringLiteral("scroll_right"), // (screen scrolls to the right to a new page; reversed behavior applies when moving to previous page)
+        QStringLiteral("scroll_down"), // (screen scrolls down to a new page; reversed behavior applies when moving to previous page)
+        QStringLiteral("none") // (no transition animation happens)
+    };
 }
 
-QStringList Page::titleForAllLanguages()
+QStringList Page::titleForAllLanguages() const
 {
     return d->title.values();
 }
 
-QString Page::title(QString language)
+QString Page::title(const QString& language) const
 {
     return d->title.value(language);
 }
 
-void Page::setTitle(QString title, QString language)
+void Page::setTitle(const QString& title, const QString& language)
 {
     if(title.isEmpty())
     {
@@ -204,27 +201,27 @@ void Page::setTitle(QString title, QString language)
     }
 }
 
-QString Page::imageHref()
+QString Page::imageHref() const
 {
     return d->imageHref;
 }
 
-void Page::setImageHref(QString imageHref)
+void Page::setImageHref(const QString& imageHref)
 {
     d->imageHref = imageHref;
 }
 
-QList<Textlayer *> Page::textLayersForAllLanguages()
+QList<Textlayer *> Page::textLayersForAllLanguages() const
 {
     return d->textLayers.values();
 }
 
-Textlayer * Page::textLayer(QString language)
+Textlayer * Page::textLayer(const QString& language) const
 {
     return d->textLayers.value(language);
 }
 
-void Page::setTextLayer(Textlayer* textlayer, QString language)
+void Page::setTextLayer(Textlayer* textlayer, const QString& language)
 {
     if(textlayer)
     {
@@ -236,17 +233,17 @@ void Page::setTextLayer(Textlayer* textlayer, QString language)
     }
 }
 
-QList<Frame *> Page::frames()
+QList<Frame *> Page::frames() const
 {
     return d->frames;
 }
 
-Frame * Page::frame(int index)
+Frame * Page::frame(int index) const
 {
     return d->frames.at(index);
 }
 
-int Page::frameIndex(Frame* frame)
+int Page::frameIndex(Frame* frame) const
 {
     return d->frames.indexOf(frame);
 }
@@ -277,17 +274,17 @@ bool Page::swapFrames(Frame* swapThis, Frame* withThis)
     return false;
 }
 
-QList<Jump *> Page::jumps()
+QList<Jump *> Page::jumps() const
 {
     return d->jumps;
 }
 
-Jump * Page::jump(int index)
+Jump * Page::jump(int index) const
 {
     return d->jumps.at(index);
 }
 
-int Page::jumpIndex(Jump* jump)
+int Page::jumpIndex(Jump* jump) const
 {
     return d->jumps.indexOf(jump);
 }
@@ -318,7 +315,7 @@ bool Page::swapJumps(Jump* swapThis, Jump* withThis)
     return false;
 }
 
-bool Page::isCoverPage()
+bool Page::isCoverPage() const
 {
     return d->isCoverPage;
 }

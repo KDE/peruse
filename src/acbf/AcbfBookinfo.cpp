@@ -61,10 +61,7 @@ BookInfo::BookInfo(Metadata* parent)
     d->coverPage->setIsCoverPage(true);
 }
 
-BookInfo::~BookInfo()
-{
-    delete d;
-}
+BookInfo::~BookInfo() = default;
 
 Metadata * BookInfo::metadata()
 {
@@ -73,7 +70,7 @@ Metadata * BookInfo::metadata()
 
 void BookInfo::toXml(QXmlStreamWriter* writer)
 {
-    writer->writeStartElement("book-info");
+    writer->writeStartElement(QStringLiteral("book-info"));
 
     Q_FOREACH(Author* author, d->author) {
         author->toXml(writer);
@@ -82,8 +79,8 @@ void BookInfo::toXml(QXmlStreamWriter* writer)
     QHashIterator<QString, QString> titles(d->title);
     while(titles.hasNext()) {
         titles.next();
-        writer->writeStartElement("book-title");
-        writer->writeAttribute("lang", titles.key());
+        writer->writeStartElement(QStringLiteral("book-title"));
+        writer->writeAttribute(QStringLiteral("lang"), titles.key());
         writer->writeCharacters(titles.value());
         writer->writeEndElement();
     }
@@ -91,8 +88,8 @@ void BookInfo::toXml(QXmlStreamWriter* writer)
     QHashIterator<QString, int> genres(d->genre);
     while(genres.hasNext()) {
         genres.next();
-        writer->writeStartElement("genre");
-        writer->writeAttribute("match", QString::number(genres.value()));
+        writer->writeStartElement(QStringLiteral("genre"));
+        writer->writeAttribute(QStringLiteral("match"), QString::number(genres.value()));
         writer->writeCharacters(genres.key());
         writer->writeEndElement();
     }
@@ -109,10 +106,10 @@ void BookInfo::toXml(QXmlStreamWriter* writer)
     QHashIterator<QString, QStringList> annotations(d->annotation);
     while(annotations.hasNext()) {
         annotations.next();
-        writer->writeStartElement("annotation");
-        writer->writeAttribute("lang", annotations.key());
+        writer->writeStartElement(QStringLiteral("annotation"));
+        writer->writeAttribute(QStringLiteral("lang"), annotations.key());
         Q_FOREACH(const QString& paragraph, annotations.value()) {
-            writer->writeStartElement("p");
+            writer->writeStartElement(QStringLiteral("p"));
             writer->writeCharacters(paragraph);
             writer->writeEndElement();
         }
@@ -122,15 +119,15 @@ void BookInfo::toXml(QXmlStreamWriter* writer)
     QHashIterator<QString, QStringList> keywords(d->keywords);
     while(keywords.hasNext()) {
         keywords.next();
-        writer->writeStartElement("keywords");
-        writer->writeAttribute("lang", keywords.key());
+        writer->writeStartElement(QStringLiteral("keywords"));
+        writer->writeAttribute(QStringLiteral("lang"), keywords.key());
         writer->writeCharacters(keywords.value().join(','));
         writer->writeEndElement();
     }
 
     d->coverPage->toXml(writer);
 
-    writer->writeStartElement("languages");
+    writer->writeStartElement(QStringLiteral("languages"));
     Q_FOREACH(Language* language, d->languages) {
         language->toXml(writer);
     }
@@ -153,7 +150,7 @@ bool BookInfo::fromXml(QXmlStreamReader *xmlReader)
 {
     while(xmlReader->readNextStartElement())
     {
-        if(xmlReader->name() == "author")
+        if(xmlReader->name() == QStringLiteral("author"))
         {
             Author* newAuthor = new Author(metadata());
             if(!newAuthor->fromXml(xmlReader)) {
@@ -161,20 +158,20 @@ bool BookInfo::fromXml(QXmlStreamReader *xmlReader)
             }
             d->author.append(newAuthor);
         }
-        else if(xmlReader->name() == "book-title")
+        else if(xmlReader->name() == QStringLiteral("book-title"))
         {
-            QString language = xmlReader->attributes().value("lang").toString();
+            QString language = xmlReader->attributes().value(QStringLiteral("lang")).toString();
             d->title[language] = xmlReader->readElementText(QXmlStreamReader::IncludeChildElements);
         }
-        else if(xmlReader->name() == "genre")
+        else if(xmlReader->name() == QStringLiteral("genre"))
         {
-            int match = xmlReader->attributes().value("match").toInt();
+            int match = xmlReader->attributes().value(QStringLiteral("match")).toInt();
             d->genre[xmlReader->readElementText(QXmlStreamReader::IncludeChildElements)] = match;
         }
-        else if(xmlReader->name() == "characters")
+        else if(xmlReader->name() == QStringLiteral("characters"))
         {
             while(xmlReader->readNextStartElement()) {
-                if(xmlReader->name() == "name") {
+                if(xmlReader->name() == QStringLiteral("name")) {
                     d->characters.append(xmlReader->readElementText(QXmlStreamReader::IncludeChildElements));
                 }
                 else {
@@ -183,12 +180,12 @@ bool BookInfo::fromXml(QXmlStreamReader *xmlReader)
             }
             qDebug() << "Created character entries, we now have" << d->characters.count() << "characters";
         }
-        else if(xmlReader->name() == "annotation")
+        else if(xmlReader->name() == QStringLiteral("annotation"))
         {
-            QString language = xmlReader->attributes().value("lang").toString();
+            QString language = xmlReader->attributes().value(QStringLiteral("lang")).toString();
             QStringList paragraphs;
             while(xmlReader->readNextStartElement()) {
-                if(xmlReader->name() == "p") {
+                if(xmlReader->name() == QStringLiteral("p")) {
                     paragraphs.append(xmlReader->readElementText(QXmlStreamReader::IncludeChildElements));
                 }
                 else {
@@ -197,21 +194,21 @@ bool BookInfo::fromXml(QXmlStreamReader *xmlReader)
             }
             d->annotation[language] = paragraphs;
         }
-        else if(xmlReader->name() == "keywords")
+        else if(xmlReader->name() == QStringLiteral("keywords"))
         {
-            QString language = xmlReader->attributes().value("lang").toString();
+            QString language = xmlReader->attributes().value(QStringLiteral("lang")).toString();
             d->keywords[language] = xmlReader->readElementText(QXmlStreamReader::IncludeChildElements).split(',');
         }
-        else if(xmlReader->name() == "coverpage")
+        else if(xmlReader->name() == QStringLiteral("coverpage"))
         {
             if(!d->coverPage->fromXml(xmlReader)) {
                 return false;
             }
         }
-        else if(xmlReader->name() == "languages")
+        else if(xmlReader->name() == QStringLiteral("languages"))
         {
             while(xmlReader->readNextStartElement()) {
-                if(xmlReader->name() == "text-layer") {
+                if(xmlReader->name() == QStringLiteral("text-layer")) {
                     Language* newLanguage = new Language(this);
                     newLanguage->fromXml(xmlReader);
                     d->languages.append(newLanguage);
@@ -221,19 +218,19 @@ bool BookInfo::fromXml(QXmlStreamReader *xmlReader)
                 }
             }
         }
-        else if(xmlReader->name() == "sequence")
+        else if(xmlReader->name() == QStringLiteral("sequence"))
         {
             Sequence* newSequence = new Sequence(this);
             newSequence->fromXml(xmlReader);
             d->sequence.append(newSequence);
         }
-        else if(xmlReader->name() == "databaseref")
+        else if(xmlReader->name() == QStringLiteral("databaseref"))
         {
             DatabaseRef* newDatabaseRef = new DatabaseRef(this);
             newDatabaseRef->fromXml(xmlReader);
             d->databaseRef.append(newDatabaseRef);
         }
-        else if(xmlReader->name() == "content-rating")
+        else if(xmlReader->name() == QStringLiteral("content-rating"))
         {
             ContentRating* newContentRating = new ContentRating(this);
             newContentRating->fromXml(xmlReader);
@@ -383,35 +380,36 @@ void BookInfo::removeGenre(QString genre)
 
 QStringList BookInfo::availableGenres()
 {
-    QStringList genres;
-    genres << "science_fiction";
-    genres << "fantasy";
-    genres << "adventure";
-    genres << "horror";
-    genres << "mystery";
-    genres << "crime";
-    genres << "military"; // (war ...)
-    genres << "real_life";
-    genres << "superhero"; // (e.g. Superman, Spiderman … or Super Villains)
-    genres << "humor";
-    genres << "western";
-    genres << "manga";
-    genres << "politics";
-    genres << "caricature";
-    genres << "sports";
-    genres << "history"; // (historical comics)
-    genres << "biography"; // (biographical comics)
-    genres << "education"; // (education and science)
-    genres << "computer"; // (computers related)
-    genres << "religion";
-    genres << "romance";
-    genres << "children";
-    genres << "non-fiction";
-    genres << "adult";
-    genres << "alternative"; // (abstract, underground ...)
-    genres << "other";
-    return genres;
+    return {
+        QStringLiteral("science_fiction"),
+        QStringLiteral("fantasy"),
+        QStringLiteral("adventure"),
+        QStringLiteral("horror"),
+        QStringLiteral("mystery"),
+        QStringLiteral("crime"),
+        QStringLiteral("military"), // (war ...)
+        QStringLiteral("real_life"),
+        QStringLiteral("superhero"), // (e.g. Superman, Spiderman … or Super Villains)
+        QStringLiteral("humor"),
+        QStringLiteral("western"),
+        QStringLiteral("manga"),
+        QStringLiteral("politics"),
+        QStringLiteral("caricature"),
+        QStringLiteral("sports"),
+        QStringLiteral("history"), // (historical comics)
+        QStringLiteral("biography"), // (biographical comics)
+        QStringLiteral("education"), // (education and science)
+        QStringLiteral("computer"), // (computers related)
+        QStringLiteral("religion"),
+        QStringLiteral("romance"),
+        QStringLiteral("children"),
+        QStringLiteral("non-fiction"),
+        QStringLiteral("adult"),
+        QStringLiteral("alternative"), // (abstract, underground ...)
+        QStringLiteral("other")
+    };
 }
+
 
 QStringList BookInfo::characters()
 {

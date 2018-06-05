@@ -39,14 +39,11 @@ Data::Data(Document* parent)
     qRegisterMetaType<Data*>("Data*");
 }
 
-Data::~Data()
-{
-    delete d;
-}
+Data::~Data() = default;
 
 void Data::toXml(QXmlStreamWriter* writer)
 {
-    writer->writeStartElement("data");
+    writer->writeStartElement(QStringLiteral("data"));
 
     Q_FOREACH(Binary* binary, d->binaries) {
         binary->toXml(writer);
@@ -59,7 +56,7 @@ bool Data::fromXml(QXmlStreamReader* xmlReader)
 {
     while(xmlReader->readNextStartElement())
     {
-        if(xmlReader->name() == "binary")
+        if(xmlReader->name() == QStringLiteral("binary"))
         {
             Binary* newBinary = new Binary(this);
             if(!newBinary->fromXml(xmlReader)) {
@@ -80,7 +77,7 @@ bool Data::fromXml(QXmlStreamReader* xmlReader)
     return !xmlReader->hasError();
 }
 
-Binary* Data::binary(QString id)
+Binary* Data::binary(const QString& id) const
 {
     return d->binaries.value(id);
 }

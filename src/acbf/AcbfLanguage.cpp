@@ -42,34 +42,31 @@ Language::Language(BookInfo* parent)
 {
 }
 
-Language::~Language()
-{
-    delete d;
-}
+Language::~Language() = default;
 
 void Language::toXml(QXmlStreamWriter* writer)
 {
-    writer->writeStartElement("text-layer");
-    writer->writeAttribute("lang", d->language);
-    writer->writeAttribute("show", d->show ? "true" : "false");
+    writer->writeStartElement(QStringLiteral("text-layer"));
+    writer->writeAttribute(QStringLiteral("lang"), d->language);
+    writer->writeAttribute(QStringLiteral("show"), d->show ? QStringLiteral("true") : QStringLiteral("false"));
     writer->writeEndElement();
 }
 
 bool Language::fromXml(QXmlStreamReader *xmlReader)
 {
-    setShow(xmlReader->attributes().value("show").toString().toLower() == "true");
-    setLanguage(xmlReader->attributes().value("lang").toString());
+    setShow(xmlReader->attributes().value(QStringLiteral("show")).toString().toLower() == QStringLiteral("true"));
+    setLanguage(xmlReader->attributes().value(QStringLiteral("lang")).toString());
     xmlReader->skipCurrentElement();
     qDebug() << Q_FUNC_INFO << "Created language" << language();
     return true;
 }
 
-void Language::setLanguage(QString language)
+void Language::setLanguage(const QString& language)
 {
     d->language = language;
 }
 
-QString Language::language()
+QString Language::language() const
 {
     return d->language;
 }
@@ -79,7 +76,7 @@ void Language::setShow(bool show)
     d->show = show;
 }
 
-bool Language::show()
+bool Language::show() const
 {
     return d->show;
 }

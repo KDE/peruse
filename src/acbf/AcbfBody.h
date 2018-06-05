@@ -22,6 +22,8 @@
 #ifndef ACBFBODY_H
 #define ACBFBODY_H
 
+#include <memory>
+
 #include "AcbfDocument.h"
 
 #include <QDate>
@@ -36,26 +38,28 @@ class ACBF_EXPORT Body : public QObject
     Q_OBJECT
 public:
     explicit Body(Document* parent = nullptr);
-    ~Body() override;
+    ~Body();
 
-    Document* document();
+    Document* document() const;
 
     void toXml(QXmlStreamWriter *writer);
     bool fromXml(QXmlStreamReader *xmlReader);
 
-    QString bgcolor();
-    void setBgcolor(QString newColor);
+    QString bgcolor() const;
+    void setBgcolor(const QString& newColor);
 
-    QList<Page*> pages();
-    Page* page(int index);
-    int pageIndex(Page* page);
+    QList<Page*> pages() const;
+    Page* page(int index) const;
+    int pageIndex(Page* page) const;
+
     // If afterIndex is larger than zero, the insertion will happen at that index
     void addPage(Page* page, int index = -1);
     void removePage(Page* page);
     bool swapPages(Page* swapThis, Page* withThis);
+
 private:
     class Private;
-    Private* d;
+    std::unique_ptr<Private> d;
 };
 }
 

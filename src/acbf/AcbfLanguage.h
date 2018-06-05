@@ -22,6 +22,8 @@
 #ifndef ACBFLANGUAGEINFO_H
 #define ACBFLANGUAGEINFO_H
 
+#include <memory>
+
 #include "AcbfBookinfo.h"
 
 namespace AdvancedComicBookFormat
@@ -38,14 +40,14 @@ public:
     void toXml(QXmlStreamWriter* writer);
     bool fromXml(QXmlStreamReader *xmlReader);
 
-    void setLanguage(QString language);
-    QString language();
+    void setLanguage(const QString& language);
+    QString language() const;
 
     void setShow(bool show);
-    bool show();
+    bool show() const;
 private:
     class Private;
-    Private* d;
+    std::unique_ptr<Private> d;
 };
 }
 

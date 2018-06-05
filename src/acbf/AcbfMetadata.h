@@ -22,6 +22,8 @@
 #ifndef ACBFMETADATA_H
 #define ACBFMETADATA_H
 
+#include <memory>
+
 #include "AcbfDocument.h"
 
 class QXmlStreamWriter;
@@ -38,18 +40,18 @@ public:
     explicit Metadata(Document* parent = nullptr);
     ~Metadata() override;
 
-    Document* document();
+    Document* document() const;
 
     void toXml(QXmlStreamWriter *writer);
     bool fromXml(QXmlStreamReader *xmlReader);
 
-    BookInfo* bookInfo();
+    BookInfo* bookInfo() const;
     Q_SIGNAL void bookInfoChanged();
-    PublishInfo* publishInfo();
-    DocumentInfo* documentInfo();
+    PublishInfo* publishInfo() const;
+    DocumentInfo* documentInfo() const;
 private:
     class Private;
-    Private* d;
+    std::unique_ptr<Private> d;
 };
 }
 

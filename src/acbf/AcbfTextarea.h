@@ -22,6 +22,8 @@
 #ifndef ACBFTEXTAREA_H
 #define ACBFTEXTAREA_H
 
+#include <memory>
+
 #include "AcbfTextlayer.h"
 
 #include <QPoint>
@@ -35,40 +37,42 @@ public:
     explicit Textarea(Textlayer* parent = nullptr);
     ~Textarea() override;
 
+    static QStringList availableTypes();
+
     void toXml(QXmlStreamWriter* writer);
     bool fromXml(QXmlStreamReader *xmlReader);
 
-    QList<QPoint> points();
-    QPoint point(int index);
-    int pointIndex(QPoint point);
+    QList<QPoint> points() const;
+    QPoint point(int index) const;
+    int pointIndex(const QPoint& point) const;
+
     // If afterIndex is larger than zero, the insertion will happen at that index
-    void addPoint(QPoint point, int index = -1);
-    void removePoint(QPoint point);
-    bool swapPoints(QPoint swapThis, QPoint withThis);
+    void addPoint(const QPoint& point, int index = -1);
+    void removePoint(const QPoint& point);
+    bool swapPoints(const QPoint& swapThis, const QPoint& withThis);
 
-    QString bgcolor();
-    void setBgcolor(QString newColor = "");
+    QString bgcolor() const;
+    void setBgcolor(const QString& newColor = QString());
 
-    int textRotation();
+    int textRotation() const;
     void setTextRotation(int rotation = 0);
 
-    QString type();
-    void setType(QString type = "speech");
-    static QStringList availableTypes();
+    QString type() const;
+    void setType(const QString& type = QStringLiteral("speech"));
 
-    bool inverted();
+    bool inverted() const;
     void setInverted(bool inverted = false);
 
-    bool transparent();
+    bool transparent() const;
     void setTransparent(bool transparent = false);
 
-    QStringList paragraphs();
+    QStringList paragraphs() const;
     // Allowed sub-elements: strong, emphasis, strikethrough, sub, sup, a (with mandatory href attribute only)
     // Deprecated sub-elements (superceded by...): code (type option code), inverted (textarea option inverted)
-    void setParagraphs(QStringList paragraphs);
+    void setParagraphs(const QStringList& paragraphs);
 private:
     class Private;
-    Private* d;
+    std::unique_ptr<Private> d;
 };
 }
 

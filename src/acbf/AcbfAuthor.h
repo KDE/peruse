@@ -23,6 +23,7 @@
 #define ACBFAUTHORINFO_H
 
 #include "AcbfMetadata.h"
+#include <memory>
 
 namespace AdvancedComicBookFormat
 {
@@ -32,36 +33,36 @@ class ACBF_EXPORT Author : public QObject
 public:
     // Author is used in both Bookinfo and Documentinfo, and as such it is parented to Metadata
     explicit Author(Metadata* parent = nullptr);
-    ~Author() override;
+    ~Author();
 
     void toXml(QXmlStreamWriter* writer);
     bool fromXml(QXmlStreamReader *xmlReader);
 
-    Q_INVOKABLE QString displayName();
+    Q_INVOKABLE QString displayName() const;
 
-    Q_INVOKABLE QString activity();
-    Q_INVOKABLE void setActivity(QString activity);
+    Q_INVOKABLE QString activity() const;
+    Q_INVOKABLE void setActivity(const QString& activity);
     Q_INVOKABLE static QStringList availableActivities();
 
     // The language this author worked in for this book. Activity dependent (writer, translator, letterer...)
-    Q_INVOKABLE QString language();
-    Q_INVOKABLE void setLanguage(QString language = "");
+    Q_INVOKABLE QString language() const;
+    Q_INVOKABLE void setLanguage(const QString& language = QString());
 
-    Q_INVOKABLE QString firstName();
-    Q_INVOKABLE void setFirstName(QString name);
-    Q_INVOKABLE QString middleName();
-    Q_INVOKABLE void setMiddleName(QString name);
-    Q_INVOKABLE QString lastName();
-    Q_INVOKABLE void setLastName(QString name);
-    Q_INVOKABLE QString nickName();
-    Q_INVOKABLE void setNickName(QString name);
-    Q_INVOKABLE QString homePage();
-    Q_INVOKABLE void setHomePage(QString homepage);
-    Q_INVOKABLE QString email();
-    Q_INVOKABLE void setEmail(QString email);
+    Q_INVOKABLE QString firstName() const;
+    Q_INVOKABLE void setFirstName(const QString& name);
+    Q_INVOKABLE QString middleName() const;
+    Q_INVOKABLE void setMiddleName(const QString& name);
+    Q_INVOKABLE QString lastName() const;
+    Q_INVOKABLE void setLastName(const QString& name);
+    Q_INVOKABLE QString nickName() const;
+    Q_INVOKABLE void setNickName(const QString& name);
+    Q_INVOKABLE QString homePage() const;
+    Q_INVOKABLE void setHomePage(const QString& homepage);
+    Q_INVOKABLE QString email() const;
+    Q_INVOKABLE void setEmail(const QString& email);
 private:
     class Private;
-    Private* d;
+    std::unique_ptr<Private> d;
 };
 }
 

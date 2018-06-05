@@ -40,43 +40,40 @@ ContentRating::ContentRating(BookInfo* parent)
 {
 }
 
-ContentRating::~ContentRating()
-{
-    delete d;
-}
+ContentRating::~ContentRating() = default;
 
 void ContentRating::toXml(QXmlStreamWriter* writer)
 {
-    writer->writeStartElement("content-rating");
-    writer->writeAttribute("type", d->type);
+    writer->writeStartElement(QStringLiteral("content-rating"));
+    writer->writeAttribute(QStringLiteral("type"), d->type);
     writer->writeCharacters(d->rating);
     writer->writeEndElement();
 }
 
 bool ContentRating::fromXml(QXmlStreamReader *xmlReader)
 {
-    setType(xmlReader->attributes().value("type").toString());
+    setType(xmlReader->attributes().value(QStringLiteral("type")).toString());
     setRating(xmlReader->readElementText(QXmlStreamReader::IncludeChildElements));
     qDebug() << Q_FUNC_INFO << "Created a content rating for" << type() << "with rating" << rating();
     return true;
 }
 
-QString ContentRating::type()
+QString ContentRating::type() const
 {
     return d->type;
 }
 
-void ContentRating::setType(QString type)
+void ContentRating::setType(const QString& type)
 {
     d->type = type;
 }
 
-QString ContentRating::rating()
+QString ContentRating::rating() const
 {
     return d->rating;
 }
 
-void ContentRating::setRating(QString rating)
+void ContentRating::setRating(const QString& rating)
 {
     d->rating = rating;
 }

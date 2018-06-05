@@ -44,40 +44,37 @@ Sequence::Sequence(BookInfo* parent)
 {
 }
 
-Sequence::~Sequence()
-{
-    delete d;
-}
+Sequence::~Sequence() = default;
 
 void Sequence::toXml(QXmlStreamWriter* writer)
 {
-    writer->writeStartElement("sequence");
-    writer->writeAttribute("title", d->title);
-    writer->writeAttribute("volume", QString::number(d->volume));
+    writer->writeStartElement(QStringLiteral("sequence"));
+    writer->writeAttribute(QStringLiteral("title"), d->title);
+    writer->writeAttribute(QStringLiteral("volume"), QString::number(d->volume));
     writer->writeCharacters(QString::number(d->number));
     writer->writeEndElement();
 }
 
 bool Sequence::fromXml(QXmlStreamReader *xmlReader)
 {
-    setVolume(xmlReader->attributes().value("volume").toInt());
-    setTitle(xmlReader->attributes().value("title").toString());
+    setVolume(xmlReader->attributes().value(QStringLiteral("volume")).toInt());
+    setTitle(xmlReader->attributes().value(QStringLiteral("title")).toString());
     setNumber(xmlReader->readElementText(QXmlStreamReader::IncludeChildElements).toInt());
     qDebug() << Q_FUNC_INFO << "Created sequence entry, which places this book as number" << number() << "in the series" << title();
     return true;
 }
 
-QString Sequence::title()
+QString Sequence::title() const
 {
     return d->title;
 }
 
-void Sequence::setTitle(QString title)
+void Sequence::setTitle(const QString& title)
 {
     d->title = title;
 }
 
-int Sequence::volume()
+int Sequence::volume() const
 {
     return d->volume;
 }
@@ -87,7 +84,7 @@ void Sequence::setVolume(int volume)
     d->volume = volume;
 }
 
-int Sequence::number()
+int Sequence::number() const
 {
     return d->number;
 }
