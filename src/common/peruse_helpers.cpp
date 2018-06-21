@@ -9,6 +9,7 @@
 #include <QOffscreenSurface>
 #include <QOpenGLFunctions>
 #include <QDebug>
+#include <QDir>
 
 #include <KDeclarative/KDeclarative>
 
