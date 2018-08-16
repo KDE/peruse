@@ -36,7 +36,9 @@ OverlayDrawer {
     property string title: typeof i18n !== "undefined" ? i18n("Actions") : "Actions"
 
     // This can be any list of objects which can be a child of a column
-    property Item topContent: pageStack.currentItem && pageStack.currentItem.contextualTopItems ? pageStack.currentItem.contextualTopItems : null;
+    property Item topContent: pageStack.layers.depth > 1
+        ? (pageStack.layers.currentItem.contextualTopItems ? pageStack.layers.currentItem.contextualTopItems : null)
+        : (pageStack.currentItem && pageStack.currentItem.contextualTopItems ? pageStack.currentItem.contextualTopItems : null);
 
     /**
      * actions: list<Action>
@@ -134,8 +136,8 @@ OverlayDrawer {
                             supportsMouseEvents: true
                             separatorVisible: false
                             label: model ? (model.tooltip ? model.tooltip : model.text) : (modelData.tooltip ? modelData.tooltip : modelData.text)
-                            enabled: model ? model.enabled : modelData.enabled
-                            visible: model ? model.visible : modelData.visible
+                            enabled: model && model.enabled !== undefined ? model.enabled : (modelData.enabled !== undefined ? modelData.enabled : true)
+                            visible: model && model.visible !== undefined ? model.visible : (modelData.visible !== undefined ? modelData.visible : true)
                             opacity: enabled ? 1.0 : 0.6
                             onClicked: {
                                 if (modelData.children!==undefined && modelData.children.length > 0) {
@@ -150,10 +152,8 @@ OverlayDrawer {
                                 }
                             }
                             Icon {
-                                anchors {
-                                    verticalCenter: parent.verticalCenter
-                                    right: parent.right
-                                }
+                                Layout.alignment: Qt.AlignVCenter
+                                Layout.rightMargin: Settings.isMobile ? 0 : Units.gridUnit
                                 height: Units.iconSizes.smallMedium
                                 selected: listItem.checked || listItem.pressed
                                 width: height
