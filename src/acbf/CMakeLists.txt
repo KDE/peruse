@@ -27,4 +27,10 @@ target_link_libraries(acbf
     Qt5::Core
 )
 
+set_target_properties(acbf PROPERTIES
+   VERSION 0.1
+   SOVERSION 0.1
+   EXPORT_NAME AdvancedComicBookFormat
+)
+
 install(TARGETS acbf ${KF5_INSTALL_TARGETS_DEFAULT_ARGS})
