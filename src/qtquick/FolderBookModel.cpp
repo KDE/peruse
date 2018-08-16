@@ -20,7 +20,9 @@
  */
 
 #include "FolderBookModel.h"
+#include <QMimeDatabase>
 #include <QDir>
+#include <KFileMetaData/UserMetaData>
 
 FolderBookModel::FolderBookModel(QObject* parent)
     : BookModel(parent)
@@ -33,16 +35,48 @@ FolderBookModel::~FolderBookModel()
 
 void FolderBookModel::setFilename(QString newFilename)
 {
+    setProcessing(true);
+    clearPages();
+
+    QMimeDatabase mimeDb;
+    QString mimeType = mimeDb.mimeTypeForFile(newFilename).name();
+    QString currentPageFile;
+    if(mimeType == "image/jpeg" || mimeType == "image/png") {
+        QFileInfo file(newFilename);
+        newFilename = file.absolutePath();
+        currentPageFile = file.fileName();
+    }
+
     QDir dir(newFilename);
     if(dir.exists())
     {
         QFileInfoList entries = dir.entryInfoList(QDir::Files, QDir::Name);
+        QLatin1String undesired("thumbs.db");
+        int i = 0;
         Q_FOREACH(const QFileInfo& entry, entries)
         {
+            if(entry.fileName().toLower() == undesired) {
+                continue;
+            }
             addPage(QString("file://").append(entry.canonicalFilePath()), entry.fileName());
+            if(currentPageFile == entry.fileName()) {
+                BookModel::setCurrentPage(i, false);
+            }
+            ++i;
         }
     }
+
     BookModel::setFilename(newFilename);
+
+    // We might have opened this in the past, so reset the current page to the actual one
+    // rather than the filename we tried to open. Recent File is the opened page, rather
+    // than the directory (because it makes for much simpler code), so reset rather than
+    // doing other magic.
+    KFileMetaData::UserMetaData data(filename());
+    if(data.hasAttribute("peruse.currentPage"))
+        BookModel::setCurrentPage(data.attribute("peruse.currentPage").toInt(), false);
+
     emit loadingCompleted(true);
+    setProcessing(false);
 }
 

@@ -489,7 +489,7 @@ Kirigami.Page {
             viewLoader.source = "viewers/cbr.qml";
             attemptFallback = false;
         }
-        if(mimetype == "inode/directory") {
+        if(mimetype == "inode/directory" || mimetype == "image/jpeg" || mimetype == "image/png") {
             viewLoader.source = "viewers/folderofimages.qml";
             attemptFallback = false;
         }
