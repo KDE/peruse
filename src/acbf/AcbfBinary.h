@@ -31,6 +31,23 @@
 class QXmlStreamReader;
 class QXmlStreamWriter;
 
+/**
+ * \brief Class for handling the embedded data in ACBF
+ * 
+ * ACBF allows for embedding images and fonts as Base64 bytearrays.
+ * 
+ * The images are used to allow ACBF to be standalone.
+ * 
+ * The fonts are used to indicate the appropriate style
+ * for text areas.
+ * 
+ * This class holds the bytearray and mimetype,
+ * handling reading and loading from the xml.
+ * 
+ * It does not convert the bytearrays
+ * to the appropriate object.
+ */
+
 namespace AdvancedComicBookFormat
 {
 class Data;
@@ -41,16 +58,53 @@ public:
     explicit Binary(Data* parent = nullptr);
     ~Binary() override;
 
+    /**
+     *\brief Load binary data into xml.
+     */
     void toXml(QXmlStreamWriter *writer);
+    
+    /**
+     * \brief Load binary data from xml.
+     * @return True if the xmlReader encountered no errors.
+     */
     bool fromXml(QXmlStreamReader *xmlReader);
 
+    /**
+     * @return The ID of this binary data element as a QString.
+     * Used to identify it from other parts of the
+     * ACBF document.
+     */
     QString id() const;
+    
+    /**
+     * \brief Set the ID for this binary element.
+     * This is used to reference this element from
+     * other parts of the ACBF document.
+     * @param newId - The new ID as a string.
+     */
     void setId(const QString& newId);
 
+    /**
+     * @return the mimetype of the binary data as a QString.
+     */
     QString contentType() const;
+    
+    /**
+     * \brief Indicate the mimetype of the binary data.
+     * @param newContentType - the mimetype in string format.
+     */
     void setContentType(const QString& newContentType);
 
+    /**
+     * @return The binary data as a QByteArray.
+     */
     QByteArray data() const;
+    
+    /**
+     * \brief Set the binary data to store in this element.
+     * 
+     * @param newData - This should be a QByteArray.
+     */
     void setData(const QByteArray& newData);
 private:
     class Private;

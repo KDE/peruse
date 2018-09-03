@@ -25,6 +25,39 @@
 #include "AcbfMetadata.h"
 #include <memory>
 
+/**
+ * \brief Class for handling ACBF style authors.
+ * 
+ * ACBF style authors have their names split up into
+ * first/middle/last and nickname. This is because
+ * traditionally archives use a lastname, first name
+ * format to catalogue the entry, while in the west
+ * their proper name is firstname/lastname.
+ * 
+ * Nickname is particularly necessary for comics because
+ * many artists use a nom de plume of sorts.
+ * 
+ * activity is similar to EPUB role, but where EPUB uses
+ * MARC relators, ACBF has its own limited list of activities.
+ * These are available as a stringlist from
+ * the available activities function.
+ * 
+ * Authors also have two contact options
+ * available(homepage and email), the official xsd
+ * allows multiple of these.
+ * 
+ * Authors can also have a language assigned.
+ * This is relevant for translator in particular, but
+ * the official xsd does not invalidate any other with
+ * the attribute.
+ * 
+ * Authors should, at minimum have a name, which is either
+ * a nickname, or a first and lastname.
+ * 
+ * TODO: Authors can have multiple email and homepage entries
+ * according to the official xsd.
+ */
+
 namespace AdvancedComicBookFormat
 {
 class ACBF_EXPORT Author : public QObject
@@ -35,30 +68,118 @@ public:
     explicit Author(Metadata* parent = nullptr);
     ~Author();
 
+    /**
+     * Write the data from this author object into the XmlStream.
+     */
     void toXml(QXmlStreamWriter* writer);
+    
+    /**
+     * \brief Load the data from the acbf xml into this author object.
+     * @return True if the xmlReader encountered no errors.
+     */
     bool fromXml(QXmlStreamReader *xmlReader);
 
+    /**
+     * \brief convenience function to put together the different parts
+     * of the author's name into a single string.
+     * @return a single string for the author's name.
+     */
     Q_INVOKABLE QString displayName() const;
 
+    /**
+     * @return The activity this author performed on the book.
+     */
     Q_INVOKABLE QString activity() const;
+    
+    /**
+     * \brief Set the activity this author performed on the book.
+     * @param activity - the activity as a string, should be an entry
+     * of availableActivities().
+     */
     Q_INVOKABLE void setActivity(const QString& activity);
+    
+    /**
+     * @return A list of all the approved activities.
+     */
     Q_INVOKABLE static QStringList availableActivities();
 
-    // The language this author worked in for this book. Activity dependent (writer, translator, letterer...)
+    /**
+     * \brief The language this author worked in for this book. Activity dependent (writer, translator, letterer...)
+     * @return The language in xs:language style language-COUNTRY format.
+     */
     Q_INVOKABLE QString language() const;
+
+    /**
+     * \brief Set the language used by this author, in particular necessary for translator.
+     * 
+     * @param language should be xs:language, which is BCP 47 minus the script.
+     */
     Q_INVOKABLE void setLanguage(const QString& language = QString());
 
+    /**
+     * @return the given name of this author as a QString.
+     */
     Q_INVOKABLE QString firstName() const;
+    
+    /**
+     * \brief Set the given name of this author.
+     * @param name - the given name as a string.
+     */
     Q_INVOKABLE void setFirstName(const QString& name);
+    
+    /**
+     * @return the middles name(s) of this author as a QString.
+     */
     Q_INVOKABLE QString middleName() const;
+    
+    /**
+     * \brief Set the middles name(s) of this author.
+     * @param name - the middle name(s) as a string.
+     */
     Q_INVOKABLE void setMiddleName(const QString& name);
+    
+    /**
+     * @return the family name of this author as a QString.
+     */
     Q_INVOKABLE QString lastName() const;
+    
+    /**
+     * \brief Set the family name of this author.
+     * @param name - the family name as a string.
+     */
     Q_INVOKABLE void setLastName(const QString& name);
+    
+    /**
+     * @return the nick name of this author as a QString.
+     */
     Q_INVOKABLE QString nickName() const;
+    
+    /**
+     * \brief set the nick name of this author.
+     * @param name - the nickname as a string.
+     */
     Q_INVOKABLE void setNickName(const QString& name);
+    
+    /**
+     * @return the homepage associated with this author as a QString.
+     */
     Q_INVOKABLE QString homePage() const;
+    
+    /**
+     * \brief Set the homepage associated with this author.
+     * @param homepage - the url of the homepage as a string.
+     */
     Q_INVOKABLE void setHomePage(const QString& homepage);
+    
+    /**
+     * @return The email adress associated with this author as a QString.
+     */
     Q_INVOKABLE QString email() const;
+    
+    /**
+     * \brief Set the email adress associated with this author.
+     * @param email - email as a string.
+     */
     Q_INVOKABLE void setEmail(const QString& email);
 private:
     class Private;

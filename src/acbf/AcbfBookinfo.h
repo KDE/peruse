@@ -28,6 +28,44 @@
 
 #include <QHash>
 
+/**
+ * \brief Class for handling the book metadata.
+ * 
+ * ACBF book-info is all the metadata that relates
+ * to the story inside.
+ * 
+ * This class holds all the authors, titles, languages,
+ * summaries, genres, keywords, hashtags and more.
+ * 
+ * It also handles adding and removing, as well as storing
+ * and reading it from the xml.
+ * 
+ * ACBF can hold multiple authors per book. Authors have their own object.
+ * 
+ * ACBF can hold titles, annotations(summaries or descriptions) and
+ * a list of comma seperated keywords in several languages.
+ * 
+ * Annotations in particular are a stringlist of paragraphs.
+ * 
+ * ACBF's language support is further detailed in the Language object.
+ * 
+ * ACBF can have multiple genres, but they are limited to a list of keys, given
+ * by availableGenres().
+ * Genres can also indicate how much they apply on the given story, using
+ * a match percentage. This allows noting that a story is 80% romance, and
+ * 20% western for example.
+ * 
+ * ACBF can also hold character names. Character names are a type of tag, and
+ * especially relevant with American style multiverses, but also in Creative
+ * Commons stories because the permissive licenses allow for easier reusage of
+ * existing characters.
+ * 
+ * The coverpage is defined in the book-info as a Page object.
+ * 
+ * Finally, ACBF can hold metadata about database references, sequences and
+ * content rating. All these too have their own objects.
+ */
+
 namespace AdvancedComicBookFormat
 {
 class Author;
@@ -49,64 +87,281 @@ public:
 
     Metadata* metadata();
 
+    /**
+     * \brief write the whole book-info section to the XML writer.
+     */
     void toXml(QXmlStreamWriter *writer);
+    
+    /**
+     * \brief load the whole book-info section from the xml into this object.
+     * @return True if the xmlReader encountered no errors.
+     */
     bool fromXml(QXmlStreamReader *xmlReader);
 
+    /**
+     * @return The list of authors that worked on this book as author objects.
+     */
     QList<Author*> author();
+    
+    /**
+     * @return The list of authors that worked on this book as
+     * a stringlist of names.
+     */
     QStringList authorNames() const;
+    
+    /**
+     * \brief get an author object by index.
+     * @param index - the index of the author.
+     */
     Q_INVOKABLE Author* getAuthor(int index) const;
+    
+    /**
+     * \brief add an author to the list.
+     * @param activity - the role this author played.
+     * @param language - the language of the author in language code, country
+     * code format joined by a dash (not an underscore).
+     * @param firstName - the given name of the author.
+     * @param middleName - the middle name(s) of the author as a string.
+     * @param lastName - the family name of the author.
+     * @param nickName - the nickname of the author.
+     * @param homePage - a homepage url to associate with this author.
+     * @param email - an email adress to associate with this author.
+     */
     Q_INVOKABLE void addAuthor(QString activity, QString language, QString firstName, QString middleName, QString lastName, QString nickName, QString homePage, QString email);
+    /**
+     * \brief make changes to an author in the list.
+     * @param index - The index of this author in the author list.
+     * @param activity - the role this author played.
+     * @param language - the language of the author in language code, country
+     * code format joined by a dash (not an underscore).
+     * @param firstName - the given name of the author.
+     * @param middleName - the middle name(s) of the author as a string.
+     * @param lastName - the family name of the author.
+     * @param nickName - the nickname of the author.
+     * @param homePage - a homepage url to associate with this author.
+     * @param email - an email adress to associate with this author.
+     */
     Q_INVOKABLE void setAuthor(int index, QString activity, QString language, QString firstName, QString middleName, QString lastName, QString nickName, QString homePage, QString email);
+    /**
+     * \brief remove an author in the list.
+     * @param index - the index of the author to remove.
+     */
     Q_INVOKABLE void removeAuthor(int index);
+    /**
+     * \brief add an author to the list.
+     * @param author - the author object to add.
+     */
     void addAuthor(Author* author);
+    /**
+     * \brief remove an author to the list.
+     * @param author - the author object to remove.
+     */
     void removeAuthor(Author* author);
+    /**
+     * \brief triggers when the authors list changes.
+     */
     Q_SIGNAL void authorsChanged();
 
+    /**
+     * \brief this holds a list of titles regardless of language.
+     * @return a stringlist with all the titles.
+     */
     Q_INVOKABLE QStringList titleForAllLanguages();
+    /**
+     * @return a list of the languages the titles are in.
+     */
     Q_INVOKABLE QStringList titleLanguages();
+    /**
+     * \brief get the title for the given language.
+     * @param language - the language of which to return the title for.
+     * @return The title for the given language code.
+     * When no language is supplied, returns english title.
+     */
     Q_INVOKABLE QString title(QString language = "");
+    /**
+     * \brief set the title for the given language code.
+     * @param title - the title as a QString
+     * @param language - the language code in language code, country
+     * code format joined by a dash (not an underscore).
+     * TODO: title() defaults to English when no language is given, but setTitle() does not...
+     */
     Q_INVOKABLE void setTitle(QString title, QString language = "");
+    
+    /**
+     * \brief triggers when a title is set for any language.
+     */
     Q_SIGNAL void titleChanged();
 
+    /**
+     * @return returns a hash of genre keys and their match percentage.
+     */
     Q_INVOKABLE QHash<QString, int> genre();
+    /**
+     * @return a list of strings for the genres.
+     */
     Q_INVOKABLE QStringList genres() const;
+    /**
+     * @param genre - the genre for which to return the percentage.
+     * @return an integer between 0 to 100 representing the match
+     * percentage of the given genre.
+     */
     Q_INVOKABLE int genrePercentage(QString genre) const;
+    /**
+     * \brief Set a genre and their match percentage.
+     * @param genre - the name of the genre to add.
+     * @param matchPercentage - the percentage of how much this genre matches.
+     */
     Q_INVOKABLE void setGenre(QString genre, int matchPercentage = 100);
+    /**
+     * \brief remove the genre from the hashlist.
+     * @param genre - the genre name to remove.
+     */
     Q_INVOKABLE void removeGenre(QString genre);
+    /**
+     * \brief triggers when genres are set or removed.
+     */
     Q_SIGNAL void genresChanged();
+    /**
+     * \brief the list of approved genre names.
+     */
     Q_INVOKABLE static QStringList availableGenres();
 
+    /**
+     * @return character names as a stringlist.
+     */
     Q_INVOKABLE QStringList characters();
+    /**
+     * \brief add a character to the characters list.
+     * @param name - the name of the character to add.
+     */
     Q_INVOKABLE void addCharacter(QString name);
+    /**
+     * \brief remove a character from the character list.
+     * @param name - the name of the character to remove.
+     */
     Q_INVOKABLE void removeCharacter(QString name);
+    /**
+     * \brief this triggers when the character name list is changed.
+     */
     Q_SIGNAL void charactersChanged();
 
+    /**
+     * @return a list of annotations, which in turn are stringlists.
+     */
     Q_INVOKABLE QList<QStringList> annotationsForAllLanguage();
+    /**
+     * @return a list of languages the annotation is available in.
+     */
     Q_INVOKABLE QStringList annotationLanguages();
+    /**
+     * @param language - the language for which to return the annotation.
+     * @return the annotation for the given language
+     * as a stringlist of paragraphs
+     */
     Q_INVOKABLE QStringList annotation(QString language = ""); // empty string means "default language", as (un)defined by the specification...
+    /**
+     * \brief set an annotation for the given language.
+     * @param annotation - A stringlist of paragraphs which make
+     * up the annotiation.
+     * @param language - The language for which to set the annotation in
+     * language code, country code format joined by a dash (not an underscore).
+     */
     Q_INVOKABLE void setAnnotation(QStringList annotation, QString language = "");
 
+    /**
+     * @return a hashmap of languages and the keyword stringlists.
+     */
     QHash<QString, QStringList> keywordsForAllLanguage();
+    /**
+     * @param language - the language for which to return the keywords for.
+     * @return a stringlist of keywords in the given language.
+     */
     QStringList keywords(QString language = "");
+    /**
+     * \brief set the list of keywords for the given language.
+     * @param annotation - A stringlist of keywords
+     * @param language - The language for which to set the annotation in
+     * language code, country code format joined by a dash (not an underscore).
+     */
     void setKeywords(QStringList keywords, QString language = "");
 
+    /**
+     * @return the coverpage as a page object.
+     */
     Page* coverpage();
+    /**
+     * \brief set a cover page.
+     * @param newCover
+     */
     void setCoverpage(Page* newCover);
 
+    /**
+     * @return a list of language objects for determining translations.
+     */
     QList<Language*> languages();
+    /**
+     * \brief add a language to the list of translations.
+     * @param language - language object to add.
+     */
     void addLanguage(Language* language);
+    /**
+     * \brief remove a language from the translations.
+     * @param language - language object to remove.
+     */
     void removeLanguage(Language* language);
 
+    /**
+     * @return a list of sequence objects that describe the series and
+     * collections this book is part of.
+     */
     QList<Sequence*> sequence();
+    /**
+     * \brief add a sequence object to indicate this book is part of one.
+     * @param sequence - the sequence object that describes this book's place in
+     * a sequence.
+     */
     void addSequence(Sequence* sequence);
+    /**
+     * \brief remove a sequence object from the list of sequences this book is
+     * part of.
+     * @param sequence - the sequence object that describes this book's place in
+     * a sequence.
+     */
     void removeSequence(Sequence* sequence);
 
+    /**
+     * @returns a list of entries that this book has in various databases.
+     */
     QList<DatabaseRef*> databaseRef();
+    /**
+     * \brief add a database entry that this book has.
+     * @param databaseRef - a databaseRef object describing this work's place
+     * in a database.
+     */
     void addDatabaseRef(DatabaseRef* databaseRef);
+    /**
+     * \brief remove a database entry that this book has.
+     * @param databaseRef - a databaseRef object describing this work's place
+     * in a database.
+     */
     void removeDatabaseRef(DatabaseRef* databaseRef);
 
+    /**
+     * @returns a list of contentRating objects describing the audience for this
+     * book.
+     */
     QList<ContentRating*> contentRating();
+    /**
+     * \brief add a contentRating object to the contentratings.
+     * @param contentRating - a contentRating object describing the label and
+     * contentrating system.
+     */
     void addContentRating(ContentRating* contentRating);
+    /**
+     * \brief remove a contentRating object from the contentRatings.
+     * @param contentRating - a contentRating object describing the label and
+     * contentrating system.
+     */
     void removeContentRating(ContentRating* contentRating);
 private:
     class Private;

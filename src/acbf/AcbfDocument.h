@@ -26,7 +26,23 @@
 
 #include <QObject>
 #include "acbf_export.h"
-
+/**
+ * \brief Class that handles all of the ACBF document.
+ * 
+ * ACBF documents are made up of several subsections:
+ * 
+ * - Metadata, which in turn holds book, publishing and document info.
+ * - Body, which holds the pages and their frame and text definitions.
+ * - Data, which holds embedded data like images and fonts.
+ * - References, a section which holds notes and references that can be pointed
+ * at from the text. Not supported currently.
+ * - Stylesheet, which is a css stylesheet to inform how overlaid translations
+ * should be rendered. Not supported currently.
+ * 
+ * Of these, only Body and Metadata are necessary for a proper ACBF file.
+ * 
+ * TODO: Support references and stylesheets.
+ */
 namespace AdvancedComicBookFormat
 {
 class Metadata;
@@ -42,14 +58,33 @@ public:
     explicit Document(QObject* parent = nullptr);
     ~Document() override;
 
+    /**
+     * \brief write the whole document to an ACBF xml.
+     */
     QString toXml();
+    /**
+     * \brief load an ACBF file from XML.
+     * @return True if the xmlReader encountered no errors.
+     */
     bool fromXml(QString xmlDocument);
 
+    /**
+     * @returns The metadata object.
+     */
     Metadata* metaData() const;
+    /**
+     * \brief triggers when the metadata is changed.
+     */
     Q_SIGNAL void metaDataChanged();
 
+    /**
+     * @returns the Body object.
+     */
     Body* body() const;
     // References* references();
+    /**
+     * @returns the Data object.
+     */
     Data* data() const;
     // Stylesheet* stylesheet();
 private:

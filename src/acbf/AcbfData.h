@@ -29,7 +29,16 @@
 
 #include "AcbfDocument.h"
 #include "AcbfBinary.h"
-
+/**
+ * \brief Class to handle the list of embedded data in an ACBF document.
+ * 
+ * ACBF allows embedding images and fonts as Base64 bytearrays.
+ * They are stored in the data section of the file, with a binary
+ * element each.
+ * 
+ * This class holds Binary objects which in turn hold the binary data.
+ * This class cannot yet modify the entries or add and remove entries.
+ */
 namespace AdvancedComicBookFormat
 {
 class ACBF_EXPORT Data : public QObject
@@ -39,9 +48,20 @@ public:
     explicit Data(Document* parent = nullptr);
     ~Data() override;
 
+    /**
+     * \brief writes the data section and its entries to the file.
+     */
     void toXml(QXmlStreamWriter *writer);
+    /**
+     * \brief load the data section from the xml into this object.
+     * @return True if the xmlReader encountered no errors.
+     */
     bool fromXml(QXmlStreamReader *xmlReader);
 
+    /**
+     * @param id - the id that is used to reference to this object.
+     * @return the binary object referenced by this id.
+     */
     Binary* binary(const QString& id) const;
 private:
     class Private;

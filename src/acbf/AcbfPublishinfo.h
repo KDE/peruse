@@ -27,7 +27,13 @@
 #include "AcbfMetadata.h"
 
 #include <QDate>
-
+/**
+ * \brief Class to handle the publishing info.
+ * 
+ * The Publishing info in ACBF is about who published the book,
+ * when, where, the ISBN number, and which license it was published
+ * under.
+ */
 namespace AdvancedComicBookFormat
 {
 class ACBF_EXPORT PublishInfo : public QObject
@@ -37,22 +43,63 @@ public:
     explicit PublishInfo(Metadata* parent = nullptr);
     ~PublishInfo() override;
 
+    /**
+     * \brief Write the publishingInfo into the xml writer.
+     */
     void toXml(QXmlStreamWriter *writer);
+    /**
+     * \brief load the publishing info into this object.
+     * @return True if the xmlReader encountered no errors.
+     */
     bool fromXml(QXmlStreamReader *xmlReader);
 
+    /**
+     * @return the name of the publisher.
+     */
     QString publisher() const;
+    /**
+     * \brief set the name of the publisher.
+     */
     void setPublisher(const QString& publisher);
 
+    /**
+     * @return the publishing date as a QDate object.
+     */
     QDate publishDate() const;
+    /**
+     * \brief set the publishing date.
+     * @param publishDate - the publishingdate as a QDate object.
+     */
     void setPublishDate(const QDate& publishDate);
 
+    /**
+     * @return the name of the city the work was published in.
+     */
     QString city() const;
+    /**
+     * \brief set the name of the city the work was published in.
+     * @param city - the name of the city as a QString.
+     */
     void setCity(const QString& city = QString());
 
+    /**
+     * @return the ISBN number as a QString.
+     */
     QString isbn() const;
+    /**
+     * \brief set the ISBN number.
+     * @param isbn - the ISBN number as a QString. ISBN numbers should be registered.
+     */
     void setIsbn(const QString& isbn = QString());
 
+    /**
+     * @return the name of the license the comic was published under.
+     */
     QString license() const;
+    /**
+     * \brief set the License that the work was published under.
+     * @param license - the name of the license as a QString.
+     */
     void setLicense(const QString& license = QString());
 private:
     class Private;

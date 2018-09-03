@@ -25,7 +25,14 @@
 #include <memory>
 
 #include "AcbfPage.h"
-
+/**
+ * \brief Class to handle the textlayer element.
+ * 
+ * ACBF textlayers are groupings of textareas
+ * according to a specific language.
+ * 
+ * They also have a default textarea background color.
+ */
 namespace AdvancedComicBookFormat
 {
 class Textarea;
@@ -36,22 +43,72 @@ public:
     explicit Textlayer(Page* parent = nullptr);
     ~Textlayer() override;
 
+    /**
+     * \brief Write the textlayer into the xml writer.
+     */
     void toXml(QXmlStreamWriter* writer);
+    /**
+     * \brief load a textlayer element into this object.
+     * @return True if the xmlReader encountered no errors.
+     */
     bool fromXml(QXmlStreamReader *xmlReader);
 
+    /**
+     * @returns the language for this text-layer.
+     */
     QString language() const;
+    /**
+     * \brief set the language for this text-layer.
+     * @param language - the language of the entry in language code, country
+     * code format joined by a dash (not an underscore).
+     */
     void setLanguage(const QString& language);
 
+    /**
+     * @return the background color as a QString.
+     * 
+     * It should be an 8bit per channel rgb hexcode.
+     */
     QString bgcolor() const;
+    /**
+     * \brief set the background color.
+     * 
+     * @param newColor - a String with an 8bit per channel rgb hexcode (#ff00ff, or the like)
+     */
     void setBgcolor(const QString& newColor = QString());
 
+    /**
+     * @returns a list of textareas in this page.
+     */
     QList<Textarea*> textareas() const;
+    /**
+     * @param index - index of the textarea.
+     * @return the textarea of that index.
+     */
     Textarea* textarea(int index) const;
+    /**
+     * @param textarea - the textarea you want to index of.
+     * @returns the index of the given textarea.
+     */
     int textareaIndex(Textarea* textarea) const;
 
-    // If afterIndex is larger than zero, the insertion will happen at that index
+    /**
+     * \brief add a textarea to the list of frames.
+     * @param textarea - the frame to add.
+     * @param index - the index to add it at. If afterIndex is larger than
+     * zero, the insertion will happen at that index
+     */
     void addTextarea(Textarea* textarea, int index = -1);
+    /**
+     * \brief remove the given textarea from the framelist.
+     * @param textarea - the textarea to remove.
+     */
     void removeTextarea(Textarea* textarea);
+    /**
+     * \brief Swap two textareas in the list.
+     * @param swapThis - the first textarea to swap.
+     * @param withThis - the second textarea to swap.
+     */
     bool swapTextareas(Textarea* swapThis, Textarea* withThis);
 private:
     class Private;

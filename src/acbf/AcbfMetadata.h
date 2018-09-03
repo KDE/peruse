@@ -26,6 +26,17 @@
 
 #include "AcbfDocument.h"
 
+/**
+ * \brief Class to handle the metadata section of ACBF.
+ * 
+ * ACBF metadata is split into three sections:
+ * 
+ * - Book-info, which handles the metadata about the story.
+ * - Publishing-info, which handles the metadata about the publishing.
+ * - Document-info, which handles the metadata about this specific ACBF document.
+ * 
+ * All three are mandatory.
+ */
 class QXmlStreamWriter;
 class QXmlStreamReader;
 namespace AdvancedComicBookFormat
@@ -42,12 +53,31 @@ public:
 
     Document* document() const;
 
+    /**
+     * \brief Write the metadata into the xml writer.
+     */
     void toXml(QXmlStreamWriter *writer);
+    /**
+     * \brief load the metadata element into this object.
+     * @return True if the xmlReader encountered no errors.
+     */
     bool fromXml(QXmlStreamReader *xmlReader);
 
+    /**
+     * @return the bookinfo object.
+     */
     BookInfo* bookInfo() const;
+    /**
+     * \brief triggers when the bookinfo is changed.
+     */
     Q_SIGNAL void bookInfoChanged();
+    /**
+     * @returns the publishinfo object.
+     */
     PublishInfo* publishInfo() const;
+    /**
+     * @returns the documentinfo object.
+     */
     DocumentInfo* documentInfo() const;
 private:
     class Private;

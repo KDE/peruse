@@ -29,7 +29,17 @@
 #include <QDate>
 class QXmlStreamWriter;
 class QXmlStreamReader;
-
+/**
+ * \brief Class to handle the body section of ACBF.
+ * 
+ * ACBF's body section holds all the pages. Beyond that,
+ * it has a bgcolor. The presence of the body section
+ * is mandatory.
+ * 
+ * This class can load and save the body section.
+ * It also holds the page objects and allows
+ * ordering/adding/removing them.
+ */
 namespace AdvancedComicBookFormat
 {
 class Page;
@@ -42,19 +52,62 @@ public:
 
     Document* document() const;
 
+    /**
+     * \brief write body data into the XMLWriter.
+     */
     void toXml(QXmlStreamWriter *writer);
+    
+    /**
+     * \brief Load data from the xml into this body object.
+     * @return True if the xmlReader encountered no errors.
+     */
     bool fromXml(QXmlStreamReader *xmlReader);
 
+    /**
+     * @return the background color as a QString.
+     * 
+     * It should be an 8bit per channel rgb hexcode.
+     */
     QString bgcolor() const;
+    
+    /**
+     * \brief set the background color.
+     * 
+     * @param newColor - a String with an 8bit per channel rgb hexcode (#ff00ff, or the like)
+     */
     void setBgcolor(const QString& newColor);
 
+    /**
+     * @return a QList of all the pages stored currently.
+     */
     QList<Page*> pages() const;
+    
+    /**
+     * @param index - the index of the page.
+     * @return the page object at the given index.
+     */
     Page* page(int index) const;
+    
+    /**
+     * @param page - The page for which to return the index.
+     * @return index of the page given, will return -1 if the page isn't in this document.
+     */
     int pageIndex(Page* page) const;
 
     // If afterIndex is larger than zero, the insertion will happen at that index
     void addPage(Page* page, int index = -1);
+    
+    /**
+     * \brief remove the given page object from this body.
+     * @param page - the page to remove.
+     */
     void removePage(Page* page);
+    
+    /**
+     * \brief Swap two pages in the list.
+     * @param swapThis - the first page to swap.
+     * @param withThis - the second page to swap.
+     */
     bool swapPages(Page* swapThis, Page* withThis);
 
 private:

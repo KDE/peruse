@@ -24,7 +24,18 @@
 
 #include <memory>
 #include "AcbfBookinfo.h"
-
+/**
+ * \brief Class to handle references to this book in catalogues and databases.
+ * 
+ * Books can have entries in databases and library catalogues. If such an entry
+ * exists, the DatabaseRef object can hold it. Such entries are useful to figure
+ * out if two stories are related, or to retrieve extra information about the book
+ * such as collections it may be part of.
+ * 
+ * dbname is the name of the database.
+ * type is the type of reference it is, such as IssueID, SeriesID, or just plain URL.
+ * reference is the actual reference.
+ */
 namespace AdvancedComicBookFormat
 {
 class ACBF_EXPORT DatabaseRef : public QObject
@@ -34,16 +45,44 @@ public:
     explicit DatabaseRef(BookInfo* parent = nullptr);
     ~DatabaseRef() override;
 
+    /**
+     * \brief write the contents of this object into the xmlwriter.
+     */
     void toXml(QXmlStreamWriter* writer);
+    /**
+     * \brief load a DatabaseRef section from the xml into this object.
+     * @return True if the xmlReader encountered no errors.
+     */
     bool fromXml(QXmlStreamReader *xmlReader);
 
+    /**
+     * @return the name of the database.
+     */
     QString dbname() const;
+    /**
+     * \brief set the name of the database for this reference.
+     * @param dbname - the name of the database.
+     */
     void setDbname(const QString& dbname);
 
+    /**
+     * @returns the type of reference the reference is.
+     */
     QString type() const;
+    /**
+     * \brief set which type of reference the reference is.
+     * @param type - the type of reference.
+     */
     void setType(const QString& type);
 
+    /**
+     * @returns the reference.
+     */
     QString reference() const;
+    /**
+     * \brief set the reference as a string.
+     * @param reference - the reference a QString.
+     */
     void setReference(const QString& reference);
 private:
     class Private;

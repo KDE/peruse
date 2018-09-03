@@ -25,7 +25,15 @@
 #include <memory>
 
 #include "AcbfBookinfo.h"
-
+/**
+ * \brief Class to handle the content rating of the work.
+ * 
+ * Because there are multiple ContentRating systems over various
+ * countries, ACBF can handle multiple content rating objects, and
+ * has entries for handling which system said rating is in.
+ * 
+ * This is used in the BookInfo object.
+ */
 namespace AdvancedComicBookFormat
 {
 class ACBF_EXPORT ContentRating : public QObject
@@ -35,13 +43,34 @@ public:
     explicit ContentRating(BookInfo* parent = nullptr);
     ~ContentRating() override;
 
+    /**
+     * \brief write this content rating to the xml writer.
+     */
     void toXml(QXmlStreamWriter* writer);
+    /**
+     * \brief load a content-rating section from the xml into this object.
+     * @return True if the xmlReader encountered no errors.
+     */
     bool fromXml(QXmlStreamReader *xmlReader);
 
+    /**
+     * @return the system that the content rating belongs to.
+     */
     QString type() const;
+    /**
+     * \brief set the system that defines this rating.
+     * @param type - the name of the system.
+     */
     void setType(const QString& type);
 
+    /**
+     * @return the rating label as a string.
+     */
     QString rating() const;
+    /**
+     * \brief set the rating.
+     * @param rating - the name of the rating label as a QString.
+     */
     void setRating(const QString& rating);
 private:
     class Private;
