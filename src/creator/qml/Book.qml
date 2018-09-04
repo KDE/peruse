@@ -28,7 +28,7 @@ import org.kde.peruse 0.1 as Peruse
 Kirigami.ScrollablePage {
     id: root;
     property string categoryName: "book";
-    title: i18nc("title of the main book editor page", "Editing %1").arg(bookModel.title == "" ? root.filename : bookModel.title);
+    title: i18nc("title of the main book editor page", "Editing %1", bookModel.title == "" ? root.filename : bookModel.title);
     property string filename;
 
     actions {

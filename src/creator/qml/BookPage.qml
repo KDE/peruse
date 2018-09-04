@@ -26,6 +26,6 @@ import org.kde.kirigami 2.1 as Kirigami
 Kirigami.Page {
     id: root;
     property string categoryName: "bookPage";
-    title: i18nc("title of the page editing sub-page for the book editor", "Page %1").arg(root.title);
+    title: i18nc("title of the page editing sub-page for the book editor", "Page %1", root.title);
     property string title;
 }
