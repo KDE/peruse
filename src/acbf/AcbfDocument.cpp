@@ -75,7 +75,9 @@ bool Document::fromXml(QString xmlDocument)
     if(xmlReader.readNextStartElement())
     {
         if(xmlReader.name() == QStringLiteral("ACBF")
-            && xmlReader.namespaceUri().startsWith(QStringLiteral("http://www.fictionbook-lib.org/xml/acbf/")))
+            && (xmlReader.namespaceUri().startsWith(QStringLiteral("http://www.fictionbook-lib.org/xml/acbf/"))
+                || xmlReader.namespaceUri().startsWith(QStringLiteral("http://www.acbf.info/xml/acbf/"))
+            ))
         {
             while(xmlReader.readNextStartElement())
             {
