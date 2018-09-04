@@ -38,10 +38,34 @@ public:
     explicit PreviewImageProvider(QObject* parent = nullptr);
     ~PreviewImageProvider() override;
 
+    /**
+     * \brief Get an image.
+     * 
+     * @param id The source of the image.
+     * @param size The size of the original image.
+     * @param requestedSize The required size of the final image.
+     * 
+     * @return a QImage.
+     */
     QImage requestImage(const QString& id, QSize* size, const QSize& requestedSize) override;
 
+    /**
+     *\brief Get an icon associated with the mimetype of the image as a fallback.
+     * 
+     * @param p Pointer to pixmap to write this fallback into.
+     */
     Q_SLOT void updatePreview(const KFileItem&, const QPixmap& p);
+    /**
+     *\brief Get an icon associated with the mimetype of the image as a fallback.
+     * 
+     * @param item The image to write a fallback for.
+     */
     Q_SLOT void fallbackPreview(const KFileItem& item);
+    /**
+     * \brief Set whether the preview generation is finished.
+     * 
+     * @param job The job to mark finished.
+     */
     Q_SLOT void finishedPreview(KJob* job);
 private:
     class Private;

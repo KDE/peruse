@@ -23,7 +23,13 @@
 #define _QML_PLUGIN_H
 
 #include <QQmlExtensionPlugin>
-
+/**
+ * \brief The QML plugin file.
+ * 
+ * This takes the different classes in this folder and turns them into
+ * a QML plugin, so the properties can be accessed and modified from a
+ * QML file.
+ */
 class QmlPlugins : public QQmlExtensionPlugin
 {
     Q_OBJECT

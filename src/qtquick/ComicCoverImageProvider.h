@@ -37,6 +37,15 @@ public:
     explicit ComicCoverImageProvider();
     ~ComicCoverImageProvider() override;
 
+    /**
+     * \brief Get an image.
+     * 
+     * @param id The source of the image.
+     * @param size The size of the original image, unused.
+     * @param requestedSize The required size of the final image, unused.
+     * 
+     * @return a QImage.
+     */
     QImage requestImage(const QString& id, QSize* size, const QSize& requestedSize) override;
 private:
     class Private;

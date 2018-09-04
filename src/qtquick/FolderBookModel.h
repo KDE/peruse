@@ -23,7 +23,12 @@
 #define FOLDERBOOKMODEL_H
 
 #include "BookModel.h"
-
+/**
+ * \brief Class to handle a folder of images as a book.
+ * 
+ * This class will treat a folder of images as a book, with the alphabetical
+ * order of the files determining the page order.
+ */
 class FolderBookModel : public BookModel
 {
     Q_OBJECT
@@ -31,6 +36,10 @@ public:
     explicit FolderBookModel(QObject* parent = nullptr);
     ~FolderBookModel() override;
 
+    /**
+     * \brief Set the folder name of this book or a file describing
+     * describing the images that belong to this book.
+     */
     void setFilename(QString newFilename) override;
 };
 

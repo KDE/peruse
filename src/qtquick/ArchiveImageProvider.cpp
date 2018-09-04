@@ -64,6 +64,7 @@ QImage ArchiveImageProvider::requestImage(const QString& id, QSize* size, const 
      * In ACBF, image references starting with a '#' refer to files embedded
      * in the <data> section of the .acbf file.
      * see: http://acbf.wikia.com/wiki/Body_Section_Definition#Image
+     * TODO: binary files can also handle fonts, and those cannot be loaded into a QImage.
      */
     if (id.startsWith('#')) {
         auto document = qobject_cast<AdvancedComicBookFormat::Document*>(d->bookModel->acbfData());

@@ -23,7 +23,11 @@
 #define FILTERPROXY_H
 
 #include <QSortFilterProxyModel>
-
+/**
+ * \brief a Filter proxy for handling search with.
+ * 
+ * Extends QSortFilterProxyModel, is caseInsensitive.
+ */
 class FilterProxy : public QSortFilterProxyModel
 {
     Q_OBJECT

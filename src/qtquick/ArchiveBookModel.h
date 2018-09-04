@@ -23,7 +23,15 @@
 #define ARCHIVEBOOKMODEL_H
 
 #include "BookModel.h"
-
+/**
+ * \brief Class to hold pages and metadata for archive based books.
+ * 
+ * In particular, ArchiveBookModel handles CBZ and CBR files, reads
+ * potential metadata and holds that into the acbfdata object.
+ * 
+ * ArchiveBookModel extends BookModel, which handles the functions for
+ * setting the current page, and returning basic metadata.
+ */
 class KArchiveFile;
 class ArchiveBookModel : public BookModel
 {
@@ -35,33 +43,103 @@ public:
     explicit ArchiveBookModel(QObject* parent = nullptr);
     ~ArchiveBookModel() override;
 
+    /**
+     * \brief Set the filename that points to the archive that describes this book.
+     */
     void setFilename(QString newFilename) override;
 
+    /**
+     * The author name will be either the default bookmodel author name, or
+     * if ACBF data is available, the first authorname in the list of ACBF authors.
+     * 
+     * @return the author name as a QString.
+     */
     QString author() const override;
+    /**
+     * \brief Set the main author's nickname.
+     * 
+     * If there is no ACBF data, this will set the author to BookModel's author.
+     * If there is ACBF data, this will set the nickname entry on the name of the
+     * first possible author.
+     * 
+     * Preferably authors should be added by editing the author list in the bookinfo
+     * of the ACBF metadata this book holds.
+     * 
+     * @param newAuthor The main author's nickname.
+     */
     void setAuthor(QString newAuthor) override;
+    /**
+     * @return the name of the publisher as a QString.
+     */
     QString publisher() const override;
+    /**
+     * \brief Set the name of the publisher.
+     * @param newPublisher QString with the name of the publisher.
+     */
     void setPublisher(QString newPublisher) override;
+    /**
+     * @return The proper title of this book as a QString.
+     */
     QString title() const override;
+    /**
+     * \brief Set the default title of this book.
+     * @param newTitle The default title of this book as a QString.
+     */
     void setTitle(QString newTitle) override;
 
+    /**
+     * @return a QQmlEngine associated with this book.
+     * TODO: What is the QML engine and what is its purpose?
+     * Used in the cbr.qml
+     */
     QObject* qmlEngine() const;
+    /**
+     * \brief Set the QML engine on this book.
+     * @param newEngine A QQmlEngine object.
+     */
     void setQmlEngine(QObject* newEngine);
+    /**
+     * \brief Fires when a new QQmlEngine is set on this book.
+     */
     Q_SIGNAL void qmlEngineChanged();
 
+    /**
+     * TODO: What is this? Only used in book.qml once?
+     */
     bool readWrite() const;
     void setReadWrite(bool newReadWrite);
     Q_SIGNAL void readWriteChanged();
 
+    /**
+     * @return whether the book has been modified and has unsaved changes.
+     * 
+     * Used in PeruseCreator to determine whether to enable the save dialog.
+     */
     bool hasUnsavedChanges() const;
+    /**
+     * \brief Set that the book has been modified.
+     * @param isDirty whether the book has been modified.
+     */
     Q_INVOKABLE void setDirty(bool isDirty = true);
+    /**
+     * \brief Fires when there are unsaved changes.
+     */
     Q_SIGNAL void hasUnsavedChangesChanged();
 
     /**
-     * Saves the archive back to disk
+     * \brief Saves the archive back to disk
      * @return True if the save was successful
      */
     Q_INVOKABLE bool saveBook();
 
+    /**
+     * \brief add a page to this book.
+     * 
+     * This adds it to the ACBF metadata too.
+     * 
+     * @param url The resource location of the page as an url.
+     * @param title The title of the page. This is shown in a table of contents.
+     */
     void addPage(QString url, QString title) override;
     /**
      * Adds a new page to the book archive on disk, by copying in the file
@@ -87,6 +165,10 @@ public:
      * Creates a new book in the folder, with the given title and cover.
      * A filename will be constructed to fit the title, and which does not already exist in the
      * directory.
+     * 
+     * @param folder the path to the folder to create this book in.
+     * @param title The title of the book.
+     * @param coverUrl A resource location pointing at the image that will be the coverpage.
      */
     Q_INVOKABLE QString createBook(QString folder, QString title, QString coverUrl);
 

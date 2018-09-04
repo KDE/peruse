@@ -35,8 +35,15 @@ public:
     explicit BalooContentLister(QObject* parent = nullptr);
     ~BalooContentLister() override;
 
+    /**
+     * @returns whether Baloo is enabled. If baloo is not available on the system, we cannot use it.
+     */
     bool balooEnabled() const;
 
+    /**
+     * \brief Start a search.
+     * @param queries  List of ContentQueries that the search should be limited to.
+     */
     void startSearch(const QList<ContentQuery*>& queries) override;
 
 private:

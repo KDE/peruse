@@ -35,6 +35,15 @@ public:
     explicit PDFCoverImageProvider();
     virtual ~PDFCoverImageProvider();
 
+    /**
+     * \brief Get an image.
+     * 
+     * @param id The source of the image.
+     * @param size The size of the original image, unused.
+     * @param requestedSize The required size of the final image, unused.
+     * 
+     * @return a QImage.
+     */
     virtual QImage requestImage(const QString& id, QSize* size, const QSize& requestedSize);
 private:
     class Private;

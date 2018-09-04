@@ -32,7 +32,10 @@ class FilesystemContentLister : public ContentListerBase
 public:
     explicit FilesystemContentLister(QObject* parent = nullptr);
     ~FilesystemContentLister() override;
-
+    /**
+     * \brief Start a search.
+     * @param queries  List of ContentQueries that the search should be limited to.
+     */
     void startSearch(const QList<ContentQuery*>& queries) override;
 
 private:

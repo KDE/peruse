@@ -24,6 +24,12 @@
 
 #include <QQuickImageProvider>
 
+/**
+ * \brief Class to return images for archives.
+ * 
+ * ArchiveImageProvider is for getting images out of
+ * archives(zip, rar, cbz, cbr), as well as getting image data out of ACBF files.
+ */
 class ArchiveBookModel;
 class ArchiveImageProvider : public QQuickImageProvider
 {
@@ -31,10 +37,32 @@ public:
     explicit ArchiveImageProvider();
     ~ArchiveImageProvider() override;
 
+    /**
+     * \brief Request a given image.
+     * 
+     * @param id The url of the image to provide.
+     * @param size A QSize containing the original size of the image. Not used.
+     * @param requestedSize A QSize containing the required size of the image. Not used.
+     * 
+     * @return A QImage.
+     */
     QImage requestImage(const QString& id, QSize* size, const QSize& requestedSize) override;
 
+    /**
+     * \brief Set the ArchiveBookModel to get images for.
+     * @param model ArchiveBookModel to get images for.
+     */
     void setArchiveBookModel(ArchiveBookModel* model);
+    
+    /**
+     * \brief Set the prefix.
+     * @param prefix The prefix as a string.
+     * TODO: What is the prefix and why is it necessary?
+     */
     void setPrefix(QString prefix);
+    /**
+     * @returns the prefix as a QString.
+     */
     QString prefix() const;
 private:
     class Private;
