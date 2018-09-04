@@ -391,7 +391,9 @@ Kirigami.Page {
                 return;
             }
             seriesListView.model = contentList.seriesModelForEntry(filename);
-            setNewCurrentIndex(seriesListView.model.indexOfFile(filename));
+            if (seriesListView.model) {
+                setNewCurrentIndex(seriesListView.model.indexOfFile(filename));
+            }
             open();
         }
         onSheetOpenChanged: {
