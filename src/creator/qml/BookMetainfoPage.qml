@@ -143,7 +143,7 @@ Kirigami.Page {
                 onClicked: {
                     if(parent.text !== "") {
                         // Just add an author where only the nickname is defined
-                        root.model.acbfData.metaData.bookInfo.addAuthor("", "", "", "", "", parent.text, "", "");
+                        root.model.acbfData.metaData.bookInfo.addAuthor("", "", "", "", "", parent.text, [""], [""]);
                         root.model.setDirty();
                         parent.text = "";
                     }
@@ -283,7 +283,7 @@ Kirigami.Page {
             id: authorEditor;
             bookinfo: root.model.acbfData.metaData.bookInfo;
             onSave: {
-                root.model.acbfData.metaData.bookInfo.setAuthor(index, activity, language, firstName, middleName, lastName, nickName, homePage, email);
+                root.model.acbfData.metaData.bookInfo.setAuthor(index, activity, language, firstName, middleName, lastName, nickName, [homePage], [email]);
                 root.model.setDirty();
             }
         }

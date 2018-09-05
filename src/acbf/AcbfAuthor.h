@@ -54,8 +54,6 @@
  * Authors should, at minimum have a name, which is either
  * a nickname, or a first and lastname.
  * 
- * TODO: Authors can have multiple email and homepage entries
- * according to the official xsd.
  */
 
 namespace AdvancedComicBookFormat
@@ -161,26 +159,37 @@ public:
     Q_INVOKABLE void setNickName(const QString& name);
     
     /**
-     * @return the homepage associated with this author as a QString.
+     * @return the homepages associated with this author as a QStringList.
      */
-    Q_INVOKABLE QString homePage() const;
+    Q_INVOKABLE QStringList homePages() const;
     
     /**
-     * \brief Set the homepage associated with this author.
+     * \brief Add a homepage associated with this author.
      * @param homepage - the url of the homepage as a string.
      */
-    Q_INVOKABLE void setHomePage(const QString& homepage);
+    Q_INVOKABLE void addHomePage(const QString& homepage);
     
     /**
-     * @return The email adress associated with this author as a QString.
+     * \brief Set the homepages associated with this author.
+     * @param homepages - homepages as a string.
      */
-    Q_INVOKABLE QString email() const;
+    Q_INVOKABLE void setHomePages(const QStringList& homepages);
+    
+    /**
+     * @return The email adresses associated with this author as a QStringList.
+     */
+    Q_INVOKABLE QStringList emails() const;
     
     /**
      * \brief Set the email adress associated with this author.
      * @param email - email as a string.
      */
-    Q_INVOKABLE void setEmail(const QString& email);
+    Q_INVOKABLE void addEmail(const QString& email);
+    /**
+     * \brief Add an email adresses associated with this author.
+     * @param emails - email dresses as a stringlist.
+     */
+    Q_INVOKABLE void setEmails(const QStringList& emails);
 private:
     class Private;
     std::unique_ptr<Private> d;

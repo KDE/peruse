@@ -36,8 +36,8 @@ public:
     QString middleName;
     QString lastName;
     QString nickName;
-    QString homePage;
-    QString email;
+    QStringList homePage;
+    QStringList email;
 };
 
 Author::Author(Metadata* parent)
@@ -58,10 +58,10 @@ QString Author::displayName() const
         return QStringLiteral("%1 %2 %3").arg(d->firstName).arg(d->middleName).arg(d->lastName).simplified();
     }
     else if(!d->email.isEmpty()) {
-        return d->email;
+        return d->email.at(0);
     }
     else if(!d->homePage.isEmpty()) {
-        return d->homePage;
+        return d->homePage.at(0);
     }
     return QLatin1String("");
 }
@@ -80,9 +80,13 @@ void Author::toXml(QXmlStreamWriter* writer)
     writer->writeTextElement(QStringLiteral("middle-name"), d->middleName);
     writer->writeTextElement(QStringLiteral("last-name"), d->lastName);
     writer->writeTextElement(QStringLiteral("nickname"), d->nickName);
-    writer->writeTextElement(QStringLiteral("home-page"), d->homePage);
-    writer->writeTextElement(QStringLiteral("email"), d->email);
-
+    Q_FOREACH(const QString& url, d->homePage) {
+        writer->writeTextElement(QStringLiteral("home-page"), url);
+    }
+    Q_FOREACH(const QString& address, d->email) {
+        writer->writeTextElement(QStringLiteral("email"), address);
+    }
+    
     writer->writeEndElement();  
 }
 
@@ -110,11 +114,11 @@ bool Author::fromXml(QXmlStreamReader *xmlReader)
         }
         else if(xmlReader->name() == QStringLiteral("home-page"))
         {
-            setHomePage(xmlReader->readElementText());
+            addHomePage(xmlReader->readElementText());
         }
         else if(xmlReader->name() == QStringLiteral("email"))
         {
-            setEmail(xmlReader->readElementText());
+            addEmail(xmlReader->readElementText());
         }
         else
         {
@@ -208,22 +212,32 @@ void Author::setNickName(const QString& name)
     d->nickName = name;
 }
 
-QString Author::homePage() const
+QStringList Author::homePages() const
 {
     return d->homePage;
 }
 
-void Author::setHomePage(const QString& homepage)
+void Author::addHomePage(const QString& homepage)
 {
-    d->homePage = homepage;
+    d->homePage.append(homepage);
 }
 
-QString Author::email() const
+void Author::setHomePages(const QStringList& homepages)
+{
+    d->homePage = homepages;
+}
+
+QStringList Author::emails() const
 {
     return d->email;
 }
 
-void Author::setEmail(const QString& email)
+void Author::addEmail(const QString& email)
 {
-    d->email = email;
+    d->email.append(email);
+}
+
+void Author::setEmails(const QStringList& emails)
+{
+    d->email = emails;
 }

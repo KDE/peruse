@@ -268,7 +268,7 @@ Author * BookInfo::getAuthor(int index) const
     return d->author.at(index);
 }
 
-void BookInfo::addAuthor(QString activity, QString language, QString firstName, QString middleName, QString lastName, QString nickName, QString homePage, QString email)
+void BookInfo::addAuthor(QString activity, QString language, QString firstName, QString middleName, QString lastName, QString nickName, QStringList homePages, QStringList emails)
 {
     Author* author = new Author(metadata());
     author->setActivity(activity);
@@ -277,13 +277,13 @@ void BookInfo::addAuthor(QString activity, QString language, QString firstName, 
     author->setMiddleName(middleName);
     author->setLastName(lastName);
     author->setNickName(nickName);
-    author->setHomePage(homePage);
-    author->setEmail(email);
+    author->setHomePages(homePages);
+    author->setEmails(emails);
     d->author.append(author);
     emit authorsChanged();
 }
 
-void BookInfo::setAuthor(int index, QString activity, QString language, QString firstName, QString middleName, QString lastName, QString nickName, QString homePage, QString email)
+void BookInfo::setAuthor(int index, QString activity, QString language, QString firstName, QString middleName, QString lastName, QString nickName, QStringList homePages, QStringList emails)
 {
     Author* author = d->author.at(index);
     author->setActivity(activity);
@@ -292,8 +292,8 @@ void BookInfo::setAuthor(int index, QString activity, QString language, QString 
     author->setMiddleName(middleName);
     author->setLastName(lastName);
     author->setNickName(nickName);
-    author->setHomePage(homePage);
-    author->setEmail(email);
+    author->setHomePages(homePages);
+    author->setEmails(emails);
     emit authorsChanged();
 }
 

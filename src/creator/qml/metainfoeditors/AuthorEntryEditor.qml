@@ -39,8 +39,12 @@ Kirigami.OverlaySheet {
         middleNameField.text = root.author.middleName();
         lastNameField.text = root.author.lastName();
         nickNameField.text = root.author.nickName();
-        homePageField.text = root.author.homePage();
-        emailField.text = root.author.email();
+        if (root.author.homePages.count > 0) {
+            homePageField.text = root.author.homePages()[0];
+        }
+        if (root.author.emails.count > 0) {
+            emailField.text = root.author.emails()[0];
+        }
     }
     property QtObject author: null;
 
