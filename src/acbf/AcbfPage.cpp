@@ -108,7 +108,13 @@ bool Page::fromXml(QXmlStreamReader *xmlReader)
         }
         else if(xmlReader->name() == QStringLiteral("image"))
         {
-            setImageHref(xmlReader->attributes().value(QStringLiteral("href")).toString());
+            /**
+             * There are some acbf files out there that have backslashes in their
+             * image href. This is probably a mistake from windows users, but not proper XML.
+             * We should thus replace those with forward slashes so the image can be loaded.
+             */
+            QString href = xmlReader->attributes().value(QStringLiteral("href")).toString();
+            setImageHref(href.replace(QStringLiteral("\\"), QStringLiteral("/"))); 
             xmlReader->skipCurrentElement();
         }
         else if(xmlReader->name() == QStringLiteral("text-layer"))
