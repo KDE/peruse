@@ -35,7 +35,7 @@ public:
     QDate creationDate;
     QStringList source;
     QString id;
-    QString version;
+    float version;
     QStringList history;
 };
 
@@ -78,7 +78,7 @@ void DocumentInfo::toXml(QXmlStreamWriter *writer)
     writer->writeEndElement();
 
     writer->writeStartElement(QStringLiteral("version"));
-    writer->writeCharacters(d->version);
+    writer->writeCharacters(QString::number(d->version));
     writer->writeEndElement();
 
     writer->writeStartElement(QStringLiteral("history"));
@@ -131,7 +131,7 @@ bool DocumentInfo::fromXml(QXmlStreamReader *xmlReader)
         }
         else if(xmlReader->name() == QStringLiteral("version"))
         {
-            setVersion(xmlReader->readElementText());
+            setVersion(QString(xmlReader->readElementText()).toFloat());
         }
         else if(xmlReader->name() == QStringLiteral("history"))
         {
@@ -202,12 +202,12 @@ void DocumentInfo::setId(const QString& id)
     d->id = id;
 }
 
-QString DocumentInfo::version() const
+float DocumentInfo::version() const
 {
     return d->version;
 }
 
-void DocumentInfo::setVersion(const QString& version)
+void DocumentInfo::setVersion(const float& version)
 {
     d->version = version;
 }

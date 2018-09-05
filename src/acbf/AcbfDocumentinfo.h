@@ -106,15 +106,14 @@ public:
     void setId(const QString& id);
 
     /**
-     * @return the version of this document.
+     * @return the version of this document as a float.
      */
-    QString version() const;
+    float version() const;
     /**
      * \brief set the version of this document
-     * @param version - the version as a string.
-     * TODO: The official XSD requires a floating point number here.
+     * @param version - the version as a floating point number.
      */
-    void setVersion(const QString& version);
+    void setVersion(const float& version);
 
     /**
      * @return a list of history entries as a stringlist.
