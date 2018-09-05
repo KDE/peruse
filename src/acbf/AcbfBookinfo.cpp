@@ -50,6 +50,7 @@ public:
     QList<Sequence*> sequence;
     QList<DatabaseRef*> databaseRef;
     QList<ContentRating*> contentRating;
+    QString readingDirection;
 };
 
 BookInfo::BookInfo(Metadata* parent)
@@ -142,6 +143,13 @@ void BookInfo::toXml(QXmlStreamWriter* writer)
     Q_FOREACH(ContentRating* rating, d->contentRating) {
         rating->toXml(writer);
     }
+    
+    //ACBF 1.2
+    /*
+    writer->writeStartElement("characters");
+    writer->writeCharacters(d->readingDirection);
+    writer->writeEndElement();
+    */
 
     writer->writeEndElement();
 }
@@ -236,6 +244,10 @@ bool BookInfo::fromXml(QXmlStreamReader *xmlReader)
             newContentRating->fromXml(xmlReader);
             d->contentRating.append(newContentRating);
         }
+        else if(xmlReader->name() == QStringLiteral("reading-direction"))
+        {
+            setReadingDirection(xmlReader->readElementText(QXmlStreamReader::IncludeChildElements).toLower());
+        }
         else
         {
             qWarning() << Q_FUNC_INFO << "currently unsupported subsection:" << xmlReader->name();
@@ -245,7 +257,7 @@ bool BookInfo::fromXml(QXmlStreamReader *xmlReader)
     if (xmlReader->hasError()) {
         qWarning() << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader->name() << "(" << xmlReader->lineNumber() << ":" << xmlReader->columnNumber() << ") The reported error was:" << xmlReader->errorString();
     }
-    qDebug() << Q_FUNC_INFO << "Created book information for the book with the titles" << d->title.values();;
+    qDebug() << Q_FUNC_INFO << "Created book information for the book with the titles" << d->title.values();
     return !xmlReader->hasError();
 }
 
@@ -550,6 +562,7 @@ QList<DatabaseRef *> BookInfo::databaseRef()
     return d->databaseRef;
 }
 
+
 void BookInfo::addDatabaseRef(DatabaseRef* databaseRef)
 {
     d->databaseRef.append(databaseRef);
@@ -573,4 +586,15 @@ void BookInfo::addContentRating(ContentRating* contentRating)
 void BookInfo::removeContentRating(ContentRating* contentRating)
 {
     d->contentRating.removeAll(contentRating);
+}
+QString BookInfo::readingDirection() const
+{
+    return d->readingDirection;
+}
+
+void BookInfo::setReadingDirection(const QString& readingDirection) {
+    if (readingDirection == "ltr" ||
+        readingDirection == "rtl") {
+        d->readingDirection = readingDirection;
+    }
 }

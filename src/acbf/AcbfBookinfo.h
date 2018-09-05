@@ -367,6 +367,21 @@ public:
      * contentrating system.
      */
     void removeContentRating(ContentRating* contentRating);
+    
+    /**
+     * @brief The reading direction for this comic for adjusting the layout.
+     * An ACBF 1.2 feature.
+     * @return QString with either ltr or rtl.
+     */
+    QString readingDirection() const;
+    
+    /**
+     * @brief set the Reading direction for this comic. This indicates
+     * how the UI will lay out the buttons and controls.
+     * An ACBF 1.2 feature.
+     * @param readingDirection a QString with either "ltr" or "rtl".
+     */
+    void setReadingDirection(const QString& readingDirection = "ltr");
 private:
     class Private;
     std::unique_ptr<Private> d;
