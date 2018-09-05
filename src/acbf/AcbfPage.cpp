@@ -21,6 +21,8 @@
 
 #include "AcbfPage.h"
 #include "AcbfTextlayer.h"
+#include "AcbfFrame.h"
+#include "AcbfJump.h"
 
 #include <QDebug>
 #include <QHash>
@@ -85,13 +87,13 @@ void Page::toXml(QXmlStreamWriter* writer)
         layer->toXml(writer);
     }
 
-//     Q_FOREACH(Frame* frame, d->frames) {
-//         frame->toXml(writer);
-//     }
+     Q_FOREACH(Frame* frame, d->frames) {
+         frame->toXml(writer);
+     }
 
-//     Q_FOREACH(Jump* jump, d->jumps) {
-//         jump->toXml(writer);
-//     }
+     Q_FOREACH(Jump* jump, d->jumps) {
+         jump->toXml(writer);
+     }
 
     writer->writeEndElement();
 }
@@ -125,22 +127,27 @@ bool Page::fromXml(QXmlStreamReader *xmlReader)
             }
             d->textLayers[newLayer->language()] = newLayer;
         }
-//             else if(xmlReader->name() == "frame")
-//             {
-//                 Frame* newFrame = new Frame(this);
-//                 if(!newFrame->fromXml()) {
-//                     return false;
-//                 }
-//                 d->frames.append(newFrame);
-//             }
-//             else if(xmlReader->name() == "jump")
-//             {
-//                 Jump* newJump = new Jump(this);
-//                 if(!newJump->fromXml()) {
-//                     return false;
-//                 }
-//                 d->jumps.append(newJump);
-//             }
+        else if(xmlReader->name() == QStringLiteral("frame"))
+        {
+            Frame* newFrame = new Frame(this);
+            if(!newFrame->fromXml(xmlReader)) {
+                return false;
+            }
+            d->frames.append(newFrame);
+
+            // Frames have no child elements, so we need to force the reader to go to the next one.
+            xmlReader->readNext();
+        }
+         else if(xmlReader->name() == QStringLiteral("jump"))
+         {
+             Jump* newJump = new Jump(this);
+             if(!newJump->fromXml(xmlReader)) {
+                 return false;
+             }
+             
+             // Jumps have no child elements, so we need to force the reader to go to the next one.
+             d->jumps.append(newJump);
+         }
         else
         {
             qWarning() << Q_FUNC_INFO << "currently unsupported subsection:" << xmlReader->name();

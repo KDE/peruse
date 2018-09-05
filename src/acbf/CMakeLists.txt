@@ -17,6 +17,8 @@ set(acbf_SRCS
     AcbfSequence.cpp
     AcbfTextarea.cpp
     AcbfTextlayer.cpp
+    AcbfFrame.cpp
+    AcbfJump.cpp
 )
 
 add_library(acbf SHARED ${acbf_SRCS})

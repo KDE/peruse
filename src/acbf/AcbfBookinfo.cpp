@@ -327,11 +327,14 @@ QStringList BookInfo::titleLanguages()
 
 QString BookInfo::title(QString language)
 {
+    if (d->title.count()==0) {
+        return "";
+    }
     if (!d->title.keys().contains(language)) {
         language = "";
     }
 
-    if(language.isEmpty() && d->title[language].isEmpty()) {
+    if(language.isEmpty() && d->title[language].isEmpty() && d->languages.count()>0) {
         language = d->languages.at(0)->language();
     }
 
