@@ -158,6 +158,7 @@ QStringList Author::availableActivities()
         QStringLiteral("Editor"),
         QStringLiteral("Assistant Editor"), // /new in 1.1/
         QStringLiteral("Translator"),
+        QStringLiteral("Designer"), // /new in 1.2/        
         QStringLiteral("Other") // /new in 1.1/
     };
 }

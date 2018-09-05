@@ -407,31 +407,32 @@ void BookInfo::removeGenre(QString genre)
 QStringList BookInfo::availableGenres()
 {
     return {
-        QStringLiteral("science_fiction"),
-        QStringLiteral("fantasy"),
+        QStringLiteral("adult"),
         QStringLiteral("adventure"),
-        QStringLiteral("horror"),
-        QStringLiteral("mystery"),
-        QStringLiteral("crime"),
-        QStringLiteral("military"), // (war ...)
-        QStringLiteral("real_life"),
-        QStringLiteral("superhero"), // (e.g. Superman, Spiderman … or Super Villains)
-        QStringLiteral("humor"),
-        QStringLiteral("western"),
-        QStringLiteral("manga"),
-        QStringLiteral("politics"),
-        QStringLiteral("caricature"),
-        QStringLiteral("sports"),
-        QStringLiteral("history"), // (historical comics)
+        QStringLiteral("alternative"), // (abstract, underground ...)
+        QStringLiteral("artbook"), // 1.2
         QStringLiteral("biography"), // (biographical comics)
-        QStringLiteral("education"), // (education and science)
+        QStringLiteral("caricature"),
+        QStringLiteral("children"),
         QStringLiteral("computer"), // (computers related)
+        QStringLiteral("crime"),
+        QStringLiteral("education"), // (education and science)
+        QStringLiteral("fantasy"),
+        QStringLiteral("history"), // (historical comics)
+        QStringLiteral("horror"),
+        QStringLiteral("humor"),
+        QStringLiteral("manga"),
+        QStringLiteral("military"), // (war ...)
+        QStringLiteral("mystery"),
+        QStringLiteral("non-fiction"),
+        QStringLiteral("politics"),
+        QStringLiteral("real_life"),
         QStringLiteral("religion"),
         QStringLiteral("romance"),
-        QStringLiteral("children"),
-        QStringLiteral("non-fiction"),
-        QStringLiteral("adult"),
-        QStringLiteral("alternative"), // (abstract, underground ...)
+        QStringLiteral("science_fiction"),
+        QStringLiteral("sports"),
+        QStringLiteral("superhero"), // (e.g. Superman, Spiderman … or Super Villains)
+        QStringLiteral("western"),
         QStringLiteral("other")
     };
 }

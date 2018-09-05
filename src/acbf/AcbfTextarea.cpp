@@ -210,6 +210,7 @@ QStringList Textarea::availableTypes()
         QStringLiteral("audio"), // (speech emanating from an audio device, e.g., television or radio speaker, telephone, walkie-talkie, etc.)
         QStringLiteral("thought"),
         QStringLiteral("sign"), // (any kind of sign/writing, text is centered)
+        QStringLiteral("sound"), // /new in 1.2/
     };
 }
 
