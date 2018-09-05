@@ -327,10 +327,21 @@ QStringList BookInfo::titleLanguages()
 
 QString BookInfo::title(QString language)
 {
-    if(language.isEmpty()) {
-        language = "en";
+    if (!d->title.keys().contains(language)) {
+        language = "";
     }
-    return d->title.value(language);
+
+    if(language.isEmpty() && d->title[language].isEmpty()) {
+        language = d->languages.at(0)->language();
+    }
+
+    QString title = d->title.value(language);
+
+    if (title.isEmpty()) {
+        title = d->title.values().at(0);
+    }
+
+    return title;
 }
 
 void BookInfo::setTitle(QString title, QString language)
@@ -440,7 +451,21 @@ QStringList BookInfo::annotationLanguages()
 
 QStringList BookInfo::annotation(QString language)
 {
-    return d->annotation.value(language);
+    if (!d->annotation.keys().contains(language)) {
+        language = "";
+    }
+
+    if(language.isEmpty() && d->annotation.value(language).count()==0) {
+        language = d->languages.at(0)->language();
+    }
+
+    QStringList annotation = d->annotation.value(language);
+
+    if (annotation.count()==0) {
+        annotation = d->annotation.values().at(0);
+    }
+
+    return annotation;
 }
 
 void BookInfo::setAnnotation(QStringList annotation, QString language)
@@ -455,7 +480,21 @@ QHash<QString, QStringList> BookInfo::keywordsForAllLanguage()
 
 QStringList BookInfo::keywords(QString language)
 {
-    return d->keywords.value(language);
+    if (!d->keywords.keys().contains(language)) {
+        language = "";
+    }
+
+    if(language.isEmpty() && d->keywords.value(language).count()==0) {
+        language = d->languages.at(0)->language();
+    }
+
+    QStringList keywords = d->keywords.value(language);
+
+    if (keywords.count()==0) {
+        keywords = d->keywords.values().at(0);
+    }
+
+    return keywords;
 }
 
 void BookInfo::setKeywords(QStringList keywords, QString language)

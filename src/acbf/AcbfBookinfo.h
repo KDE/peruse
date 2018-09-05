@@ -47,6 +47,11 @@
  * 
  * Annotations in particular are a stringlist of paragraphs.
  * 
+ * The library handles retrieving title, keywords and annotation when there is no
+ * language defined as follows: It checks if there is an entry for "", if not, tries
+ * the entry for the first language object, and if that doesn't work, returns the first
+ * value it can find.
+ * 
  * ACBF's language support is further detailed in the Language object.
  * 
  * ACBF can have multiple genres, but they are limited to a list of keys, given
@@ -183,7 +188,6 @@ public:
      * @param title - the title as a QString
      * @param language - the language code in language code, country
      * code format joined by a dash (not an underscore).
-     * TODO: title() defaults to English when no language is given, but setTitle() does not...
      */
     Q_INVOKABLE void setTitle(QString title, QString language = "");
     
@@ -279,7 +283,7 @@ public:
     QStringList keywords(QString language = "");
     /**
      * \brief set the list of keywords for the given language.
-     * @param annotation - A stringlist of keywords
+     * @param keywords - A stringlist of keywords
      * @param language - The language for which to set the annotation in
      * language code, country code format joined by a dash (not an underscore).
      */
@@ -291,7 +295,7 @@ public:
     Page* coverpage();
     /**
      * \brief set a cover page.
-     * @param newCover
+     * @param newCover A page object with the new cover.
      */
     void setCoverpage(Page* newCover);
 
