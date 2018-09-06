@@ -62,14 +62,12 @@ void Reference::toXml(QXmlStreamWriter* writer)
 
 bool Reference::fromXml(QXmlStreamReader *xmlReader)
 {
-    qDebug()<< "Getting the reference";
     setId(xmlReader->attributes().value(QStringLiteral("id")).toString());
     setLanguage(xmlReader->attributes().value(QStringLiteral("lang")).toString());
     while(xmlReader->readNextStartElement())
     {
         if(xmlReader->name() == QStringLiteral("p"))
         {
-            qDebug()<<"Getting the paragraphs";
             d->paragraphs.append(xmlReader->readElementText(QXmlStreamReader::IncludeChildElements));
         }
         else

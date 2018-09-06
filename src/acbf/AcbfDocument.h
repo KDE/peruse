@@ -41,7 +41,6 @@
  * 
  * Of these, only Body and Metadata are necessary for a proper ACBF file.
  * 
- * TODO: Support references and stylesheets.
  */
 namespace AdvancedComicBookFormat
 {

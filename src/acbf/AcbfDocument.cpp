@@ -86,7 +86,6 @@ bool Document::fromXml(QString xmlDocument)
                 || xmlReader.namespaceUri().startsWith(QStringLiteral("http://www.acbf.info/xml/acbf/"))
             ))
         {
-            qDebug()<< xmlReader.documentEncoding().toString();
             while(xmlReader.readNextStartElement())
             {
                 if(xmlReader.name() == QStringLiteral("meta-data"))
