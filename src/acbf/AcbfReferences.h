@@ -33,6 +33,19 @@
 namespace AdvancedComicBookFormat
 {
 
+    /**
+     * @brief Class to handle the ACBF references section.
+     * 
+     * The References object holds Reference objects, which
+     * in turn have an id, language and a list of paragraphs.
+     * 
+     * A reference is a bit of text that can be refered to
+     * with an anchor in any of the other paragraphs. This
+     * can be used for footnotes, like translation notes
+     * or author's notes.
+     * 
+     * Reference objects can be retrieved by using their ID.
+     */
 class ACBF_EXPORT References : public QObject
 {
     Q_OBJECT
@@ -42,11 +55,11 @@ public:
     ~References() override;
     
     /**
-     * \brief Write the textarea into the xml writer.
+     * \brief Write the references into the xml writer.
      */
     void toXml(QXmlStreamWriter* writer);
     /**
-     * \brief load a textarea element into this object.
+     * \brief load a reference element into this object.
      * @return True if the xmlReader encountered no errors.
      */
     bool fromXml(QXmlStreamReader *xmlReader);

@@ -28,6 +28,8 @@
 #include "AcbfPage.h"
 
 #include <QPoint>
+namespace AdvancedComicBookFormat
+{
 /**
  * \brief a Class to handle ACBF jumps.
  * 
@@ -39,9 +41,10 @@
  * story and pointing at the beginning of the story.
  * 
  * Other uses included choose your own adventure style books.
+ * 
+ * Within ACBF, Jumps are areas defined by a polygon of points,
+ * with an index pointing at the page to jump to.
  */
-namespace AdvancedComicBookFormat
-{
 class ACBF_EXPORT Jump : public QObject
 {
     Q_OBJECT
@@ -51,17 +54,17 @@ public:
     ~Jump() override;
     
     /**
-     * \brief Write the textarea into the xml writer.
+     * \brief Write the jump into the xml writer.
      */
     void toXml(QXmlStreamWriter* writer);
     /**
-     * \brief load a textarea element into this object.
+     * \brief load a jump element into this object.
      * @return True if the xmlReader encountered no errors.
      */
     bool fromXml(QXmlStreamReader *xmlReader);
 
     /**
-     * @return a list of points that encompasses the textarea.
+     * @return a list of points that encompasses the jump.
      */
     QList<QPoint> points() const;
     /**

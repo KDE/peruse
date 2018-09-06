@@ -10,18 +10,18 @@ set(acbf_SRCS
     AcbfDatabaseref.cpp
     AcbfDocument.cpp
     AcbfDocumentinfo.cpp
+    AcbfFrame.cpp
+    AcbfJump.cpp
     AcbfLanguage.cpp
     AcbfMetadata.cpp
     AcbfPage.cpp
     AcbfPublishinfo.cpp
-    AcbfSequence.cpp
-    AcbfTextarea.cpp
-    AcbfTextlayer.cpp
-    AcbfFrame.cpp
-    AcbfJump.cpp
     AcbfReferences.cpp
     AcbfReference.cpp
+    AcbfSequence.cpp
     AcbfStyleSheet.cpp
+    AcbfTextarea.cpp
+    AcbfTextlayer.cpp
 )
 
 add_library(acbf SHARED ${acbf_SRCS})

@@ -33,7 +33,19 @@ class QXmlStreamReader;
 
 namespace AdvancedComicBookFormat
 {
-
+/**
+ * @brief Class to handle the CSS stylesheet.
+ * 
+ * ACBF files have a CSS stylesheet that can be used
+ * to style the different types of textarea, such as
+ * speech, inverted, commentary, and so forth.
+ * 
+ * This in turn allows generated text overlays to be
+ * closer stylistically to a given acbf file.
+ * 
+ * This class does some minimal parsing on the css to
+ * seperate the definitions and the selectors.
+ */
 class ACBF_EXPORT StyleSheet : public QObject
 {
     Q_OBJECT
@@ -43,11 +55,11 @@ public:
     ~StyleSheet() override;
     
     /**
-     * \brief Write the textarea into the xml writer.
+     * \brief Write the stylesheet into the xml writer.
      */
     void toXml(QXmlStreamWriter* writer);
     /**
-     * \brief load a textarea element into this object.
+     * \brief load a stylesheet element into this object.
      * @return True if the xmlReader encountered no errors.
      */
     bool fromXml(QXmlStreamReader *xmlReader);

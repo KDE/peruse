@@ -35,6 +35,12 @@ namespace AdvancedComicBookFormat
 /**
  * \brief a Class to handle a single ACBF reference.
  * 
+ * A reference is a bit of text that can be refered to
+ * with an anchor in any of the other paragraphs. This
+ * can be used for footnotes, like translation notes
+ * or author's notes.
+ * 
+ * You refer to a reference by using the ID.
  */
 class References;
 class ACBF_EXPORT Reference : public QObject
@@ -46,11 +52,11 @@ public:
     ~Reference() override;
     
     /**
-     * \brief Write the textarea into the xml writer.
+     * \brief Write the reference into the xml writer.
      */
     void toXml(QXmlStreamWriter* writer);
     /**
-     * \brief load a textarea element into this object.
+     * \brief load a reference element into this object.
      * @return True if the xmlReader encountered no errors.
      */
     bool fromXml(QXmlStreamReader *xmlReader);

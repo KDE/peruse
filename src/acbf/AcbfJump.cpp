@@ -69,7 +69,7 @@ bool Jump::fromXml(QXmlStreamReader *xmlReader)
         }
         else
         {
-            qWarning() << "Failed to construct one of the points for a frame. Attempted to handle the point" << point << "in the data" << points;
+            qWarning() << "Failed to construct one of the points for a jump. Attempted to handle the point" << point << "in the data" << points;
             return false;
         }
     }
@@ -77,7 +77,7 @@ bool Jump::fromXml(QXmlStreamReader *xmlReader)
     if (xmlReader->hasError()) {
         qWarning() << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader->name() << "(" << xmlReader->lineNumber() << ":" << xmlReader->columnNumber() << ") The reported error was:" << xmlReader->errorString();
     }
-    qDebug() << Q_FUNC_INFO << "Created a jump with " << points.count() << "points, to page "<<d->pageIndex;
+    qDebug() << Q_FUNC_INFO << "Created a jump with " << points.count() << "points, to page " << d->pageIndex;
 
     return !xmlReader->hasError();
 }

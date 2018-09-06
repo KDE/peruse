@@ -52,17 +52,17 @@ public:
     ~Frame() override;
     
     /**
-     * \brief Write the textarea into the xml writer.
+     * \brief Write the frame into the xml writer.
      */
     void toXml(QXmlStreamWriter* writer);
     /**
-     * \brief load a textarea element into this object.
+     * \brief load a frame element into this object.
      * @return True if the xmlReader encountered no errors.
      */
     bool fromXml(QXmlStreamReader *xmlReader);
 
     /**
-     * @return a list of points that encompasses the textarea.
+     * @return a list of points that encompasses the frame.
      */
     QList<QPoint> points() const;
     /**
