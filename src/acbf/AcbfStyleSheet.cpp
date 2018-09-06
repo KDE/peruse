@@ -47,7 +47,7 @@ void StyleSheet::toXml(QXmlStreamWriter* writer) {
     QStringList contents;
     Q_FOREACH(const QString selector, d->classes.keys())
     {
-        contents.append(selector+" {\n"+d->classes[selector]+"\n}");
+        contents.append(QStringLiteral("%1 {\n%2\n}").arg(selector, d->classes[selector]));
     }
     writer->writeCharacters(contents.join("\n"));
     writer->writeEndElement();
