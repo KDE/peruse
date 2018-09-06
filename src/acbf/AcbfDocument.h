@@ -47,9 +47,9 @@ namespace AdvancedComicBookFormat
 {
 class Metadata;
 class Body;
-// class References;
+class References;
 class Data;
-// class Stylesheet;
+class StyleSheet;
 class ACBF_EXPORT Document : public QObject
 {
     Q_OBJECT
@@ -81,12 +81,24 @@ public:
      * @returns the Body object.
      */
     Body* body() const;
-    // References* references();
+    
+    /**
+     * @brief The reference section.
+     * 
+     * @return a References object with the references.
+     */
+    References* references() const;
     /**
      * @returns the Data object.
      */
     Data* data() const;
-    // Stylesheet* stylesheet();
+    
+    /**
+     * @brief The style section, which contains a css stylesheet.
+     * 
+     * @return A StyleSheet object with the css.
+     */
+    StyleSheet* styleSheet() const;
 private:
     class Private;
     std::unique_ptr<Private> d;

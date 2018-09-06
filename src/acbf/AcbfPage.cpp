@@ -147,6 +147,7 @@ bool Page::fromXml(QXmlStreamReader *xmlReader)
              
              // Jumps have no child elements, so we need to force the reader to go to the next one.
              d->jumps.append(newJump);
+             xmlReader->readNext();
          }
         else
         {

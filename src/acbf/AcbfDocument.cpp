@@ -24,6 +24,8 @@
 #include "AcbfMetadata.h"
 #include "AcbfBookinfo.h"
 #include "AcbfData.h"
+#include "AcbfReferences.h"
+#include "AcbfStyleSheet.h"
 
 #include <QDebug>
 #include <QXmlStreamReader>
@@ -40,6 +42,9 @@ public:
     Metadata* metaData;
     Body* body;
     Data* data;
+    References* references;
+    StyleSheet* cssStyleSheet;
+    
 };
 
 Document::Document(QObject* parent)
@@ -49,6 +54,8 @@ Document::Document(QObject* parent)
     d->metaData = new Metadata(this);
     d->body = new Body(this);
     d->data = new Data(this);
+    d->references = new References(this);
+    d->cssStyleSheet = new StyleSheet(this);
 }
 
 Document::~Document() = default;
@@ -79,6 +86,7 @@ bool Document::fromXml(QString xmlDocument)
                 || xmlReader.namespaceUri().startsWith(QStringLiteral("http://www.acbf.info/xml/acbf/"))
             ))
         {
+            qDebug()<< xmlReader.documentEncoding().toString();
             while(xmlReader.readNextStartElement())
             {
                 if(xmlReader.name() == QStringLiteral("meta-data"))
@@ -96,6 +104,18 @@ bool Document::fromXml(QString xmlDocument)
                 else if(xmlReader.name() == QStringLiteral("data"))
                 {
                     if(!d->data->fromXml(&xmlReader)) {
+                        break;
+                    }
+                }
+                else if(xmlReader.name() == QStringLiteral("references"))
+                {
+                    if(!d->references->fromXml(&xmlReader)) {
+                        break;
+                    }
+                }
+                else if(xmlReader.name() == QStringLiteral("style"))
+                {
+                    if(!d->cssStyleSheet->fromXml(&xmlReader)) {
                         break;
                     }
                 }
@@ -131,4 +151,14 @@ Body * Document::body() const
 Data * Document::data() const
 {
     return d->data;
+}
+
+References * Document::references() const
+{
+    return d->references;
+}
+
+StyleSheet * Document::styleSheet() const
+{
+    return d->cssStyleSheet;
 }
