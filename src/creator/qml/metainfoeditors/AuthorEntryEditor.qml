@@ -23,7 +23,19 @@ import QtQuick 2.2
 
 import org.kde.kirigami 2.1 as Kirigami
 import QtQuick.Controls 2.2 as QtControls
-
+/**
+ * @brief a special overlay sheet for editing the author information.
+ * 
+ * Authors can have the full names, nicknames and some contact information
+ * like email adress and homepage. They can also be assigned a role
+ * from a list of predefined author activities.
+ * 
+ * Author is used in acbf for both the actual authors as well as the people
+ * who handled generating the acbf document, which is why this is
+ * a dedicated form.
+ * 
+ * TODO: Support input for multiple homepage and email adresses.
+ */
 Kirigami.OverlaySheet {
     id: root;
     property int index: -1;

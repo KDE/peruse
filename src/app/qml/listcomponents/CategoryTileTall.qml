@@ -24,6 +24,12 @@ import QtQuick.Controls 2.2 as QtControls
 
 import org.kde.kirigami 2.1 as Kirigami
 
+/**
+ * @brief A button to select a category to show the categories and books inside.
+ * 
+ * It distinguishes itself from a book by drawing two rectangles behind the thumbnail,
+ * to indicate 'multiple books'.
+ */
 Item {
     id: root;
     property bool selected: false;

@@ -22,7 +22,9 @@
 import QtQuick 2.1
 
 import org.kde.kirigami 2.1 as Kirigami
-
+/**
+ * @brief Draws a big header to indicate subsections within a page.
+ */
 Row {
     width: parent.width;
     height: headerText.paintedHeight;

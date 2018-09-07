@@ -25,7 +25,14 @@ import QtQuick.Controls 2.2 as QtControls
 
 import org.kde.kirigami 2.1 as Kirigami
 import org.kde.okular 2.0 as Okular
-
+/**
+ * @brief a ViewerBase intended as a fallback for unsupported books.
+ * 
+ * It is called from Book when the opened book has no other specialised viewers.
+ * 
+ * It does not use the ImageBrowser because it needs to access
+ * Okular Page items for the images.
+ */
 ViewerBase {
     id: root;
     property string title: documentItem.windowTitleForDocument;

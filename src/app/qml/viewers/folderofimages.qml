@@ -24,7 +24,14 @@ import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.0
 
 import org.kde.peruse 0.1 as Peruse
-
+/**
+ * @brief a ViewerBase for books that are folders with images.
+ * 
+ * It is called from Book when the opened book is one of the following files:
+ * - inode/directory
+ * - image/jpeg
+ * - image/png
+ */
 ViewerBase {
     id: root;
     property string title: imageBrowser.model.title;

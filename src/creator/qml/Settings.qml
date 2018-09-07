@@ -22,7 +22,9 @@
 import QtQuick 2.2
 
 import org.kde.kirigami 2.1 as Kirigami
-
+/**
+ * @brief Page with knobs and dials for configuring Peruse Creator.
+ */
 Kirigami.Page {
     id: root;
     property string categoryName: "settingsPage";

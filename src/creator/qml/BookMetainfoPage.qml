@@ -25,7 +25,13 @@ import QtQuick.Controls 2.2 as QtControls
 import org.kde.kirigami 2.1 as Kirigami
 
 import "metainfoeditors"
-
+/**
+ * @brief Page with form to edit the comic metadata.
+ * 
+ * Most metadata entries are quite simple.
+ * 
+ * Others, like Author, need a dedicated entry editor (AuthorEntryEditor).
+ */
 Kirigami.Page {
     id: root;
     title: i18nc("title text for the book meta information editor sheet", "Edit Meta Information");

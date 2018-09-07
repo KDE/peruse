@@ -23,6 +23,11 @@ import QtQuick 2.3
 // import QtQuick.Layouts 1.1
 // import QtQuick.Controls 1.0 as QtControls
 
+/**
+ * @brief The image viewer used by the CBR and Folder Viewer Base classes.
+ * 
+ * It handles drawing the image and the different zoom modes.
+ */
 ListView {
     id: root
     signal goNextPage();
@@ -43,7 +48,14 @@ ListView {
             currentIndex = indexHere;
         }
     }
-
+    /**
+     * An interactive area with an image.
+     * 
+     * Clicking once on the image will hide all other controls from view.
+     * Clicking twice will instead zoom in.
+     * 
+     * Pinch will zoom in as well.
+     */
     delegate: Flickable {
         id: flick
         width: imageWidth

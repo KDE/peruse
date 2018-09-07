@@ -28,6 +28,24 @@ import org.kde.kirigami 2.1 as Kirigami
 import org.kde.peruse 0.1 as Peruse
 import org.kde.contentlist 0.1
 
+/**
+ * @brief main application window.
+ * 
+ * This splits the window in two sections:
+ * - A section where you can select comics.
+ * - A "global drawer" which can be used to switch between categories
+ *   and access settings and the open book dialog.
+ * 
+ * The global drawer controls which is the main component on the left.
+ * It initializes on WelcomePage. The category filters are each handled
+ * by a BookShelf. The store page by Store and the settings by Settings.
+ * 
+ * This also controls the bookViewer, which is a Book object where the
+ * main reading of comics is done.
+ * 
+ * There is also the PeruseContextDrawer, which is only accesible on the book
+ * page and requires flicking in from the right.
+ */
 Kirigami.ApplicationWindow {
     id: mainWindow;
     title: "Comic Book Reader";

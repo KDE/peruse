@@ -28,7 +28,11 @@ import org.kde.kirigami 2.1 as Kirigami
 import org.kde.peruse 0.1 as Peruse
 
 import "listcomponents" as ListComponents
-
+/**
+ * @brief Page that handles reading the book.
+ * 
+ * 
+ */
 Kirigami.Page {
     id: root;
     objectName: "bookViewer";
@@ -283,6 +287,11 @@ Kirigami.Page {
         enabled: root.isCurrentPage;
     }
 
+    /**
+     * This holds an instance of ViewerBase, which can either be the
+     * Okular viewer(the fallback one), or one of the type specific
+     * ones(ImageBrowser based).
+     */
     Item {
         width: root.width - (root.leftPadding + root.rightPadding);
         height: root.height - (root.topPadding + root.bottomPadding);
@@ -359,7 +368,9 @@ Kirigami.Page {
             }
         }
     }
-
+    /**
+     * Overlay with book information and a series selection.
+     */
     Kirigami.OverlaySheet {
         id: bookInfo;
         function setNewCurrentIndex(newIndex) {

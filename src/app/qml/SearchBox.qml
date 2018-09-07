@@ -26,7 +26,13 @@ import org.kde.kirigami 2.1 as Kirigami
 
 import org.kde.peruse 0.1 as Peruse
 import "listcomponents" as ListComponents
-
+/**
+ * @brief A box that holds search results
+ * 
+ * This shows up when selecting the search from
+ * BookShelf or the WelcomePage. It draws BookTileTall
+ * and CategoryTileTall for the entries it finds.
+ */
 Rectangle {
     id: root;
     property int maxHeight: parent.height;

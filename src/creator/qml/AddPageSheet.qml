@@ -24,7 +24,11 @@ import QtQuick.Dialogs 1.2
 import QtQuick.Controls 2.2 as QtControls
 
 import org.kde.kirigami 2.1 as Kirigami
-
+/**
+ * @brief overlay with options for adding a page.
+ * 
+ * It is accessed from Book
+ */
 Kirigami.OverlaySheet {
     id: root;
     property int addPageAfter: 0;

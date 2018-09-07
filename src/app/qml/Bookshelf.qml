@@ -28,7 +28,18 @@ import org.kde.kirigami 2.1 as Kirigami
 import org.kde.peruse 0.1 as Peruse
 
 import "listcomponents" as ListComponents
-
+/**
+ * @brief This lays out the books and categories.
+ * 
+ * It uses BookTileTall for the books and CategoryTileTall
+ * for showing the categories. Categories can be selected to open
+ * a new bookshelf from the right, showing the entries in that
+ * subcategory. This is particularly in use with the folder category.
+ * 
+ * There is also access to the SearchBox, and it is possible to access
+ * a BookTile by press+holding the thumbnail.
+ * This holds information about the book.
+ */
 Kirigami.ScrollablePage {
     id: root;
     title: headerText;

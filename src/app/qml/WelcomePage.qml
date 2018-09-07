@@ -27,7 +27,19 @@ import org.kde.kirigami 2.1 as Kirigami
 
 import org.kde.peruse 0.1 as Peruse
 import "listcomponents" as ListComponents
-
+/**
+ * @brief The page that Peruse opens up on.
+ * 
+ * The WelcomePage shares some resemblance to the
+ * BookShelf pages in that it allows the user to select a comic,
+ * but where BookShelf pages are really for discovery and searching
+ * through categories and subcategories, the WelcomePage is primarily
+ * for selecting the recently opened and new books, which the user is most likely
+ * to look at when they want to read.
+ * 
+ * It uses BookTileTall to show the selectable books, SearchBox to search books
+ * and Section to indicate a subsection.
+ */
 Kirigami.Page {
     id: root;
     property string categoryName: "welcomePage";

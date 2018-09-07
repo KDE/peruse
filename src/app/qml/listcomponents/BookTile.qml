@@ -24,6 +24,16 @@ import QtQuick.Controls 2.2 as QtControls
 
 import org.kde.kirigami 2.1 as Kirigami
 
+/**
+ * @brief small window with book information.
+ * 
+ * This shows a bit of information about the book and gives a
+ * selector with the other books in the series.
+ * 
+ * It pops up after finishing a book in Book, and when pressing long
+ * on a BookTileTall item in BookShelf.
+ * 
+ */
 Item {
     id: root;
     property bool selected: false;

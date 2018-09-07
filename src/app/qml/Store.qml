@@ -29,7 +29,9 @@ import org.kde.kirigami 2.1 as Kirigami
 import org.kde.peruse 0.1 as Peruse
 
 import "listcomponents" as ListComponents
-
+/**
+ * @brief This holds the NewStuffStuff to get new comics from the KDE store.
+ */
 Kirigami.Page {
     id: root;
     property string categoryName: "storePage";

@@ -24,7 +24,15 @@ import QtQuick.Controls 2.2 as QtControls
 
 import org.kde.kirigami 2.1 as Kirigami
 import org.kde.peruse 0.1 as Peruse
-
+/**
+ * @brief the page that deals with editing the book.
+ * 
+ * This is primarily a list of pages that can be moved around. These are inside
+ * Kirigami ListSwipeItems.
+ * 
+ * This also has a button to add pages, which calls up AddPageSheet.
+ * And a button to edit the book metadata, which calls up BookMetainfoPage.
+ */
 Kirigami.ScrollablePage {
     id: root;
     property string categoryName: "book";

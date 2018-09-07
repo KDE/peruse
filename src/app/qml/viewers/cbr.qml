@@ -24,7 +24,15 @@ import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.0
 
 import org.kde.peruse 0.1 as Peruse
-
+/**
+ * @brief a ViewerBase for CBR style books.
+ * 
+ * It is called from Book when the opened book is one of the following files:
+ * - application/x-cbz
+ * - application/x-cbr
+ * - application/vnd.comicbook+zip
+ * - application/vnd.comicbook+rar
+ */
 ViewerBase {
     id: root;
     property string title: imageBrowser.model.title;

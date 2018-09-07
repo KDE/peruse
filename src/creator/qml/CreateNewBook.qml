@@ -25,7 +25,12 @@ import QtQuick.Controls 2.2 as QtControls
 
 import org.kde.kirigami 2.1 as Kirigami
 import org.kde.peruse 0.1 as Peruse
-
+/**
+ * @brief page with a form for creating a new comic.
+ * 
+ * It asks for the default title, folder and cover image,
+ * and when done it open the new book in Book.
+ */
 Kirigami.Page {
     id: root;
     property string categoryName: "createNewBook";

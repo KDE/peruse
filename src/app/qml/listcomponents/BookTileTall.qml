@@ -24,6 +24,9 @@ import QtQuick.Controls 2.2 as QtControls
 
 import org.kde.kirigami 2.1 as Kirigami
 
+/**
+ * @brief A button to select a book to read with a nice big thumbnail.
+ */
 Item {
     id: root;
     property bool selected: false;

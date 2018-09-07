@@ -29,7 +29,11 @@ import org.kde.kirigami 2.1 as Kirigami
 import org.kde.peruse 0.1 as Peruse
 
 import "listcomponents" as ListComponents
-
+/**
+ * @brief This holds toggles and dials to configure Peruse.
+ * 
+ * Its main purpose is to add and remove entries from the list of booklocations.
+ */
 Kirigami.Page {
     id: root;
     property string categoryName: "settingsPage";

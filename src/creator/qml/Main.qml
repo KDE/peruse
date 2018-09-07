@@ -25,7 +25,18 @@ import QtQuick.Dialogs 1.2
 
 import org.kde.kirigami 2.1 as Kirigami
 import org.kde.peruse 0.1 as Peruse
-
+/**
+ * @brief Main window of the application.
+ * 
+ * This splits the window in two sections:
+ * - A section where you can modify a comic.
+ * - A "global drawer" which can be used to select actions.
+ * 
+ * WelcomePage is the opening page and holds options to create a new comic.
+ * CreateNewBook gives options for creating a new book from scratch.
+ * Book is the actual book being modified.
+ * Settings is the page with toggles and knobs for Peruse Creator config.
+ */
 Kirigami.ApplicationWindow {
     id: mainWindow;
     property int animationDuration: 200;

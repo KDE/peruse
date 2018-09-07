@@ -24,7 +24,15 @@ import QtQuick.Layouts 1.1
 import QtQuick.Controls 2.2 as QtControls
 
 import org.kde.kirigami 2.1 as Kirigami
-
+/**
+ * @brief The page on which Peruse Creator opens.
+ * 
+ * This page gives an introduction to peruse and has options for:
+ * - Opening the last opened archive by either Peruse or Peruse Creator.
+ * - Opening an existing comic.
+ * - Creating a blank comic.
+ * - Creating a comic archive from a selection of images.
+ */
 Kirigami.Page {
     id: root;
     property string categoryName: "welcomePage";

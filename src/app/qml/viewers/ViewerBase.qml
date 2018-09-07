@@ -22,7 +22,15 @@
 import QtQuick 2.1
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.0
-
+/**
+ * @brief a base for holding the image browser.
+ * 
+ * It keeps track of the comic data and deals with all sorts
+ * of side functions like keeping track of the current page,
+ * right to left mode and the controls.
+ * 
+ * This is slightly different between filetypes.
+ */
 Item {
     id: root;
     signal goNextPage();
