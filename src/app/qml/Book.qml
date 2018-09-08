@@ -273,14 +273,14 @@ Kirigami.Page {
     }
     Kirigami.Action {
         id: mainBookAction;
-        text: applicationWindow().visibility !== Window.FullScreen ? i18n("Enter full screen mode on any device type", "Go full screen") : i18nc("Exit full screen mode on any device type", "Exit full screen");
+        text: applicationWindow().visibility !== Window.FullScreen ? i18nc("Enter full screen mode on any device type", "Go full screen") : i18nc("Exit full screen mode on any device type", "Exit full screen");
         iconName: "view-fullscreen";
         onTriggered: toggleFullscreen();
         enabled: root.isCurrentPage;
     }
     Kirigami.Action {
         id: bookInfoAction;
-        text: i18n("Closes the book information drawer", "Close");
+        text: i18nc("Closes the book information drawer", "Close");
         shortcut: bookInfo.sheetOpen ? "Esc" : "";
         iconName: "dialog-cancel";
         onTriggered: bookInfo.close();
