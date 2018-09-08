@@ -120,6 +120,7 @@ Rectangle {
                 author: model.author ? model.author : i18nc("used for the author data in book lists if autor is empty", "(unknown)");
                 title: model.title;
                 filename: model.filename;
+                thumbnail: model.thumbnail;
                 categoryEntriesCount: model.categoryEntriesCount;
                 currentPage: model.currentPage;
                 totalPages: model.totalPages;
