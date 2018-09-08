@@ -32,7 +32,7 @@ import "metainfoeditors"
  * 
  * Others, like Author, need a dedicated entry editor (AuthorEntryEditor).
  */
-Kirigami.Page {
+Kirigami.ScrollablePage {
     id: root;
     title: i18nc("title text for the book meta information editor sheet", "Edit Meta Information");
     property QtObject model;
