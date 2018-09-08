@@ -118,7 +118,6 @@ Kirigami.ApplicationWindow {
                 text: "Welcome";
                 iconName: "start-over";
                 checked: mainWindow.currentCategory === "welcomePage";
-                checkable: true;
                 onTriggered: {
                     changeCategory(welcomePage);
                     pageStack.currentItem.updateRecent();
@@ -130,28 +129,24 @@ Kirigami.ApplicationWindow {
                 text: i18nc("Switch to the listing page showing the most recently discovered books", "Recently Added Books");
                 iconName: "appointment-new";
                 checked: mainWindow.currentCategory === "bookshelfAdded";
-                checkable: true;
                 onTriggered: changeCategory(bookshelfAdded);
             },
             Kirigami.Action {
                 text: i18nc("Switch to the listing page showing items grouped by title", "Group by Title");
                 iconName: "view-media-title";
                 checked: mainWindow.currentCategory === "bookshelfTitle";
-                checkable: true;
                 onTriggered: changeCategory(bookshelfTitle);
             },
             Kirigami.Action {
                 text: i18nc("Switch to the listing page showing items grouped by author", "Group by Author");
                 iconName: "actor";
                 checked: mainWindow.currentCategory === "bookshelfAuthor";
-                checkable: true;
                 onTriggered: changeCategory(bookshelfAuthor);
             },
             Kirigami.Action {
                 text: i18nc("Switch to the listing page showing items grouped by series", "Group by Series");
                 iconName: "edit-group";
                 checked: currentCategory === "bookshelfSeries";
-                checkable: true;
                 onTriggered: changeCategory(bookshelfSeries);
             },
             Kirigami.Action {
@@ -164,7 +159,6 @@ Kirigami.ApplicationWindow {
                 text: i18nc("Switch to the listing page showing items grouped by their filesystem folder", "Filter by Folder");
                 iconName: "tag-folder";
                 checked: mainWindow.currentCategory === "bookshelfFolder";
-                checkable: true;
                 onTriggered: changeCategory(bookshelfFolder);
             },
             Kirigami.Action {
@@ -177,6 +171,7 @@ Kirigami.ApplicationWindow {
             Kirigami.Action {
                 text: i18nc("Switch to the book store page", "Get Hot New Books");
                 iconName: "get-hot-new-stuff";
+                checked: mainWindow.currentCategory === "storePage";
                 onTriggered: changeCategory(storePage);
             },
             Kirigami.Action {
@@ -185,7 +180,6 @@ Kirigami.ApplicationWindow {
                 text: i18nc("Open the settings page", "Settings");
                 iconName: "configure"
                 checked: mainWindow.currentCategory === "settingsPage";
-                checkable: true;
                 onTriggered: changeCategory(settingsPage);
             }
         ]
