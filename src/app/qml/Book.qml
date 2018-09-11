@@ -395,7 +395,10 @@ Kirigami.Page {
             }
         }
         function openSelected() {
-            applicationWindow().showBook(detailsTile.filename, detailsTile.currentPage);
+            if (detailsTile.filename!==root.file) {
+                closeBook();
+                applicationWindow().showBook(detailsTile.filename, detailsTile.currentPage);
+            }
         }
         function showBookInfo(filename) {
             if(sheetOpen) {
@@ -446,7 +449,7 @@ Kirigami.Page {
                 totalPages: bookInfo.currentBook.readProperty("totalPages");
                 onBookSelected: {
                     if(root.file !== filename) {
-                        applicationWindow().showBook(filename, currentPage);
+                        openSelected();
                     }
                 }
                 onBookDeleteRequested: {
@@ -476,7 +479,13 @@ Kirigami.Page {
                     categoryEntriesCount: 0;
                     currentPage: model.currentPage;
                     totalPages: model.totalPages;
-                    onBookSelected: bookInfo.setNewCurrentIndex(model.index);
+                    onBookSelected:{
+                        if (seriesListView.currentIndex !== model.index) {
+                            bookInfo.setNewCurrentIndex(model.index);
+                        } else {
+                            bookInfo.openSelected();
+                        }
+                    }
                     selected: seriesListView.currentIndex === model.index;
                 }
                 onCurrentIndexChanged: {
