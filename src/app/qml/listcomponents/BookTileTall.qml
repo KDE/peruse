@@ -38,6 +38,7 @@ Item {
     property string totalPages;
     property double progress: currentPage / totalPages;
     property string thumbnail;
+    property bool pressIndicator: false;
     signal bookSelected(string filename, int currentPage);
     /// FIXME This signal will also forward the MouseEvent, but the type is not recognised, so we can't
     /// add it to the signature. Certainly would be nice if that were possible, though, right?
@@ -52,6 +53,34 @@ Item {
         anchors.fill: parent;
         onClicked: root.bookSelected(root.filename, root.currentPage);
         onPressAndHold: root.pressAndHold(mouse);
+        onPressed: root.pressIndicator ? pressIndicatorAnimation.start():0;
+        onReleased: {pressIndicatorAnimation.stop(); pressIndicator.width = 0;pressIndicator.height = 0;}
+
+        // FIXME The duration should ideally be the pressHold interval.
+        ParallelAnimation {
+                id: pressIndicatorAnimation;
+                NumberAnimation {
+                    target: pressIndicator;
+                    from: coverImage.paintedWidth/3;
+                    to: coverOutline.width;
+                    property: "width";
+                    duration: 800;
+                }
+                NumberAnimation {
+                    target: pressIndicator;
+                    from: coverImage.paintedWidth/3;
+                    to: coverOutline.height;
+                    property: "height";
+                    duration: 800;
+                }
+                NumberAnimation {
+                    target: pressIndicator;
+                    from: coverImage.paintedWidth/3;
+                    to: 0;
+                    property: "radius";
+                    duration: 800;
+                }
+        }
     }
     Item {
         id: bookCover;
@@ -99,6 +128,15 @@ Item {
             anchors.centerIn: parent;
             visible: running;
             running: coverImage.status === Image.Loading;
+        }
+        Rectangle{
+            id: pressIndicator;
+            anchors.centerIn: coverImage;
+            width: 0;
+            height: 0;
+            color: "transparent";
+            border.color:Kirigami.Theme.highlightColor;
+            border.width:Kirigami.Units.smallSpacing;
         }
     }
     QtControls.Label {

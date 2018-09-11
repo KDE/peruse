@@ -173,6 +173,7 @@ Kirigami.ScrollablePage {
                 onBookSelected: root.bookSelected(filename, currentPage);
                 selected: shelfList.currentIndex === index;
                 onPressAndHold: bookDetails.showBookInfo(model.index);
+                pressIndicator: true;
             }
         }
     }
