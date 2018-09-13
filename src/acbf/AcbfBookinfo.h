@@ -280,14 +280,14 @@ public:
      * @param language - the language for which to return the keywords for.
      * @return a stringlist of keywords in the given language.
      */
-    QStringList keywords(QString language = "");
+    Q_INVOKABLE QStringList keywords(QString language = "");
     /**
      * \brief set the list of keywords for the given language.
      * @param keywords - A stringlist of keywords
      * @param language - The language for which to set the annotation in
      * language code, country code format joined by a dash (not an underscore).
      */
-    void setKeywords(QStringList keywords, QString language = "");
+    Q_INVOKABLE void setKeywords(QStringList keywords, QString language = "");
 
     /**
      * @return the coverpage as a page object.

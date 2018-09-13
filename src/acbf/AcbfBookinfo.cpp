@@ -467,6 +467,9 @@ QStringList BookInfo::annotationLanguages()
 
 QStringList BookInfo::annotation(QString language)
 {
+    if (d->annotation.isEmpty()) {
+        return QStringList("");
+    }
     if (!d->annotation.keys().contains(language)) {
         language = "";
     }
@@ -496,6 +499,10 @@ QHash<QString, QStringList> BookInfo::keywordsForAllLanguage()
 
 QStringList BookInfo::keywords(QString language)
 {
+    if (d->keywords.isEmpty()) {
+        return QStringList("");
+    }
+
     if (!d->keywords.keys().contains(language)) {
         language = "";
     }

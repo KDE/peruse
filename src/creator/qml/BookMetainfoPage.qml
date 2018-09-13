@@ -55,35 +55,100 @@ Kirigami.ScrollablePage {
         width: root.width - (root.leftPadding + root.rightPadding);
         height: childrenRect.height;
         spacing: Kirigami.Units.smallSpacing;
+
         Kirigami.Heading {
             width: parent.width;
             height: paintedHeight + Kirigami.Units.smallSpacing * 2;
-            text: i18nc("label text for the edit field for the book title", "Titles");
+            text: i18nc("label text for the edit field for the book title", "Title");
         }
-        Repeater {
-            model: root.model.acbfData ? root.model.acbfData.metaData.bookInfo.titleLanguages : 0;
-            delegate: LanguageTextEntryEditor {
-                width: contentColumn.width;
-                title: modelData === "" ? i18nc("label text for the the book title with no language (default)", "Default title") : modelData;
-                text: root.model.acbfData.metaData.bookInfo.title(modelData);
-                onSaveRequested: {
-                    root.model.acbfData.metaData.bookInfo.setTitle(text, modelData);
-                    root.model.setDirty();
+
+        Item { width: parent.width; height: Kirigami.Units.smallSpacing; }
+        QtControls.TextField {
+            id: defaultTitle;
+            width: parent.width - updateTitleButton.width - Kirigami.Units.smallSpacing;
+            placeholderText: i18nc("placeholder text for default title text-input", "Write to add default title");
+            text:root.model.acbfData ? root.model.acbfData.metaData.bookInfo.title("") : "";
+            QtControls.Button {
+                id: updateTitleButton;
+                anchors {
+                    left: parent.right;
+                    leftMargin: Kirigami.Units.smallSpacing;
                 }
-                onRemoveRequested: {
-                    root.model.acbfData.metaData.bookInfo.setTitle("", modelData);
-                    root.model.setDirty();
+                contentItem: Kirigami.Icon {
+                    source: "list-add";
                 }
-                removePossible: title === modelData;
+                height: parent.height;
+                width: height;
+                onClicked: {
+                    if(parent.text !== "") {
+                        root.model.acbfData.metaData.bookInfo.setTitle(parent.text, "");
+                        root.model.setDirty();
+                    }
+                }
             }
         }
-        QtControls.Button {
-            anchors.right: parent.right;
-            width: parent.with;
-            contentItem: Kirigami.Icon {
-                source: "list-add";
+
+        Kirigami.Heading {
+            width: parent.width;
+            height: paintedHeight + Kirigami.Units.smallSpacing * 2;
+            text: i18nc("label text for the edit field for the default annotation", "Annotation");
+        }
+        Item { width: parent.width; height: Kirigami.Units.smallSpacing; }
+        QtControls.TextArea {
+            id: defaultAnnotation;
+            width: parent.width - addCharacterButton.width - Kirigami.Units.smallSpacing;
+            placeholderText: i18nc("placeholder text for default annotiation text-area", "Write to add default annotation");
+            text:root.model.acbfData ? root.model.acbfData.metaData.bookInfo.annotation("").join("\n\n") : "";
+            QtControls.Button {
+                id: updateAnnotationButton;
+                anchors {
+                    left: parent.right;
+                    leftMargin: Kirigami.Units.smallSpacing;
+                }
+                contentItem: Kirigami.Icon {
+                    source: "list-add";
+                }
+                height: addCharacterButton.width;
+                width: height;
+                onClicked: {
+                    if(parent.text !== "") {
+                        root.model.acbfData.metaData.bookInfo.setAnnotation(parent.text.split("\n\n"), "");
+                        root.model.setDirty();
+                    }
+                }
             }
-            text: i18nc("Text on the button for adding new titles", "Add a title in another language");
+        }
+        Kirigami.Heading {
+            width: parent.width;
+            height: paintedHeight + Kirigami.Units.smallSpacing * 2;
+            text: i18nc("label text for the edit field for the keyword list", "Keywords");
+        }
+        Item { width: parent.width; height: Kirigami.Units.smallSpacing; }
+        QtControls.TextField {
+            width: parent.width - updateKeywordsButton.width - Kirigami.Units.smallSpacing;
+            placeholderText: i18nc("placeholder text for the add new keyword text entry", "Write a comma seperated list of keywords.");
+            text:root.model.acbfData ? root.model.acbfData.metaData.bookInfo.keywords("").join(", ") : "";
+            QtControls.Button {
+                id: updateKeywordsButton;
+                anchors {
+                    left: parent.right;
+                    leftMargin: Kirigami.Units.smallSpacing;
+                }
+                contentItem: Kirigami.Icon {
+                    source: "list-add";
+                }
+                height: parent.height;
+                width: height;
+                onClicked: {
+                    if(parent.text !== "") {
+                        var keywords = parent.text.split(",")
+                        for (var i in keywords) {
+                            keywords[i] = keywords[i].trim();
+                        }
+                        root.model.acbfData.metaData.bookInfo.setKeywords(keywords, "");
+                    }
+                }
+            }
         }
 
         Kirigami.Heading {
