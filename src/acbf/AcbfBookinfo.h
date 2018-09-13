@@ -86,6 +86,7 @@ class ACBF_EXPORT BookInfo : public QObject
     Q_PROPERTY(QStringList titleLanguages READ titleLanguages NOTIFY titleChanged)
     Q_PROPERTY(QStringList genres READ genres NOTIFY genresChanged)
     Q_PROPERTY(QStringList characters READ characters NOTIFY charactersChanged)
+    Q_PROPERTY(int sequenceCount READ sequenceCount NOTIFY sequenceCountChanged)
 public:
     explicit BookInfo(Metadata* parent = nullptr);
     ~BookInfo() override;
@@ -325,6 +326,15 @@ public:
      * a sequence.
      */
     void addSequence(Sequence* sequence);
+
+    /**
+     * @brief add a sequence from basic strings.
+     *
+     * @param number - integer representing the number within the sequence.
+     * @param title - the of the sequence, optional.
+     * @param volume - volume of the sequence, optional.
+     */
+    Q_INVOKABLE void addSequence(int number, QString title = QString(), int volume = 0);
     /**
      * \brief remove a sequence object from the list of sequences this book is
      * part of.
@@ -333,6 +343,26 @@ public:
      */
     void removeSequence(Sequence* sequence);
 
+    /**
+     * @brief remove a sequence by index.
+     * @param index - index of sequence to remove.
+     */
+    Q_INVOKABLE void removeSequence(int index);
+    /**
+     * @brief get a sequence by index.
+     * @param index = index of the sequence to get.
+     */
+    Q_INVOKABLE Sequence* sequence(int index) const;
+
+    /**
+     * @brief get total amount of sequences.
+     */
+    Q_INVOKABLE int sequenceCount() const;
+
+    /**
+     * @brief fires when the sequence count changes.
+     */
+    Q_SIGNAL void sequenceCountChanged();
     /**
      * @returns a list of entries that this book has in various databases.
      */

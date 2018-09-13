@@ -350,6 +350,104 @@ Kirigami.ScrollablePage {
             }
         }
 
+        Kirigami.Heading {
+            width: parent.width;
+            height: paintedHeight + Kirigami.Units.smallSpacing * 2;
+            text: i18nc("label text for the edit field for the sequence list", "Sequence");
+        }
+        Repeater {
+            model: root.model.acbfData ? root.model.acbfData.metaData.bookInfo.sequenceCount : 0;
+            delegate: Item {
+                width: parent.width;
+                height: childrenRect.height;
+                QtControls.TextField {
+                    id: seriesTextField;
+                    width: parent.width - removeSequenceButton.width - Kirigami.Units.smallSpacing;
+                    text: root.model.acbfData.metaData.bookInfo.sequence(modelData).title;
+                }
+                QtControls.SpinBox {
+                    anchors {
+                        top: seriesTextField.bottom;
+                        topMargin: Kirigami.Units.smallSpacing;
+                    }
+                    value : root.model.acbfData.metaData.bookInfo.sequence(modelData).number;
+                    width : (seriesTextField.width+Kirigami.Units.smallSpacing)/2;
+                    id: numberField;
+                }
+                QtControls.SpinBox {
+                    anchors {
+                        left: numberField.right;
+                        leftMargin: Kirigami.Units.smallSpacing;
+                        top: seriesTextField.bottom;
+                        topMargin: Kirigami.Units.smallSpacing;
+                    }
+                    value : root.model.acbfData.metaData.bookInfo.sequence(modelData).volume;
+                    width : (seriesTextField.width/2)-(Kirigami.Units.smallSpacing*1.5);
+                    id: volumeField;
+                }
+                QtControls.Button {
+                    id: updateSequenceButton;
+                    anchors {
+                        left: seriesTextField.right;
+                        leftMargin: Kirigami.Units.smallSpacing;
+                    }
+                    contentItem: Kirigami.Icon {
+                        source: "list-add";
+                    }
+                    height: seriesTextField.height;
+                    width: height;
+                    onClicked: {
+                        root.model.acbfData.metaData.bookInfo.sequence(modelData).title = seriesTextField.text;
+                        root.model.acbfData.metaData.bookInfo.sequence(modelData).number = numberField.value;
+                        root.model.acbfData.metaData.bookInfo.sequence(modelData).volume = volumeField.value;
+                        root.model.setDirty();
+                    }
+                }
+                QtControls.Button {
+                    id: removeSequenceButton;
+                    anchors {
+                        top: seriesTextField.bottom;
+                        topMargin: Kirigami.Units.smallSpacing;
+                        left: seriesTextField.right;
+                        leftMargin: Kirigami.Units.smallSpacing;
+                    }
+                    contentItem: Kirigami.Icon {
+                        source: "list-remove";
+                    }
+                    height: seriesTextField.height;
+                    width: height;
+                    onClicked: {
+                        root.model.acbfData.metaData.bookInfo.removeSequence(modelData);
+                        root.model.setDirty();
+                    }
+                }
+            }
+        }
+        Item { width: parent.width; height: Kirigami.Units.smallSpacing; }
+        QtControls.TextField {
+            width: parent.width - addSequenceButton.width - Kirigami.Units.smallSpacing;
+            placeholderText: i18nc("placeholder text for the add new series text entry", "Write to add new series");
+            QtControls.Button {
+                id: addSequenceButton;
+                anchors {
+                    left: parent.right;
+                    leftMargin: Kirigami.Units.smallSpacing;
+                }
+                contentItem: Kirigami.Icon {
+                    source: "list-add";
+                }
+                height: parent.height;
+                width: height;
+                onClicked: {
+                    if(parent.text !== "") {
+                        root.model.acbfData.metaData.bookInfo.addSequence(0, parent.text);
+                        root.model.setDirty();
+                        parent.text = "";
+                    }
+                }
+            }
+        }
+
         AuthorEntryEditor {
             id: authorEditor;
             bookinfo: root.model.acbfData.metaData.bookInfo;

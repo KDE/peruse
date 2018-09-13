@@ -42,6 +42,7 @@ Sequence::Sequence(BookInfo* parent)
     : QObject(parent)
     , d(new Private)
 {
+    qRegisterMetaType<Sequence*>("Sequence*");
 }
 
 Sequence::~Sequence() = default;
@@ -72,6 +73,7 @@ QString Sequence::title() const
 void Sequence::setTitle(const QString& title)
 {
     d->title = title;
+    emit titleChanged();
 }
 
 int Sequence::volume() const
@@ -82,6 +84,7 @@ int Sequence::volume() const
 void Sequence::setVolume(int volume)
 {
     d->volume = volume;
+    emit volumeChanged();
 }
 
 int Sequence::number() const
@@ -92,4 +95,5 @@ int Sequence::number() const
 void Sequence::setNumber(int number)
 {
     d->number = number;
+    emit numberChanged();
 }

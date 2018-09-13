@@ -37,6 +37,9 @@ namespace AdvancedComicBookFormat
 class ACBF_EXPORT Sequence : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QString title READ title WRITE setTitle NOTIFY titleChanged)
+    Q_PROPERTY(int volume READ volume WRITE setVolume NOTIFY volumeChanged)
+    Q_PROPERTY(int number READ number WRITE setNumber NOTIFY numberChanged)
 public:
     explicit Sequence(BookInfo * parent = nullptr);
     ~Sequence() override;
@@ -61,6 +64,8 @@ public:
      */
     void setTitle(const QString& title);
 
+    Q_SIGNAL void titleChanged();
+
     /**
      * @returns the volume number.
      */
@@ -72,6 +77,8 @@ public:
      */
     void setVolume(int volume = 0);
 
+    Q_SIGNAL void volumeChanged();
+
     /**
      * @return the number that this work takes up in the sequence.
      */
@@ -82,6 +89,8 @@ public:
      * part of the series.
      */
     void setNumber(int number);
+
+    Q_SIGNAL void numberChanged();
 private:
     class Private;
     std::unique_ptr<Private> d;

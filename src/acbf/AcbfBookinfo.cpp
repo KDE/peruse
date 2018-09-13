@@ -558,11 +558,38 @@ QList<Sequence *> BookInfo::sequence()
 void BookInfo::addSequence(Sequence* sequence)
 {
     d->sequence.append(sequence);
+    emit sequenceCountChanged();
+}
+
+void BookInfo::addSequence(int number, QString title, int volume)
+{
+    Sequence* sequence = new Sequence(this);
+    sequence->setNumber(number);
+    sequence->setTitle(title);
+    sequence->setVolume(volume);
+    addSequence(sequence);
 }
 
 void BookInfo::removeSequence(Sequence* sequence)
 {
     d->sequence.removeAll(sequence);
+    emit sequenceCountChanged();
+}
+
+void BookInfo::removeSequence(int index)
+{
+    removeSequence(sequence(index));
+}
+
+Sequence *BookInfo::sequence(int index) const
+{
+    return d->sequence.at(index);
+}
+
+int BookInfo::sequenceCount() const
+{
+
+    return d->sequence.size();
 }
 
 QList<DatabaseRef *> BookInfo::databaseRef()
