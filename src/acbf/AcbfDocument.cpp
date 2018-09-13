@@ -67,7 +67,7 @@ QString Document::toXml()
     writer.setAutoFormatting(true);
     writer.writeStartDocument();
     writer.writeStartElement(QStringLiteral("ACBF"));
-    writer.writeAttribute(QStringLiteral("xmlns"), QStringLiteral("http://www.fictionbook-lib.org/xml/acbf/1.0"));
+    writer.writeAttribute(QStringLiteral("xmlns"), QStringLiteral("http://www.acbf.info/xml/acbf/1.1"));
     d->metaData->toXml(&writer);
     d->body->toXml(&writer);
     writer.writeEndElement();
