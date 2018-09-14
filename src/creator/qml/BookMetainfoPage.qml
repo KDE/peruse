@@ -619,6 +619,9 @@ Kirigami.ScrollablePage {
             height: paintedHeight + Kirigami.Units.smallSpacing * 2;
             text: i18nc("label text for the form for the publishing info list", "Publisher Info");
         }
+        QtControls.Label {
+            text: i18nc("Label for publisher", "Publisher:");
+        }
         QtControls.TextField {
             width : parent.width;
             id: publisher;
@@ -630,6 +633,9 @@ Kirigami.ScrollablePage {
                     root.model.setDirty();
                 }
             }
+        }
+        QtControls.Label {
+            text: i18nc("Label for publishing date", "Publishing Date:");
         }
         Item {
             width : parent.width;
@@ -679,6 +685,9 @@ Kirigami.ScrollablePage {
                 onValueChanged: parent.changePublishDate();
             }
         }
+        QtControls.Label {
+            text: i18nc("Label for city", "City:");
+        }
         QtControls.TextField {
             width : parent.width;
             id: city;
@@ -691,6 +700,10 @@ Kirigami.ScrollablePage {
                 }
             }
         }
+        QtControls.Label {
+            text: i18nc("Label for isbn", "ISBN:");
+        }
+
         QtControls.TextField {
             width : parent.width;
             id: isbn;
@@ -702,6 +715,9 @@ Kirigami.ScrollablePage {
                     root.model.setDirty();
                 }
             }
+        }
+        QtControls.Label {
+            text: i18nc("Label for license", "License:");
         }
         QtControls.TextField {
             width : parent.width;
@@ -794,7 +810,7 @@ Kirigami.ScrollablePage {
         Kirigami.Heading {
             width: parent.width;
             height: paintedHeight + Kirigami.Units.smallSpacing * 2;
-            text: i18nc("label text for the form for the sources list", "Document Source");
+            text: i18nc("label text for the form for the sources list", "Document Sources");
         }
 
         Repeater {
@@ -921,7 +937,7 @@ Kirigami.ScrollablePage {
             QtControls.Label {
                 id: versionLabel;
                 height: versionSpinBox.height;
-                text: i18nc("Label for the document version spinbox","Document Version");
+                text: i18nc("Label for the document version spinbox","Document Version:");
             }
             QtControls.SpinBox {
                 id: versionSpinBox;
