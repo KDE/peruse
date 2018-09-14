@@ -728,6 +728,22 @@ Kirigami.ScrollablePage {
                 width: parent.width - removeDocAuthorButton.width - Kirigami.Units.smallSpacing;
                 text: modelData.length > 0 ? modelData : "(unnamed)";
                 QtControls.Button {
+                    id: editDocAuthorButton;
+                    anchors {
+                        right: removeDocAuthorButton.left;
+                        leftMargin: Kirigami.Units.smallSpacing;
+                    }
+                    contentItem: Kirigami.Icon {
+                        source: "document-edit";
+                    }
+                    height: parent.height;
+                    width: height;
+                    onClicked: {
+                        docAuthorEditor.index = model.index;
+                        docAuthorEditor.open();
+                    }
+                }
+                QtControls.Button {
                     id: removeDocAuthorButton;
                     anchors {
                         left: parent.right;
@@ -931,7 +947,15 @@ Kirigami.ScrollablePage {
             id: authorEditor;
             bookinfo: root.model.acbfData.metaData.bookInfo;
             onSave: {
-                root.model.acbfData.metaData.bookInfo.setAuthor(index, activity, language, firstName, middleName, lastName, nickName, [homePage], [email]);
+                root.model.acbfData.metaData.bookInfo.setAuthor(index, activity, language, firstName, middleName, lastName, nickName, homePage, email);
+                root.model.setDirty();
+            }
+        }
+        AuthorEntryEditor {
+            id: docAuthorEditor;
+            bookinfo: root.model.acbfData.metaData.documentInfo;
+            onSave: {
+                root.model.acbfData.metaData.documentInfo.setAuthor(index, activity, language, firstName, middleName, lastName, nickName, homePage, email);
                 root.model.setDirty();
             }
         }

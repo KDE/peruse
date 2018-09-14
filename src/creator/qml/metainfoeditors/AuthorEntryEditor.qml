@@ -51,12 +51,7 @@ Kirigami.OverlaySheet {
         middleNameField.text = root.author.middleName();
         lastNameField.text = root.author.lastName();
         nickNameField.text = root.author.nickName();
-        if (root.author.homePages.count > 0) {
-            homePageField.text = root.author.homePages()[0];
-        }
-        if (root.author.emails.count > 0) {
-            emailField.text = root.author.emails()[0];
-        }
+
     }
     property QtObject author: null;
 
@@ -66,8 +61,8 @@ Kirigami.OverlaySheet {
     property alias middleName: middleNameField.text;
     property alias lastName: lastNameField.text;
     property alias nickName: nickNameField.text;
-    property alias homePage: homePageField.text;
-    property alias email: emailField.text;
+    property var homePage: root.author.homePages;
+    property var email: root.author.emails;
 
     Column {
         height: childrenRect.height;
@@ -111,6 +106,7 @@ Kirigami.OverlaySheet {
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere;
         }
         QtControls.ComboBox {
+            //enabled: activity;
             id: activityField;
             width: parent.width - Kirigami.Units.smallSpacing;
         }
@@ -184,26 +180,113 @@ Kirigami.OverlaySheet {
         QtControls.Label {
             width: parent.width;
             height: paintedHeight;
-            text: i18nc("label for the homepage field", "Homepage address:");
+            text: i18nc("label for the homepage field", "Homepage addresses:");
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere;
+        }
+        Repeater {
+            model: root.author.homePages;
+            QtControls.TextField {
+                width: parent.width - removeHomePageButton.width - Kirigami.Units.smallSpacing;
+                text: modelData;
+                onEditingFinished: root.author.homePages[index] = text;
+
+                QtControls.Button {
+                    id: removeHomePageButton;
+                    anchors {
+                        left: parent.right;
+                        leftMargin: Kirigami.Units.smallSpacing;
+                    }
+                    contentItem: Kirigami.Icon {
+                        source: "list-remove";
+                    }
+                    height: parent.height;
+                    width: height;
+                    onClicked: root.author.removeHomePage(index);
+                }
+            }
+
         }
         QtControls.TextField {
             id: homePageField;
-            width: parent.width - Kirigami.Units.smallSpacing;
-            placeholderText: i18nc("placeholder text for the homepage field", "Homepage");
+            width: parent.width - addHomepageButton.width - Kirigami.Units.smallSpacing;
+            placeholderText: i18nc("placeholder text for the homepage field", "Add Homepage");
+            Keys.onReturnPressed: addEntry();
+            function addEntry() {
+                if (text!=="") {
+                    root.author.addHomePage(text);
+                    text="";
+                }
+            }
+
+            QtControls.Button {
+                id: addHomepageButton;
+                anchors {
+                    left: parent.right;
+                    leftMargin: Kirigami.Units.smallSpacing;
+                }
+                contentItem: Kirigami.Icon {
+                    source: "list-add";
+                }
+                height: parent.height;
+                width: height;
+                onClicked: parent.addEntry();
+            }
         }
         Item { width: parent.width; height: Kirigami.Units.smallSpacing; }
-
         QtControls.Label {
             width: parent.width;
             height: paintedHeight;
-            text: i18nc("label for the email field", "Email address:");
+            text: i18nc("label for the email field", "Email addresses:");
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere;
+        }
+        Repeater {
+            model: root.author.emails;
+            QtControls.TextField {
+                width: parent.width - addEmailButton.width - Kirigami.Units.smallSpacing;
+                text: modelData;
+                onEditingFinished: root.author.emails[index] = text;
+
+                QtControls.Button {
+                    id: removeEmailButton;
+                    anchors {
+                        left: parent.right;
+                        leftMargin: Kirigami.Units.smallSpacing;
+                    }
+                    contentItem: Kirigami.Icon {
+                        source: "list-remove";
+                    }
+                    height: parent.height;
+                    width: height;
+                    onClicked: root.author.removeEmail(index);
+                }
+            }
+
         }
         QtControls.TextField {
             id: emailField;
-            width: parent.width - Kirigami.Units.smallSpacing;
-            placeholderText: i18nc("placeholder text for the email field", "Email address");
+            width: parent.width - addEmailButton.width - Kirigami.Units.smallSpacing;
+            placeholderText: i18nc("placeholder text for the email field", "Add Email address");
+            Keys.onReturnPressed: addEntry();
+            function addEntry() {
+                if (text!=="") {
+                    root.author.addEmail(text);
+                    text = "";
+                }
+            }
+
+            QtControls.Button {
+                id: addEmailButton;
+                anchors {
+                    left: parent.right;
+                    leftMargin: Kirigami.Units.smallSpacing;
+                }
+                contentItem: Kirigami.Icon {
+                    source: "list-add";
+                }
+                height: parent.height;
+                width: height;
+                onClicked: parent.addEntry();
+            }
         }
         Item { width: parent.width; height: Kirigami.Units.smallSpacing; }
     }

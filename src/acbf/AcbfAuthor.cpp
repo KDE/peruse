@@ -221,11 +221,19 @@ QStringList Author::homePages() const
 void Author::addHomePage(const QString& homepage)
 {
     d->homePage.append(homepage);
+    emit homePageChanged();
+}
+
+void Author::removeHomePage(const int &index)
+{
+    d->homePage.removeAt(index);
+    emit homePageChanged();
 }
 
 void Author::setHomePages(const QStringList& homepages)
 {
     d->homePage = homepages;
+    emit homePageChanged();
 }
 
 QStringList Author::emails() const
@@ -236,9 +244,17 @@ QStringList Author::emails() const
 void Author::addEmail(const QString& email)
 {
     d->email.append(email);
+    emit emailChanged();
+}
+
+void Author::removeEmail(const int &index)
+{
+    d->email.removeAt(index);
+    emit emailChanged();
 }
 
 void Author::setEmails(const QStringList& emails)
 {
     d->email = emails;
+    emit emailChanged();
 }

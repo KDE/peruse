@@ -202,6 +202,20 @@ void DocumentInfo::addAuthor(QString activity, QString language, QString firstNa
     emit authorsChanged();
 }
 
+void DocumentInfo::setAuthor(int index, QString activity, QString language, QString firstName, QString middleName, QString lastName, QString nickName, QStringList homePages, QStringList emails)
+{
+    Author* author = d->author.at(index);
+    author->setActivity(activity);
+    author->setLanguage(language);
+    author->setFirstName(firstName);
+    author->setMiddleName(middleName);
+    author->setLastName(lastName);
+    author->setNickName(nickName);
+    author->setHomePages(homePages);
+    author->setEmails(emails);
+    emit authorsChanged();
+}
+
 void DocumentInfo::removeAuthor(int index)
 {
     removeAuthor(d->author.at(index));

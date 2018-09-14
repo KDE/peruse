@@ -105,6 +105,21 @@ public:
      */
     Q_INVOKABLE void addAuthor(QString activity, QString language, QString firstName, QString middleName, QString lastName, QString nickName, QStringList homePages, QStringList emails);
     /**
+     * \brief make changes to an author in the list.
+     * @param index - The index of this author in the author list.
+     * @param activity - the role this author played.
+     * @param language - the language of the author in language code, country
+     * code format joined by a dash (not an underscore).
+     * @param firstName - the given name of the author.
+     * @param middleName - the middle name(s) of the author as a string.
+     * @param lastName - the family name of the author.
+     * @param nickName - the nickname of the author.
+     * @param homePages - a homepage url to associate with this author.
+     * @param emails - an email adress to associate with this author.
+     */
+    Q_INVOKABLE void setAuthor(int index, QString activity, QString language, QString firstName, QString middleName, QString lastName, QString nickName, QStringList homePages, QStringList emails);
+
+    /**
      * \brief remove an author in the list.
      * @param index - the index of the author to remove.
      */

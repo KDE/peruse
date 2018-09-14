@@ -61,6 +61,8 @@ namespace AdvancedComicBookFormat
 class ACBF_EXPORT Author : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QStringList homePages READ homePages WRITE setHomePages NOTIFY homePageChanged)
+    Q_PROPERTY(QStringList emails READ emails WRITE setEmails NOTIFY emailChanged)
 public:
     // Author is used in both Bookinfo and Documentinfo, and as such it is parented to Metadata
     explicit Author(Metadata* parent = nullptr);
@@ -168,12 +170,20 @@ public:
      * @param homepage - the url of the homepage as a string.
      */
     Q_INVOKABLE void addHomePage(const QString& homepage);
-    
+    /**
+     * @brief remove homepage by index.
+     * @param index - index of the homepage to remove.
+     */
+    Q_INVOKABLE void removeHomePage(const int& index);
     /**
      * \brief Set the homepages associated with this author.
      * @param homepages - homepages as a string.
      */
     Q_INVOKABLE void setHomePages(const QStringList& homepages);
+    /**
+     * @brief fires when the homepage list changes.
+     */
+    Q_SIGNAL void homePageChanged();
     
     /**
      * @return The email adresses associated with this author as a QStringList.
@@ -186,10 +196,19 @@ public:
      */
     Q_INVOKABLE void addEmail(const QString& email);
     /**
+     * @brief remove email by index.
+     * @param index - index of the email to remove.
+     */
+    Q_INVOKABLE void removeEmail(const int& index);
+    /**
      * \brief Add an email adresses associated with this author.
      * @param emails - email dresses as a stringlist.
      */
     Q_INVOKABLE void setEmails(const QStringList& emails);
+    /**
+     * @brief fires when the email list changes.
+     */
+    Q_SIGNAL void emailChanged();
 private:
     class Private;
     std::unique_ptr<Private> d;
