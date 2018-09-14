@@ -47,6 +47,8 @@ class DocumentInfo;
 class ACBF_EXPORT Metadata : public QObject {
     Q_OBJECT
     Q_PROPERTY(AdvancedComicBookFormat::BookInfo* bookInfo READ bookInfo NOTIFY bookInfoChanged)
+    Q_PROPERTY(AdvancedComicBookFormat::PublishInfo* publishInfo READ publishInfo NOTIFY publishInfoChanged)
+    Q_PROPERTY(AdvancedComicBookFormat::DocumentInfo* documentInfo READ documentInfo NOTIFY documentInfoChanged)
 public:
     explicit Metadata(Document* parent = nullptr);
     ~Metadata() override;
@@ -76,9 +78,17 @@ public:
      */
     PublishInfo* publishInfo() const;
     /**
+     * @brief fires when the publishing info changes.
+     */
+    Q_SIGNAL void publishInfoChanged();
+    /**
      * @returns the documentinfo object.
      */
     DocumentInfo* documentInfo() const;
+    /**
+     * @brief fires when the document info changes.
+     */
+    Q_SIGNAL void documentInfoChanged();
 private:
     class Private;
     std::unique_ptr<Private> d;

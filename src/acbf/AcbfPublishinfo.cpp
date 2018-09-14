@@ -56,7 +56,7 @@ void PublishInfo::toXml(QXmlStreamWriter *writer)
     writer->writeEndElement();
 
     writer->writeStartElement(QStringLiteral("publish-date"));
-    writer->writeAttribute(QStringLiteral("value"), d->publishDate.toString(QStringLiteral("YYYY-MM-dd")));
+    writer->writeAttribute(QStringLiteral("value"), d->publishDate.toString(QStringLiteral("yyyy-MM-dd")));
     writer->writeCharacters(d->publishDate.toString(QStringLiteral("MMMM d yyyy")));
     writer->writeEndElement();
 
@@ -86,12 +86,13 @@ bool PublishInfo::fromXml(QXmlStreamReader *xmlReader)
         else if(xmlReader->name() == QStringLiteral("publish-date"))
         {
             QString date = xmlReader->attributes().value(QStringLiteral("value")).toString();
-            if(date.isEmpty()) {
+            if(date.isEmpty() || !QDate::fromString(date, Qt::ISODate).isValid()) {
                 date = xmlReader->readElementText();
+                setPublishDate(QDate::fromString(date));
             } else {
+                setPublishDate(QDate::fromString(date, Qt::ISODate));
                 xmlReader->skipCurrentElement();
             }
-            setPublishDate(QDate::fromString(date));
         }
         else if(xmlReader->name() == QStringLiteral("city"))
         {
@@ -126,16 +127,28 @@ QString PublishInfo::publisher() const
 void PublishInfo::setPublisher(const QString& publisher)
 {
     d->publisher = publisher;
+    emit publisherChanged();
 }
 
 QDate PublishInfo::publishDate() const
 {
-    return d->publishDate;
+    if (d->publishDate.isValid()) {
+        return d->publishDate;
+    } else {
+        return QDate().currentDate();
+    }
 }
 
 void PublishInfo::setPublishDate(const QDate& publishDate)
 {
     d->publishDate = publishDate;
+    emit publishDateChanged();
+}
+
+void PublishInfo::setPublishDateFromInts(const int &year, const int &month, const int &day)
+{
+    QDate date(year, month, day);
+    setPublishDate(date);
 }
 
 QString PublishInfo::city() const
@@ -146,6 +159,7 @@ QString PublishInfo::city() const
 void PublishInfo::setCity(const QString& city)
 {
     d->city = city;
+    emit cityChanged();
 }
 
 QString PublishInfo::isbn() const
@@ -156,6 +170,7 @@ QString PublishInfo::isbn() const
 void PublishInfo::setIsbn(const QString& isbn)
 {
     d->isbn = isbn;
+    emit isbnChanged();
 }
 
 QString PublishInfo::license() const
@@ -166,4 +181,5 @@ QString PublishInfo::license() const
 void PublishInfo::setLicense(const QString& license)
 {
     d->license = license;
+    emit licenseChanged();
 }

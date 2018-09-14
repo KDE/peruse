@@ -39,6 +39,11 @@ namespace AdvancedComicBookFormat
 class ACBF_EXPORT PublishInfo : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QString publisher READ publisher WRITE setPublisher NOTIFY publisherChanged)
+    Q_PROPERTY(QDate publishDate READ publishDate WRITE setPublishDate NOTIFY publishDateChanged)
+    Q_PROPERTY(QString city READ city WRITE setCity NOTIFY cityChanged)
+    Q_PROPERTY(QString isbn READ isbn WRITE setIsbn NOTIFY isbnChanged)
+    Q_PROPERTY(QString license READ license WRITE setLicense NOTIFY licenseChanged)
 public:
     explicit PublishInfo(Metadata* parent = nullptr);
     ~PublishInfo() override;
@@ -61,6 +66,10 @@ public:
      * \brief set the name of the publisher.
      */
     void setPublisher(const QString& publisher);
+    /**
+     * @brief fires when the publisher has changed.
+     */
+    Q_SIGNAL void publisherChanged();
 
     /**
      * @return the publishing date as a QDate object.
@@ -71,6 +80,17 @@ public:
      * @param publishDate - the publishingdate as a QDate object.
      */
     void setPublishDate(const QDate& publishDate);
+    /**
+     * @brief a function to work around strangeness surrounding qml date.
+     * @param year - publishing year.
+     * @param month - publishing month, from 1 to 12
+     * @param day - publishing day.
+     */
+    Q_INVOKABLE void setPublishDateFromInts(const int& year, const int& month, const int& day);
+    /**
+     * @brief fires when the date has changed.
+     */
+    Q_SIGNAL void publishDateChanged();
 
     /**
      * @return the name of the city the work was published in.
@@ -81,6 +101,10 @@ public:
      * @param city - the name of the city as a QString.
      */
     void setCity(const QString& city = QString());
+    /**
+     * @brief fires when the city has changed.
+     */
+    Q_SIGNAL void cityChanged();
 
     /**
      * @return the ISBN number as a QString.
@@ -91,6 +115,10 @@ public:
      * @param isbn - the ISBN number as a QString. ISBN numbers should be registered.
      */
     void setIsbn(const QString& isbn = QString());
+    /**
+     * @brief fires when the usbn has changed.
+     */
+    Q_SIGNAL void isbnChanged();
 
     /**
      * @return the name of the license the comic was published under.
@@ -101,6 +129,10 @@ public:
      * @param license - the name of the license as a QString.
      */
     void setLicense(const QString& license = QString());
+    /**
+     * @brief fires when the license has changed.
+     */
+    Q_SIGNAL void licenseChanged();
 private:
     class Private;
     std::unique_ptr<Private> d;

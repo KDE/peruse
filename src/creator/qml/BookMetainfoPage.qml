@@ -614,6 +614,108 @@ Kirigami.ScrollablePage {
                     onClicked: parent.addRating();
                 }
             }
+        Kirigami.Heading {
+            width: parent.width;
+            height: paintedHeight + Kirigami.Units.smallSpacing * 2;
+            text: i18nc("label text for the form for the publishing info list", "Publisher Info");
+        }
+        QtControls.TextField {
+            width : parent.width;
+            id: publisher;
+            placeholderText: i18nc("placeholder text for the publisher entry", "Write to add publisher");
+            text: root.model.acbfData? root.model.acbfData.metaData.publishInfo.publisher: "";
+            onEditingFinished: {
+                if (root.model.acbfData && text !=="") {
+                    root.model.acbfData.metaData.publishInfo.publisher = text
+                    root.model.setDirty();
+                }
+            }
+        }
+        Item {
+            width : parent.width;
+            id: publishingDate;
+            height: childrenRect.height;
+            property date publishingDate: root.model.acbfData.metaData.publishInfo.publishDate;
+            function changePublishDate() {
+                root.model.acbfData.metaData.publishInfo.setPublishDateFromInts(pdYear.value, (pdMonth.currentIndex+1), pdDate.value);
+                root.model.setDirty();
+            }
+            QtControls.SpinBox {
+                id: pdYear
+                width: (parent.width-(Kirigami.Units.smallSpacing*2))/3;
+                value: parent.publishingDate.getFullYear();
+                onValueChanged: parent.changePublishDate();
+                editable: true;
+                from: 0;
+                to: 9999;
+            }
+            QtControls.ComboBox {
+                id: pdMonth
+                anchors {
+                    left: pdYear.right;
+                    margins: Kirigami.Units.smallSpacing;
+                }
+                model: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+                width: (parent.width-(Kirigami.Units.smallSpacing*2))/3;
+                currentIndex: parent.publishingDate.getMonth();
+                displayText: Qt.locale().monthName(currentText, Locale.LongFormat);
+                onActivated: parent.changePublishDate();
+                delegate: QtControls.ItemDelegate {
+                    text:Qt.locale().monthName(modelData, Locale.LongFormat);
+                }
+            }
+            QtControls.SpinBox {
+                id: pdDate
+                anchors {
+                    left: pdMonth.right;
+                    margins: Kirigami.Units.smallSpacing;
+                }
+                width: (parent.width-(Kirigami.Units.smallSpacing*2))/3;
+                height: pdMonth.height;
+                from: 1;
+                to: 31;
+                editable: true;
+                value: parent.publishingDate.getDate();
+                onValueChanged: parent.changePublishDate();
+            }
+        }
+        QtControls.TextField {
+            width : parent.width;
+            id: city;
+            placeholderText: i18nc("placeholder text for the publishing city entry", "Write to add city");
+            text: root.model.acbfData? root.model.acbfData.metaData.publishInfo.city: "";
+            onEditingFinished: {
+                if (root.model.acbfData && text !=="") {
+                    root.model.acbfData.metaData.publishInfo.city = text ;
+                    root.model.setDirty();
+                }
+            }
+        }
+        QtControls.TextField {
+            width : parent.width;
+            id: isbn;
+            placeholderText: i18nc("placeholder text for the publishing isbn entry", "Write to add isbn");
+            text: root.model.acbfData? root.model.acbfData.metaData.publishInfo.isbn: "";
+            onEditingFinished: {
+                if (root.model.acbfData && text !=="") {
+                    root.model.acbfData.metaData.publishInfo.isbn = text
+                    root.model.setDirty();
+                }
+            }
+        }
+        QtControls.TextField {
+            width : parent.width;
+            id: license;
+            placeholderText: i18nc("placeholder text for the publishing license entry", "Write to add license");
+            text: root.model.acbfData? root.model.acbfData.metaData.publishInfo.license: "";
+            onEditingFinished: {
+                if (root.model.acbfData && text !=="") {
+                    root.model.acbfData.metaData.publishInfo.license = text
+                    root.model.setDirty();
+                }
+            }
+        }
+
         AuthorEntryEditor {
             id: authorEditor;
             bookinfo: root.model.acbfData.metaData.bookInfo;
