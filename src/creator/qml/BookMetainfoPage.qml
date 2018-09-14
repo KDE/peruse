@@ -715,6 +715,217 @@ Kirigami.ScrollablePage {
                 }
             }
         }
+        Kirigami.Heading {
+            width: parent.width;
+            height: paintedHeight + Kirigami.Units.smallSpacing * 2;
+            text: i18nc("label text for the form for the document info list", "Document Authors");
+        }
+
+        Repeater {
+            id: docAuthorRepeater;
+            model: root.model.acbfData ? root.model.acbfData.metaData.documentInfo.authorNames : 0;
+            delegate: QtControls.Label {
+                width: parent.width - removeDocAuthorButton.width - Kirigami.Units.smallSpacing;
+                text: modelData.length > 0 ? modelData : "(unnamed)";
+                QtControls.Button {
+                    id: removeDocAuthorButton;
+                    anchors {
+                        left: parent.right;
+                        leftMargin: Kirigami.Units.smallSpacing;
+                    }
+                    contentItem: Kirigami.Icon {
+                        source: "list-remove";
+                    }
+                    height: parent.height;
+                    width: height;
+                    onClicked: {
+                        // When removing, set the model dirty first, and then remove the entry to avoid reference errors.
+                        root.model.setDirty();
+                        root.model.acbfData.metaData.documentInfo.removeAuthor(index);
+                    }
+                }
+            }
+        }
+        Item { width: parent.width; height: Kirigami.Units.smallSpacing; }
+        QtControls.TextField {
+            width: parent.width - addDocAuthorButton.width - Kirigami.Units.smallSpacing;
+            placeholderText: i18nc("placeholder text for the add new author text entry", "Write to add new author (nickname)");
+            Keys.onReturnPressed: addAuthor();
+            function addAuthor() {
+                if(text !== "") {
+                    // Just add an author where only the nickname is defined
+                    root.model.acbfData.metaData.documentInfo.addAuthor("", "", "", "", "", text, [""], [""]);
+                    root.model.setDirty();
+                    text = "";
+                }
+            }
+
+            QtControls.Button {
+                id: addDocAuthorButton;
+                anchors {
+                    left: parent.right;
+                    leftMargin: Kirigami.Units.smallSpacing;
+                }
+                contentItem: Kirigami.Icon {
+                    source: "list-add";
+                }
+                height: parent.height;
+                width: height;
+                onClicked: parent.addAuthor();
+            }
+        }
+
+        Kirigami.Heading {
+            width: parent.width;
+            height: paintedHeight + Kirigami.Units.smallSpacing * 2;
+            text: i18nc("label text for the form for the sources list", "Document Source");
+        }
+
+        Repeater {
+            model: root.model.acbfData ? root.model.acbfData.metaData.documentInfo.source : 0;
+            delegate: Item {
+                width: parent.width;
+                height: childrenRect.height;
+                QtControls.TextField {
+                    id: sourceText;
+                    width: parent.width - removeSourceButton.width - Kirigami.Units.smallSpacing;
+                    text: modelData;
+                    onEditingFinished: root.model.acbfData.metaData.documentInfo.sources[index] = text;
+                    QtControls.Button {
+                        id: removeSourceButton;
+                        anchors {
+                            left: parent.right;
+                            leftMargin: Kirigami.Units.smallSpacing;
+                        }
+                        contentItem: Kirigami.Icon {
+                            source: "list-remove";
+                        }
+                        height: parent.height;
+                        width: height;
+                        onClicked: {
+                            root.model.setDirty();
+                            root.model.acbfData.metaData.documentInfo.removeSource(index);
+                        }
+                    }
+                }
+            }
+        }
+        Item { width: parent.width; height: Kirigami.Units.smallSpacing; }
+        QtControls.TextField {
+            width: parent.width - addSourceButton.width - Kirigami.Units.smallSpacing;
+            Keys.onReturnPressed: addEntry();
+            function addEntry() {
+                if (text !== "") {
+                    root.model.acbfData.metaData.documentInfo.source.push(text);
+                    root.model.setDirty();
+                    text = "";
+                }
+            }
+
+            QtControls.Button {
+                id: addSourceButton;
+                anchors {
+                    left: parent.right;
+                    leftMargin: Kirigami.Units.smallSpacing;
+                }
+                contentItem: Kirigami.Icon {
+                    source: "list-add";
+                }
+                height: parent.height;
+                width: height;
+                onClicked: parent.addEntry();
+            }
+        }
+
+        Kirigami.Heading {
+            width: parent.width;
+            height: paintedHeight + Kirigami.Units.smallSpacing * 2;
+            text: i18nc("label text for the form for the history list", "Document History");
+        }
+
+        Repeater {
+            model: root.model.acbfData ? root.model.acbfData.metaData.documentInfo.history : 0;
+            delegate: Item {
+                width: parent.width;
+                height: childrenRect.height;
+                QtControls.TextField {
+                    id: historyText;
+                    width: parent.width - removeHistoryButton.width - Kirigami.Units.smallSpacing;
+                    text: modelData;
+                    onEditingFinished: root.model.acbfData.metaData.documentInfo.history[index] = text;
+                    QtControls.Button {
+                        id: removeHistoryButton;
+                        anchors {
+                            left: parent.right;
+                            leftMargin: Kirigami.Units.smallSpacing;
+                        }
+                        contentItem: Kirigami.Icon {
+                            source: "list-remove";
+                        }
+                        height: parent.height;
+                        width: height;
+                        onClicked: {
+                            root.model.setDirty();
+                            root.model.acbfData.metaData.documentInfo.removeHistoryLine(index);
+                        }
+                    }
+                }
+            }
+        }
+        Item { width: parent.width; height: Kirigami.Units.smallSpacing; }
+        QtControls.TextField {
+            width: parent.width - addHistoryButton.width - Kirigami.Units.smallSpacing;
+            Keys.onReturnPressed: addEntry();
+            function addEntry() {
+                if (text !== "") {
+                    root.model.acbfData.metaData.documentInfo.history.push(text);
+                    root.model.setDirty();
+                    text = "";
+                }
+            }
+
+            QtControls.Button {
+                id: addHistoryButton;
+                anchors {
+                    left: parent.right;
+                    leftMargin: Kirigami.Units.smallSpacing;
+                }
+                contentItem: Kirigami.Icon {
+                    source: "list-add";
+                }
+                height: parent.height;
+                width: height;
+                onClicked: parent.addEntry();
+            }
+        }
+        Item { width: parent.width; height: Kirigami.Units.smallSpacing; }
+        Item {
+            width: parent.width;
+            height: childrenRect.height;
+            QtControls.Label {
+                id: versionLabel;
+                height: versionSpinBox.height;
+                text: i18nc("Label for the document version spinbox","Document Version");
+            }
+            QtControls.SpinBox {
+                id: versionSpinBox;
+                anchors {
+                    top: versionLabel.top;
+                    left: versionLabel.right;
+                    leftMargin: Kirigami.Units.smallSpacing;
+                }
+
+                width: parent.width - (Kirigami.Units.smallSpacing*2) - versionLabel.width - addHistoryButton.width;
+                value: root.model.acbfData.metaData.documentInfo.version;
+
+                onValueChanged: {
+                    if (root.model.acbfData.metaData.documentInfo.version!==value) {
+                        root.model.acbfData.metaData.documentInfo.version = value;
+                    }
+                }
+            }
+        }
+
 
         AuthorEntryEditor {
             id: authorEditor;

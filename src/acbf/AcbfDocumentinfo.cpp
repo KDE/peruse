@@ -24,6 +24,7 @@
 
 #include <QDebug>
 #include <QXmlStreamReader>
+#include <QUuid>
 
 using namespace AdvancedComicBookFormat;
 
@@ -62,7 +63,7 @@ void DocumentInfo::toXml(QXmlStreamWriter *writer)
     }
 
     writer->writeStartElement(QStringLiteral("creation-date"));
-    writer->writeCharacters(d->creationDate.toString(QStringLiteral("MMMM d yyyy")));
+    writer->writeCharacters(QDate::currentDate().toString(QStringLiteral("MMMM d yyyy")));
     writer->writeEndElement();
 
     writer->writeStartElement(QStringLiteral("source"));
@@ -74,11 +75,11 @@ void DocumentInfo::toXml(QXmlStreamWriter *writer)
     writer->writeEndElement();
 
     writer->writeStartElement(QStringLiteral("id"));
-    writer->writeCharacters(d->id);
+    writer->writeCharacters(id());
     writer->writeEndElement();
 
     writer->writeStartElement(QStringLiteral("version"));
-    writer->writeCharacters(QString::number(d->version));
+    writer->writeCharacters(QString::number(double(d->version)));
     writer->writeEndElement();
 
     writer->writeStartElement(QStringLiteral("history"));
@@ -172,6 +173,41 @@ void DocumentInfo::removeAuthor(Author* author)
     d->author.removeAll(author);
 }
 
+QStringList DocumentInfo::authorNames() const
+{
+    QStringList names;
+    for(Author* author : d->author) {
+        names.append(author->displayName());
+    }
+    return names;
+}
+
+Author *DocumentInfo::getAuthor(int index) const
+{
+    return d->author.at(index);
+}
+
+void DocumentInfo::addAuthor(QString activity, QString language, QString firstName, QString middleName, QString lastName, QString nickName, QStringList homePages, QStringList emails)
+{
+    Author* author = new Author(metadata());
+    author->setActivity(activity);
+    author->setLanguage(language);
+    author->setFirstName(firstName);
+    author->setMiddleName(middleName);
+    author->setLastName(lastName);
+    author->setNickName(nickName);
+    author->setHomePages(homePages);
+    author->setEmails(emails);
+    d->author.append(author);
+    emit authorsChanged();
+}
+
+void DocumentInfo::removeAuthor(int index)
+{
+    removeAuthor(d->author.at(index));
+    emit authorsChanged();
+}
+
 QDate DocumentInfo::creationDate() const
 {
     return d->creationDate;
@@ -190,10 +226,21 @@ QStringList DocumentInfo::source() const
 void DocumentInfo::setSource(const QStringList& source)
 {
     d->source = source;
+    emit sourceChanged();
+}
+
+void DocumentInfo::removeSource(int index)
+{
+    d->source.removeAt(index);
+    emit sourceChanged();
 }
 
 QString DocumentInfo::id() const
 {
+    // If ID is empty we ought to generate one.
+    if (d->id.isEmpty()) {
+        d->id = QUuid::createUuid().toString();
+    }
     return d->id;
 }
 
@@ -210,6 +257,7 @@ float DocumentInfo::version() const
 void DocumentInfo::setVersion(const float& version)
 {
     d->version = version;
+    emit versionChanged();
 }
 
 QStringList DocumentInfo::history() const
@@ -220,9 +268,17 @@ QStringList DocumentInfo::history() const
 void DocumentInfo::setHistory(const QStringList& history)
 {
     d->history = history;
+    emit historyChanged();
 }
 
 void DocumentInfo::addHistoryLine(const QString& historyLine)
 {
     d->history.append(historyLine);
+    emit historyChanged();
+}
+
+void DocumentInfo::removeHistoryLine(int index)
+{
+    d->history.removeAt(index);
+    emit historyChanged();
 }

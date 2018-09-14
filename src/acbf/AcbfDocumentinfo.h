@@ -43,6 +43,10 @@ class Author;
 class ACBF_EXPORT DocumentInfo : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QStringList authorNames READ authorNames NOTIFY authorsChanged)
+    Q_PROPERTY(QStringList source READ source WRITE setSource NOTIFY sourceChanged)
+    Q_PROPERTY(float version READ version WRITE setVersion NOTIFY versionChanged)
+    Q_PROPERTY(QStringList history READ history WRITE setHistory NOTIFY historyChanged)
 public:
     explicit DocumentInfo(Metadata* parent = nullptr);
     ~DocumentInfo() override;
@@ -76,6 +80,41 @@ public:
     void removeAuthor(Author* author);
 
     /**
+     * @return The list of authors that worked on this book as
+     * a stringlist of names.
+     */
+    QStringList authorNames() const;
+
+    /**
+     * \brief get an author object by index.
+     * @param index - the index of the author.
+     */
+    Q_INVOKABLE Author* getAuthor(int index) const;
+
+    /**
+     * \brief add an author to the list.
+     * @param activity - the role this author played.
+     * @param language - the language of the author in language code, country
+     * code format joined by a dash (not an underscore).
+     * @param firstName - the given name of the author.
+     * @param middleName - the middle name(s) of the author as a string.
+     * @param lastName - the family name of the author.
+     * @param nickName - the nickname of the author.
+     * @param homePages - a homepage url to associate with this author.
+     * @param emails - an email adress to associate with this author.
+     */
+    Q_INVOKABLE void addAuthor(QString activity, QString language, QString firstName, QString middleName, QString lastName, QString nickName, QStringList homePages, QStringList emails);
+    /**
+     * \brief remove an author in the list.
+     * @param index - the index of the author to remove.
+     */
+    Q_INVOKABLE void removeAuthor(int index);
+    /**
+     * \brief triggers when the authors list changes.
+     */
+    Q_SIGNAL void authorsChanged();
+
+    /**
      * @return a QDate with the creation date of this file.
      */
     QDate creationDate() const;
@@ -96,6 +135,16 @@ public:
     void setSource(const QStringList& source);
 
     /**
+     * @brief remove the source  by index.
+     * @param index - index of the source to remove.
+     */
+    Q_INVOKABLE void removeSource(int index);
+    /**
+     * @brief fires when the source stringlist is changed.
+     */
+    Q_SIGNAL void sourceChanged();
+
+    /**
      * @returns the unique id of this ACBF document, used for cataloguing purposes.
      */
     QString id() const;
@@ -114,7 +163,10 @@ public:
      * @param version - the version as a floating point number.
      */
     void setVersion(const float& version);
-
+    /**
+     * @brief fires when the version of the document changes.
+     */
+    Q_SIGNAL void versionChanged();
     /**
      * @return a list of history entries as a stringlist.
      */
@@ -129,6 +181,15 @@ public:
      * @param historyLine - a single entry in the document.
      */
     void addHistoryLine(const QString& historyLine);
+    /**
+     * @brief remove the history line by index.
+     * @param index - index of the line to remove.
+     */
+    Q_INVOKABLE void removeHistoryLine(int index);
+    /**
+     * @brief fires when the history stringlist changes.
+     */
+    Q_SIGNAL void historyChanged();
 private:
     class Private;
     Private* d;
