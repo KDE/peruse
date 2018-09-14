@@ -189,7 +189,7 @@ Kirigami.ScrollablePage {
             delegate: Item {
                 width: parent.width;
                 height: childrenRect.height;
-                QtControls.TextField {
+                QtControls.Label {
                     id: genreText;
                     width: parent.width - removeGenreButton.width - Kirigami.Units.smallSpacing;
                     text: modelData;
@@ -230,16 +230,17 @@ Kirigami.ScrollablePage {
             }
         }
         Item { width: parent.width; height: Kirigami.Units.smallSpacing; }
-        QtControls.TextField {
+        QtControls.ComboBox {
             width: parent.width - addGenreButton.width - Kirigami.Units.smallSpacing;
-            placeholderText: i18nc("placeholder text for the add new genre text entry", "Write to add new genre");
+            model: root.model.acbfData ? root.model.acbfData.metaData.bookInfo.availableGenres().filter(checkGenreInUse) : 0;
             Keys.onReturnPressed: addGenre();
             function addGenre() {
-                if(text !== "") {
-                    root.model.acbfData.metaData.bookInfo.setGenre(text);
-                    root.model.setDirty();
-                    text = "";
-                }
+                root.model.acbfData.metaData.bookInfo.setGenre(currentText);
+                root.model.setDirty();
+                currentIndex=0;
+            }
+            function checkGenreInUse (genre) {
+                return root.model.acbfData.metaData.bookInfo.genres.indexOf(genre) === -1;
             }
 
             QtControls.Button {
