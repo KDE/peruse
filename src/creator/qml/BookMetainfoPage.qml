@@ -521,6 +521,99 @@ Kirigami.ScrollablePage {
             }
         }
 
+        Kirigami.Heading {
+            width: parent.width;
+            height: paintedHeight + Kirigami.Units.smallSpacing * 2;
+            text: i18nc("label text for the edit field for the content rating list", "Content Ratings");
+        }
+        Repeater {
+            model: root.model.acbfData ? root.model.acbfData.metaData.bookInfo.contentRatingCount : 0;
+            delegate: Item {
+                width: parent.width;
+                height: childrenRect.height;
+
+                function updateRating() {
+                    root.model.acbfData.metaData.bookInfo.contentRating(modelData).rating = ratingNameField.text
+                    root.model.acbfData.metaData.bookInfo.contentRating(modelData).type = systemNameField.text
+                    root.model.setDirty();
+                }
+
+                QtControls.TextField {
+                    width : (parent.width-removeRatingButton.width+Kirigami.Units.smallSpacing)/2;
+                    id: ratingNameField;
+                    text: root.model.acbfData.metaData.bookInfo.contentRating(modelData).rating;
+                    onEditingFinished: parent.updateRating();
+                }
+                QtControls.TextField {
+                    anchors {
+                        left: ratingNameField.right;
+                        leftMargin: Kirigami.Units.smallSpacing;
+                    }
+                    width : ((parent.width-removeRatingButton.width)/2)-(Kirigami.Units.smallSpacing*1.5);
+                    id: systemNameField;
+                    text: root.model.acbfData.metaData.bookInfo.contentRating(modelData).type;
+                    placeholderText: i18nc("placeholder text for the add reference type text entry", "Write to add reference type");
+                    onEditingFinished: parent.updateRating();
+                }
+                QtControls.Button {
+                    id: removeRatingButton;
+                    anchors {
+                        left: systemNameField.right;
+                        leftMargin: Kirigami.Units.smallSpacing;
+                    }
+                    contentItem: Kirigami.Icon {
+                        source: "list-remove";
+                    }
+                    height: systemNameField.height;
+                    width: height;
+                    onClicked: {
+                        root.model.setDirty();
+                        root.model.acbfData.metaData.bookInfo.removeContentRating(index);
+                    }
+                }
+            }
+        }
+        Item {
+            width: parent.width;
+            height: childrenRect.height;
+            function addRating() {
+                if(addRatingField.text !== "" && addSystemField.text !== "") {
+                    root.model.acbfData.metaData.bookInfo.addContentRating(addRatingField.text, addSystemField.text);
+                    root.model.setDirty();
+                    addRatingField.text = "";
+                    addSystemField.text = "";
+                }
+            }
+                QtControls.TextField {
+                    width : (parent.width-addRatingButton.width+Kirigami.Units.smallSpacing)/2;
+                    id: addRatingField;
+                    placeholderText: i18nc("placeholder text for the add content rating text entry", "Write to add rating label.");
+                    onEditingFinished: parent.addRating();
+                }
+                QtControls.TextField {
+                    anchors {
+                        left: addRatingField.right;
+                        leftMargin: Kirigami.Units.smallSpacing;
+                    }
+                    width : ((parent.width-addRatingButton.width)/2)-(Kirigami.Units.smallSpacing*1.5);
+                    id: addSystemField;
+                    placeholderText: i18nc("placeholder text for the add content rating system text entry", "Write to add rating system.");
+                    onEditingFinished: parent.addRating();
+                }
+                QtControls.Button {
+                    id: addRatingButton;
+                    anchors {
+                        left: addSystemField.right;
+                        leftMargin: Kirigami.Units.smallSpacing;
+                    }
+                    contentItem: Kirigami.Icon {
+                        source: "list-add";
+                    }
+                    height: addSystemField.height;
+                    width: height;
+                    onClicked: parent.addRating();
+                }
+            }
         AuthorEntryEditor {
             id: authorEditor;
             bookinfo: root.model.acbfData.metaData.bookInfo;

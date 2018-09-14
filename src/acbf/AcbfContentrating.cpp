@@ -38,6 +38,7 @@ ContentRating::ContentRating(BookInfo* parent)
     : QObject(parent)
     , d(new Private)
 {
+    qRegisterMetaType<ContentRating*>("ContentRating*");
 }
 
 ContentRating::~ContentRating() = default;
@@ -66,6 +67,7 @@ QString ContentRating::type() const
 void ContentRating::setType(const QString& type)
 {
     d->type = type;
+    emit typeChanged();
 }
 
 QString ContentRating::rating() const
@@ -76,4 +78,5 @@ QString ContentRating::rating() const
 void ContentRating::setRating(const QString& rating)
 {
     d->rating = rating;
+    emit ratingChanged();
 }

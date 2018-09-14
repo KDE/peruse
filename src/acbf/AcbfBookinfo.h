@@ -88,6 +88,7 @@ class ACBF_EXPORT BookInfo : public QObject
     Q_PROPERTY(QStringList characters READ characters WRITE setCharacters NOTIFY charactersChanged)
     Q_PROPERTY(int sequenceCount READ sequenceCount NOTIFY sequenceCountChanged)
     Q_PROPERTY(int databaseRefCount READ databaseRefCount NOTIFY databaseRefCountChanged)
+    Q_PROPERTY(int contentRatingCount READ contentRatingCount NOTIFY contentRatingCountChanged)
 public:
     explicit BookInfo(Metadata* parent = nullptr);
     ~BookInfo() override;
@@ -427,12 +428,37 @@ public:
      */
     void addContentRating(ContentRating* contentRating);
     /**
+     * @brief add a contentRating object to the contentratings.
+     * @param rating - The label of the rating.
+     * @param type - the system the label belongs to.
+     */
+    Q_INVOKABLE void addContentRating(QString rating, QString type = QString());
+    /**
      * \brief remove a contentRating object from the contentRatings.
      * @param contentRating - a contentRating object describing the label and
      * contentrating system.
      */
     void removeContentRating(ContentRating* contentRating);
-    
+    /**
+     * @brief removeContentRating
+     * @param index the entry to remove.
+     */
+    Q_INVOKABLE void removeContentRating(int index);
+    /**
+     * @brief gets the contentrating by index.
+     * @param index - index of the content rating to get.
+     * @return the content rating for the index.
+     */
+    Q_INVOKABLE ContentRating* contentRating(int index);
+    /**
+     * @brief contentRatingCount
+     * @return the total amount of content ratings in this book.
+     */
+    Q_INVOKABLE int contentRatingCount();
+    /**
+     * @brief fires when contentRatingCount changes.
+     */
+    Q_SIGNAL void contentRatingCountChanged();
     /**
      * @brief The reading direction for this comic for adjusting the layout.
      * An ACBF 1.2 feature.

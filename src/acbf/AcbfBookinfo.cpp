@@ -648,11 +648,36 @@ QList<ContentRating *> BookInfo::contentRating()
 void BookInfo::addContentRating(ContentRating* contentRating)
 {
     d->contentRating.append(contentRating);
+    emit contentRatingCountChanged();
+}
+
+void BookInfo::addContentRating(QString rating, QString type)
+{
+    ContentRating* CR = new ContentRating(this);
+    CR->setRating(rating);
+    CR->setType(type);
+    addContentRating(CR);
 }
 
 void BookInfo::removeContentRating(ContentRating* contentRating)
 {
     d->contentRating.removeAll(contentRating);
+    emit contentRatingCountChanged();
+}
+
+void BookInfo::removeContentRating(int index)
+{
+    removeContentRating(contentRating(index));
+}
+
+ContentRating *BookInfo::contentRating(int index)
+{
+    return d->contentRating.at(index);
+}
+
+int BookInfo::contentRatingCount()
+{
+    return d->contentRating.size();
 }
 QString BookInfo::readingDirection() const
 {

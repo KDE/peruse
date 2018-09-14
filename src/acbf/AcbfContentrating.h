@@ -39,6 +39,8 @@ namespace AdvancedComicBookFormat
 class ACBF_EXPORT ContentRating : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QString rating READ rating WRITE setRating NOTIFY ratingChanged())
+    Q_PROPERTY(QString type READ type WRITE setType NOTIFY typeChanged())
 public:
     explicit ContentRating(BookInfo* parent = nullptr);
     ~ContentRating() override;
@@ -56,22 +58,30 @@ public:
     /**
      * @return the system that the content rating belongs to.
      */
-    QString type() const;
+    Q_INVOKABLE QString type() const;
     /**
      * \brief set the system that defines this rating.
      * @param type - the name of the system.
      */
-    void setType(const QString& type);
+    Q_INVOKABLE void setType(const QString& type);
+    /**
+     * @brief fires when the type changes.
+     */
+    Q_SIGNAL void typeChanged();
 
     /**
      * @return the rating label as a string.
      */
-    QString rating() const;
+    Q_INVOKABLE QString rating() const;
     /**
      * \brief set the rating.
      * @param rating - the name of the rating label as a QString.
      */
-    void setRating(const QString& rating);
+    Q_INVOKABLE void setRating(const QString& rating);
+    /**
+     * @brief fires when the rating changes.
+     */
+    Q_SIGNAL void ratingChanged();
 private:
     class Private;
     std::unique_ptr<Private> d;
