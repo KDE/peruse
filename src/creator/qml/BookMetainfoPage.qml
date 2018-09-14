@@ -45,6 +45,15 @@ Kirigami.ScrollablePage {
         text: i18nc("Saves the remaining unsaved edited fields and closes the metainfo editor", "Save and Close Editor");
         iconName: "dialog-ok";
         onTriggered: {
+            // Save the default title/annotation/keywords.
+            root.model.acbfData.metaData.bookInfo.setTitle(defaultTitle.text, "");
+            root.model.acbfData.metaData.bookInfo.setAnnotation(defaultAnnotation.text.split("\n\n"), "");
+            var keywords = defaultKeywords.text.split(",")
+            for (var i in keywords) {
+                keywords[i] = keywords[i].trim();
+            }
+            root.model.acbfData.metaData.bookInfo.setKeywords(keywords, "");
+
             root.model.setDirty();
             pageStack.pop();
         }
@@ -65,27 +74,9 @@ Kirigami.ScrollablePage {
         Item { width: parent.width; height: Kirigami.Units.smallSpacing; }
         QtControls.TextField {
             id: defaultTitle;
-            width: parent.width - updateTitleButton.width - Kirigami.Units.smallSpacing;
+            width: parent.width;
             placeholderText: i18nc("placeholder text for default title text-input", "Write to add default title");
             text:root.model.acbfData ? root.model.acbfData.metaData.bookInfo.title("") : "";
-            QtControls.Button {
-                id: updateTitleButton;
-                anchors {
-                    left: parent.right;
-                    leftMargin: Kirigami.Units.smallSpacing;
-                }
-                contentItem: Kirigami.Icon {
-                    source: "list-add";
-                }
-                height: parent.height;
-                width: height;
-                onClicked: {
-                    if(parent.text !== "") {
-                        root.model.acbfData.metaData.bookInfo.setTitle(parent.text, "");
-                        root.model.setDirty();
-                    }
-                }
-            }
         }
 
         Kirigami.Heading {
@@ -96,27 +87,9 @@ Kirigami.ScrollablePage {
         Item { width: parent.width; height: Kirigami.Units.smallSpacing; }
         QtControls.TextArea {
             id: defaultAnnotation;
-            width: parent.width - addCharacterButton.width - Kirigami.Units.smallSpacing;
+            width: parent.width;
             placeholderText: i18nc("placeholder text for default annotiation text-area", "Write to add default annotation");
             text:root.model.acbfData ? root.model.acbfData.metaData.bookInfo.annotation("").join("\n\n") : "";
-            QtControls.Button {
-                id: updateAnnotationButton;
-                anchors {
-                    left: parent.right;
-                    leftMargin: Kirigami.Units.smallSpacing;
-                }
-                contentItem: Kirigami.Icon {
-                    source: "list-add";
-                }
-                height: addCharacterButton.width;
-                width: height;
-                onClicked: {
-                    if(parent.text !== "") {
-                        root.model.acbfData.metaData.bookInfo.setAnnotation(parent.text.split("\n\n"), "");
-                        root.model.setDirty();
-                    }
-                }
-            }
         }
         Kirigami.Heading {
             width: parent.width;
@@ -125,30 +98,10 @@ Kirigami.ScrollablePage {
         }
         Item { width: parent.width; height: Kirigami.Units.smallSpacing; }
         QtControls.TextField {
-            width: parent.width - updateKeywordsButton.width - Kirigami.Units.smallSpacing;
+            id: defaultKeywords;
+            width: parent.width;
             placeholderText: i18nc("placeholder text for the add new keyword text entry", "Write a comma seperated list of keywords.");
             text:root.model.acbfData ? root.model.acbfData.metaData.bookInfo.keywords("").join(", ") : "";
-            QtControls.Button {
-                id: updateKeywordsButton;
-                anchors {
-                    left: parent.right;
-                    leftMargin: Kirigami.Units.smallSpacing;
-                }
-                contentItem: Kirigami.Icon {
-                    source: "list-add";
-                }
-                height: parent.height;
-                width: height;
-                onClicked: {
-                    if(parent.text !== "") {
-                        var keywords = parent.text.split(",")
-                        for (var i in keywords) {
-                            keywords[i] = keywords[i].trim();
-                        }
-                        root.model.acbfData.metaData.bookInfo.setKeywords(keywords, "");
-                    }
-                }
-            }
         }
 
         Kirigami.Heading {
@@ -307,6 +260,7 @@ Kirigami.ScrollablePage {
             delegate: QtControls.TextField {
                 width: parent.width - removeCharacterButton.width - Kirigami.Units.smallSpacing;
                 text: modelData;
+                onEditingFinished: root.model.acbfData.metaData.bookInfo.characters[index] = text;
                 QtControls.Button {
                     id: removeCharacterButton;
                     anchors {
@@ -356,14 +310,24 @@ Kirigami.ScrollablePage {
             text: i18nc("label text for the edit field for the sequence list", "Sequence");
         }
         Repeater {
+            id: sequenceListRepeater;
             model: root.model.acbfData ? root.model.acbfData.metaData.bookInfo.sequenceCount : 0;
             delegate: Item {
                 width: parent.width;
                 height: childrenRect.height;
+
+                function updateSeries() {
+                    root.model.acbfData.metaData.bookInfo.sequence(modelData).title = seriesTextField.text;
+                    root.model.acbfData.metaData.bookInfo.sequence(modelData).number = numberField.value;
+                    root.model.acbfData.metaData.bookInfo.sequence(modelData).volume = volumeField.value;
+                    root.model.setDirty();
+                }
+
                 QtControls.TextField {
                     id: seriesTextField;
                     width: parent.width - removeSequenceButton.width - Kirigami.Units.smallSpacing;
                     text: root.model.acbfData.metaData.bookInfo.sequence(modelData).title;
+                    onEditingFinished: parent.updateSeries();
                 }
                 QtControls.SpinBox {
                     anchors {
@@ -373,6 +337,7 @@ Kirigami.ScrollablePage {
                     value : root.model.acbfData.metaData.bookInfo.sequence(modelData).number;
                     width : (seriesTextField.width+Kirigami.Units.smallSpacing)/2;
                     id: numberField;
+                    onValueChanged: parent.updateSeries();
                 }
                 QtControls.SpinBox {
                     anchors {
@@ -384,30 +349,11 @@ Kirigami.ScrollablePage {
                     value : root.model.acbfData.metaData.bookInfo.sequence(modelData).volume;
                     width : (seriesTextField.width/2)-(Kirigami.Units.smallSpacing*1.5);
                     id: volumeField;
-                }
-                QtControls.Button {
-                    id: updateSequenceButton;
-                    anchors {
-                        left: seriesTextField.right;
-                        leftMargin: Kirigami.Units.smallSpacing;
-                    }
-                    contentItem: Kirigami.Icon {
-                        source: "list-add";
-                    }
-                    height: seriesTextField.height;
-                    width: height;
-                    onClicked: {
-                        root.model.acbfData.metaData.bookInfo.sequence(modelData).title = seriesTextField.text;
-                        root.model.acbfData.metaData.bookInfo.sequence(modelData).number = numberField.value;
-                        root.model.acbfData.metaData.bookInfo.sequence(modelData).volume = volumeField.value;
-                        root.model.setDirty();
-                    }
+                    onValueChanged: parent.updateSeries();
                 }
                 QtControls.Button {
                     id: removeSequenceButton;
                     anchors {
-                        top: seriesTextField.bottom;
-                        topMargin: Kirigami.Units.smallSpacing;
                         left: seriesTextField.right;
                         leftMargin: Kirigami.Units.smallSpacing;
                     }

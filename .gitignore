@@ -1,3 +1,4 @@
 .kdev4
 src.kdev4
 .directory
+CMakeLists.txt.user

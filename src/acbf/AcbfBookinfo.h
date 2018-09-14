@@ -85,7 +85,7 @@ class ACBF_EXPORT BookInfo : public QObject
     Q_PROPERTY(QStringList authorNames READ authorNames NOTIFY authorsChanged)
     Q_PROPERTY(QStringList titleLanguages READ titleLanguages NOTIFY titleChanged)
     Q_PROPERTY(QStringList genres READ genres NOTIFY genresChanged)
-    Q_PROPERTY(QStringList characters READ characters NOTIFY charactersChanged)
+    Q_PROPERTY(QStringList characters READ characters WRITE setCharacters NOTIFY charactersChanged)
     Q_PROPERTY(int sequenceCount READ sequenceCount NOTIFY sequenceCountChanged)
 public:
     explicit BookInfo(Metadata* parent = nullptr);
@@ -245,6 +245,12 @@ public:
      * @param name - the name of the character to remove.
      */
     Q_INVOKABLE void removeCharacter(QString name);
+
+    /**
+     * @brief Replace the characters stringlist.
+     * @param characters new string list to use.
+     */
+    Q_INVOKABLE void setCharacters(QStringList characters);
     /**
      * \brief this triggers when the character name list is changed.
      */

@@ -455,6 +455,12 @@ void BookInfo::removeCharacter(QString name)
     emit charactersChanged();
 }
 
+void BookInfo::setCharacters(QStringList characters)
+{
+    d->characters = characters;
+    emit charactersChanged();
+}
+
 QList<QStringList> BookInfo::annotationsForAllLanguage()
 {
     return d->annotation.values();
