@@ -143,8 +143,9 @@ Kirigami.ScrollablePage {
                     height: parent.height;
                     width: height;
                     onClicked: {
-                        root.model.acbfData.metaData.bookInfo.removeAuthor(modelData);
+                        // When removing, set the model dirty first, and then remove the entry to avoid reference errors.
                         root.model.setDirty();
+                        root.model.acbfData.metaData.bookInfo.removeAuthor(index);
                     }
                 }
             }
@@ -153,6 +154,16 @@ Kirigami.ScrollablePage {
         QtControls.TextField {
             width: parent.width - addAuthorButton.width - Kirigami.Units.smallSpacing;
             placeholderText: i18nc("placeholder text for the add new author text entry", "Write to add new author (nickname)");
+            Keys.onReturnPressed: addAuthor();
+            function addAuthor() {
+                if(text !== "") {
+                    // Just add an author where only the nickname is defined
+                    root.model.acbfData.metaData.bookInfo.addAuthor("", "", "", "", "", text, [""], [""]);
+                    root.model.setDirty();
+                    text = "";
+                }
+            }
+
             QtControls.Button {
                 id: addAuthorButton;
                 anchors {
@@ -164,14 +175,7 @@ Kirigami.ScrollablePage {
                 }
                 height: parent.height;
                 width: height;
-                onClicked: {
-                    if(parent.text !== "") {
-                        // Just add an author where only the nickname is defined
-                        root.model.acbfData.metaData.bookInfo.addAuthor("", "", "", "", "", parent.text, [""], [""]);
-                        root.model.setDirty();
-                        parent.text = "";
-                    }
-                }
+                onClicked: parent.addAuthor();
             }
         }
 
@@ -201,8 +205,8 @@ Kirigami.ScrollablePage {
                         height: parent.height;
                         width: height;
                         onClicked: {
-                            root.model.acbfData.metaData.bookInfo.removeGenre(modelData);
                             root.model.setDirty();
+                            root.model.acbfData.metaData.bookInfo.removeGenre(modelData);
                         }
                     }
                 }
@@ -227,8 +231,17 @@ Kirigami.ScrollablePage {
         }
         Item { width: parent.width; height: Kirigami.Units.smallSpacing; }
         QtControls.TextField {
-            width: parent.width - addCharacterButton.width - Kirigami.Units.smallSpacing;
+            width: parent.width - addGenreButton.width - Kirigami.Units.smallSpacing;
             placeholderText: i18nc("placeholder text for the add new genre text entry", "Write to add new genre");
+            Keys.onReturnPressed: addGenre();
+            function addGenre() {
+                if(text !== "") {
+                    root.model.acbfData.metaData.bookInfo.setGenre(text);
+                    root.model.setDirty();
+                    text = "";
+                }
+            }
+
             QtControls.Button {
                 id: addGenreButton;
                 anchors {
@@ -240,13 +253,7 @@ Kirigami.ScrollablePage {
                 }
                 height: parent.height;
                 width: height;
-                onClicked: {
-                    if(parent.text !== "") {
-                        root.model.acbfData.metaData.bookInfo.setGenre(parent.text);
-                        root.model.setDirty();
-                        parent.text = "";
-                    }
-                }
+                onClicked: parent.addGenre();
             }
         }
 
@@ -273,8 +280,8 @@ Kirigami.ScrollablePage {
                     height: parent.height;
                     width: height;
                     onClicked: {
-                        root.model.acbfData.metaData.bookInfo.removeCharacter(modelData);
                         root.model.setDirty();
+                        root.model.acbfData.metaData.bookInfo.removeCharacter(modelData);
                     }
                 }
             }
@@ -283,6 +290,15 @@ Kirigami.ScrollablePage {
         QtControls.TextField {
             width: parent.width - addCharacterButton.width - Kirigami.Units.smallSpacing;
             placeholderText: i18nc("placeholder text for the add new character text entry", "Write to add new character");
+            Keys.onReturnPressed: addCharacter();
+            function addCharacter() {
+                if(text !== "") {
+                    root.model.acbfData.metaData.bookInfo.addCharacter(text);
+                    root.model.setDirty();
+                    text = "";
+                }
+            }
+
             QtControls.Button {
                 id: addCharacterButton;
                 anchors {
@@ -294,13 +310,7 @@ Kirigami.ScrollablePage {
                 }
                 height: parent.height;
                 width: height;
-                onClicked: {
-                    if(parent.text !== "") {
-                        root.model.acbfData.metaData.bookInfo.addCharacter(parent.text);
-                        root.model.setDirty();
-                        parent.text = "";
-                    }
-                }
+                onClicked: parent.addCharacter();
             }
         }
 
@@ -318,8 +328,12 @@ Kirigami.ScrollablePage {
 
                 function updateSeries() {
                     root.model.acbfData.metaData.bookInfo.sequence(modelData).title = seriesTextField.text;
-                    root.model.acbfData.metaData.bookInfo.sequence(modelData).number = numberField.value;
-                    root.model.acbfData.metaData.bookInfo.sequence(modelData).volume = volumeField.value;
+                    if (numberField.value !== root.model.acbfData.metaData.bookInfo.sequence(modelData).number) {
+                        root.model.acbfData.metaData.bookInfo.sequence(modelData).number = numberField.value;
+                    }
+                    if (volumeField.value !== root.model.acbfData.metaData.bookInfo.sequence(modelData).volume) {
+                        root.model.acbfData.metaData.bookInfo.sequence(modelData).volume = volumeField.value;
+                    }
                     root.model.setDirty();
                 }
 
@@ -363,8 +377,8 @@ Kirigami.ScrollablePage {
                     height: seriesTextField.height;
                     width: height;
                     onClicked: {
-                        root.model.acbfData.metaData.bookInfo.removeSequence(modelData);
                         root.model.setDirty();
+                        root.model.acbfData.metaData.bookInfo.removeSequence(index);
                     }
                 }
             }
@@ -373,6 +387,15 @@ Kirigami.ScrollablePage {
         QtControls.TextField {
             width: parent.width - addSequenceButton.width - Kirigami.Units.smallSpacing;
             placeholderText: i18nc("placeholder text for the add new series text entry", "Write to add new series");
+            Keys.onReturnPressed:addSequence();
+            function addSequence() {
+                if(text !== "") {
+                    root.model.acbfData.metaData.bookInfo.addSequence(0, text);
+                    root.model.setDirty();
+                    text = "";
+                }
+            }
+
             QtControls.Button {
                 id: addSequenceButton;
                 anchors {
@@ -384,13 +407,7 @@ Kirigami.ScrollablePage {
                 }
                 height: parent.height;
                 width: height;
-                onClicked: {
-                    if(parent.text !== "") {
-                        root.model.acbfData.metaData.bookInfo.addSequence(0, parent.text);
-                        root.model.setDirty();
-                        parent.text = "";
-                    }
-                }
+                onClicked: parent.addSequence();
             }
         }
 
@@ -435,7 +452,7 @@ Kirigami.ScrollablePage {
                         top: referenceTextField.bottom;
                         topMargin: Kirigami.Units.smallSpacing;
                     }
-                    width : (referenceTextField.width+Kirigami.Units.smallSpacing)/2;
+                    width : (referenceTextField.width/2)-(Kirigami.Units.smallSpacing*1.5);
                     id: referenceTypeField;
                     text: root.model.acbfData.metaData.bookInfo.databaseRef(modelData).type;
                     placeholderText: i18nc("placeholder text for the add reference type text entry", "Write to add reference type");
@@ -453,8 +470,8 @@ Kirigami.ScrollablePage {
                     height: referenceTextField.height;
                     width: height;
                     onClicked: {
-                        root.model.acbfData.metaData.bookInfo.removeDatabaseRef(modelData);
                         root.model.setDirty();
+                        root.model.acbfData.metaData.bookInfo.removeDatabaseRef(index);
                     }
                 }
             }
