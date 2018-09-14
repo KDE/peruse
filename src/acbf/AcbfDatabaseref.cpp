@@ -39,6 +39,7 @@ DatabaseRef::DatabaseRef(BookInfo* parent)
     : QObject(parent)
     , d(new Private)
 {
+    qRegisterMetaType<DatabaseRef*>("DatabaseRef*");
 }
 
 DatabaseRef::~DatabaseRef() = default;
@@ -56,7 +57,7 @@ void DatabaseRef::toXml(QXmlStreamWriter* writer)
 
 bool DatabaseRef::fromXml(QXmlStreamReader *xmlReader)
 {
-    setDbname(xmlReader->attributes().value(QStringLiteral("volume")).toString());
+    setDbname(xmlReader->attributes().value(QStringLiteral("dbname")).toString());
     setType(xmlReader->attributes().value(QStringLiteral("type")).toString());
     setReference(xmlReader->readElementText(QXmlStreamReader::IncludeChildElements));
     qDebug() << Q_FUNC_INFO << "Created a database reference for the database" << dbname() << "with reference" << reference();
@@ -71,6 +72,7 @@ QString DatabaseRef::dbname() const
 void DatabaseRef::setDbname(const QString& dbname)
 {
     d->dbname = dbname;
+    emit dbnameChanged();
 }
 
 QString DatabaseRef::type() const
@@ -81,6 +83,7 @@ QString DatabaseRef::type() const
 void DatabaseRef::setType(const QString& type)
 {
     d->type = type;
+    emit typeChanged();
 }
 
 QString DatabaseRef::reference() const
@@ -91,4 +94,5 @@ QString DatabaseRef::reference() const
 void DatabaseRef::setReference(const QString& reference)
 {
     d->reference = reference;
+    emit referenceChanged();
 }

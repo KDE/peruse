@@ -394,6 +394,115 @@ Kirigami.ScrollablePage {
             }
         }
 
+        Kirigami.Heading {
+            width: parent.width;
+            height: paintedHeight + Kirigami.Units.smallSpacing * 2;
+            text: i18nc("label text for the edit field for the database reference list", "Database References");
+        }
+        Repeater {
+            model: root.model.acbfData ? root.model.acbfData.metaData.bookInfo.databaseRefCount : 0;
+            delegate: Item {
+                width: parent.width;
+                height: childrenRect.height;
+
+                function updateDatabaseRef() {
+                    root.model.acbfData.metaData.bookInfo.databaseRef(modelData).reference = referenceTextField.text
+                    root.model.acbfData.metaData.bookInfo.databaseRef(modelData).dbname = databaseNameField.text
+                    root.model.acbfData.metaData.bookInfo.databaseRef(modelData).type = referenceTypeField.text
+                    root.model.setDirty();
+                }
+
+                QtControls.TextField {
+                    id: referenceTextField;
+                    width: parent.width - removeReferenceButton.width - Kirigami.Units.smallSpacing;
+                    text: root.model.acbfData.metaData.bookInfo.databaseRef(modelData).reference;
+                    onEditingFinished: parent.updateDatabaseRef();
+                }
+                QtControls.TextField {
+                    anchors {
+                        top: referenceTextField.bottom;
+                        topMargin: Kirigami.Units.smallSpacing;
+                    }
+                    width : (referenceTextField.width+Kirigami.Units.smallSpacing)/2;
+                    id: databaseNameField;
+                    text: root.model.acbfData.metaData.bookInfo.databaseRef(modelData).dbname;
+                    onEditingFinished: parent.updateDatabaseRef();
+                }
+                QtControls.TextField {
+                    anchors {
+                        left: databaseNameField.right;
+                        leftMargin: Kirigami.Units.smallSpacing;
+                        top: referenceTextField.bottom;
+                        topMargin: Kirigami.Units.smallSpacing;
+                    }
+                    width : (referenceTextField.width+Kirigami.Units.smallSpacing)/2;
+                    id: referenceTypeField;
+                    text: root.model.acbfData.metaData.bookInfo.databaseRef(modelData).type;
+                    placeholderText: i18nc("placeholder text for the add reference type text entry", "Write to add reference type");
+                    onEditingFinished: parent.updateDatabaseRef();
+                }
+                QtControls.Button {
+                    id: removeReferenceButton;
+                    anchors {
+                        left: referenceTextField.right;
+                        leftMargin: Kirigami.Units.smallSpacing;
+                    }
+                    contentItem: Kirigami.Icon {
+                        source: "list-remove";
+                    }
+                    height: referenceTextField.height;
+                    width: height;
+                    onClicked: {
+                        root.model.acbfData.metaData.bookInfo.removeDatabaseRef(modelData);
+                        root.model.setDirty();
+                    }
+                }
+            }
+        }
+        Item { width: parent.width; height: Kirigami.Units.smallSpacing; }
+        Item {
+             width: parent.width;
+             height: childrenRect.height;
+            function addReference() {
+                if(addReferenceField.text !== "" && addDatabaseNameField.text !== "") {
+                    root.model.acbfData.metaData.bookInfo.addDatabaseRef(addReferenceField.text, addDatabaseNameField.text);
+                    root.model.setDirty();
+                    addReferenceField.text = "";
+                    addDatabaseNameField.text = "";
+                }
+            }
+
+            QtControls.TextField {
+                id: addReferenceField
+                width: parent.width - addReferenceButton.width - Kirigami.Units.smallSpacing;
+                placeholderText: i18nc("placeholder text for the add new reference text entry", "Write to add new reference");
+                Keys.onReturnPressed: parent.addReference();
+            }
+            QtControls.TextField {
+                id: addDatabaseNameField
+                anchors {
+                    top: addReferenceField.bottom;
+                    topMargin: Kirigami.Units.smallSpacing;
+                }
+                width: parent.width - addReferenceButton.width - Kirigami.Units.smallSpacing;
+                placeholderText: i18nc("placeholder text for the add databasename text entry", "Write to add database name for new reference.");
+                Keys.onReturnPressed: parent.addReference();
+            }
+            QtControls.Button {
+                id: addReferenceButton;
+                anchors {
+                    left: addReferenceField.right;
+                    leftMargin: Kirigami.Units.smallSpacing;
+                }
+                contentItem: Kirigami.Icon {
+                    source: "list-add";
+                }
+                height: addReferenceField.height;
+                width: height;
+                onClicked: parent.addReference();
+            }
+        }
+
         AuthorEntryEditor {
             id: authorEditor;
             bookinfo: root.model.acbfData.metaData.bookInfo;

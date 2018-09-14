@@ -87,6 +87,7 @@ class ACBF_EXPORT BookInfo : public QObject
     Q_PROPERTY(QStringList genres READ genres NOTIFY genresChanged)
     Q_PROPERTY(QStringList characters READ characters WRITE setCharacters NOTIFY charactersChanged)
     Q_PROPERTY(int sequenceCount READ sequenceCount NOTIFY sequenceCountChanged)
+    Q_PROPERTY(int databaseRefCount READ databaseRefCount NOTIFY databaseRefCountChanged)
 public:
     explicit BookInfo(Metadata* parent = nullptr);
     ~BookInfo() override;
@@ -380,11 +381,39 @@ public:
      */
     void addDatabaseRef(DatabaseRef* databaseRef);
     /**
+     * @brief add a database entry that this book has.
+     * @param reference the entry itself.
+     * @param dbname the name of the database.
+     * @param type the type of entry, optional.
+     */
+    Q_INVOKABLE void addDatabaseRef(QString reference, QString dbname, QString type="");
+    /**
      * \brief remove a database entry that this book has.
      * @param databaseRef - a databaseRef object describing this work's place
      * in a database.
      */
     void removeDatabaseRef(DatabaseRef* databaseRef);
+    /**
+     * @brief removeDatabaseRef
+     * @param index of the database reference to remove.
+     */
+    Q_INVOKABLE void removeDatabaseRef(int index);
+
+    /**
+     * @brief get databaseRef
+     * @param index - index of the database ref to get.
+     * @return databaseTef at index.
+     */
+    Q_INVOKABLE DatabaseRef* databaseRef(int index);
+    /**
+     * @brief databaseRefCount
+     * @return amount of database references.
+     */
+    Q_INVOKABLE int databaseRefCount();
+    /**
+     * @brief fires when databaseRefCount changes
+     */
+    Q_SIGNAL void databaseRefCountChanged();
 
     /**
      * @returns a list of contentRating objects describing the audience for this

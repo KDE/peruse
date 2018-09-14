@@ -41,6 +41,9 @@ namespace AdvancedComicBookFormat
 class ACBF_EXPORT DatabaseRef : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QString dbname READ dbname WRITE setDbname NOTIFY dbnameChanged)
+    Q_PROPERTY(QString type READ type WRITE setType NOTIFY typeChanged)
+    Q_PROPERTY(QString reference READ reference WRITE setReference NOTIFY referenceChanged)
 public:
     explicit DatabaseRef(BookInfo* parent = nullptr);
     ~DatabaseRef() override;
@@ -58,32 +61,43 @@ public:
     /**
      * @return the name of the database.
      */
-    QString dbname() const;
+    Q_INVOKABLE QString dbname() const;
     /**
      * \brief set the name of the database for this reference.
      * @param dbname - the name of the database.
      */
-    void setDbname(const QString& dbname);
-
+    Q_INVOKABLE void setDbname(const QString& dbname);
+    /**
+     * @brief fires when the dbname changes;
+     */
+    Q_SIGNAL void dbnameChanged();
     /**
      * @returns the type of reference the reference is.
      */
-    QString type() const;
+    Q_INVOKABLE QString type() const;
     /**
      * \brief set which type of reference the reference is.
      * @param type - the type of reference.
      */
-    void setType(const QString& type);
-
+    Q_INVOKABLE void setType(const QString& type);
+    /**
+     * @brief fires when the type of the reference changes.
+     */
+    Q_SIGNAL void typeChanged();
     /**
      * @returns the reference.
      */
-    QString reference() const;
+    Q_INVOKABLE QString reference() const;
     /**
      * \brief set the reference as a string.
      * @param reference - the reference a QString.
      */
-    void setReference(const QString& reference);
+    Q_INVOKABLE void setReference(const QString& reference);
+    /**
+     * @brief fires when the reference that this object has of the book
+     * is changed.
+     */
+    Q_SIGNAL void referenceChanged();
 private:
     class Private;
     std::unique_ptr<Private> d;

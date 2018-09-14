@@ -607,11 +607,37 @@ QList<DatabaseRef *> BookInfo::databaseRef()
 void BookInfo::addDatabaseRef(DatabaseRef* databaseRef)
 {
     d->databaseRef.append(databaseRef);
+    emit databaseRefCountChanged();
+}
+
+void BookInfo::addDatabaseRef(QString reference, QString dbname, QString type)
+{
+    DatabaseRef* dRef = new DatabaseRef(this);
+    dRef->setReference(reference);
+    dRef->setDbname(dbname);
+    dRef->setType(type);
+    addDatabaseRef(dRef);
 }
 
 void BookInfo::removeDatabaseRef(DatabaseRef* databaseRef)
 {
     d->databaseRef.removeAll(databaseRef);
+    emit databaseRefCountChanged();
+}
+
+void BookInfo::removeDatabaseRef(int index)
+{
+    removeDatabaseRef(databaseRef(index));
+}
+
+DatabaseRef *BookInfo::databaseRef(int index)
+{
+    return d->databaseRef.at(index);
+}
+
+int BookInfo::databaseRefCount()
+{
+    return d->databaseRef.size();
 }
 
 QList<ContentRating *> BookInfo::contentRating()
