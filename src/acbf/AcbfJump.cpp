@@ -39,6 +39,8 @@ Jump::Jump(Page* parent)
     : QObject(parent)
     , d(new Private)
 {
+    qRegisterMetaType<Jump*>("Jump*");
+    connect(this, SIGNAL(pointCountChanged()), this, SIGNAL(boundsChanged()));
 }
 
 Jump::~Jump() = default;
@@ -105,11 +107,13 @@ void Jump::addPoint(const QPoint& point, int index)
     else {
         d->points.append(point);
     }
+    emit pointCountChanged();
 }
 
 void Jump::removePoint(const QPoint& point)
 {
     d->points.removeAll(point);
+    emit pointCountChanged();
 }
 
 bool Jump::swapPoints(const QPoint& swapThis, const QPoint& withThis)
@@ -118,9 +122,48 @@ bool Jump::swapPoints(const QPoint& swapThis, const QPoint& withThis)
     int index2 = d->points.indexOf(withThis);
     if(index1 > -1 && index2 > -1) {
         d->points.swap(index1, index2);
+        emit pointCountChanged();
         return true;
     }
     return false;
+}
+
+void Jump::setPointsFromRect(const QPoint &topLeft, const QPoint &bottomRight)
+{
+    QRect rect(topLeft, bottomRight);
+    d->points.clear();
+    d->points.append(topLeft);
+    d->points.append(rect.topRight());
+    d->points.append(rect.bottomRight());
+    d->points.append(rect.bottomLeft());
+    emit pointCountChanged();
+}
+
+int Jump::pointCount() const
+{
+    return d->points.size();
+}
+
+QRect Jump::bounds() const
+{
+    // Would use QPolygon here, but that requires including QTGUI.
+    QRect rect(d->points.at(0), d->points.at(1));
+    for (int i = 2; i < d->points.size(); i++) {
+        QPoint p = d->points.at(i);
+        if (rect.left() > p.x()) {
+            rect.setLeft(p.x());
+        }
+        if (rect.right() < p.x()) {
+            rect.setRight(p.x());
+        }
+        if (rect.bottom() > p.y()) {
+            rect.setBottom(p.y());
+        }
+        if (rect.top() < p.y()) {
+            rect.setTop(p.y());
+        }
+    }
+    return rect;
 }
 
 int Jump::pageIndex() const
@@ -131,4 +174,5 @@ int Jump::pageIndex() const
 void Jump::setPageIndex(const int& pageNumber)
 {
     d->pageIndex = pageNumber;
+    emit pageIndexChanged();
 }

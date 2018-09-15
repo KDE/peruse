@@ -39,6 +39,9 @@ class Textarea;
 class ACBF_EXPORT Textlayer : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QString language READ language WRITE setLanguage NOTIFY languageChanged)
+    Q_PROPERTY(QString bgcolor READ bgcolor WRITE setBgcolor NOTIFY bgcolorChanged)
+    Q_PROPERTY(int textareaCount READ textareaCount NOTIFY textareaCountChanged)
 public:
     explicit Textlayer(Page* parent = nullptr);
     ~Textlayer() override;
@@ -63,6 +66,10 @@ public:
      * code format joined by a dash (not an underscore).
      */
     void setLanguage(const QString& language);
+    /**
+     * @brief fires when the language changes.
+     */
+    Q_SIGNAL void languageChanged();
 
     /**
      * @return the background color as a QString.
@@ -76,6 +83,10 @@ public:
      * @param newColor - a String with an 8bit per channel rgb hexcode (#ff00ff, or the like)
      */
     void setBgcolor(const QString& newColor = QString());
+    /**
+     * @brief fires when the background color changes.
+     */
+    Q_SIGNAL void bgcolorChanged();
 
     /**
      * @returns a list of textareas in this page.
@@ -85,31 +96,51 @@ public:
      * @param index - index of the textarea.
      * @return the textarea of that index.
      */
-    Textarea* textarea(int index) const;
+    Q_INVOKABLE Textarea* textarea(int index) const;
     /**
      * @param textarea - the textarea you want to index of.
      * @returns the index of the given textarea.
      */
-    int textareaIndex(Textarea* textarea) const;
+    Q_INVOKABLE int textareaIndex(Textarea* textarea) const;
 
     /**
      * \brief add a textarea to the list of frames.
-     * @param textarea - the frame to add.
+     * @param textarea - the textarea to add.
      * @param index - the index to add it at. If afterIndex is larger than
      * zero, the insertion will happen at that index
      */
     void addTextarea(Textarea* textarea, int index = -1);
+    /**
+     * @brief add a text area at index.
+     * @param index - the index to add it at. If afterIndex is larger than
+     * zero, the insertion will happen at that index
+     */
+    Q_INVOKABLE void addTextarea(int index = -1);
     /**
      * \brief remove the given textarea from the framelist.
      * @param textarea - the textarea to remove.
      */
     void removeTextarea(Textarea* textarea);
     /**
+     * @brief addTextarea
+     * @param index to remove the textarea at.
+     */
+    Q_INVOKABLE void removeTextarea(int index);
+    /**
      * \brief Swap two textareas in the list.
      * @param swapThis - the first textarea to swap.
      * @param withThis - the second textarea to swap.
      */
-    bool swapTextareas(Textarea* swapThis, Textarea* withThis);
+    Q_INVOKABLE bool swapTextareas(int swapThis, int withThis);
+    /**
+     * @brief textareaCount
+     * @return
+     */
+    int textareaCount();
+    /**
+     * @brief textareaCountChanged
+     */
+    Q_SIGNAL void textareaCountChanged();
 private:
     class Private;
     std::unique_ptr<Private> d;

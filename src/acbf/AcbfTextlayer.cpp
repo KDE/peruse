@@ -41,6 +41,7 @@ Textlayer::Textlayer(Page* parent)
     : QObject(parent)
     , d(new Private)
 {
+    qRegisterMetaType<Textlayer*>("Textlayer*");
 }
 
 Textlayer::~Textlayer() = default;
@@ -97,6 +98,7 @@ QString Textlayer::language() const
 void Textlayer::setLanguage(const QString& language)
 {
     d->language = language;
+    emit languageChanged();
 }
 
 QString Textlayer::bgcolor() const
@@ -107,6 +109,7 @@ QString Textlayer::bgcolor() const
 void Textlayer::setBgcolor(const QString& newColor)
 {
     d->bgcolor = newColor;
+    emit bgcolorChanged();
 }
 
 QList<Textarea *> Textlayer::textareas() const
@@ -132,20 +135,37 @@ void Textlayer::addTextarea(Textarea* textarea, int index)
     else {
         d->textareas.append(textarea);
     }
+    emit textareaCountChanged();
+}
+
+void Textlayer::addTextarea(int index)
+{
+    Textarea* text = new Textarea(this);
+    addTextarea(text, index);
 }
 
 void Textlayer::removeTextarea(Textarea* textarea)
 {
     d->textareas.removeAll(textarea);
+    emit textareaCountChanged();
 }
 
-bool Textlayer::swapTextareas(Textarea* swapThis, Textarea* withThis)
+void Textlayer::removeTextarea(int index)
 {
-    int index1 = d->textareas.indexOf(swapThis);
-    int index2 = d->textareas.indexOf(withThis);
-    if(index1 > -1 && index2 > -1) {
-        d->textareas.swap(index1, index2);
+    removeTextarea(textarea(index));
+}
+
+bool Textlayer::swapTextareas(int swapThis, int withThis)
+{
+    if(swapThis > -1 && withThis > -1) {
+        d->textareas.swap(swapThis, withThis);
+        emit textareaCountChanged();
         return true;
     }
     return false;
+}
+
+int Textlayer::textareaCount()
+{
+    return d->textareas.size();
 }

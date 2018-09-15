@@ -27,6 +27,7 @@
 #include "AcbfTextlayer.h"
 
 #include <QPoint>
+#include <QRect>
 
 /**
  * \brief Class to handle the text areas in ACBF
@@ -40,6 +41,15 @@ namespace AdvancedComicBookFormat
 class ACBF_EXPORT Textarea : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QString bgcolor READ bgcolor WRITE setBgcolor NOTIFY bgcolorChanged)
+    Q_PROPERTY(int pointCount READ pointCount NOTIFY pointCountChanged)
+    Q_PROPERTY(QRect bounds READ bounds NOTIFY boundsChanged)
+    Q_PROPERTY(int textRotation READ textRotation WRITE setTextRotation NOTIFY textRotationChanged)
+    Q_PROPERTY(QString type READ type WRITE setType NOTIFY typeChanged)
+    Q_PROPERTY(bool inverted READ inverted WRITE setInverted NOTIFY invertedChanged)
+    Q_PROPERTY(bool transparent READ transparent WRITE setTransparent NOTIFY transparentChanged)
+    Q_PROPERTY(QStringList paragraphs READ paragraphs WRITE setParagraphs NOTIFY paragraphsChanged)
+
 public:
     explicit Textarea(Textlayer* parent = nullptr);
     ~Textarea() override;
@@ -67,12 +77,12 @@ public:
      * @param index - the index of the desired point.
      * @return a point for an index.
      */
-    QPoint point(int index) const;
+    Q_INVOKABLE QPoint point(int index) const;
     /**
      * @param point - a point from the points list.
      * @return the index of the given point.
      */
-    int pointIndex(const QPoint& point) const;
+    Q_INVOKABLE int pointIndex(const QPoint& point) const;
 
     /**
      * \brief add a point to the points list.
@@ -80,19 +90,39 @@ public:
      * @param index - the index to add it at. If afterIndex is larger than zero,
      * the insertion will happen at that index
      */
-    void addPoint(const QPoint& point, int index = -1);
+    Q_INVOKABLE void addPoint(const QPoint& point, int index = -1);
     /**
      * \brief remove a point from the list.
      * @param point - point to remove from the list.
      */
-    void removePoint(const QPoint& point);
+    Q_INVOKABLE void removePoint(const QPoint& point);
     /**
      * \brief Swap two points in the list.
      * @param swapThis - the first points to swap.
      * @param withThis - the second points to swap.
      */
     bool swapPoints(const QPoint& swapThis, const QPoint& withThis);
+    /**
+     * @brief set the points based on a top left and bottom right.
+     * @param topLeft the topleft corner of the rect.
+     * @param bottomRight the bottomright corner of the rect.
+     */
+    Q_INVOKABLE void setPointsFromRect(const QPoint& topLeft, const QPoint& bottomRight);
 
+    int pointCount() const;
+    /**
+     * @brief fires when the point counts changes.
+     */
+    Q_SIGNAL void pointCountChanged();
+    /**
+     * @brief convenience function to get the ractangle of the points.
+     * @return the bounds of the frame.
+     */
+    QRect bounds() const;
+    /**
+     * @brief fires when the bounds change, which happens when the point count changes.
+     */
+    Q_SIGNAL void boundsChanged();
     /**
      * @return the background color as a QString.
      * 
@@ -105,6 +135,10 @@ public:
      * @param newColor - a String with an 8bit per channel rgb hexcode (#ff00ff, or the like)
      */
     void setBgcolor(const QString& newColor = QString());
+    /**
+     * @brief fires when the background color changes.
+     */
+    Q_SIGNAL void bgcolorChanged();
 
     /**
      * @return the text rotation in degrees.
@@ -115,6 +149,10 @@ public:
      * @param rotation - the text rotation in degrees.
      */
     void setTextRotation(int rotation = 0);
+    /**
+     * @brief fires when the text rotation is set.
+     */
+    Q_SIGNAL void textRotationChanged();
 
     /**
      * @return the type of the text area. This determines how it is styled.
@@ -126,6 +164,10 @@ public:
      * it will change the way how the text is styled. The default is "speech".
      */
     void setType(const QString& type = QStringLiteral("speech"));
+    /**
+     * @brief fires when the type is set.
+     */
+    Q_SIGNAL void typeChanged();
 
     /**
      * @return whether the text should use the 'inverted' colorscheme.
@@ -136,7 +178,10 @@ public:
      * @param inverted - whether to do so.
      */
     void setInverted(bool inverted = false);
-
+    /**
+     * @brief fires when inverted is set.
+     */
+    Q_SIGNAL void invertedChanged();
     /**
      * @return whether to use the background color when overlaying the text.
      */
@@ -147,6 +192,10 @@ public:
      * to have the textare background transparent.
      */
     void setTransparent(bool transparent = false);
+    /**
+     * @brief fires when transparent is set.
+     */
+    Q_SIGNAL void transparentChanged();
 
     /**
      * @returns a list of paragraphs.
@@ -163,6 +212,10 @@ public:
      * strong, emphasis, strikethrough, sub, sup, a (with mandatory href attribute only)
      */
     void setParagraphs(const QStringList& paragraphs);
+    /**
+     * @brief fires when the paragraphs are set.
+     */
+    Q_SIGNAL void paragraphsChanged();
 private:
     class Private;
     std::unique_ptr<Private> d;

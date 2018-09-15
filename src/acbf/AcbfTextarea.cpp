@@ -45,6 +45,8 @@ Textarea::Textarea(Textlayer* parent)
     : QObject(parent)
     , d(new Private)
 {
+    qRegisterMetaType<Textarea*>("Textarea*");
+    connect(this, SIGNAL(pointCountChanged()), this, SIGNAL(boundsChanged()));
 }
 
 Textarea::~Textarea() = default;
@@ -150,11 +152,13 @@ void Textarea::addPoint(const QPoint& point, int index)
     else {
         d->points.append(point);
     }
+    emit pointCountChanged();
 }
 
 void Textarea::removePoint(const QPoint& point)
 {
     d->points.removeAll(point);
+    emit pointCountChanged();
 }
 
 bool Textarea::swapPoints(const QPoint& swapThis, const QPoint& withThis)
@@ -163,9 +167,47 @@ bool Textarea::swapPoints(const QPoint& swapThis, const QPoint& withThis)
     int index2 = d->points.indexOf(withThis);
     if(index1 > -1 && index2 > -1) {
         d->points.swap(index1, index2);
+        emit pointCountChanged();
         return true;
     }
     return false;
+}
+void Textarea::setPointsFromRect(const QPoint &topLeft, const QPoint &bottomRight)
+{
+    QRect rect(topLeft, bottomRight);
+    d->points.clear();
+    d->points.append(topLeft);
+    d->points.append(rect.topRight());
+    d->points.append(rect.bottomRight());
+    d->points.append(rect.bottomLeft());
+    emit pointCountChanged();
+}
+
+int Textarea::pointCount() const
+{
+    return d->points.size();
+}
+
+QRect Textarea::bounds() const
+{
+    // Would use QPolygon here, but that requires including QTGUI.
+    QRect rect(d->points.at(0), d->points.at(1));
+    for (int i = 2; i < d->points.size(); i++) {
+        QPoint p = d->points.at(i);
+        if (rect.left() > p.x()) {
+            rect.setLeft(p.x());
+        }
+        if (rect.right() < p.x()) {
+            rect.setRight(p.x());
+        }
+        if (rect.bottom() > p.y()) {
+            rect.setBottom(p.y());
+        }
+        if (rect.top() < p.y()) {
+            rect.setTop(p.y());
+        }
+    }
+    return rect;
 }
 
 QString Textarea::bgcolor() const
@@ -176,11 +218,13 @@ QString Textarea::bgcolor() const
 void Textarea::setBgcolor(const QString& newColor)
 {
     d->bgcolor = newColor;
+    emit bgcolorChanged();
 }
 
 void Textarea::setTextRotation(int rotation)
 {
     d->textRotation = rotation;
+    emit textRotationChanged();
 }
 
 int Textarea::textRotation() const
@@ -196,6 +240,7 @@ QString Textarea::type() const
 void Textarea::setType(const QString& type)
 {
     d->type = type;
+    emit typeChanged();
 }
 
 QStringList Textarea::availableTypes()
@@ -222,6 +267,7 @@ bool Textarea::inverted() const
 void Textarea::setInverted(bool inverted)
 {
     d->inverted = inverted;
+    emit invertedChanged();
 }
 
 bool Textarea::transparent() const
@@ -232,6 +278,7 @@ bool Textarea::transparent() const
 void Textarea::setTransparent(bool transparent)
 {
     d->transparent = transparent;
+    emit transparentChanged();
 }
 
 QStringList Textarea::paragraphs() const
@@ -242,4 +289,5 @@ QStringList Textarea::paragraphs() const
 void Textarea::setParagraphs(const QStringList& paragraphs)
 {
     d->paragraphs = paragraphs;
+    emit paragraphsChanged();
 }

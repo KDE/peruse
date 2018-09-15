@@ -50,6 +50,7 @@ Page::Page(Document* parent)
     : QObject(parent)
     , d(new Private)
 {
+    qRegisterMetaType<Page*>("Page*");
 }
 
 Page::~Page() = default;
@@ -180,6 +181,7 @@ QString Page::transition() const
 void Page::setTransition(const QString& transition)
 {
     d->transition = transition;
+    emit transitionChanged();
 }
 
 QStringList Page::availableTransitions()
@@ -213,6 +215,7 @@ void Page::setTitle(const QString& title, const QString& language)
     {
         d->title[language] = title;
     }
+    emit titlesChanged();
 }
 
 QString Page::imageHref() const
@@ -245,6 +248,23 @@ void Page::setTextLayer(Textlayer* textlayer, const QString& language)
     {
         d->textLayers.remove(language);
     }
+    emit textLayerLanguagesChanged();
+}
+
+void Page::addTextLayer(const QString &language)
+{
+    Textlayer* textLayer = new Textlayer(this);
+    setTextLayer(textLayer, language);
+}
+
+void Page::removeTextLayer(const QString &language)
+{
+    setTextLayer(nullptr, language);
+}
+
+QStringList Page::textLayerLanguages() const
+{
+    return d->textLayers.keys();
 }
 
 QList<Frame *> Page::frames() const
@@ -270,22 +290,39 @@ void Page::addFrame(Frame* frame, int index)
     else {
         d->frames.append(frame);
     }
+    emit frameCountChanged();
 }
 
 void Page::removeFrame(Frame* frame)
 {
     d->frames.removeAll(frame);
+    emit frameCountChanged();
 }
 
-bool Page::swapFrames(Frame* swapThis, Frame* withThis)
+void Page::removeFrame(int index)
 {
-    int index1 = d->frames.indexOf(swapThis);
-    int index2 = d->frames.indexOf(withThis);
-    if(index1 > -1 && index2 > -1) {
-        d->frames.swap(index1, index2);
+    removeFrame(frame(index));
+}
+
+void Page::addFrame(int index)
+{
+    Frame* frame = new Frame(this);
+    addFrame(frame, index);
+}
+
+bool Page::swapFrames(int swapThis, int withThis)
+{
+    if(swapThis > -1 && withThis > -1) {
+        d->frames.swap(swapThis, withThis);
+        emit frameCountChanged();
         return true;
     }
     return false;
+}
+
+int Page::frameCount()
+{
+    return d->frames.size();
 }
 
 QList<Jump *> Page::jumps() const
@@ -311,22 +348,40 @@ void Page::addJump(Jump* jump, int index)
     else {
         d->jumps.append(jump);
     }
+    emit jumpCountChanged();
+}
+
+void Page::addJump(int pageIndex, int index)
+{
+    Jump* jump = new Jump(this);
+    jump->setPageIndex(pageIndex);
+    addJump(jump, index);
 }
 
 void Page::removeJump(Jump* jump)
 {
     d->jumps.removeAll(jump);
+    emit jumpCountChanged();
 }
 
-bool Page::swapJumps(Jump* swapThis, Jump* withThis)
+void Page::removeJump(int index)
 {
-    int index1 = d->jumps.indexOf(swapThis);
-    int index2 = d->jumps.indexOf(withThis);
-    if(index1 > -1 && index2 > -1) {
-        d->jumps.swap(index1, index2);
+    removeJump(jump(index));
+}
+
+bool Page::swapJumps(int swapThis, int withThis)
+{
+    if(swapThis > -1 && withThis > -1) {
+        d->jumps.swap(swapThis, withThis);
+        emit jumpCountChanged();
         return true;
     }
     return false;
+}
+
+int Page::jumpCount()
+{
+    return d->jumps.size();
 }
 
 bool Page::isCoverPage() const

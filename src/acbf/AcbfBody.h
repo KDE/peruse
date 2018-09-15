@@ -46,6 +46,7 @@ class Page;
 class ACBF_EXPORT Body : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QString bgcolor READ bgcolor WRITE setBgcolor NOTIFY bgcolorChanged)
 public:
     explicit Body(Document* parent = nullptr);
     ~Body();
@@ -76,6 +77,10 @@ public:
      * @param newColor - a String with an 8bit per channel rgb hexcode (#ff00ff, or the like)
      */
     void setBgcolor(const QString& newColor);
+    /**
+     * @brief fires when the background color changes.
+     */
+    Q_SIGNAL void bgcolorChanged();
 
     /**
      * @return a QList of all the pages stored currently.
@@ -86,7 +91,7 @@ public:
      * @param index - the index of the page.
      * @return the page object at the given index.
      */
-    Page* page(int index) const;
+    Q_INVOKABLE Page* page(int index) const;
     
     /**
      * @param page - The page for which to return the index.
@@ -101,8 +106,7 @@ public:
      * \brief remove the given page object from this body.
      * @param page - the page to remove.
      */
-    void removePage(Page* page);
-    
+    void removePage(Page* page);    
     /**
      * \brief Swap two pages in the list.
      * @param swapThis - the first page to swap.

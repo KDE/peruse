@@ -94,6 +94,7 @@ QString Body::bgcolor() const
 void Body::setBgcolor(const QString& newColor)
 {
     d->bgcolor = newColor;
+    emit bgcolorChanged();
 }
 
 QList<Page *> Body::pages() const

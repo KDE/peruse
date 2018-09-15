@@ -28,6 +28,7 @@
 #include "AcbfPage.h"
 
 #include <QPoint>
+#include <QRect>
 namespace AdvancedComicBookFormat
 {
 /**
@@ -48,6 +49,9 @@ namespace AdvancedComicBookFormat
 class ACBF_EXPORT Jump : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(int pointCount READ pointCount NOTIFY pointCountChanged)
+    Q_PROPERTY(QRect bounds READ bounds NOTIFY boundsChanged)
+    Q_PROPERTY(int pageIndex READ pageIndex WRITE setPageIndex NOTIFY pageIndexChanged)
 
 public:
     explicit Jump(Page* parent = nullptr);
@@ -71,12 +75,12 @@ public:
      * @param index - the index of the desired point.
      * @return a point for an index.
      */
-    QPoint point(int index) const;
+    Q_INVOKABLE QPoint point(int index) const;
     /**
      * @param point - a point from the points list.
      * @return the index of the given point.
      */
-    int pointIndex(const QPoint& point) const;
+    Q_INVOKABLE int pointIndex(const QPoint& point) const;
 
     /**
      * \brief add a point to the points list.
@@ -84,19 +88,39 @@ public:
      * @param index - the index to add it at. If afterIndex is larger than zero,
      * the insertion will happen at that index
      */
-    void addPoint(const QPoint& point, int index = -1);
+    Q_INVOKABLE void addPoint(const QPoint& point, int index = -1);
     /**
      * \brief remove a point from the list.
      * @param point - point to remove from the list.
      */
-    void removePoint(const QPoint& point);
+    Q_INVOKABLE void removePoint(const QPoint& point);
     /**
      * \brief Swap two points in the list.
      * @param swapThis - the first points to swap.
      * @param withThis - the second points to swap.
      */
     bool swapPoints(const QPoint& swapThis, const QPoint& withThis);
-    
+    /**
+     * @brief set the points based on a top left and bottom right.
+     * @param topLeft the topleft corner of the rect.
+     * @param bottomRight the bottomright corner of the rect.
+     */
+    Q_INVOKABLE void setPointsFromRect(const QPoint& topLeft, const QPoint& bottomRight);
+
+    int pointCount() const;
+    /**
+     * @brief fires when the point counts changes.
+     */
+    Q_SIGNAL void pointCountChanged();
+    /**
+     * @brief convenience function to get the ractangle of the points.
+     * @return the bounds of the frame.
+     */
+    QRect bounds() const;
+    /**
+     * @brief fires when the bounds change, which happens when the point count changes.
+     */
+    Q_SIGNAL void boundsChanged();
     /**
      * @brief The page to jump to.
      * 
@@ -111,6 +135,10 @@ public:
      * page list.
      */
     void setPageIndex(const int& pageNumber = 0);
+    /**
+     * @brief pageIndexChanged
+     */
+    Q_SIGNAL void pageIndexChanged();
 
 private:
     class Private;

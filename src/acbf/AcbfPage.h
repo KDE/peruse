@@ -57,6 +57,12 @@ class Jump;
 class ACBF_EXPORT Page : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QString bgcolor READ bgcolor WRITE setBgcolor NOTIFY bgcolorChanged)
+    Q_PROPERTY(QString transition READ transition WRITE setTransition NOTIFY transitionChanged)
+    Q_PROPERTY(QString imageHref READ imageHref WRITE setImageHref NOTIFY imageHrefChanged)
+    Q_PROPERTY(QStringList textLayerLanguages READ textLayerLanguages NOTIFY textLayerLanguagesChanged)
+    Q_PROPERTY(int frameCount READ frameCount NOTIFY frameCountChanged)
+    Q_PROPERTY(int jumpCount READ jumpCount NOTIFY jumpCountChanged)
 public:
     // Pages can also be cover pages, which means they can also be children of BookInfo
     explicit Page(Document* parent = nullptr);
@@ -84,7 +90,10 @@ public:
      * @param newColor - a String with an 8bit per channel rgb hexcode (#ff00ff, or the like)
      */
     void setBgcolor(const QString& newColor = QString());
-
+    /**
+     * @brief fires when the background color changes.
+     */
+    Q_SIGNAL void bgcolorChanged();
     /**
      * @return transition type as a string.
      */
@@ -95,6 +104,10 @@ public:
      */
     void setTransition(const QString& transition);
     /**
+     * @brief fires when the transition type changes.
+     */
+    Q_SIGNAL void transitionChanged();
+    /**
      * @returns a list of strings that can be used for the transition.
      */
     static QStringList availableTransitions();
@@ -102,19 +115,23 @@ public:
     /**
      * @return all titles for this page in all languages.
      */
-    QStringList titleForAllLanguages() const;
+    Q_INVOKABLE QStringList titleForAllLanguages() const;
     /**
      * @param language - the language of the entry in language code, country
      * code format joined by a dash (not an underscore).
      * @return the title for this language.
      */
-    QString title(const QString& language = QString()) const;
+    Q_INVOKABLE QString title(const QString& language = QString()) const;
     /**
      * \brief set the title for this language.
      * @param language - the language of the entry in language code, country
      * code format joined by a dash (not an underscore).
      */
-    void setTitle(const QString& title, const QString& language = QString());
+    Q_INVOKABLE void setTitle(const QString& title, const QString& language = QString());
+    /**
+     * @brief titlesChanged
+     */
+    Q_SIGNAL void titlesChanged();
 
     /**
      * @returns the URI for the image of this page as a QString
@@ -130,6 +147,10 @@ public:
      *  - Everything else is presumed to be a file on disk.
      */
     void setImageHref(const QString& imageHref);
+    /**
+     * @brief fires when the image url changes.
+     */
+    Q_SIGNAL void imageHrefChanged();
 
     /**
      * @returns all the textlayers objects.
@@ -140,7 +161,7 @@ public:
      * code format joined by a dash (not an underscore).
      * @returns the TextLayer object for that language.
      */
-    Textlayer* textLayer(const QString& language = QString()) const;
+    Q_INVOKABLE Textlayer* textLayer(const QString& language = QString()) const;
     /**
      * 
      * @param language - the language of the entry in language code, country
@@ -148,7 +169,28 @@ public:
      * for a language to null removes that language (as with other translated
      * entries, though this one not being text warranted a comment)
      */
-    void setTextLayer(Textlayer* textlayer, const QString& language = "");
+    void setTextLayer(Textlayer* textlayer, const QString& language = QString());
+    /**
+     * @brief add a textlayer for language.
+     * @param language code to add a textlayer for.
+     */
+    Q_INVOKABLE void addTextLayer(const QString& language = QString());
+    /**
+     * @brief remove a text layer by language.
+     * @param language code to remove the textlayer for.
+     */
+    Q_INVOKABLE void removeTextLayer(const QString& language = QString());
+    /**
+     * @brief get the possible translations.
+     * @return a stringlist with all the languages available.
+     */
+    QStringList textLayerLanguages() const;
+    /**
+     * @brief fires when the textlayer languages list changes
+     *
+     * this can happen when text layers are added or removed.
+     */
+    Q_SIGNAL void textLayerLanguagesChanged();
 
     /**
      * @returns a list of frames in this page.
@@ -158,7 +200,7 @@ public:
      * @param index - index of the frame.
      * @return the frame of that index.
      */
-    Frame* frame(int index) const;
+    Q_INVOKABLE Frame* frame(int index) const;
     /**
      * @param frame - the frame you want to index of.
      * @returns the index of the given frame.
@@ -178,11 +220,31 @@ public:
      */
     void removeFrame(Frame* frame);
     /**
-     * \brief Swap two frames in the list.
-     * @param swapThis - the first frame to swap.
-     * @param withThis - the second frame to swap.
+     * @brief remove frame by index.
+     * @param index index of the frame to remove.
      */
-    bool swapFrames(Frame* swapThis, Frame* withThis);
+    Q_INVOKABLE void removeFrame(int index);
+    /**
+     * @brief add a frame at index..
+     * @param index - the index to add it at. If afterIndex is larger than
+     * zero, the insertion will happen at that index
+     */
+    Q_INVOKABLE void addFrame(int index = -1);
+    /**
+     * \brief Swap two frames in the list.
+     * @param swapThis - the first index to swap.
+     * @param withThis - the second index to swap.
+     */
+    Q_INVOKABLE bool swapFrames(int swapThis, int withThis);
+    /**
+     * @brief frameCount
+     * @return the total amount of frames.
+     */
+    int frameCount();
+    /**
+     * @brief fires when the frame count changes.
+     */
+    Q_SIGNAL void frameCountChanged();
 
     /**
      * @return the list of jump objects for this page.
@@ -192,7 +254,7 @@ public:
      * @param index - the index for which you want the jump object.
      * @return a jump object for the given frame.
      */
-    Jump* jump(int index) const;
+    Q_INVOKABLE Jump* jump(int index) const;
     /**
      * @param jump - the jump you want to index of.
      * @returns the index of the given jump.
@@ -207,16 +269,35 @@ public:
      */
     void addJump(Jump* jump, int index = -1);
     /**
+     * @brief addJump
+     * @param index - the index to add it at. If afterIndex is larger than
+     * zero, the insertion will happen at that index
+     */
+    Q_INVOKABLE void addJump(int pageIndex, int index = -1);
+    /**
      * \brief remove the given jump from the list of jumps.
      * @param jump - the jump to remove.
      */
     void removeJump(Jump* jump);
     /**
-     * \brief Swap two jumps in the list.
-     * @param swapThis - the first jumps to swap.
-     * @param withThis - the second jumps to swap.
+     * @brief removeJump
+     * @param index to remove the jump at.
      */
-    bool swapJumps(Jump* swapThis, Jump* withThis);
+    Q_INVOKABLE void removeJump(int index);
+    /**
+     * \brief Swap two jumps in the list.
+     * @param swapThis - the first index to swap.
+     * @param withThis - the second index to swap.
+     */
+    Q_INVOKABLE bool swapJumps(int swapThis, int withThis);
+    /**
+     * @brief the amount of jumps on this page.
+     */
+    int jumpCount();
+    /**
+     * @brief changes when the jumpcount changes.
+     */
+    Q_SIGNAL void jumpCountChanged();
 
     /**
      * @returns whether this is the cover page.
