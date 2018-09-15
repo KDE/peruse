@@ -146,12 +146,95 @@ Kirigami.Page {
                 }
             }
         }
+        MouseArea {
+            anchors.fill: parent;
+            id: pointCatchArea;
+            property point startPoint:;
+            property point endPoint: ;
+            property bool dragging: false;
+            hoverEnabled: true;
+
+            onClicked: {
+                if (dragging == false) {
+                    startPoint = Qt.point(mouse.x, mouse.y);
+                    endPoint = startPoint;
+                    dragging = true;
+                } else {
+                    if (Qt.point(mouse.x, mouse.y)!==startPoint) {
+                        endPoint = Qt.point(mouse.x, mouse.y)
+                        dragging = false;
+                        createFrame();
+                    }
+                }
+                mouse.accepted
+            }
+
+            onPositionChanged: {
+                if (dragging) {
+                    endPoint = Qt.point(mouse.x, mouse.y)
+                }
+            }
+
+            Rectangle {
+                x: Math.min(parent.startPoint.x, parent.endPoint.x);
+                y: Math.min(parent.startPoint.y, parent.endPoint.y);
+                width: Math.max(parent.startPoint.x, parent.endPoint.x) - Math.min(parent.startPoint.x, parent.endPoint.x);
+                height: Math.max(parent.startPoint.y, parent.endPoint.y) - Math.min(parent.startPoint.y, parent.endPoint.y);
+                opacity: 0.5;
+                border.color: "black";
+                border.width: 1;
+            }
+
+            function createFrame() {
+                var x  = ( Math.min(startPoint.x, endPoint.x) - coverImage.offsetX ) / coverImage.muliplierWidth;
+                var x2 = ( Math.max(startPoint.x, endPoint.x) - coverImage.offsetX ) / coverImage.muliplierWidth;
+                var y  = ( Math.min(startPoint.y, endPoint.y) - coverImage.offsetY ) / coverImage.muliplierHeight;
+                var y2 = ( Math.max(startPoint.y, endPoint.y) - coverImage.offsetY ) / coverImage.muliplierHeight;
+
+                addPageArea.topLeft = Qt.point(x,y);
+                addPageArea.bottomRight = Qt.point(x2,y2);
+                endPoint = startPoint;
+                addPageArea.open();
+            }
+
+        }
+
+
+
+
     }
     Component {
         id: pageInfo;
         PageMetaInfo {
             page: root.currentPage;
             onSave: {root.pageTitle = page.title(""); root.model.setDirty();}
+        }
+    }
+
+    AddPageArea {
+        id: addPageArea
+        onSave: {
+            var index = 0;
+            if (type===0) {
+                index = root.currentPage.frameCount;
+                root.currentPage.addFrame(index);
+                root.currentPage.frame(index).setPointsFromRect(topLeft, bottomRight);
+            } else if (type===1) {
+                console.log(root.currentPage.textLayerLanguages)
+                console.log(root.currentPage.textLayerLanguages.length)
+                if (root.currentPage.textLayerLanguages.length === 0) {
+                    console.log("gonna add a textlayer")
+                    root.currentPage.addTextLayer("")
+                }
+                index = root.currentPage.textLayer("").textareaCount;
+                console.log(index);
+                root.currentPage.textLayer("").addTextarea(index);
+                root.currentPage.textLayer("").textarea(index).setPointsFromRect(topLeft, bottomRight);
+            } else if (type===2) {
+                index = root.currentPage.jumpCount;
+                root.currentPage.addJump(index);
+                root.currentPage.jump(index).setPointsFromRect(topLeft, bottomRight);
+            }
         }
     }
 

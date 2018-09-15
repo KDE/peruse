@@ -128,6 +128,11 @@ Kirigami.ScrollablePage {
                         onTriggered: { page.swapFrames(index, index + 1); }
                         enabled: index < page.frameCount - 1;
                         visible: enabled;
+                    },
+                    Kirigami.Action {
+                        text: i18nc("remove the frame from the page", "Delete Frame");
+                        iconName: "list-remove"
+                        onTriggered: page.removeFrame(index);
                     }
                 ]
                 Item {
@@ -153,18 +158,23 @@ Kirigami.ScrollablePage {
                 supportsMouseEvents: true;
                 actions: [
                     Kirigami.Action {
-                        text: i18nc("swap the position of this frame with the previous one", "Move Up");
+                        text: i18nc("swap the position of this text area with the previous one", "Move Up");
                         iconName: "go-up"
                         onTriggered: { page.textLayer("").swapTextareas(index, index - 1); }
                         enabled: index > 0;
                         visible: enabled;
                     },
                     Kirigami.Action {
-                        text: i18nc("swap the position of this frame with the next one", "Move Down");
+                        text: i18nc("swap the position of this text area with the next one", "Move Down");
                         iconName: "go-down"
                         onTriggered: { page.textLayer("").swapTextareas(index, index + 1); }
                         enabled: index < page.textLayer("").textareaCount - 1;
                         visible: enabled;
+                    },
+                    Kirigami.Action {
+                        text: i18nc("remove the text area from the page", "Delete Text Area");
+                        iconName: "list-remove"
+                        onTriggered: page.textLayer("").removeTextarea(index);
                     }
                 ]
                 Item {
@@ -200,18 +210,23 @@ Kirigami.ScrollablePage {
                 supportsMouseEvents: true;
                 actions: [
                     Kirigami.Action {
-                        text: i18nc("swap the position of this frame with the previous one", "Move Up");
+                        text: i18nc("swap the position of this jump with the previous one", "Move Up");
                         iconName: "go-up"
                         onTriggered: { page.swapJumps(index, index - 1); }
                         enabled: index > 0;
                         visible: enabled;
                     },
                     Kirigami.Action {
-                        text: i18nc("swap the position of this frame with the next one", "Move Down");
+                        text: i18nc("swap the position of this jump with the next one", "Move Down");
                         iconName: "go-down"
                         onTriggered: { page.swapJumps(index, index + 1); }
                         enabled: index < page.jumpCount - 1;
                         visible: enabled;
+                    },
+                    Kirigami.Action {
+                        text: i18nc("remove the jump from the page", "Delete Jump");
+                        iconName: "list-remove"
+                        onTriggered: page.removeJump(index);
                     }
                 ]
                 Item {
@@ -222,8 +237,14 @@ Kirigami.ScrollablePage {
                     }
                     QtControls.Label {
                         id: pageIndexLabel;
+                        anchors {
+                            top: jumpLabel.bottom;
+                            topMargin: Kirigami.Units.smallSpacing;
+                        }
+                        height: jumpIndexSpin.height;
                         text: i18nc("Label from jump page index.", "Page Index:");
                     }
+
                     QtControls.SpinBox {
                         anchors {
                             top: jumpLabel.bottom;
@@ -233,6 +254,7 @@ Kirigami.ScrollablePage {
                         }
                         from: 0;
                         to: 99;
+                        id: jumpIndexSpin;
                         value: page.jump(index).pageIndex;
                         onValueChanged: {
                             if (page.jump(index).pageIndex !== value) {

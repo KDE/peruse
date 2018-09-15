@@ -271,6 +271,7 @@ void Page::setTextLayer(Textlayer* textlayer, const QString& language)
 void Page::addTextLayer(const QString &language)
 {
     Textlayer* textLayer = new Textlayer(this);
+    textLayer->setLanguage(language);
     setTextLayer(textLayer, language);
 }
 
@@ -281,6 +282,9 @@ void Page::removeTextLayer(const QString &language)
 
 QStringList Page::textLayerLanguages() const
 {
+    if (d->textLayers.isEmpty()) {
+        return QStringList();
+    }
     return d->textLayers.keys();
 }
 
