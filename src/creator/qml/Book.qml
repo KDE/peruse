@@ -89,6 +89,18 @@ Kirigami.ScrollablePage {
                 model: bookModel;
             }
         }
+        Component {
+            id: editBookPage;
+            BookPage {
+                model: bookModel;
+                onSave: {
+                   bookList.updateTitle(currentPage.title(""));
+                }
+            }
+        }
+        function updateTitle(title) {
+            model.title = title;
+        }
 
         delegate: Kirigami.SwipeListItem {
             id: listItem;
@@ -119,7 +131,15 @@ Kirigami.ScrollablePage {
                     text: i18nc("add a page to the book after this one", "Add Page After This");
                     iconName: "list-add"
                     onTriggered: root.addPage(model.index);
+                },
+                Kirigami.Action {
+                    text: i18nc("Edit page data such as title, frames, etc.", "Edit Page");
+                    iconName: "document-edit";
+                    onTriggered: {
+                        pageStack.push(editBookPage, { index: model.index, pageUrl: model.url })
+                    }
                 }
+
             ]
             Item {
                 anchors.fill: parent;

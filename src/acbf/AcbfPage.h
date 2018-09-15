@@ -110,7 +110,7 @@ public:
     /**
      * @returns a list of strings that can be used for the transition.
      */
-    static QStringList availableTransitions();
+    Q_INVOKABLE static QStringList availableTransitions();
 
     /**
      * @return all titles for this page in all languages.

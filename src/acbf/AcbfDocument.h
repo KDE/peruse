@@ -53,6 +53,7 @@ class ACBF_EXPORT Document : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(Metadata* metaData READ metaData NOTIFY metaDataChanged)
+    Q_PROPERTY(Body* body READ body NOTIFY bodyChanged)
 public:
     explicit Document(QObject* parent = nullptr);
     ~Document() override;
@@ -72,7 +73,7 @@ public:
      */
     Metadata* metaData() const;
     /**
-     * \brief triggers when the metadata is changed.
+     * @brief fires when the metadata is changed.
      */
     Q_SIGNAL void metaDataChanged();
 
@@ -80,6 +81,10 @@ public:
      * @returns the Body object.
      */
     Body* body() const;
+    /**
+     * @return fires when the body changes. Not used.
+     */
+    Q_SIGNAL void bodyChanged();
     
     /**
      * @brief The reference section.

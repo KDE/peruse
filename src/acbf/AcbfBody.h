@@ -47,6 +47,7 @@ class ACBF_EXPORT Body : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString bgcolor READ bgcolor WRITE setBgcolor NOTIFY bgcolorChanged)
+    Q_PROPERTY(int pageCount READ pageCount NOTIFY pageCountChanged)
 public:
     explicit Body(Document* parent = nullptr);
     ~Body();
@@ -113,6 +114,15 @@ public:
      * @param withThis - the second page to swap.
      */
     bool swapPages(Page* swapThis, Page* withThis);
+    /**
+     * @brief pageCount
+     * @return
+     */
+    int pageCount();
+    /**
+     * @brief pageCountChanged
+     */
+    Q_SIGNAL void pageCountChanged();
 
 private:
     class Private;

@@ -301,7 +301,7 @@ public:
     /**
      * @return the coverpage as a page object.
      */
-    Page* coverpage();
+    Q_INVOKABLE Page* coverpage();
     /**
      * \brief set a cover page.
      * @param newCover A page object with the new cover.

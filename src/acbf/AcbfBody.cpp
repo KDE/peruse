@@ -120,11 +120,13 @@ void Body::addPage(Page* page, int index)
     else {
         d->pages.append(page);
     }
+    emit pageCountChanged();
 }
 
 void Body::removePage(Page* page)
 {
     d->pages.removeAll(page);
+    emit pageCountChanged();
 }
 
 bool Body::swapPages(Page* swapThis, Page* withThis)
@@ -133,7 +135,13 @@ bool Body::swapPages(Page* swapThis, Page* withThis)
     int index2 = d->pages.indexOf(withThis);
     if(index1 > -1 && index2 > -1) {
         d->pages.swap(index1, index2);
+        emit pageCountChanged();
         return true;
     }
     return false;
+}
+
+int Body::pageCount()
+{
+    return d->pages.size();
 }

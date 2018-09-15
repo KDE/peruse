@@ -171,6 +171,7 @@ QString Page::bgcolor() const
 void Page::setBgcolor(const QString& newColor)
 {
     d->bgcolor = newColor;
+    emit bgcolorChanged();
 }
 
 QString Page::transition() const
@@ -202,7 +203,20 @@ QStringList Page::titleForAllLanguages() const
 
 QString Page::title(const QString& language) const
 {
-    return d->title.value(language);
+    if (d->title.count()==0) {
+        return "";
+    }
+    if (!d->title.keys().contains(language)) {
+        d->title.values().at(0);
+    }
+
+    QString title = d->title.value(language);
+
+    if (title.isEmpty()) {
+        title = d->title.values().at(0);
+    }
+
+    return title;
 }
 
 void Page::setTitle(const QString& title, const QString& language)
@@ -235,6 +249,9 @@ QList<Textlayer *> Page::textLayersForAllLanguages() const
 
 Textlayer * Page::textLayer(const QString& language) const
 {
+    if (!d->textLayers.keys().contains("") && language == QString()) {
+        return d->textLayers.values().at(0);
+    }
     return d->textLayers.value(language);
 }
 

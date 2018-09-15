@@ -200,10 +200,10 @@ QRect Textarea::bounds() const
         if (rect.right() < p.x()) {
             rect.setRight(p.x());
         }
-        if (rect.bottom() > p.y()) {
+        if (rect.bottom() < p.y()) {
             rect.setBottom(p.y());
         }
-        if (rect.top() < p.y()) {
+        if (rect.top() > p.y()) {
             rect.setTop(p.y());
         }
     }
