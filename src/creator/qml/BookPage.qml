@@ -60,6 +60,7 @@ Kirigami.Page {
         id: saveAndCloseAction;
         text: i18nc("Saves the remaining unsaved edited fields and closes the page editor", "Save and Close Page");
         iconName: "dialog-ok";
+        shortcut: "Esc";
         onTriggered: {
             root.save();
             root.model.setDirty();
@@ -68,7 +69,7 @@ Kirigami.Page {
     }
     Kirigami.Action {
         id: editPageDataAction;
-        text: i18nc("Saves the remaining unsaved edited fields and closes the page editor", "Save and Close Page");
+        text: i18nc("Edit the page data in detail", "Edit Page Data");
         iconName: "document-edit"
         onTriggered: pageStack.push(pageInfo)
     }

@@ -44,6 +44,7 @@ Kirigami.ScrollablePage {
         id: saveAndCloseAction;
         text: i18nc("Saves the remaining unsaved edited fields and closes the metainfo editor", "Save and Close Editor");
         iconName: "dialog-ok";
+        shortcut: "Esc";
         onTriggered: {
             // Save the default title/annotation/keywords.
             root.model.acbfData.metaData.bookInfo.setTitle(defaultTitle.text, "");

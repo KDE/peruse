@@ -82,6 +82,10 @@ Kirigami.OverlaySheet {
                 }
                 height: parent.height;
                 width: height;
+                Keys.onReturnPressed: {
+                        root.save();
+                        root.close();
+                    }
                 onClicked: {
                     root.save();
                     root.close();

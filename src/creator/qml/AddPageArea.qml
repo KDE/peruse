@@ -41,22 +41,6 @@ Kirigami.OverlaySheet {
             height: paintedHeight;
             text: i18nc("title text for the add page area sheet", "Add Page Area");
             QtControls.Button {
-                id: saveButton;
-                anchors {
-                    right: parent.right;
-                    leftMargin: Kirigami.Units.smallSpacing;
-                }
-                contentItem: Kirigami.Icon {
-                    source: "dialog-ok";
-                }
-                height: parent.height;
-                width: height;
-                onClicked: {
-                    root.save();
-                    root.close();
-                }
-            }
-            QtControls.Button {
                 id: closeButton;
                 anchors {
                     right: saveButton.left;
@@ -67,7 +51,25 @@ Kirigami.OverlaySheet {
                 }
                 height: parent.height;
                 width: height;
-                onClicked: {
+                Keys.onReturnPressed: root.close();
+                onClicked: root.close();
+            }
+            QtControls.Button {
+                id: saveButton;
+                anchors {
+                    right: parent.right;
+                    leftMargin: Kirigami.Units.smallSpacing;
+                }
+                contentItem: Kirigami.Icon {
+                    source: "dialog-ok";
+                }
+                height: parent.height;
+                width: height;
+                Keys.onReturnPressed: saveAndClose();
+                onClicked: saveAndClose();
+
+                function saveAndClose() {
+                    root.save();
                     root.close();
                 }
             }

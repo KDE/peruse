@@ -42,6 +42,7 @@ Kirigami.ScrollablePage {
         id: saveAndCloseAction;
         text: i18nc("Saves the remaining unsaved edited fields and closes the metainfo editor", "Close Editor");
         iconName: "dialog-ok";
+        shortcut: "Esc";
         onTriggered: {
             root.page.setTitle(defaultTitle.text, "")
             root.page.bgcolor = pageBackgroundColor.text;
