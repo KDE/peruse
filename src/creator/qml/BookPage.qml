@@ -36,6 +36,7 @@ Kirigami.Page {
     property string pageTitle: "";
     signal save();
 
+
     onIndexChanged: {
         if (root.index===0) {
             root.currentPage = root.model.acbfData.metaData.bookInfo.coverpage();
@@ -155,8 +156,8 @@ Kirigami.Page {
         MouseArea {
             anchors.fill: parent;
             id: pointCatchArea;
-            property point startPoint:;
-            property point endPoint: ;
+            property point startPoint: Qt.point(0,0);
+            property point endPoint: Qt.point(0,0);
             property bool dragging: false;
             hoverEnabled: true;
 
