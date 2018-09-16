@@ -94,12 +94,12 @@ Kirigami.ScrollablePage {
             BookPage {
                 model: bookModel;
                 onSave: {
-                   bookList.updateTitle(currentPage.title(""));
+                   bookList.updateTitle(index, currentPage.title(""));
                 }
             }
         }
-        function updateTitle(title) {
-            model.title = title;
+        function updateTitle(index, title) {
+            //Need to add feature to update data here.
         }
 
         delegate: Kirigami.SwipeListItem {
