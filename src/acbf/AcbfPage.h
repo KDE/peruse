@@ -181,6 +181,13 @@ public:
      */
     Q_INVOKABLE void removeTextLayer(const QString& language = QString());
     /**
+     * @brief duplicate a text layer to a different language, if languageFrom doesn't
+     * exist this makes a new text layer.
+     * @param languageFrom the language from which to duplicate.
+     * @param languageTo the language to make the new text layer at.
+     */
+    Q_INVOKABLE void duplicateTextLayer(const QString&languageFrom, const QString& languageTo = QString());
+    /**
      * @brief get the possible translations.
      * @return a stringlist with all the languages available.
      */

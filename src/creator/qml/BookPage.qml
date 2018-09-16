@@ -43,6 +43,12 @@ Kirigami.Page {
             root.currentPage = root.model.acbfData.body.page(root.index-1);
         }
         root.pageTitle = root.currentPage.title("");
+        // Let's ensure there's always a default text-layer.
+        if (root.currentPage.textLayerLanguages.length === 0) {
+            root.currentPage.addTextLayer("")
+        } else if (root.currentPage.textLayerLanguages.indexOf("") < 0) {
+            root.currentPage.duplicateTextLayer(root.currentPage.textLayerLanguages[1], "");
+        }
     }
 
     actions {
@@ -220,14 +226,7 @@ Kirigami.Page {
                 root.currentPage.addFrame(index);
                 root.currentPage.frame(index).setPointsFromRect(topLeft, bottomRight);
             } else if (type===1) {
-                console.log(root.currentPage.textLayerLanguages)
-                console.log(root.currentPage.textLayerLanguages.length)
-                if (root.currentPage.textLayerLanguages.length === 0) {
-                    console.log("gonna add a textlayer")
-                    root.currentPage.addTextLayer("")
-                }
                 index = root.currentPage.textLayer("").textareaCount;
-                console.log(index);
                 root.currentPage.textLayer("").addTextarea(index);
                 root.currentPage.textLayer("").textarea(index).setPointsFromRect(topLeft, bottomRight);
             } else if (type===2) {

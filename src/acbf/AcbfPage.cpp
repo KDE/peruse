@@ -23,6 +23,7 @@
 #include "AcbfTextlayer.h"
 #include "AcbfFrame.h"
 #include "AcbfJump.h"
+#include "AcbfTextarea.h"
 
 #include <QDebug>
 #include <QHash>
@@ -278,6 +279,29 @@ void Page::addTextLayer(const QString &language)
 void Page::removeTextLayer(const QString &language)
 {
     setTextLayer(nullptr, language);
+}
+
+void Page::duplicateTextLayer(const QString &languageFrom, const QString &languageTo)
+{
+    Textlayer* to = new Textlayer(this);
+    to->setLanguage(languageTo);
+    if (d->textLayers[languageFrom]) {
+        Textlayer* from = d->textLayers[languageFrom];
+        to->setBgcolor(from->bgcolor());
+        for (int i=0; i<from->textareaCount(); i++) {
+            to->addTextarea(i);
+            to->textarea(i)->setBgcolor(from->textarea(i)->bgcolor());
+            to->textarea(i)->setInverted(from->textarea(i)->inverted());
+            to->textarea(i)->setTransparent(from->textarea(i)->transparent());
+            to->textarea(i)->setTextRotation(from->textarea(i)->textRotation());
+            to->textarea(i)->setType(from->textarea(i)->type());
+            to->textarea(i)->setParagraphs(from->textarea(i)->paragraphs());
+            for (int p=0; p<from->textarea(i)->pointCount(); p++) {
+                to->textarea(i)->addPoint(from->textarea(i)->point(p));
+            }
+        }
+    }
+    setTextLayer(to);
 }
 
 QStringList Page::textLayerLanguages() const
