@@ -39,8 +39,8 @@ namespace AdvancedComicBookFormat
 class ACBF_EXPORT ContentRating : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString rating READ rating WRITE setRating NOTIFY ratingChanged())
-    Q_PROPERTY(QString type READ type WRITE setType NOTIFY typeChanged())
+    Q_PROPERTY(QString rating READ rating WRITE setRating NOTIFY ratingChanged)
+    Q_PROPERTY(QString type READ type WRITE setType NOTIFY typeChanged)
 public:
     explicit ContentRating(BookInfo* parent = nullptr);
     ~ContentRating() override;
