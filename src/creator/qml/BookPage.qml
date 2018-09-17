@@ -98,17 +98,24 @@ Kirigami.Page {
                 height: coverImage.muliplierHeight * root.currentPage.frame(index).bounds.height;
                 x: coverImage.muliplierWidth * root.currentPage.frame(index).bounds.x + coverImage.offsetX
                 y: coverImage.muliplierHeight * root.currentPage.frame(index).bounds.y + coverImage.offsetY;
-                opacity: 0.2;
-                color: "blue";
                 border.color: "blue";
+                color: "transparent";
+                opacity: 0.5;
+                border.width: Kirigami.Units.smallSpacing;
                 Rectangle {
                     anchors.fill: parent;
-                    border.color: "blue";
-                    color: "transparent";
-                    border.width: Kirigami.Units.smallSpacing;
+                    opacity: 0.4;
+                    color: "blue";
+                }
+                Text {
+                    text: index+1;
+                    anchors {
+                        centerIn: parent;
+                    }
+                    color: "blue";
+                    font.weight: Font.Bold;
                 }
             }
-
         }
 
         Repeater {
@@ -119,16 +126,22 @@ Kirigami.Page {
                 height: coverImage.muliplierHeight * root.currentPage.textLayer("").textarea(index).bounds.height;
                 x: coverImage.muliplierWidth * root.currentPage.textLayer("").textarea(index).bounds.x + coverImage.offsetX
                 y: coverImage.muliplierHeight * root.currentPage.textLayer("").textarea(index).bounds.y + coverImage.offsetY;
-                opacity: {
-                    0.2;}
-                color: "red";
                 border.color: "red";
+                color: "transparent";
+                opacity: 0.5;
                 border.width: Kirigami.Units.smallSpacing;
                 Rectangle {
                     anchors.fill: parent;
-                    border.color: "red";
-                    color: "transparent";
-                    border.width: Kirigami.Units.smallSpacing;
+                    opacity: 0.4;
+                    color: "red";
+                }
+                Text {
+                    text: index+1;
+                    anchors {
+                        centerIn: parent;
+                    }
+                    color: "red";
+                    font.weight: Font.Bold;
                 }
             }
         }
@@ -141,16 +154,22 @@ Kirigami.Page {
                 height: coverImage.muliplierHeight * root.currentPage.jump(index).bounds.height;
                 x: coverImage.muliplierWidth * root.currentPage.jump(index).bounds.x + coverImage.offsetX
                 y: coverImage.muliplierHeight * root.currentPage.jump(index).bounds.y + coverImage.offsetY;
-                opacity: {
-                    0.2;}
-                color: "green";
                 border.color: "green";
+                color: "transparent";
+                opacity: 0.5;
                 border.width: Kirigami.Units.smallSpacing;
                 Rectangle {
                     anchors.fill: parent;
-                    border.color: "green";
-                    color: "transparent";
-                    border.width: Kirigami.Units.smallSpacing;
+                    opacity: 0.4;
+                    color: "green";
+                }
+                Text {
+                    text: index+1;
+                    anchors {
+                        centerIn: parent;
+                    }
+                    color: "green";
+                    font.weight: Font.Bold;
                 }
             }
         }
