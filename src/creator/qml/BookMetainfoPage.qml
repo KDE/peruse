@@ -54,6 +54,10 @@ Kirigami.ScrollablePage {
                 keywords[i] = keywords[i].trim();
             }
             root.model.acbfData.metaData.bookInfo.setKeywords(keywords, "");
+            // Ensure there's a default language entry.
+            if (root.model.acbfData.metaData.bookInfo.languageEntryList.indexOf("") === -1) {
+                root.model.acbfData.metaData.bookInfo.addLanguage("");
+            }
 
             root.model.setDirty();
             pageStack.pop();

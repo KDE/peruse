@@ -555,11 +555,35 @@ QList<Language *> BookInfo::languages()
 void BookInfo::addLanguage(Language* language)
 {
     d->languages.append(language);
+    emit languageEntryListChanged();
+}
+
+QStringList BookInfo::languageEntryList()
+{
+    QStringList lang;
+    for (int i=0; i<d->languages.size(); i++) {
+        lang.append(d->languages.at(i)->language());
+    }
+    return lang;
+}
+
+void BookInfo::addLanguage(QString language, bool show)
+{
+    Language* lang = new Language(this);
+    lang->setLanguage(language);
+    lang->setShow(show);
+    addLanguage(lang);
 }
 
 void BookInfo::removeLanguage(Language* language)
 {
     d->languages.removeAll(language);
+    emit languageEntryListChanged();
+}
+
+void BookInfo::removeLanguage(int index)
+{
+    removeLanguage(d->languages.at(index));
 }
 
 QList<Sequence *> BookInfo::sequence()

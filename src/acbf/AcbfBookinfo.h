@@ -86,6 +86,7 @@ class ACBF_EXPORT BookInfo : public QObject
     Q_PROPERTY(QStringList titleLanguages READ titleLanguages NOTIFY titleChanged)
     Q_PROPERTY(QStringList genres READ genres NOTIFY genresChanged)
     Q_PROPERTY(QStringList characters READ characters WRITE setCharacters NOTIFY charactersChanged)
+    Q_PROPERTY(QStringList languageEntryList READ languageEntryList NOTIFY languageEntryListChanged)
     Q_PROPERTY(int sequenceCount READ sequenceCount NOTIFY sequenceCountChanged)
     Q_PROPERTY(int databaseRefCount READ databaseRefCount NOTIFY databaseRefCountChanged)
     Q_PROPERTY(int contentRatingCount READ contentRatingCount NOTIFY contentRatingCountChanged)
@@ -318,11 +319,33 @@ public:
      * @param language - language object to add.
      */
     void addLanguage(Language* language);
+
+    /**
+     * @brief languageEntryList
+     * @return a list of languages for the language text layers.
+     */
+    QStringList languageEntryList();
+    /**
+     * @brief fires when the language entry list changes.
+     */
+    Q_SIGNAL void languageEntryListChanged();
+
+    /**
+     * \brief add a language to the list of translations.
+     * @param language - language for which to add a language object.
+     * @param show - whether to set the language object to 'show'.
+     */
+    Q_INVOKABLE void addLanguage(QString language="", bool show=false);
     /**
      * \brief remove a language from the translations.
      * @param language - language object to remove.
      */
     void removeLanguage(Language* language);
+    /**
+     * @brief removeLanguage
+     * @param index
+     */
+    Q_INVOKABLE void removeLanguage(int index);
 
     /**
      * @return a list of sequence objects that describe the series and
