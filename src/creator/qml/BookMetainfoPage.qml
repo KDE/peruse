@@ -644,17 +644,16 @@ Kirigami.ScrollablePage {
             height: childrenRect.height;
             property date publishingDate: root.model.acbfData.metaData.publishInfo.publishDate;
             function changePublishDate() {
-                root.model.acbfData.metaData.publishInfo.setPublishDateFromInts(pdYear.value, (pdMonth.currentIndex+1), pdDate.value);
+                root.model.acbfData.metaData.publishInfo.setPublishDateFromInts(pdYear.text, (pdMonth.currentIndex+1), pdDate.value);
                 root.model.setDirty();
             }
-            QtControls.SpinBox {
+            QtControls.TextField {
                 id: pdYear
                 width: (parent.width-(Kirigami.Units.smallSpacing*2))/3;
-                value: parent.publishingDate.getFullYear();
-                onValueChanged: parent.changePublishDate();
-                editable: true;
-                from: 0;
-                to: 9999;
+                text: parent.publishingDate.getFullYear();
+                onEditingFinished: parent.changePublishDate();
+                inputMask: "9999"
+                inputMethodHints: Qt.ImhFormattedNumbersOnly;
             }
             QtControls.ComboBox {
                 id: pdMonth
