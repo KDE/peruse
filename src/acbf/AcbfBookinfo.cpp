@@ -50,7 +50,7 @@ public:
     QList<Sequence*> sequence;
     QList<DatabaseRef*> databaseRef;
     QList<ContentRating*> contentRating;
-    QString readingDirection;
+    bool rightToLeft = false;
 };
 
 BookInfo::BookInfo(Metadata* parent)
@@ -145,11 +145,12 @@ void BookInfo::toXml(QXmlStreamWriter* writer)
     }
     
     //ACBF 1.2
-    /*
-    writer->writeStartElement("characters");
-    writer->writeCharacters(d->readingDirection);
-    writer->writeEndElement();
-    */
+    // Therefore only write this one when it is useful.
+    if (d->rightToLeft) {
+        writer->writeStartElement("reading-direction");
+        writer->writeCharacters("RTL");
+        writer->writeEndElement();
+    }
 
     writer->writeEndElement();
 }
@@ -246,7 +247,12 @@ bool BookInfo::fromXml(QXmlStreamReader *xmlReader)
         }
         else if(xmlReader->name() == QStringLiteral("reading-direction"))
         {
-            setReadingDirection(xmlReader->readElementText(QXmlStreamReader::IncludeChildElements).toLower());
+            QString direction = xmlReader->readElementText(QXmlStreamReader::IncludeChildElements).toLower();
+            if (direction=="rtl") {
+                setRightToLeft(true);
+            } else {
+                setRightToLeft(false);
+            }
         }
         else
         {
@@ -679,14 +685,12 @@ int BookInfo::contentRatingCount()
 {
     return d->contentRating.size();
 }
-QString BookInfo::readingDirection() const
+bool BookInfo::rightToLeft() const
 {
-    return d->readingDirection;
+    return d->rightToLeft;
 }
 
-void BookInfo::setReadingDirection(const QString& readingDirection) {
-    if (readingDirection == "ltr" ||
-        readingDirection == "rtl") {
-        d->readingDirection = readingDirection;
-    }
+void BookInfo::setRightToLeft(const bool& rtl) {
+    d->rightToLeft = rtl;
+    emit rightToLeftChanged();
 }

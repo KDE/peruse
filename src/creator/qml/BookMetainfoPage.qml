@@ -585,36 +585,48 @@ Kirigami.ScrollablePage {
                     addSystemField.text = "";
                 }
             }
-                QtControls.TextField {
-                    width : (parent.width-addRatingButton.width+Kirigami.Units.smallSpacing)/2;
-                    id: addRatingField;
-                    placeholderText: i18nc("placeholder text for the add content rating text entry", "Write to add rating label.");
-                    onEditingFinished: parent.addRating();
-                }
-                QtControls.TextField {
-                    anchors {
-                        left: addRatingField.right;
-                        leftMargin: Kirigami.Units.smallSpacing;
-                    }
-                    width : ((parent.width-addRatingButton.width)/2)-(Kirigami.Units.smallSpacing*1.5);
-                    id: addSystemField;
-                    placeholderText: i18nc("placeholder text for the add content rating system text entry", "Write to add rating system.");
-                    onEditingFinished: parent.addRating();
-                }
-                QtControls.Button {
-                    id: addRatingButton;
-                    anchors {
-                        left: addSystemField.right;
-                        leftMargin: Kirigami.Units.smallSpacing;
-                    }
-                    contentItem: Kirigami.Icon {
-                        source: "list-add";
-                    }
-                    height: addSystemField.height;
-                    width: height;
-                    onClicked: parent.addRating();
-                }
+            QtControls.TextField {
+                width : (parent.width-addRatingButton.width+Kirigami.Units.smallSpacing)/2;
+                id: addRatingField;
+                placeholderText: i18nc("placeholder text for the add content rating text entry", "Write to add rating label.");
+                onEditingFinished: parent.addRating();
             }
+            QtControls.TextField {
+                anchors {
+                    left: addRatingField.right;
+                    leftMargin: Kirigami.Units.smallSpacing;
+                }
+                width : ((parent.width-addRatingButton.width)/2)-(Kirigami.Units.smallSpacing*1.5);
+                id: addSystemField;
+                placeholderText: i18nc("placeholder text for the add content rating system text entry", "Write to add rating system.");
+                onEditingFinished: parent.addRating();
+            }
+            QtControls.Button {
+                id: addRatingButton;
+                anchors {
+                    left: addSystemField.right;
+                    leftMargin: Kirigami.Units.smallSpacing;
+                }
+                contentItem: Kirigami.Icon {
+                    source: "list-add";
+                }
+                height: addSystemField.height;
+                width: height;
+                onClicked: parent.addRating();
+            }
+        }
+        Kirigami.Heading {
+            width: parent.width;
+            height: paintedHeight + Kirigami.Units.smallSpacing * 2;
+            text: i18nc("label text for the form for reading direction.", "Reading Direction");
+        }
+        QtControls.CheckBox {
+            width: parent.width;
+            text: i18nc("label text for right to left checkbox.", "Right to left.");
+            checked: root.model.acbfData.metaData.bookInfo.rightToLeft;
+            onCheckStateChanged: root.model.acbfData.metaData.bookInfo.rightToLeft = checked;
+        }
+
         Kirigami.Heading {
             width: parent.width;
             height: paintedHeight + Kirigami.Units.smallSpacing * 2;

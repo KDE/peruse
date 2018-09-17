@@ -89,6 +89,7 @@ class ACBF_EXPORT BookInfo : public QObject
     Q_PROPERTY(int sequenceCount READ sequenceCount NOTIFY sequenceCountChanged)
     Q_PROPERTY(int databaseRefCount READ databaseRefCount NOTIFY databaseRefCountChanged)
     Q_PROPERTY(int contentRatingCount READ contentRatingCount NOTIFY contentRatingCountChanged)
+    Q_PROPERTY(bool rightToLeft READ rightToLeft WRITE setRightToLeft NOTIFY rightToLeftChanged)
 public:
     explicit BookInfo(Metadata* parent = nullptr);
     ~BookInfo() override;
@@ -462,17 +463,21 @@ public:
     /**
      * @brief The reading direction for this comic for adjusting the layout.
      * An ACBF 1.2 feature.
-     * @return QString with either ltr or rtl.
+     * @return true when the reading direction is right to left.
      */
-    QString readingDirection() const;
+    bool rightToLeft() const;
     
     /**
      * @brief set the Reading direction for this comic. This indicates
      * how the UI will lay out the buttons and controls.
      * An ACBF 1.2 feature.
-     * @param readingDirection a QString with either "ltr" or "rtl".
+     * @param rtl a boolean indicating whether the reading direction is right to left.
      */
-    void setReadingDirection(const QString& readingDirection = "ltr");
+    void setRightToLeft(const bool& rtl = false);
+    /**
+     * @brief fires when right to left changes.
+     */
+    Q_SIGNAL void rightToLeftChanged();
 private:
     class Private;
     std::unique_ptr<Private> d;
