@@ -179,27 +179,41 @@ Kirigami.Page {
             property point startPoint: Qt.point(0,0);
             property point endPoint: Qt.point(0,0);
             property bool dragging: false;
-            hoverEnabled: true;
+            //hoverEnabled: true;
+            preventStealing: true;
 
-            onClicked: {
+            onPressed: {
                 if (dragging == false) {
                     startPoint = Qt.point(mouse.x, mouse.y);
                     endPoint = startPoint;
                     dragging = true;
-                } else {
-                    if (Qt.point(mouse.x, mouse.y)!==startPoint) {
-                        endPoint = Qt.point(mouse.x, mouse.y)
-                        dragging = false;
-                        createFrame();
-                    }
+                    mouse.accepted
                 }
-                mouse.accepted
+
             }
 
             onPositionChanged: {
                 if (dragging) {
                     endPoint = Qt.point(mouse.x, mouse.y)
+                    mouse.accepted
                 }
+            }
+
+            onReleased: {
+                if (dragging) {
+                    if (Qt.point(mouse.x, mouse.y)!==startPoint) {
+                        endPoint = Qt.point(mouse.x, mouse.y);
+                        dragging = false;
+                        createFrame();
+                        mouse.accepted
+                    }
+                }
+
+            }
+            onCanceled: {
+                dragging = false;
+                endPoint: Qt.point(0,0);
+                startPoint: Qt.point(0,0);
             }
 
             Rectangle {
@@ -225,10 +239,6 @@ Kirigami.Page {
             }
 
         }
-
-
-
-
     }
     Component {
         id: pageInfo;
