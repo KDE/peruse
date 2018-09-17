@@ -958,6 +958,16 @@ Kirigami.ScrollablePage {
                 }
             }
         }
+        Kirigami.Heading {
+            width: parent.width;
+            height: paintedHeight + Kirigami.Units.smallSpacing * 2;
+            text: i18nc("label text for the form for the body background color.", "General Page Background Color");
+        }
+        QtControls.TextField {
+            text: root.model.acbfData.body.bgcolor;
+            placeholderText: "#ffffff";
+            onEditingFinished: root.model.acbfData.body.bgcolor = text;
+        }
 
 
         AuthorEntryEditor {

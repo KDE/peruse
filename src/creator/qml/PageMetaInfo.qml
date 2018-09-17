@@ -121,14 +121,14 @@ Kirigami.ScrollablePage {
                         iconName: "go-up"
                         onTriggered: { page.swapFrames(index, index - 1); }
                         enabled: index > 0;
-                        visible: enabled;
+                        visible: false; //hidden because the listview doesn't update.
                     },
                     Kirigami.Action {
                         text: i18nc("swap the position of this frame with the next one", "Move Down");
                         iconName: "go-down"
                         onTriggered: { page.swapFrames(index, index + 1); }
                         enabled: index < page.frameCount - 1;
-                        visible: enabled;
+                        visible: false; //hidden because the listview doesn't update.
                     },
                     Kirigami.Action {
                         text: i18nc("remove the frame from the page", "Delete Frame");
@@ -139,7 +139,30 @@ Kirigami.ScrollablePage {
                 Item {
                     anchors.fill: parent;
                     QtControls.Label {
+                        id: frameLabel;
                         text: i18nc("Comic book panel frame name.", "Frame %1", index+1);
+                    }
+                    QtControls.Label {
+                        id: frameBgcolorLabel;
+                        anchors {
+                            top: frameLabel.bottom;
+                            topMargin: Kirigami.Units.smallSpacing;
+                        }
+                        height: frameBgcolor.height;
+                        text: i18nc("Label from frame background color.", "Background Color:");
+                    }
+
+                    QtControls.TextField {
+                        anchors {
+                            top: frameLabel.bottom;
+                            topMargin: Kirigami.Units.smallSpacing;
+                            left: frameBgcolorLabel.right;
+                            leftMargin: Kirigami.Units.smallSpacing;
+                        }
+                        id: frameBgcolor;
+                        text: page.frame(index).bgcolor;
+                        onEditingFinished: page.frame(index).bgcolor = text;
+                        placeholderText: pageBackgroundColor.text !== ""? pageBackgroundColor.text : root.colorname;
                     }
                 }
             }
@@ -148,6 +171,22 @@ Kirigami.ScrollablePage {
             width: parent.width;
             height: paintedHeight + Kirigami.Units.smallSpacing * 2;
             text: i18nc("label text for the edit field for the page textareas", "Text Areas");
+        }
+        QtControls.Label {
+            id: textLayerBgcolorLabel;
+            height: textLayerBgColor.height;
+            text: i18nc("Label from textlayer background color.", "Background Color:");
+        }
+
+        QtControls.TextField {
+            anchors {
+                left: textLayerBgcolorLabel.right;
+                leftMargin: Kirigami.Units.smallSpacing;
+            }
+            id: textLayerBgColor;
+            text: page.textLayer("").bgcolor;
+            onEditingFinished: page.textLayer("").bgcolor = text;
+            placeholderText: pageBackgroundColor.text !== ""? pageBackgroundColor.text : root.colorname;
         }
         ListView {
             model: page.textLayer("").textareaCount;
@@ -163,14 +202,14 @@ Kirigami.ScrollablePage {
                         iconName: "go-up"
                         onTriggered: { page.textLayer("").swapTextareas(index, index - 1); }
                         enabled: index > 0;
-                        visible: enabled;
+                        visible: false;
                     },
                     Kirigami.Action {
                         text: i18nc("swap the position of this text area with the next one", "Move Down");
                         iconName: "go-down"
                         onTriggered: { page.textLayer("").swapTextareas(index, index + 1); }
                         enabled: index < page.textLayer("").textareaCount - 1;
-                        visible: enabled;
+                        visible: false;
                     },
                     Kirigami.Action {
                         text: i18nc("remove the text area from the page", "Delete Text Area");
@@ -215,14 +254,14 @@ Kirigami.ScrollablePage {
                         iconName: "go-up"
                         onTriggered: { page.swapJumps(index, index - 1); }
                         enabled: index > 0;
-                        visible: enabled;
+                        visible: false;
                     },
                     Kirigami.Action {
                         text: i18nc("swap the position of this jump with the next one", "Move Down");
                         iconName: "go-down"
                         onTriggered: { page.swapJumps(index, index + 1); }
                         enabled: index < page.jumpCount - 1;
-                        visible: enabled;
+                        visible: false;
                     },
                     Kirigami.Action {
                         text: i18nc("remove the jump from the page", "Delete Jump");

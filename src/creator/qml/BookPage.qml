@@ -233,6 +233,7 @@ Kirigami.Page {
     Component {
         id: pageInfo;
         PageMetaInfo {
+            colorname: root.model.acbfData.body.bgcolor !== ""? root.model.acbfData.body.bgcolor: "#ffffff";
             page: root.currentPage;
             onSave: {root.pageTitle = page.title(""); root.model.setDirty();}
         }
