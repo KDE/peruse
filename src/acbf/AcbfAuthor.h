@@ -61,8 +61,8 @@ namespace AdvancedComicBookFormat
 class ACBF_EXPORT Author : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QStringList homePages READ homePages WRITE setHomePages NOTIFY homePageChanged)
-    Q_PROPERTY(QStringList emails READ emails WRITE setEmails NOTIFY emailChanged)
+    Q_PROPERTY(QStringList homePages READ homePages WRITE setHomePages NOTIFY homePagesChanged)
+    Q_PROPERTY(QStringList emails READ emails WRITE setEmails NOTIFY emailsChanged)
 public:
     // Author is used in both Bookinfo and Documentinfo, and as such it is parented to Metadata
     explicit Author(Metadata* parent = nullptr);
@@ -183,7 +183,7 @@ public:
     /**
      * @brief fires when the homepage list changes.
      */
-    Q_SIGNAL void homePageChanged();
+    Q_SIGNAL void homePagesChanged();
     
     /**
      * @return The email adresses associated with this author as a QStringList.
@@ -208,7 +208,7 @@ public:
     /**
      * @brief fires when the email list changes.
      */
-    Q_SIGNAL void emailChanged();
+    Q_SIGNAL void emailsChanged();
 private:
     class Private;
     std::unique_ptr<Private> d;
