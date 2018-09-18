@@ -577,6 +577,7 @@ Kirigami.ScrollablePage {
                     width : (parent.width-removeRatingButton.width+Kirigami.Units.smallSpacing)/2;
                     id: ratingNameField;
                     text: root.model.acbfData.metaData.bookInfo.contentRating(modelData).rating;
+                    placeholderText: i18nc("placeholder text for the add content rating text entry", "Write to add rating label.");
                     onEditingFinished: parent.updateRating();
                 }
                 QtControls.TextField {
@@ -587,7 +588,7 @@ Kirigami.ScrollablePage {
                     width : ((parent.width-removeRatingButton.width)/2)-(Kirigami.Units.smallSpacing*1.5);
                     id: systemNameField;
                     text: root.model.acbfData.metaData.bookInfo.contentRating(modelData).type;
-                    placeholderText: i18nc("placeholder text for the add reference type text entry", "Write to add reference type");
+                    placeholderText: i18nc("placeholder text for the add content rating system text entry", "Write to add rating system.");
                     onEditingFinished: parent.updateRating();
                 }
                 QtControls.Button {
