@@ -135,7 +135,7 @@ void Textlayer::addTextarea(Textarea* textarea, int index)
     else {
         d->textareas.append(textarea);
     }
-    emit textareaCountChanged();
+    emit textareaPointStringsChanged();
 }
 
 void Textlayer::addTextarea(int index)
@@ -147,7 +147,7 @@ void Textlayer::addTextarea(int index)
 void Textlayer::removeTextarea(Textarea* textarea)
 {
     d->textareas.removeAll(textarea);
-    emit textareaCountChanged();
+    emit textareaPointStringsChanged();
 }
 
 void Textlayer::removeTextarea(int index)
@@ -159,13 +159,21 @@ bool Textlayer::swapTextareas(int swapThis, int withThis)
 {
     if(swapThis > -1 && withThis > -1) {
         d->textareas.swap(swapThis, withThis);
-        emit textareaCountChanged();
+        emit textareaPointStringsChanged();
         return true;
     }
     return false;
 }
 
-int Textlayer::textareaCount()
+QStringList Textlayer::textareaPointStrings()
 {
-    return d->textareas.size();
+    QStringList textAreaList;
+    for (int i=0; i<d->textareas.size(); i++) {
+        QStringList points;
+        for (int p=0; p< textarea(i)->pointCount(); p++) {
+            points.append(QString("%1,%2").arg(textarea(i)->point(p).x()).arg(textarea(i)->point(p).y()));
+        }
+        textAreaList.append(points.join(" "));
+    }
+    return textAreaList;
 }

@@ -91,7 +91,7 @@ Kirigami.Page {
         property int offsetY: (height-paintedHeight)/2
 
         Repeater {
-            model: root.currentPage.frameCount
+            model: root.currentPage.framePointStrings
 
             Rectangle {
                 width: coverImage.muliplierWidth * root.currentPage.frame(index).bounds.width;
@@ -119,7 +119,7 @@ Kirigami.Page {
         }
 
         Repeater {
-            model: root.currentPage.textLayer("").textareaCount
+            model: root.currentPage.textLayer("").textareaPointStrings
 
             Rectangle {
                 width: coverImage.muliplierWidth * root.currentPage.textLayer("").textarea(index).bounds.width;
@@ -147,7 +147,7 @@ Kirigami.Page {
         }
 
         Repeater {
-            model: root.currentPage.jumpCount
+            model: root.currentPage.jumpPointStrings
 
             Rectangle {
                 width: coverImage.muliplierWidth * root.currentPage.jump(index).bounds.width;
@@ -254,15 +254,15 @@ Kirigami.Page {
         onSave: {
             var index = 0;
             if (type===0) {
-                index = root.currentPage.frameCount;
+                index = root.currentPage.framePointStrings.length;
                 root.currentPage.addFrame(index);
                 root.currentPage.frame(index).setPointsFromRect(topLeft, bottomRight);
             } else if (type===1) {
-                index = root.currentPage.textLayer("").textareaCount;
+                index = root.currentPage.textLayer("").textareaPointStrings.length;
                 root.currentPage.textLayer("").addTextarea(index);
                 root.currentPage.textLayer("").textarea(index).setPointsFromRect(topLeft, bottomRight);
             } else if (type===2) {
-                index = root.currentPage.jumpCount;
+                index = root.currentPage.jumpPointStrings.length;
                 root.currentPage.addJump(index);
                 root.currentPage.jump(index).setPointsFromRect(topLeft, bottomRight);
             }

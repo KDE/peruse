@@ -41,7 +41,7 @@ class ACBF_EXPORT Textlayer : public QObject
     Q_OBJECT
     Q_PROPERTY(QString language READ language WRITE setLanguage NOTIFY languageChanged)
     Q_PROPERTY(QString bgcolor READ bgcolor WRITE setBgcolor NOTIFY bgcolorChanged)
-    Q_PROPERTY(int textareaCount READ textareaCount NOTIFY textareaCountChanged)
+    Q_PROPERTY(QStringList textareaPointStrings READ textareaPointStrings NOTIFY textareaPointStringsChanged)
 public:
     explicit Textlayer(Page* parent = nullptr);
     ~Textlayer() override;
@@ -133,14 +133,16 @@ public:
      */
     Q_INVOKABLE bool swapTextareas(int swapThis, int withThis);
     /**
-     * @brief textareaCount
-     * @return
+     * @brief a list with the textareas.
+     * This is a hack to ensure that qml repeaters and listviews update
+     * properly when the textareas are swapped.
+     * @return a QStringList with textareas and their points.
      */
-    int textareaCount();
+    QStringList textareaPointStrings();
     /**
      * @brief textareaCountChanged
      */
-    Q_SIGNAL void textareaCountChanged();
+    Q_SIGNAL void textareaPointStringsChanged();
 private:
     class Private;
     std::unique_ptr<Private> d;

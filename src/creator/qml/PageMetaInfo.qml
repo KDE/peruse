@@ -109,7 +109,7 @@ Kirigami.ScrollablePage {
         ListView {
             width: parent.width;
             height: childrenRect.height;
-            model: page.frameCount
+            model: page.framePointStrings
             delegate: Kirigami.SwipeListItem {
                 id: frameItem;
                 height: Kirigami.Units.iconSizes.huge + Kirigami.Units.smallSpacing * 2;
@@ -121,14 +121,14 @@ Kirigami.ScrollablePage {
                         iconName: "go-up"
                         onTriggered: { page.swapFrames(index, index - 1); }
                         enabled: index > 0;
-                        visible: false; //hidden because the listview doesn't update.
+                        visible: enabled;
                     },
                     Kirigami.Action {
                         text: i18nc("swap the position of this frame with the next one", "Move Down");
                         iconName: "go-down"
                         onTriggered: { page.swapFrames(index, index + 1); }
-                        enabled: index < page.frameCount - 1;
-                        visible: false; //hidden because the listview doesn't update.
+                        enabled: index < page.framePointStrings.length - 1;
+                        visible: enabled;
                     },
                     Kirigami.Action {
                         text: i18nc("remove the frame from the page", "Delete Frame");
@@ -189,7 +189,7 @@ Kirigami.ScrollablePage {
             placeholderText: pageBackgroundColor.text !== ""? pageBackgroundColor.text : root.colorname;
         }
         ListView {
-            model: page.textLayer("").textareaCount;
+            model: page.textLayer("").textareaPointStrings;
             width: parent.width;
             height: childrenRect.height;
             delegate: Kirigami.SwipeListItem {
@@ -202,14 +202,14 @@ Kirigami.ScrollablePage {
                         iconName: "go-up"
                         onTriggered: { page.textLayer("").swapTextareas(index, index - 1); }
                         enabled: index > 0;
-                        visible: false;
+                        visible: enabled;
                     },
                     Kirigami.Action {
                         text: i18nc("swap the position of this text area with the next one", "Move Down");
                         iconName: "go-down"
                         onTriggered: { page.textLayer("").swapTextareas(index, index + 1); }
-                        enabled: index < page.textLayer("").textareaCount - 1;
-                        visible: false;
+                        enabled: index < page.textLayer("").textareaPointStrings.length - 1;
+                        visible: enabled;
                     },
                     Kirigami.Action {
                         text: i18nc("remove the text area from the page", "Delete Text Area");
@@ -241,7 +241,7 @@ Kirigami.ScrollablePage {
             text: i18nc("label text for the edit field for the page jumps", "Jumps");
         }
         ListView {
-            model: page.jumpCount
+            model: page.jumpPointStrings
             width: parent.width;
             height: childrenRect.height;
             delegate: Kirigami.SwipeListItem {
@@ -254,14 +254,14 @@ Kirigami.ScrollablePage {
                         iconName: "go-up"
                         onTriggered: { page.swapJumps(index, index - 1); }
                         enabled: index > 0;
-                        visible: false;
+                        visible: enabled;
                     },
                     Kirigami.Action {
                         text: i18nc("swap the position of this jump with the next one", "Move Down");
                         iconName: "go-down"
                         onTriggered: { page.swapJumps(index, index + 1); }
-                        enabled: index < page.jumpCount - 1;
-                        visible: false;
+                        enabled: index < page.jumpPointStrings.length - 1;
+                        visible: enabled;
                     },
                     Kirigami.Action {
                         text: i18nc("remove the jump from the page", "Delete Jump");

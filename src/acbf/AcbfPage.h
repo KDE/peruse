@@ -61,8 +61,8 @@ class ACBF_EXPORT Page : public QObject
     Q_PROPERTY(QString transition READ transition WRITE setTransition NOTIFY transitionChanged)
     Q_PROPERTY(QString imageHref READ imageHref WRITE setImageHref NOTIFY imageHrefChanged)
     Q_PROPERTY(QStringList textLayerLanguages READ textLayerLanguages NOTIFY textLayerLanguagesChanged)
-    Q_PROPERTY(int frameCount READ frameCount NOTIFY frameCountChanged)
-    Q_PROPERTY(int jumpCount READ jumpCount NOTIFY jumpCountChanged)
+    Q_PROPERTY(QStringList framePointStrings READ framePointStrings NOTIFY framePointStringsChanged)
+    Q_PROPERTY(QStringList jumpPointStrings READ jumpPointStrings NOTIFY jumpPointStringsChanged)
 public:
     // Pages can also be cover pages, which means they can also be children of BookInfo
     explicit Page(Document* parent = nullptr);
@@ -244,14 +244,15 @@ public:
      */
     Q_INVOKABLE bool swapFrames(int swapThis, int withThis);
     /**
-     * @brief frameCount
-     * @return the total amount of frames.
+     * @brief returns the amount of frames as a stringlist.
+     * This is a hack to ensure that qml repeaters may update properly.
+     * @return a string list containing strings with the point counts of said frames.
      */
-    int frameCount();
+    QStringList framePointStrings();
     /**
-     * @brief fires when the frame count changes.
+     * @brief fires when the frame point strings change.
      */
-    Q_SIGNAL void frameCountChanged();
+    Q_SIGNAL void framePointStringsChanged();
 
     /**
      * @return the list of jump objects for this page.
@@ -299,12 +300,14 @@ public:
     Q_INVOKABLE bool swapJumps(int swapThis, int withThis);
     /**
      * @brief the amount of jumps on this page.
+     * This is a hack to ensure QML updates properly when swapJumps is called.
+     * @returns a QStringlist with the jump's points.
      */
-    int jumpCount();
+    QStringList jumpPointStrings();
     /**
-     * @brief changes when the jumpcount changes.
+     * @brief changes when the jump point strings change.
      */
-    Q_SIGNAL void jumpCountChanged();
+    Q_SIGNAL void jumpPointStringsChanged();
 
     /**
      * @returns whether this is the cover page.

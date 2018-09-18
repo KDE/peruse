@@ -288,7 +288,7 @@ void Page::duplicateTextLayer(const QString &languageFrom, const QString &langua
     if (d->textLayers[languageFrom]) {
         Textlayer* from = d->textLayers[languageFrom];
         to->setBgcolor(from->bgcolor());
-        for (int i=0; i<from->textareaCount(); i++) {
+        for (int i=0; i<from->textareaPointStrings().size(); i++) {
             to->addTextarea(i);
             to->textarea(i)->setBgcolor(from->textarea(i)->bgcolor());
             to->textarea(i)->setInverted(from->textarea(i)->inverted());
@@ -335,13 +335,13 @@ void Page::addFrame(Frame* frame, int index)
     else {
         d->frames.append(frame);
     }
-    emit frameCountChanged();
+    emit framePointStringsChanged();
 }
 
 void Page::removeFrame(Frame* frame)
 {
     d->frames.removeAll(frame);
-    emit frameCountChanged();
+    emit framePointStringsChanged();
 }
 
 void Page::removeFrame(int index)
@@ -359,15 +359,23 @@ bool Page::swapFrames(int swapThis, int withThis)
 {
     if(swapThis > -1 && withThis > -1) {
         d->frames.swap(swapThis, withThis);
-        emit frameCountChanged();
+        emit framePointStringsChanged();
         return true;
     }
     return false;
 }
 
-int Page::frameCount()
+QStringList Page::framePointStrings()
 {
-    return d->frames.size();
+    QStringList frameList;
+    for (int i=0; i<d->frames.size(); i++) {
+        QStringList framePoints;
+        for (int p=0; p< frame(i)->pointCount(); p++) {
+            framePoints.append(QString("%1,%2").arg(frame(i)->point(p).x()).arg(frame(i)->point(p).y()));
+        }
+        frameList.append(framePoints.join(" "));
+    }
+    return frameList;
 }
 
 QList<Jump *> Page::jumps() const
@@ -393,7 +401,7 @@ void Page::addJump(Jump* jump, int index)
     else {
         d->jumps.append(jump);
     }
-    emit jumpCountChanged();
+    emit jumpPointStringsChanged();
 }
 
 void Page::addJump(int pageIndex, int index)
@@ -406,7 +414,7 @@ void Page::addJump(int pageIndex, int index)
 void Page::removeJump(Jump* jump)
 {
     d->jumps.removeAll(jump);
-    emit jumpCountChanged();
+    emit jumpPointStringsChanged();
 }
 
 void Page::removeJump(int index)
@@ -418,15 +426,23 @@ bool Page::swapJumps(int swapThis, int withThis)
 {
     if(swapThis > -1 && withThis > -1) {
         d->jumps.swap(swapThis, withThis);
-        emit jumpCountChanged();
+        emit jumpPointStringsChanged();
         return true;
     }
     return false;
 }
 
-int Page::jumpCount()
+QStringList Page::jumpPointStrings()
 {
-    return d->jumps.size();
+    QStringList jumpList;
+    for (int i=0; i<d->jumps.size(); i++) {
+        QStringList points;
+        for (int p=0; p< jump(i)->pointCount(); p++) {
+            points.append(QString("%1,%2").arg(jump(i)->point(p).x()).arg(jump(i)->point(p).y()));
+        }
+        jumpList.append(points.join(" "));
+    }
+    return jumpList;
 }
 
 bool Page::isCoverPage() const
