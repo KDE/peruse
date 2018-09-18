@@ -358,6 +358,9 @@ Kirigami.ScrollablePage {
                     width : (seriesTextField.width+Kirigami.Units.smallSpacing)/2;
                     id: numberField;
                     onValueChanged: parent.updateSeries();
+                    from: 0;
+                    to: 99999;
+                    editable: true;
                 }
                 QtControls.SpinBox {
                     anchors {
@@ -370,6 +373,9 @@ Kirigami.ScrollablePage {
                     width : (seriesTextField.width/2)-(Kirigami.Units.smallSpacing*1.5);
                     id: volumeField;
                     onValueChanged: parent.updateSeries();
+                    from: 0;
+                    to: 99999;
+                    editable: true;
                 }
                 QtControls.Button {
                     id: removeSequenceButton;
