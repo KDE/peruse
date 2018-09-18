@@ -349,28 +349,52 @@ Kirigami.ScrollablePage {
                     text: root.model.acbfData.metaData.bookInfo.sequence(modelData).title;
                     onEditingFinished: parent.updateSeries();
                 }
-                QtControls.SpinBox {
+
+                QtControls.Label {
+                    text: i18nc("Label for sequence number:","Number:");
+                    id: sequenceNumberLabel;
+                    height:numberField.height;
                     anchors {
                         top: seriesTextField.bottom;
                         topMargin: Kirigami.Units.smallSpacing;
                     }
+                }
+                QtControls.SpinBox {
+                    anchors {
+                        top: seriesTextField.bottom;
+                        topMargin: Kirigami.Units.smallSpacing;
+                        left: sequenceNumberLabel.right;
+                        leftMargin: Kirigami.Units.smallSpacing;
+                    }
                     value : root.model.acbfData.metaData.bookInfo.sequence(modelData).number;
-                    width : (seriesTextField.width+Kirigami.Units.smallSpacing)/2;
+                    width : ((seriesTextField.width+Kirigami.Units.smallSpacing)/2)-(sequenceNumberLabel.width+Kirigami.Units.smallSpacing);
                     id: numberField;
                     onValueChanged: parent.updateSeries();
                     from: 0;
                     to: 99999;
                     editable: true;
                 }
-                QtControls.SpinBox {
+                QtControls.Label {
+                    text: i18nc("Label for sequence Volume:","Volume:");
+                    id: sequenceVolumeLabel;
+                    height:volumeField.height;
                     anchors {
                         left: numberField.right;
                         leftMargin: Kirigami.Units.smallSpacing;
                         top: seriesTextField.bottom;
                         topMargin: Kirigami.Units.smallSpacing;
                     }
+
+                }
+                QtControls.SpinBox {
+                    anchors {
+                        left: sequenceVolumeLabel.right;
+                        leftMargin: Kirigami.Units.smallSpacing;
+                        top: seriesTextField.bottom;
+                        topMargin: Kirigami.Units.smallSpacing;
+                    }
                     value : root.model.acbfData.metaData.bookInfo.sequence(modelData).volume;
-                    width : (seriesTextField.width/2)-(Kirigami.Units.smallSpacing*1.5);
+                    width : (seriesTextField.width/2)-(Kirigami.Units.smallSpacing*1.5)-(sequenceVolumeLabel.width+Kirigami.Units.smallSpacing);
                     id: volumeField;
                     onValueChanged: parent.updateSeries();
                     from: 0;
