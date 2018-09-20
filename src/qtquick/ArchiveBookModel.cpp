@@ -29,6 +29,7 @@
 #include <AcbfMetadata.h>
 #include <AcbfPage.h>
 #include <AcbfPublishinfo.h>
+#include <AcbfDocumentinfo.h>
 
 #include <QCoreApplication>
 #include <QDebug>
@@ -36,6 +37,7 @@
 #include <QMimeDatabase>
 #include <QQmlEngine>
 #include <QTemporaryFile>
+#include <QXmlStreamReader>
 
 #include <KFileMetaData/UserMetaData>
 #include <karchive.h>
@@ -198,7 +200,12 @@ void ArchiveBookModel::setFilename(QString newFilename)
 
             // First check and see if we've got an ACBF document in there...
             QString acbfEntry;
+            QString comicInfoEntry;
+            QStringList xmlFiles;
             QLatin1String acbfSuffix(".acbf");
+            QLatin1String ComicInfoXML("comicinfo.xml");
+            QLatin1String xmlSuffix(".xml");
+            QStringList images;
             Q_FOREACH(const QString& entry, entries)
             {
                 if(entry.toLower().endsWith(acbfSuffix))
@@ -206,7 +213,19 @@ void ArchiveBookModel::setFilename(QString newFilename)
                     acbfEntry = entry;
                     break;
                 }
+                if(entry.toLower().endsWith(xmlSuffix)) {
+                    if(entry.toLower().endsWith(ComicInfoXML)) {
+                        comicInfoEntry = entry;
+                    } else {
+                        xmlFiles.append(entry);
+                    }
+                }
+                if (entry.toLower().endsWith(".jpg") || entry.toLower().endsWith(".jpeg")
+                        || entry.toLower().endsWith(".gif") || entry.toLower().endsWith(".png")) {
+                    images.append(entry);
+                }
             }
+            images.sort();
             if(!acbfEntry.isEmpty())
             {
                 AdvancedComicBookFormat::Document* acbfDocument = new AdvancedComicBookFormat::Document(this);
@@ -224,6 +243,27 @@ void ArchiveBookModel::setFilename(QString newFilename)
                 {
                     // just in case this is, for whatever reason, being reused...
                     setAcbfData(nullptr);
+                }
+            }
+            if (!comicInfoEntry.isEmpty() || !xmlFiles.isEmpty()) {
+                AdvancedComicBookFormat::Document* acbfDocument = new AdvancedComicBookFormat::Document(this);
+                const KArchiveFile* archFile = d->archive->directory()->file(comicInfoEntry);
+                bool loadData = false;
+
+                if (!comicInfoEntry.isEmpty()) {
+                    loadData = loadComicInfoXML(archFile->data(), acbfDocument, images, newFilename);
+                } else {
+                    loadData = loadCoMet(xmlFiles, acbfDocument, images, newFilename);
+                }
+
+                if (loadData) {
+                    setAcbfData(acbfDocument);
+                    QString undesired = QString("%1").arg("/").append("Thumbs.db");
+                    addPage(QString("image://%1/%2").arg(prefix).arg(acbfDocument->metaData()->bookInfo()->coverpage()->imageHref()), acbfDocument->metaData()->bookInfo()->coverpage()->title());
+                    Q_FOREACH(AdvancedComicBookFormat::Page* page, acbfDocument->body()->pages())
+                    {
+                        addPage(QString("image://%1/%2").arg(prefix).arg(page->imageHref()), page->title());
+                    }
                 }
             }
             if(!acbfData())
@@ -631,4 +671,583 @@ const KArchiveFile * ArchiveBookModel::archiveFile(const QString& filePath)
         return d->archive->directory()->file(filePath);
     }
     return nullptr;
+}
+
+bool ArchiveBookModel::loadComicInfoXML(QString xmlDocument, QObject *acbfData, QStringList entries, QString filename)
+{
+    KFileMetaData::UserMetaData filedata(filename);
+    AdvancedComicBookFormat::Document* acbfDocument = qobject_cast<AdvancedComicBookFormat::Document*>(acbfData);
+    QXmlStreamReader xmlReader(xmlDocument);
+    if(xmlReader.readNextStartElement())
+    {
+        if(xmlReader.name() == QStringLiteral("ComicInfo"))
+        {
+            // We'll need to collect several items to generate a series. Thankfully, comicinfo only has two types of series.
+            QString series;
+            int number = -1;
+            int volume = 0;
+
+            QString seriesAlt;
+            int numberAlt = -1;
+            int volumeAlt = 0;
+
+            // Also publishing date.
+            int year = 0;
+            int month = 0;
+            int day = 0;
+
+            QStringList publisher;
+            QStringList keywords;
+            QStringList empty;
+
+            while(xmlReader.readNextStartElement())
+            {
+                if(xmlReader.name() == QStringLiteral("Title"))
+                {
+                    acbfDocument->metaData()->bookInfo()->setTitle(xmlReader.readElementText(),"");
+                }
+
+                //Summary/annotation.
+                else if(xmlReader.name() == QStringLiteral("Summary"))
+                {
+                    acbfDocument->metaData()->bookInfo()->setAnnotation(xmlReader.readElementText().split("\n\n"), "");
+                }
+
+                /*
+                 * This ought to go into the kfile metadata.
+                 */
+                else if(xmlReader.name() == QStringLiteral("Notes"))
+                {
+                    filedata.setUserComment(xmlReader.readElementText());
+                }
+                else if(xmlReader.name() == QStringLiteral("Tags"))
+                {
+                    filedata.setTags(xmlReader.readElementText().split(","));
+                }
+                else if(xmlReader.name() == QStringLiteral("PageCount"))
+                {
+                    filedata.setAttribute("Peruse.totalPages", xmlReader.readElementText());
+                }
+                else if(xmlReader.name() == QStringLiteral("ScanInformation"))
+                {
+                    QString userComment = filedata.userComment();
+                    userComment.append("\n"+xmlReader.readElementText());
+                    filedata.setUserComment(userComment);
+                }
+
+                //Series
+
+                else if(xmlReader.name() == QStringLiteral("Series"))
+                {
+                    series = xmlReader.readElementText();
+                }
+                else if(xmlReader.name() == QStringLiteral("Number"))
+                {
+                    number = xmlReader.readElementText().toInt();
+                }
+                else if(xmlReader.name() == QStringLiteral("Volume"))
+                {
+                    volume = xmlReader.readElementText().toInt();
+                }
+
+                // Series alt
+
+                else if(xmlReader.name() == QStringLiteral("AlternateSeries"))
+                {
+                    seriesAlt = xmlReader.readElementText();
+                }
+                else if(xmlReader.name() == QStringLiteral("AlternateNumber"))
+                {
+                    numberAlt = xmlReader.readElementText().toInt();
+                }
+                else if(xmlReader.name() == QStringLiteral("AlternateVolume"))
+                {
+                    volumeAlt = xmlReader.readElementText().toInt();
+                }
+
+                // Publishing date.
+
+                else if(xmlReader.name() == QStringLiteral("Year"))
+                {
+                    year = xmlReader.readElementText().toInt();
+                }
+                else if(xmlReader.name() == QStringLiteral("Month"))
+                {
+                    month = xmlReader.readElementText().toInt();
+                }
+                else if(xmlReader.name() == QStringLiteral("Day"))
+                {
+                    day = xmlReader.readElementText().toInt();
+                }
+
+                //Publisher
+
+                else if(xmlReader.name() == QStringLiteral("Publisher"))
+                {
+                    publisher.append(xmlReader.readElementText());
+                }
+                else if(xmlReader.name() == QStringLiteral("Imprint"))
+                {
+                    publisher.append(xmlReader.readElementText());
+                }
+
+                //Genre
+                else if(xmlReader.name() == QStringLiteral("Genre"))
+                {
+                    QString key = xmlReader.readElementText();
+                    QString genreKey = key.toLower().replace(" ", "_");
+                    if (acbfDocument->metaData()->bookInfo()->availableGenres().contains(genreKey)) {
+                        acbfDocument->metaData()->bookInfo()->setGenre(genreKey);
+                    } else {
+                        //There must always be a genre in a proper acbf file...
+                        acbfDocument->metaData()->bookInfo()->setGenre("other");
+                        keywords.append(key);
+                    }
+                }
+
+                //Language
+
+                else if(xmlReader.name() == QStringLiteral("LanguageISO"))
+                {
+                    acbfDocument->metaData()->bookInfo()->addLanguage(xmlReader.readElementText());
+                }
+
+                //Sources/Weblink
+                else if(xmlReader.name() == QStringLiteral("Web"))
+                {
+                    acbfDocument->metaData()->documentInfo()->setSource(QStringList(xmlReader.readElementText()));
+                }
+
+                //One short, trade, etc.
+                else if(xmlReader.name() == QStringLiteral("Format"))
+                {
+                    keywords.append(xmlReader.readElementText());
+                }
+
+                //Is this a manga?
+                else if(xmlReader.name() == QStringLiteral("Manga"))
+                {
+                    if (xmlReader.readElementText() == "Yes") {
+                        acbfDocument->metaData()->bookInfo()->setGenre("manga");
+                        acbfDocument->metaData()->bookInfo()->setRightToLeft(true);
+                    }
+                }
+                //Content rating...
+                else if(xmlReader.name() == QStringLiteral("AgeRating"))
+                {
+                    acbfDocument->metaData()->bookInfo()->addContentRating(xmlReader.readElementText());
+                }
+
+                //Authors...
+                else if(xmlReader.name() == QStringLiteral("Writer"))
+                {
+                    QStringList people = xmlReader.readElementText().split(",", QString::SkipEmptyParts);
+                    for (int i=0; i < people.size(); i++) {
+                        acbfDocument->metaData()->bookInfo()->addAuthor("Writer", "", "", "", "", people.at(i).trimmed(), empty, empty);
+                    }
+                }
+                else if(xmlReader.name() == QStringLiteral("Plotter"))
+                {
+                    QStringList people = xmlReader.readElementText().split(",", QString::SkipEmptyParts);
+                    for (int i=0; i < people.size(); i++) {
+                        acbfDocument->metaData()->bookInfo()->addAuthor("Writer", "", "", "", "", people.at(i).trimmed(), empty, empty);
+                    }
+                }
+                else if(xmlReader.name() == QStringLiteral("Scripter"))
+                {
+                    QStringList people = xmlReader.readElementText().split(",", QString::SkipEmptyParts);
+                    for (int i=0; i < people.size(); i++) {
+                        acbfDocument->metaData()->bookInfo()->addAuthor("Writer", "", "", "", "", people.at(i).trimmed(), empty, empty);
+                    }
+                }
+                else if(xmlReader.name() == QStringLiteral("Penciller"))
+                {
+                    QStringList people = xmlReader.readElementText().split(",", QString::SkipEmptyParts);
+                    for (int i=0; i < people.size(); i++) {
+                        acbfDocument->metaData()->bookInfo()->addAuthor("Penciller", "", "", "", "", people.at(i).trimmed(), empty, empty);
+                    }
+                }
+                else if(xmlReader.name() == QStringLiteral("Inker"))
+                {
+                    QStringList people = xmlReader.readElementText().split(",", QString::SkipEmptyParts);
+                    for (int i=0; i < people.size(); i++) {
+                        acbfDocument->metaData()->bookInfo()->addAuthor("Inker", "", "", "", "", people.at(i).trimmed(), empty, empty);
+                    }
+                }
+                else if(xmlReader.name() == QStringLiteral("Colorist"))
+                {
+                    QStringList people = xmlReader.readElementText().split(",", QString::SkipEmptyParts);
+                    for (int i=0; i < people.size(); i++) {
+                        acbfDocument->metaData()->bookInfo()->addAuthor("Colorist", "", "", "", "", people.at(i).trimmed(), empty, empty);
+                    }
+                }
+                else if(xmlReader.name() == QStringLiteral("CoverArtist"))
+                {
+                    QStringList people = xmlReader.readElementText().split(",", QString::SkipEmptyParts);
+                    for (int i=0; i < people.size(); i++) {
+                        acbfDocument->metaData()->bookInfo()->addAuthor("CoverArtist", "", "", "", "", people.at(i).trimmed(), empty, empty);
+                    }
+                }
+                else if(xmlReader.name() == QStringLiteral("Letterer"))
+                {
+                    QStringList people = xmlReader.readElementText().split(",", QString::SkipEmptyParts);
+                    for (int i=0; i < people.size(); i++) {
+                        acbfDocument->metaData()->bookInfo()->addAuthor("Letterer", "", "", "", "", people.at(i).trimmed(), empty, empty);
+                    }
+                }
+                else if(xmlReader.name() == QStringLiteral("Editor"))
+                {
+                    QStringList people = xmlReader.readElementText().split(",", QString::SkipEmptyParts);
+                    for (int i=0; i < people.size(); i++) {
+                        acbfDocument->metaData()->bookInfo()->addAuthor("Editor", "", "", "", "", people.at(i).trimmed(), empty, empty);
+                    }
+                }
+                else if(xmlReader.name() == QStringLiteral("Other"))
+                {
+                    QStringList people = xmlReader.readElementText().split(",", QString::SkipEmptyParts);
+                    for (int i=0; i < people.size(); i++) {
+                        acbfDocument->metaData()->bookInfo()->addAuthor("Other", "", "", "", "", people.at(i).trimmed(), empty, empty);
+                    }
+                }
+                //Characters...
+                else if(xmlReader.name() == QStringLiteral("Characters"))
+                {
+                    QStringList people = xmlReader.readElementText().split(",", QString::SkipEmptyParts);
+                    for (int i=0; i < people.size(); i++) {
+                        acbfDocument->metaData()->bookInfo()->addCharacter(people.at(i).trimmed());
+                    }
+                }
+                //Throw the rest into the keywords.
+                else if(xmlReader.name() == QStringLiteral("Teams"))
+                {
+                    QStringList teams = xmlReader.readElementText().split(",", QString::SkipEmptyParts);
+                    for (int i=0; i < teams.size(); i++) {
+                        keywords.append(teams.at(i).trimmed());
+                    }
+                }
+                else if(xmlReader.name() == QStringLiteral("Locations"))
+                {
+                    QStringList locations = xmlReader.readElementText().split(",", QString::SkipEmptyParts);
+                    for (int i=0; i < locations.size(); i++) {
+                        keywords.append(locations.at(i).trimmed());
+                    }
+                }
+                else if(xmlReader.name() == QStringLiteral("StoryArc"))
+                {
+                    QStringList arc = xmlReader.readElementText().split(",", QString::SkipEmptyParts);
+                    for (int i=0; i < arc.size(); i++) {
+                        keywords.append(arc.at(i).trimmed());
+                    }
+                }
+                else if(xmlReader.name() == QStringLiteral("SeriesGroup"))
+                {
+                    QStringList group = xmlReader.readElementText().split(",", QString::SkipEmptyParts);
+                    for (int i=0; i < group.size(); i++) {
+                        keywords.append(group.at(i).trimmed());
+                    }
+                }
+
+                //Pages...
+                else if(xmlReader.name() == QStringLiteral("Pages")) {
+                    while(xmlReader.readNextStartElement()) {
+                        if(xmlReader.name() == QStringLiteral("Page"))
+                        {
+                            int index = xmlReader.attributes().value(QStringLiteral("Image")).toInt();
+                            QString type = xmlReader.attributes().value(QStringLiteral("Type")).toString();
+                            QString bookmark = xmlReader.attributes().value(QStringLiteral("Bookmark")).toString();
+                            AdvancedComicBookFormat::Page* page = new AdvancedComicBookFormat::Page(acbfDocument);
+                            page->setImageHref(entries.at(index));
+                            if (type ==  QStringLiteral("FrontCover")) {
+                                acbfDocument->metaData()->bookInfo()->setCoverpage(page);
+                            } else {
+                                if (bookmark.isEmpty()) {
+                                    page->setTitle(type.append(QString::number(index)));
+                                } else {
+                                    page->setTitle(bookmark);
+                                }
+                                acbfDocument->body()->addPage(page, index-1);
+                            }
+                            xmlReader.readNext();
+                        }
+                    }
+                }
+
+                else
+                {
+                    qWarning() << Q_FUNC_INFO << "currently unsupported subsection:" << xmlReader.name();
+                    xmlReader.skipCurrentElement();
+                }
+            }
+
+            if (!series.isEmpty() && number>-1) {
+                acbfDocument->metaData()->bookInfo()->addSequence(number, series, volume);
+            }
+            if (!seriesAlt.isEmpty() && numberAlt>-1) {
+                acbfDocument->metaData()->bookInfo()->addSequence(numberAlt, seriesAlt, volumeAlt);
+            }
+
+            if (year > 0 || month > 0 || day > 0) {
+                //acbfDocument->metaData()->publishInfo()->setPublishDateFromInts(year, month, day);
+            }
+
+            if (publisher.size()>0) {
+                acbfDocument->metaData()->publishInfo()->setPublisher(publisher.join(", "));
+            }
+
+            if (keywords.size()>0) {
+                acbfDocument->metaData()->bookInfo()->setKeywords(keywords, "");
+            }
+
+            if (acbfDocument->metaData()->bookInfo()->languages().size()>0) {
+                QString lang = acbfDocument->metaData()->bookInfo()->languageEntryList().at(0);
+                acbfDocument->metaData()->bookInfo()->setTitle(acbfDocument->metaData()->bookInfo()->title(""), lang);
+                acbfDocument->metaData()->bookInfo()->setAnnotation(acbfDocument->metaData()->bookInfo()->annotation(""), lang);
+                acbfDocument->metaData()->bookInfo()->setKeywords(acbfDocument->metaData()->bookInfo()->keywords(""), lang);
+            }
+        }
+    }
+
+    if (xmlReader.hasError()) {
+        qWarning() << Q_FUNC_INFO << "Failed to read Comic Info XML document at token" << xmlReader.name() << "(" << xmlReader.lineNumber() << ":" << xmlReader.columnNumber() << ") The reported error was:" << xmlReader.errorString();
+    }
+    qDebug() << Q_FUNC_INFO << "Completed ACBF document creation from ComicInfo.xml for" << acbfDocument->metaData()->bookInfo()->title();
+    acbfData = acbfDocument;
+    return !xmlReader.hasError();
+}
+
+bool ArchiveBookModel::loadCoMet(QStringList xmlDocuments, QObject *acbfData, QStringList entries, QString filename)
+{
+    KFileMetaData::UserMetaData filedata(filename);
+    AdvancedComicBookFormat::Document* acbfDocument = qobject_cast<AdvancedComicBookFormat::Document*>(acbfData);
+    Q_FOREACH(const QString xmlDocument, xmlDocuments) {
+        const KArchiveFile* archFile = d->archive->directory()->file(xmlDocument);
+        QXmlStreamReader xmlReader(archFile->data());
+        if(xmlReader.readNextStartElement())
+        {
+            if(xmlReader.name() == QStringLiteral("comet"))
+            {
+                // We'll need to collect several items to generate a series. Thankfully, comicinfo only has two types of series.
+                QString series;
+                int number = -1;
+                int volume = 0;
+
+                QStringList keywords;
+                QStringList empty;
+
+                while(xmlReader.readNextStartElement())
+                {
+                    if(xmlReader.name() == QStringLiteral("title"))
+                    {
+                        acbfDocument->metaData()->bookInfo()->setTitle(xmlReader.readElementText(),"");
+                    }
+
+                    //Summary/annotation.
+                    else if(xmlReader.name() == QStringLiteral("description"))
+                    {
+                        acbfDocument->metaData()->bookInfo()->setAnnotation(xmlReader.readElementText().split("\n\n"), "");
+                    }
+
+                    /*
+                     * This ought to go into the kfile metadata.
+                     */
+                    //pages
+                    else if(xmlReader.name() == QStringLiteral("pages"))
+                    {
+                        filedata.setAttribute("Peruse.totalPages", xmlReader.readElementText());
+                    }
+                    //curentpage -- only read this when there's no such entry.
+                    else if(xmlReader.name() == QStringLiteral("lastMark"))
+                    {
+                        if (!filedata.hasAttribute("Peruse.currentPage")) {
+                            filedata.setAttribute("Peruse.currentPage", xmlReader.readElementText());
+                        }
+                    }
+
+                    //Series
+
+                    else if(xmlReader.name() == QStringLiteral("series"))
+                    {
+                        series = xmlReader.readElementText();
+                    }
+                    else if(xmlReader.name() == QStringLiteral("issue"))
+                    {
+                        number = xmlReader.readElementText().toInt();
+                    }
+                    else if(xmlReader.name() == QStringLiteral("volume"))
+                    {
+                        volume = xmlReader.readElementText().toInt();
+                    }
+
+                    // Publishing date.
+
+                    else if(xmlReader.name() == QStringLiteral("date"))
+                    {
+                        acbfDocument->metaData()->publishInfo()->setPublishDate(QDate::fromString(xmlReader.readElementText(), Qt::ISODate));
+                    }
+
+                    //Publisher
+
+                    else if(xmlReader.name() == QStringLiteral("publisher"))
+                    {
+                        acbfDocument->metaData()->publishInfo()->setPublisher(xmlReader.readElementText());
+                    }
+                    else if(xmlReader.name() == QStringLiteral("rights"))
+                    {
+                        acbfDocument->metaData()->publishInfo()->setLicense(xmlReader.readElementText());
+                    }
+                    else if(xmlReader.name() == QStringLiteral("identifier"))
+                    {
+                        acbfDocument->metaData()->publishInfo()->setIsbn(xmlReader.readElementText());
+                    }
+
+                    //Genre
+                    else if(xmlReader.name() == QStringLiteral("genre"))
+                    {
+                        QString key = xmlReader.readElementText();
+                        QString genreKey = key.toLower().replace(" ", "_");
+                        if (acbfDocument->metaData()->bookInfo()->availableGenres().contains(genreKey)) {
+                            acbfDocument->metaData()->bookInfo()->setGenre(genreKey);
+                        } else {
+                            keywords.append(key);
+                        }
+                    }
+
+                    //Language
+
+                    else if(xmlReader.name() == QStringLiteral("language"))
+                    {
+                        acbfDocument->metaData()->bookInfo()->addLanguage(xmlReader.readElementText());
+                    }
+
+                    //Sources/Weblink
+                    else if(xmlReader.name() == QStringLiteral("isVersionOf"))
+                    {
+                        acbfDocument->metaData()->documentInfo()->setSource(QStringList(xmlReader.readElementText()));
+                    }
+
+                    //One short, trade, etc.
+                    else if(xmlReader.name() == QStringLiteral("format"))
+                    {
+                        keywords.append(xmlReader.readElementText());
+                    }
+
+                    //Is this a manga?
+                    else if(xmlReader.name() == QStringLiteral("readingDirection"))
+                    {
+                        if (xmlReader.readElementText() == "rtl") {
+                            acbfDocument->metaData()->bookInfo()->setRightToLeft(true);
+                        }
+                    }
+                    //Content rating...
+                    else if(xmlReader.name() == QStringLiteral("rating"))
+                    {
+                        acbfDocument->metaData()->bookInfo()->addContentRating(xmlReader.readElementText());
+                    }
+
+                    //Authors...
+                    else if(xmlReader.name() == QStringLiteral("writer"))
+                    {
+                        QString person = xmlReader.readElementText();
+                        acbfDocument->metaData()->bookInfo()->addAuthor("Writer", "", "", "", "", person, empty, empty);
+                    }
+                    else if(xmlReader.name() == QStringLiteral("creator"))
+                    {
+                        QString person = xmlReader.readElementText();
+                        acbfDocument->metaData()->bookInfo()->addAuthor("Writer", "", "", "", "", person, empty, empty);
+                    }
+                    else if(xmlReader.name() == QStringLiteral("penciller"))
+                    {
+                        QString person = xmlReader.readElementText();
+                        acbfDocument->metaData()->bookInfo()->addAuthor("Penciller", "", "", "", "", person, empty, empty);
+                    }
+                    else if(xmlReader.name() == QStringLiteral("editor"))
+                    {
+                        QString person = xmlReader.readElementText();
+                        acbfDocument->metaData()->bookInfo()->addAuthor("Editor", "", "", "", "", person, empty, empty);
+                    }
+                    else if(xmlReader.name() == QStringLiteral("coverDesigner"))
+                    {
+                        QString person = xmlReader.readElementText();
+                        acbfDocument->metaData()->bookInfo()->addAuthor("CoverArtist", "", "", "", "", person, empty, empty);
+                    }
+                    else if(xmlReader.name() == QStringLiteral("letterer"))
+                    {
+                        QString person = xmlReader.readElementText();
+                        acbfDocument->metaData()->bookInfo()->addAuthor("Letterer", "", "", "", "", person, empty, empty);
+                    }
+                    else if(xmlReader.name() == QStringLiteral("inker"))
+                    {
+                        QString person = xmlReader.readElementText();
+                        acbfDocument->metaData()->bookInfo()->addAuthor("Inker", "", "", "", "", person, empty, empty);
+                    }
+                    else if(xmlReader.name() == QStringLiteral("colorist"))
+                    {
+                        QString person = xmlReader.readElementText();
+                        acbfDocument->metaData()->bookInfo()->addAuthor("Colorist", "", "", "", "", person, empty, empty);
+                    }
+
+                    //Characters
+                    else if(xmlReader.name() == QStringLiteral("character"))
+                    {
+                        QString person = xmlReader.readElementText();
+                        acbfDocument->metaData()->bookInfo()->addCharacter(person);
+                    }
+
+
+                    //Get the cover image, set it, remove it from entries, then remove all other entries.
+                    else if(xmlReader.name() == QStringLiteral("coverImage"))
+                    {
+                        QString url = xmlReader.readElementText();
+                        AdvancedComicBookFormat::Page* cover = new AdvancedComicBookFormat::Page(acbfDocument);
+                        cover->setImageHref(url);
+                        acbfDocument->metaData()->bookInfo()->setCoverpage(cover);
+                        entries.removeAll(url);
+                        Q_FOREACH(QString entry, entries) {
+                            AdvancedComicBookFormat::Page* page = new AdvancedComicBookFormat::Page(acbfDocument);
+                            page->setImageHref(entry);
+                            acbfDocument->body()->addPage(page);
+                        }
+                        xmlReader.readNext();
+                    }
+
+                    else
+                    {
+                        qWarning() << Q_FUNC_INFO << "currently unsupported subsection:" << xmlReader.name();
+                        xmlReader.skipCurrentElement();
+                    }
+                }
+
+                if (!series.isEmpty() && number>-1) {
+                    acbfDocument->metaData()->bookInfo()->addSequence(number, series, volume);
+                }
+
+                if (acbfDocument->metaData()->bookInfo()->genres().size()==0) {
+                    //There must always be a genre in a proper acbf file...
+                    acbfDocument->metaData()->bookInfo()->setGenre("other");
+                }
+
+                if (keywords.size()>0) {
+                    acbfDocument->metaData()->bookInfo()->setKeywords(keywords, "");
+                }
+
+                if (acbfDocument->metaData()->bookInfo()->languages().size()>0) {
+                    QString lang = acbfDocument->metaData()->bookInfo()->languageEntryList().at(0);
+                    acbfDocument->metaData()->bookInfo()->setTitle(acbfDocument->metaData()->bookInfo()->title(""), lang);
+                    acbfDocument->metaData()->bookInfo()->setAnnotation(acbfDocument->metaData()->bookInfo()->annotation(""), lang);
+                    acbfDocument->metaData()->bookInfo()->setKeywords(acbfDocument->metaData()->bookInfo()->keywords(""), lang);
+                }
+            }
+            if (xmlReader.hasError()) {
+                qWarning() << Q_FUNC_INFO << "Failed to read CoMet document at token" << xmlReader.name()
+                           << "(" << xmlReader.lineNumber() << ":"
+                           << xmlReader.columnNumber() << ") The reported error was:" << xmlReader.errorString();
+            }
+            qDebug() << Q_FUNC_INFO << "Completed ACBF document creation from CoMet for" << acbfDocument->metaData()->bookInfo()->title();
+            acbfData = acbfDocument;
+            return !xmlReader.hasError();
+        } else {
+            xmlReader.skipCurrentElement();
+        }
+    }
+    return false;
 }

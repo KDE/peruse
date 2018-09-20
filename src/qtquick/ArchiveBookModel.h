@@ -178,6 +178,26 @@ protected:
 
 private:
     class Private;
+    /**
+     * @brief loadComicInfoXML
+     * Loads ComicInfo.xml, this is an old file metadata type used by comicrack, and since then
+     * written by other editors, amongst which a callibre plugin.
+     * @param xmlDocument string with the archive value.
+     * @param acbfData a pointer pointing to a acbfDocument.
+     * @param entries a list of image entries, sorted.
+     * @param filename the file name of the doument, necessary for writing data to kfilemetadata.
+     * @return whether the reading was succesful.
+     */
+    bool loadComicInfoXML(QString xmlDocument, QObject* acbfData, QStringList entries, QString filename);
+    /**
+     * @brief loads CoMet xmls, https://www.denvog.com/comet/comet-specification/
+     * @param xmlDocument string with the archive value.
+     * @param acbfData a pointer pointing to a acbfDocument.
+     * @param entries a list of image entries, sorted.
+     * @param filename the file name of the doument, necessary for writing data to kfilemetadata.
+     * @return whether the reading was succesful.
+     */
+    bool loadCoMet(QStringList xmlDocuments, QObject* acbfData, QStringList entries, QString filename);
     Private* d;
 };
 
