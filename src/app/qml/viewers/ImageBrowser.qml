@@ -113,10 +113,97 @@ ListView {
                         if (flick.interactive) {
                             flick.resizeContent(imageWidth, imageHeight, {x: imageWidth/2, y: imageHeight/2});
                         } else {
-                            flick.resizeContent(imageWidth * 2, imageHeight * 2, {x: mouse.x, y: mouse.y});
+                            flick.resizeContent(imageWidth * 2, imageHeight * 2, Qt.point(mouse.x, mouse.y));
                         }
                     }
                 }
+
+                // Setup for all the entries.
+                property QtObject currentPageObject: {
+                            if (model.index===0) {
+                                 currentPageObject = root.model.acbfData.metaData.bookInfo.coverpage();
+                             } else if (model.index > 0) {
+                                 currentPageObject = root.model.acbfData.body.page(model.index-1);
+                             }
+                }
+                property real muliplier: isTall? (paintedHeight / implicitHeight): (paintedWidth / implicitWidth);
+                property int offsetX: (width-paintedWidth)/2;
+                property int offsetY: (height-paintedHeight)/2;
+
+                function focusOnFrame(index) {
+                    if (index>-1) {
+                        var frameBounds = image.currentPageObject.frame(index).bounds;
+                        var frameMultiplier = image.implicitWidth/frameBounds.width;
+                        //Check if the height of the final frame is higher than the contentHeight
+                        //When we're using a *fit to with scheme.
+                        if ((frameBounds.height/frameBounds.width)*contentWidth > contentHeight) {
+                            frameMultiplier = image.implicitHeight/frameBounds.height;
+                            frameMultiplier = frameMultiplier * (contentHeight/image.paintedHeight);
+                        } else {
+                            frameMultiplier = frameMultiplier * (contentWidth/image.paintedWidth);
+                        }
+                        flick.resizeContent(imageWidth * frameMultiplier, imageHeight * frameMultiplier, Qt.point(0,0));
+                        var frameRect = Qt.rect(image.muliplier * frameBounds.x + image.offsetX,
+                                                image.muliplier * frameBounds.y+ image.offsetY,
+                                                image.muliplier * frameBounds.width,
+                                                image.muliplier * frameBounds.height);
+                        flick.contentX = frameRect.x - (flick.width-frameRect.width)/2;
+                        flick.contentY = frameRect.y - (flick.height-frameRect.height)/2;
+                    }
+                }
+
+                function nextFrame() {
+                    if (image.totalFrames > 0 && image.currentFrame+1 < image.totalFrames) {
+                        image.currentFrame++;
+                    } else {
+                        root.goNextPage();
+                        image.currentFrame = -1;
+                    }
+                }
+
+                function previousFrame() {
+                    if (image.totalFrames > 0 && image.currentFrame-1 > -1) {
+                        image.currentFrame--;
+                    } else {
+                        root.goPreviousPage();
+                        image.currentFrame = -1;
+                    }
+                }
+
+                property int totalFrames: image.currentPageObject? image.currentPageObject.framePointStrings.length: 0;
+                property int currentFrame: -1;
+                onCurrentFrameChanged: focusOnFrame(currentFrame);
+
+                Repeater {
+                    model: image.currentPageObject? image.currentPageObject.framePointStrings: 0;
+                    Rectangle {
+                        id: frame;
+                        x: image.muliplier * image.currentPageObject.frame(index).bounds.x + image.offsetX;
+                        y: image.muliplier * image.currentPageObject.frame(index).bounds.y + image.offsetY;
+                        width: {
+                            image.muliplier * image.currentPageObject.frame(index).bounds.width;
+                        }
+                        height: image.muliplier * image.currentPageObject.frame(index).bounds.height;
+                        color: "blue";
+                        opacity: 0;
+                        MouseArea {
+                            anchors.fill: parent;
+                            onClicked: startToggleControls();
+                            preventStealing: true;
+                            onDoubleClicked: {
+                                abortToggleControls();
+                                if (flick.interactive && image.currentFrame == index) {
+                                    flick.resizeContent(imageWidth, imageHeight, {x: imageWidth/2, y: imageHeight/2});
+                                    image.currentFrame = -1;
+                                } else {
+                                    image.currentFrame = index;
+                                    mouse.accepted;
+                                }
+                            }
+                        }
+                    }
+                }
+
                 MouseArea {
                     anchors {
                         top: parent.top;
@@ -124,7 +211,8 @@ ListView {
                         bottom: parent.bottom;
                     }
                     width: parent.width / 6;
-                    onClicked: root.goPreviousPage();
+                    preventStealing: true;
+                    onClicked: image.previousFrame();
                 }
                 MouseArea {
                     anchors {
@@ -133,7 +221,8 @@ ListView {
                         bottom: parent.bottom;
                     }
                     width: parent.width / 6;
-                    onClicked: root.goNextPage();
+                    preventStealing: true;
+                    onClicked: image.nextFrame();
                 }
             }
         }
