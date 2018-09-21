@@ -61,8 +61,8 @@ Kirigami.OverlaySheet {
     property alias middleName: middleNameField.text;
     property alias lastName: lastNameField.text;
     property alias nickName: nickNameField.text;
-    property var homePage: root.author.homePages;
-    property var email: root.author.emails;
+    property var homePage: root.author ? root.author.homePages : "";
+    property var email: root.author ? root.author.emails : "";
 
     Column {
         height: childrenRect.height;
@@ -188,7 +188,7 @@ Kirigami.OverlaySheet {
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere;
         }
         Repeater {
-            model: root.author.homePages;
+            model: root.author ? root.author.homePages : 0;
             QtControls.TextField {
                 width: parent.width - removeHomePageButton.width - Kirigami.Units.smallSpacing;
                 text: modelData;
@@ -244,7 +244,7 @@ Kirigami.OverlaySheet {
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere;
         }
         Repeater {
-            model: root.author.emails;
+            model: root.author ? root.author.emails : 0;
             QtControls.TextField {
                 width: parent.width - addEmailButton.width - Kirigami.Units.smallSpacing;
                 text: modelData;
