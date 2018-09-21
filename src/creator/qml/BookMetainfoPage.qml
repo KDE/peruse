@@ -1003,8 +1003,8 @@ Kirigami.ScrollablePage {
                 property real realValue: value / 100;
 
                 validator: DoubleValidator {
-                        bottom: Math.min(spinbox.from, spinbox.to)
-                        top:  Math.max(spinbox.from, spinbox.to)
+                        bottom: Math.min(versionSpinBox.from, versionSpinBox.to)
+                        top:  Math.max(versionSpinBox.from, versionSpinBox.to)
                 }
 
                 textFromValue: function(value, locale) {
