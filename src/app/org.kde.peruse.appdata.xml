@@ -44,7 +44,7 @@
       <image width="1839" height="1124">https://peruse.kde.org/screenshots/peruse-book-details.jpg</image>
     </screenshot>
   </screenshots>
-  <url type="homepage">http://peruse.kde.org/</url>
+  <url type="homepage">https://peruse.kde.org/</url>
   <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=peruse</url>
   <project_group>KDE</project_group>
   <provides>
