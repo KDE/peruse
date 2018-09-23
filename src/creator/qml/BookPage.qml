@@ -227,10 +227,10 @@ Kirigami.Page {
             }
 
             function createFrame() {
-                var x  = ( Math.min(startPoint.x, endPoint.x) - coverImage.offsetX ) / coverImage.muliplierWidth;
-                var x2 = ( Math.max(startPoint.x, endPoint.x) - coverImage.offsetX ) / coverImage.muliplierWidth;
-                var y  = ( Math.min(startPoint.y, endPoint.y) - coverImage.offsetY ) / coverImage.muliplierHeight;
-                var y2 = ( Math.max(startPoint.y, endPoint.y) - coverImage.offsetY ) / coverImage.muliplierHeight;
+                var x  = Math.max(( Math.min(startPoint.x, endPoint.x) - coverImage.offsetX ) / coverImage.muliplierWidth, 0);
+                var x2 = Math.min(( Math.max(startPoint.x, endPoint.x) - coverImage.offsetX ) / coverImage.muliplierWidth, coverImage.sourceSize.width);
+                var y  = Math.max(( Math.min(startPoint.y, endPoint.y) - coverImage.offsetY ) / coverImage.muliplierHeight, 0);
+                var y2 = Math.min(( Math.max(startPoint.y, endPoint.y) - coverImage.offsetY ) / coverImage.muliplierHeight, coverImage.sourceSize.height);
 
                 addPageArea.topLeft = Qt.point(x,y);
                 addPageArea.bottomRight = Qt.point(x2,y2);
