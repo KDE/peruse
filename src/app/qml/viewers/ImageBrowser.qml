@@ -120,11 +120,15 @@ ListView {
 
                 // Setup for all the entries.
                 property QtObject currentPageObject: {
-                            if (model.index===0) {
-                                 currentPageObject = root.model.acbfData.metaData.bookInfo.coverpage();
-                             } else if (model.index > 0) {
-                                 currentPageObject = root.model.acbfData.body.page(model.index-1);
-                             }
+                    if (model.acbfData) {
+                        if (model.index===0) {
+                            currentPageObject = root.model.acbfData.metaData.bookInfo.coverpage();
+                        } else if (model.index > 0) {
+                            currentPageObject = root.model.acbfData.body.page(model.index-1);
+                        }
+                    } else {
+                        null;
+                    }
                 }
                 property real muliplier: isTall? (paintedHeight / implicitHeight): (paintedWidth / implicitWidth);
                 property int offsetX: (width-paintedWidth)/2;
