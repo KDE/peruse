@@ -16,13 +16,13 @@
   </description>
   <screenshots>
     <screenshot type="default">
-      <image width="1519" height="969">http://leinir.dk/apps/peruse/screenshots/peruse-welcome.png</image>
+      <image width="1797" height="1155">https://peruse.kde.org/screenshots/peruse-welcome.jpg</image>
     </screenshot>
     <screenshot type="default">
-      <image width="1600" height="1200">http://leinir.dk/apps/peruse/screenshots/peruse-reading.png</image>
+      <image width="1886" height="1152">https://peruse.kde.org/screenshots/peruse-reading-sidebar.jpg</image>
     </screenshot>
     <screenshot type="default">
-      <image width="1450" height="920">http://leinir.dk/apps/peruse/screenshots/peruse-drilldown.png</image>
+      <image width="1839" height="1124">https://peruse.kde.org/screenshots/peruse-book-details.jpg</image>
     </screenshot>
   </screenshots>
   <url type="homepage">http://peruse.kde.org/</url>
