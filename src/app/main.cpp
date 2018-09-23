@@ -37,6 +37,8 @@ int main(int argc, char** argv)
     app.setApplicationDisplayName("Peruse");
     app.setOrganizationDomain("kde.org");
 
+    KLocalizedString::setApplicationDomain("peruse");
+
     QCommandLineParser parser;
     parser.addOption(QCommandLineOption(QStringLiteral("clear-db"), i18n("Clear the metainfo cache and perform a full rescan.")));
     // TODO file option for opening comics by passing them through on the command line

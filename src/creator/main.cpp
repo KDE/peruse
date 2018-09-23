@@ -33,6 +33,8 @@ int main(int argc, char** argv)
     QApplication app(argc, argv);
     app.setApplicationDisplayName("Peruse Creator");
 
+    KLocalizedString::setApplicationDomain("peruse");
+
     QCommandLineParser parser;
     // TODO file option for opening comics by passing them through on the command line
     parser.addHelpOption();
