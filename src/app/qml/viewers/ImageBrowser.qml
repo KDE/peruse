@@ -120,7 +120,7 @@ ListView {
 
                 // Setup for all the entries.
                 property QtObject currentPageObject: {
-                    if (model.acbfData) {
+                    if (root.model.acbfData) {
                         if (model.index===0) {
                             currentPageObject = root.model.acbfData.metaData.bookInfo.coverpage();
                         } else if (model.index > 0) {
