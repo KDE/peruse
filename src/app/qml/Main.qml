@@ -34,7 +34,7 @@ PeruseMain {
 
     FileDialog {
         id: openDlg;
-        title: i18nc("Title of a standard file open dialog used to open a book not in the collection", "Please choose a comic to open");
+        title: i18nc("@title:window standard file open dialog used to open a book not in the collection", "Please Choose a Comic to Open");
         folder: root.homeDir();
         property int splitPos: osIsWindows ? 8 : 7;
         onAccepted: {

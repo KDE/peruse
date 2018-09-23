@@ -39,7 +39,7 @@ Kirigami.OverlaySheet {
         Kirigami.Heading {
             width: parent.width;
             height: paintedHeight;
-            text: i18nc("title text for the add page sheet", "Add A Page?");
+            text: i18nc("title text for the add page sheet", "Add a Page?");
         }
         QtControls.Label {
             width: parent.width;
@@ -54,11 +54,11 @@ Kirigami.OverlaySheet {
         QtControls.Button {
             anchors.horizontalCenter: parent.horizontalCenter;
 //             iconName: "document-open";
-            text: i18nc("button to add a page by finding an image on the filesystem and copying it into the book", "Copy an image from your device");
+            text: i18nc("@action:button add a page by finding an image on the filesystem and copying it into the book", "Copy Image from Device");
             onClicked: openDlg.open();
             FileDialog {
                 id: openDlg;
-                title: i18nc("Title of a standard file open dialog used to find a page to add to the book", "Please choose an image to add");
+                title: i18nc("@title:window standard file open dialog used to find a page to add to the book", "Please Choose an Image to Add");
                 folder: mainWindow.homeDir();
                 property int splitPos: osIsWindows ? 8 : 7;
                 onAccepted: {
@@ -75,12 +75,12 @@ Kirigami.OverlaySheet {
         QtControls.Button {
             anchors.horizontalCenter: parent.horizontalCenter;
 //             iconName: "document-new";
-            text: i18nc("button to add a page by creating a new image using an image editor", "Create a new image using an image editor");
+            text: i18nc("@action:button add a page by creating a new image using an image editor", "Create a New Image Using an Image Editor");
         }
         QtControls.Button {
             anchors.horizontalCenter: parent.horizontalCenter;
 //             iconName: "camera";
-            text: i18nc("button to add a page by taking a photo with a camera", "Take a photo and add that");
+            text: i18nc("@action:button add a page by taking a photo with a camera", "Take a Photo and Add That");
         }
     }
 }

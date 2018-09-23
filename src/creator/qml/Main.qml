@@ -69,7 +69,7 @@ Kirigami.ApplicationWindow {
         modal: false;
         actions: [
             Kirigami.Action {
-                text: "Welcome";
+                text: i18nc("Switch to the welcome page", "Welcome");
                 iconName: "start-over";
                 checked: mainWindow.currentCategory === "welcomePage";
                 checkable: true;
@@ -80,12 +80,12 @@ Kirigami.ApplicationWindow {
             Kirigami.Action {
             },
             Kirigami.Action {
-                text: i18nc("Create a book", "Create a new book...");
+                text: i18nc("Create a book", "Create a New Book...");
                 iconName: "document-new";
                 onTriggered: changeCategory(createNewBookPage);
             },
             Kirigami.Action {
-                text: i18nc("Open a book from somewhere on disk (uses the open dialog, or a drilldown on touch devices)", "Open other...");
+                text: i18nc("Open a book from somewhere on disk (uses the open dialog, or a drilldown on touch devices)", "Open Other...");
                 iconName: "document-open";
                 onTriggered: openOther();
             },
@@ -139,7 +139,7 @@ Kirigami.ApplicationWindow {
 
     FileDialog {
         id: openDlg;
-        title: i18nc("Title of a standard file open dialog used to open a book not in the collection", "Please choose a book to open");
+        title: i18nc("@title:window standard file open dialog used to open a book not in the collection", "Please Choose a Book to Open");
         folder: mainWindow.homeDir();
         nameFilters: [ "Comic Book Archive zip format (*.cbz)", "All files (*)" ]
         property int splitPos: osIsWindows ? 8 : 7;

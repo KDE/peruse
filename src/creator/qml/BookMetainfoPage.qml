@@ -105,14 +105,14 @@ Kirigami.ScrollablePage {
         QtControls.TextField {
             id: defaultKeywords;
             width: parent.width;
-            placeholderText: i18nc("placeholder text for the add new keyword text entry", "Write a comma seperated list of keywords.");
+            placeholderText: i18nc("placeholder text for the add new keyword text entry", "Write a comma separated list of keywords.");
             text:root.model.acbfData ? root.model.acbfData.metaData.bookInfo.keywords("").join(", ") : "";
         }
 
         Kirigami.Heading {
             width: parent.width;
             height: paintedHeight + Kirigami.Units.smallSpacing * 2;
-            text: i18nc("label text for the edit field for the author list", "Authors (" + authorRepeater.count + ")");
+            text: i18nc("label text for the edit field for the author list", "Authors (%1)", authorRepeater.count);
         }
         Repeater {
             id: authorRepeater;
@@ -351,7 +351,7 @@ Kirigami.ScrollablePage {
                 }
 
                 QtControls.Label {
-                    text: i18nc("Label for sequence number:","Number:");
+                    text: i18nc("Label for sequence number","Number:");
                     id: sequenceNumberLabel;
                     height:numberField.height;
                     anchors {
@@ -375,7 +375,7 @@ Kirigami.ScrollablePage {
                     editable: true;
                 }
                 QtControls.Label {
-                    text: i18nc("Label for sequence Volume:","Volume:");
+                    text: i18nc("Label for sequence volume","Volume:");
                     id: sequenceVolumeLabel;
                     height:volumeField.height;
                     anchors {
@@ -748,13 +748,13 @@ Kirigami.ScrollablePage {
             }
         }
         QtControls.Label {
-            text: i18nc("Label for isbn", "ISBN:");
+            text: i18nc("Label for ISBN", "ISBN:");
         }
 
         QtControls.TextField {
             width : parent.width;
             id: isbn;
-            placeholderText: i18nc("placeholder text for the publishing isbn entry", "Write to add isbn");
+            placeholderText: i18nc("placeholder text for the publishing ISBN entry", "Write to add ISBN");
             text: root.model.acbfData? root.model.acbfData.metaData.publishInfo.isbn: "";
             onEditingFinished: {
                 if (root.model.acbfData && text !=="") {

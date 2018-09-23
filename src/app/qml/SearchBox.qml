@@ -117,7 +117,7 @@ Rectangle {
                 id: bookTile;
                 height: model.categoryEntriesCount < 1 ? neededHeight : 0;
                 width: parent.width;
-                author: model.author ? model.author : i18nc("used for the author data in book lists if autor is empty", "(unknown)");
+                author: model.author ? model.author : i18nc("used for the author data in book lists if author is empty", "(unknown)");
                 title: model.title;
                 filename: model.filename;
                 thumbnail: model.thumbnail;

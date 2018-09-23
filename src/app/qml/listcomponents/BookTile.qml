@@ -201,7 +201,7 @@ Item {
         ]
         QtControls.Button {
             id: deleteButton;
-            text: i18nc("Spawn inline dialog box to confirm permanent removal of this book", "Delete from device");
+            text: i18nc("Spawn inline dialog box to confirm permanent removal of this book", "Delete from Device");
             anchors {
                 bottom: parent.bottom;
                 right: parent.right;
@@ -238,7 +238,7 @@ Item {
                     right: parent.horizontalCenter;
                     rightMargin: (parent.width - width) / 4;
                 }
-                text: i18nc("Confirmation button for book delete dialog", "Yes, really delete");
+                text: i18nc("Confirmation button for book delete dialog", "Yes, Really Delete");
 //                 iconName: "dialog-ok";
                 onClicked: root.bookDeleteRequested();
             }
@@ -249,7 +249,7 @@ Item {
                     left: parent.horizontalCenter;
                     leftMargin: (parent.width - width) / 4;
                 }
-                text: i18nc("Cancellation button or book delete dialog", "No, cancel delete");
+                text: i18nc("Cancellation button or book delete dialog", "No, Cancel Delete");
 //                 iconName: "dialog-cancel";
                 onClicked: deleteBase.state = "";
             }

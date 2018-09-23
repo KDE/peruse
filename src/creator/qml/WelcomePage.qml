@@ -120,7 +120,7 @@ Kirigami.Page {
                     QtControls.Button {
                         anchors.centerIn: parent;
 //                         iconName: "go-next";
-                        text: i18nc("Button to continue working on the most recently opened comic book archive", "Continue %1", continueLast.mostRecentBook.split('/').pop());
+                        text: i18nc("@action:button continue working on the most recently opened comic book archive", "Continue %1", continueLast.mostRecentBook.split('/').pop());
                         onClicked: mainWindow.openBook(continueLast.mostRecentBook);
                     }
                     property string mostRecentBook: "";
@@ -146,7 +146,7 @@ Kirigami.Page {
                     QtControls.Button {
                         anchors.centerIn: parent;
 //                         iconName: "document-open";
-                        text: i18nc("Button to open existing comic book archive", "Open Existing...");
+                        text: i18nc("@action:button open existing comic book archive", "Open Existing...");
                         onClicked: mainWindow.openOther();
                     }
                 }
@@ -160,7 +160,7 @@ Kirigami.Page {
                     QtControls.Button {
                         anchors.centerIn: parent;
 //                         iconName: "document-new";
-                        text: i18nc("Button to create a new, empty comic book archive", "Create Blank");
+                        text: i18nc("@action:button create a new, empty comic book archive", "Create Blank");
                         onClicked: mainWindow.createNew();
                     }
                 }
@@ -174,7 +174,7 @@ Kirigami.Page {
                     QtControls.Button {
                         anchors.centerIn: parent;
 //                         iconName: "folder-open";
-                        text: i18nc("Button to create a new comic book archive by copying in a bunch of pictures", "Create From Images...");
+                        text: i18nc("@action:button create a new comic book archive by copying in a bunch of pictures", "Create from Images...");
                     }
                 }
             }

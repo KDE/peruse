@@ -166,7 +166,7 @@ Kirigami.Page {
 
     FileDialog {
         id: desktopFolderDlg;
-        title: i18nc("title for the dialogue used to add a new search folder", "Select a folder");
+        title: i18nc("@title:window dialogue used to add a new search folder", "Select a Folder");
         selectFolder: true;
         folder: shortcuts.home;
         onAccepted: {

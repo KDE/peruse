@@ -52,21 +52,21 @@ Kirigami.Page {
     property list<QtObject> mobileActions;
     property list<QtObject> desktopActions: [
         Kirigami.Action {
-            text: i18n("Open selected book");
+            text: i18n("Open Selected Book");
             shortcut: "Return";
             iconName: "document-open";
             onTriggered: bookSelected(startWithThese.currentItem.filename, startWithThese.currentItem.currentPage);
             enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
         },
         Kirigami.Action {
-            text: i18nc("select the previous book entry in the list", "Previous book");
+            text: i18nc("select the previous book entry in the list", "Previous Book");
             shortcut: StandardKey.MoveToPreviousChar;
             iconName: "go-previous";
             onTriggered: startWithThese.selectPrevious();
             enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
         },
         Kirigami.Action {
-            text: i18nc("select the next book entry in the list", "Next book");
+            text: i18nc("select the next book entry in the list", "Next Book");
             shortcut: StandardKey.MoveToNextChar;
             iconName: "go-next";
             onTriggered: startWithThese.selectNext();
@@ -220,7 +220,7 @@ Kirigami.Page {
                 width: parent.width;
                 height: childrenRect.height;
                 ListComponents.Section {
-                    text: i18nc("title of list of recently opened books", "Continue reading");
+                    text: i18nc("title of list of recently opened books", "Continue Reading");
                     width: startWithThese.width;
                     height: rread0.height > 0 ? paintedHeight : 0;
                     visible: height > 0;
@@ -320,7 +320,7 @@ Kirigami.Page {
                     }
                 }
                 ListComponents.Section {
-                    text: i18nc("title of list of recently discovered books", "Recently added");
+                    text: i18nc("title of list of recently discovered books", "Recently Added");
                     width: startWithThese.width;
                     height: paintedHeight;
                 }
@@ -328,7 +328,7 @@ Kirigami.Page {
                     visible: !firstRecentlyAddedBook.visible;
                     height: visible ? paintedHeight : 0;
                     width: startWithThese.width;
-                    text: i18nc("description text for the recently discovered list, shown when no items exist in the search paths", "You have no comics on your device. Please put some into your Documents or Downloads folder (for example by downloading some) and they will show up here!");
+                    text: i18nc("description text for the recently discovered list, shown when no items exist in the search paths", "You have no comics on your device. Please put some into your Documents or Downloads folder (for example by downloading some) and they will show up here.");
                     wrapMode: Text.WordWrap;
                     horizontalAlignment: Text.AlignHCenter;
                 }

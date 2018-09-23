@@ -160,13 +160,13 @@ Kirigami.Page {
 
     property list<QtObject> mobileActions: [
         Kirigami.Action {
-            text: applicationWindow().visibility !== Window.FullScreen ? i18nc("Enter full screen mode on a touch-based device", "Go full screen") : i18nc("Exit full sceen mode on a touch based device", "Exit full screen");
+            text: applicationWindow().visibility !== Window.FullScreen ? i18nc("Enter full screen mode on a touch-based device", "Go Full Screen") : i18nc("Exit full sceen mode on a touch based device", "Exit Full Screen");
             iconName: "view-fullscreen";
             onTriggered: toggleFullscreen();
             enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypePhone;
         },
         Kirigami.Action {
-            text: i18nc("Action used on touch devices to close the currently open book and return to whatever page was most recently shown", "Close book");
+            text: i18nc("Action used on touch devices to close the currently open book and return to whatever page was most recently shown", "Close Book");
             shortcut: bookInfo.sheetOpen ? "" : "Esc";
             iconName: "dialog-close";
             onTriggered: closeBook();
@@ -175,7 +175,7 @@ Kirigami.Page {
     ]
     property list<QtObject> desktopActions: [
         Kirigami.Action {
-            text: i18nc("Top level entry leading to a submenu with options for the book display", "View options");
+            text: i18nc("Top level entry leading to a submenu with options for the book display", "View Options");
             iconName: "configure";
             QtObject {
                 property string text: "Reading Direction"
@@ -219,28 +219,28 @@ Kirigami.Page {
 //             QtObject {}
         },
         Kirigami.Action {
-            text: i18nc("Go to the previous page in the book", "Previous page");
+            text: i18nc("Go to the previous page in the book", "Previous Page");
             shortcut: root.isCurrentPage && bookInfo.sheetOpen ? "" : StandardKey.MoveToPreviousChar;
             iconName: "go-previous";
             onTriggered: previousPage();
             enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
         },
         Kirigami.Action {
-            text: i18nc("Go to the next page in the book", "Next page");
+            text: i18nc("Go to the next page in the book", "Next Page");
             shortcut: bookInfo.sheetOpen ? "" : StandardKey.MoveToNextChar;
             iconName: "go-next";
             onTriggered: nextPage();
             enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
         },
         Kirigami.Action {
-            text: applicationWindow().visibility !== Window.FullScreen ? i18nc("Enter full screen mode on a non-touch-based device", "Go full screen") : i18nc("Exit full sceen mode on a non-touch based device", "Exit full screen");
+            text: applicationWindow().visibility !== Window.FullScreen ? i18nc("Enter full screen mode on a non-touch-based device", "Go Full Screen") : i18nc("Exit full sceen mode on a non-touch based device", "Exit Full Screen");
             shortcut: (applicationWindow().visibility === Window.FullScreen) ? (bookInfo.sheetOpen ? "" : "Esc") : "f";
             iconName: "view-fullscreen";
             onTriggered: toggleFullscreen();
             enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
         },
         Kirigami.Action {
-            text: i18nc("Action used on non-touch devices to close the currently open book and return to whatever page was most recently shown", "Close book");
+            text: i18nc("Action used on non-touch devices to close the currently open book and return to whatever page was most recently shown", "Close Book");
             shortcut: (applicationWindow().visibility === Window.FullScreen) ? "" : (bookInfo.sheetOpen ? "" : "Esc");
             iconName: "dialog-close";
             onTriggered: closeBook();
@@ -273,7 +273,7 @@ Kirigami.Page {
     }
     Kirigami.Action {
         id: mainBookAction;
-        text: applicationWindow().visibility !== Window.FullScreen ? i18nc("Enter full screen mode on any device type", "Go full screen") : i18nc("Exit full screen mode on any device type", "Exit full screen");
+        text: applicationWindow().visibility !== Window.FullScreen ? i18nc("Enter full screen mode on any device type", "Go Full Screen") : i18nc("Exit full screen mode on any device type", "Exit Full Screen");
         iconName: "view-fullscreen";
         onTriggered: toggleFullscreen();
         enabled: root.isCurrentPage;

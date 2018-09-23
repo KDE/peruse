@@ -37,7 +37,7 @@ PeruseMain {
         Kirigami.Page {
             id: root;
             property string folder;
-            title: i18nc("Title of a page which lets you open comics not in your collection by using a standard touch-friendly dig-down style filesystem browser", "Open comics not in your collection");
+            title: i18nc("Title of a page which lets you open comics not in your collection by using a standard touch-friendly dig-down style filesystem browser", "Open Comics not in Your Collection");
             FileFinder {
                 width: root.width - (root.leftPadding + root.rightPadding);
                 height: root.height - (root.topPadding + root.bottomPadding);

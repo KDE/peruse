@@ -91,7 +91,7 @@ Kirigami.Page {
             }
             FileDialog {
                 id: getFolderDlg;
-                title: i18nc("Title of a folder dialog used to select the location of a new book", "Please choose the location for the book");
+                title: i18nc("@title:window folder dialog used to select the location of a new book", "Please Choose the Location for the Book");
                 folder: mainWindow.homeDir();
                 selectFolder: true;
             }
@@ -113,7 +113,7 @@ Kirigami.Page {
             }
             FileDialog {
                 id: getCoverDlg;
-                title: i18nc("Title of a file dialog used to select the cover image for a new book", "Please choose your cover image");
+                title: i18nc("@title:window file dialog used to select the cover image for a new book", "Please Choose Your Cover Image");
                 folder: mainWindow.homeDir();
                 nameFilters: [ "JPEG images (*.jpg, *.jpeg)", "All files (*)" ];
             }

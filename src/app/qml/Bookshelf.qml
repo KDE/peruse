@@ -77,21 +77,21 @@ Kirigami.ScrollablePage {
             enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop && applicationWindow().pageStack.currentIndex > 0;
         },
 //         Kirigami.Action {
-//             text: i18nc("Select the previous book in the list", "Select previous book");
+//             text: i18nc("Select the previous book in the list", "Select Previous Book");
 //             shortcut: StandardKey.MoveToPreviousChar
 //             iconName: "go-previous";
 //             onTriggered: shelfList.previousEntry();
 //             enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
 //         },
 //         Kirigami.Action {
-//             text: i18nc("Select the next book in the list", "Select next book");
+//             text: i18nc("Select the next book in the list", "Select Next Book");
 //             shortcut: StandardKey.MoveToNextChar;
 //             iconName: "go-next";
 //             onTriggered: shelfList.nextEntry();
 //             enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
 //         },
         Kirigami.Action {
-            text: i18nc("Open the book which is currently selected in the list", "Open selected book");
+            text: i18nc("Open the book which is currently selected in the list", "Open Selected Book");
             shortcut: "Return";
             iconName: "document-open";
             onTriggered: openBook(shelfList.currentIndex);
@@ -163,7 +163,7 @@ Kirigami.ScrollablePage {
                 id: bookTile;
                 height: model.categoryEntriesCount < 1 ? neededHeight : 0;
                 width: parent.width;
-                author: model.author ? model.author : i18nc("used for the author data in book lists if autor is empty", "(unknown)");
+                author: model.author ? model.author : i18nc("used for the author data in book lists if author is empty", "(unknown)");
                 title: model.title;
                 filename: model.filename;
                 thumbnail: model.categoryEntriesCount < 1 ? model.thumbnail : "";

@@ -95,7 +95,7 @@ Kirigami.OverlaySheet {
         QtControls.Label {
             width: parent.width;
             height: paintedHeight;
-            text: i18nc("help text for the edit author sheet", "Please coplete the information for this author.");
+            text: i18nc("help text for the edit author sheet", "Please complete the information for this author.");
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere;
         }
         Item {

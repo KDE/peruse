@@ -115,7 +115,7 @@ Kirigami.ApplicationWindow {
     }
     property list<QtObject> globalDrawerActions: [
             Kirigami.Action {
-                text: "Welcome";
+                text: i18nc("Switch to the welcome page", "Welcome");
                 iconName: "start-over";
                 checked: mainWindow.currentCategory === "welcomePage";
                 onTriggered: {
@@ -164,7 +164,7 @@ Kirigami.ApplicationWindow {
             Kirigami.Action {
             },
             Kirigami.Action {
-                text: i18nc("Open a book from somewhere on disk (uses the open dialog, or a drilldown on touch devices)", "Open other...");
+                text: i18nc("Open a book from somewhere on disk (uses the open dialog, or a drilldown on touch devices)", "Open Other...");
                 iconName: "document-open";
                 onTriggered: openOther();
             },
