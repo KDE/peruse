@@ -580,7 +580,7 @@ void ArchiveBookModel::addPageFromFile(QString fileUrl, int insertAfter)
 
         // This is a permanent thing, renaming in zip files is VERY expensive (literally not possible without
         // rewriting the entire archive...)
-        QString archiveFileName = QString("page-%1.jpg").arg(QString::number(insertionIndex));
+        QString archiveFileName = QString("page-%1.%2").arg(QString::number(insertionIndex), QFileInfo(fileUrl).completeSuffix());
         d->archive->close();
         d->archive->open(QIODevice::ReadWrite);
         d->archive->addLocalFile(fileUrl, archiveFileName);
@@ -649,12 +649,13 @@ QString ArchiveBookModel::createBook(QString folder, QString title, QString cove
     model->BookModel::setFilename(filename);
     model->setTitle(title);
     AdvancedComicBookFormat::Document* acbfDocument = qobject_cast<AdvancedComicBookFormat::Document*>(model->acbfData());
-    acbfDocument->metaData()->bookInfo()->coverpage()->setImageHref("cover.jpg");
+    QString coverArchiveName = QString("cover.%1").arg(QFileInfo(coverUrl).completeSuffix());
+    acbfDocument->metaData()->bookInfo()->coverpage()->setImageHref(coverArchiveName);
     success = model->saveBook();
 
     model->d->archive->close();
     model->d->archive->open(QIODevice::ReadWrite);
-    model->d->archive->addLocalFile(coverUrl, "cover.jpg");
+    model->d->archive->addLocalFile(coverUrl, coverArchiveName);
     model->d->archive->close();
 
     model->deleteLater();
