@@ -284,7 +284,9 @@ void CategoryEntriesModel::addCategoryEntry(const QString& categoryName, BookEnt
             d->categoryModels.insert(insertionIndex, categoryModel);
             endInsertRows();
         }
-        categoryModel->append(entry);
+        if (categoryModel->indexOfFile(entry->filename) == -1) {
+            categoryModel->append(entry);
+        }
         categoryModel->addCategoryEntry(splitName.join("/"), entry);
     }
 }

@@ -117,10 +117,14 @@ public:
         for (int i=0; i<entry->series.size(); i++) {
             seriesCategoryModel->addCategoryEntry(entry->series.at(i), entry);
         }
-        newlyAddedCategoryModel->append(entry, CreatedRole);
+        if (newlyAddedCategoryModel->indexOfFile(entry->filename) == -1) {
+            newlyAddedCategoryModel->append(entry, CreatedRole);
+        }
         QUrl url(entry->filename.left(entry->filename.lastIndexOf("/")));
         folderCategoryModel->addCategoryEntry(url.path().mid(1), entry);
-        folderCategoryModel->append(entry);
+        if (folderCategoryModel->indexOfFile(entry->filename) == -1) {
+            folderCategoryModel->append(entry);
+        }
     }
 
     void loadCache(BookListModel* q) {
