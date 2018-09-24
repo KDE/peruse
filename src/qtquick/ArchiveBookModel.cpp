@@ -719,11 +719,20 @@ bool ArchiveBookModel::loadComicInfoXML(QString xmlDocument, QObject *acbfData, 
                  */
                 else if(xmlReader.name() == QStringLiteral("Notes"))
                 {
-                    filedata.setUserComment(xmlReader.readElementText());
+                    if (filedata.userComment().isEmpty()) {
+                        filedata.setUserComment(xmlReader.readElementText());
+                    }
                 }
                 else if(xmlReader.name() == QStringLiteral("Tags"))
                 {
-                    filedata.setTags(xmlReader.readElementText().split(","));
+                    QStringList tags = filedata.tags();
+                    QStringList newTags = xmlReader.readElementText().split(",");
+                    for (int i=0; i < newTags.size(); i++) {
+                        if (!tags.contains(newTags.at(i))) {
+                            tags.append(newTags.at(i));
+                        }
+                    }
+                    filedata.setTags(tags);
                 }
                 else if(xmlReader.name() == QStringLiteral("PageCount"))
                 {
