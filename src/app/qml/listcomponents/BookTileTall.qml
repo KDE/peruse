@@ -31,7 +31,7 @@ Item {
     id: root;
     property bool selected: false;
     property alias title: bookTitle.text;
-    property string author;
+    property var author: [];
     property string filename;
     property int categoryEntriesCount;
     property string currentPage;

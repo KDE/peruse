@@ -160,5 +160,29 @@ QString PeruseConfig::homeDir() const
 void PeruseConfig::setFilesystemProperty(QString fileName, QString propertyName, QString value)
 {
     KFileMetaData::UserMetaData data(fileName);
-    data.setAttribute(QString("peruse.").append(propertyName), value);
+    if (propertyName == "rating") {
+        data.setRating(value.toInt());
+    } else if (propertyName == "tags") {
+        data.setTags(value.split(","));
+    } else if (propertyName == "comment") {
+        data.setUserComment(value);
+    } else {
+        data.setAttribute(QString("peruse.").append(propertyName), value);
+    }
+}
+
+QString PeruseConfig::getFilesystemProperty(QString fileName, QString propertyName)
+{
+    QString value;
+    KFileMetaData::UserMetaData data(fileName);
+    if (propertyName == "rating") {
+        value = QString::number(data.rating());
+    } else if (propertyName == "tags") {
+        value = data.tags().join(",");
+    } else if (propertyName == "comment") {
+        value = data.userComment();
+    } else {
+        value = data.attribute(QString("peruse.").append(propertyName));
+    }
+    return value;
 }

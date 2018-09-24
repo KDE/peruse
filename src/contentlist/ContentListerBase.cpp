@@ -64,6 +64,13 @@ QVariantMap ContentListerBase::metaDataForFile(const QString& file)
         int totalPages = data.attribute("peruse.totalPages").toInt();
         metadata["totalPages"] = QVariant::fromValue<int>(totalPages);
     }
+    if (!data.tags().isEmpty()) {
+        metadata["tags"] = QVariant::fromValue<QStringList>(data.tags());
+    }
+    if (!data.userComment().isEmpty()) {
+        metadata["comment"] = QVariant::fromValue<QString>(data.userComment());
+    }
+    metadata["rating"] = QVariant::fromValue<int>(data.rating());
 
     return metadata;
 }

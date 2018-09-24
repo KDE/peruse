@@ -53,6 +53,10 @@ public:
         obj->setProperty("title", entry->title);
         obj->setProperty("totalPages", entry->totalPages);
         obj->setProperty("thumbnail", entry->thumbnail);
+        obj->setProperty("description", entry->description);
+        obj->setProperty("comment", entry->comment);
+        obj->setProperty("tags", entry->tags);
+        obj->setProperty("rating", QString::number(entry->rating));
         return obj;
     }
 };
@@ -86,6 +90,10 @@ QHash<int, QByteArray> CategoryEntriesModel::roleNames() const
     roles[CategoryEntriesModelRole] = "categoryEntriesModel";
     roles[CategoryEntryCountRole] = "categoryEntriesCount";
     roles[ThumbnailRole] = "thumbnail";
+    roles[DescriptionRole] = "description";
+    roles[CommentRole] = "comment";
+    roles[TagsRole] = "tags";
+    roles[RatingRole] = "rating";
     return roles;
 }
 
@@ -158,6 +166,18 @@ QVariant CategoryEntriesModel::data(const QModelIndex& index, int role) const
                     break;
                 case ThumbnailRole:
                     result.setValue(entry->thumbnail);
+                    break;
+                case DescriptionRole:
+                    result.setValue(entry->description);
+                    break;
+                case CommentRole:
+                    result.setValue(entry->comment);
+                    break;
+                case TagsRole:
+                    result.setValue(entry->tags);
+                    break;
+                case RatingRole:
+                    result.setValue(entry->rating);
                     break;
                 default:
                     result.setValue(QString("Unknown role"));
@@ -353,6 +373,13 @@ QObject* CategoryEntriesModel::bookFromFile(QString filename)
             if (data.hasAttribute("peruse.totalPages")) {
                 int totalPages = data.attribute("peruse.totalPages").toInt();
                 obj->setProperty("totalPages", QVariant::fromValue<int>(totalPages));
+            }
+            obj->setProperty("rating", QVariant::fromValue<int>(data.rating()));
+            if (!data.tags().isEmpty()) {
+                obj->setProperty("tags", QVariant::fromValue<QStringList>(data.tags()));
+            }
+            if (!data.userComment().isEmpty()) {
+                obj->setProperty("comment", QVariant::fromValue<QString>(data.userComment()));
             }
             obj->setProperty("filename", filename);
 

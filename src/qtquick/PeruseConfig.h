@@ -113,6 +113,13 @@ public:
      * Creates a KFileMetaData::UserMetaData for this file, propery and value so the information is not lost when files are moved around outside of Peruse
      */
     Q_INVOKABLE void setFilesystemProperty(QString fileName, QString propertyName, QString value);
+    /**
+     * @brief getFilesystemProperty
+     * @param fileName file name of the file to get data from.
+     * @param propertyName value of the proper to get data from.
+     * @return the value of the property.
+     */
+    Q_INVOKABLE QString getFilesystemProperty(QString fileName, QString propertyName);
 private:
     class Private;
     Private* d;

@@ -354,7 +354,7 @@ QString ArchiveBookModel::publisher() const
     AdvancedComicBookFormat::Document* acbfDocument = qobject_cast<AdvancedComicBookFormat::Document*>(acbfData());
     if(acbfDocument)
     {
-        if(acbfDocument->metaData()->publishInfo()->publisher().length() > 0)
+        if(!acbfDocument->metaData()->publishInfo()->publisher().isEmpty())
         {
             return acbfDocument->metaData()->publishInfo()->publisher();
         }

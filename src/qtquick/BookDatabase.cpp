@@ -58,7 +58,7 @@ public:
             return true;
 
         QSqlQuery q;
-        if (!q.exec(QLatin1String("create table books(filename varchar primary key, filetitle varchar, title varchar, series varchar, author varchar, publisher varchar, created datetime, lastOpenedTime datetime, totalPages integer, currentPage integer, thumbnail varchar)"))) {
+        if (!q.exec(QLatin1String("create table books(filename varchar primary key, filetitle varchar, title varchar, series varchar, author varchar, publisher varchar, created datetime, lastOpenedTime datetime, totalPages integer, currentPage integer, thumbnail varchar, description varchar, comment varchar, tags varchar, rating integer)"))) {
             qDebug() << "Database could not create the table books";
             return false;
         }
@@ -89,21 +89,25 @@ QList<BookEntry*> BookDatabase::loadEntries()
     }
 
     QList<BookEntry*> entries;
-    QSqlQuery allEntries("SELECT filename, filetitle, title, series, author, publisher, created, lastOpenedTime, totalPages, currentPage, thumbnail FROM books");
+    QSqlQuery allEntries("SELECT filename, filetitle, title, series, author, publisher, created, lastOpenedTime, totalPages, currentPage, thumbnail, description, comment, tags, rating FROM books");
     while(allEntries.next())
     {
         BookEntry* entry = new BookEntry();
         entry->filename = allEntries.value(0).toString();
         entry->filetitle = allEntries.value(1).toString();
         entry->title = allEntries.value(2).toString();
-        entry->series = allEntries.value(3).toString();
-        entry->author = allEntries.value(4).toString();
+        entry->series = allEntries.value(3).toString().split(",");
+        entry->author = allEntries.value(4).toString().split(",");
         entry->publisher = allEntries.value(5).toString();
         entry->created = allEntries.value(6).toDateTime();
         entry->lastOpenedTime = allEntries.value(7).toDateTime();
         entry->totalPages = allEntries.value(8).toInt();
         entry->currentPage = allEntries.value(9).toInt();
         entry->thumbnail = allEntries.value(10).toString();
+        entry->description = allEntries.value(11).toString().split(",");
+        entry->comment = allEntries.value(12).toString();
+        entry->tags = allEntries.value(13).toString().split(",");
+        entry->rating = allEntries.value(14).toInt();
         entries.append(entry);
     }
 
@@ -119,13 +123,13 @@ void BookDatabase::addEntry(BookEntry* entry)
     qDebug() << "Adding newly discovered book to the database" << entry->filename;
 
     QSqlQuery newEntry;
-    newEntry.prepare("INSERT INTO books (filename, filetitle, title, series, author, publisher, created, lastOpenedTime, totalPages, currentPage, thumbnail) "
-                     "VALUES (:filename, :filetitle, :title, :series, :author, :publisher, :created, :lastOpenedTime, :totalPages, :currentPage, :thumbnail)");
+    newEntry.prepare("INSERT INTO books (filename, filetitle, title, series, author, publisher, created, lastOpenedTime, totalPages, currentPage, thumbnail, description, comment, tags, rating) "
+                     "VALUES (:filename, :filetitle, :title, :series, :author, :publisher, :created, :lastOpenedTime, :totalPages, :currentPage, :thumbnail, :description, :comment, :tags, :rating)");
     newEntry.bindValue(":filename", entry->filename);
     newEntry.bindValue(":filetitle", entry->filetitle);
     newEntry.bindValue(":title", entry->title);
-    newEntry.bindValue(":series", entry->series);
-    newEntry.bindValue(":author", entry->author);
+    newEntry.bindValue(":series", entry->series.join(","));
+    newEntry.bindValue(":author", entry->author.join(","));
     newEntry.bindValue(":publisher", entry->publisher);
     newEntry.bindValue(":publisher", entry->publisher);
     newEntry.bindValue(":created", entry->created);
@@ -133,6 +137,10 @@ void BookDatabase::addEntry(BookEntry* entry)
     newEntry.bindValue(":totalPages", entry->totalPages);
     newEntry.bindValue(":currentPage", entry->currentPage);
     newEntry.bindValue(":thumbnail", entry->thumbnail);
+    newEntry.bindValue(":description", entry->description.join(","));
+    newEntry.bindValue(":comment", entry->comment);
+    newEntry.bindValue(":tags", entry->tags.join(","));
+    newEntry.bindValue(":rating", entry->rating);
     newEntry.exec();
 
     d->closeDb();

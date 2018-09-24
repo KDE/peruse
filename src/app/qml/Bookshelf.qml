@@ -92,7 +92,7 @@ Kirigami.ScrollablePage {
 //         },
         Kirigami.Action {
             text: i18nc("Open the book which is currently selected in the list", "Open Selected Book");
-            shortcut: "Return";
+            shortcut: bookDetails.sheetOpen? "" : "Return";
             iconName: "document-open";
             onTriggered: openBook(shelfList.currentIndex);
             enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
@@ -193,6 +193,7 @@ Kirigami.ScrollablePage {
             property string thumbnail: "";
             property string currentPage: "0";
             property string totalPages: "0";
+            property string comment: "";
         }
         ListComponents.BookTile {
             id: detailsTile;
@@ -206,6 +207,7 @@ Kirigami.ScrollablePage {
             categoryEntriesCount: 0;
             currentPage: bookDetails.currentBook.readProperty("currentPage");
             totalPages: bookDetails.currentBook.readProperty("totalPages");
+            description: bookDetails.currentBook.readProperty("description");
             onBookSelected: {
                 bookDetails.close();
                 applicationWindow().showBook(filename, currentPage);

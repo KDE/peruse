@@ -422,13 +422,17 @@ Kirigami.Page {
         property bool controlsShown;
         property QtObject currentBook: fakeBook;
         property QtObject fakeBook: Peruse.PropertyContainer {
-            property string author: "";
+            property var author: [""];
             property string title: "";
             property string filename: "";
             property string publisher: "";
             property string thumbnail: "";
             property string currentPage: "0";
             property string totalPages: "0";
+            property string comment: "";
+            property var tags: [""];
+            property var description: [""];
+            property string rating: "0";
         }
         Column {
             clip: true;
@@ -447,6 +451,7 @@ Kirigami.Page {
                 categoryEntriesCount: 0;
                 currentPage: bookInfo.currentBook.readProperty("currentPage");
                 totalPages: bookInfo.currentBook.readProperty("totalPages");
+                description: bookInfo.currentBook.readProperty("description");
                 onBookSelected: {
                     if(root.file !== filename) {
                         openSelected();
@@ -470,7 +475,7 @@ Kirigami.Page {
                 orientation: ListView.Horizontal;
                 NumberAnimation { id: seriesListAnimation; target: seriesListView; property: "contentX"; duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; }
                 delegate: ListComponents.BookTileTall {
-                    height: model.filename != "" ? neededHeight : 1;
+                    height: model.filename !== "" ? neededHeight : 1;
                     width: seriesListView.width / 3;
                     author: model.author;
                     title: model.title;

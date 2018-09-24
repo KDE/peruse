@@ -37,14 +37,18 @@ struct BookEntry {
     QString filename;
     QString filetitle;
     QString title;
-    QString series;
-    QString author;
+    QStringList series;
+    QStringList author;
     QString publisher;
     QDateTime created;
     QDateTime lastOpenedTime;
     int totalPages;
     int currentPage;
     QString thumbnail;
+    QStringList description;
+    QString comment;
+    QStringList tags;
+    int rating;
 };
 
 /**
@@ -84,7 +88,11 @@ public:
         CurrentPageRole,
         CategoryEntriesModelRole,
         CategoryEntryCountRole,
-        ThumbnailRole
+        ThumbnailRole,
+        DescriptionRole,
+        CommentRole,
+        TagsRole,
+        RatingRole
     };
 
     /**

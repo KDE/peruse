@@ -27,8 +27,10 @@
 
 #include "AcbfAuthor.h"
 #include "AcbfSequence.h"
+#include "AcbfBookinfo.h"
 
 #include <kio/deletejob.h>
+#include <KFileMetaData/UserMetaData>
 
 #include <QCoreApplication>
 #include <QDir>
@@ -109,8 +111,12 @@ public:
         entries.append(entry);
         q->append(entry);
         titleCategoryModel->addCategoryEntry(entry->title.left(1).toUpper(), entry);
-        authorCategoryModel->addCategoryEntry(entry->author, entry);
-        seriesCategoryModel->addCategoryEntry(entry->series, entry);
+        for (int i=0; i<entry->author.size(); i++) {
+            authorCategoryModel->addCategoryEntry(entry->author.at(i), entry);
+        }
+        for (int i=0; i<entry->series.size(); i++) {
+            seriesCategoryModel->addCategoryEntry(entry->series.at(i), entry);
+        }
         newlyAddedCategoryModel->append(entry, CreatedRole);
         QUrl url(entry->filename.left(entry->filename.lastIndexOf("/")));
         folderCategoryModel->addCategoryEntry(url.path().mid(1), entry);
@@ -192,7 +198,7 @@ void BookListModel::contentModelItemsInserted(QModelIndex index, int first, int 
         if (!splitName.isEmpty())
             entry->filetitle = splitName.takeLast();
         if(!splitName.isEmpty())
-            entry->series = splitName.takeLast(); // hahahaheuristics (dumb assumptions about filesystems, go!)
+            entry->series = QStringList(splitName.takeLast()); // hahahaheuristics (dumb assumptions about filesystems, go!)
         // just in case we end up without a title... using complete basename here,
         // as we would rather have "book one. part two" and the odd "book one - part two.tar"
         QFileInfo fileinfo(entry->filename);
@@ -210,11 +216,16 @@ void BookListModel::contentModelItemsInserted(QModelIndex index, int first, int 
             entry->thumbnail = QString("image://preview/").append(entry->filename);
         }
 
+        KFileMetaData::UserMetaData data(entry->filename);
+        entry->rating = data.rating();
+        entry->comment = data.userComment();
+        entry->tags = data.tags();
+
         QVariantHash metadata = d->contentModel->data(d->contentModel->index(first, 0, index), Qt::UserRole + 2).toHash();
         QVariantHash::const_iterator it = metadata.constBegin();
         for (; it != metadata.constEnd(); it++) {
             if(it.key() == QLatin1String("author"))
-            { entry->author = it.value().toString().trimmed(); }
+            { entry->author = it.value().toStringList(); }
             else if(it.key() == QLatin1String("title"))
             { entry->title = it.value().toString().trimmed(); }
             else if(it.key() == QLatin1String("publisher"))
@@ -225,6 +236,12 @@ void BookListModel::contentModelItemsInserted(QModelIndex index, int first, int 
             { entry->currentPage = it.value().toInt(); }
             else if(it.key() == QLatin1String("totalPages"))
             { entry->totalPages = it.value().toInt(); }
+            else if(it.key() == QLatin1String("comments"))
+            { entry->comment = it.value().toString();}
+            else if(it.key() == QLatin1Literal("tags"))
+            { entry->tags = it.value().toStringList();}
+            else if(it.key() == QLatin1String("rating"))
+            { entry->rating = it.value().toInt();}
         }
         // ACBF information is always preferred for CBRs, so let's just use that if it's there
         QMimeDatabase db;
@@ -236,12 +253,17 @@ void BookListModel::contentModelItemsInserted(QModelIndex index, int first, int 
             AdvancedComicBookFormat::Document* acbfDocument = qobject_cast<AdvancedComicBookFormat::Document*>(bookModel->acbfData());
             if(acbfDocument) {
                 for(AdvancedComicBookFormat::Sequence* sequence : acbfDocument->metaData()->bookInfo()->sequence()) {
-                    entry->series = sequence->title();
-                    break;
+                    entry->series.append(sequence->title());
                 }
+                for(AdvancedComicBookFormat::Author* author : acbfDocument->metaData()->bookInfo()->author()) {
+                    entry->author.append(author->displayName());
+                }
+                entry->description = acbfDocument->metaData()->bookInfo()->annotation("");
             }
-            // TODO extend the model to support multiple authors per book, ditto series/sequences
-            entry->author = bookModel->author();
+
+            if (entry->author.isEmpty()) {
+                entry->author.append(bookModel->author());
+            }
             entry->title = bookModel->title();
             entry->publisher = bookModel->publisher();
             entry->totalPages = bookModel->pageCount();
@@ -311,6 +333,17 @@ void BookListModel::setBookData(QString fileName, QString property, QString valu
             else if(property == "currentPage")
             {
                 entry->currentPage = value.toInt();
+            }
+            else if(property == "rating")
+            {
+                entry->rating = value.toInt();
+            }
+            else if(property == "tags")
+            {
+                entry->tags = value.split(",");
+            }
+            else if(property == "comment") {
+                entry->comment = value;
             }
             emit entryDataUpdated(entry);
             break;

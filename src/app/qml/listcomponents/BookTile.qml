@@ -38,20 +38,41 @@ Item {
     id: root;
     property bool selected: false;
     property alias title: bookTitle.text;
-    property string author;
+    property var author: [];
     property string publisher;
     property alias filename: bookFile.text;
     property alias thumbnail: coverImage.source;
     property int categoryEntriesCount;
     property string currentPage;
     property string totalPages;
+    property var description: [];
+    property string comment: peruseConfig.getFilesystemProperty(root.filename, "comment");
+    property var tags: peruseConfig.getFilesystemProperty(root.filename, "tags").split(",");
+    property int rating: peruseConfig.getFilesystemProperty(root.filename, "rating");
     signal bookSelected(string filename, int currentPage);
     signal bookDeleteRequested();
 
     property int neededHeight: bookCover.height;// + bookAuthorLabel.height + bookFile.height + Kirigami.Units.smallSpacing * 4;
+    property bool showCommentTags: neededHeight > bookTitle.height + bookAuthorLabel.height
+                                   + bookPublisherLabel.height + ratingContainer.height
+                                   + tagsContainer.height + commentContainer.height + deleteButton.height + Kirigami.Units.smallSpacing * 7;
     visible: height > 1;
     enabled: visible;
     clip: true;
+
+    onRatingChanged: {
+        contentList.setBookData(root.filename, "rating", rating);
+        peruseConfig.setFilesystemProperty(root.filename, "rating", rating);
+    }
+    onTagsChanged: {
+        contentList.setBookData(root.filename, "tags", tags.join(","));
+        peruseConfig.setFilesystemProperty(root.filename, "tags", tags.join(","));
+    }
+    onCommentChanged: {
+        contentList.setBookData(root.filename, "comment", comment);
+        peruseConfig.setFilesystemProperty(root.filename, "comment", comment);
+    }
+
     Rectangle {
         anchors.fill: parent;
         color: Kirigami.Theme.highlightColor;
@@ -114,8 +135,8 @@ Item {
             leftMargin: Kirigami.Units.smallSpacing;
         }
         width: paintedWidth;
-        text: "Author";
-        font.bold: true;
+        text: i18nc("Label for authors", "Author(s)");
+        font.weight: Font.Bold;
     }
     QtControls.Label {
         id: bookAuthor;
@@ -126,7 +147,7 @@ Item {
             right: parent.right;
         }
         elide: Text.ElideRight;
-        text: root.author === "" ? "(unknown)" : root.author;
+        text: root.author.length === 0 ? "(unknown)" : root.author.join(", ");
         opacity: (text === "(unknown)" || text === "") ? 0.3 : 1;
     }
     QtControls.Label {
@@ -137,8 +158,8 @@ Item {
             leftMargin: Kirigami.Units.smallSpacing;
         }
         width: paintedWidth;
-        text: "Publisher";
-        font.bold: true;
+        text: i18nc("Label for publisher", "Publisher");
+        font.weight: Font.Bold;
     }
     QtControls.Label {
         id: bookPublisher;
@@ -166,9 +187,142 @@ Item {
         maximumLineCount: 1;
     }
     Item {
-        id: descriptionContainer;
+        id: ratingContainer;
         anchors {
             top: bookFile.bottom;
+            left: bookCover.right;
+            right: parent.right;
+            margins: Kirigami.Units.smallSpacing;
+        }
+        Row {
+            id: ratingRow;
+            QtControls.Label {
+                width: paintedWidth;
+                text: i18nc("label for rating widget","Rating");
+                height: Kirigami.Units.iconSizes.medium;
+                font.weight: Font.Bold;
+                anchors.rightMargin: Kirigami.Units.smallSpacing;
+            }
+            property int potentialRating: root.rating;
+            Repeater{
+                model: 5;
+                Item {
+
+                    height: Kirigami.Units.iconSizes.medium;
+                    width: Kirigami.Units.iconSizes.medium;
+
+                Kirigami.Icon {
+                    source: "rating";
+                    opacity: (ratingRow.potentialRating-2)/2 >= index? 1.0: 0.3;
+                    anchors.fill:parent;
+
+                    MouseArea {
+                        anchors.fill: parent;
+                        hoverEnabled: true;
+                        onEntered: {
+                            if (ratingRow.potentialRating === (index+1)*2) {
+                                ratingRow.potentialRating = ratingRow.potentialRating-1;
+                            } else {
+                                ratingRow.potentialRating = (index+1)*2;
+                            }
+                        }
+                        onExited: {
+                            ratingRow.potentialRating = root.rating;
+                        }
+                        onClicked: root.rating === ratingRow.potentialRating?
+                                       root.rating = ratingRow.potentialRating-1 :
+                                       root.rating = ratingRow.potentialRating;
+                    }
+
+                }
+                Kirigami.Icon {
+                    source: "rating";
+                    height: parent.height/2;
+                    clip: true;
+                    anchors.centerIn: parent;
+                    width: height;
+                    visible: ratingRow.potentialRating === (index*2)+1;
+                }
+                }
+            }
+        }
+
+        height: childrenRect.height;
+    }
+    Item {
+        id: tagsContainer;
+        height: root.showCommentTags? childrenRect.height: 0;
+        visible: root.showCommentTags;
+        anchors {
+            top: ratingContainer.bottom;
+            left: bookCover.right;
+            right: parent.right;
+            margins: Kirigami.Units.smallSpacing;
+        }
+        QtControls.Label {
+            text: i18nc("label for tags field","Tags");
+            height: tagField.height;
+            font.weight: Font.Bold;
+            id: tagsLabel;
+        }
+        QtControls.TextField {
+            id: tagField;
+            anchors{
+                leftMargin: Kirigami.Units.smallSpacing;
+                left: tagsLabel.right;
+                top: parent.top;
+                right: parent.right;
+            }
+            width: {parent.width - tagsLabel.width - Kirigami.Units.smallSpacing;}
+
+            text: root.tags.length !== 0? root.tags.join(", "): "";
+            placeholderText: i18nc("Placeholder tag field", "(No tags)");
+            onEditingFinished: {
+                var tags = text.split(",");
+                for (var i in tags) {
+                    tags[i] = tags[i].trim();
+                }
+                root.tags = tags;
+            }
+        }
+    }
+    Item {
+        id: commentContainer;
+        anchors {
+            top: tagsContainer.bottom;
+            left: bookCover.right;
+            right: parent.right;
+            margins: Kirigami.Units.smallSpacing;
+        }
+        QtControls.Label {
+            text: i18nc("label for comment field","Comment");
+            height: tagField.height;
+            font.weight: Font.Bold;
+            id: commentLabel;
+        }
+        QtControls.TextField {
+            id: commentField;
+            anchors{
+                leftMargin: Kirigami.Units.smallSpacing;
+                left: commentLabel.right;
+                top: parent.top;
+                right: parent.right;
+            }
+            width: parent.width - commentLabel.width - Kirigami.Units.smallSpacing;
+
+            text: root.comment !== ""? root.comment: "";
+            placeholderText: i18nc("Placeholder comment field", "(No comment)");
+            onEditingFinished: {
+                root.comment = text;
+            }
+        }
+        height: root.showCommentTags? childrenRect.height: 0;
+        visible: root.showCommentTags;
+    }
+    Item {
+        id: descriptionContainer;
+        anchors {
+            top: commentContainer.bottom;
             left: bookCover.right;
             right: parent.right;
             bottom: deleteBase.top;
@@ -177,8 +331,11 @@ Item {
         QtControls.Label {
             anchors.fill: parent;
             verticalAlignment: Text.AlignTop;
-            text: i18nc("Placeholder text for the book description field when no description is set", "(no description available for this book)");
-            opacity: 0.3;
+            text: root.description.length !== 0?
+                      root.description.join("\n\n"):
+                      i18nc("Placeholder text for the book description field when no description is set", "(no description available for this book)");
+            wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+            opacity: root.description.length !== 0? 1.0: 0.3;
         }
     }
     Item {
