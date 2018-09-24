@@ -259,7 +259,7 @@ void CategoryEntriesModel::addCategoryEntry(const QString& categoryName, BookEnt
         CategoryEntriesModel* categoryModel = nullptr;
         Q_FOREACH(CategoryEntriesModel* existingModel, d->categoryModels)
         {
-            if(existingModel->name() == nextCategory)
+            if(existingModel->name().toLower() == nextCategory.toLower())
             {
                 categoryModel = existingModel;
                 break;
