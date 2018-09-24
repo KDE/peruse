@@ -249,7 +249,7 @@ Kirigami.ApplicationWindow {
     Component {
         id: bookshelfPublisher;
         Bookshelf {
-            model: contentList;
+            model: contentList.publisherCategoryModel;
             headerText: i18nc("Title of the page with books grouped by who published them", "Group by Publisher");
             onBookSelected: mainWindow.showBook(filename, currentPage);
             categoryName: "bookshelfPublisher";

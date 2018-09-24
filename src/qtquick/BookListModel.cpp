@@ -47,6 +47,7 @@ public:
         , newlyAddedCategoryModel(nullptr)
         , authorCategoryModel(nullptr)
         , seriesCategoryModel(nullptr)
+        , publisherCategoryModel(nullptr)
         , folderCategoryModel(nullptr)
         , cacheLoaded(false)
     {
@@ -64,6 +65,7 @@ public:
     CategoryEntriesModel* newlyAddedCategoryModel;
     CategoryEntriesModel* authorCategoryModel;
     CategoryEntriesModel* seriesCategoryModel;
+    CategoryEntriesModel* publisherCategoryModel;
     CategoryEntriesModel* folderCategoryModel;
 
     BookDatabase* db;
@@ -98,6 +100,13 @@ public:
             connect(q, SIGNAL(entryRemoved(BookEntry*)), seriesCategoryModel, SIGNAL(entryRemoved(BookEntry*)));
             emit q->seriesCategoryModelChanged();
         }
+        if(!publisherCategoryModel)
+        {
+            publisherCategoryModel = new CategoryEntriesModel(q);
+            connect(q, SIGNAL(entryDataUpdated(BookEntry*)), publisherCategoryModel, SIGNAL(entryDataUpdated(BookEntry*)));
+            connect(q, SIGNAL(entryRemoved(BookEntry*)), publisherCategoryModel, SIGNAL(entryRemoved(BookEntry*)));
+            emit q->publisherCategoryModelChanged();
+        }
         if(!folderCategoryModel)
         {
             folderCategoryModel = new CategoryEntriesModel(q);
@@ -120,6 +129,7 @@ public:
         if (newlyAddedCategoryModel->indexOfFile(entry->filename) == -1) {
             newlyAddedCategoryModel->append(entry, CreatedRole);
         }
+        publisherCategoryModel->addCategoryEntry(entry->publisher, entry);
         QUrl url(entry->filename.left(entry->filename.lastIndexOf("/")));
         folderCategoryModel->addCategoryEntry(url.path().mid(1), entry);
         if (folderCategoryModel->indexOfFile(entry->filename) == -1) {
@@ -312,6 +322,11 @@ QObject * BookListModel::seriesModelForEntry(QString fileName)
         }
     }
     return nullptr;
+}
+
+QObject *BookListModel::publisherCategoryModel() const
+{
+    return d->publisherCategoryModel;
 }
 
 QObject * BookListModel::folderCategoryModel() const
