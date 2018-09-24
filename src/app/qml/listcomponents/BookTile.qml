@@ -73,6 +73,13 @@ Item {
         peruseConfig.setFilesystemProperty(root.filename, "comment", comment);
     }
 
+    onFilenameChanged: {
+        comment = peruseConfig.getFilesystemProperty(root.filename, "comment");
+        tags = peruseConfig.getFilesystemProperty(root.filename, "tags").split(",");
+        rating = peruseConfig.getFilesystemProperty(root.filename, "rating");
+        ratingRow.potentialRating = rating;
+    }
+
     Rectangle {
         anchors.fill: parent;
         color: Kirigami.Theme.highlightColor;
