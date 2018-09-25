@@ -124,7 +124,7 @@ public:
             authorCategoryModel->addCategoryEntry(entry->author.at(i), entry);
         }
         for (int i=0; i<entry->series.size(); i++) {
-            seriesCategoryModel->addCategoryEntry(entry->series.at(i), entry);
+            seriesCategoryModel->addCategoryEntry(entry->series.at(i), entry, SeriesRole);
         }
         if (newlyAddedCategoryModel->indexOfFile(entry->filename) == -1) {
             newlyAddedCategoryModel->append(entry, CreatedRole);
@@ -211,8 +211,11 @@ void BookListModel::contentModelItemsInserted(QModelIndex index, int first, int 
         QStringList splitName = entry->filename.split("/");
         if (!splitName.isEmpty())
             entry->filetitle = splitName.takeLast();
-        if(!splitName.isEmpty())
+        if(!splitName.isEmpty()) {
             entry->series = QStringList(splitName.takeLast()); // hahahaheuristics (dumb assumptions about filesystems, go!)
+            entry->seriesNumbers = QStringList("0");
+            entry->seriesVolumes = QStringList("0");
+        }
         // just in case we end up without a title... using complete basename here,
         // as we would rather have "book one. part two" and the odd "book one - part two.tar"
         QFileInfo fileinfo(entry->filename);
@@ -267,7 +270,16 @@ void BookListModel::contentModelItemsInserted(QModelIndex index, int first, int 
             AdvancedComicBookFormat::Document* acbfDocument = qobject_cast<AdvancedComicBookFormat::Document*>(bookModel->acbfData());
             if(acbfDocument) {
                 for(AdvancedComicBookFormat::Sequence* sequence : acbfDocument->metaData()->bookInfo()->sequence()) {
-                    entry->series.append(sequence->title());
+                    if (!entry->series.contains(sequence->title())) {
+                        entry->series.append(sequence->title());
+                        entry->seriesNumbers.append(QString::number(sequence->number()));
+                        entry->seriesVolumes.append(QString::number(sequence->volume()));
+                    } else {
+                        int series = entry->series.indexOf(sequence->title());
+                        entry->seriesNumbers.replace(series, QString::number(sequence->number()));
+                        entry->seriesVolumes.replace(series, QString::number(sequence->volume()));
+                    }
+
                 }
                 for(AdvancedComicBookFormat::Author* author : acbfDocument->metaData()->bookInfo()->author()) {
                     entry->author.append(author->displayName());

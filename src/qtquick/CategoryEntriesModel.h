@@ -38,6 +38,8 @@ struct BookEntry {
     QString filetitle;
     QString title;
     QStringList series;
+    QStringList seriesNumbers;
+    QStringList seriesVolumes;
     QStringList author;
     QString publisher;
     QDateTime created;
@@ -79,7 +81,9 @@ public:
         FilenameRole = Qt::UserRole + 1,
         FiletitleRole,
         TitleRole,
-        SeriesRole,
+        SeriesRole, // Gets a stringlist of series this book is part of.
+        SeriesNumbersRole, // Gets a stringlist of numbers, which represent the sequence number the book has within each series.
+        SeriesVolumesRole, // Get a stringlist of numbers, which represent the volume number the book has within a series. This is optional.
         AuthorRole,
         PublisherRole,
         CreatedRole,
@@ -130,7 +134,7 @@ public:
      * 
      * This also adds it to the model's list of entries.
      */
-    void addCategoryEntry(const QString& categoryName, BookEntry* entry);
+    void addCategoryEntry(const QString& categoryName, BookEntry* entry, Roles compareRole = TitleRole);
 
     /**
      * @param index an integer index pointing at the desired book.

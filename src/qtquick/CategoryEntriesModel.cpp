@@ -81,6 +81,8 @@ QHash<int, QByteArray> CategoryEntriesModel::roleNames() const
     roles[FiletitleRole] = "filetitle";
     roles[TitleRole] = "title";
     roles[SeriesRole] = "series";
+    roles[SeriesNumbersRole] = "seriesNumber";
+    roles[SeriesVolumesRole] = "seriesVolume";
     roles[AuthorRole] = "author";
     roles[PublisherRole] = "publisher";
     roles[CreatedRole] = "created";
@@ -140,6 +142,12 @@ QVariant CategoryEntriesModel::data(const QModelIndex& index, int role) const
                 case SeriesRole:
                     result.setValue(entry->series);
                     break;
+                case SeriesNumbersRole:
+                    result.setValue(entry->seriesNumbers);
+                    break;
+                case SeriesVolumesRole:
+                    result.setValue(entry->seriesVolumes);
+                    break;
                 case AuthorRole:
                     result.setValue(entry->author);
                     break;
@@ -198,12 +206,43 @@ int CategoryEntriesModel::rowCount(const QModelIndex& parent) const
 void CategoryEntriesModel::append(BookEntry* entry, Roles compareRole)
 {
     int insertionIndex = 0;
+    int seriesOne = -1; int seriesTwo = -1;
+    if(compareRole == SeriesRole) {
+        seriesOne = entry->series.indexOf(name());
+        if (entry->series.contains(name(), Qt::CaseInsensitive) && seriesOne == -1){
+            for (int s=0; s<entry->series.size();s++) {
+                if (name().toLower() == entry->series.at(s).toLower()) {
+                    seriesOne = s;
+                }
+            }
+        }
+    }
     for(; insertionIndex < d->entries.count(); ++insertionIndex)
     {
+        if(compareRole == SeriesRole) {
+            seriesTwo = d->entries.at(insertionIndex)->series.indexOf(name());
+            if ( d->entries.at(insertionIndex)->series.contains(name(), Qt::CaseInsensitive) && seriesTwo == -1){
+                for (int s=0; s< d->entries.at(insertionIndex)->series.size();s++) {
+                    if (name().toLower() ==  d->entries.at(insertionIndex)->series.at(s).toLower()) {
+                        seriesTwo = s;
+                    }
+                }
+            }
+        }
         if(compareRole == CreatedRole)
         {
             if(entry->created <= d->entries.at(insertionIndex)->created)
             { continue; }
+            break;
+        }
+        else if((seriesOne>-1 && seriesTwo>-1)
+                && entry->seriesNumbers.at(seriesOne).toInt() > 0
+                && d->entries.at(insertionIndex)->seriesNumbers.at(seriesTwo).toInt() > 0)
+        {
+            if (entry->seriesVolumes.at(seriesOne).toInt() >= d->entries.at(insertionIndex)->seriesVolumes.at(seriesTwo).toInt()
+                    && entry->seriesNumbers.at(seriesOne).toInt() > d->entries.at(insertionIndex)->seriesNumbers.at(seriesTwo).toInt())
+            {continue;}
+            qDebug() << name() << entry->seriesNumbers.at(seriesOne).toInt() << d->entries.at(insertionIndex)->seriesNumbers.at(seriesTwo).toInt();
             break;
         }
         else
@@ -249,7 +288,7 @@ QObject * CategoryEntriesModel::leafModelForEntry(BookEntry* entry)
     return model;
 }
 
-void CategoryEntriesModel::addCategoryEntry(const QString& categoryName, BookEntry* entry)
+void CategoryEntriesModel::addCategoryEntry(const QString& categoryName, BookEntry* entry, Roles compareRole)
 {
     if(categoryName.length() > 0)
     {
@@ -285,7 +324,7 @@ void CategoryEntriesModel::addCategoryEntry(const QString& categoryName, BookEnt
             endInsertRows();
         }
         if (categoryModel->indexOfFile(entry->filename) == -1) {
-            categoryModel->append(entry);
+            categoryModel->append(entry, compareRole);
         }
         categoryModel->addCategoryEntry(splitName.join("/"), entry);
     }
