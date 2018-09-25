@@ -210,10 +210,10 @@ Kirigami.ScrollablePage {
             description: bookDetails.currentBook.readProperty("description");
             onBookSelected: {
                 bookDetails.close();
-                applicationWindow().showBook(filename, currentPage);
+                applicationWindow().showBook(fileSelected, currentPage);
             }
             onBookDeleteRequested: {
-                contentList.removeBook(detailsTile.filename, true);
+                contentList.removeBook(fileSelected, true);
                 close();
             }
         }

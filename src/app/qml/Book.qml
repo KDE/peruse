@@ -453,7 +453,7 @@ Kirigami.Page {
                 totalPages: bookInfo.currentBook.readProperty("totalPages");
                 description: bookInfo.currentBook.readProperty("description");
                 onBookSelected: {
-                    if(root.file !== filename) {
+                    if(root.file !== fileSelected) {
                         openSelected();
                     }
                 }
@@ -462,7 +462,7 @@ Kirigami.Page {
                     // nice for making sure the details tile is right
                     var oldIndex = seriesListView.currentIndex;
                     seriesListView.currentIndex = -1;
-                    contentList.removeBook(detailsTile.filename, true);
+                    contentList.removeBook(fileSelected, true);
                     seriesListView.currentIndex = oldIndex;
                 }
             }

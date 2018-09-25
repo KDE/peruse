@@ -49,8 +49,8 @@ Item {
     property string comment: peruseConfig.getFilesystemProperty(root.filename, "comment");
     property var tags: peruseConfig.getFilesystemProperty(root.filename, "tags").split(",");
     property int rating: peruseConfig.getFilesystemProperty(root.filename, "rating");
-    signal bookSelected(string filename, int currentPage);
-    signal bookDeleteRequested();
+    signal bookSelected(string fileSelected, int currentPage);
+    signal bookDeleteRequested(string fileSelected);
 
     property int neededHeight: bookCover.height;// + bookAuthorLabel.height + bookFile.height + Kirigami.Units.smallSpacing * 4;
     property bool showCommentTags: neededHeight > bookTitle.height + bookAuthorLabel.height
@@ -61,12 +61,16 @@ Item {
     clip: true;
 
     onRatingChanged: {
-        contentList.setBookData(root.filename, "rating", rating);
-        peruseConfig.setFilesystemProperty(root.filename, "rating", rating);
+        if (peruseConfig.getFilesystemProperty(root.filename, "rating") !== rating) {
+            contentList.setBookData(root.filename, "rating", rating);
+            peruseConfig.setFilesystemProperty(root.filename, "rating", rating);
+        }
     }
     onTagsChanged: {
-        contentList.setBookData(root.filename, "tags", tags.join(","));
-        peruseConfig.setFilesystemProperty(root.filename, "tags", tags.join(","));
+        if (tags.join(",") !== peruseConfig.getFilesystemProperty(root.filename, "tags")) {
+            contentList.setBookData(root.filename, "tags", tags.join(","));
+            peruseConfig.setFilesystemProperty(root.filename, "tags", tags.join(","));
+        }
     }
     onCommentChanged: {
         contentList.setBookData(root.filename, "comment", comment);
@@ -375,12 +379,13 @@ Item {
             onClicked: deleteBase.state = "confirmDelete";
             Behavior on opacity { PropertyAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
         }
-        Item {
+        Rectangle {
             id: deleteConfirmBase;
             opacity: 0;
             width: parent.width;
             Behavior on opacity { PropertyAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
             height: yesDelete.height + confirmDeleteLabel.height + Kirigami.Units.largeSpacing * 2 + Kirigami.Units.smallSpacing;
+            color: Kirigami.Theme.viewBackgroundColor;
             QtControls.Label {
                 id: confirmDeleteLabel;
                 anchors {
@@ -400,18 +405,18 @@ Item {
                     top: confirmDeleteLabel.bottom;
                     topMargin: Kirigami.Units.smallSpacing;
                     right: parent.horizontalCenter;
-                    rightMargin: (parent.width - width) / 4;
+                    rightMargin: (Kirigami.Units.smallSpacing) / 2;
                 }
                 text: i18nc("Confirmation button for book delete dialog", "Yes, Really Delete");
 //                 iconName: "dialog-ok";
-                onClicked: root.bookDeleteRequested();
+                onClicked: {root.bookDeleteRequested(root.filename); deleteBase.state = "";}
             }
             QtControls.Button {
                 anchors {
                     top: confirmDeleteLabel.bottom;
                     topMargin: Kirigami.Units.smallSpacing;
                     left: parent.horizontalCenter;
-                    leftMargin: (parent.width - width) / 4;
+                    leftMargin: (Kirigami.Units.smallSpacing) / 2;
                 }
                 text: i18nc("Cancellation button or book delete dialog", "No, Cancel Delete");
 //                 iconName: "dialog-cancel";
