@@ -179,7 +179,6 @@ Kirigami.Page {
         // Now search for new items in that locations...
         var locations = peruseConfig.bookLocations;
         addingNewBooksProgress.opacity = 1;
-        contentList.contentModel.addLocation(locations[locations.length - 1]);
         contentList.contentModel.startSearch();
     }
 }
