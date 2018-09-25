@@ -49,6 +49,11 @@ public:
      * @param entry The entry to add.
      */
     void addEntry(BookEntry* entry);
+    /**
+     * @brief remove an entry by filename from the cache.
+     * @param entry the entry to remove.
+     */
+    void removeEntry(BookEntry* entry);
 private:
     class Private;
     Private* d;

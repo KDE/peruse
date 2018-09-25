@@ -146,10 +146,19 @@ public:
         int i = 0;
         foreach(BookEntry* entry, entries)
         {
-            addEntry(q, entry);
-            if(++i % 100 == 0) {
-                emit q->countChanged();
-                qApp->processEvents();
+            /*
+             * This might turn out a little slow, but we should avoid having entries
+             * that do not exist. If we end up with slowdown issues when loading the
+             * cache this would be a good place to start investigating.
+             */
+            if (QFileInfo::exists(entry->filename)) {
+                addEntry(q, entry);
+                if(++i % 100 == 0) {
+                    emit q->countChanged();
+                    qApp->processEvents();
+                }
+            } else {
+                db->removeEntry(entry);
             }
         }
         cacheLoaded = true;
@@ -394,6 +403,7 @@ void BookListModel::removeBook(QString fileName, bool deleteFile)
         if(entry->filename == fileName)
         {
             emit entryRemoved(entry);
+            d->db->removeEntry(entry);
             delete entry;
             break;
         }

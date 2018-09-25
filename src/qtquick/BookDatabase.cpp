@@ -149,3 +149,17 @@ void BookDatabase::addEntry(BookEntry* entry)
 
     d->closeDb();
 }
+
+void BookDatabase::removeEntry(BookEntry* entry)
+{
+    if(!d->prepareDb()) {
+        return;
+    }
+    qDebug() << "Removing book from the database" << entry->filename;
+
+    QSqlQuery removeEntry;
+    removeEntry.prepare("DELETE FROM books WHERE filename='"+entry->filename+"';");
+    removeEntry.exec();
+
+    d->closeDb();
+}
