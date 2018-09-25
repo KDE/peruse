@@ -78,25 +78,25 @@ public:
      * \brief Extra roles for the book entry access.
      */
     enum Roles {
-        FilenameRole = Qt::UserRole + 1,
-        FiletitleRole,
-        TitleRole,
-        SeriesRole, // Gets a stringlist of series this book is part of.
-        SeriesNumbersRole, // Gets a stringlist of numbers, which represent the sequence number the book has within each series.
-        SeriesVolumesRole, // Get a stringlist of numbers, which represent the volume number the book has within a series. This is optional.
-        AuthorRole,
-        PublisherRole,
-        CreatedRole,
-        LastOpenedTimeRole,
-        TotalPagesRole,
-        CurrentPageRole,
-        CategoryEntriesModelRole,
-        CategoryEntryCountRole,
-        ThumbnailRole,
-        DescriptionRole,
-        CommentRole,
-        TagsRole,
-        RatingRole
+        FilenameRole = Qt::UserRole + 1, /// For getting a string with the full path to the book.
+        FiletitleRole, /// For getting a string with the basename of the book.
+        TitleRole, /// For getting a string with the proper title of the book.
+        SeriesRole, /// For getting a stringlist of series this book is part of.
+        SeriesNumbersRole, /// For getting a stringlist of numbers, which represent the sequence number the book has within each series.
+        SeriesVolumesRole, /// For getting a stringlist of numbers, which represent the volume number the book has within a series. This is optional.
+        AuthorRole, /// For getting a stringlist of all the authors.
+        PublisherRole, /// For getting a string with the publisher name.
+        CreatedRole, /// For getting the creation date of the book as a QDateTime.
+        LastOpenedTimeRole, /// For getting the last time the book was opened as a QDateTime.
+        TotalPagesRole, /// For getting the total amount of pages in this book.
+        CurrentPageRole, /// For getting the current page as an int.
+        CategoryEntriesModelRole, /// For getting the model of this category.
+        CategoryEntryCountRole, /// For getting the an int with the number of books within this category.
+        ThumbnailRole, /// For getting a thumbnail url for this book.
+        DescriptionRole, /// For getting a stringlist with a book description.
+        CommentRole, /// For getting a string with user assigned comment.
+        TagsRole, /// For getting a stringlist with user assigned tags.
+        RatingRole /// For getting an int with the rating of the comic. This is gotten from KFileMeta and thus goes from 1-10 with 0 being no rating.
     };
 
     /**
