@@ -22,6 +22,7 @@
 import QtQuick 2.3
 // import QtQuick.Layouts 1.1
 // import QtQuick.Controls 1.0 as QtControls
+import org.kde.kirigami 2.1 as Kirigami
 
 /**
  * @brief The image viewer used by the CBR and Folder Viewer Base classes.
@@ -214,9 +215,39 @@ ListView {
                         left: parent.left;
                         bottom: parent.bottom;
                     }
-                    width: parent.width / 6;
+                    width: Math.max(parent.width / 6, (parent.width-image.paintedWidth)/2);
                     preventStealing: true;
                     onClicked: root.layoutDirection === Qt.RightToLeft? image.previousFrame(): image.nextFrame();
+                    hoverEnabled: true;
+
+                    onPositionChanged: {
+                        var hWidth = width/2;
+                        var hHeight = height/2;
+                        var opacityX = mouse.x>hWidth? hWidth-(mouse.x-hWidth) : mouse.x;
+                        opacityX = opacityX/(hWidth - (Kirigami.Units.iconSizes.huge/2));
+                        var opacityY = mouse.y>hHeight? hHeight-(mouse.y-hHeight) : mouse.y;
+                        opacityY = opacityY/(hHeight - (Kirigami.Units.iconSizes.huge/2));
+                        leftPageIcon.opacity = opacityX*opacityY;
+                    }
+                    onExited: {
+                        leftPageIcon.opacity = 0;
+                    }
+
+                    Rectangle {
+                        id: leftPageIcon;
+                        anchors.centerIn: parent;
+                        width: Kirigami.Units.iconSizes.huge;
+                        height: width;
+                        radius:width/2;
+                        color: Kirigami.Theme.highlightColor;
+                        opacity: 0;
+                        Kirigami.Icon {
+                            anchors.centerIn: parent;
+                            source: "go-previous"
+                            width: parent.width*(2/3);
+                            height: width;
+                        }
+                    }
                 }
                 MouseArea {
                     anchors {
@@ -224,9 +255,38 @@ ListView {
                         right: parent.right;
                         bottom: parent.bottom;
                     }
-                    width: parent.width / 6;
+                    width: Math.max(parent.width / 6, (parent.width-image.paintedWidth)/2);
                     preventStealing: true;
                     onClicked: root.layoutDirection === Qt.RightToLeft? image.nextFrame(): image.previousFrame();
+                    hoverEnabled: true;
+                    onPositionChanged: {
+                        var hWidth = width/2;
+                        var hHeight = height/2;
+                        var opacityX = mouse.x>hWidth? hWidth-(mouse.x-hWidth) : mouse.x;
+                        opacityX = opacityX/(hWidth - (Kirigami.Units.iconSizes.huge/2));
+                        var opacityY = mouse.y>hHeight? hHeight-(mouse.y-hHeight) : mouse.y;
+                        opacityY = opacityY/(hHeight - (Kirigami.Units.iconSizes.huge/2));
+                        rightPageIcon.opacity = opacityX*opacityY;
+                    }
+                    onExited: {
+                        rightPageIcon.opacity = 0;
+                    }
+
+                    Rectangle {
+                        id: rightPageIcon;
+                        anchors.centerIn: parent;
+                        width: Kirigami.Units.iconSizes.huge;
+                        height: width;
+                        radius:width/2;
+                        color: Kirigami.Theme.highlightColor;
+                        opacity: 0;
+                        Kirigami.Icon {
+                            anchors.centerIn: parent;
+                            source: "go-next"
+                            width: parent.width*(2/3);
+                            height: width;
+                        }
+                    }
                 }
             }
         }

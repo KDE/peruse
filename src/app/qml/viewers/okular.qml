@@ -237,6 +237,35 @@ ViewerBase {
         }
         width: parent.width / 6;
         onClicked: imageBrowser.layoutDirection == Qt.RightToLeft? root.goNextPage(): root.goPreviousPage();
+        hoverEnabled: true;
+        onPositionChanged: {
+            var hWidth = width/2;
+            var hHeight = height/2;
+            var opacityX = mouse.x>hWidth? hWidth-(mouse.x-hWidth) : mouse.x;
+            opacityX = opacityX/(hWidth - (Kirigami.Units.iconSizes.huge/2));
+            var opacityY = mouse.y>hHeight? hHeight-(mouse.y-hHeight) : mouse.y;
+            opacityY = opacityY/(hHeight - (Kirigami.Units.iconSizes.huge/2));
+            leftPageIcon.opacity = opacityX*opacityY;
+        }
+        onExited: {
+            leftPageIcon.opacity = 0;
+        }
+
+        Rectangle {
+            id: leftPageIcon;
+            anchors.centerIn: parent;
+            width: Kirigami.Units.iconSizes.huge;
+            height: width;
+            radius:width/2;
+            color: Kirigami.Theme.highlightColor;
+            opacity: 0;
+            Kirigami.Icon {
+                anchors.centerIn: parent;
+                source: "go-previous"
+                width: parent.width*(2/3);
+                height: width;
+            }
+        }
     }
     MouseArea {
         anchors {
@@ -246,5 +275,34 @@ ViewerBase {
         }
         width: parent.width / 6;
         onClicked:  imageBrowser.layoutDirection == Qt.RightToLeft? root.goPreviousPage(): root.goNextPage();
+        hoverEnabled: true;
+        onPositionChanged: {
+            var hWidth = width/2;
+            var hHeight = height/2;
+            var opacityX = mouse.x>hWidth? hWidth-(mouse.x-hWidth) : mouse.x;
+            opacityX = opacityX/(hWidth - (Kirigami.Units.iconSizes.huge/2));
+            var opacityY = mouse.y>hHeight? hHeight-(mouse.y-hHeight) : mouse.y;
+            opacityY = opacityY/(hHeight - (Kirigami.Units.iconSizes.huge/2));
+            rightPageIcon.opacity = opacityX*opacityY;
+        }
+        onExited: {
+            rightPageIcon.opacity = 0;
+        }
+
+        Rectangle {
+            id: rightPageIcon;
+            anchors.centerIn: parent;
+            width: Kirigami.Units.iconSizes.huge;
+            height: width;
+            radius:width/2;
+            color: Kirigami.Theme.highlightColor;
+            opacity: 0;
+            Kirigami.Icon {
+                anchors.centerIn: parent;
+                source: "go-next"
+                width: parent.width*(2/3);
+                height: width;
+            }
+        }
     }
 }
