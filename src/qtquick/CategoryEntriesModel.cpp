@@ -242,7 +242,6 @@ void CategoryEntriesModel::append(BookEntry* entry, Roles compareRole)
             if (entry->seriesVolumes.at(seriesOne).toInt() >= d->entries.at(insertionIndex)->seriesVolumes.at(seriesTwo).toInt()
                     && entry->seriesNumbers.at(seriesOne).toInt() > d->entries.at(insertionIndex)->seriesNumbers.at(seriesTwo).toInt())
             {continue;}
-            qDebug() << name() << entry->seriesNumbers.at(seriesOne).toInt() << d->entries.at(insertionIndex)->seriesNumbers.at(seriesTwo).toInt();
             break;
         }
         else

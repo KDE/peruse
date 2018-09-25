@@ -353,7 +353,6 @@ int BookListModel::count() const
 
 void BookListModel::setBookData(QString fileName, QString property, QString value)
 {
-    qDebug() << fileName << property << value;
     Q_FOREACH(BookEntry* entry, d->entries)
     {
         if(entry->filename == fileName)
@@ -385,7 +384,6 @@ void BookListModel::setBookData(QString fileName, QString property, QString valu
 
 void BookListModel::removeBook(QString fileName, bool deleteFile)
 {
-    qDebug() << QUrl::fromLocalFile(fileName) << deleteFile;
     if(deleteFile) {
         KIO::DeleteJob* job = KIO::del(QUrl::fromLocalFile(fileName), KIO::HideProgressInfo);
         job->start();
