@@ -236,7 +236,7 @@ ViewerBase {
             bottom: parent.bottom;
         }
         width: parent.width / 6;
-        onClicked: root.goPreviousPage();
+        onClicked: imageBrowser.layoutDirection == Qt.RightToLeft? root.goNextPage(): root.goPreviousPage();
     }
     MouseArea {
         anchors {
@@ -245,6 +245,6 @@ ViewerBase {
             bottom: parent.bottom;
         }
         width: parent.width / 6;
-        onClicked: root.goNextPage();
+        onClicked:  imageBrowser.layoutDirection == Qt.RightToLeft? root.goPreviousPage(): root.goNextPage();
     }
 }

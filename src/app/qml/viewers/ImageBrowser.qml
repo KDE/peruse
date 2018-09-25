@@ -216,7 +216,7 @@ ListView {
                     }
                     width: parent.width / 6;
                     preventStealing: true;
-                    onClicked: image.previousFrame();
+                    onClicked: root.layoutDirection === Qt.RightToLeft? image.previousFrame(): image.nextFrame();
                 }
                 MouseArea {
                     anchors {
@@ -226,7 +226,7 @@ ListView {
                     }
                     width: parent.width / 6;
                     preventStealing: true;
-                    onClicked: image.nextFrame();
+                    onClicked: root.layoutDirection === Qt.RightToLeft? image.nextFrame(): image.previousFrame();
                 }
             }
         }
