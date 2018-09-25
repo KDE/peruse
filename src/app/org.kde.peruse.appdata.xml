@@ -1,11 +1,25 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright 2016 Dan Leinir Turthra Jensen <admin@leinir.dk> -->
 <component type="desktop">
   <id>org.kde.peruse.desktop</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0+</project_license>
   <name>Peruse</name>
+  <name xml:lang="ca">Peruse</name>
+  <name xml:lang="ca-valencia">Peruse</name>
+  <name xml:lang="nl">Peruse</name>
+  <name xml:lang="pt">Peruse</name>
+  <name xml:lang="sv">Peruse</name>
+  <name xml:lang="uk">Peruse</name>
+  <name xml:lang="x-test">xxPerusexx</name>
   <summary>Comic Book Reader</summary>
+  <summary xml:lang="ca">Lector de llibres de còmic</summary>
+  <summary xml:lang="ca-valencia">Lector de llibres de còmic</summary>
+  <summary xml:lang="nl">Stripboekreader</summary>
+  <summary xml:lang="pt">Leitor de Bandas Desenhadas</summary>
+  <summary xml:lang="sv">Serietidningsläsare</summary>
+  <summary xml:lang="uk">Програма для читання коміксів</summary>
+  <summary xml:lang="x-test">xxComic Book Readerxx</summary>
   <description>
     <p>
       There are many ways to read comic books, and one of those that has become more
@@ -15,6 +29,12 @@
       peruse your comic books at your leisure, but that would be a silly way of
       putting it - so, peruse your comic books at your leisure!
     </p>
+    <p xml:lang="ca">Hi ha moltes maneres de llegir còmics, i una de les que ha esdevingut més normal en anys recents és en un ordinador. El Peruse es va crear com una manera de fer-ho exactament tant fàcil i agradable com fos possible, i per senzillament oblidar-se de la manera i permetre llegir els llibres de còmic. Es podria dir que permet llegir atentament els llibres de còmic en el temps de lleure, però això seria una manera forassenyada de dir-ho, així que llegiu atentament els llibres de còmic en el vostre temps de lleure!</p>
+    <p xml:lang="ca-valencia">Hi ha moltes maneres de llegir còmics, i una de les que ha esdevingut més normal en anys recents és en un ordinador. El Peruse es va crear com una manera de fer-ho exactament tant fàcil i agradable com fos possible, i per senzillament oblidar-se de la manera i permetre llegir els llibres de còmic. Es podria dir que permet llegir atentament els llibres de còmic en el temps de lleure, però això seria una manera forassenyada de dir-ho, així que llegiu atentament els llibres de còmic en el vostre temps de lleure!</p>
+    <p xml:lang="nl">Er zijn vele manieren om stripboeken te lezen en een van deze, die meer in voorbije jaren algemeen is geworden, is op een computer. Peruse is gamaakt op een manier om precies dat zo gemakkelijk en plezierig als mogelijk te maken, en eenvoudig uit de weg te gaan en u uw stripboeken te laten lezen. Men zou kunnen zeggen dat het u toestaat door uw stipboeken te dwalen als vermaak, maar dat is een rare manier om het zo te zeggen - dus, dwaal door uw stripboeken om u te vermaken!</p>
+    <p xml:lang="pt">Existem muitas formas de ler bandas desenhadas, e uma das que se tornou mais comum recentemente é num computador. O Peruse foi criado como uma forma de fazer exactamente isso da forma mais agradável possível, saindo simplesmente do caminho e deixando-o ler as suas bandas desenhadas. Pode-se dizer que lhe permite usar os seus livros de banda desenhada para o seu lazer, mas isso seria uma forma estranha de o colocar - como tal, use os seus livros de banda desenhada à sua vontade!</p>
+    <p xml:lang="uk">Читати комікси можна у декілька способів. Останнім часом усе більшої популярності набуває читання коміксів за допомогою комп'ютера. Peruse було створено для полегшення читання коміксів на комп'ютері. Програма має усунути усі можливі завади так, щоб ви могли повністю зануритися у споглядання книги і отримати максимум задоволення від неї!</p>
+    <p xml:lang="x-test">xxThere are many ways to read comic books, and one of those that has become more common in recent years is on a computer. Peruse was created as a way to make exactly that as easy and pleasant as possible, and to simply get out of the way and let you read your comic books. One could say that it allows you to peruse your comic books at your leisure, but that would be a silly way of putting it - so, peruse your comic books at your leisure!xx</p>
     <p>
       One of the ways in which Peruse ensures your reading experience is as pleasant
       and effortless as possible is to allow you to simply pick up where you last left
@@ -23,14 +43,69 @@
       where you left off, simply tap the top left item and you will be taken right to
       the page you were reading before you had to stop.
     </p>
+    <p xml:lang="ca">Una de les maneres en que el Peruse us assegura que l'experiència de lectura serà agradable i sense esforç és senzillament retornar a on ho vàreu deixar. La pàgina de benvinguda de l'aplicació (la primera captura de pantalla de sota) us mostra els còmics llegits més recents, i mostra el seu progrés. Per tornar a on ho vàreu deixar, només toqueu l'element superior de l'esquerra i anireu directe a la pàgina que estàveu llegint abans d'aturar-vos.</p>
+    <p xml:lang="ca-valencia">Una de les maneres en que el Peruse vos assegura que l'experiència de lectura serà agradable i sense esforç és senzillament retornar a on ho vàreu deixar. La pàgina de benvinguda de l'aplicació (la primera captura de pantalla de sota) vos mostra els còmics llegits més recents, i mostra el seu progrés. Per tornar a on ho vàreu deixar, només toqueu l'element superior de l'esquerra i anireu directe a la pàgina que estàveu llegint abans d'aturar-vos.</p>
+    <p xml:lang="nl">Een van de manieren waarop Peruse uw leeservaring zo plezierig en zonder inspanning als mogelijke maakt is om u verder te laten gaan waar u als laatste stopte. De welkomstpagina in de toepassing (eerste onderstaande schermafdruk) toont u uw meest recent gelezen strips en toont hoe u daarin bent gevorderd. Om verder te gaan waar u bent gestopt, tik eenvoudig op het bovenste verlaten item en u zult direct naar de pagina gaan waar u eerder bent geëindigd met lezen voordat u moest stoppen.</p>
+    <p xml:lang="pt">Uma das formas nas quais o Peruse garante que a sua experiência de leitura se torna tão agradável e simples quanto possível é simplesmente pegar onde deixou da última vez. A página de boas-vindas na aplicação (primeira imagem em baixo) mostra-lhe as suas bandas desenhadas mais recentes, mostrando o seu progresso nelas. Para pegar onde deixou da última vez, basta tocar no item no canto superior-esquerdo para que passe logo para a página que estava a ler antes de parar.</p>
+    <p xml:lang="uk">Однією з можливостей, яку пропонує вам Peruse для спрощення читання, є можливість продовжувати читання з місця, на якому ви востаннє зупинилися. На сторінці вітання програми (перший з наведених нижче знімків) буде показано список коміксів, які ви читали останніми, та дані щодо поступу читання. Щоб перейти до місця, де ви зупинилися, просто натисніть пункт вгорі ліворуч, і програма відкриє вам сторінку, яку ви читали останньою.</p>
+    <p xml:lang="x-test">xxOne of the ways in which Peruse ensures your reading experience is as pleasant and effortless as possible is to allow you to simply pick up where you last left off. The welcome page in the application (first screenshot below) shows you your most recently read comics, and shows your progress through them. To pick up where you left off, simply tap the top left item and you will be taken right to the page you were reading before you had to stop.xx</p>
     <p>Features:</p>
+    <p xml:lang="ca">Característiques:</p>
+    <p xml:lang="ca-valencia">Característiques:</p>
+    <p xml:lang="nl">Mogelijkheden:</p>
+    <p xml:lang="pt">Funcionalidades:</p>
+    <p xml:lang="sv">Funktioner:</p>
+    <p xml:lang="uk">Можливості:</p>
+    <p xml:lang="x-test">xxFeatures:xx</p>
     <ul>
-        <li>Comic Book Archive (cbz, cbr, cb7, cbt, cba)</li>
-        <li>Portable Document Format (pdf)</li>
-        <li>ePub Books (epub)</li>
-        <li>DeVice Independent files (dvi)</li>
-        <li>DeJaVu (djvu)</li>
-        <li>Compiled Help (chm)</li>
+      <li>Comic Book Archive (cbz, cbr, cb7, cbt, cba)</li>
+      <li xml:lang="ca">Arxiu de llibres de còmic (cbz, cbr, cb7, cbt, cba)</li>
+      <li xml:lang="ca-valencia">Arxiu de llibres de còmic (cbz, cbr, cb7, cbt, cba)</li>
+      <li xml:lang="nl">Archief voor stripboeken (cbz, cbr, cb7, cbt, cba)</li>
+      <li xml:lang="pt">Pacote de Banda Desenhada (cbz, cbr, cb7, cbt, cba)</li>
+      <li xml:lang="sv">Serietidningsarkiv (cbz, cbr, cb7, cbt, cba)</li>
+      <li xml:lang="uk">Робота з архівами коміксів (cbz, cbr, cb7, cbt, cba)</li>
+      <li xml:lang="x-test">xxComic Book Archive (cbz, cbr, cb7, cbt, cba)xx</li>
+      <li>Portable Document Format (pdf)</li>
+      <li xml:lang="ca">Format de document portable (pdf)</li>
+      <li xml:lang="ca-valencia">Format de document portable (pdf)</li>
+      <li xml:lang="nl">Portable Document Format (pdf)</li>
+      <li xml:lang="pt">Formato de Documento Portátil (pdf)</li>
+      <li xml:lang="sv">Portable Dokumentformat (pdf)</li>
+      <li xml:lang="uk">Робота із портативним форматом документів (pdf)</li>
+      <li xml:lang="x-test">xxPortable Document Format (pdf)xx</li>
+      <li>ePub Books (epub)</li>
+      <li xml:lang="ca">Llibres ePub (epub)</li>
+      <li xml:lang="ca-valencia">Llibres ePub (epub)</li>
+      <li xml:lang="nl">ePub boeken (epub)</li>
+      <li xml:lang="pt">Livros ePub (epub)</li>
+      <li xml:lang="sv">ePub-böcker (epub)</li>
+      <li xml:lang="uk">Робота з книгами ePub (epub)</li>
+      <li xml:lang="x-test">xxePub Books (epub)xx</li>
+      <li>DeVice Independent files (dvi)</li>
+      <li xml:lang="ca">Fitxers independent de dispositiu (dvi)</li>
+      <li xml:lang="ca-valencia">Fitxers independent de dispositiu (dvi)</li>
+      <li xml:lang="nl">DeVice Independent bestanden (dvi)</li>
+      <li xml:lang="pt">Ficheiros Independentes do Dispositivo (dvi)</li>
+      <li xml:lang="sv">DeVice oberoende filer (dvi)</li>
+      <li xml:lang="uk">Робота із файлами DeVice Independent (dvi)</li>
+      <li xml:lang="x-test">xxDeVice Independent files (dvi)xx</li>
+      <li>DeJaVu (djvu)</li>
+      <li xml:lang="ca">DeJaVu (djvu)</li>
+      <li xml:lang="ca-valencia">DeJaVu (djvu)</li>
+      <li xml:lang="nl">DeJaVu (djvu)</li>
+      <li xml:lang="pt">DeJaVu (djvu)</li>
+      <li xml:lang="sv">DeJaVu (djvu)</li>
+      <li xml:lang="uk">Робота з файлами DeJaVu (djvu)</li>
+      <li xml:lang="x-test">xxDeJaVu (djvu)xx</li>
+      <li>Compiled Help (chm)</li>
+      <li xml:lang="ca">Ajuda compilada (chm)</li>
+      <li xml:lang="ca-valencia">Ajuda compilada (chm)</li>
+      <li xml:lang="nl">Gecompileerde help (chm)</li>
+      <li xml:lang="pt">Ajuda Compilada (chm)</li>
+      <li xml:lang="sv">Kompilerad hjälp (chm)</li>
+      <li xml:lang="uk">Робота з файлами компільованої довідки (chm)</li>
+      <li xml:lang="x-test">xxCompiled Help (chm)xx</li>
     </ul>
   </description>
   <screenshots>
