@@ -721,6 +721,8 @@ bool ArchiveBookModel::loadComicInfoXML(QString xmlDocument, QObject *acbfData, 
                 {
                     if (filedata.userComment().isEmpty()) {
                         filedata.setUserComment(xmlReader.readElementText());
+                    } else {
+                        xmlReader.skipCurrentElement();
                     }
                 }
                 else if(xmlReader.name() == QStringLiteral("Tags"))
@@ -1070,6 +1072,8 @@ bool ArchiveBookModel::loadCoMet(QStringList xmlDocuments, QObject *acbfData, QS
                     {
                         if (!filedata.hasAttribute("Peruse.currentPage")) {
                             filedata.setAttribute("Peruse.currentPage", xmlReader.readElementText());
+                        } else {
+                            xmlReader.skipCurrentElement();
                         }
                     }
 
