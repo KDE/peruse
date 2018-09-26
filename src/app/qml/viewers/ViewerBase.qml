@@ -47,6 +47,13 @@ Item {
     property Component thumbnailComponent;
     signal restoreCurrentPage();
 
+    /**
+     * Whether or not the viewer supports frame based navigation
+     */
+    property bool hasFrames: false;
+    signal nextFrame();
+    signal previousFrame();
+
     // This all looks a little silly, however, without this, we can't double-click on the
     // page (which is, these days, used for zooming purposes). It also works around some
     // minor small annoyances, like accidental swiping when the finger doesn't leave the

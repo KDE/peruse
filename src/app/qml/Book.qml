@@ -78,6 +78,24 @@ Kirigami.Page {
         updateCurrent.start();
     }
 
+    function nextFrame() {
+        // If there is a next frame to go to, or whether it is supported at all
+        if(viewLoader.item.hasFrames === true) {
+            viewLoader.item.nextFrame();
+        }
+        else {
+            nextPage();
+        }
+    }
+    function previousFrame() {
+        // If there is a next frame to go to, or whether it is supported at all
+        if(viewLoader.item.hasFrames === true) {
+            viewLoader.item.previousFrame();
+        }
+        else {
+            previousPage();
+        }
+    }
     function nextPage() {
         if(viewLoader.item.currentPage < viewLoader.item.pageCount - 1) {
             viewLoader.item.currentPage++;
@@ -219,15 +237,29 @@ Kirigami.Page {
 //             QtObject {}
         },
         Kirigami.Action {
-            text: i18nc("Go to the previous page in the book", "Previous Page");
+            text: i18nc("Go to the previous frame on the current page", "Previous Frame");
             shortcut: root.isCurrentPage && bookInfo.sheetOpen ? "" : StandardKey.MoveToPreviousChar;
+            iconName: "go-previous";
+            onTriggered: previousFrame();
+            enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
+        },
+        Kirigami.Action {
+            text: i18nc("Go to the next frame on the current page", "Next Frame");
+            shortcut: root.isCurrentPage && bookInfo.sheetOpen ? "" : StandardKey.MoveToNextChar;
+            iconName: "go-next";
+            onTriggered: nextFrame();
+            enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
+        },
+        Kirigami.Action {
+            text: i18nc("Go to the previous page in the book", "Previous Page");
+            shortcut: root.isCurrentPage && bookInfo.sheetOpen ? "" : StandardKey.MoveToNextPage;
             iconName: "go-previous";
             onTriggered: previousPage();
             enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
         },
         Kirigami.Action {
             text: i18nc("Go to the next page in the book", "Next Page");
-            shortcut: bookInfo.sheetOpen ? "" : StandardKey.MoveToNextChar;
+            shortcut: bookInfo.sheetOpen ? "" : StandardKey.MoveToNextPage;
             iconName: "go-next";
             onTriggered: nextPage();
             enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;

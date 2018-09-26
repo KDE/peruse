@@ -31,6 +31,8 @@ import org.kde.kirigami 2.1 as Kirigami
  */
 ListView {
     id: root
+    function goNextFrame() { root.currentItem.goNextFrame(); }
+    function goPreviousFrame() { root.currentItem.goPreviousFrame(); }
     signal goNextPage();
     signal goPreviousPage();
 
@@ -66,6 +68,8 @@ ListView {
         interactive: contentWidth > width || contentHeight > height
         onInteractiveChanged: root.interactive = !interactive;
         z: interactive ? 1000 : 0
+        function goNextFrame() { image.nextFrame(); }
+        function goPreviousFrame() { image.previousFrame(); }
         PinchArea {
             width: Math.max(flick.contentWidth, flick.width)
             height: Math.max(flick.contentHeight, flick.height)

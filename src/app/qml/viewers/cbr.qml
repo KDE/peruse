@@ -53,6 +53,9 @@ ViewerBase {
         imageBrowser.positionViewAtIndex(imageBrowser.currentIndex, ListView.Center);
 
     }
+    hasFrames: true;
+    onNextFrame: imageBrowser.goNextFrame();
+    onPreviousFrame: imageBrowser.goPreviousFrame();
 
     onCurrentPageChanged: {
         if(currentPage !== imageBrowser.currentIndex) {
