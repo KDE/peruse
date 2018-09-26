@@ -221,7 +221,7 @@ ListView {
                     }
                     width: Math.max(parent.width / 6, (parent.width-image.paintedWidth)/2);
                     preventStealing: true;
-                    onClicked: root.layoutDirection === Qt.RightToLeft? image.previousFrame(): image.nextFrame();
+                    onClicked: root.layoutDirection === Qt.RightToLeft? image.nextFrame(): image.previousFrame();
                     hoverEnabled: true;
 
                     onPositionChanged: {
@@ -261,7 +261,7 @@ ListView {
                     }
                     width: Math.max(parent.width / 6, (parent.width-image.paintedWidth)/2);
                     preventStealing: true;
-                    onClicked: root.layoutDirection === Qt.RightToLeft? image.nextFrame(): image.previousFrame();
+                    onClicked: root.layoutDirection === Qt.RightToLeft? image.previousFrame(): image.nextFrame();
                     hoverEnabled: true;
                     onPositionChanged: {
                         var hWidth = width/2;
