@@ -9,6 +9,7 @@
   <name xml:lang="ca-valencia">Peruse</name>
   <name xml:lang="nl">Peruse</name>
   <name xml:lang="pt">Peruse</name>
+  <name xml:lang="sk">Peruse</name>
   <name xml:lang="sv">Peruse</name>
   <name xml:lang="uk">Peruse</name>
   <name xml:lang="x-test">xxPerusexx</name>
@@ -17,6 +18,7 @@
   <summary xml:lang="ca-valencia">Eina de creació de llibres de còmic</summary>
   <summary xml:lang="nl">Hulpmiddel voor maken van stripboeken</summary>
   <summary xml:lang="pt">Ferramenta de Criação de Bandas Desenhadas</summary>
+  <summary xml:lang="sk">Nástroj na vytváranie komiksov</summary>
   <summary xml:lang="sv">Serietidningsskapare</summary>
   <summary xml:lang="uk">Засіб для створення коміксів</summary>
   <summary xml:lang="x-test">xxComic Book Creation Toolxx</summary>
@@ -28,6 +30,7 @@
     <p xml:lang="ca-valencia">Característiques:</p>
     <p xml:lang="nl">Mogelijkheden:</p>
     <p xml:lang="pt">Funcionalidades:</p>
+    <p xml:lang="sk">Funkcie:</p>
     <p xml:lang="sv">Funktioner:</p>
     <p xml:lang="uk">Можливості</p>
     <p xml:lang="x-test">xxFeatures:xx</p>
@@ -37,6 +40,7 @@
       <li xml:lang="ca-valencia">Arxiu de llibres de còmic (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="nl">Archief voor stripboeken (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="pt">Pacote de Banda Desenhada (cbz, cbr, cb7, cbt, cba)</li>
+      <li xml:lang="sk">Komiksový archív (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="sv">Serietidningsarkiv (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="uk">Робота із архівами коміксів (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="x-test">xxComic Book Archive (cbz, cbr, cb7, cbt, cba)xx</li>
