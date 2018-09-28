@@ -28,6 +28,7 @@
 #include <QSqlDatabase>
 #include <QSqlError>
 #include <QSqlQuery>
+#include <QSqlRecord>
 
 #include <QDir>
 
@@ -46,6 +47,7 @@ public:
 
     QSqlDatabase db;
     QString dbfile;
+    QStringList fieldNames;
 
     bool prepareDb() {
         if (!db.open()) {
@@ -54,14 +56,33 @@ public:
         }
 
         QStringList tables = db.tables();
-        if (tables.contains("books", Qt::CaseInsensitive))
+        if (tables.contains("books", Qt::CaseInsensitive)) {
+            if (fieldNames.isEmpty()) {
+                QSqlQuery qu("SELECT * FROM books");
+                for (int i=0; i< qu.record().count(); i++) {
+                    fieldNames.append(qu.record().fieldName(i));
+                }
+                qDebug() << Q_FUNC_INFO << ": opening database with following fieldNames:" << fieldNames;
+            }
             return true;
+        }
 
         QSqlQuery q;
-        if (!q.exec(QLatin1String("create table books(filename varchar primary key, filetitle varchar, title varchar, series varchar, author varchar, publisher varchar, created datetime, lastOpenedTime datetime, totalPages integer, currentPage integer, thumbnail varchar, description varchar, comment varchar, tags varchar, rating integer, seriesVolumes varchar, seriesNumbers varchar, genres varchar, keywords varchar, characters varchar)"))) {
+        QStringList entryNames;
+        entryNames << "fileName varchar primary key" << "fileTitle varchar" << "title varchar" << "genres varchar"
+                   << "keywords varchar" << "characters varchar" << "description varchar" << "series varchar"
+                   << "seriesNumbers varchar" << "seriesVolumes varchar" << "author varchar" << "publisher varchar"
+                   << "created datetime" << "lastOpenedTime datetime" << "totalPages integer" << "currentPage integer"
+                   << "thumbnail varchar" << "comment varchar" << "tags varchar" << "rating varchar";
+        if (!q.exec(QString("create table books("+entryNames.join(", ")+")"))) {
             qDebug() << "Database could not create the table books";
             return false;
         }
+        for (int i=0; i< entryNames.size(); i++) {
+            QString fieldName = entryNames.at(i).split(" ").first();
+            fieldNames.append(fieldName);
+        }
+        qDebug() << Q_FUNC_INFO << ": making database with following fieldNames:" << fieldNames;
 
         return true;
     }
@@ -89,30 +110,31 @@ QList<BookEntry*> BookDatabase::loadEntries()
     }
 
     QList<BookEntry*> entries;
-    QSqlQuery allEntries("SELECT filename, filetitle, title, series, author, publisher, created, lastOpenedTime, totalPages, currentPage, thumbnail, description, comment, tags, rating, seriesNumbers, seriesVolumes, genres, keywords, characters FROM books");
+    QStringList entryNames = d->fieldNames;
+    QSqlQuery allEntries("SELECT " + d->fieldNames.join(", ") + " FROM books");
     while(allEntries.next())
     {
         BookEntry* entry = new BookEntry();
-        entry->filename = allEntries.value(0).toString();
-        entry->filetitle = allEntries.value(1).toString();
-        entry->title = allEntries.value(2).toString();
-        entry->series = allEntries.value(3).toString().split(",", QString::SkipEmptyParts);
-        entry->author = allEntries.value(4).toString().split(",", QString::SkipEmptyParts);
-        entry->publisher = allEntries.value(5).toString();
-        entry->created = allEntries.value(6).toDateTime();
-        entry->lastOpenedTime = allEntries.value(7).toDateTime();
-        entry->totalPages = allEntries.value(8).toInt();
-        entry->currentPage = allEntries.value(9).toInt();
-        entry->thumbnail = allEntries.value(10).toString();
-        entry->description = allEntries.value(11).toString().split("\n", QString::SkipEmptyParts);
-        entry->comment = allEntries.value(12).toString();
-        entry->tags = allEntries.value(13).toString().split(",", QString::SkipEmptyParts);
-        entry->rating = allEntries.value(14).toInt();
-        entry->seriesNumbers = allEntries.value(15).toString().split(",", QString::SkipEmptyParts);
-        entry->seriesVolumes = allEntries.value(16).toString().split(",", QString::SkipEmptyParts);
-        entry->genres = allEntries.value(17).toString().split(",", QString::SkipEmptyParts);
-        entry->keywords = allEntries.value(18).toString().split(",", QString::SkipEmptyParts);
-        entry->characters = allEntries.value(19).toString().split(",", QString::SkipEmptyParts);
+        entry->filename       = allEntries.value(d->fieldNames.indexOf("fileName")).toString();
+        entry->filetitle      = allEntries.value(d->fieldNames.indexOf("fileTitle")).toString();
+        entry->title          = allEntries.value(d->fieldNames.indexOf("title")).toString();
+        entry->series         = allEntries.value(d->fieldNames.indexOf("series")).toString().split(",", QString::SkipEmptyParts);
+        entry->author         = allEntries.value(d->fieldNames.indexOf("author")).toString().split(",", QString::SkipEmptyParts);
+        entry->publisher      = allEntries.value(d->fieldNames.indexOf("publisher")).toString();
+        entry->created        = allEntries.value(d->fieldNames.indexOf("created")).toDateTime();
+        entry->lastOpenedTime = allEntries.value(d->fieldNames.indexOf("lastOpenedTime")).toDateTime();
+        entry->totalPages     = allEntries.value(d->fieldNames.indexOf("totalPages")).toInt();
+        entry->currentPage    = allEntries.value(d->fieldNames.indexOf("currentPage")).toInt();
+        entry->thumbnail      = allEntries.value(d->fieldNames.indexOf("thumbnail")).toString();
+        entry->description    = allEntries.value(d->fieldNames.indexOf("description")).toString().split("\n", QString::SkipEmptyParts);
+        entry->comment        = allEntries.value(d->fieldNames.indexOf("comment")).toString();
+        entry->tags           = allEntries.value(d->fieldNames.indexOf("tags")).toString().split(",", QString::SkipEmptyParts);
+        entry->rating         = allEntries.value(d->fieldNames.indexOf("rating")).toInt();
+        entry->seriesNumbers  = allEntries.value(d->fieldNames.indexOf("seriesNumbers")).toString().split(",", QString::SkipEmptyParts);
+        entry->seriesVolumes  = allEntries.value(d->fieldNames.indexOf("seriesVolumes")).toString().split(",", QString::SkipEmptyParts);
+        entry->genres         = allEntries.value(d->fieldNames.indexOf("genres")).toString().split(",", QString::SkipEmptyParts);
+        entry->keywords       = allEntries.value(d->fieldNames.indexOf("keywords")).toString().split(",", QString::SkipEmptyParts);
+        entry->characters     = allEntries.value(d->fieldNames.indexOf("characters")).toString().split(",", QString::SkipEmptyParts);
         entries.append(entry);
     }
 
@@ -127,11 +149,15 @@ void BookDatabase::addEntry(BookEntry* entry)
     }
     qDebug() << "Adding newly discovered book to the database" << entry->filename;
 
+    QStringList valueNames;
+    for (int i=0; i< d->fieldNames.size(); i++) {
+        valueNames.append(QString(":").append(d->fieldNames.at(i)));
+    }
     QSqlQuery newEntry;
-    newEntry.prepare("INSERT INTO books (filename, filetitle, title, series, author, publisher, created, lastOpenedTime, totalPages, currentPage, thumbnail, description, comment, tags, rating, seriesNumbers, seriesVolumes, genres, keywords, characters) "
-                     "VALUES (:filename, :filetitle, :title, :series, :author, :publisher, :created, :lastOpenedTime, :totalPages, :currentPage, :thumbnail, :description, :comment, :tags, :rating, :seriesNumbers, :seriesVolumes, :genres, :keywords, :characters)");
-    newEntry.bindValue(":filename", entry->filename);
-    newEntry.bindValue(":filetitle", entry->filetitle);
+    newEntry.prepare("INSERT INTO books (" + d->fieldNames.join(", ") + ") "
+                     "VALUES (" + valueNames.join(", ") + ")");
+    newEntry.bindValue(":fileName", entry->filename);
+    newEntry.bindValue(":fileTitle", entry->filetitle);
     newEntry.bindValue(":title", entry->title);
     newEntry.bindValue(":series", entry->series.join(","));
     newEntry.bindValue(":author", entry->author.join(","));
