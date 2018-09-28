@@ -73,6 +73,10 @@ class BookListModel : public CategoryEntriesModel, public QQmlParserStatus
      */
     Q_PROPERTY(QObject* publisherCategoryModel READ publisherCategoryModel NOTIFY publisherCategoryModelChanged)
     /**
+     * \brief The "keyword" category entries model managed the sorting of entry by keyword.
+     */
+    Q_PROPERTY(QObject* keywordCategoryModel READ keywordCategoryModel NOTIFY keywordCategoryModelChanged)
+    /**
      * \brief The "folder" category entries model managed the sorting of entry by file system folder.
      */
     Q_PROPERTY(QObject* folderCategoryModel READ folderCategoryModel NOTIFY folderCategoryModelChanged)
@@ -184,6 +188,14 @@ public:
      * \brief Fires when the publisherCategoryModel has changed or finished initializing.
      */
     Q_SIGNAL void publisherCategoryModelChanged();
+    /**
+     * @return The categoryEntriesModel that manages the sorting of entries by keywords, names and genres.
+     */
+    QObject* keywordCategoryModel() const;
+    /**
+     * \brief Fires when the keywordCategoryModel has changed or finished initializing.
+     */
+    Q_SIGNAL void keywordCategoryModelChanged();
     /**
      * @return The categoryEntriesModel that manages the sorting of entries by folder.
      */

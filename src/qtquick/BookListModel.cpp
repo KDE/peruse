@@ -48,6 +48,7 @@ public:
         , authorCategoryModel(nullptr)
         , seriesCategoryModel(nullptr)
         , publisherCategoryModel(nullptr)
+        , keywordCategoryModel(nullptr)
         , folderCategoryModel(nullptr)
         , cacheLoaded(false)
     {
@@ -66,6 +67,7 @@ public:
     CategoryEntriesModel* authorCategoryModel;
     CategoryEntriesModel* seriesCategoryModel;
     CategoryEntriesModel* publisherCategoryModel;
+    CategoryEntriesModel* keywordCategoryModel;
     CategoryEntriesModel* folderCategoryModel;
 
     BookDatabase* db;
@@ -107,6 +109,13 @@ public:
             connect(q, SIGNAL(entryRemoved(BookEntry*)), publisherCategoryModel, SIGNAL(entryRemoved(BookEntry*)));
             emit q->publisherCategoryModelChanged();
         }
+        if(!keywordCategoryModel)
+        {
+            keywordCategoryModel = new CategoryEntriesModel(q);
+            connect(q, SIGNAL(entryDataUpdated(BookEntry*)), keywordCategoryModel, SIGNAL(entryDataUpdated(BookEntry*)));
+            connect(q, SIGNAL(entryRemoved(BookEntry*)), keywordCategoryModel, SIGNAL(entryRemoved(BookEntry*)));
+            emit q->keywordCategoryModelChanged();
+        }
         if(!folderCategoryModel)
         {
             folderCategoryModel = new CategoryEntriesModel(q);
@@ -135,6 +144,16 @@ public:
         if (folderCategoryModel->indexOfFile(entry->filename) == -1) {
             folderCategoryModel->append(entry);
         }
+        for (int i=0; i<entry->genres.size(); i++) {
+            keywordCategoryModel->addCategoryEntry(QString("Genre/").append(entry->genres.at(i)), entry, GenreRole);
+        }
+        for (int i=0; i<entry->characters.size(); i++) {
+            keywordCategoryModel->addCategoryEntry(QString("Characters/").append(entry->characters.at(i)), entry, GenreRole);
+        }
+        for (int i=0; i<entry->keywords.size(); i++) {
+            keywordCategoryModel->addCategoryEntry(QString("Keywords/").append(entry->keywords.at(i)), entry, GenreRole);
+        }
+
     }
 
     void loadCache(BookListModel* q) {
@@ -294,6 +313,9 @@ void BookListModel::contentModelItemsInserted(QModelIndex index, int first, int 
                     entry->author.append(author->displayName());
                 }
                 entry->description = acbfDocument->metaData()->bookInfo()->annotation("");
+                entry->genres = acbfDocument->metaData()->bookInfo()->genres();
+                entry->characters = acbfDocument->metaData()->bookInfo()->characters();
+                entry->keywords = acbfDocument->metaData()->bookInfo()->keywords("");
             }
 
             if (entry->author.isEmpty()) {
@@ -348,6 +370,11 @@ QObject * BookListModel::seriesModelForEntry(QString fileName)
 QObject *BookListModel::publisherCategoryModel() const
 {
     return d->publisherCategoryModel;
+}
+
+QObject *BookListModel::keywordCategoryModel() const
+{
+    return d->keywordCategoryModel;
 }
 
 QObject * BookListModel::folderCategoryModel() const

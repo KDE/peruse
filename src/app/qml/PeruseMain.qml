@@ -156,6 +156,12 @@ Kirigami.ApplicationWindow {
                 onTriggered: changeCategory(bookshelfPublisher);
             },
             Kirigami.Action {
+                text: i18nc("Switch to the listing page showing items grouped by keywords, characters or genres", "Group by Keywords");
+                iconName: "tag";
+                checked: mainWindow.currentCategory === "bookshelfKeywords";
+                onTriggered: changeCategory(bookshelfKeywords);
+            },
+            Kirigami.Action {
                 text: i18nc("Switch to the listing page showing items grouped by their filesystem folder", "Filter by Folder");
                 iconName: "tag-folder";
                 checked: mainWindow.currentCategory === "bookshelfFolder";
@@ -253,6 +259,16 @@ Kirigami.ApplicationWindow {
             headerText: i18nc("Title of the page with books grouped by who published them", "Group by Publisher");
             onBookSelected: mainWindow.showBook(filename, currentPage);
             categoryName: "bookshelfPublisher";
+        }
+    }
+
+    Component {
+        id: bookshelfKeywords;
+        Bookshelf {
+            model: contentList.keywordCategoryModel;
+            headerText: i18nc("Title of the page with books grouped by keywords, character or genres", "Group by Keywords, Characters and Genres");
+            onBookSelected: mainWindow.showBook(filename, currentPage);
+            categoryName: "bookshelfKeywords";
         }
     }
 

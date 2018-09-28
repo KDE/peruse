@@ -46,6 +46,9 @@ public:
         obj->setProperty("currentPage", QString::number(entry->currentPage));
         obj->setProperty("filename", entry->filename);
         obj->setProperty("filetitle", entry->filetitle);
+        obj->setProperty("genres", entry->genres);
+        obj->setProperty("keywords", entry->keywords);
+        obj->setProperty("characters", entry->characters);
         obj->setProperty("created", entry->created);
         obj->setProperty("lastOpenedTime", entry->lastOpenedTime);
         obj->setProperty("publisher", entry->publisher);
@@ -80,6 +83,8 @@ QHash<int, QByteArray> CategoryEntriesModel::roleNames() const
     roles[FilenameRole] = "filename";
     roles[FiletitleRole] = "filetitle";
     roles[TitleRole] = "title";
+    roles[GenreRole] = "genres";
+    roles[KeywordRole] = "keywords";
     roles[SeriesRole] = "series";
     roles[SeriesNumbersRole] = "seriesNumber";
     roles[SeriesVolumesRole] = "seriesVolume";
@@ -138,6 +143,15 @@ QVariant CategoryEntriesModel::data(const QModelIndex& index, int role) const
                     break;
                 case TitleRole:
                     result.setValue(entry->title);
+                    break;
+                case GenreRole:
+                    result.setValue(entry->genres);
+                    break;
+                case KeywordRole:
+                    result.setValue(entry->keywords);
+                    break;
+                case CharacterRole:
+                    result.setValue(entry->characters);
                     break;
                 case SeriesRole:
                     result.setValue(entry->series);
@@ -292,7 +306,6 @@ void CategoryEntriesModel::addCategoryEntry(const QString& categoryName, BookEnt
     if(categoryName.length() > 0)
     {
         QStringList splitName = categoryName.split("/");
-//         qDebug() << "Parsing" << categoryName;
         QString nextCategory = splitName.takeFirst();
         CategoryEntriesModel* categoryModel = nullptr;
         Q_FOREACH(CategoryEntriesModel* existingModel, d->categoryModels)
