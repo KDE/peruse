@@ -165,8 +165,10 @@ ListView {
                     if (image.totalFrames > 0 && image.currentFrame+1 < image.totalFrames) {
                         image.currentFrame++;
                     } else {
-                        root.goNextPage();
+                        flick.resizeContent(imageWidth, imageHeight, {x: imageWidth/2, y: imageHeight/2});
                         image.currentFrame = -1;
+                        flick.returnToBounds();
+                        root.goNextPage();
                     }
                 }
 
@@ -174,8 +176,10 @@ ListView {
                     if (image.totalFrames > 0 && image.currentFrame-1 > -1) {
                         image.currentFrame--;
                     } else {
-                        root.goPreviousPage();
+                        flick.resizeContent(imageWidth, imageHeight, {x: imageWidth/2, y: imageHeight/2});
                         image.currentFrame = -1;
+                        flick.returnToBounds();
+                        root.goPreviousPage();
                     }
                 }
 
