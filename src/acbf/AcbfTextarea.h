@@ -57,7 +57,7 @@ public:
     /**
      * @return the types that a text-area can be, like speech or commentary.
      */
-    static QStringList availableTypes();
+    Q_INVOKABLE static QStringList availableTypes();
 
     /**
      * \brief Write the textarea into the xml writer.
@@ -142,6 +142,11 @@ public:
 
     /**
      * @return the text rotation in degrees.
+     *
+     * -   0 : horizontal.
+     * -  90 : vertical, ltr text going upwards.
+     * - 180 : horizontal, text flipped.
+     * - 270 : vertical, ltr text going downwards.
      */
     int textRotation() const;
     /**

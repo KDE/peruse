@@ -34,6 +34,8 @@ Kirigami.Page {
     property int index: -1;
     property string pageUrl: "";
     property string pageTitle: "";
+    property var pageList: [];
+    property var textTypes: ["speech", "commentary", "formal", "letter", "code", "heading"];
     signal save();
 
 
@@ -49,6 +51,16 @@ Kirigami.Page {
             root.currentPage.addTextLayer("")
         } else if (root.currentPage.textLayerLanguages.indexOf("") < 0) {
             root.currentPage.duplicateTextLayer(root.currentPage.textLayerLanguages[1], "");
+        }
+
+        pageList = [];
+        for (var i=0; i<model.acbfData.body.pageCount; i++){
+            var t = model.acbfData.body.page(i).title("")
+            if (t !== "") {
+                pageList.push(t);
+            } else {
+                pageList.push(i18n("Page %1", i+1));
+            }
         }
     }
 
@@ -251,21 +263,65 @@ Kirigami.Page {
 
     AddPageArea {
         id: addPageArea
+        imageSource: pageUrl;
+        pages: root.pageList;
+        bgColor: root.currentPage.bgcolor !== ""? root.currentPage.bgcolor: "#ffffff";
+        textBgColor: root.currentPage.textLayer("").bgcolor !== ""? root.currentPage.textLayer("").bgcolor: bgcolor;
+        availableTypes: root.textTypes;
+        transparent: false;
+        inverted: false;
+        rotation: 0;
         onSave: {
             var index = 0;
             if (type===0) {
                 index = root.currentPage.framePointStrings.length;
                 root.currentPage.addFrame(index);
                 root.currentPage.frame(index).setPointsFromRect(topLeft, bottomRight);
+                if (bgColor !== root.model.acbfData.body.bgcolor
+                        && bgColor !== root.currentPage.bgcolor
+                        && bgColor !== "#ffffff") {
+                    root.currentPage.frame(index).bgcolor = bgColor;
+                }
             } else if (type===1) {
                 index = root.currentPage.textLayer("").textareaPointStrings.length;
                 root.currentPage.textLayer("").addTextarea(index);
+                if (textBgColor !== root.currentPage.textLayer("").bgcolor
+                        && textBgColor !== root.model.acbfData.body.bgcolor
+                        && textBgColor !== root.currentPage.bgcolor
+                        && textBgColor !== "#ffffff") {
+                    root.currentPage.textLayer("").textarea(index).bgcolor = textBgColor;
+                }
+                root.currentPage.textLayer("").textarea(index).transparent = transparent;
+                root.currentPage.textLayer("").textarea(index).inverted = inverted;
+                root.currentPage.textLayer("").textarea(index).paragraphs = paragraphs.split("\n\n");
                 root.currentPage.textLayer("").textarea(index).setPointsFromRect(topLeft, bottomRight);
+                root.currentPage.textLayer("").textarea(index).type = availableTypes[textTypeIndex];
+                root.textTypes = root.currentPage.textLayer("").textarea(index).availableTypes();
+                root.currentPage.textLayer("").textarea(index).textRotation = rotation;
             } else if (type===2) {
                 index = root.currentPage.jumpPointStrings.length;
                 root.currentPage.addJump(index);
                 root.currentPage.jump(index).setPointsFromRect(topLeft, bottomRight);
+                root.currentPage.jump(index).pageIndex = pageIndex;
             }
+            resetEverything();
+        }
+        onSheetOpenChanged: {
+            if (sheetOpen) {
+                resetEverything();
+            }
+        }
+
+        function resetEverything() {
+            // Reset everything again.
+            paragraphs = "";
+            inverted = false;
+            transparent = false;
+            rotation = 0;
+            bgColor = root.currentPage.bgcolor !== ""? root.currentPage.bgcolor: "#ffffff";
+            textBgColor = root.currentPage.textLayer("").bgcolor !== ""? root.currentPage.textLayer("").bgcolor: bgColor;
+            textTypeIndex = 0;
+            pageIndex = 0;
         }
     }
 

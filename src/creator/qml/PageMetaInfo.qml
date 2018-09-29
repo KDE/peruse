@@ -46,7 +46,6 @@ Kirigami.ScrollablePage {
         shortcut: "Esc";
         onTriggered: {
             root.page.setTitle(defaultTitle.text, "")
-            root.page.bgcolor = pageBackgroundColor.text;
             root.save();
             pageStack.pop();
         }
@@ -115,7 +114,7 @@ Kirigami.ScrollablePage {
             ColorDialog {
                 id: backgroundColorDialog
                 title: i18nc("@title color choosing dialog","Choose the background color for page");
-                color: parent.color;
+                color: root.page.bgcolor !== ""? root.page.bgcolor: root.colorname;
                 onAccepted: root.page.bgcolor = color;
             }
         }
@@ -191,7 +190,7 @@ Kirigami.ScrollablePage {
                             ColorDialog {
                                 id: frameBackgroundColorDialog
                                 title: i18nc("@title color choosing dialog","Choose  background color for this frame");
-                                color: parent.color;
+                                color: page.frame(index).bgcolor !== ""? page.frame(index).bgcolor: pageBackgroundColor.color;
                                 onAccepted: page.frame(index).bgcolor = color;
                             }
                         }
@@ -232,7 +231,7 @@ Kirigami.ScrollablePage {
                 ColorDialog {
                     id: textLayerBackgroundColorDialog
                     title: i18nc("@title color choosing dialog","Choose the background color for all textareas on this page");
-                    color: parent.color;
+                    color: page.textLayer("").bgcolor !== ""? page.textLayer("").bgcolor: pageBackgroundColor.color;
                     onAccepted: page.textLayer("").bgcolor = color;
                 }
             }
