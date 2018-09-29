@@ -21,6 +21,7 @@
 
 import QtQuick 2.2
 import QtQuick.Controls 2.2 as QtControls
+import QtQuick.Dialogs 1.2
 
 import org.kde.kirigami 2.1 as Kirigami
 /**
@@ -93,12 +94,30 @@ Kirigami.ScrollablePage {
         }
 
         Item { width: parent.width; height: Kirigami.Units.smallSpacing; }
-        QtControls.TextField {
+        Rectangle {
             id: pageBackgroundColor;
-            width: parent.width;
-            placeholderText: root.colorname;
-            text: root.page.bgcolor;
-            onEditingFinished: root.page.bgcolor = text;
+            height: Kirigami.Units.iconSizes.medium;
+            width: Kirigami.Units.iconSizes.huge;
+            radius: 3;
+            border.color: Kirigami.Theme.disabledTextColor;
+            border.width: 1;
+            color: root.page.bgcolor !== ""? root.page.bgcolor: root.colorname;
+            MouseArea {
+                anchors.fill: parent;
+                onClicked: {
+                    backgroundColorDialog.open();
+
+                }
+                hoverEnabled: true;
+                onEntered: parent.border.color = Kirigami.Theme.buttonHoverColor;
+                onExited: parent.border.color = Kirigami.Theme.disabledTextColor;
+            }
+            ColorDialog {
+                id: backgroundColorDialog
+                title: i18nc("@title color choosing dialog","Choose the background color for page");
+                color: parent.color;
+                onAccepted: root.page.bgcolor = color;
+            }
         }
 
         Kirigami.Heading {
@@ -142,27 +161,40 @@ Kirigami.ScrollablePage {
                         id: frameLabel;
                         text: i18nc("Comic book panel frame name.", "Frame %1", index+1);
                     }
-                    QtControls.Label {
-                        id: frameBgcolorLabel;
+                    Row {
                         anchors {
                             top: frameLabel.bottom;
                             topMargin: Kirigami.Units.smallSpacing;
                         }
-                        height: frameBgcolor.height;
-                        text: i18nc("Label from frame background color.", "Background Color:");
-                    }
+                        spacing: Kirigami.Units.smallSpacing;
+                        QtControls.Label {
+                            height: Kirigami.Units.iconSizes.medium;
+                            text: i18nc("Label from frame background color.", "Background Color:");
+                        }
+                        Rectangle {
+                            height: Kirigami.Units.iconSizes.medium;
+                            width: Kirigami.Units.iconSizes.huge;
+                            radius: 3;
+                            border.color: Kirigami.Theme.disabledTextColor;
+                            border.width: 1;
+                            color: page.frame(index).bgcolor !== ""? page.frame(index).bgcolor: pageBackgroundColor.color;
+                            MouseArea {
+                                anchors.fill: parent;
+                                onClicked: {
+                                    frameBackgroundColorDialog.open();
 
-                    QtControls.TextField {
-                        anchors {
-                            top: frameLabel.bottom;
-                            topMargin: Kirigami.Units.smallSpacing;
-                            left: frameBgcolorLabel.right;
-                            leftMargin: Kirigami.Units.smallSpacing;
+                                }
+                                hoverEnabled: true;
+                                onEntered: parent.border.color = Kirigami.Theme.buttonHoverColor;
+                                onExited: parent.border.color = Kirigami.Theme.disabledTextColor;
+                            }
+                            ColorDialog {
+                                id: frameBackgroundColorDialog
+                                title: i18nc("@title color choosing dialog","Choose  background color for this frame");
+                                color: parent.color;
+                                onAccepted: page.frame(index).bgcolor = color;
+                            }
                         }
-                        id: frameBgcolor;
-                        text: page.frame(index).bgcolor;
-                        onEditingFinished: page.frame(index).bgcolor = text;
-                        placeholderText: pageBackgroundColor.text !== ""? pageBackgroundColor.text : root.colorname;
                     }
                 }
             }
@@ -172,21 +204,38 @@ Kirigami.ScrollablePage {
             height: paintedHeight + Kirigami.Units.smallSpacing * 2;
             text: i18nc("label text for the edit field for the page textareas", "Text Areas");
         }
-        QtControls.Label {
-            id: textLayerBgcolorLabel;
-            height: textLayerBgColor.height;
-            text: i18nc("Label from textlayer background color.", "Background Color:");
-        }
-
-        QtControls.TextField {
-            anchors {
-                left: textLayerBgcolorLabel.right;
-                leftMargin: Kirigami.Units.smallSpacing;
+        Row {
+            spacing: Kirigami.Units.smallSpacing;
+            QtControls.Label {
+                id: textLayerBgcolorLabel;
+                height: textLayerBgColor.height;
+                text: i18nc("Label from textlayer background color.", "Background Color:");
             }
-            id: textLayerBgColor;
-            text: page.textLayer("").bgcolor;
-            onEditingFinished: page.textLayer("").bgcolor = text;
-            placeholderText: pageBackgroundColor.text !== ""? pageBackgroundColor.text : root.colorname;
+            Rectangle {
+                height: Kirigami.Units.iconSizes.medium;
+                width: Kirigami.Units.iconSizes.huge;
+                id: textLayerBgColor;
+                radius: 3;
+                border.color: Kirigami.Theme.disabledTextColor;
+                border.width: 1;
+                color: page.textLayer("").bgcolor !== ""? page.textLayer("").bgcolor: pageBackgroundColor.color;
+                MouseArea {
+                    anchors.fill: parent;
+                    onClicked: {
+                        textLayerBackgroundColorDialog.open();
+
+                    }
+                    hoverEnabled: true;
+                    onEntered: parent.border.color = Kirigami.Theme.buttonHoverColor;
+                    onExited: parent.border.color = Kirigami.Theme.disabledTextColor;
+                }
+                ColorDialog {
+                    id: textLayerBackgroundColorDialog
+                    title: i18nc("@title color choosing dialog","Choose the background color for all textareas on this page");
+                    color: parent.color;
+                    onAccepted: page.textLayer("").bgcolor = color;
+                }
+            }
         }
         ListView {
             model: page.textLayer("").textareaPointStrings;

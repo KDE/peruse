@@ -21,6 +21,7 @@
 
 import QtQuick 2.2
 import QtQuick.Controls 2.2 as QtControls
+import QtQuick.Dialogs 1.2
 
 import org.kde.kirigami 2.1 as Kirigami
 
@@ -1028,10 +1029,20 @@ Kirigami.ScrollablePage {
             height: paintedHeight + Kirigami.Units.smallSpacing * 2;
             text: i18nc("label text for the form for the body background color.", "General Page Background Color");
         }
-        QtControls.TextField {
-            text: root.model.acbfData.body.bgcolor;
-            placeholderText: "#ffffff";
-            onEditingFinished: root.model.acbfData.body.bgcolor = text;
+        Rectangle {
+            height: addHistoryButton.height;
+            width: parent.width - height;
+            radius: 3;
+            border.color: Kirigami.Theme.disabledTextColor;
+            border.width: 1;
+            color: root.model.acbfData.body.bgcolor !== ""? root.model.acbfData.body.bgcolor: "#ffffff";
+            MouseArea {
+                anchors.fill: parent;
+                onClicked: bodyBackgroundColorDialog.open();
+                hoverEnabled: true;
+                onEntered: parent.border.color = Kirigami.Theme.buttonHoverColor;
+                onExited: parent.border.color = Kirigami.Theme.disabledTextColor;
+            }
         }
 
 
@@ -1049,6 +1060,14 @@ Kirigami.ScrollablePage {
             onSave: {
                 root.model.acbfData.metaData.documentInfo.setAuthor(index, activity, language, firstName, middleName, lastName, nickName, homePage, email);
                 root.model.setDirty();
+            }
+        }
+        ColorDialog {
+            id: bodyBackgroundColorDialog
+            title: i18nc("@title color choosing dialog","Choose the general background color for this comic");
+            color: root.model.acbfData.body.bgcolor !==""? root.model.acbfData.body.bgcolor: "#ffffff";
+            onAccepted: {
+                root.model.acbfData.body.bgcolor = color;
             }
         }
     }
