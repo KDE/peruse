@@ -7,6 +7,7 @@
   <name>Peruse</name>
   <name xml:lang="ca">Peruse</name>
   <name xml:lang="ca-valencia">Peruse</name>
+  <name xml:lang="it">Peruse</name>
   <name xml:lang="nl">Peruse</name>
   <name xml:lang="pt">Peruse</name>
   <name xml:lang="sk">Peruse</name>
@@ -16,6 +17,7 @@
   <summary>Comic Book Reader</summary>
   <summary xml:lang="ca">Lector de llibres de còmic</summary>
   <summary xml:lang="ca-valencia">Lector de llibres de còmic</summary>
+  <summary xml:lang="it">Lettore di fumetti</summary>
   <summary xml:lang="nl">Stripboekreader</summary>
   <summary xml:lang="pt">Leitor de Bandas Desenhadas</summary>
   <summary xml:lang="sk">Čítačka komiksoc</summary>
@@ -56,6 +58,7 @@
     <p>Features:</p>
     <p xml:lang="ca">Característiques:</p>
     <p xml:lang="ca-valencia">Característiques:</p>
+    <p xml:lang="it">Funzionalità:</p>
     <p xml:lang="nl">Mogelijkheden:</p>
     <p xml:lang="pt">Funcionalidades:</p>
     <p xml:lang="sk">Funkcie:</p>
@@ -84,6 +87,7 @@
       <li>ePub Books (epub)</li>
       <li xml:lang="ca">Llibres ePub (epub)</li>
       <li xml:lang="ca-valencia">Llibres ePub (epub)</li>
+      <li xml:lang="it">Libri ePub (epub)</li>
       <li xml:lang="nl">ePub boeken (epub)</li>
       <li xml:lang="pt">Livros ePub (epub)</li>
       <li xml:lang="sk">Knihy ePub (epub)</li>
@@ -102,6 +106,7 @@
       <li>DeJaVu (djvu)</li>
       <li xml:lang="ca">DeJaVu (djvu)</li>
       <li xml:lang="ca-valencia">DeJaVu (djvu)</li>
+      <li xml:lang="it">DeJaVu (djvu)</li>
       <li xml:lang="nl">DeJaVu (djvu)</li>
       <li xml:lang="pt">DeJaVu (djvu)</li>
       <li xml:lang="sk">DeJaVu (djvu)</li>

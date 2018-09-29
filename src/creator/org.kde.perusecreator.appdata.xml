@@ -7,6 +7,7 @@
   <name>Peruse</name>
   <name xml:lang="ca">Peruse</name>
   <name xml:lang="ca-valencia">Peruse</name>
+  <name xml:lang="it">Peruse</name>
   <name xml:lang="nl">Peruse</name>
   <name xml:lang="pt">Peruse</name>
   <name xml:lang="sk">Peruse</name>
@@ -16,6 +17,7 @@
   <summary>Comic Book Creation Tool</summary>
   <summary xml:lang="ca">Eina de creació de llibres de còmic</summary>
   <summary xml:lang="ca-valencia">Eina de creació de llibres de còmic</summary>
+  <summary xml:lang="it">Strumento di creazione di fumetti</summary>
   <summary xml:lang="nl">Hulpmiddel voor maken van stripboeken</summary>
   <summary xml:lang="pt">Ferramenta de Criação de Bandas Desenhadas</summary>
   <summary xml:lang="sk">Nástroj na vytváranie komiksov</summary>
@@ -28,6 +30,7 @@
     <p>Features:</p>
     <p xml:lang="ca">Característiques:</p>
     <p xml:lang="ca-valencia">Característiques:</p>
+    <p xml:lang="it">Funzionalità:</p>
     <p xml:lang="nl">Mogelijkheden:</p>
     <p xml:lang="pt">Funcionalidades:</p>
     <p xml:lang="sk">Funkcie:</p>
