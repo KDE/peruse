@@ -190,8 +190,46 @@ void BookDatabase::removeEntry(BookEntry* entry)
     qDebug() << "Removing book from the database" << entry->filename;
 
     QSqlQuery removeEntry;
-    removeEntry.prepare("DELETE FROM books WHERE filename='"+entry->filename+"';");
+    removeEntry.prepare("DELETE FROM books WHERE fileName='"+entry->filename+"';");
     removeEntry.exec();
+
+    d->closeDb();
+}
+
+void BookDatabase::updateEntry(QString fileName, QString property, QVariant value)
+{
+    if(!d->prepareDb()) {
+        return;
+    }
+    //qDebug() << "Updating book in the database" << fileName << property << value;
+
+    if (!d->fieldNames.contains(property)) {
+        return;
+    }
+
+    QStringList stringListValues;
+    stringListValues << "series" << "author" << "characters" << "genres" << "keywords" << "tags";
+    QString val;
+    if (stringListValues.contains(property)) {
+        val = value.toStringList().join(",");
+    } else if (property == "description") {
+        val = value.toStringList().join("\n");
+    }
+
+    QSqlQuery updateEntry;
+    updateEntry.prepare(QString("UPDATE books SET %1=:value WHERE fileName=:filename ").arg(property));
+    updateEntry.bindValue(":value", value);
+    if (!val.isEmpty()) {
+        updateEntry.bindValue(":value", val);
+    }
+    updateEntry.bindValue(":filename", fileName);
+    if (!updateEntry.exec()) {
+        qDebug() << updateEntry.lastError();
+        qDebug() << "Query failed, string:" << updateEntry.lastQuery();
+        qDebug() << updateEntry.boundValue(":value");
+        qDebug() << updateEntry.boundValue(":filename");
+        qDebug() << d->db.lastError();
+    }
 
     d->closeDb();
 }

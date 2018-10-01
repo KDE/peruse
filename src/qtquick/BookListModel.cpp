@@ -396,21 +396,26 @@ void BookListModel::setBookData(QString fileName, QString property, QString valu
             if(property == "totalPages")
             {
                 entry->totalPages = value.toInt();
+                d->db->updateEntry(entry->filename, property, QVariant(value.toInt()));
             }
             else if(property == "currentPage")
             {
                 entry->currentPage = value.toInt();
+                d->db->updateEntry(entry->filename, property, QVariant(value.toInt()));
             }
             else if(property == "rating")
             {
                 entry->rating = value.toInt();
+                d->db->updateEntry(entry->filename, property, QVariant(value.toInt()));
             }
             else if(property == "tags")
             {
                 entry->tags = value.split(",");
+                d->db->updateEntry(entry->filename, property, QVariant(value.split(",")));
             }
             else if(property == "comment") {
                 entry->comment = value;
+                d->db->updateEntry(entry->filename, property, QVariant(value));
             }
             emit entryDataUpdated(entry);
             break;
