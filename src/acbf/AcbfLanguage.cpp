@@ -21,8 +21,9 @@
 
 #include "AcbfLanguage.h"
 
-#include <QDebug>
 #include <QXmlStreamReader>
+
+#include <acbf_debug.h>
 
 using namespace AdvancedComicBookFormat;
 
@@ -57,7 +58,7 @@ bool Language::fromXml(QXmlStreamReader *xmlReader)
     setShow(xmlReader->attributes().value(QStringLiteral("show")).toString().toLower() == QStringLiteral("true"));
     setLanguage(xmlReader->attributes().value(QStringLiteral("lang")).toString());
     xmlReader->skipCurrentElement();
-    qDebug() << Q_FUNC_INFO << "Created language" << language();
+    qCDebug(ACBF_LOG) << Q_FUNC_INFO << "Created language" << language();
     return true;
 }
 

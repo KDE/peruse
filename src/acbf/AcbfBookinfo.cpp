@@ -27,9 +27,10 @@
 #include "AcbfPage.h"
 #include "AcbfSequence.h"
 
-#include <QDebug>
 #include <QHash>
 #include <QXmlStreamReader>
+
+#include <acbf_debug.h>
 
 using namespace AdvancedComicBookFormat;
 
@@ -187,7 +188,7 @@ bool BookInfo::fromXml(QXmlStreamReader *xmlReader)
                     xmlReader->skipCurrentElement();
                 }
             }
-            qDebug() << "Created character entries, we now have" << d->characters.count() << "characters";
+            qCDebug(ACBF_LOG) << "Created character entries, we now have" << d->characters.count() << "characters";
         }
         else if(xmlReader->name() == QStringLiteral("annotation"))
         {
@@ -256,14 +257,14 @@ bool BookInfo::fromXml(QXmlStreamReader *xmlReader)
         }
         else
         {
-            qWarning() << Q_FUNC_INFO << "currently unsupported subsection:" << xmlReader->name();
+            qCWarning(ACBF_LOG) << Q_FUNC_INFO << "currently unsupported subsection:" << xmlReader->name();
             xmlReader->skipCurrentElement();
         }
     }
     if (xmlReader->hasError()) {
-        qWarning() << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader->name() << "(" << xmlReader->lineNumber() << ":" << xmlReader->columnNumber() << ") The reported error was:" << xmlReader->errorString();
+        qCWarning(ACBF_LOG) << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader->name() << "(" << xmlReader->lineNumber() << ":" << xmlReader->columnNumber() << ") The reported error was:" << xmlReader->errorString();
     }
-    qDebug() << Q_FUNC_INFO << "Created book information for the book with the titles" << d->title.values();
+    qCDebug(ACBF_LOG) << Q_FUNC_INFO << "Created book information for the book with the titles" << d->title.values();
     return !xmlReader->hasError();
 }
 

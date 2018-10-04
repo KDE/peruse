@@ -43,6 +43,7 @@ include(KDECompilerSettings)
 include(GenerateExportHeader)
 include(ECMInstallIcons)
 include(ECMAddAppIcon)
+include(ECMQtDeclareLoggingCategory)
 
 kde_enable_exceptions()
 

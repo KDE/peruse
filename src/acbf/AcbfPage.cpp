@@ -25,9 +25,10 @@
 #include "AcbfJump.h"
 #include "AcbfTextarea.h"
 
-#include <QDebug>
 #include <QHash>
 #include <QXmlStreamReader>
+
+#include <acbf_debug.h>
 
 using namespace AdvancedComicBookFormat;
 
@@ -153,14 +154,14 @@ bool Page::fromXml(QXmlStreamReader *xmlReader)
          }
         else
         {
-            qWarning() << Q_FUNC_INFO << "currently unsupported subsection:" << xmlReader->name();
+            qCWarning(ACBF_LOG) << Q_FUNC_INFO << "currently unsupported subsection:" << xmlReader->name();
             xmlReader->skipCurrentElement();
         }
     }
     if (xmlReader->hasError()) {
-        qWarning() << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader->name() << "(" << xmlReader->lineNumber() << ":" << xmlReader->columnNumber() << ") The reported error was:" << xmlReader->errorString();
+        qCWarning(ACBF_LOG) << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader->name() << "(" << xmlReader->lineNumber() << ":" << xmlReader->columnNumber() << ") The reported error was:" << xmlReader->errorString();
     }
-    qDebug() << Q_FUNC_INFO << "Created page for image" << d->imageHref;
+    qCDebug(ACBF_LOG) << Q_FUNC_INFO << "Created page for image" << d->imageHref;
     return !xmlReader->hasError();
 }
 

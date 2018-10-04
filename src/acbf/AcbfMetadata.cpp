@@ -24,8 +24,9 @@
 #include "AcbfPublishinfo.h"
 #include "AcbfDocumentinfo.h"
 
-#include <QDebug>
 #include <QXmlStreamReader>
+
+#include <acbf_debug.h>
 
 using namespace AdvancedComicBookFormat;
 
@@ -92,14 +93,14 @@ bool Metadata::fromXml(QXmlStreamReader *xmlReader)
         }
         else
         {
-            qWarning() << Q_FUNC_INFO << "currently unsupported subsection:" << xmlReader->name();
+            qCWarning(ACBF_LOG) << Q_FUNC_INFO << "currently unsupported subsection:" << xmlReader->name();
             xmlReader->skipCurrentElement();
         }
     }
     if (xmlReader->hasError()) {
-        qWarning() << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader->name() << "(" << xmlReader->lineNumber() << ":" << xmlReader->columnNumber() << ") The reported error was:" << xmlReader->errorString();
+        qCWarning(ACBF_LOG) << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader->name() << "(" << xmlReader->lineNumber() << ":" << xmlReader->columnNumber() << ") The reported error was:" << xmlReader->errorString();
     }
-    qDebug() << Q_FUNC_INFO << "Created meta information section";
+    qCDebug(ACBF_LOG) << Q_FUNC_INFO << "Created meta information section";
     return !xmlReader->hasError();
 }
 

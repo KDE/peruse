@@ -26,8 +26,8 @@
     #include "BalooContentLister.h"
 #endif
 
-#include <QDebug>
 #include <QMimeDatabase>
+#include <QSet>
 #include <QTimer>
 #include <QUrl>
 

@@ -27,8 +27,9 @@
 #include "AcbfReferences.h"
 #include "AcbfStyleSheet.h"
 
-#include <QDebug>
 #include <QXmlStreamReader>
+
+#include <acbf_debug.h>
 
 using namespace AdvancedComicBookFormat;
 
@@ -120,20 +121,20 @@ bool Document::fromXml(QString xmlDocument)
                 }
                 else
                 {
-                    qWarning() << Q_FUNC_INFO << "currently unsupported subsection:" << xmlReader.name();
+                    qCWarning(ACBF_LOG) << Q_FUNC_INFO << "currently unsupported subsection:" << xmlReader.name();
                     xmlReader.skipCurrentElement();
                 }
             }
         }
         else {
-            qWarning() << Q_FUNC_INFO << "not an ACBF XML document";
+            qCWarning(ACBF_LOG) << Q_FUNC_INFO << "not an ACBF XML document";
             return false;
         }
     }
     if (xmlReader.hasError()) {
-        qWarning() << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader.name() << "(" << xmlReader.lineNumber() << ":" << xmlReader.columnNumber() << ") The reported error was:" << xmlReader.errorString();
+        qCWarning(ACBF_LOG) << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader.name() << "(" << xmlReader.lineNumber() << ":" << xmlReader.columnNumber() << ") The reported error was:" << xmlReader.errorString();
     }
-    qDebug() << Q_FUNC_INFO << "Completed ACBF document creation for" << d->metaData->bookInfo()->title();
+    qCDebug(ACBF_LOG) << Q_FUNC_INFO << "Completed ACBF document creation for" << d->metaData->bookInfo()->title();
     return !xmlReader.hasError();
 }
 

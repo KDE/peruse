@@ -25,7 +25,6 @@
 
 #include <QCoreApplication>
 #include <QDateTime>
-#include <QDebug>
 #include <QDirIterator>
 #include <QMimeDatabase>
 #include <QTimer>

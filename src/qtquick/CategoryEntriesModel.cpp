@@ -24,7 +24,6 @@
 #include <KFileMetaData/UserMetaData>
 #include <QDir>
 #include <QFileInfo>
-#include <QDebug>
 
 class CategoryEntriesModel::Private {
 public:

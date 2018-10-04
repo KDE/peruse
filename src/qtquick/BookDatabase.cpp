@@ -23,7 +23,6 @@
 
 #include "CategoryEntriesModel.h"
 
-#include <QDebug>
 #include <QStandardPaths>
 #include <QSqlDatabase>
 #include <QSqlError>
@@ -31,6 +30,8 @@
 #include <QSqlRecord>
 
 #include <QDir>
+
+#include <qtquick_debug.h>
 
 class BookDatabase::Private {
 public:
@@ -51,7 +52,7 @@ public:
 
     bool prepareDb() {
         if (!db.open()) {
-            qDebug() << "Failed to open the book database file" << dbfile << db.lastError();
+            qCDebug(QTQUICK_LOG) << "Failed to open the book database file" << dbfile << db.lastError();
             return false;
         }
 
@@ -62,7 +63,7 @@ public:
                 for (int i=0; i< qu.record().count(); i++) {
                     fieldNames.append(qu.record().fieldName(i));
                 }
-                qDebug() << Q_FUNC_INFO << ": opening database with following fieldNames:" << fieldNames;
+                qCDebug(QTQUICK_LOG) << Q_FUNC_INFO << ": opening database with following fieldNames:" << fieldNames;
             }
             return true;
         }
@@ -75,14 +76,14 @@ public:
                    << "created datetime" << "lastOpenedTime datetime" << "totalPages integer" << "currentPage integer"
                    << "thumbnail varchar" << "comment varchar" << "tags varchar" << "rating varchar";
         if (!q.exec(QString("create table books("+entryNames.join(", ")+")"))) {
-            qDebug() << "Database could not create the table books";
+            qCDebug(QTQUICK_LOG) << "Database could not create the table books";
             return false;
         }
         for (int i=0; i< entryNames.size(); i++) {
             QString fieldName = entryNames.at(i).split(" ").first();
             fieldNames.append(fieldName);
         }
-        qDebug() << Q_FUNC_INFO << ": making database with following fieldNames:" << fieldNames;
+        qCDebug(QTQUICK_LOG) << Q_FUNC_INFO << ": making database with following fieldNames:" << fieldNames;
 
         return true;
     }
@@ -147,7 +148,7 @@ void BookDatabase::addEntry(BookEntry* entry)
     if(!d->prepareDb()) {
         return;
     }
-    qDebug() << "Adding newly discovered book to the database" << entry->filename;
+    qCDebug(QTQUICK_LOG) << "Adding newly discovered book to the database" << entry->filename;
 
     QStringList valueNames;
     for (int i=0; i< d->fieldNames.size(); i++) {
@@ -187,7 +188,7 @@ void BookDatabase::removeEntry(BookEntry* entry)
     if(!d->prepareDb()) {
         return;
     }
-    qDebug() << "Removing book from the database" << entry->filename;
+    qCDebug(QTQUICK_LOG) << "Removing book from the database" << entry->filename;
 
     QSqlQuery removeEntry;
     removeEntry.prepare("DELETE FROM books WHERE fileName='"+entry->filename+"';");
@@ -201,7 +202,7 @@ void BookDatabase::updateEntry(QString fileName, QString property, QVariant valu
     if(!d->prepareDb()) {
         return;
     }
-    //qDebug() << "Updating book in the database" << fileName << property << value;
+    //qCDebug(QTQUICK_LOG) << "Updating book in the database" << fileName << property << value;
 
     if (!d->fieldNames.contains(property)) {
         return;
@@ -224,11 +225,11 @@ void BookDatabase::updateEntry(QString fileName, QString property, QVariant valu
     }
     updateEntry.bindValue(":filename", fileName);
     if (!updateEntry.exec()) {
-        qDebug() << updateEntry.lastError();
-        qDebug() << "Query failed, string:" << updateEntry.lastQuery();
-        qDebug() << updateEntry.boundValue(":value");
-        qDebug() << updateEntry.boundValue(":filename");
-        qDebug() << d->db.lastError();
+        qCDebug(QTQUICK_LOG) << updateEntry.lastError();
+        qCDebug(QTQUICK_LOG) << "Query failed, string:" << updateEntry.lastQuery();
+        qCDebug(QTQUICK_LOG) << updateEntry.boundValue(":value");
+        qCDebug(QTQUICK_LOG) << updateEntry.boundValue(":filename");
+        qCDebug(QTQUICK_LOG) << d->db.lastError();
     }
 
     d->closeDb();

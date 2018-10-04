@@ -27,7 +27,6 @@
 #include <KFileMetaData/UserMetaData>
 
 #include <QDateTime>
-#include <QDebug>
 #include <QList>
 #include <QFileInfo>
 #include <QProcess>

@@ -34,10 +34,11 @@
 
 #include <QCoreApplication>
 #include <QDir>
-#include <QDebug>
 #include <QMimeDatabase>
 #include <QTimer>
 #include <QUrl>
+
+#include <qtquick_debug.h>
 
 class BookListModel::Private {
 public:

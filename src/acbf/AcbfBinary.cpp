@@ -22,7 +22,6 @@
 #include "AcbfBinary.h"
 
 #include <QString>
-#include <QDebug>
 #include <QXmlStreamWriter>
 #include <QXmlStreamReader>
 

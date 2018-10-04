@@ -175,7 +175,7 @@ int BookModel::currentPage() const
 
 void BookModel::setCurrentPage(int newCurrentPage, bool updateFilesystem)
 {
-//     qDebug() << Q_FUNC_INFO << d->filename << newCurrentPage << updateFilesystem;
+//     qCDebug(QTQUICK_LOG) << Q_FUNC_INFO << d->filename << newCurrentPage << updateFilesystem;
     if(updateFilesystem)
     {
         KFileMetaData::UserMetaData data(d->filename);

@@ -28,7 +28,8 @@
 #include <QProcess>
 #include <QStandardPaths>
 #include <QUrl>
-#include <QDebug>
+
+#include <qtquick_debug.h>
 
 class PDFCoverImageProvider::Private {
 public:
@@ -99,7 +100,7 @@ QImage PDFCoverImageProvider::requestImage(const QString& id, QSize* size, const
         if(!success) {
             QIcon oops = QIcon::fromTheme("unknown");
             img = oops.pixmap(oops.availableSizes().last()).toImage();
-            qDebug() << "Failed to load image with id" << id << "from thumbnail file" << outFile;
+            qCDebug(QTQUICK_LOG) << "Failed to load image with id" << id << "from thumbnail file" << outFile;
         }
     }
 

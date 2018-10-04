@@ -27,7 +27,8 @@
 
 #include <QIcon>
 #include <QMimeDatabase>
-#include <QDebug>
+
+#include <qtquick_debug.h>
 
 class ComicCoverImageProvider::Private {
 public:
@@ -107,7 +108,7 @@ QImage ComicCoverImageProvider::requestImage(const QString& id, QSize* size, con
                     if(!success) {
                         QIcon oops = QIcon::fromTheme("unknown");
                         img = oops.pixmap(oops.availableSizes().last()).toImage();
-                        qDebug() << "Failed to load image with id:" << id;
+                        qCDebug(QTQUICK_LOG) << "Failed to load image with id:" << id;
                     }
                 }
             }

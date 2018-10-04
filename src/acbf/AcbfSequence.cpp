@@ -22,7 +22,8 @@
 #include "AcbfSequence.h"
 
 #include <QXmlStreamWriter>
-#include <QDebug>
+
+#include <acbf_debug.h>
 
 using namespace AdvancedComicBookFormat;
 
@@ -61,7 +62,7 @@ bool Sequence::fromXml(QXmlStreamReader *xmlReader)
     setVolume(xmlReader->attributes().value(QStringLiteral("volume")).toInt());
     setTitle(xmlReader->attributes().value(QStringLiteral("title")).toString());
     setNumber(xmlReader->readElementText(QXmlStreamReader::IncludeChildElements).toInt());
-    qDebug() << Q_FUNC_INFO << "Created sequence entry, which places this book as number" << number() << "in the series" << title();
+    qCDebug(ACBF_LOG) << Q_FUNC_INFO << "Created sequence entry, which places this book as number" << number() << "in the series" << title();
     return true;
 }
 

@@ -21,8 +21,9 @@
 
 #include "AcbfTextarea.h"
 
-#include <QDebug>
 #include <QXmlStreamReader>
+
+#include <acbf_debug.h>
 
 using namespace AdvancedComicBookFormat;
 
@@ -105,7 +106,7 @@ bool Textarea::fromXml(QXmlStreamReader *xmlReader)
         }
         else
         {
-            qWarning() << "Failed to construct one of the points for a text-area. Attempted to handle the point" << point << "in the data" << points;
+            qCWarning(ACBF_LOG) << "Failed to construct one of the points for a text-area. Attempted to handle the point" << point << "in the data" << points;
             return false;
         }
     }
@@ -118,14 +119,14 @@ bool Textarea::fromXml(QXmlStreamReader *xmlReader)
         }
         else
         {
-            qWarning() << Q_FUNC_INFO << "currently unsupported subsection in text-area:" << xmlReader->name();
+            qCWarning(ACBF_LOG) << Q_FUNC_INFO << "currently unsupported subsection in text-area:" << xmlReader->name();
             xmlReader->skipCurrentElement();
         }
     }
     if (xmlReader->hasError()) {
-        qWarning() << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader->name() << "(" << xmlReader->lineNumber() << ":" << xmlReader->columnNumber() << ") The reported error was:" << xmlReader->errorString();
+        qCWarning(ACBF_LOG) << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader->name() << "(" << xmlReader->lineNumber() << ":" << xmlReader->columnNumber() << ") The reported error was:" << xmlReader->errorString();
     }
-    qDebug() << Q_FUNC_INFO << "Created a text area of type" << type();
+    qCDebug(ACBF_LOG) << Q_FUNC_INFO << "Created a text area of type" << type();
     return !xmlReader->hasError();
 }
 

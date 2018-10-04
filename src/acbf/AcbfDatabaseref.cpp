@@ -22,7 +22,8 @@
 #include "AcbfDatabaseref.h"
 
 #include <QXmlStreamWriter>
-#include <QDebug>
+
+#include <acbf_debug.h>
 
 using namespace AdvancedComicBookFormat;
 
@@ -60,7 +61,7 @@ bool DatabaseRef::fromXml(QXmlStreamReader *xmlReader)
     setDbname(xmlReader->attributes().value(QStringLiteral("dbname")).toString());
     setType(xmlReader->attributes().value(QStringLiteral("type")).toString());
     setReference(xmlReader->readElementText(QXmlStreamReader::IncludeChildElements));
-    qDebug() << Q_FUNC_INFO << "Created a database reference for the database" << dbname() << "with reference" << reference();
+    qCDebug(ACBF_LOG) << Q_FUNC_INFO << "Created a database reference for the database" << dbname() << "with reference" << reference();
     return true;
 }
 

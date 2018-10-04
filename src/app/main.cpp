@@ -19,7 +19,6 @@
 
 #include <QStandardPaths>
 #include <QDir>
-#include <QDebug>
 
 #include <KLocalizedString>
 
@@ -30,6 +29,8 @@
 #include <iostream>
 
 #include "peruse_helpers.h"
+
+#include <app_debug.h>
 
 int main(int argc, char** argv)
 {
@@ -52,7 +53,7 @@ int main(int argc, char** argv)
     if (parser.isSet(QStringLiteral("clear-db"))) {
         QString dbfile = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/library.sqlite";
         if(QFile::exists(dbfile)) {
-            qDebug() << "Remove database at" << dbfile;
+            qCDebug(APP_LOG) << "Remove database at" << dbfile;
             QFile::remove(dbfile);
         }
     }

@@ -21,9 +21,10 @@
 
 #include "AcbfStyleSheet.h"
 #include <QString>
-#include <QDebug>
 #include <QXmlStreamWriter>
 #include <QXmlStreamReader>
+
+#include <acbf_debug.h>
 
 using namespace AdvancedComicBookFormat;
 
@@ -57,9 +58,9 @@ bool StyleSheet::fromXml(QXmlStreamReader *xmlReader)
 {
     setContents(xmlReader->readElementText(QXmlStreamReader::IncludeChildElements));
     if (xmlReader->hasError()) {
-        qWarning() << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader->name() << "(" << xmlReader->lineNumber() << ":" << xmlReader->columnNumber() << ") The reported error was:" << xmlReader->errorString();
+        qCWarning(ACBF_LOG) << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader->name() << "(" << xmlReader->lineNumber() << ":" << xmlReader->columnNumber() << ") The reported error was:" << xmlReader->errorString();
     }
-    qDebug() << Q_FUNC_INFO << "Created a stylesheet section with"<<d->classes.keys().count()<<"classes";
+    qCDebug(ACBF_LOG) << Q_FUNC_INFO << "Created a stylesheet section with"<<d->classes.keys().count()<<"classes";
     return !xmlReader->hasError();
 }
 

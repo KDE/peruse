@@ -24,6 +24,13 @@ set(acbf_SRCS
     AcbfTextlayer.cpp
 )
 
+ecm_qt_declare_logging_category(acbf_SRCS
+    HEADER acbf_debug.h
+    IDENTIFIER ACBF_LOG
+    CATEGORY_NAME org.kde.peruse.acbf
+    DEFAULT_SEVERITY Warning
+)
+
 add_library(acbf SHARED ${acbf_SRCS})
 generate_export_header(acbf BASE_NAME acbf)
 

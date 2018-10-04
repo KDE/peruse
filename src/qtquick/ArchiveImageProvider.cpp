@@ -25,12 +25,13 @@
 #include <karchive.h>
 #include <karchivefile.h>
 
-#include <QDebug>
 #include <QIcon>
 
 #include <AcbfDocument.h>
 #include <AcbfBinary.h>
 #include <AcbfData.h>
+
+#include <qtquick_debug.h>
 
 class ArchiveImageProvider::Private
 {
@@ -89,7 +90,7 @@ QImage ArchiveImageProvider::requestImage(const QString& id, QSize* size, const 
     if (!success) {
         QIcon oops = QIcon::fromTheme("unknown");
         img = oops.pixmap(oops.availableSizes().last()).toImage();
-        qDebug() << "Failed to load image with id:" << id;
+        qCDebug(QTQUICK_LOG) << "Failed to load image with id:" << id;
     }
 
     return img;

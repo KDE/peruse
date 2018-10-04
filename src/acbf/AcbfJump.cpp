@@ -20,8 +20,9 @@
  */
 
 #include "AcbfJump.h"
-#include <QDebug>
 #include <QXmlStreamReader>
+
+#include <acbf_debug.h>
 
 using namespace AdvancedComicBookFormat;
 
@@ -71,15 +72,15 @@ bool Jump::fromXml(QXmlStreamReader *xmlReader)
         }
         else
         {
-            qWarning() << "Failed to construct one of the points for a jump. Attempted to handle the point" << point << "in the data" << points;
+            qCWarning(ACBF_LOG) << "Failed to construct one of the points for a jump. Attempted to handle the point" << point << "in the data" << points;
             return false;
         }
     }
 
     if (xmlReader->hasError()) {
-        qWarning() << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader->name() << "(" << xmlReader->lineNumber() << ":" << xmlReader->columnNumber() << ") The reported error was:" << xmlReader->errorString();
+        qCWarning(ACBF_LOG) << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader->name() << "(" << xmlReader->lineNumber() << ":" << xmlReader->columnNumber() << ") The reported error was:" << xmlReader->errorString();
     }
-    qDebug() << Q_FUNC_INFO << "Created a jump with " << points.count() << "points, to page " << d->pageIndex;
+    qCDebug(ACBF_LOG) << Q_FUNC_INFO << "Created a jump with " << points.count() << "points, to page " << d->pageIndex;
 
     return !xmlReader->hasError();
 }

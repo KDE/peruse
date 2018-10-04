@@ -28,6 +28,13 @@ if(USE_PERUSE_PDFTHUMBNAILER)
     )
 endif()
 
+ecm_qt_declare_logging_category(qmlplugin_SRCS
+    HEADER qtquick_debug.h
+    IDENTIFIER QTQUICK_LOG
+    CATEGORY_NAME org.kde.peruse.qml
+    DEFAULT_SEVERITY Warning
+)
+
 add_library (peruseqmlplugin SHARED ${qmlplugin_SRCS})
 if(USE_PERUSE_PDFTHUMBNAILER)
 target_compile_definitions(peruseqmlplugin

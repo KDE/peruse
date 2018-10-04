@@ -4,6 +4,13 @@ set(APP_SRCS
 
 ecm_add_app_icon(APP_SRCS ICONS "icon/128-apps-peruse.png")
 
+ecm_qt_declare_logging_category(APP_SRCS
+    HEADER app_debug.h
+    IDENTIFIER APP_LOG
+    CATEGORY_NAME org.kde.peruse.app
+    DEFAULT_SEVERITY Warning
+)
+
 add_executable(peruse ${APP_SRCS})
 target_link_libraries(peruse
     Qt5::Core
