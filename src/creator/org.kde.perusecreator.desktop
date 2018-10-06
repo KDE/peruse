@@ -2,6 +2,7 @@
 Name=Peruse Creator
 Name[ca]=Creador del Peruse
 Name[ca@valencia]=Creador del Peruse
+Name[cs]=Tvůrce Peruse
 Name[it]=Peruse Creator
 Name[nl]=Maker van Peruse
 Name[pt]=Criador do Peruse
@@ -12,6 +13,7 @@ Name[x-test]=xxPeruse Creatorxx
 GenericName=Comic Book Creator
 GenericName[ca]=Creador de llibres de còmic
 GenericName[ca@valencia]=Creador de llibres de còmic
+GenericName[cs]=Tvůrce komixů
 GenericName[it]=Creatore di fumetti
 GenericName[nl]=Maker van stripboeken
 GenericName[pt]=Criador de Bandas Desenhadas

@@ -2,6 +2,7 @@
 Name=Peruse
 Name[ca]=Peruse
 Name[ca@valencia]=Peruse
+Name[cs]=Peruse
 Name[it]=Peruse
 Name[nl]=Peruse
 Name[pt]=Peruse
@@ -12,6 +13,7 @@ Name[x-test]=xxPerusexx
 GenericName=Comic Book Reader
 GenericName[ca]=Lector de llibres de còmic
 GenericName[ca@valencia]=Lector de llibres de còmic
+GenericName[cs]=Čtečka komixů
 GenericName[it]=Lettore di fumetti
 GenericName[nl]=Stripboekreader
 GenericName[pt]=Leitor de Bandas Desenhadas
