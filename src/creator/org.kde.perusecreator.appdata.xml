@@ -5,6 +5,7 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0+</project_license>
   <name>Peruse</name>
+  <name xml:lang="ast">Peruse</name>
   <name xml:lang="ca">Peruse</name>
   <name xml:lang="ca-valencia">Peruse</name>
   <name xml:lang="cs">Peruse</name>
@@ -16,6 +17,7 @@
   <name xml:lang="uk">Peruse</name>
   <name xml:lang="x-test">xxPerusexx</name>
   <summary>Comic Book Creation Tool</summary>
+  <summary xml:lang="ast">Ferramienta pa la creación de cómics</summary>
   <summary xml:lang="ca">Eina de creació de llibres de còmic</summary>
   <summary xml:lang="ca-valencia">Eina de creació de llibres de còmic</summary>
   <summary xml:lang="cs">Nástroj pro vytváření komixů</summary>
@@ -30,6 +32,7 @@
     <p>
     </p>
     <p>Features:</p>
+    <p xml:lang="ast">Carauterístiques:</p>
     <p xml:lang="ca">Característiques:</p>
     <p xml:lang="ca-valencia">Característiques:</p>
     <p xml:lang="cs">Vlastnosti:</p>

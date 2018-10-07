@@ -5,6 +5,7 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0+</project_license>
   <name>Peruse</name>
+  <name xml:lang="ast">Peruse</name>
   <name xml:lang="ca">Peruse</name>
   <name xml:lang="ca-valencia">Peruse</name>
   <name xml:lang="cs">Peruse</name>
@@ -16,6 +17,7 @@
   <name xml:lang="uk">Peruse</name>
   <name xml:lang="x-test">xxPerusexx</name>
   <summary>Comic Book Reader</summary>
+  <summary xml:lang="ast">Llector de cómics</summary>
   <summary xml:lang="ca">Lector de llibres de còmic</summary>
   <summary xml:lang="ca-valencia">Lector de llibres de còmic</summary>
   <summary xml:lang="cs">Čtečka komixů</summary>
