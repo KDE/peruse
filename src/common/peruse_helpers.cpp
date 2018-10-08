@@ -44,7 +44,7 @@ int getMaxTextureSize()
     return maxSize;
 }
 
-int init(QString &path, QApplication& app) {
+int init(QString &path, QApplication& app, const QString &filename) {
     KDeclarative::KDeclarative kdeclarative;
     QQmlEngine engine;
     kdeclarative.setDeclarativeEngine(&engine);
@@ -64,6 +64,8 @@ int init(QString &path, QApplication& app) {
 #endif
 
     engine.rootContext()->setContextProperty("osIsWindows", osIsWindows);
+
+    engine.rootContext()->setContextProperty("fileToOpen", filename);
 
     QQmlContext* objectContext = engine.rootContext();
     QString platformEnv(qgetenv("PLASMA_PLATFORM"));

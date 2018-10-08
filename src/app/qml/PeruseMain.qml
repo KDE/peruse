@@ -311,5 +311,12 @@ Kirigami.ApplicationWindow {
             globalDrawer.close();
         }
     }
+
+
+    Component.onCompleted: {
+        if (fileToOpen !== "") {
+            mainWindow.showBook(fileToOpen, 0);
+        }
+    }
 }
 

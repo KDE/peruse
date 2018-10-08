@@ -42,9 +42,15 @@ int main(int argc, char** argv)
 
     QCommandLineParser parser;
     parser.addOption(QCommandLineOption(QStringLiteral("clear-db"), i18n("Clear the metainfo cache and perform a full rescan.")));
-    // TODO file option for opening comics by passing them through on the command line
+    parser.addPositionalArgument(QStringLiteral("file"), i18n("Open file in peruse."));
     parser.addHelpOption();
     parser.process(app);
+
+
+    QString filename;
+    if (parser.positionalArguments().size() > 0) {
+        filename = parser.positionalArguments().at(0);
+    }
 
     if (parser.positionalArguments().size() > 1) {
         parser.showHelp(1);
@@ -61,5 +67,5 @@ int main(int argc, char** argv)
     QString path = QStandardPaths::locate(QStandardPaths::AppDataLocation,
         platformEnv.startsWith("phone") ? "qml/MobileMain.qml" : "qml/Main.qml");
 
-    return PeruseHelpers::init(path, app);
+    return PeruseHelpers::init(path, app, filename);
 }

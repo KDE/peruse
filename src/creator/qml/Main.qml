@@ -152,4 +152,10 @@ Kirigami.ApplicationWindow {
             // Just do nothing, we don't really care...
         }
     }
+
+    Component.onCompleted: {
+        if (fileToOpen !== "") {
+             mainWindow.openBook(fileToOpen);
+        }
+    }
 }

@@ -36,14 +36,19 @@ int main(int argc, char** argv)
     KLocalizedString::setApplicationDomain("peruse");
 
     QCommandLineParser parser;
-    // TODO file option for opening comics by passing them through on the command line
+    parser.addPositionalArgument(QStringLiteral("file"), i18n("Open file in peruse."));
     parser.addHelpOption();
     parser.process(app);
+
+    QString filename;
+    if (parser.positionalArguments().size() > 0) {
+        filename = parser.positionalArguments().at(0);
+    }
 
     if (parser.positionalArguments().size() > 1) {
         parser.showHelp(1);
     }
 
     QString path= QStandardPaths::locate(QStandardPaths::DataLocation, "qml/Main.qml");
-    return PeruseHelpers::init(path, app);
+    return PeruseHelpers::init(path, app, filename);
 }

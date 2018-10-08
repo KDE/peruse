@@ -8,7 +8,7 @@ class QApplication;
 
 namespace PeruseHelpers {
     int getMaxTextureSize();
-    int init(QString& path, QApplication& app);
+    int init(QString& path, QApplication& app, const QString &filename = QString());
 }
 
 #endif
