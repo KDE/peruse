@@ -247,7 +247,7 @@ Kirigami.OverlaySheet {
                     width: parent.width;
                     QtControls.Label {
                         id: rotationLabel;
-                        text: i18nc("Label for text rotation slider", "Text-rotation:")
+                        text: i18nc("Label for text rotation slider", "Text rotation:")
                         anchors.verticalCenter: parent.verticalCenter;
                     }
                     spacing: Kirigami.Units.smallSpacing;

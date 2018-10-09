@@ -189,7 +189,7 @@ Kirigami.ScrollablePage {
                             }
                             ColorDialog {
                                 id: frameBackgroundColorDialog
-                                title: i18nc("@title color choosing dialog","Choose  background color for this frame");
+                                title: i18nc("@title color choosing dialog","Choose background color for this frame");
                                 color: page.frame(index).bgcolor !== ""? page.frame(index).bgcolor: pageBackgroundColor.color;
                                 onAccepted: page.frame(index).bgcolor = color;
                             }
@@ -230,7 +230,7 @@ Kirigami.ScrollablePage {
                 }
                 ColorDialog {
                     id: textLayerBackgroundColorDialog
-                    title: i18nc("@title color choosing dialog","Choose the background color for all textareas on this page");
+                    title: i18nc("@title color choosing dialog","Choose the background color for all text areas on this page");
                     color: page.textLayer("").bgcolor !== ""? page.textLayer("").bgcolor: pageBackgroundColor.color;
                     onAccepted: page.textLayer("").bgcolor = color;
                 }
