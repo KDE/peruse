@@ -5,10 +5,10 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0+</project_license>
   <name>Peruse</name>
-  <name xml:lang="ast">Peruse</name>
   <name xml:lang="ca">Peruse</name>
   <name xml:lang="ca-valencia">Peruse</name>
   <name xml:lang="cs">Peruse</name>
+  <name xml:lang="de">Peruse</name>
   <name xml:lang="es">Peruse</name>
   <name xml:lang="it">Peruse</name>
   <name xml:lang="nl">Peruse</name>
@@ -18,10 +18,10 @@
   <name xml:lang="uk">Peruse</name>
   <name xml:lang="x-test">xxPerusexx</name>
   <summary>Comic Book Reader</summary>
-  <summary xml:lang="ast">Llector de cómics</summary>
   <summary xml:lang="ca">Lector de llibres de còmic</summary>
   <summary xml:lang="ca-valencia">Lector de llibres de còmic</summary>
   <summary xml:lang="cs">Čtečka komixů</summary>
+  <summary xml:lang="de">Anzeigeprogramm für Comic-Book</summary>
   <summary xml:lang="es">Lector de cómics</summary>
   <summary xml:lang="it">Lettore di fumetti</summary>
   <summary xml:lang="nl">Stripboekreader</summary>
@@ -67,6 +67,7 @@
     <p xml:lang="ca">Característiques:</p>
     <p xml:lang="ca-valencia">Característiques:</p>
     <p xml:lang="cs">Vlastnosti:</p>
+    <p xml:lang="de">Leistungsmerkmale:</p>
     <p xml:lang="es">Características:</p>
     <p xml:lang="it">Funzionalità:</p>
     <p xml:lang="nl">Mogelijkheden:</p>
@@ -80,6 +81,7 @@
       <li xml:lang="ca">Arxiu de llibres de còmic (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="ca-valencia">Arxiu de llibres de còmic (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="cs">Archiv Comic Book (cbz, cbr, cb7, cbt, cba)</li>
+      <li xml:lang="de">Comic-Book-Archive (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="es">Archivos de cómic (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="nl">Archief voor stripboeken (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="pt">Pacote de Banda Desenhada (cbz, cbr, cb7, cbt, cba)</li>
@@ -91,6 +93,7 @@
       <li xml:lang="ca">Format de document portable (pdf)</li>
       <li xml:lang="ca-valencia">Format de document portable (pdf)</li>
       <li xml:lang="cs">Portable Document Format (pdf)</li>
+      <li xml:lang="de">Portables Dokumentformat (PDF)</li>
       <li xml:lang="es">Portable Document Format (pdf)</li>
       <li xml:lang="nl">Portable Document Format (pdf)</li>
       <li xml:lang="pt">Formato de Documento Portátil (pdf)</li>
@@ -102,6 +105,7 @@
       <li xml:lang="ca">Llibres ePub (epub)</li>
       <li xml:lang="ca-valencia">Llibres ePub (epub)</li>
       <li xml:lang="cs">Knihy ePub (epub)</li>
+      <li xml:lang="de">ePub-Bücher (epub)</li>
       <li xml:lang="es">Libros ePub (epub)</li>
       <li xml:lang="it">Libri ePub (epub)</li>
       <li xml:lang="nl">ePub boeken (epub)</li>
@@ -113,6 +117,7 @@
       <li>DeVice Independent files (dvi)</li>
       <li xml:lang="ca">Fitxers independent de dispositiu (dvi)</li>
       <li xml:lang="ca-valencia">Fitxers independent de dispositiu (dvi)</li>
+      <li xml:lang="de">Geräteunabhängiges Dateiformat (DVI)</li>
       <li xml:lang="es">Archivos DeVice Independent (dvi)</li>
       <li xml:lang="nl">DeVice Independent bestanden (dvi)</li>
       <li xml:lang="pt">Ficheiros Independentes do Dispositivo (dvi)</li>
@@ -124,6 +129,7 @@
       <li xml:lang="ca">DeJaVu (djvu)</li>
       <li xml:lang="ca-valencia">DeJaVu (djvu)</li>
       <li xml:lang="cs">DeJaVu (djvu)</li>
+      <li xml:lang="de">DeJaVu (djvu)</li>
       <li xml:lang="es">DeJaVu (djvu)</li>
       <li xml:lang="it">DeJaVu (djvu)</li>
       <li xml:lang="nl">DeJaVu (djvu)</li>
@@ -136,6 +142,7 @@
       <li xml:lang="ca">Ajuda compilada (chm)</li>
       <li xml:lang="ca-valencia">Ajuda compilada (chm)</li>
       <li xml:lang="cs">Kompilovaná nápověda (chm)</li>
+      <li xml:lang="de">Kompilierte Hilfe (chm)</li>
       <li xml:lang="es">Compiled Help (chm)</li>
       <li xml:lang="nl">Gecompileerde help (chm)</li>
       <li xml:lang="pt">Ajuda Compilada (chm)</li>

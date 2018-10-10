@@ -5,10 +5,10 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0+</project_license>
   <name>Peruse</name>
-  <name xml:lang="ast">Peruse</name>
   <name xml:lang="ca">Peruse</name>
   <name xml:lang="ca-valencia">Peruse</name>
   <name xml:lang="cs">Peruse</name>
+  <name xml:lang="de">Peruse</name>
   <name xml:lang="es">Peruse</name>
   <name xml:lang="it">Peruse</name>
   <name xml:lang="nl">Peruse</name>
@@ -18,10 +18,10 @@
   <name xml:lang="uk">Peruse</name>
   <name xml:lang="x-test">xxPerusexx</name>
   <summary>Comic Book Creation Tool</summary>
-  <summary xml:lang="ast">Ferramienta pa la creación de cómics</summary>
   <summary xml:lang="ca">Eina de creació de llibres de còmic</summary>
   <summary xml:lang="ca-valencia">Eina de creació de llibres de còmic</summary>
   <summary xml:lang="cs">Nástroj pro vytváření komixů</summary>
+  <summary xml:lang="de">Werkzeug zum Erstellen von Comics</summary>
   <summary xml:lang="es">Herramienta de creación de cómics</summary>
   <summary xml:lang="it">Strumento di creazione di fumetti</summary>
   <summary xml:lang="nl">Hulpmiddel voor maken van stripboeken</summary>
@@ -34,10 +34,10 @@
     <p>
     </p>
     <p>Features:</p>
-    <p xml:lang="ast">Carauterístiques:</p>
     <p xml:lang="ca">Característiques:</p>
     <p xml:lang="ca-valencia">Característiques:</p>
     <p xml:lang="cs">Vlastnosti:</p>
+    <p xml:lang="de">Leistungsmerkmale:</p>
     <p xml:lang="es">Características:</p>
     <p xml:lang="it">Funzionalità:</p>
     <p xml:lang="nl">Mogelijkheden:</p>
@@ -51,6 +51,7 @@
       <li xml:lang="ca">Arxiu de llibres de còmic (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="ca-valencia">Arxiu de llibres de còmic (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="cs">Archiv Comic Book (cbz, cbr, cb7, cbt, cba)</li>
+      <li xml:lang="de">Comic-Buch-Archive (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="es">Archivos de cómic (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="nl">Archief voor stripboeken (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="pt">Pacote de Banda Desenhada (cbz, cbr, cb7, cbt, cba)</li>
