@@ -32,6 +32,7 @@
 
 #include <app_debug.h>
 
+Q_DECL_EXPORT
 int main(int argc, char** argv)
 {
     QApplication app(argc, argv);
