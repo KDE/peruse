@@ -11,6 +11,7 @@
   <name xml:lang="de">Peruse</name>
   <name xml:lang="es">Peruse</name>
   <name xml:lang="gl">Peruse</name>
+  <name xml:lang="id">Peruse</name>
   <name xml:lang="it">Peruse</name>
   <name xml:lang="nl">Peruse</name>
   <name xml:lang="pt">Peruse</name>
@@ -25,6 +26,7 @@
   <summary xml:lang="de">Werkzeug zum Erstellen von Comics</summary>
   <summary xml:lang="es">Herramienta de creación de cómics</summary>
   <summary xml:lang="gl">Ferramenta de creación de libros de banda deseñada</summary>
+  <summary xml:lang="id">Alat Penciptaan Buku Komik</summary>
   <summary xml:lang="it">Strumento di creazione di fumetti</summary>
   <summary xml:lang="nl">Hulpmiddel voor maken van stripboeken</summary>
   <summary xml:lang="pt">Ferramenta de Criação de Bandas Desenhadas</summary>
@@ -43,6 +45,7 @@
     <p xml:lang="es">Características:</p>
     <p xml:lang="fr">Fonctionnalités :</p>
     <p xml:lang="gl">Funcionalidades:</p>
+    <p xml:lang="id">Fitur:</p>
     <p xml:lang="it">Funzionalità:</p>
     <p xml:lang="nl">Mogelijkheden:</p>
     <p xml:lang="pt">Funcionalidades:</p>
@@ -59,6 +62,7 @@
       <li xml:lang="de">Comic-Buch-Archive (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="es">Archivos de cómic (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="gl">Arquivo de libro de banda deseñada (cbz, cbr, cb7, cbt, cba)</li>
+      <li xml:lang="id">Arsip Buku Komik (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="it">Archivi di fumetti (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="nl">Archief voor stripboeken (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="pt">Pacote de Banda Desenhada (cbz, cbr, cb7, cbt, cba)</li>
