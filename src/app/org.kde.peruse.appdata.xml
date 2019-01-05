@@ -19,6 +19,7 @@
   <name xml:lang="sv">Peruse</name>
   <name xml:lang="uk">Peruse</name>
   <name xml:lang="x-test">xxPerusexx</name>
+  <name xml:lang="zh-TW">Peruse</name>
   <summary>Comic Book Reader</summary>
   <summary xml:lang="ca">Lector de llibres de còmic</summary>
   <summary xml:lang="ca-valencia">Lector de llibres de còmic</summary>
@@ -34,6 +35,7 @@
   <summary xml:lang="sv">Serietidningsläsare</summary>
   <summary xml:lang="uk">Програма для читання коміксів</summary>
   <summary xml:lang="x-test">xxComic Book Readerxx</summary>
+  <summary xml:lang="zh-TW">漫畫書閱讀器</summary>
   <description>
     <p>
       There are many ways to read comic books, and one of those that has become more
@@ -88,6 +90,7 @@
     <p xml:lang="uk">Можливості:</p>
     <p xml:lang="x-test">xxFeatures:xx</p>
     <p xml:lang="zh-CN">功能：</p>
+    <p xml:lang="zh-TW">功能：</p>
     <ul>
       <li>Comic Book Archive (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="ca">Arxiu de llibres de còmic (cbz, cbr, cb7, cbt, cba)</li>
@@ -103,6 +106,7 @@
       <li xml:lang="sv">Serietidningsarkiv (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="uk">Робота з архівами коміксів (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="x-test">xxComic Book Archive (cbz, cbr, cb7, cbt, cba)xx</li>
+      <li xml:lang="zh-TW">漫畫書封存檔 (cbz, cbr, cb7, cbt, cba)</li>
       <li>Portable Document Format (pdf)</li>
       <li xml:lang="ca">Format de document portable (pdf)</li>
       <li xml:lang="ca-valencia">Format de document portable (pdf)</li>
@@ -117,6 +121,7 @@
       <li xml:lang="sv">Portable Dokumentformat (pdf)</li>
       <li xml:lang="uk">Робота із портативним форматом документів (pdf)</li>
       <li xml:lang="x-test">xxPortable Document Format (pdf)xx</li>
+      <li xml:lang="zh-TW">可攜式文件格式 (pdf)</li>
       <li>ePub Books (epub)</li>
       <li xml:lang="ca">Llibres ePub (epub)</li>
       <li xml:lang="ca-valencia">Llibres ePub (epub)</li>
@@ -132,6 +137,7 @@
       <li xml:lang="sv">ePub-böcker (epub)</li>
       <li xml:lang="uk">Робота з книгами ePub (epub)</li>
       <li xml:lang="x-test">xxePub Books (epub)xx</li>
+      <li xml:lang="zh-TW">ePub 書本 (epub)</li>
       <li>DeVice Independent files (dvi)</li>
       <li xml:lang="ca">Fitxers independent de dispositiu (dvi)</li>
       <li xml:lang="ca-valencia">Fitxers independent de dispositiu (dvi)</li>
@@ -145,6 +151,7 @@
       <li xml:lang="sv">DeVice oberoende filer (dvi)</li>
       <li xml:lang="uk">Робота із файлами DeVice Independent (dvi)</li>
       <li xml:lang="x-test">xxDeVice Independent files (dvi)xx</li>
+      <li xml:lang="zh-TW">DeVice 獨立檔案 (dvi)</li>
       <li>DeJaVu (djvu)</li>
       <li xml:lang="ca">DeJaVu (djvu)</li>
       <li xml:lang="ca-valencia">DeJaVu (djvu)</li>
@@ -160,6 +167,7 @@
       <li xml:lang="sv">DeJaVu (djvu)</li>
       <li xml:lang="uk">Робота з файлами DeJaVu (djvu)</li>
       <li xml:lang="x-test">xxDeJaVu (djvu)xx</li>
+      <li xml:lang="zh-TW">DeJaVu (djvu)</li>
       <li>Compiled Help (chm)</li>
       <li xml:lang="ca">Ajuda compilada (chm)</li>
       <li xml:lang="ca-valencia">Ajuda compilada (chm)</li>
@@ -174,6 +182,7 @@
       <li xml:lang="sv">Kompilerad hjälp (chm)</li>
       <li xml:lang="uk">Робота з файлами компільованої довідки (chm)</li>
       <li xml:lang="x-test">xxCompiled Help (chm)xx</li>
+      <li xml:lang="zh-TW">編譯過的說明文件 (chm)</li>
     </ul>
   </description>
   <screenshots>

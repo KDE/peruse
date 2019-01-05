@@ -19,6 +19,7 @@
   <name xml:lang="sv">Peruse</name>
   <name xml:lang="uk">Peruse</name>
   <name xml:lang="x-test">xxPerusexx</name>
+  <name xml:lang="zh-TW">Peruse</name>
   <summary>Comic Book Creation Tool</summary>
   <summary xml:lang="ca">Eina de creació de llibres de còmic</summary>
   <summary xml:lang="ca-valencia">Eina de creació de llibres de còmic</summary>
@@ -34,6 +35,7 @@
   <summary xml:lang="sv">Serietidningsskapare</summary>
   <summary xml:lang="uk">Засіб для створення коміксів</summary>
   <summary xml:lang="x-test">xxComic Book Creation Toolxx</summary>
+  <summary xml:lang="zh-TW">漫畫書製作工具</summary>
   <description>
     <p>
     </p>
@@ -54,6 +56,7 @@
     <p xml:lang="uk">Можливості</p>
     <p xml:lang="x-test">xxFeatures:xx</p>
     <p xml:lang="zh-CN">功能：</p>
+    <p xml:lang="zh-TW">功能：</p>
     <ul>
       <li>Comic Book Archive (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="ca">Arxiu de llibres de còmic (cbz, cbr, cb7, cbt, cba)</li>
@@ -70,6 +73,7 @@
       <li xml:lang="sv">Serietidningsarkiv (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="uk">Робота із архівами коміксів (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="x-test">xxComic Book Archive (cbz, cbr, cb7, cbt, cba)xx</li>
+      <li xml:lang="zh-TW">漫畫書封存檔 (cbz, cbr, cb7, cbt, cba)</li>
     </ul>
   </description>
   <screenshots>
