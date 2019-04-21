@@ -65,7 +65,7 @@ Kirigami.ScrollablePage {
     }
     Kirigami.Action {
         id: closeAddPageSheetAction;
-        text: i18nc("closes the the add page sheet", "Do not Add a Page");
+        text: i18nc("closes the add page sheet", "Do not Add a Page");
         iconName: "dialog-cancel";
         onTriggered: addPageSheet.close();
     }
