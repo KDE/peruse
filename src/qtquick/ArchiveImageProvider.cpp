@@ -25,7 +25,10 @@
 #include <karchive.h>
 #include <karchivefile.h>
 
+#include <QBuffer>
 #include <QIcon>
+#include <QImageReader>
+#include <QPainter>
 
 #include <AcbfDocument.h>
 #include <AcbfBinary.h>
@@ -41,6 +44,22 @@ public:
     {}
     ArchiveBookModel* bookModel;
     QString prefix;
+
+    QString errorString;
+    bool loadImage(QImage *image, const QByteArray &data)
+    {
+        QBuffer b;
+        b.setData(data);
+        b.open(QIODevice::ReadOnly);
+        QImageReader reader(&b, nullptr);
+        bool success = reader.read(image);
+        if (success) {
+            errorString.clear();
+        } else {
+            errorString = reader.errorString();
+        }
+        return success;
+    }
 };
 
 ArchiveImageProvider::ArchiveImageProvider()
@@ -74,7 +93,7 @@ QImage ArchiveImageProvider::requestImage(const QString& id, QSize* size, const 
             AdvancedComicBookFormat::Binary* binary = document->data()->binary(id.mid(1));
 
             if (binary) {
-                success = img.loadFromData(binary->data());
+                success = d->loadImage(&img, binary->data());
             }
         }
     }
@@ -83,14 +102,16 @@ QImage ArchiveImageProvider::requestImage(const QString& id, QSize* size, const 
         const KArchiveFile* entry = d->bookModel->archiveFile(id);
 
         if(entry) {
-            success = img.loadFromData(entry->data());
+            success = d->loadImage(&img, entry->data());
         }
     }
 
     if (!success) {
         QIcon oops = QIcon::fromTheme("unknown");
         img = oops.pixmap(oops.availableSizes().last()).toImage();
-        qCDebug(QTQUICK_LOG) << "Failed to load image with id:" << id;
+        QPainter thing(&img);
+        thing.drawText(img.rect(), Qt::AlignCenter | Qt::TextWordWrap, d->errorString);
+        qCDebug(QTQUICK_LOG) << "Failed to load image with id:" << id << "and the error" << d->errorString;
     }
 
     return img;
