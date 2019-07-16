@@ -44,7 +44,7 @@ public:
      * 
      * @return a QImage.
      */
-    virtual QImage requestImage(const QString& id, QSize* size, const QSize& requestedSize);
+    virtual QImage requestImage(const QString& id, QSize* size, const QSize& requestedSize) override;
 private:
     class Private;
     Private* d;
