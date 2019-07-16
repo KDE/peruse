@@ -106,7 +106,7 @@ Kirigami.Page {
                 left: parent.left;
                 right: parent.right;
             }
-            height: applicationWindow().isLoading ? (parent.height / 2) : (appNameLabel.height + appDescriptionLabel.height + Kirigami.Units.largeSpacing);
+            height: applicationWindow().isLoading ? (parent.height / 3) : (appNameLabel.height + appDescriptionLabel.height + Kirigami.Units.largeSpacing);
             Behavior on height { PropertyAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
             Kirigami.Heading {
                 id: appNameLabel;
@@ -183,6 +183,7 @@ Kirigami.Page {
                 right: parent.right;
                 bottom: parent.bottom;
             }
+            visible: opacity > 0
             opacity: applicationWindow().isLoading ? 0 : 1;
             Behavior on opacity { PropertyAnimation { duration: applicationWindow().animationDuration; } }
             contentWidth: width;
@@ -487,18 +488,20 @@ Kirigami.Page {
         Item {
             id: loadingProgress;
             anchors {
-                top: parent.verticalCenter;
+                top: titleContainer.bottom;
                 left: parent.left;
                 right: parent.right;
                 bottom: parent.bottom;
             }
+            visible: opacity > 0
             opacity: applicationWindow().isLoading ? 1 : 0;
             Behavior on opacity { PropertyAnimation { duration: applicationWindow().animationDuration; } }
             QtControls.Label {
                 anchors {
-                    bottom: parent.verticalCenter;
+                    bottom: loadingSpinner.top;
                     left: parent.left;
                     right: parent.right;
+                    margins: Kirigami.Units.smallSpacing
                 }
                 horizontalAlignment: Text.AlignHCenter;
                 text: i18nc("shown with a throbber when searching for books on the device", "Please wait while we find your books...");
@@ -506,10 +509,11 @@ Kirigami.Page {
             QtControls.BusyIndicator {
                 id: loadingSpinner;
                 anchors {
-                    top: parent.verticalCenter;
-                    left: parent.left;
-                    right: parent.right;
+                    verticalCenter: parent.verticalCenter
+                    horizontalCenter: parent.horizontalCenter
                 }
+                width: Kirigami.Units.iconSizes.huge
+                height: width
                 running: applicationWindow().isLoading;
             }
             QtControls.Label {
