@@ -100,8 +100,6 @@ Kirigami.ApplicationWindow {
         return peruseConfig.homeDir();
     }
 
-    header: Kirigami.ApplicationHeader {}
-
     contextDrawer: PeruseContextDrawer {
         id: contextDrawer;
     }
