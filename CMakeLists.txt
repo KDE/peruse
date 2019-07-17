@@ -19,18 +19,12 @@ elseif(WIN32)
 endif()
 
 find_package(Qt5 REQUIRED NO_MODULE COMPONENTS Qml Quick Gui Widgets OpenGL Sql)
-find_package(KF5 5.5 REQUIRED COMPONENTS I18n Declarative Config FileMetaData IconThemes KIO)
+find_package(KF5 5.56 REQUIRED COMPONENTS I18n Declarative Config FileMetaData IconThemes KIO NewStuffQuick)
 
 find_package(KF5Baloo) # optional - we'll just let it pass if it's missing
 find_package(KF5Archive ${KF5_VERSION} REQUIRED)
 
-find_package(KF5NewStuffQuick) # optional - this currently sits in a branch. Make required when branch is merged into master
-set_package_properties(KF5NewStuffQuick PROPERTIES
-    PURPOSE "Required at runtime to use the store functionality"
-    TYPE RUNTIME
-)
-
-find_package(KF5Kirigami2 5.37.0)
+find_package(KF5Kirigami2 5.56.0)
 set_package_properties(KF5Kirigami2 PROPERTIES
     PURPOSE "Required at runtime to display the GUI"
     TYPE RUNTIME

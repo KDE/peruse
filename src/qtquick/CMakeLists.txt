@@ -64,4 +64,4 @@ target_link_libraries (peruseqmlplugin
 
 install (TARGETS peruseqmlplugin DESTINATION ${QML_INSTALL_DIR}/org/kde/peruse)
 install (FILES qmldir DESTINATION ${QML_INSTALL_DIR}/org/kde/peruse)
-install (FILES peruse.knsrc DESTINATION ${CONFIG_INSTALL_DIR})
+install (FILES peruse.knsrc DESTINATION ${KDE_INSTALL_KNSRCDIR})
