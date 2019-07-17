@@ -48,7 +48,8 @@ int init(QString &path, QApplication& app, const QString &filename) {
     KDeclarative::KDeclarative kdeclarative;
     QQmlEngine engine;
     kdeclarative.setDeclarativeEngine(&engine);
-    kdeclarative.setupBindings();
+    kdeclarative.setupEngine(&engine);
+    kdeclarative.setupContext();
 
     bool osIsWindows = false;
 #ifdef Q_OS_WIN
