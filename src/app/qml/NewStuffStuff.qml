@@ -23,7 +23,6 @@ import QtQuick 2.2
 import org.kde.newstuff 1.0 as NewStuff
 
 NewStuff.NewStuffList {
-    anchors.fill: parent;
     configFile: peruseConfig.newstuffLocation;
     onMessage: console.log("KNS Message: " + message);
     onIdleMessage: console.log("KNS Idle: " + message);
