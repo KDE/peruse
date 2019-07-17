@@ -32,19 +32,24 @@ import "listcomponents" as ListComponents
 /**
  * @brief This holds the NewStuffStuff to get new comics from the KDE store.
  */
-Kirigami.Page {
+Kirigami.ScrollablePage {
     id: root;
     property string categoryName: "storePage";
     title: i18nc("title of the book store page", "Book Store");
+    flickable: newStuffLoader.item;
 
-    Item {
-        width: root.width - (root.leftPadding + root.rightPadding);
-        height: root.height - (root.topPadding + root.bottomPadding);
-
-        Loader {
-            id: newStuffLoader;
-            anchors.fill: parent;
-            source: "NewStuffStuff.qml";
+    Loader {
+        id: newStuffLoader;
+        source: "NewStuffStuff.qml";
+        Binding {
+            target: newStuffLoader.item
+            property: "width"
+            value: root.width
+        }
+        Binding {
+            target: newStuffLoader.item
+            property: "height"
+            value: root.height
         }
         Connections {
             target: newStuffLoader.item;
