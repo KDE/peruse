@@ -34,7 +34,7 @@ struct BookPage {
 class BookModel::Private {
 public:
     Private()
-        : currentPage(-1)
+        : currentPage(0)
         , acbfData(nullptr)
         , processing(false)
     {}
