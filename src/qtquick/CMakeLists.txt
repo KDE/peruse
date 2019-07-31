@@ -1,10 +1,5 @@
 add_subdirectory(karchive-rar)
 
-set(USE_PERUSE_PDFTHUMBNAILER false)
-if(WIN32)
-    set(USE_PERUSE_PDFTHUMBNAILER true)
-endif()
-
 set(qmlplugin_SRCS
     qmlplugin.cpp
     ArchiveBookModel.cpp
@@ -60,6 +55,7 @@ target_link_libraries (peruseqmlplugin
     KF5::KIOCore
     KF5::KIOWidgets
     KF5::FileMetaData
+    KF5::NewStuffCore
 )
 
 install (TARGETS peruseqmlplugin DESTINATION ${QML_INSTALL_DIR}/org/kde/peruse)

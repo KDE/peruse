@@ -5,6 +5,11 @@ if(POLICY CMP0063)
     cmake_policy (SET CMP0063 NEW)
 endif(POLICY CMP0063)
 
+option(USE_PERUSE_PDFTHUMBNAILER "Use the internal thumbnail generator for PDF files (defaults to true on windows)" OFF)
+if(WIN32)
+    set(USE_PERUSE_PDFTHUMBNAILER ON)
+endif()
+
 find_package(ECM 0.0.9 REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" ${ECM_MODULE_PATH})
 
