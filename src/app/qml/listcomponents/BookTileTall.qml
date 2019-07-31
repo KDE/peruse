@@ -119,7 +119,7 @@ Item {
                 fill: parent;
                 margins: Kirigami.Units.largeSpacing;
             }
-            source: root.thumbnail;
+            source: root.thumbnail === "Unknown role" ? "" : root.thumbnail;
             asynchronous: true;
             fillMode: Image.PreserveAspectFit;
         }
