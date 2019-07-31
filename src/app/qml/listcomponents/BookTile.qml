@@ -342,11 +342,11 @@ Item {
         QtControls.Label {
             anchors.fill: parent;
             verticalAlignment: Text.AlignTop;
-            text: root.description.length !== 0?
+            text: (typeof root.description !== "undefined" && root.description.length !== 0) ?
                       root.description.join("\n\n"):
                       i18nc("Placeholder text for the book description field when no description is set", "(no description available for this book)");
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-            opacity: root.description.length !== 0? 1.0: 0.3;
+            opacity: (typeof root.description !== "undefined" && root.description.length !== 0) ? 1.0: 0.3;
         }
     }
     Item {
