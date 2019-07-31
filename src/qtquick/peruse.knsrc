@@ -1,6 +1,6 @@
 [KNewStuff3]
-ProvidersUrl=https://share.krita.org/ocs/providers.xml
-Categories=Comics
+ProvidersUrl=https://download.kde.org/ocs/providers.xml
+Categories=Comics,Sci-Fi,Fantasy
 XdgTargetDir=comics
 Uncompress=never
-DownloadTagFilter=data##mimetype==application/x-cbz,data##mimetype==application/x-cbr,data##mimetype==application/x-cb7,data##mimetype==application/x-cbt,data##mimetype==application/x-cba,data##mimetype==application/vnd.comicbook+zip,data##mimetype==application/vnd.comicbook+rar,data##mimetype==application/vnd.ms-htmlhelp,data##mimetype==image/vnd.djvu,data##mimetype==image/x-djvu,data##mimetype==application/epub+zip,data##mimetype==application/pdf
+DownloadTagFilter=data##mimetype==application/x-cbz,data##mimetype==application/x-cbr,data##mimetype==application/x-cb7,data##mimetype==application/x-cbt,data##mimetype==application/x-cba,data##mimetype==application/vnd.comicbook+zip,data##mimetype==application/vnd.comicbook+rar,data##mimetype==application/vnd.ms-htmlhelp,data##mimetype==image/vnd.djvu,data##mimetype==image/x-djvu,data##mimetype==application/epub+zip,data##mimetype==application/pdf,data##mimetype==application/zip
