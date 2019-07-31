@@ -136,6 +136,17 @@ QList<BookEntry*> BookDatabase::loadEntries()
         entry->genres         = allEntries.value(d->fieldNames.indexOf("genres")).toString().split(",", QString::SkipEmptyParts);
         entry->keywords       = allEntries.value(d->fieldNames.indexOf("keywords")).toString().split(",", QString::SkipEmptyParts);
         entry->characters     = allEntries.value(d->fieldNames.indexOf("characters")).toString().split(",", QString::SkipEmptyParts);
+
+        // Since we may change the thumbnailer between updates, but retain the
+        // database, this may break so we need to sanitise in case of pdf...
+        if(entry->filename.toLower().endsWith("pdf")) {
+#ifdef USE_PERUSE_PDFTHUMBNAILER
+            entry->thumbnail = QString("image://pdfcover/").append(entry->filename);
+#else
+            entry->thumbnail = QString("image://preview/").append(entry->filename);
+#endif
+        }
+
         entries.append(entry);
     }
 
