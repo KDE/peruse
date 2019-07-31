@@ -29,6 +29,7 @@
 #include <QIcon>
 #include <QMimeDatabase>
 #include <QThread>
+#include <QDebug>
 
 class PreviewImageProvider::Private
 {
@@ -80,6 +81,8 @@ QImage PreviewImageProvider::requestImage(const QString& id, QSize* size, const 
         connect(job, SIGNAL(failed(KFileItem)), SLOT(fallbackPreview(KFileItem)));
         connect(job, SIGNAL(finished(KJob*)), SLOT(finishedPreview(KJob*)));
 
+        connect(job, &QObject::destroyed, [job,this](){d->jobCompletion.remove(job);});
+
         d->jobCompletion[job] = false;
         if(job->exec())
         {
@@ -88,7 +91,6 @@ QImage PreviewImageProvider::requestImage(const QString& id, QSize* size, const 
             while(!d->jobCompletion[job]) {
                 // Let's let the job do its thing and whatnot...
                 qApp->processEvents();
-                QThread::msleep(500);
             }
             if(!d->previews[job].isNull())
             {
@@ -103,7 +105,6 @@ QImage PreviewImageProvider::requestImage(const QString& id, QSize* size, const 
             }
         }
         d->previews.remove(job);
-        d->jobCompletion.remove(job);
         delete allPlugins;
     }
     else
