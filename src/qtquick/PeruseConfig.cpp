@@ -24,6 +24,7 @@
 #include <KFileMetaData/UserMetaData>
 #include <KConfig>
 #include <KConfigGroup>
+#include <KNSCore/Engine>
 
 #include <QTimer>
 #include <QFile>
@@ -143,7 +144,14 @@ QStringList PeruseConfig::bookLocations() const
 
 QString PeruseConfig::newstuffLocation() const
 {
-    QString knsrc = QStandardPaths::locate(QStandardPaths::GenericConfigLocation, "peruse.knsrc");
+    const QStringList locations = KNSCore::Engine::configSearchLocations();
+    QString knsrc;
+    for (const QString& location : locations) {
+        knsrc = QString::fromLocal8Bit("%1/peruse.knsrc").arg(location);
+        if (QFile().exists()) {
+            break;
+        }
+    }
     if(qEnvironmentVariableIsSet("APPDIR"))
     {
         // Because appimage install happens into /app/usr...
