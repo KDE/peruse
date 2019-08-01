@@ -20,15 +20,14 @@
  */
 
 #include "PreviewImageProvider.h"
-#include <QDir>
 
 #include <kiconloader.h>
 #include <kio/previewjob.h>
 
 #include <QCoreApplication>
+#include <QDir>
 #include <QIcon>
 #include <QMimeDatabase>
-#include <QThread>
 #include <QDebug>
 
 class PreviewImageProvider::Private
