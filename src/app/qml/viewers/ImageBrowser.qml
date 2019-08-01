@@ -70,6 +70,11 @@ ListView {
         z: interactive ? 1000 : 0
         function goNextFrame() { image.nextFrame(); }
         function goPreviousFrame() { image.previousFrame(); }
+        pixelAligned: true
+        Behavior on contentX { PropertyAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
+        Behavior on contentY { PropertyAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
+        Behavior on contentWidth { PropertyAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
+        Behavior on contentHeight { PropertyAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
         PinchArea {
             width: Math.max(flick.contentWidth, flick.width)
             height: Math.max(flick.contentHeight, flick.height)
@@ -151,7 +156,7 @@ ListView {
                         } else {
                             frameMultiplier = frameMultiplier * (contentWidth/image.paintedWidth);
                         }
-                        flick.resizeContent(imageWidth * frameMultiplier, imageHeight * frameMultiplier, Qt.point(0,0));
+                        flick.resizeContent(imageWidth * frameMultiplier, imageHeight * frameMultiplier, Qt.point(flick.contentX,flick.contentY));
                         var frameRect = Qt.rect(image.muliplier * frameBounds.x + image.offsetX,
                                                 image.muliplier * frameBounds.y+ image.offsetY,
                                                 image.muliplier * frameBounds.width,
