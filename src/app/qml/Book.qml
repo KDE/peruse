@@ -42,7 +42,7 @@ Kirigami.Page {
     topPadding: applicationWindow().controlsVisible ? (applicationWindow() && applicationWindow().header ? applicationWindow().header.height : 0) : 0;
     leftPadding: applicationWindow().controlsVisible ? Kirigami.Units.gridUnit : 0;
     rightPadding: applicationWindow().controlsVisible ? Kirigami.Units.gridUnit : 0;
-    bottomPadding: applicationWindow().controlsVisible ? Kirigami.Units.gridUnit : 0;
+    bottomPadding: applicationWindow().controlsVisible ? Kirigami.Units.gridUnit * 2 : 0;
 
     background: Rectangle {
         anchors.fill: parent;
