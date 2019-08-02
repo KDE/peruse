@@ -20,11 +20,13 @@
 #include <QStandardPaths>
 #include <QDir>
 
+#include <KAboutData>
 #include <KLocalizedString>
 
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QCommandLineOption>
+#include <QIcon>
 
 #include <iostream>
 
@@ -36,10 +38,17 @@ Q_DECL_EXPORT
 int main(int argc, char** argv)
 {
     QApplication app(argc, argv);
+    app.setWindowIcon(QIcon::fromTheme(QStringLiteral("peruse")));
     app.setApplicationDisplayName("Peruse");
     app.setOrganizationDomain("kde.org");
 
     KLocalizedString::setApplicationDomain("peruse");
+    KAboutData about(QStringLiteral("peruse"), i18n("Peruse Reader"), "2.0", i18n("Comic Book Reader by KDE"),
+                     KAboutLicense::GPL, i18n("© 2016-2019 KDE"));
+    about.addAuthor(i18n("Dan Leinir Turthra Jensen"), QString("Maintainer and Lead Developer"), QStringLiteral("admin@leinir.dk"), QStringLiteral("https://leinir.dk/"), QStringLiteral("leinir"));
+    about.setProductName("peruse/peruse");
+    about.setProgramLogo(app.windowIcon());
+    KAboutData::setApplicationData(about);
 
     QCommandLineParser parser;
     parser.addOption(QCommandLineOption(QStringLiteral("clear-db"), i18n("Clear the metainfo cache and perform a full rescan.")));

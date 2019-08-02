@@ -185,6 +185,12 @@ Kirigami.ApplicationWindow {
                 iconName: "configure"
                 checked: mainWindow.currentCategory === "settingsPage";
                 onTriggered: changeCategory(settingsPage);
+            },
+            Kirigami.Action {
+                text: i18nc("Open the about page", "About");
+                iconName: "help-about"
+                checked: mainWindow.currentCategory === "aboutPage";
+                onTriggered: changeCategory(aboutPage);
             }
         ]
 
@@ -296,6 +302,12 @@ Kirigami.ApplicationWindow {
     Component {
         id: settingsPage;
         Settings {
+        }
+    }
+
+    Component {
+        id: aboutPage
+        About {
         }
     }
 
