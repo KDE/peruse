@@ -12,6 +12,7 @@
 #include <QDir>
 
 #include <KDeclarative/KDeclarative>
+#include <KAboutData>
 
 #include "peruse_helpers.h"
 
@@ -75,6 +76,7 @@ int init(QString &path, QApplication& app, const QString &filename) {
     // things like the archive book model to create imageproviders for the archives
     engine.rootContext()->setContextProperty("globalQmlEngine", &engine);
     engine.rootContext()->setContextProperty("maxTextureSize", getMaxTextureSize());
+    engine.rootContext()->setContextProperty(QStringLiteral("peruseAboutData"), QVariant::fromValue(KAboutData::applicationData()));
 
     if(path.isEmpty()) {
         qCritical() << "The file structure is not set up currectly, and our data is somewhere weird.";
