@@ -19,11 +19,13 @@
 
 #include <QStandardPaths>
 
+#include <KAboutData>
 #include <KLocalizedString>
 
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QCommandLineOption>
+#include <QIcon>
 
 #include <iostream>
 #include "peruse_helpers.h"
@@ -31,9 +33,17 @@
 int main(int argc, char** argv)
 {
     QApplication app(argc, argv);
+    app.setWindowIcon(QIcon::fromTheme(QStringLiteral("peruse-creator")));
     app.setApplicationDisplayName("Peruse Creator");
+    app.setOrganizationDomain("kde.org");
 
     KLocalizedString::setApplicationDomain("peruse");
+    KAboutData about(QStringLiteral("perusecreator"), i18n("Peruse Creator"), "2.0", i18n("Comic Book Creator by KDE"),
+                     KAboutLicense::GPL, i18n("© 2016-2019 KDE"));
+    about.addAuthor(i18n("Dan Leinir Turthra Jensen"), QString("Maintainer and Lead Developer"), QStringLiteral("admin@leinir.dk"), QStringLiteral("https://leinir.dk/"), QStringLiteral("leinir"));
+    about.setProductName("peruse/perusecreator");
+    about.setProgramLogo(app.windowIcon());
+    KAboutData::setApplicationData(about);
 
     QCommandLineParser parser;
     parser.addPositionalArgument(QStringLiteral("file"), i18n("Open file in peruse."));

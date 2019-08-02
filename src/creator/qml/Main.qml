@@ -58,7 +58,6 @@ Kirigami.ApplicationWindow {
         mainWindow.pageStack.push(bookPage, { filename: bookFilename });
     }
 
-    header: Kirigami.ApplicationHeader {}
     globalDrawer: Kirigami.GlobalDrawer {
         /// FIXME This causes the text to get cut off on the phone, however if the text is shorter
         /// it fails to expand the sidebar sufficiently to see all the action labels fully. Revisit
@@ -72,7 +71,6 @@ Kirigami.ApplicationWindow {
                 text: i18nc("Switch to the welcome page", "Welcome");
                 iconName: "start-over";
                 checked: mainWindow.currentCategory === "welcomePage";
-                checkable: true;
                 onTriggered: {
                     changeCategory(welcomePage);
                 }
@@ -95,8 +93,13 @@ Kirigami.ApplicationWindow {
                 text: i18nc("Open the settings page", "Settings");
                 iconName: "configure"
                 checked: mainWindow.currentCategory === "settingsPage";
-                checkable: true;
                 onTriggered: changeCategory(settingsPage);
+            },
+            Kirigami.Action {
+                text: i18nc("Open the about page", "About");
+                iconName: "help-about"
+                checked: mainWindow.currentCategory === "aboutPage";
+                onTriggered: changeCategory(aboutPage);
             }
         ]
     }
@@ -122,6 +125,12 @@ Kirigami.ApplicationWindow {
     Component {
         id: settingsPage;
         Settings {
+        }
+    }
+
+    Component {
+        id: aboutPage;
+        About {
         }
     }
 
