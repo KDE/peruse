@@ -121,6 +121,7 @@ ListView {
                     color: "white"
                     Behavior on color { PropertyAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
                     Behavior on opacity { NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
+                    visible: opacity > 0
                 }
                 source: model.url
                 fillMode: Image.PreserveAspectFit
