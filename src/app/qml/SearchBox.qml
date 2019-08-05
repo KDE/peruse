@@ -45,7 +45,7 @@ Rectangle {
     signal bookSelected(string filename, int currentPage);
     clip: true;
     height: searchField.focus || searchField.text.length > 0 ? searchHeight : 0;
-    Behavior on height { PropertyAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
+    Behavior on height { NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
     property int searchHeight: searchField.text.length > 0 ? maxHeight : searchField.height;
     QtControls.TextField {
         id: searchField;

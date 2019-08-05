@@ -71,7 +71,7 @@ Item {
                 source: "document-save";
             }
             opacity: editor.text !== root.text;
-            Behavior on opacity { PropertyAnimation { duration: mainWindow.animationDuration; } }
+            Behavior on opacity { NumberAnimation { duration: mainWindow.animationDuration; } }
             enabled: opacity > 0;
             onClicked: {
                 root.text = editor.text;

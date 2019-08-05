@@ -107,7 +107,7 @@ Kirigami.Page {
                 right: parent.right;
             }
             height: applicationWindow().isLoading ? (parent.height / 3) : (appNameLabel.height + appDescriptionLabel.height + Kirigami.Units.largeSpacing);
-            Behavior on height { PropertyAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
+            Behavior on height { NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
             Kirigami.Heading {
                 id: appNameLabel;
                 anchors {
@@ -185,7 +185,7 @@ Kirigami.Page {
             }
             visible: opacity > 0
             opacity: applicationWindow().isLoading ? 0 : 1;
-            Behavior on opacity { PropertyAnimation { duration: applicationWindow().animationDuration; } }
+            Behavior on opacity { NumberAnimation { duration: applicationWindow().animationDuration; } }
             contentWidth: width;
             contentHeight: recentItemsColumn.height;
             clip: true;
@@ -495,7 +495,7 @@ Kirigami.Page {
             }
             visible: opacity > 0
             opacity: applicationWindow().isLoading ? 1 : 0;
-            Behavior on opacity { PropertyAnimation { duration: applicationWindow().animationDuration; } }
+            Behavior on opacity { NumberAnimation { duration: applicationWindow().animationDuration; } }
             QtControls.Label {
                 anchors {
                     bottom: loadingSpinner.top;

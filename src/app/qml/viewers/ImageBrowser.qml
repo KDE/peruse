@@ -72,10 +72,10 @@ ListView {
         function goNextFrame() { image.nextFrame(); }
         function goPreviousFrame() { image.previousFrame(); }
         pixelAligned: true
-        Behavior on contentX { PropertyAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
-        Behavior on contentY { PropertyAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
-        Behavior on contentWidth { PropertyAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
-        Behavior on contentHeight { PropertyAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
+        Behavior on contentX { NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
+        Behavior on contentY { NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
+        Behavior on contentWidth { NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
+        Behavior on contentHeight { NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
         PinchArea {
             width: Math.max(flick.contentWidth, flick.width)
             height: Math.max(flick.contentHeight, flick.height)
@@ -111,15 +111,15 @@ ListView {
                     id: holyRect
                     anchors.fill: parent
                     topBorder: 0
-                    Behavior on topBorder { PropertyAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
+                    Behavior on topBorder { NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
                     leftBorder: 0
-                    Behavior on leftBorder { PropertyAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
+                    Behavior on leftBorder { NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
                     rightBorder: 0
-                    Behavior on rightBorder { PropertyAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
+                    Behavior on rightBorder { NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
                     bottomBorder: 0
-                    Behavior on bottomBorder { PropertyAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
+                    Behavior on bottomBorder { NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
                     color: "white"
-                    Behavior on color { PropertyAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
+                    Behavior on color { ColorAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
                     Behavior on opacity { NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
                     visible: opacity > 0
                 }

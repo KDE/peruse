@@ -105,7 +105,7 @@ Kirigami.Page {
             color: Kirigami.Theme.viewBackgroundColor;
             anchors.fill: parent;
             opacity: 0;
-            Behavior on opacity { PropertyAnimation { duration: applicationWindow().animationDuration; } }
+            Behavior on opacity { NumberAnimation { duration: applicationWindow().animationDuration; } }
             Connections {
                 target: contentList.contentModel;
                 onSearchCompleted: addingNewBooksProgress.opacity = 0;

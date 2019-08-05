@@ -176,7 +176,7 @@ Kirigami.ScrollablePage {
             id: processingBackground;
             anchors.fill: parent;
             opacity: bookModel.processing ? 0.5 : 0;
-            Behavior on opacity { PropertyAnimation { duration: mainWindow.animationDuration; } }
+            Behavior on opacity { NumberAnimation { duration: mainWindow.animationDuration; } }
             MouseArea {
                 anchors.fill: parent;
                 enabled: parent.opacity > 0;

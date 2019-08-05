@@ -134,7 +134,7 @@ Item {
             id: deleteBase;
             width: root.width;
             height: deleteButton.height + Kirigami.Units.largeSpacing * 2;
-            Behavior on height { PropertyAnimation { duration: applicationWindow().animationDuration; } }
+            Behavior on height { NumberAnimation { duration: applicationWindow().animationDuration; } }
             states: [
                 State {
                     name: "confirmDelete";
@@ -153,13 +153,13 @@ Item {
                 }
                 iconName: "edit-delete";
                 onClicked: deleteBase.state = "confirmDelete";
-                Behavior on opacity { PropertyAnimation { duration: applicationWindow().animationDuration; } }
+                Behavior on opacity { NumberAnimation { duration: applicationWindow().animationDuration; } }
             }
             Item {
                 id: deleteConfirmBase;
                 opacity: 0;
                 width: root.width;
-                Behavior on opacity { PropertyAnimation { duration: applicationWindow().animationDuration; } }
+                Behavior on opacity { NumberAnimation { duration: applicationWindow().animationDuration; } }
                 height: yesDelete.height + confirmDeleteLabel.height + Kirigami.Units.largeSpacing * 2 + Kirigami.Units.smallSpacing;
                 QtControls.Label {
                     id: confirmDeleteLabel;
