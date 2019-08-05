@@ -23,25 +23,31 @@ import QtQuick 2.3
 
 /**
  * @brief Renders a rectangle of a solid color, with a hole somewhere inside it
+ *
+ * The rectangle will extend past the item's borders, yielding the result of obscuring everything
+ * behind it, except for the hole. The extent of the obscured area is the width and height of the
+ * component instance (thus ensuring we definitely obscure the image it's put over the top of,
+ * even when the area is moved into the viewport quite a way, such as is done when moving
+ * through the frames of a page)
  */
 Item {
     id: component
     /**
      * The height of the top border (distance from the top edge to the beginning of the hole)
      */
-    property alias topBorder: topRect.height
+    property int topBorder: 0
     /**
      * The width of the left hand side border (distance from the left edge to the beginning of the hole)
      */
-    property alias leftBorder: leftRect.width
+    property int leftBorder: 0
     /**
      * The width of the right hand side border (distance from the right edge to the beginning of the hole)
      */
-    property alias rightBorder: rightRect.width
+    property int rightBorder: 0
     /**
      * The height of the bottom border (distance from the bottom edge to the beginning of the hole)
      */
-    property alias bottomBorder: bottomRect.height
+    property int bottomBorder: 0
     /**
      * The color of the rectangle, around the hole
      */
@@ -58,17 +64,23 @@ Item {
         id: topRect
         anchors {
             top: parent.top
+            topMargin: -component.height
             left: parent.left
+            leftMargin: -component.leftBorder
             right: parent.right
+            rightMargin: -component.rightBorder
         }
+        height: component.height + component.topBorder
     }
     Rectangle {
         id: leftRect
         anchors {
             top: parent.top
             left: parent.left
+            leftMargin: -component.width
             bottom: parent.bottom
         }
+        width: component.width + component.leftBorder
         color: topRect.color
     }
     Rectangle {
@@ -76,17 +88,23 @@ Item {
         anchors {
             top: parent.top
             right: parent.right
+            rightMargin: -component.width
             bottom: parent.bottom
         }
+        width: component.width + component.rightBorder
         color: topRect.color
     }
     Rectangle {
         id: bottomRect
         anchors {
             left: parent.left
+            leftMargin: -component.leftBorder
             right: parent.right
+            rightMargin: -component.rightBorder
             bottom: parent.bottom
+            bottomMargin: -component.height
         }
+        height: component.height + component.bottomBorder
         color: topRect.color
     }
 }
