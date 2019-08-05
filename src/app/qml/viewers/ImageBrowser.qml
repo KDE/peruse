@@ -120,6 +120,7 @@ ListView {
                     Behavior on bottomBorder { NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
                     color: "white"
                     Behavior on color { ColorAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
+                    opacity: 0
                     Behavior on opacity { NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
                     visible: opacity > 0
                 }
