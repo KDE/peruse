@@ -23,6 +23,7 @@ import QtQuick 2.3
 // import QtQuick.Layouts 1.1
 // import QtQuick.Controls 1.0 as QtControls
 import org.kde.kirigami 2.1 as Kirigami
+import "helpers" as Helpers
 
 /**
  * @brief The image viewer used by the CBR and Folder Viewer Base classes.
@@ -106,6 +107,21 @@ ListView {
                 id: image
                 width: flick.contentWidth
                 height: flick.contentHeight
+                Helpers.HolyRectangle {
+                    id: holyRect
+                    anchors.fill: parent
+                    topBorder: 0
+                    Behavior on topBorder { PropertyAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
+                    leftBorder: 0
+                    Behavior on leftBorder { PropertyAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
+                    rightBorder: 0
+                    Behavior on rightBorder { PropertyAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
+                    bottomBorder: 0
+                    Behavior on bottomBorder { PropertyAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
+                    color: "white"
+                    Behavior on color { PropertyAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
+                    Behavior on opacity { NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
+                }
                 source: model.url
                 fillMode: Image.PreserveAspectFit
                 asynchronous: true
@@ -146,7 +162,8 @@ ListView {
 
                 function focusOnFrame(index) {
                     if (index>-1) {
-                        var frameBounds = image.currentPageObject.frame(index).bounds;
+                        var frameObj = image.currentPageObject.frame(index);
+                        var frameBounds = frameObj.bounds;
                         var frameMultiplier = image.implicitWidth/frameBounds.width;
                         //Check if the height of the final frame is higher than the contentHeight
                         //When we're using a *fit to with scheme.
@@ -163,6 +180,14 @@ ListView {
                                                 image.muliplier * frameBounds.height);
                         flick.contentX = frameRect.x - (flick.width-frameRect.width)/2;
                         flick.contentY = frameRect.y - (flick.height-frameRect.height)/2;
+
+                        holyRect.opacity = 1;
+                        holyRect.color = frameObj.bgcolor;
+                        holyRect.setHole(frameRect);
+                    } else {
+                        holyRect.opacity = 0;
+                        holyRect.topBorder = holyRect.leftBorder = holyRect.rightBorder = holyRect.bottomBorder = 0;
+                        holyRect.color = "white"
                     }
                 }
 
