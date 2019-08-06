@@ -71,6 +71,8 @@ ListView {
         z: interactive ? 1000 : 0
         function goNextFrame() { image.nextFrame(); }
         function goPreviousFrame() { image.previousFrame(); }
+        property alias totalFrames: image.totalFrames;
+        property alias currentFrame: image.currentFrame;
         pixelAligned: true
         Behavior on contentX { NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
         Behavior on contentY { NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
@@ -201,6 +203,9 @@ ListView {
                         image.currentFrame = -1;
                         flick.returnToBounds();
                         root.goNextPage();
+                        if(root.currentItem.totalFrames > 0) {
+                            root.currentItem.currentFrame = 0;
+                        }
                     }
                 }
 
@@ -212,6 +217,9 @@ ListView {
                         image.currentFrame = -1;
                         flick.returnToBounds();
                         root.goPreviousPage();
+                        if(root.currentItem.totalFrames > 0) {
+                            root.currentItem.currentFrame = root.currentItem.totalFrames - 1;
+                        }
                     }
                 }
 
