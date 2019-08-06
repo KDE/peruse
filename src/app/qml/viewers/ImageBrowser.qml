@@ -71,6 +71,24 @@ ListView {
         z: interactive ? 1000 : 0
         function goNextFrame() { image.nextFrame(); }
         function goPreviousFrame() { image.previousFrame(); }
+        function setColouredHole(holeRect,holeColor) {
+            holyRect.setHole(holeRect);
+            holyRect.color = holeColor;
+        }
+        function resetHole() {
+            if(image.status == Image.Ready) {
+                var holeColor = "blue";
+                if (image.currentPageObject !== null) {
+                    holeColor = image.currentPageObject.bgcolor;
+                }
+                setColouredHole(image.paintedRect, holeColor);
+            }
+        }
+        ListView.onIsCurrentItemChanged: resetHole();
+        Connections {
+            target: image
+            onStatusChanged: resetHole();
+        }
         property alias totalFrames: image.totalFrames;
         property alias currentFrame: image.currentFrame;
         pixelAligned: true
@@ -120,9 +138,9 @@ ListView {
                     Behavior on rightBorder { NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
                     bottomBorder: 0
                     Behavior on bottomBorder { NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
-                    color: "white"
+                    color: image.currentPageObject.bgcolor
                     Behavior on color { ColorAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
-                    opacity: 0
+                    opacity: flick.ListView.isCurrentItem ? 1 : 0
                     Behavior on opacity { NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
                     visible: opacity > 0
                 }
@@ -163,6 +181,7 @@ ListView {
                 property real muliplier: isTall? (paintedHeight / implicitHeight): (paintedWidth / implicitWidth);
                 property int offsetX: (width-paintedWidth)/2;
                 property int offsetY: (height-paintedHeight)/2;
+                property rect paintedRect: Qt.rect(offsetX, offsetY, paintedWidth, paintedHeight);
 
                 function focusOnFrame(index) {
                     if (index>-1) {
@@ -185,13 +204,10 @@ ListView {
                         flick.contentX = frameRect.x - (flick.width-frameRect.width)/2;
                         flick.contentY = frameRect.y - (flick.height-frameRect.height)/2;
 
-                        holyRect.opacity = 1;
                         holyRect.color = frameObj.bgcolor;
                         holyRect.setHole(frameRect);
                     } else {
-                        holyRect.opacity = 0;
-                        holyRect.topBorder = holyRect.leftBorder = holyRect.rightBorder = holyRect.bottomBorder = 0;
-                        holyRect.color = "white"
+                        flick.resetHole();
                     }
                 }
 
