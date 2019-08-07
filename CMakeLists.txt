@@ -44,6 +44,8 @@ include(ECMInstallIcons)
 include(ECMAddAppIcon)
 include(ECMQtDeclareLoggingCategory)
 
+set(CMAKE_AUTORCC ON)
+
 kde_enable_exceptions()
 
 add_subdirectory(src)
