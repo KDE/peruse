@@ -130,18 +130,8 @@ ListView {
                 Helpers.HolyRectangle {
                     id: holyRect
                     anchors.fill: parent
-                    topBorder: 0
-                    Behavior on topBorder { NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
-                    leftBorder: 0
-                    Behavior on leftBorder { NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
-                    rightBorder: 0
-                    Behavior on rightBorder { NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
-                    bottomBorder: 0
-                    Behavior on bottomBorder { NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
                     color: image.currentPageObject.bgcolor
-                    Behavior on color { ColorAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
                     opacity: flick.ListView.isCurrentItem ? 1 : 0
-                    Behavior on opacity { NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
                     visible: opacity > 0
                 }
                 source: model.url

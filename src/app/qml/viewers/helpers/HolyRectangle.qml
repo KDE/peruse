@@ -28,7 +28,7 @@ import QtQuick 2.3
  * behind it, except for the hole. The extent of the obscured area is the width and height of the
  * component instance (thus ensuring we definitely obscure the image it's put over the top of,
  * even when the area is moved into the viewport quite a way, such as is done when moving
- * through the frames of a page)
+ * through the frames of a page). To stop this behavior, set the instance's clip property to true.
  */
 Item {
     id: component
@@ -53,12 +53,25 @@ Item {
      */
     property alias color: topRect.color
 
+    /**
+     * Set all the values of the hole in one go, by using an inscribed rectangle.
+     * It will conceptually punch a hole in HolyRect in the location and of the
+     * size described by the rectangle passed to the function.
+     * @param holeRect A rectangle which must fit inside HolyRect instance
+     */
     function setHole(holeRect) {
         component.topBorder = holeRect.y;
         component.leftBorder = holeRect.x;
         component.rightBorder = component.width - (holeRect.x + holeRect.width);
         component.bottomBorder = component.height - (holeRect.y + holeRect.height);
     }
+
+    Behavior on topBorder { NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
+    Behavior on leftBorder { NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
+    Behavior on rightBorder { NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
+    Behavior on bottomBorder { NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
+    Behavior on color { ColorAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
+    Behavior on opacity { NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
 
     Rectangle {
         id: topRect
