@@ -74,8 +74,9 @@ int main(int argc, char** argv)
         }
     }
     QString platformEnv(qgetenv("PLASMA_PLATFORM"));
-    QString path = QStandardPaths::locate(QStandardPaths::AppDataLocation,
-        platformEnv.startsWith("phone") ? "qml/MobileMain.qml" : "qml/Main.qml");
+    QString path = platformEnv.startsWith("phone")
+        ? QStringLiteral("qrc:///qml/MobileMain.qml")
+        : QStringLiteral("qrc:///qml/Main.qml");
 
     return PeruseHelpers::init(path, app, filename);
 }

@@ -59,6 +59,6 @@ int main(int argc, char** argv)
         parser.showHelp(1);
     }
 
-    QString path= QStandardPaths::locate(QStandardPaths::DataLocation, "qml/Main.qml");
+    QString path = QStringLiteral("qrc:///qml/Main.qml");
     return PeruseHelpers::init(path, app, filename);
 }

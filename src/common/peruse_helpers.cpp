@@ -78,11 +78,6 @@ int init(QString &path, QApplication& app, const QString &filename) {
     engine.rootContext()->setContextProperty("maxTextureSize", getMaxTextureSize());
     engine.rootContext()->setContextProperty(QStringLiteral("peruseAboutData"), QVariant::fromValue(KAboutData::applicationData()));
 
-    if(path.isEmpty()) {
-        qCritical() << "The file structure is not set up currectly, and our data is somewhere weird.";
-        path = QString("%1/data/peruse/qml/Main.qml").arg(qApp->applicationDirPath());
-    }
-
     QQmlComponent component(&engine, path);
     if (component.isError()) {
         qCritical() << "Failed to load the component from disk. Reported error was:" << component.errorString();
