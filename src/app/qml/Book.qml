@@ -170,9 +170,11 @@ Kirigami.Page {
         applicationWindow().contextDrawer.close();
         if(applicationWindow().visibility !== Window.FullScreen) {
             applicationWindow().visibility = Window.FullScreen;
+            applicationWindow().controlsVisible = false;
         }
         else {
             applicationWindow().visibility = Window.AutomaticVisibility;
+            applicationWindow().controlsVisible = true;
         }
     }
 
