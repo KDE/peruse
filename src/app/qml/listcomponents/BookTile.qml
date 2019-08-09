@@ -158,7 +158,7 @@ Item {
             right: parent.right;
         }
         elide: Text.ElideRight;
-        text: root.author.length === 0 ? "(unknown)" : root.author.join(", ");
+        text: (typeof root.author !== "undefined" && root.author.length > 0) ? root.author.join(", ") : "(unknown)";
         opacity: (text === "(unknown)" || text === "") ? 0.3 : 1;
     }
     QtControls.Label {
