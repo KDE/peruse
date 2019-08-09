@@ -25,41 +25,29 @@ import QtQuick.Controls 1.4 as QtControls
 import QtQuick.Dialogs 1.0
 
 import org.kde.kirigami 2.1 as Kirigami
+import org.kde.newstuff 1.0 as NewStuff
 
 import org.kde.peruse 0.1 as Peruse
 
-import "listcomponents" as ListComponents
 /**
- * @brief This holds the NewStuffStuff to get new comics from the KDE store.
+ * @brief This holds the NewStuff list, for getting new books from the KDE store.
  */
 Kirigami.ScrollablePage {
     id: root;
     property string categoryName: "storePage";
     title: i18nc("title of the book store page", "Book Store");
-    flickable: newStuffLoader.item;
-
-    Loader {
-        id: newStuffLoader;
-        source: "NewStuffStuff.qml";
-        Binding {
-            target: newStuffLoader.item
-            property: "width"
-            value: root.width
-        }
-        Binding {
-            target: newStuffLoader.item
-            property: "height"
-            value: root.height
-        }
-        Connections {
-            target: newStuffLoader.item;
-            onDownloadedItemClicked: {
-                if(Array.isArray(installedFiles) && installedFiles.length > 0) {
-                    applicationWindow().showBook(installedFiles[0], 0);
-                }
-                else if(installedFiles.length > 0) {
-                    applicationWindow().showBook(installedFiles, 0);
-                }
+    NewStuff.NewStuffList {
+        configFile: peruseConfig.newstuffLocation;
+        onMessage: console.log("KNS Message: " + message);
+        onIdleMessage: console.log("KNS Idle: " + message);
+        onBusyMessage: console.log("KNS Busy: " + message);
+        onErrorMessage: console.log("KNS Error: " + message);
+        onDownloadedItemClicked: {
+            if(Array.isArray(installedFiles) && installedFiles.length > 0) {
+                applicationWindow().showBook(installedFiles[0], 0);
+            }
+            else if(installedFiles.length > 0) {
+                applicationWindow().showBook(installedFiles, 0);
             }
         }
     }

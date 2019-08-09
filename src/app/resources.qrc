@@ -7,7 +7,6 @@
         <file>qml/Bookshelf.qml</file>
         <file>qml/Main.qml</file>
         <file>qml/MobileMain.qml</file>
-        <file>qml/NewStuffStuff.qml</file>
         <file>qml/PeruseContextDrawer.qml</file>
         <file>qml/PeruseMain.qml</file>
         <file>qml/SearchBox.qml</file>
