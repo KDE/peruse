@@ -130,7 +130,7 @@ ListView {
                 Helpers.HolyRectangle {
                     id: holyRect
                     anchors.fill: parent
-                    color: image.currentPageObject.bgcolor
+                    color: image.currentFrameObj.bgcolor
                     opacity: flick.ListView.isCurrentItem ? 1 : 0
                     visible: opacity > 0
                 }
@@ -186,18 +186,13 @@ ListView {
                         } else {
                             frameMultiplier = frameMultiplier * (contentWidth/image.paintedWidth);
                         }
-                        flick.resizeContent(imageWidth * frameMultiplier, imageHeight * frameMultiplier, Qt.point(flick.contentX,flick.contentY));
-                        var frameRect = Qt.rect(image.muliplier * frameBounds.x + image.offsetX,
-                                                image.muliplier * frameBounds.y+ image.offsetY,
-                                                image.muliplier * frameBounds.width,
-                                                image.muliplier * frameBounds.height);
+                        flick.resizeContent(globalUiScaleFactor * imageWidth * frameMultiplier, globalUiScaleFactor * imageHeight * frameMultiplier, Qt.point(flick.contentX,flick.contentY));
+                        var frameRect = Qt.rect((image.muliplier * frameBounds.x) / globalUiScaleFactor + image.offsetX
+                                            , (image.muliplier * frameBounds.y) / globalUiScaleFactor + image.offsetY
+                                            , (image.muliplier * frameBounds.width) / globalUiScaleFactor
+                                            , (image.muliplier * frameBounds.height) / globalUiScaleFactor);
                         flick.contentX = frameRect.x - (flick.width-frameRect.width)/2;
                         flick.contentY = frameRect.y - (flick.height-frameRect.height)/2;
-
-                        holyRect.color = frameObj.bgcolor;
-                        holyRect.setHole(frameRect);
-                    } else {
-                        flick.resetHole();
                     }
                 }
 
@@ -231,18 +226,29 @@ ListView {
 
                 property int totalFrames: image.currentPageObject? image.currentPageObject.framePointStrings.length: 0;
                 property int currentFrame: -1;
+                property QtObject currentFrameObj: image.currentPageObject && image.currentFrame > -1 ? image.currentPageObject.frame(currentFrame) : noFrame;
+                onCurrentFrameObjChanged: {
+                    holyRect.setHole(Qt.rect((image.muliplier * currentFrameObj.bounds.x) / globalUiScaleFactor + image.offsetX,
+                                            (image.muliplier * currentFrameObj.bounds.y) / globalUiScaleFactor + image.offsetY,
+                                            (image.muliplier * currentFrameObj.bounds.width) / globalUiScaleFactor,
+                                            (image.muliplier * currentFrameObj.bounds.height) / globalUiScaleFactor));
+                }
+                property QtObject noFrame: QtObject {
+                    property rect bounds: image.paintedRect
+                    property color bgcolor: image.currentPageObject.bgcolor
+                }
                 onCurrentFrameChanged: focusOnFrame(currentFrame);
 
                 Repeater {
                     model: image.currentPageObject? image.currentPageObject.framePointStrings: 0;
                     Rectangle {
                         id: frame;
-                        x: image.muliplier * image.currentPageObject.frame(index).bounds.x + image.offsetX;
-                        y: image.muliplier * image.currentPageObject.frame(index).bounds.y + image.offsetY;
+                        x: ((image.muliplier * image.currentPageObject.frame(index).bounds.x) / globalUiScaleFactor) + image.offsetX;
+                        y: ((image.muliplier * image.currentPageObject.frame(index).bounds.y) / globalUiScaleFactor) + image.offsetY;
                         width: {
-                            image.muliplier * image.currentPageObject.frame(index).bounds.width;
+                            (image.muliplier * image.currentPageObject.frame(index).bounds.width) / globalUiScaleFactor;
                         }
-                        height: image.muliplier * image.currentPageObject.frame(index).bounds.height;
+                        height: (image.muliplier * image.currentPageObject.frame(index).bounds.height) / globalUiScaleFactor;
                         color: "blue";
                         opacity: 0;
                         MouseArea {
