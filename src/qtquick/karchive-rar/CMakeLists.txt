@@ -2,10 +2,6 @@ project(karchive-rar)
 
 find_package(ZLIB)
 
-if (UNIX OR MINGW)
-    add_compile_options(-std=gnu99 -fomit-frame-pointer -D_FILE_OFFSET_BITS=64 -fPIC)
-endif (UNIX OR MINGW)
-
 set(unarr_SRCS
     unarr/rar/uncompress-rar.c
     unarr/rar/huffman-rar.c
@@ -31,7 +27,14 @@ set(karchive_rar_SRCS
     KRarFileEntry.cpp
 )
 
-add_library(karchive-rar STATIC ${karchive_rar_SRCS} ${unarr_SRCS})
+add_library(karchive-c-unarr OBJECT ${unarr_SRCS})
+if (UNIX OR MINGW)
+    target_compile_options(karchive-c-unarr PRIVATE -std=gnu99 -fomit-frame-pointer -D_FILE_OFFSET_BITS=64 -fPIC)
+    set_property(TARGET karchive-c-unarr PROPERTY AUTOMOC OFF)
+endif (UNIX OR MINGW)
+
+
+add_library(karchive-rar STATIC ${karchive_rar_SRCS} $<TARGET_OBJECTS:karchive-c-unarr>)
 target_link_libraries(karchive-rar
     PUBLIC KF5::Archive
 )
