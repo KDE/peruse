@@ -200,6 +200,10 @@ ViewerBase {
                 }
 
                 Item {
+                    implicitWidth: page.implicitWidth
+                    implicitHeight: page.implicitHeight
+                    width: flick.contentWidth
+                    height: flick.contentHeight
                     Okular.PageItem {
                         id: page;
                         document: documentItem;
@@ -210,20 +214,14 @@ ViewerBase {
                         width: sameOrientation ? parent.height * pageRatio : parent.width
                         height: !sameOrientation ? parent.width / pageRatio : parent.height
                     }
-                    implicitWidth: page.implicitWidth
-                    implicitHeight: page.implicitHeight
-                    width: flick.contentWidth
-                    height: flick.contentHeight
                     MouseArea {
-                        anchors.fill: parent
-                        onClicked: startToggleControls();
+                        anchors.fill: parent;
+                        enabled: flick.interactive
+                        onClicked: startToggleControls()
                         onDoubleClicked: {
                             abortToggleControls();
-                            if (flick.interactive) {
-                                flick.resizeContent(imageBrowser.imageWidth, imageBrowser.imageHeight, {x: imageBrowser.imageWidth/2, y: imageBrowser.imageHeight/2});
-                            } else {
-                                flick.resizeContent(imageBrowser.imageWidth * 2, imageBrowser.imageHeight * 2, {x: mouse.x, y: mouse.y});
-                            }
+                            flick.resizeContent(imageBrowser.imageWidth, imageBrowser.imageHeight, Qt.point(imageBrowser.imageWidth/2, imageBrowser.imageHeight/2));
+                            flick.returnToBounds();
                         }
                     }
                 }
@@ -232,17 +230,15 @@ ViewerBase {
     }
 
     Helpers.Navigator {
+        enabled: !imageBrowser.currentItem.interactive;
         anchors.fill: parent;
         onLeftRequested: imageBrowser.layoutDirection == Qt.RightToLeft? root.goNextPage(): root.goPreviousPage();
         onRightRequested: imageBrowser.layoutDirection == Qt.RightToLeft? root.goPreviousPage(): root.goNextPage();
         onTapped: startToggleControls();
         onDoubleTapped: {
             abortToggleControls();
-            if (imageBrowser.currentItem.interactive) {
-                imageBrowser.currentItem.resizeContent(imageWidth, imageHeight, Qt.point(imageWidth/2, imageHeight/2));
-            } else {
-                imageBrowser.currentItem.resizeContent(imageWidth * 2, imageHeight * 2, Qt.point(eventPoint.x, eventPoint.y));
-            }
+            imageBrowser.currentItem.resizeContent(imageBrowser.imageWidth * 2, imageBrowser.imageHeight * 2, Qt.point(eventPoint.x, eventPoint.y));
+            imageBrowser.currentItem.returnToBounds();
         }
     }
 }

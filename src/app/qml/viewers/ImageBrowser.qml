@@ -67,7 +67,7 @@ ListView {
         height: imageHeight
         contentWidth: imageWidth
         contentHeight: imageHeight
-        interactive: (contentWidth > width || contentHeight > height) && (currentFrame === -1)
+        interactive: (contentWidth > width || contentHeight > height) && (totalFrames === 0)
         z: interactive ? 1000 : 0
         function goNextFrame() { image.nextFrame(); }
         function goPreviousFrame() { image.previousFrame(); }
@@ -236,27 +236,20 @@ ListView {
                         id: frame;
                         x: ((image.muliplier * image.currentPageObject.frame(index).bounds.x) / globalUiScaleFactor) + image.offsetX;
                         y: ((image.muliplier * image.currentPageObject.frame(index).bounds.y) / globalUiScaleFactor) + image.offsetY;
-                        width: {
-                            (image.muliplier * image.currentPageObject.frame(index).bounds.width) / globalUiScaleFactor;
-                        }
+                        width: (image.muliplier * image.currentPageObject.frame(index).bounds.width) / globalUiScaleFactor;
                         height: (image.muliplier * image.currentPageObject.frame(index).bounds.height) / globalUiScaleFactor;
                         color: "blue";
                         opacity: 0;
-//                         MouseArea {
-//                             anchors.fill: parent;
-//                             onClicked: startToggleControls();
-//                             preventStealing: true;
-//                             onDoubleClicked: {
-//                                 abortToggleControls();
-//                                 if (flick.interactive && image.currentFrame == index) {
-//                                     flick.resizeContent(imageWidth, imageHeight, Qt.point(imageWidth/2, imageHeight/2));
-//                                     image.currentFrame = -1;
-//                                 } else {
-//                                     image.currentFrame = index;
-//                                     mouse.accepted;
-//                                 }
-//                             }
-//                         }
+                    }
+                }
+                MouseArea {
+                    anchors.fill: parent;
+                    enabled: flick.interactive;
+                    onClicked: startToggleControls();
+                    onDoubleClicked: {
+                        abortToggleControls();
+                        flick.resizeContent(imageWidth, imageHeight, Qt.point(imageWidth/2, imageHeight/2));
+                        flick.returnToBounds();
                     }
                 }
             }
@@ -264,6 +257,7 @@ ListView {
     }
 
     Helpers.Navigator {
+        enabled: root.currentItem ? !root.currentItem.interactive : false;
         anchors.fill: parent;
         onLeftRequested: root.layoutDirection === Qt.RightToLeft? root.goNextFrame(): root.goPreviousFrame();
         onRightRequested: root.layoutDirection === Qt.RightToLeft? root.goPreviousFrame(): root.goNextFrame();
@@ -271,11 +265,8 @@ ListView {
         onDoubleTapped: {
             abortToggleControls();
             if (root.currentItem.totalFrames === 0) {
-                if (root.currentItem.interactive) {
-                    root.currentItem.resizeContent(imageWidth, imageHeight, Qt.point(imageWidth/2, imageHeight/2));
-                } else {
-                    root.currentItem.resizeContent(imageWidth * 2, imageHeight * 2, Qt.point(eventPoint.x, eventPoint.y));
-                }
+                root.currentItem.resizeContent(imageWidth * 2, imageHeight * 2, Qt.point(eventPoint.x, eventPoint.y));
+                root.currentItem.returnToBounds();
             }
         }
     }
