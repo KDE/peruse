@@ -37,7 +37,7 @@ import "helpers" as Helpers
  */
 ViewerBase {
     id: root;
-    property string title: documentItem.windowTitleForDocument;
+    title: documentItem.windowTitleForDocument;
     onFileChanged: documentItem.url = "file://" + file;
     onCurrentPageChanged: {
         if(documentItem.currentPage !== currentPage) {
@@ -122,9 +122,6 @@ ViewerBase {
     }
     Okular.DocumentItem {
         id: documentItem
-//         onWindowTitleForDocumentChanged: {
-//             fileBrowserRoot.title = windowTitleForDocument
-//         }
         onOpenedChanged: {
             if(opened === true) {
                 root.loadingCompleted(true);

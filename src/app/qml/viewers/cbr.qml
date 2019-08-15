@@ -35,7 +35,7 @@ import org.kde.peruse 0.1 as Peruse
  */
 ViewerBase {
     id: root;
-    property string title: imageBrowser.model.title;
+    title: imageBrowser.model.title;
     pagesModel: imageBrowser.model;
     pageCount: imageBrowser.model.pageCount;
     onRtlModeChanged: {

@@ -378,10 +378,10 @@ Kirigami.Page {
                         }
                         viewLoader.item.currentPage = root.currentPage;
                         viewLoader.loadingCompleted = true;
-                        root.title = viewLoader.item.title;
                         applicationWindow().globalDrawer.close();
                     }
                 }
+                onTitleChanged: root.title = viewLoader.item.title;
                 onCurrentPageChanged: {
                     if(root.currentPage !== viewLoader.item.currentPage && viewLoader.loadingCompleted) {
                         root.currentPage = viewLoader.item.currentPage;

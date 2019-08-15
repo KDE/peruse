@@ -39,6 +39,7 @@ Item {
     // Success is true if this was successful, and false otherwise.
     signal loadingCompleted(bool success);
     property string file;
+    property string title;
     property int currentPage;
     property bool rtlMode: false;
     property int zoomMode: 0;
