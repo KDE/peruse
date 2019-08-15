@@ -345,14 +345,12 @@ Kirigami.Page {
             id: viewLoader;
             anchors.fill: parent;
             property bool loadingCompleted: false;
-            onLoaded: {
-                if(status === Loader.Error) {
-                    // huh! problem...
-                }
-                else {
-                    item.file = root.file;
+            onStatusChanged: {
+                if (status === Loader.Error) {
+                    console.debug("Error loading up the reader...");
                 }
             }
+            onLoaded: item.file = root.file;
             Binding {
                 target: viewLoader.item;
                 property: "rtlMode";
