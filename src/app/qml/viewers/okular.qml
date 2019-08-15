@@ -38,7 +38,7 @@ import "helpers" as Helpers
 ViewerBase {
     id: root;
     property string title: documentItem.windowTitleForDocument;
-    onFileChanged: documentItem.url = file;
+    onFileChanged: documentItem.url = "file://" + file;
     onCurrentPageChanged: {
         if(documentItem.currentPage !== currentPage) {
             documentItem.currentPage = currentPage;
@@ -129,6 +129,8 @@ ViewerBase {
             if(opened === true) {
                 root.loadingCompleted(true);
                 initialPageChange.start();
+            } else {
+                console.debug("Well then, error loading the file...");
             }
         }
         onCurrentPageChanged: {
@@ -143,7 +145,7 @@ ViewerBase {
         interval: applicationWindow().animationDuration;
         running: false;
         repeat: false;
-        onTriggered: root.currentPage = imageBrowser.model.currentIndex;
+        onTriggered: root.currentPage = imageBrowser.currentIndex;
     }
     ListView {
         id: imageBrowser
