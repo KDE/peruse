@@ -23,7 +23,7 @@ elseif(WIN32)
     add_definitions(-DWINDOWS)
 endif()
 
-find_package(Qt5 REQUIRED NO_MODULE COMPONENTS Qml Quick Gui Widgets OpenGL Sql)
+find_package(Qt5 5.10 REQUIRED NO_MODULE COMPONENTS Qml Quick Gui Widgets OpenGL Sql)
 find_package(KF5 5.56 REQUIRED COMPONENTS I18n Declarative Config FileMetaData IconThemes KIO NewStuffQuick)
 
 find_package(KF5Baloo) # optional - we'll just let it pass if it's missing
