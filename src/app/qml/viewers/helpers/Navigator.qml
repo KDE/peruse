@@ -19,7 +19,7 @@
  *
  */
 
-import QtQuick 2.13
+import QtQuick 2.12
 import org.kde.kirigami 2.5 as Kirigami
 
 /**

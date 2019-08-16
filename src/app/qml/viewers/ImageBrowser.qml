@@ -19,7 +19,7 @@
  *
  */
 
-import QtQuick 2.13
+import QtQuick 2.12
 // import QtQuick.Layouts 1.1
 // import QtQuick.Controls 1.0 as QtControls
 import org.kde.kirigami 2.1 as Kirigami
