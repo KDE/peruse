@@ -60,10 +60,18 @@ Item {
      * @param holeRect A rectangle which must fit inside HolyRect instance
      */
     function setHole(holeRect) {
-        component.topBorder = holeRect.y;
-        component.leftBorder = holeRect.x;
-        component.rightBorder = component.width - (holeRect.x + holeRect.width);
-        component.bottomBorder = component.height - (holeRect.y + holeRect.height);
+        if (!isNaN(holeRect.x)) {
+//             console.debug("New hole: " + holeRect);
+            component.topBorder = holeRect.y;
+            component.leftBorder = holeRect.x;
+            component.rightBorder = component.width - (holeRect.x + holeRect.width);
+            component.bottomBorder = component.height - (holeRect.y + holeRect.height);
+        } else {
+            component.topBorder = 0;
+            component.leftBorder = 0;
+            component.rightBorder = 0;
+            component.bottomBorder = 0;
+        }
     }
 
     Behavior on topBorder { NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
