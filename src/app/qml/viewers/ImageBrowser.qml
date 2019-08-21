@@ -63,6 +63,8 @@ ListView {
      */
     delegate: Flickable {
         id: flick
+        opacity: ListView.isCurrentItem ? 1 : 0
+        Behavior on opacity { NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
         width: imageWidth
         height: imageHeight
         contentWidth: imageWidth
@@ -131,7 +133,6 @@ ListView {
                     id: holyRect
                     anchors.fill: parent
                     color: image.currentFrameObj.bgcolor
-                    opacity: flick.ListView.isCurrentItem ? 1 : 0
                     visible: opacity > 0
                 }
                 source: model.url
@@ -164,34 +165,29 @@ ListView {
                 property int offsetY: (height-paintedHeight)/2;
                 property rect paintedRect: Qt.rect(offsetX, offsetY, paintedWidth, paintedHeight);
 
-                function focusOnFrame(index) {
-                    if (index>-1) {
-                        var frameObj = image.currentPageObject.frame(index);
-                        var frameBounds = frameObj.bounds;
-                        var frameMultiplier = image.implicitWidth/frameBounds.width;
-                        //Check if the height of the final frame is higher than the contentHeight
-                        //When we're using a *fit to with scheme.
-                        if ((frameBounds.height/frameBounds.width)*contentWidth > contentHeight) {
-                            frameMultiplier = image.implicitHeight/frameBounds.height;
-                            frameMultiplier = frameMultiplier * (contentHeight/image.paintedHeight);
-                        } else {
-                            frameMultiplier = frameMultiplier * (contentWidth/image.paintedWidth);
-                        }
-                        flick.resizeContent(globalUiScaleFactor * imageWidth * frameMultiplier, globalUiScaleFactor * imageHeight * frameMultiplier, Qt.point(flick.contentX,flick.contentY));
-                        var frameRect = Qt.rect((image.muliplier * frameBounds.x) / globalUiScaleFactor + image.offsetX
-                                            , (image.muliplier * frameBounds.y) / globalUiScaleFactor + image.offsetY
-                                            , (image.muliplier * frameBounds.width) / globalUiScaleFactor
-                                            , (image.muliplier * frameBounds.height) / globalUiScaleFactor);
-                        flick.contentX = frameRect.x - (flick.width-frameRect.width)/2;
-                        flick.contentY = frameRect.y - (flick.height-frameRect.height)/2;
+                function focusOnFrame() {
+                    flick.resizeContent(imageWidth, imageHeight, Qt.point(flick.contentX, flick.contentY));
+                    var frameObj = image.currentFrameObj;
+                    var frameBounds = frameObj.bounds;
+                    var frameMultiplier = image.implicitWidth/frameBounds.width * (root.imageWidth/image.paintedWidth);
+                    // If it's now too large to fit inside the viewport, scale it by height instead
+                    if ((frameBounds.height/frameBounds.width)*root.imageWidth > root.imageHeight) {
+                        frameMultiplier = image.implicitHeight/frameBounds.height * (root.imageHeight/image.paintedHeight);
                     }
+//                     console.debug("Frame bounds for frame " + index + " are " + frameBounds + " with multiplier " + frameMultiplier);
+                    flick.resizeContent(globalUiScaleFactor * imageWidth * frameMultiplier, globalUiScaleFactor * imageHeight * frameMultiplier, Qt.point(flick.contentX,flick.contentY));
+                    var frameRect = Qt.rect((image.muliplier * frameBounds.x) / globalUiScaleFactor + image.offsetX
+                                        , (image.muliplier * frameBounds.y) / globalUiScaleFactor + image.offsetY
+                                        , (image.muliplier * frameBounds.width) / globalUiScaleFactor
+                                        , (image.muliplier * frameBounds.height) / globalUiScaleFactor);
+                    flick.contentX = frameRect.x - (flick.width-frameRect.width)/2;
+                    flick.contentY = frameRect.y - (flick.height-frameRect.height)/2;
                 }
 
                 function nextFrame() {
                     if (image.totalFrames > 0 && image.currentFrame+1 < image.totalFrames) {
                         image.currentFrame++;
                     } else {
-                        flick.resizeContent(imageWidth, imageHeight, Qt.point(imageWidth/2, imageHeight/2));
                         image.currentFrame = -1;
                         flick.returnToBounds();
                         root.goNextPage();
@@ -205,7 +201,6 @@ ListView {
                     if (image.totalFrames > 0 && image.currentFrame-1 > -1) {
                         image.currentFrame--;
                     } else {
-                        flick.resizeContent(imageWidth, imageHeight, Qt.point(imageWidth/2, imageHeight/2));
                         image.currentFrame = -1;
                         flick.returnToBounds();
                         root.goPreviousPage();
@@ -217,18 +212,18 @@ ListView {
 
                 property int totalFrames: image.currentPageObject? image.currentPageObject.framePointStrings.length: 0;
                 property int currentFrame: -1;
-                property QtObject currentFrameObj: image.currentPageObject && image.currentFrame > -1 ? image.currentPageObject.frame(currentFrame) : noFrame;
+                property QtObject currentFrameObj: image.currentPageObject && image.totalFrames > 0 && image.currentFrame > -1 ? image.currentPageObject.frame(currentFrame) : noFrame;
                 onCurrentFrameObjChanged: {
-                    holyRect.setHole(Qt.rect((image.muliplier * currentFrameObj.bounds.x) / globalUiScaleFactor + image.offsetX,
-                                            (image.muliplier * currentFrameObj.bounds.y) / globalUiScaleFactor + image.offsetY,
-                                            (image.muliplier * currentFrameObj.bounds.width) / globalUiScaleFactor,
-                                            (image.muliplier * currentFrameObj.bounds.height) / globalUiScaleFactor));
+                    focusOnFrame(image.currentFrame);
+                    holyRect.setHole(Qt.rect((image.muliplier * image.currentFrameObj.bounds.x) / globalUiScaleFactor + image.offsetX,
+                                            (image.muliplier * image.currentFrameObj.bounds.y) / globalUiScaleFactor + image.offsetY,
+                                            (image.muliplier * image.currentFrameObj.bounds.width) / globalUiScaleFactor,
+                                            (image.muliplier * image.currentFrameObj.bounds.height) / globalUiScaleFactor));
                 }
                 property QtObject noFrame: QtObject {
                     property rect bounds: image.paintedRect
                     property color bgcolor: image.currentPageObject.bgcolor
                 }
-                onCurrentFrameChanged: focusOnFrame(currentFrame);
 
                 Repeater {
                     model: image.currentPageObject? image.currentPageObject.framePointStrings: 0;
