@@ -417,7 +417,7 @@ Kirigami.Page {
             seriesListView.currentIndex = newIndex;
         }
         function nextBook() {
-            if(seriesListView.currentIndex < seriesListView.model.rowCount()) {
+            if(seriesListView.currentIndex < seriesListView.model.rowCount() - 1) {
                 setNewCurrentIndex(seriesListView.currentIndex + 1);
             }
         }
