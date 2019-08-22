@@ -50,19 +50,38 @@ Item {
     PointHandler {
         id: swipeHandler
         property bool swipeActive: false;
-        property var velocity;
+        property point pressPosition;
+        property point position;
+        // This is something that will definitely really want to go somewhere else... like, say, in Kirigami
+        property int minimumSwipeDistance: Math.max(leftHandNav.width, component.height / 6);
         onActiveChanged: {
             if (active === true) {
                 swipeActive = true;
                 swipeTimer.start();
+                pressPosition = point.pressPosition;
             } else if (swipeActive === true) {
                 swipeTimer.stop();
                 swipeActive = false;
-//                     console.log("Velocity during the swipe was: " + velocity);
-                if (velocity.x > 0.1) {
-                    component.leftRequested();
-                } else if (velocity.x < -0.1) {
-                    component.rightRequested();
+
+                var swipeVector = Qt.vector2d(position.x - pressPosition.x, position.y - pressPosition.y);
+                if (swipeVector.length() > minimumSwipeDistance) {
+                    // determinant along the x unit vector just becomes minus swipeVector.y
+                    // var determinant = swipeVector.x * xUnit.y - swipeVector.y * xUnit.x;
+                    var angle = Math.atan2(-swipeVector.y, swipeVector.dotProduct(Qt.vector2d(1, 0))) * 180 / Math.PI + 180;
+
+                    if (angle >= 315 || angle < 45) {
+//                         console.debug("leftward swipe");
+                        component.rightRequested();
+                    } else if (angle >= 45 && angle < 135) {
+//                         console.debug("downward swipe");
+                        component.leftRequested();
+                    } else if (angle >= 135 && angle < 225) {
+//                         console.debug("rightward swipe");
+                        component.leftRequested();
+                    } else {
+//                         console.debug("upward swipe");
+                        component.rightRequested();
+                    }
                 }/* else {
                     console.debug("Swipe was too weak to determine anything...");
                 }*/
@@ -70,7 +89,7 @@ Item {
         }
         onPointChanged: {
             if (swipeActive === true) {
-                velocity = point.velocity;
+                position = point.position;
             }
         }
     }
