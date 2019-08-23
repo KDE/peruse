@@ -42,9 +42,9 @@ public:
      * @param size The size of the original image, unused.
      * @param requestedSize The required size of the final image, unused.
      * 
-     * @return a QImage.
+     * @return a QPixmap.
      */
-    virtual QImage requestImage(const QString& id, QSize* size, const QSize& requestedSize) override;
+    virtual QPixmap requestPixmap(const QString& id, QSize* size, const QSize& requestedSize) override;
 private:
     class Private;
     Private* d;

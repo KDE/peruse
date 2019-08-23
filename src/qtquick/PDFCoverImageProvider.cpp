@@ -46,7 +46,7 @@ public:
 };
 
 PDFCoverImageProvider::PDFCoverImageProvider()
-    : QQuickImageProvider(QQuickImageProvider::Image)
+    : QQuickImageProvider(QQuickImageProvider::Pixmap, QQmlImageProviderBase::ForceAsynchronousImageLoading)
     , d(new Private)
 {
 }
@@ -56,11 +56,11 @@ PDFCoverImageProvider::~PDFCoverImageProvider()
     delete d;
 }
 
-QImage PDFCoverImageProvider::requestImage(const QString& id, QSize* size, const QSize& requestedSize)
+QPixmap PDFCoverImageProvider::requestPixmap(const QString& id, QSize* size, const QSize& requestedSize)
 {
     Q_UNUSED(size)
     Q_UNUSED(requestedSize)
-    QImage img;
+    QPixmap img;
 
     QMimeDatabase db;
     db.mimeTypeForFile(id, QMimeDatabase::MatchContent);
@@ -72,7 +72,7 @@ QImage PDFCoverImageProvider::requestImage(const QString& id, QSize* size, const
             // then we've not already generated a thumbnail, try to make one...
             QProcess thumbnailer;
             QStringList args;
-            args << "-sPageList=1" << "-dLastPage=1" << "-dSAFER" << "-dBATCH" << "-dNOPAUSE" << "-dQUIET" << "-sDEVICE=png16m" << "-dGraphicsAlphaBits=4" << "-r150";
+            args << "-sPageList=1" << "-dLastPage=1" << "-dSAFER" << "-dBATCH" << "-dNOPAUSE" << "-dQUIET" << "-sDEVICE=png16m" << "-dGraphicsAlphaBits=4" << "-r300";
             args << QString("-sOutputFile=%1").arg(outFile) << id;
             QString gsApp;
             #ifdef Q_OS_WIN
@@ -99,7 +99,7 @@ QImage PDFCoverImageProvider::requestImage(const QString& id, QSize* size, const
         }
         if(!success) {
             QIcon oops = QIcon::fromTheme("unknown");
-            img = oops.pixmap(oops.availableSizes().last()).toImage();
+            img = oops.pixmap(oops.availableSizes().last());
             qCDebug(QTQUICK_LOG) << "Failed to load image with id" << id << "from thumbnail file" << outFile;
         }
     }

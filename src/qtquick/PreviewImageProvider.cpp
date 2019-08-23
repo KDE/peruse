@@ -41,7 +41,7 @@ public:
 
 PreviewImageProvider::PreviewImageProvider(QObject* parent)
     : QObject(parent)
-    , QQuickImageProvider(QQuickImageProvider::Image, QQmlImageProviderBase::ForceAsynchronousImageLoading)
+    , QQuickImageProvider(QQuickImageProvider::Pixmap, QQmlImageProviderBase::ForceAsynchronousImageLoading)
     , d(new Private)
 {
     qRegisterMetaType<KFileItem>("KFileItem");
@@ -52,9 +52,9 @@ PreviewImageProvider::~PreviewImageProvider()
     delete d;
 }
 
-QImage PreviewImageProvider::requestImage(const QString& id, QSize* size, const QSize& requestedSize)
+QPixmap PreviewImageProvider::requestPixmap(const QString& id, QSize* size, const QSize& requestedSize)
 {
-    QImage image;
+    QPixmap image;
 
     QSize ourSize(KIconLoader::SizeEnormous, KIconLoader::SizeEnormous);
     if(requestedSize.width() > 0 && requestedSize.height() > 0)
@@ -95,11 +95,11 @@ QImage PreviewImageProvider::requestImage(const QString& id, QSize* size, const 
             {
                 if(requestedSize.width() > 0 && requestedSize.height() > 0)
                 {
-                    image = d->previews[job].scaled(requestedSize).toImage();
+                    image = d->previews[job].scaled(requestedSize);
                 }
                 else
                 {
-                    image = d->previews[job].toImage();
+                    image = d->previews[job];
                 }
             }
         }
@@ -108,7 +108,7 @@ QImage PreviewImageProvider::requestImage(const QString& id, QSize* size, const 
     }
     else
     {
-        image = QImage(ourSize, QImage::Format_ARGB32);
+        image = QPixmap(ourSize);
     }
 
     if(size)

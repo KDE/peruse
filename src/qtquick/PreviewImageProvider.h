@@ -45,9 +45,9 @@ public:
      * @param size The size of the original image.
      * @param requestedSize The required size of the final image.
      * 
-     * @return a QImage.
+     * @return a QPixmap.
      */
-    QImage requestImage(const QString& id, QSize* size, const QSize& requestedSize) override;
+    QPixmap requestPixmap(const QString& id, QSize* size, const QSize& requestedSize) override;
 
     /**
      *\brief Get an icon associated with the mimetype of the image as a fallback.
