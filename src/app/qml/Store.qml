@@ -38,16 +38,43 @@ Kirigami.ScrollablePage {
     title: i18nc("title of the book store page", "Book Store");
     NewStuff.NewStuffList {
         configFile: peruseConfig.newstuffLocation;
-        onMessage: console.log("KNS Message: " + message);
-        onIdleMessage: console.log("KNS Idle: " + message);
-        onBusyMessage: console.log("KNS Busy: " + message);
-        onErrorMessage: console.log("KNS Error: " + message);
+        onMessage: { busy = false; messageLabel.text = message; }
+        onIdleMessage: { busy = false; messageLabel.text = message; }
+        onBusyMessage: { busy = true; messageLabel.text = message; }
+        onErrorMessage: { busy = false; messageLabel.text = message; }
+        property bool busy: false;
         onDownloadedItemClicked: {
             if(Array.isArray(installedFiles) && installedFiles.length > 0) {
                 applicationWindow().showBook(installedFiles[0], 0);
             }
             else if(installedFiles.length > 0) {
                 applicationWindow().showBook(installedFiles, 0);
+            }
+        }
+        Item {
+            anchors.fill: parent
+            opacity: parent.busy ? 1 : 0
+            Behavior on opacity { NumberAnimation { duration: Kirigami.Units.shortDuration; } }
+            Rectangle {
+                anchors.fill: parent
+                opacity: 0.8
+                color: Kirigami.Theme.backgroundColor
+            }
+            QtControls.BusyIndicator {
+                anchors {
+                    horizontalCenter: parent.horizontalCenter
+                    top: parent.top
+                    topMargin: x / 2
+                }
+                running: parent.opacity > 0
+                QtControls.Label {
+                    id: messageLabel
+                    anchors {
+                        horizontalCenter: parent.horizontalCenter
+                        top: parent.bottom
+                        topMargin: Kirigami.Units.largeSpacing
+                    }
+                }
             }
         }
     }
