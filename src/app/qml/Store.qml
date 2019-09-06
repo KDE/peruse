@@ -62,9 +62,10 @@ Kirigami.ScrollablePage {
             }
             QtControls.BusyIndicator {
                 anchors {
-                    horizontalCenter: parent.horizontalCenter
                     top: parent.top
-                    topMargin: x / 2
+                    topMargin: parent.width / 3
+                    left: parent.left
+                    right: parent.right
                 }
                 running: parent.opacity > 0
                 QtControls.Label {
@@ -75,6 +76,26 @@ Kirigami.ScrollablePage {
                         topMargin: Kirigami.Units.largeSpacing
                     }
                 }
+            }
+        }
+        Item {
+            anchors.fill: parent;
+            opacity: parent.count === 0 && !parent.busy ? 1 : 0
+            Behavior on opacity { NumberAnimation { duration: Kirigami.Units.shortDuration; } }
+            Rectangle {
+                anchors.fill: parent
+                opacity: 0.8
+                color: Kirigami.Theme.backgroundColor
+            }
+            QtControls.Label {
+                anchors {
+                    top: parent.top
+                    topMargin: width / 3
+                    left: parent.left
+                    right: parent.right
+                }
+                horizontalAlignment: Text.AlignHCenter
+                text: i18nc("Message shown when the engine is not busy and there are no entries (which means the store connection is broken in some way, usually caused by a broken internet connection, or the store being down)", "Sorry, no books.\nThis is unusual, and likely means your internet is down, or the store is.");
             }
         }
     }
