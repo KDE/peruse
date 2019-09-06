@@ -197,8 +197,8 @@ Kirigami.Page {
         Kirigami.Action {
             text: i18nc("Top level entry leading to a submenu with options for the book display", "View Options");
             iconName: "configure";
-            QtObject {
-                property string text: "Reading Direction"
+            Kirigami.Action {
+                text: "Reading Direction"
             }
             Kirigami.Action {
                 text: "Left to Right"
@@ -214,7 +214,7 @@ Kirigami.Page {
                 enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop && root.rtlMode === false;
                 onTriggered: { root.rtlMode = true; }
             }
-            QtObject {}
+            Kirigami.Action { }
 //             QtObject {
 //                 property string text: "Zoom"
 //             }
