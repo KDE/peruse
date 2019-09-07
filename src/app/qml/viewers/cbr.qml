@@ -51,8 +51,8 @@ ViewerBase {
         // This is un-pretty, quite obviously. But thanks to the ListView's inability to
         // stay in place when the geometry changes, well, this makes things simple.
         imageBrowser.positionViewAtIndex(imageBrowser.currentIndex, ListView.Center);
-
     }
+
     hasFrames: true;
     onNextFrame: imageBrowser.goNextFrame();
     onPreviousFrame: imageBrowser.goPreviousFrame();
