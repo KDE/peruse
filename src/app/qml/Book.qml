@@ -214,7 +214,6 @@ Kirigami.Page {
                 enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop && root.rtlMode === false;
                 onTriggered: { root.rtlMode = true; }
             }
-            Kirigami.Action { }
 //             QtObject {
 //                 property string text: "Zoom"
 //             }

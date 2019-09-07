@@ -122,6 +122,7 @@ Kirigami.ApplicationWindow {
                 }
             },
             Kirigami.Action {
+                separator: true;
             },
             Kirigami.Action {
                 text: i18nc("Switch to the listing page showing the most recently discovered books", "Recently Added Books");
@@ -166,6 +167,7 @@ Kirigami.ApplicationWindow {
                 onTriggered: changeCategory(bookshelfFolder);
             },
             Kirigami.Action {
+                separator: true;
             },
             Kirigami.Action {
                 text: i18nc("Open a book from somewhere on disk (uses the open dialog, or a drilldown on touch devices)", "Open Other...");
@@ -179,6 +181,7 @@ Kirigami.ApplicationWindow {
                 onTriggered: changeCategory(storePage);
             },
             Kirigami.Action {
+                separator: true;
             },
             Kirigami.Action {
                 text: i18nc("Open the settings page", "Settings");
