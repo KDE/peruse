@@ -37,6 +37,19 @@ ListView {
     signal goNextPage();
     signal goPreviousPage();
 
+    onWidthChanged: restorationTimer.start()
+    onHeightChanged: restorationTimer.start()
+    Timer {
+        id: restorationTimer
+        interval: 300
+        running: false
+        repeat: false
+        onTriggered: {
+            imageBrowser.positionViewAtIndex(imageBrowser.currentIndex, ListView.Center);
+            currentItem.refocusFrame();
+        }
+    }
+
     interactive: false // No interactive flicky stuff here, we'll handle that with the navigator instance
     property int imageWidth
     property int imageHeight
@@ -76,6 +89,21 @@ ListView {
         function setColouredHole(holeRect,holeColor) {
             holyRect.setHole(holeRect);
             holyRect.color = holeColor;
+        }
+        Timer {
+            id: refocusTimer
+            interval: 200
+            running: false
+            repeat: false
+            onTriggered: {
+                flick.resetHole();
+                if (totalFrames > 0 && currentFrame > -1) {
+                    image.focusOnFrame();
+                }
+            }
+        }
+        function refocusFrame() {
+            refocusTimer.start();
         }
         function resetHole() {
             if(image.status == Image.Ready) {
