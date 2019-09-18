@@ -250,7 +250,7 @@ ListView {
                 }
                 property QtObject noFrame: QtObject {
                     property rect bounds: image.paintedRect
-                    property color bgcolor: image.currentPageObject.bgcolor
+                    property color bgcolor: image.currentPageObject? image.currentPageObject.bgcolor: "transparent";
                 }
 
                 Repeater {
