@@ -148,7 +148,7 @@ QString PeruseConfig::newstuffLocation() const
     QString knsrc;
     for (const QString& location : locations) {
         knsrc = QString::fromLocal8Bit("%1/peruse.knsrc").arg(location);
-        if (QFile().exists()) {
+        if (QFile(knsrc).exists()) {
             break;
         }
     }
