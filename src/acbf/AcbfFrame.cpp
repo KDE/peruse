@@ -134,7 +134,7 @@ void Frame::setPointsFromRect(const QPoint &topLeft, const QPoint &bottomRight)
 {
     QRect rect(topLeft, bottomRight);
     d->points.clear();
-    d->points.append(topLeft);
+    d->points.append(rect.topLeft());
     d->points.append(rect.topRight());
     d->points.append(rect.bottomRight());
     d->points.append(rect.bottomLeft());
@@ -149,6 +149,9 @@ int Frame::pointCount() const
 QRect Frame::bounds() const
 {
     // Would use QPolygon here, but that requires including QTGUI.
+    if (d->points.size()==0) {
+        return QRect();
+    }
     QRect rect(d->points.at(0), d->points.at(1));
     for (int i = 2; i < d->points.size(); i++) {
         QPoint p = d->points.at(i);
