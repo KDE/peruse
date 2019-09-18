@@ -107,7 +107,7 @@ ListView {
         }
         function resetHole() {
             if(image.status == Image.Ready) {
-                var holeColor = "blue";
+                var holeColor = "transparent";
                 if (image.currentPageObject !== null) {
                     holeColor = image.currentPageObject.bgcolor;
                 }
