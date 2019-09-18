@@ -111,7 +111,7 @@ Kirigami.ScrollablePage {
     }
     Kirigami.Action {
         id: bookDetailsAction;
-        text: i18n("Closes the book details drawer", "Close");
+        text: i18nc("Closes the book details drawer", "Close");
         shortcut: bookDetails.sheetOpen ? "Esc" : "";
         iconName: "dialog-cancel";
         onTriggered: bookDetails.close();
