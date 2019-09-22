@@ -32,6 +32,9 @@ class Textarea::Private
 public:
     Private()
         : textRotation(0)
+        , type ("speech")
+        , inverted(false)
+        , transparent(false)
     {}
     QString bgcolor;
     QList<QPoint> points;
