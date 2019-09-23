@@ -116,6 +116,14 @@ public:
      * @param title The title of the page. This is shown in a table of contents.
      */
     virtual void addPage(QString url, QString title);
+
+    /**
+     * @brief removePage
+     * Remove this page from the book.
+     * @param index the index of the page to be removed.
+     */
+    virtual void removePage(int pageNumber);
+
     /**
      * \brief remove all pages from the book.
      */

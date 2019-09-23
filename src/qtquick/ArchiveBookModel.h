@@ -141,6 +141,13 @@ public:
      * @param title The title of the page. This is shown in a table of contents.
      */
     void addPage(QString url, QString title) override;
+
+    /**
+     * @brief removePage
+     * remove the given page from the book by number.
+     * @param pageNumber the number of the page to remove.
+     */
+    Q_INVOKABLE void removePage(int pageNumber) override;
     /**
      * Adds a new page to the book archive on disk, by copying in the file
      * passed to the function. Optionally this can be done at a specific

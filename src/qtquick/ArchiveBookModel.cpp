@@ -568,6 +568,33 @@ void ArchiveBookModel::addPage(QString url, QString title)
     BookModel::addPage(url, title);
 }
 
+void ArchiveBookModel::removePage(int pageNumber)
+{
+    if(!d->isLoading)
+    {
+        AdvancedComicBookFormat::Document* acbfDocument = qobject_cast<AdvancedComicBookFormat::Document*>(acbfData());
+        if(!acbfDocument)
+        {
+            acbfDocument = d->createNewAcbfDocumentFromLegacyInformation();
+        }
+        else
+        {
+            if(pageNumber == 0)
+            {
+                //Page no 0 is the cover page, when removed we'll take the next page.
+                AdvancedComicBookFormat::Page* page = acbfDocument->body()->page(0);
+                acbfDocument->metaData()->bookInfo()->setCoverpage(page);
+                acbfDocument->body()->removePage(page);
+            }
+            else {
+                AdvancedComicBookFormat::Page* page = acbfDocument->body()->page(pageNumber-1);
+                acbfDocument->body()->removePage(page);
+            }
+        }
+    }
+    BookModel::removePage(pageNumber);
+}
+
 // FIXME any metadata change sets dirty (as we need to replace the whole file in archive when saving)
 
 void ArchiveBookModel::addPageFromFile(QString fileUrl, int insertAfter)

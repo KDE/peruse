@@ -125,7 +125,7 @@ Kirigami.ScrollablePage {
                 Kirigami.Action {
                     text: i18nc("remove the page from the book", "Delete Page");
                     iconName: "list-remove"
-                    onTriggered: {}
+                    onTriggered: bookModel.removePage(model.index);
                 },
                 Kirigami.Action {
                     text: i18nc("add a page to the book after this one", "Add Page After This");

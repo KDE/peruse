@@ -108,6 +108,15 @@ void BookModel::addPage(QString url, QString title)
     endInsertRows();
 }
 
+void BookModel::removePage(int pageNumber)
+{
+    QModelIndex index  = createIndex(pageNumber, 0);
+    beginRemoveRows(QModelIndex(), index.row(), index.row());
+    d->entries.removeAt(pageNumber);
+    emit pageCountChanged();
+    endRemoveRows();
+}
+
 void BookModel::clearPages()
 {
     beginResetModel();
