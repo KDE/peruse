@@ -73,11 +73,6 @@ int init(QString &path, QApplication& app, const QString &filename) {
     QString platformEnv(qgetenv("PLASMA_PLATFORM"));
     engine.rootContext()->setContextProperty("PLASMA_PLATFORM", platformEnv);
 
-    QString scaleFactor(qgetenv("QT_SCALE_FACTOR"));
-    if (scaleFactor.isEmpty()) { scaleFactor = QStringLiteral("1"); }
-    engine.rootContext()->setContextProperty("globalUiScaleFactor", scaleFactor);
-    engine.rootContext()->setContextProperty("devicePixelRatio", app.devicePixelRatio());
-
     // Yes, i realise this is a touch on the ugly side. I have found no better way to allow for
     // things like the archive book model to create imageproviders for the archives
     engine.rootContext()->setContextProperty("globalQmlEngine", &engine);

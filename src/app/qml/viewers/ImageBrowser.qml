@@ -20,6 +20,7 @@
  */
 
 import QtQuick 2.12
+import QtQuick.Window 2.12
 // import QtQuick.Layouts 1.1
 // import QtQuick.Controls 1.0 as QtControls
 import org.kde.kirigami 2.1 as Kirigami
@@ -117,7 +118,7 @@ ListView {
         ListView.onIsCurrentItemChanged: resetHole();
         Connections {
             target: image
-            onStatusChanged: resetHole();
+            onStatusChanged: refocusFrame();
         }
         property alias totalFrames: image.totalFrames;
         property alias currentFrame: image.currentFrame;
@@ -188,26 +189,31 @@ ListView {
                         null;
                     }
                 }
-                property real muliplier: isTall? (paintedHeight / implicitHeight): (paintedWidth / implicitWidth);
+                property real muliplier: isTall? (paintedHeight / pixHeight): (paintedWidth / pixWidth);
                 property int offsetX: (width-paintedWidth)/2;
                 property int offsetY: (height-paintedHeight)/2;
                 property rect paintedRect: Qt.rect(offsetX, offsetY, paintedWidth, paintedHeight);
+
+                // This is some magic that QML Image does for us, to be helpful. It isn't very helpful to us.
+                property int pixWidth: image.implicitWidth * Screen.devicePixelRatio;
+                property int pixHeight: image.implicitHeight * Screen.devicePixelRatio;
 
                 function focusOnFrame() {
                     flick.resizeContent(imageWidth, imageHeight, Qt.point(flick.contentX, flick.contentY));
                     var frameObj = image.currentFrameObj;
                     var frameBounds = frameObj.bounds;
-                    var frameMultiplier = image.implicitWidth/frameBounds.width * (root.imageWidth/image.paintedWidth);
+                    var frameMultiplier = image.pixWidth/frameBounds.width * (root.imageWidth/image.paintedWidth);
                     // If it's now too large to fit inside the viewport, scale it by height instead
                     if ((frameBounds.height/frameBounds.width)*root.imageWidth > root.imageHeight) {
-                        frameMultiplier = image.implicitHeight/frameBounds.height * (root.imageHeight/image.paintedHeight);
+                        frameMultiplier = image.pixHeight/frameBounds.height * (root.imageHeight/image.paintedHeight);
                     }
 //                     console.debug("Frame bounds for frame " + index + " are " + frameBounds + " with multiplier " + frameMultiplier);
-                    flick.resizeContent(globalUiScaleFactor * imageWidth * frameMultiplier, globalUiScaleFactor * imageHeight * frameMultiplier, Qt.point(flick.contentX,flick.contentY));
-                    var frameRect = Qt.rect((image.muliplier * frameBounds.x) / globalUiScaleFactor + image.offsetX
-                                        , (image.muliplier * frameBounds.y) / globalUiScaleFactor + image.offsetY
-                                        , (image.muliplier * frameBounds.width) / globalUiScaleFactor
-                                        , (image.muliplier * frameBounds.height) / globalUiScaleFactor);
+//                     console.debug("Actual pixel size of image with implicit size " + image.implicitWidth + " by " + image.implicitHeight + " is " + pixWidth + " by " + pixHeight);
+                    flick.resizeContent(imageWidth * frameMultiplier, imageHeight * frameMultiplier, Qt.point(flick.contentX,flick.contentY));
+                    var frameRect = Qt.rect((image.muliplier * frameBounds.x) + image.offsetX
+                                        , (image.muliplier * frameBounds.y) + image.offsetY
+                                        , (image.muliplier * frameBounds.width)
+                                        , (image.muliplier * frameBounds.height));
                     flick.contentX = frameRect.x - (flick.width-frameRect.width)/2;
                     flick.contentY = frameRect.y - (flick.height-frameRect.height)/2;
                 }
@@ -243,10 +249,10 @@ ListView {
                 property QtObject currentFrameObj: image.currentPageObject && image.totalFrames > 0 && image.currentFrame > -1 ? image.currentPageObject.frame(currentFrame) : noFrame;
                 onCurrentFrameObjChanged: {
                     focusOnFrame(image.currentFrame);
-                    holyRect.setHole(Qt.rect((image.muliplier * image.currentFrameObj.bounds.x) / globalUiScaleFactor + image.offsetX,
-                                            (image.muliplier * image.currentFrameObj.bounds.y) / globalUiScaleFactor + image.offsetY,
-                                            (image.muliplier * image.currentFrameObj.bounds.width) / globalUiScaleFactor,
-                                            (image.muliplier * image.currentFrameObj.bounds.height) / globalUiScaleFactor));
+                    holyRect.setHole(Qt.rect((image.muliplier * image.currentFrameObj.bounds.x) + image.offsetX,
+                                            (image.muliplier * image.currentFrameObj.bounds.y) + image.offsetY,
+                                            (image.muliplier * image.currentFrameObj.bounds.width),
+                                            (image.muliplier * image.currentFrameObj.bounds.height)));
                 }
                 property QtObject noFrame: QtObject {
                     property rect bounds: image.paintedRect
@@ -257,10 +263,10 @@ ListView {
                     model: image.currentPageObject? image.currentPageObject.framePointStrings: 0;
                     Rectangle {
                         id: frame;
-                        x: ((image.muliplier * image.currentPageObject.frame(index).bounds.x) / globalUiScaleFactor) + image.offsetX;
-                        y: ((image.muliplier * image.currentPageObject.frame(index).bounds.y) / globalUiScaleFactor) + image.offsetY;
-                        width: (image.muliplier * image.currentPageObject.frame(index).bounds.width) / globalUiScaleFactor;
-                        height: (image.muliplier * image.currentPageObject.frame(index).bounds.height) / globalUiScaleFactor;
+                        x: (image.muliplier * image.currentPageObject.frame(index).bounds.x) + image.offsetX;
+                        y: (image.muliplier * image.currentPageObject.frame(index).bounds.y) + image.offsetY;
+                        width: image.muliplier * image.currentPageObject.frame(index).bounds.width;
+                        height: image.muliplier * image.currentPageObject.frame(index).bounds.height;
                         color: "blue";
                         opacity: 0;
                     }
