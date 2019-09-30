@@ -37,6 +37,8 @@
 Q_DECL_EXPORT
 int main(int argc, char** argv)
 {
+    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
     QApplication app(argc, argv);
     app.setWindowIcon(QIcon::fromTheme(QStringLiteral("peruse")));
     app.setApplicationDisplayName("Peruse");
