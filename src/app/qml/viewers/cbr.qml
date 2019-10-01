@@ -19,9 +19,7 @@
  *
  */
 
-import QtQuick 2.1
-import QtQuick.Layouts 1.1
-import QtQuick.Controls 1.0
+import QtQuick 2.12
 
 import org.kde.peruse 0.1 as Peruse
 /**

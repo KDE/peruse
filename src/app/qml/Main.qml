@@ -19,9 +19,9 @@
  *
  */
 
-import QtQuick 2.2
-import QtQuick.Window 2.2
-import QtQuick.Dialogs 1.2
+import QtQuick 2.12
+import QtQuick.Window 2.12
+import QtQuick.Dialogs 1.3
 
 PeruseMain {
     id: root;

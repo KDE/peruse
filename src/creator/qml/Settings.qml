@@ -19,9 +19,9 @@
  *
  */
 
-import QtQuick 2.2
+import QtQuick 2.12
 
-import org.kde.kirigami 2.1 as Kirigami
+import org.kde.kirigami 2.7 as Kirigami
 /**
  * @brief Page with knobs and dials for configuring Peruse Creator.
  */

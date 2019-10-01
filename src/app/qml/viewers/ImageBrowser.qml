@@ -21,9 +21,9 @@
 
 import QtQuick 2.12
 import QtQuick.Window 2.12
-// import QtQuick.Layouts 1.1
-// import QtQuick.Controls 1.0 as QtControls
-import org.kde.kirigami 2.1 as Kirigami
+
+import org.kde.kirigami 2.7 as Kirigami
+
 import "helpers" as Helpers
 
 /**

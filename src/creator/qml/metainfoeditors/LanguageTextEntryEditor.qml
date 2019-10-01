@@ -19,10 +19,10 @@
  *
  */
 
-import QtQuick 2.2
+import QtQuick 2.12
+import QtQuick.Controls 2.12 as QtControls
 
-import org.kde.kirigami 2.1 as Kirigami
-import QtQuick.Controls 2.2 as QtControls
+import org.kde.kirigami 2.7 as Kirigami
 
 Item {
     id: root;

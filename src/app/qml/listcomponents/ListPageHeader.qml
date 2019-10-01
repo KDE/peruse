@@ -19,9 +19,9 @@
  *
  */
 
-import QtQuick 2.1
+import QtQuick 2.12
 
-import org.kde.kirigami 2.1 as Kirigami
+import org.kde.kirigami 2.7 as Kirigami
 
 /// FIXME Switch this to using the Kirigami page header/breadcrumbs component instead
 Row {

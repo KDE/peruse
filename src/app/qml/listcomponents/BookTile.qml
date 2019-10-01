@@ -19,10 +19,10 @@
  *
  */
 
-import QtQuick 2.1
-import QtQuick.Controls 2.2 as QtControls
+import QtQuick 2.12
+import QtQuick.Controls 2.12 as QtControls
 
-import org.kde.kirigami 2.1 as Kirigami
+import org.kde.kirigami 2.7 as Kirigami
 
 /**
  * @brief small window with book information.
@@ -385,7 +385,7 @@ Item {
             width: parent.width;
             Behavior on opacity { NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
             height: yesDelete.height + confirmDeleteLabel.height + Kirigami.Units.largeSpacing * 2 + Kirigami.Units.smallSpacing;
-            color: Kirigami.Theme.viewBackgroundColor;
+            color: Kirigami.Theme.backgroundColor;
             QtControls.Label {
                 id: confirmDeleteLabel;
                 anchors {

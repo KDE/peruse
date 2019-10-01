@@ -20,11 +20,10 @@
  */
 
 import QtQuick 2.2
-import QtQuick.Layouts 1.1
-import QtQuick.Controls 1.0
+import QtQuick.Controls 2.12 as QtControls
 import Qt.labs.folderlistmodel 2.1
 
-import org.kde.kirigami 2.1 as Kirigami
+import org.kde.kirigami 2.7 as Kirigami
 
 import "listcomponents" as ListComponents
 
@@ -60,13 +59,14 @@ Item {
         clip: true;
         height: Kirigami.Units.gridUnit * 2;
     }
-    ToolButton {
+    QtControls.ToolButton {
         anchors {
             top: parent.top;
             right: parent.right;
             margins: Kirigami.Units.smallSpacing;
         }
-        iconName: "dialog-ok-apply";
+        icon.name: "dialog-ok-apply";
+        display: AbstractButton.TextBesideIcon;
         onClicked: root.accepted();
     }
 

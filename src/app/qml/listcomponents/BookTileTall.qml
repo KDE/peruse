@@ -19,10 +19,10 @@
  *
  */
 
-import QtQuick 2.1
-import QtQuick.Controls 2.2 as QtControls
+import QtQuick 2.12
+import QtQuick.Controls 2.12 as QtControls
 
-import org.kde.kirigami 2.1 as Kirigami
+import org.kde.kirigami 2.7 as Kirigami
 
 /**
  * @brief A button to select a book to read with a nice big thumbnail.
@@ -106,10 +106,10 @@ Item {
             anchors.centerIn: coverImage;
             width: Math.max(coverImage.paintedWidth, Kirigami.Units.iconSizes.large) + Kirigami.Units.smallSpacing * 2;
             height: Math.max(coverImage.paintedHeight, Kirigami.Units.iconSizes.large) + Kirigami.Units.smallSpacing * 2;
-            color: Kirigami.Theme.viewBackgroundColor;
+            color: Kirigami.Theme.backgroundColor;
             border {
                 width: 2;
-                color: Kirigami.Theme.viewTextColor;
+                color: Kirigami.Theme.textColor;
             }
             radius: 2;
         }

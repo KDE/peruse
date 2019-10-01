@@ -19,11 +19,12 @@
  *
  */
 
-import QtQuick 2.2
-import QtQuick.Window 2.2
-import QtQuick.Dialogs 1.2
+import QtQuick 2.12
+import QtQuick.Window 2.12
+import QtQuick.Dialogs 1.3
 
-import org.kde.kirigami 2.1 as Kirigami
+import org.kde.kirigami 2.7 as Kirigami
+
 import org.kde.peruse 0.1 as Peruse
 /**
  * @brief Main window of the application.

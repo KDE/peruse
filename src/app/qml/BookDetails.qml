@@ -19,13 +19,12 @@
  *
  */
 
-import QtQuick 2.2
-import QtQuick.Layouts 1.1
-import QtQuick.Controls 2.2 as QtControls
+import QtQuick 2.12
+import QtQuick.Controls 2.12 as QtControls
 
-import org.kde.kirigami 2.1 as Kirigami
+import org.kde.kirigami 2.7 as Kirigami
+
 import org.kde.peruse 0.1 as Peruse
-
 import "listcomponents" as ListComponents
 
 Item {
@@ -81,10 +80,10 @@ Item {
                 anchors.centerIn: coverImage;
                 width: coverImage.paintedWidth + Kirigami.Units.smallSpacing * 2;
                 height: coverImage.paintedHeight + Kirigami.Units.smallSpacing * 2;
-                color: Kirigami.Theme.viewBackgroundColor;
+                color: Kirigami.Theme.backgroundColor;
                 border {
                     width: 2;
-                    color: Kirigami.Theme.viewTextColor;
+                    color: Kirigami.Theme.textColor;
                 }
                 radius: 2;
             }

@@ -19,12 +19,11 @@
  *
  */
 
-import QtQuick 2.2
-import QtQuick.Layouts 1.1
-import QtQuick.Controls 2.2 as QtControls
-import QtQuick.Dialogs 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12 as QtControls
+import QtQuick.Dialogs 1.3
 
-import org.kde.kirigami 2.1 as Kirigami
+import org.kde.kirigami 2.7 as Kirigami
 
 import org.kde.peruse 0.1 as Peruse
 
@@ -56,9 +55,8 @@ Kirigami.Page {
                 ListComponents.Section { id: folderHeader; text: i18nc("title of the list of search folders", "Search Folders"); }
                 QtControls.ToolButton {
                     id: folderAdd;
-                    contentItem: Kirigami.Icon {
-                        source: "list-add";
-                    }
+                    icon.name: "list-add";
+                    display: AbstractButton.IconOnly;
                     onClicked: {
                         if(PLASMA_PLATFORM.substring(0, 5) === "phone") {
                             applicationWindow().pageStack.push(folderDlg);
@@ -102,7 +100,7 @@ Kirigami.Page {
 
         Rectangle {
             id: addingNewBooksProgress;
-            color: Kirigami.Theme.viewBackgroundColor;
+            color: Kirigami.Theme.backgroundColor;
             anchors.fill: parent;
             opacity: 0;
             Behavior on opacity { NumberAnimation { duration: applicationWindow().animationDuration; } }

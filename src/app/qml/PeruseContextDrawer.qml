@@ -17,10 +17,11 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-import QtQuick 2.1
+import QtQuick 2.12
 import QtQuick.Layouts 1.2
-import QtQuick.Controls 1.4 as QtControls
-import org.kde.kirigami 2.1
+import QtQuick.Controls 2.12 as QtControls
+
+import org.kde.kirigami 2.7
 
 // Modified version of the ContextDrawer component found in the Plasma Components
 // In addition to the original drawer, this will allow you to optionally insert an item
