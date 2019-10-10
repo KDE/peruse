@@ -54,6 +54,11 @@ Item {
     property alias color: topRect.color
 
     /**
+     * Whether animations are enabled for repositioning of the rectangle's hole
+     */
+    property bool animatePosition: true
+
+    /**
      * Set all the values of the hole in one go, by using an inscribed rectangle.
      * It will conceptually punch a hole in HolyRect in the location and of the
      * size described by the rectangle passed to the function.
@@ -74,10 +79,10 @@ Item {
         }
     }
 
-    Behavior on topBorder { NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
-    Behavior on leftBorder { NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
-    Behavior on rightBorder { NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
-    Behavior on bottomBorder { NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
+    Behavior on topBorder { enabled: animatePosition; NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
+    Behavior on leftBorder { enabled: animatePosition; NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
+    Behavior on rightBorder { enabled: animatePosition; NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
+    Behavior on bottomBorder { enabled: animatePosition; NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
     Behavior on color { ColorAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
     Behavior on opacity { NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
 
