@@ -88,8 +88,8 @@ ListView {
         function goNextFrame() { image.nextFrame(); }
         function goPreviousFrame() { image.previousFrame(); }
         function setColouredHole(holeRect,holeColor) {
-            holyRect.setHole(holeRect);
-            holyRect.color = holeColor;
+            pageHole.setHole(holeRect);
+            pageHole.color = holeColor;
         }
         Timer {
             id: refocusTimer
@@ -159,10 +159,12 @@ ListView {
                 width: flick.contentWidth
                 height: flick.contentHeight
                 Helpers.HolyRectangle {
-                    id: holyRect
+                    id: pageHole
                     anchors.fill: parent
                     color: image.currentFrameObj.bgcolor
                     visible: opacity > 0
+                    opacity: image.currentFrame === -1 ? 1 : 0
+                    animatePosition: false
                 }
                 source: model.url
                 fillMode: Image.PreserveAspectFit
@@ -249,10 +251,6 @@ ListView {
                 property QtObject currentFrameObj: image.currentPageObject && image.totalFrames > 0 && image.currentFrame > -1 ? image.currentPageObject.frame(currentFrame) : noFrame;
                 onCurrentFrameObjChanged: {
                     focusOnFrame(image.currentFrame);
-                    holyRect.setHole(Qt.rect((image.muliplier * image.currentFrameObj.bounds.x) + image.offsetX,
-                                            (image.muliplier * image.currentFrameObj.bounds.y) + image.offsetY,
-                                            (image.muliplier * image.currentFrameObj.bounds.width),
-                                            (image.muliplier * image.currentFrameObj.bounds.height)));
                 }
                 property QtObject noFrame: QtObject {
                     property rect bounds: image.paintedRect
@@ -261,14 +259,29 @@ ListView {
 
                 Repeater {
                     model: image.currentPageObject? image.currentPageObject.framePointStrings: 0;
-                    Rectangle {
-                        id: frame;
-                        x: (image.muliplier * image.currentPageObject.frame(index).bounds.x) + image.offsetX;
-                        y: (image.muliplier * image.currentPageObject.frame(index).bounds.y) + image.offsetY;
-                        width: image.muliplier * image.currentPageObject.frame(index).bounds.width;
-                        height: image.muliplier * image.currentPageObject.frame(index).bounds.height;
-                        color: "blue";
-                        opacity: 0;
+//                     Rectangle {
+//                         id: frame;
+//                         x: (image.muliplier * image.currentPageObject.frame(index).bounds.x) + image.offsetX;
+//                         y: (image.muliplier * image.currentPageObject.frame(index).bounds.y) + image.offsetY;
+//                         width: image.muliplier * image.currentPageObject.frame(index).bounds.width;
+//                         height: image.muliplier * image.currentPageObject.frame(index).bounds.height;
+//                         color: "blue";
+//                         opacity: 0;
+//                     }
+                    Helpers.HolyRectangle {
+                        anchors.fill: parent;
+                        property QtObject frameObj: image.currentPageObject ? image.currentPageObject.frame(index) : noFrame;
+                        property rect frameRect: Qt.rect((image.muliplier * frameObj.bounds.x) + image.offsetX,
+                                            (image.muliplier * frameObj.bounds.y) + image.offsetY,
+                                            (image.muliplier * frameObj.bounds.width),
+                                            (image.muliplier * frameObj.bounds.height))
+                        color: frameObj.bgcolor;
+                        opacity: image.currentFrame === index ? 1 : 0;
+                        visible: opacity > 0;
+                        topBorder: frameRect.y;
+                        leftBorder: frameRect.x;
+                        rightBorder: width - (frameRect.x + frameRect.width);
+                        bottomBorder: height - (frameRect.y + frameRect.height);
                     }
                 }
                 MouseArea {
