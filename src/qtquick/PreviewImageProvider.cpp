@@ -50,31 +50,14 @@ PreviewImageProvider::~PreviewImageProvider()
     delete d;
 }
 
-class PreviewRunnable::Private {
-public:
-    Private() {}
-    QString id;
-    QSize requestedSize;
-
-    QImage preview;
-    bool jobCompletion{false};
-};
-
-PreviewRunnable::PreviewRunnable(const QString& id, const QSize& requestedSize)
-    : d(new Private)
-{
-    d->id = id;
-    d->requestedSize = requestedSize;
-}
-
 class PreviewResponse : public QQuickImageResponse
 {
     public:
         PreviewResponse(const QString &id, const QSize &requestedSize, QThreadPool *pool)
         {
-            auto runnable = new PreviewRunnable(id, requestedSize);
-            connect(runnable, &PreviewRunnable::done, this, &PreviewResponse::handleDone);
-            pool->start(runnable);
+            m_runnable = new PreviewRunnable(id, requestedSize);
+            connect(m_runnable, &PreviewRunnable::done, this, &PreviewResponse::handleDone);
+            pool->start(m_runnable);
         }
 
         void handleDone(QImage image) {
@@ -87,6 +70,12 @@ class PreviewResponse : public QQuickImageResponse
             return QQuickTextureFactory::textureFactoryForImage(m_image);
         }
 
+        void cancel() override
+        {
+            m_runnable->abort();
+        }
+
+        PreviewRunnable* m_runnable{nullptr};
         QImage m_image;
 };
 
@@ -94,6 +83,24 @@ QQuickImageResponse * PreviewImageProvider::requestImageResponse(const QString& 
 {
     PreviewResponse* response = new PreviewResponse(id, requestedSize, &d->pool);
     return response;
+}
+
+class PreviewRunnable::Private {
+public:
+    Private() {}
+    QString id;
+    QSize requestedSize;
+
+    QImage preview;
+    bool jobCompletion{false};
+    KIO::PreviewJob* job{nullptr};
+};
+
+PreviewRunnable::PreviewRunnable(const QString& id, const QSize& requestedSize)
+    : d(new Private)
+{
+    d->id = id;
+    d->requestedSize = requestedSize;
 }
 
 void PreviewRunnable::run()
@@ -117,15 +124,15 @@ void PreviewRunnable::run()
         }
 
         static QStringList allPlugins{KIO::PreviewJob::availablePlugins()};
-        KIO::PreviewJob* job = new KIO::PreviewJob(KFileItemList() << KFileItem(QUrl::fromLocalFile(d->id), mimetype, 0), ourSize, &allPlugins);
-        job->setIgnoreMaximumSize(true);
-        job->setScaleType(KIO::PreviewJob::ScaledAndCached);
-        connect(job, SIGNAL(gotPreview(KFileItem,QPixmap)), SLOT(updatePreview(KFileItem,QPixmap)));
-        connect(job, SIGNAL(failed(KFileItem)), SLOT(fallbackPreview(KFileItem)));
-        connect(job, SIGNAL(finished(KJob*)), SLOT(finishedPreview(KJob*)));
+        d->job = new KIO::PreviewJob(KFileItemList() << KFileItem(QUrl::fromLocalFile(d->id), mimetype, 0), ourSize, &allPlugins);
+        d->job->setIgnoreMaximumSize(true);
+        d->job->setScaleType(KIO::PreviewJob::ScaledAndCached);
+        connect(d->job, SIGNAL(gotPreview(KFileItem,QPixmap)), SLOT(updatePreview(KFileItem,QPixmap)));
+        connect(d->job, SIGNAL(failed(KFileItem)), SLOT(fallbackPreview(KFileItem)));
+        connect(d->job, SIGNAL(finished(KJob*)), SLOT(finishedPreview(KJob*)));
 
         d->jobCompletion = false;
-        if(job->exec())
+        if(d->job->exec())
         {
             // Do not access the job after this point! As we are requesting that
             // it be deleted in finishedPreview(), don't expect it to be around.
@@ -152,6 +159,11 @@ void PreviewRunnable::run()
     }
 
     Q_EMIT done(image);
+}
+
+void PreviewRunnable::abort()
+{
+    d->job->kill();
 }
 
 void PreviewRunnable::fallbackPreview(const KFileItem& item)

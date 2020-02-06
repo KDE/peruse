@@ -63,6 +63,11 @@ public:
     void run() override;
 
     /**
+     * Request that the preview worker abort what it's doing
+     */
+    Q_SLOT void abort();
+
+    /**
      * \brief Emitted once the preview has been retrieved (successfully or not)
      * @param image The preview image in the requested size (possibly a placeholder)
      */
