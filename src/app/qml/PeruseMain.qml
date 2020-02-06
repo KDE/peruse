@@ -115,8 +115,9 @@ Kirigami.ApplicationWindow {
                 iconName: "start-over";
                 checked: mainWindow.currentCategory === "welcomePage";
                 onTriggered: {
-                    changeCategory(welcomePage);
-                    pageStack.currentItem.updateRecent();
+                    if (changeCategory(welcomePage)) {
+                        pageStack.currentItem.updateRecent();
+                    }
                 }
             },
             Kirigami.Action {
@@ -313,14 +314,20 @@ Kirigami.ApplicationWindow {
     }
 
     property string currentCategory: "welcomePage";
+    property Component currentCategoryItem: welcomePage;
     function changeCategory(categoryItem) {
+        if (categoryItem === mainWindow.currentCategoryItem) {
+            return false;
+        }
         // Clear all the way to the welcome page if we change the category...
         mainWindow.pageStack.clear();
         mainWindow.pageStack.push(categoryItem);
         currentCategory = mainWindow.pageStack.currentItem.categoryName;
+        currentCategoryItem = categoryItem;
         if (PLASMA_PLATFORM.substring(0, 5) === "phone") {
             globalDrawer.close();
         }
+        return true;
     }
 
 
