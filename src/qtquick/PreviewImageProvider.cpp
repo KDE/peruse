@@ -28,20 +28,18 @@
 #include <QDir>
 #include <QIcon>
 #include <QMimeDatabase>
+#include <QThreadPool>
 #include <QDebug>
 
 class PreviewImageProvider::Private
 {
 public:
     Private() {};
-    // Yes, we might use the KFileItem here, but we have a one-to-one equivalence between jobs and previews here anyway, so...
-    QHash<KIO::PreviewJob*, QPixmap> previews;
-    QHash<KJob*, bool> jobCompletion;
+    QThreadPool pool;
 };
 
-PreviewImageProvider::PreviewImageProvider(QObject* parent)
-    : QObject(parent)
-    , QQuickImageProvider(QQuickImageProvider::Pixmap, QQmlImageProviderBase::ForceAsynchronousImageLoading)
+PreviewImageProvider::PreviewImageProvider()
+    : QQuickAsyncImageProvider()
     , d(new Private)
 {
     qRegisterMetaType<KFileItem>("KFileItem");
@@ -52,94 +50,132 @@ PreviewImageProvider::~PreviewImageProvider()
     delete d;
 }
 
-QPixmap PreviewImageProvider::requestPixmap(const QString& id, QSize* size, const QSize& requestedSize)
+class PreviewRunnable::Private {
+public:
+    Private() {}
+    QString id;
+    QSize requestedSize;
+
+    QImage preview;
+    bool jobCompletion{false};
+};
+
+PreviewRunnable::PreviewRunnable(const QString& id, const QSize& requestedSize)
+    : d(new Private)
 {
-    QPixmap image;
+    d->id = id;
+    d->requestedSize = requestedSize;
+}
+
+class PreviewResponse : public QQuickImageResponse
+{
+    public:
+        PreviewResponse(const QString &id, const QSize &requestedSize, QThreadPool *pool)
+        {
+            auto runnable = new PreviewRunnable(id, requestedSize);
+            connect(runnable, &PreviewRunnable::done, this, &PreviewResponse::handleDone);
+            pool->start(runnable);
+        }
+
+        void handleDone(QImage image) {
+            m_image = image;
+            emit finished();
+        }
+
+        QQuickTextureFactory *textureFactory() const override
+        {
+            return QQuickTextureFactory::textureFactoryForImage(m_image);
+        }
+
+        QImage m_image;
+};
+
+QQuickImageResponse * PreviewImageProvider::requestImageResponse(const QString& id, const QSize& requestedSize)
+{
+    PreviewResponse* response = new PreviewResponse(id, requestedSize, &d->pool);
+    return response;
+}
+
+void PreviewRunnable::run()
+{
+    QImage image;
 
     QSize ourSize(KIconLoader::SizeEnormous, KIconLoader::SizeEnormous);
-    if(requestedSize.width() > 0 && requestedSize.height() > 0)
+    if(d->requestedSize.width() > 0 && d->requestedSize.height() > 0)
     {
-        ourSize = requestedSize;
+        ourSize = d->requestedSize;
     }
 
-    if(QFile(id).exists())
+    if(QFile(d->id).exists())
     {
         QMimeDatabase db;
-        QList<QMimeType> mimetypes = db.mimeTypesForFileName(id);
+        QList<QMimeType> mimetypes = db.mimeTypesForFileName(d->id);
         QString mimetype;
         if(mimetypes.count() > 0)
         {
             mimetype = mimetypes.first().name();
         }
 
-        const QStringList* allPlugins = new QStringList(KIO::PreviewJob::availablePlugins());
-        KIO::PreviewJob* job = new KIO::PreviewJob(KFileItemList() << KFileItem(QUrl::fromLocalFile(id), mimetype, 0), ourSize, allPlugins);
+        static QStringList allPlugins{KIO::PreviewJob::availablePlugins()};
+        KIO::PreviewJob* job = new KIO::PreviewJob(KFileItemList() << KFileItem(QUrl::fromLocalFile(d->id), mimetype, 0), ourSize, &allPlugins);
         job->setIgnoreMaximumSize(true);
         job->setScaleType(KIO::PreviewJob::ScaledAndCached);
         connect(job, SIGNAL(gotPreview(KFileItem,QPixmap)), SLOT(updatePreview(KFileItem,QPixmap)));
         connect(job, SIGNAL(failed(KFileItem)), SLOT(fallbackPreview(KFileItem)));
         connect(job, SIGNAL(finished(KJob*)), SLOT(finishedPreview(KJob*)));
 
-        connect(job, &QObject::destroyed, [job,this](){d->jobCompletion.remove(job);});
-
-        d->jobCompletion[job] = false;
+        d->jobCompletion = false;
         if(job->exec())
         {
             // Do not access the job after this point! As we are requesting that
             // it be deleted in finishedPreview(), don't expect it to be around.
-            while(!d->jobCompletion[job]) {
+            while(!d->jobCompletion) {
                 // Let's let the job do its thing and whatnot...
                 qApp->processEvents();
             }
-            if(!d->previews[job].isNull())
+            if(!d->preview.isNull())
             {
-                if(requestedSize.width() > 0 && requestedSize.height() > 0)
+                if(d->requestedSize.width() > 0 && d->requestedSize.height() > 0)
                 {
-                    image = d->previews[job].scaled(requestedSize);
+                    image = d->preview.scaled(d->requestedSize);
                 }
                 else
                 {
-                    image = d->previews[job];
+                    image = d->preview;
                 }
             }
         }
-        d->previews.remove(job);
-        delete allPlugins;
     }
     else
     {
-        image = QPixmap(ourSize);
+        image = QImage(ourSize, QImage::Format_ARGB32);
     }
 
-    if(size)
-    {
-        *size = ourSize;
-    }
-    return image;
+    Q_EMIT done(image);
 }
 
-void PreviewImageProvider::fallbackPreview(const KFileItem& item)
+void PreviewRunnable::fallbackPreview(const KFileItem& item)
 {
     KIO::PreviewJob* previewJob = qobject_cast<KIO::PreviewJob*>(sender());
     if(previewJob)
     {
         QMimeDatabase db;
-        QPixmap preview = QIcon::fromTheme(db.mimeTypeForName(item.mimetype()).iconName()).pixmap(128);
-        d->previews[previewJob] = preview;
-        d->jobCompletion[previewJob] = true;
+        QImage preview = QIcon::fromTheme(db.mimeTypeForName(item.mimetype()).iconName()).pixmap(d->requestedSize).toImage();
+        d->preview = preview;
+        d->jobCompletion = true;
     }
 }
 
-void PreviewImageProvider::updatePreview(const KFileItem&, const QPixmap& p)
+void PreviewRunnable::updatePreview(const KFileItem&, const QPixmap& p)
 {
     KIO::PreviewJob* previewJob = qobject_cast<KIO::PreviewJob*>(sender());
     if(previewJob)
     {
-        d->previews[previewJob] = p;
+        d->preview = p.toImage();
     }
 }
 
-void PreviewImageProvider::finishedPreview(KJob* job)
+void PreviewRunnable::finishedPreview(KJob* /*job*/)
 {
-    d->jobCompletion[job] = true;
+    d->jobCompletion = true;
 }

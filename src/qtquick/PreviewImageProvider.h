@@ -22,7 +22,8 @@
 #ifndef PREVIEWIMAGEPROVIDER_H
 #define PREVIEWIMAGEPROVIDER_H
 
-#include <QQuickImageProvider>
+#include <QQuickAsyncImageProvider>
+#include <QRunnable>
 
 /**
  * \brief Get file previews using KIO::PreviewJob
@@ -31,24 +32,41 @@
  */
 class KFileItem;
 class KJob;
-class PreviewImageProvider : public QObject, public QQuickImageProvider
+class PreviewImageProvider : public QQuickAsyncImageProvider
 {
-    Q_OBJECT
 public:
-    explicit PreviewImageProvider(QObject* parent = nullptr);
+    explicit PreviewImageProvider();
     ~PreviewImageProvider() override;
 
     /**
      * \brief Get an image.
      * 
      * @param id The source of the image.
-     * @param size The size of the original image.
      * @param requestedSize The required size of the final image.
      * 
-     * @return a QPixmap.
+     * @return an asynchronous image response
      */
-    QPixmap requestPixmap(const QString& id, QSize* size, const QSize& requestedSize) override;
+    QQuickImageResponse *requestImageResponse(const QString &id, const QSize &requestedSize) override;
+private:
+    class Private;
+    Private* d;
+};
 
+/**
+ * \brief A worker class which does the bulk of the work for PreviewImageProvider
+ */
+class PreviewRunnable : public QObject, public QRunnable {
+    Q_OBJECT;
+public:
+    PreviewRunnable(const QString &id, const QSize &requestedSize);
+
+    void run() override;
+
+    /**
+     * \brief Emitted once the preview has been retrieved (successfully or not)
+     * @param image The preview image in the requested size (possibly a placeholder)
+     */
+    Q_SIGNAL void done(QImage image);
     /**
      *\brief Get an icon associated with the mimetype of the image as a fallback.
      * 
