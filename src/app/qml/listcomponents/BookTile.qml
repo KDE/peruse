@@ -262,7 +262,7 @@ Item {
     }
     Item {
         id: tagsContainer;
-        height: root.showCommentTags? childrenRect.height: 0;
+        height: childrenRect.height;
         visible: root.showCommentTags;
         anchors {
             top: ratingContainer.bottom;
@@ -299,6 +299,8 @@ Item {
     }
     Item {
         id: commentContainer;
+        height: childrenRect.height;
+        visible: root.showCommentTags;
         anchors {
             top: tagsContainer.bottom;
             left: bookCover.right;
@@ -327,13 +329,11 @@ Item {
                 root.comment = text;
             }
         }
-        height: root.showCommentTags? childrenRect.height: 0;
-        visible: root.showCommentTags;
     }
     Item {
         id: descriptionContainer;
         anchors {
-            top: commentContainer.bottom;
+            top: root.showCommentTags ? commentContainer.bottom : ratingContainer.bottom;
             left: bookCover.right;
             right: parent.right;
             bottom: deleteBase.top;
