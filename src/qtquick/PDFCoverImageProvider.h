@@ -22,14 +22,15 @@
 #ifndef PDFCOVERIMAGEPROVIDER_H
 #define PDFCOVERIMAGEPROVIDER_H
 
-#include <QQuickImageProvider>
+#include <QQuickAsyncImageProvider>
+#include <QRunnable>
 
 /**
  * \brief Get file previews of PDF files, where the thumbnailer isn't available...
  * 
  * NOTE: As this task is potentially heavy, make sure to mark any Image using this provider asynchronous
  */
-class PDFCoverImageProvider : public QQuickImageProvider
+class PDFCoverImageProvider : public QQuickAsyncImageProvider
 {
 public:
     explicit PDFCoverImageProvider();
@@ -39,12 +40,37 @@ public:
      * \brief Get an image.
      * 
      * @param id The source of the image.
-     * @param size The size of the original image, unused.
      * @param requestedSize The required size of the final image, unused.
      * 
-     * @return a QPixmap.
+     * @return an asynchronous image response
      */
-    virtual QPixmap requestPixmap(const QString& id, QSize* size, const QSize& requestedSize) override;
+    QQuickImageResponse *requestImageResponse(const QString &id, const QSize &requestedSize) override;
+private:
+    class Private;
+    Private* d;
+};
+
+class QDir;
+/**
+ * \brief A worker class which does the bulk of the work for PreviewImageProvider
+ */
+class PDFCoverRunnable : public QObject, public QRunnable {
+    Q_OBJECT;
+public:
+    PDFCoverRunnable(const QString &id, const QSize &requestedSize, const QDir& thumbDir);
+
+    void run() override;
+
+    /**
+     * Request that the preview worker abort what it's doing
+     */
+    Q_SLOT void abort();
+
+    /**
+     * \brief Emitted once the preview has been retrieved (successfully or not)
+     * @param image The preview image in the requested size (possibly a placeholder)
+     */
+    Q_SIGNAL void done(QImage image);
 private:
     class Private;
     Private* d;

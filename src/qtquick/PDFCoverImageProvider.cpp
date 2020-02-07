@@ -21,12 +21,15 @@
 
 #include "PDFCoverImageProvider.h"
 
+#include <kiconloader.h>
+
 #include <QCoreApplication>
 #include <QDir>
 #include <QIcon>
 #include <QMimeDatabase>
 #include <QProcess>
 #include <QStandardPaths>
+#include <QThreadPool>
 #include <QUrl>
 
 #include <qtquick_debug.h>
@@ -43,10 +46,11 @@ public:
         thumbDir.cd(subpath);
     }
     QDir thumbDir;
+    QThreadPool pool;
 };
 
 PDFCoverImageProvider::PDFCoverImageProvider()
-    : QQuickImageProvider(QQuickImageProvider::Pixmap, QQmlImageProviderBase::ForceAsynchronousImageLoading)
+    : QQuickAsyncImageProvider()
     , d(new Private)
 {
 }
@@ -56,24 +60,87 @@ PDFCoverImageProvider::~PDFCoverImageProvider()
     delete d;
 }
 
-QPixmap PDFCoverImageProvider::requestPixmap(const QString& id, QSize* size, const QSize& requestedSize)
+class PDFCoverResponse : public QQuickImageResponse
 {
-    Q_UNUSED(size)
-    Q_UNUSED(requestedSize)
-    QPixmap img;
+    public:
+        PDFCoverResponse(const QString &id, const QSize &requestedSize, const QDir& thumbDir, QThreadPool *pool)
+        {
+            m_runnable = new PDFCoverRunnable(id, requestedSize, thumbDir);
+            connect(m_runnable, &PDFCoverRunnable::done, this, &PDFCoverResponse::handleDone);
+            pool->start(m_runnable);
+        }
+
+        void handleDone(QImage image) {
+            m_image = image;
+            emit finished();
+        }
+
+        QQuickTextureFactory *textureFactory() const override
+        {
+            return QQuickTextureFactory::textureFactoryForImage(m_image);
+        }
+
+        void cancel() override
+        {
+            m_runnable->abort();
+        }
+
+        PDFCoverRunnable* m_runnable{nullptr};
+        QImage m_image;
+};
+
+QQuickImageResponse * PDFCoverImageProvider::requestImageResponse(const QString& id, const QSize& requestedSize)
+{
+    PDFCoverResponse* response = new PDFCoverResponse(id, requestedSize, d->thumbDir, &d->pool);
+    return response;
+}
+
+class PDFCoverRunnable::Private {
+public:
+    Private() {}
+    QString id;
+    QSize requestedSize;
+
+    bool abort{false};
+
+    QDir thumbDir;
+};
+
+PDFCoverRunnable::PDFCoverRunnable(const QString& id, const QSize& requestedSize, const QDir& thumbDir)
+    : d(new Private)
+{
+    d->id = id;
+    d->requestedSize = requestedSize;
+    d->thumbDir = thumbDir;
+}
+
+void PDFCoverRunnable::abort()
+{
+    d->abort = true;
+}
+
+void PDFCoverRunnable::run()
+{
+    QImage img;
+
+    QSize ourSize(KIconLoader::SizeEnormous, KIconLoader::SizeEnormous);
+    if(d->requestedSize.width() > 0 && d->requestedSize.height() > 0)
+    {
+        ourSize = d->requestedSize;
+    }
 
     QMimeDatabase db;
-    db.mimeTypeForFile(id, QMimeDatabase::MatchContent);
-    const QMimeType mime = db.mimeTypeForFile(id, QMimeDatabase::MatchContent);
-    if(mime.inherits("application/pdf")) {
+    db.mimeTypeForFile(d->id, QMimeDatabase::MatchContent);
+    const QMimeType mime = db.mimeTypeForFile(d->id, QMimeDatabase::MatchContent);
+    if(!d->abort && mime.inherits("application/pdf")) {
         //-sOutputFile=FILENAME.png FILENAME
-        QString outFile = QString("%1/%2.png").arg(d->thumbDir.absolutePath()).arg(QUrl(id).toString().replace("/", "-").replace(":", "-"));
-        if(!QFile::exists(outFile)) {
+        QString outFile = QString("%1/%2.png").arg(d->thumbDir.absolutePath()).arg(QUrl(d->id).toString().replace("/", "-").replace(":", "-"));
+        if(!d->abort && !QFile::exists(outFile)) {
             // then we've not already generated a thumbnail, try to make one...
             QProcess thumbnailer;
             QStringList args;
             args << "-sPageList=1" << "-dLastPage=1" << "-dSAFER" << "-dBATCH" << "-dNOPAUSE" << "-dQUIET" << "-sDEVICE=png16m" << "-dGraphicsAlphaBits=4" << "-r300";
-            args << QString("-sOutputFile=%1").arg(outFile) << id;
+            args << QString("-sOutputFile=%1").arg(outFile) << d->id;
             QString gsApp;
             #ifdef Q_OS_WIN
                 #ifdef __MINGW32__
@@ -94,16 +161,15 @@ QPixmap PDFCoverImageProvider::requestPixmap(const QString& id, QSize* size, con
         }
         bool success = false;
         // Now, does it exist this time?
-        if(QFile::exists(outFile)) {
+        if(!d->abort && QFile::exists(outFile)) {
             success = img.load(outFile);
         }
-        if(!success) {
-            QIcon oops = QIcon::fromTheme("unknown");
-            img = oops.pixmap(oops.availableSizes().last());
-            qCDebug(QTQUICK_LOG) << "Failed to load image with id" << id << "from thumbnail file" << outFile;
+        if(!d->abort && !success) {
+            QIcon oops = QIcon::fromTheme("application-pdf");
+            img = oops.pixmap(oops.availableSizes().last()).toImage();
+            qCDebug(QTQUICK_LOG) << "Failed to load image with id" << d->id << "from thumbnail file" << outFile;
         }
     }
 
-
-    return img;
+    Q_EMIT done(img.scaled(ourSize, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 }
