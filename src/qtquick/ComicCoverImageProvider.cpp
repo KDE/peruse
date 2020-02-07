@@ -24,15 +24,74 @@
 #include <KRar.h>
 #include <karchive.h>
 #include <karchivefile.h>
+#include <kiconloader.h>
 
 #include <QIcon>
 #include <QMimeDatabase>
+#include <QThreadPool>
 
 #include <qtquick_debug.h>
 
 class ComicCoverImageProvider::Private {
 public:
     Private() {}
+    QThreadPool pool;
+};
+
+ComicCoverImageProvider::ComicCoverImageProvider()
+    : QQuickAsyncImageProvider()
+    , d(new Private)
+{
+}
+
+ComicCoverImageProvider::~ComicCoverImageProvider()
+{
+    delete d;
+}
+
+class ComicCoverResponse : public QQuickImageResponse
+{
+    public:
+        ComicCoverResponse(const QString &id, const QSize &requestedSize, QThreadPool *pool)
+        {
+            m_runnable = new ComicCoverRunnable(id, requestedSize);
+            connect(m_runnable, &ComicCoverRunnable::done, this, &ComicCoverResponse::handleDone);
+            pool->start(m_runnable);
+        }
+
+        void handleDone(QImage image) {
+            m_image = image;
+            emit finished();
+        }
+
+        QQuickTextureFactory *textureFactory() const override
+        {
+            return QQuickTextureFactory::textureFactoryForImage(m_image);
+        }
+
+        void cancel() override
+        {
+            m_runnable->abort();
+        }
+
+        ComicCoverRunnable* m_runnable{nullptr};
+        QImage m_image;
+};
+
+QQuickImageResponse * ComicCoverImageProvider::requestImageResponse(const QString& id, const QSize& requestedSize)
+{
+    ComicCoverResponse* response = new ComicCoverResponse(id, requestedSize, &d->pool);
+    return response;
+}
+
+
+class ComicCoverRunnable::Private {
+public:
+    Private() {}
+    QString id;
+    QSize requestedSize;
+
+    bool abort{false};
 
     QStringList entries;
     void filterImages(QStringList& entries)
@@ -64,55 +123,60 @@ public:
     }
 };
 
-ComicCoverImageProvider::ComicCoverImageProvider()
-    : QQuickImageProvider(QQuickImageProvider::Image)
-    , d(new Private)
+ComicCoverRunnable::ComicCoverRunnable(const QString& id, const QSize& requestedSize)
+    : d(new Private)
 {
+    d->id = id;
+    d->requestedSize = requestedSize;
 }
 
-ComicCoverImageProvider::~ComicCoverImageProvider()
+void ComicCoverRunnable::abort()
 {
-    delete d;
+    d->abort = true;
 }
 
-QImage ComicCoverImageProvider::requestImage(const QString& id, QSize* size, const QSize& requestedSize)
+void ComicCoverRunnable::run()
 {
-    Q_UNUSED(size)
-    Q_UNUSED(requestedSize)
     QImage img;
+
+    QSize ourSize(KIconLoader::SizeEnormous, KIconLoader::SizeEnormous);
+    if(d->requestedSize.width() > 0 && d->requestedSize.height() > 0)
+    {
+        ourSize = d->requestedSize;
+    }
 
     KArchive* archive = nullptr;
     QMimeDatabase db;
-    db.mimeTypeForFile(id, QMimeDatabase::MatchContent);
-    const QMimeType mime = db.mimeTypeForFile(id, QMimeDatabase::MatchContent);
-    if(mime.inherits("application/x-cbr") || mime.inherits("application/x-rar")) {
-        archive = new KRar(id);
+    db.mimeTypeForFile(d->id, QMimeDatabase::MatchContent);
+    const QMimeType mime = db.mimeTypeForFile(d->id, QMimeDatabase::MatchContent);
+    if(!d->abort && (mime.inherits("application/x-cbr") || mime.inherits("application/x-rar"))) {
+        archive = new KRar(d->id);
     }
     // FIXME: This goes elsewhere - see below
     // If this code seems familiar, it is adapted from kio-extras/thumbnail/comiccreator.cpp
     // The reason being that this code should be removed once our karchive-rar functionality is merged into
     // karchive proper.
-    if(archive && archive->open(QIODevice::ReadOnly)) {
+    if(!d->abort && archive && archive->open(QIODevice::ReadOnly)) {
         // Get the archive's directory.
         const KArchiveDirectory* cArchiveDir = archive->directory();
-        if (cArchiveDir) {
+        if (!d->abort && cArchiveDir) {
             QStringList entries;
             // Get and filter the entries from the archive.
             d->getArchiveFileList(entries, QString(), cArchiveDir);
             d->filterImages(entries);
-            if (!entries.isEmpty()) {
+            if (!d->abort && !entries.isEmpty()) {
                 // Extract the cover file.
                 const KArchiveFile *coverFile = static_cast<const KArchiveFile*>(cArchiveDir->entry(entries[0]));
-                if (coverFile) {
+                if (!d->abort && coverFile) {
                     bool success = img.loadFromData(coverFile->data());
-                    if(!success) {
+                    if(!d->abort && !success) {
                         QIcon oops = QIcon::fromTheme("unknown");
                         img = oops.pixmap(oops.availableSizes().last()).toImage();
-                        qCDebug(QTQUICK_LOG) << "Failed to load image with id:" << id;
+                        qCDebug(QTQUICK_LOG) << "Failed to load image with id:" << d->id;
                     }
                 }
             }
         }
     }
-    return img;
+    Q_EMIT done(img.scaled(ourSize));
 }

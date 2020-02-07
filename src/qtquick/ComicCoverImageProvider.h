@@ -22,7 +22,8 @@
 #ifndef COMICCOVERIMAGEPROVIDER_H
 #define COMICCOVERIMAGEPROVIDER_H
 
-#include <QQuickImageProvider>
+#include <QQuickAsyncImageProvider>
+#include <QRunnable>
 
 /**
  * \brief Get file previews of Comic Book Archives 
@@ -31,7 +32,7 @@
  *
  * NOTE: As this task is potentially heavy, make sure to mark any Image using this provider asynchronous
  */
-class ComicCoverImageProvider : public QQuickImageProvider
+class ComicCoverImageProvider : public QQuickAsyncImageProvider
 {
 public:
     explicit ComicCoverImageProvider();
@@ -44,9 +45,34 @@ public:
      * @param size The size of the original image, unused.
      * @param requestedSize The required size of the final image, unused.
      * 
-     * @return a QImage.
+     * @return an asynchronous image response
      */
-    QImage requestImage(const QString& id, QSize* size, const QSize& requestedSize) override;
+    QQuickImageResponse *requestImageResponse(const QString &id, const QSize &requestedSize) override;
+private:
+    class Private;
+    Private* d;
+};
+
+/**
+ * \brief A worker class which does the bulk of the work for PreviewImageProvider
+ */
+class ComicCoverRunnable : public QObject, public QRunnable {
+    Q_OBJECT;
+public:
+    ComicCoverRunnable(const QString &id, const QSize &requestedSize);
+
+    void run() override;
+
+    /**
+     * Request that the preview worker abort what it's doing
+     */
+    Q_SLOT void abort();
+
+    /**
+     * \brief Emitted once the preview has been retrieved (successfully or not)
+     * @param image The preview image in the requested size (possibly a placeholder)
+     */
+    Q_SIGNAL void done(QImage image);
 private:
     class Private;
     Private* d;
