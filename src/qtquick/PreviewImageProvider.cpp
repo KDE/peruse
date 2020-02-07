@@ -147,7 +147,7 @@ void PreviewRunnable::run()
                 {
                     if(d->requestedSize.width() > 0 && d->requestedSize.height() > 0)
                     {
-                        image = d->preview.scaled(d->requestedSize);
+                        image = d->preview.scaled(d->requestedSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
                     }
                     else
                     {
