@@ -91,6 +91,8 @@ public:
     QString id;
     QSize requestedSize;
 
+    bool abort{false};
+
     QImage preview;
     bool jobCompletion{false};
     KIO::PreviewJob* job{nullptr};
@@ -123,32 +125,34 @@ void PreviewRunnable::run()
             mimetype = mimetypes.first().name();
         }
 
-        static QStringList allPlugins{KIO::PreviewJob::availablePlugins()};
-        d->job = new KIO::PreviewJob(KFileItemList() << KFileItem(QUrl::fromLocalFile(d->id), mimetype, 0), ourSize, &allPlugins);
-        d->job->setIgnoreMaximumSize(true);
-        d->job->setScaleType(KIO::PreviewJob::ScaledAndCached);
-        connect(d->job, SIGNAL(gotPreview(KFileItem,QPixmap)), SLOT(updatePreview(KFileItem,QPixmap)));
-        connect(d->job, SIGNAL(failed(KFileItem)), SLOT(fallbackPreview(KFileItem)));
-        connect(d->job, SIGNAL(finished(KJob*)), SLOT(finishedPreview(KJob*)));
+        if(!d->abort) {
+            static QStringList allPlugins{KIO::PreviewJob::availablePlugins()};
+            d->job = new KIO::PreviewJob(KFileItemList() << KFileItem(QUrl::fromLocalFile(d->id), mimetype, 0), ourSize, &allPlugins);
+            d->job->setIgnoreMaximumSize(true);
+            d->job->setScaleType(KIO::PreviewJob::ScaledAndCached);
+            connect(d->job, SIGNAL(gotPreview(KFileItem,QPixmap)), SLOT(updatePreview(KFileItem,QPixmap)));
+            connect(d->job, SIGNAL(failed(KFileItem)), SLOT(fallbackPreview(KFileItem)));
+            connect(d->job, SIGNAL(finished(KJob*)), SLOT(finishedPreview(KJob*)));
 
-        d->jobCompletion = false;
-        if(d->job->exec())
-        {
-            // Do not access the job after this point! As we are requesting that
-            // it be deleted in finishedPreview(), don't expect it to be around.
-            while(!d->jobCompletion) {
-                // Let's let the job do its thing and whatnot...
-                qApp->processEvents();
-            }
-            if(!d->preview.isNull())
+            d->jobCompletion = false;
+            if(d->job->exec())
             {
-                if(d->requestedSize.width() > 0 && d->requestedSize.height() > 0)
-                {
-                    image = d->preview.scaled(d->requestedSize);
+                // Do not access the job after this point! As we are requesting that
+                // it be deleted in finishedPreview(), don't expect it to be around.
+                while(!d->jobCompletion) {
+                    // Let's let the job do its thing and whatnot...
+                    qApp->processEvents();
                 }
-                else
+                if(!d->preview.isNull())
                 {
-                    image = d->preview;
+                    if(d->requestedSize.width() > 0 && d->requestedSize.height() > 0)
+                    {
+                        image = d->preview.scaled(d->requestedSize);
+                    }
+                    else
+                    {
+                        image = d->preview;
+                    }
                 }
             }
         }
@@ -163,7 +167,10 @@ void PreviewRunnable::run()
 
 void PreviewRunnable::abort()
 {
-    d->job->kill();
+    if (d->job) {
+        d->abort = true;
+        d->job->kill();
+    }
 }
 
 void PreviewRunnable::fallbackPreview(const KFileItem& item)
