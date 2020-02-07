@@ -178,5 +178,5 @@ void ComicCoverRunnable::run()
             }
         }
     }
-    Q_EMIT done(img.scaled(ourSize));
+    Q_EMIT done(img.scaled(ourSize, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 }
