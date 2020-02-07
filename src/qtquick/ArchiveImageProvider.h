@@ -22,7 +22,8 @@
 #ifndef ARCHIVEIMAGEPROVIDER_H
 #define ARCHIVEIMAGEPROVIDER_H
 
-#include <QQuickImageProvider>
+#include <QQuickAsyncImageProvider>
+#include <QRunnable>
 
 /**
  * \brief Class to return images for archives.
@@ -31,7 +32,7 @@
  * archives(zip, rar, cbz, cbr), as well as getting image data out of ACBF files.
  */
 class ArchiveBookModel;
-class ArchiveImageProvider : public QQuickImageProvider
+class ArchiveImageProvider : public QQuickAsyncImageProvider
 {
 public:
     explicit ArchiveImageProvider();
@@ -41,19 +42,18 @@ public:
      * \brief Request a given image.
      * 
      * @param id The url of the image to provide.
-     * @param size A QSize containing the original size of the image. Not used.
-     * @param requestedSize A QSize containing the required size of the image. Not used.
+     * @param requestedSize The required size of the final image, unused.
      * 
-     * @return A QImage.
+     * @return an asynchronous image response
      */
-    QImage requestImage(const QString& id, QSize* size, const QSize& requestedSize) override;
+    QQuickImageResponse *requestImageResponse(const QString &id, const QSize &requestedSize) override;
 
     /**
      * \brief Set the ArchiveBookModel to get images for.
      * @param model ArchiveBookModel to get images for.
      */
     void setArchiveBookModel(ArchiveBookModel* model);
-    
+
     /**
      * \brief Set the prefix.
      * @param prefix The prefix as a string.
@@ -64,6 +64,31 @@ public:
      * @returns the prefix as a QString.
      */
     QString prefix() const;
+private:
+    class Private;
+    Private* d;
+};
+
+/**
+ * \brief A worker class which does the bulk of the work for PreviewImageProvider
+ */
+class ArchiveImageRunnable : public QObject, public QRunnable {
+    Q_OBJECT;
+public:
+    ArchiveImageRunnable(const QString &id, const QSize &requestedSize, ArchiveBookModel* bookModel, const QString& prefix);
+
+    void run() override;
+
+    /**
+     * Request that the preview worker abort what it's doing
+     */
+    Q_SLOT void abort();
+
+    /**
+     * \brief Emitted once the preview has been retrieved (successfully or not)
+     * @param image The preview image in the requested size (possibly a placeholder)
+     */
+    Q_SIGNAL void done(QImage image);
 private:
     class Private;
     Private* d;

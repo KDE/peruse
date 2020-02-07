@@ -179,7 +179,7 @@ public:
      */
     Q_INVOKABLE QString createBook(QString folder, QString title, QString coverUrl);
 
-    friend class ArchiveImageProvider;
+    friend class ArchiveImageRunnable;
 protected:
     const KArchiveFile* archiveFile(const QString& filePath);
 

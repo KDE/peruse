@@ -29,6 +29,7 @@
 #include <QIcon>
 #include <QImageReader>
 #include <QPainter>
+#include <QThreadPool>
 
 #include <AcbfDocument.h>
 #include <AcbfBinary.h>
@@ -39,10 +40,83 @@
 class ArchiveImageProvider::Private
 {
 public:
-    Private()
-        : bookModel(nullptr)
-    {}
-    ArchiveBookModel* bookModel;
+    Private() {}
+    QThreadPool pool;
+
+    ArchiveBookModel* bookModel{nullptr};
+    QString prefix;
+};
+
+ArchiveImageProvider::ArchiveImageProvider()
+    : QQuickAsyncImageProvider()
+    , d(new Private)
+{
+}
+
+ArchiveImageProvider::~ArchiveImageProvider()
+{
+    delete d;
+}
+
+class ArchiveImageResponse : public QQuickImageResponse
+{
+    public:
+        ArchiveImageResponse(const QString &id, const QSize &requestedSize, ArchiveBookModel* bookModel, const QString& prefix, QThreadPool *pool)
+        {
+            m_runnable = new ArchiveImageRunnable(id, requestedSize, bookModel, prefix);
+            connect(m_runnable, &ArchiveImageRunnable::done, this, &ArchiveImageResponse::handleDone);
+            pool->start(m_runnable);
+        }
+
+        void handleDone(QImage image) {
+            m_image = image;
+            emit finished();
+        }
+
+        QQuickTextureFactory *textureFactory() const override
+        {
+            return QQuickTextureFactory::textureFactoryForImage(m_image);
+        }
+
+        void cancel() override
+        {
+            m_runnable->abort();
+        }
+
+        ArchiveImageRunnable* m_runnable{nullptr};
+        QImage m_image;
+};
+
+QQuickImageResponse * ArchiveImageProvider::requestImageResponse(const QString& id, const QSize& requestedSize)
+{
+    ArchiveImageResponse* response = new ArchiveImageResponse(id, requestedSize, d->bookModel, d->prefix, &d->pool);
+    return response;
+}
+
+void ArchiveImageProvider::setArchiveBookModel(ArchiveBookModel* model)
+{
+    d->bookModel = model;
+}
+
+void ArchiveImageProvider::setPrefix(QString prefix)
+{
+    d->prefix = prefix;
+}
+
+QString ArchiveImageProvider::prefix() const
+{
+    return d->prefix;
+}
+
+class ArchiveImageRunnable::Private {
+public:
+    Private() {}
+    QString id;
+    QSize requestedSize;
+
+    bool abort{false};
+
+    ArchiveBookModel* bookModel{nullptr};
     QString prefix;
 
     QString errorString;
@@ -62,21 +136,22 @@ public:
     }
 };
 
-ArchiveImageProvider::ArchiveImageProvider()
-    : QQuickImageProvider(QQuickImageProvider::Image)
-    , d(new Private)
+ArchiveImageRunnable::ArchiveImageRunnable(const QString& id, const QSize& requestedSize, ArchiveBookModel* bookModel, const QString& prefix)
+    : d(new Private)
 {
+    d->id = id;
+    d->requestedSize = requestedSize;
+    d->bookModel = bookModel;
+    d->prefix = prefix;
 }
 
-ArchiveImageProvider::~ArchiveImageProvider()
+void ArchiveImageRunnable::abort()
 {
-    delete d;
+    d->abort = true;
 }
 
-QImage ArchiveImageProvider::requestImage(const QString& id, QSize* size, const QSize& requestedSize)
+void ArchiveImageRunnable::run()//const QString& id, QSize* size, const QSize& requestedSize)
 {
-    Q_UNUSED(size)
-    Q_UNUSED(requestedSize)
     QImage img;
     bool success = false;
 
@@ -86,48 +161,33 @@ QImage ArchiveImageProvider::requestImage(const QString& id, QSize* size, const 
      * see: http://acbf.wikia.com/wiki/Body_Section_Definition#Image
      * TODO: binary files can also handle fonts, and those cannot be loaded into a QImage.
      */
-    if (id.startsWith('#')) {
+    if (d->id.startsWith('#')) {
         auto document = qobject_cast<AdvancedComicBookFormat::Document*>(d->bookModel->acbfData());
 
         if (document) {
-            AdvancedComicBookFormat::Binary* binary = document->data()->binary(id.mid(1));
+            AdvancedComicBookFormat::Binary* binary = document->data()->binary(d->id.mid(1));
 
-            if (binary) {
+            if (!d->abort && binary) {
                 success = d->loadImage(&img, binary->data());
             }
         }
     }
 
-    if (!success) {
-        const KArchiveFile* entry = d->bookModel->archiveFile(id);
+    if (!d->abort && !success) {
+        const KArchiveFile* entry = d->bookModel->archiveFile(d->id);
 
-        if(entry) {
+        if(!d->abort && entry) {
             success = d->loadImage(&img, entry->data());
         }
     }
 
-    if (!success) {
+    if (!d->abort && !success) {
         QIcon oops = QIcon::fromTheme("unknown");
         img = oops.pixmap(oops.availableSizes().last()).toImage();
         QPainter thing(&img);
         thing.drawText(img.rect(), Qt::AlignCenter | Qt::TextWordWrap, d->errorString);
-        qCDebug(QTQUICK_LOG) << "Failed to load image with id:" << id << "and the error" << d->errorString;
+        qCDebug(QTQUICK_LOG) << "Failed to load image with id:" << d->id << "and the error" << d->errorString;
     }
 
-    return img;
-}
-
-void ArchiveImageProvider::setArchiveBookModel(ArchiveBookModel* model)
-{
-    d->bookModel = model;
-}
-
-void ArchiveImageProvider::setPrefix(QString prefix)
-{
-    d->prefix = prefix;
-}
-
-QString ArchiveImageProvider::prefix() const
-{
-    return d->prefix;
+    Q_EMIT done(img);
 }
