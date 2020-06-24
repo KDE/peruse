@@ -10,9 +10,11 @@
 #include <QOpenGLFunctions>
 #include <QDebug>
 #include <QDir>
+#include <QtQuick/QQuickView>
 
 #include <KDeclarative/KDeclarative>
 #include <KAboutData>
+#include <KCrash>
 
 #include "peruse_helpers.h"
 
@@ -94,6 +96,11 @@ int init(QString &path, QApplication& app, const QString &filename) {
         qCritical() << "Failed to create an object from our component";
         return -2;
     }
+    QQuickWindow* window = qobject_cast<QQuickWindow*>(obj);
+    QObject::connect(window, &QQuickView::sceneGraphError, &app, [] (QQuickWindow::SceneGraphError /*error*/, const QString &message) {
+        KCrash::setErrorMessage(message);
+        qFatal("%s", qPrintable(message));
+    });
 
     return app.exec();
 }
