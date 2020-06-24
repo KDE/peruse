@@ -70,13 +70,12 @@ QHash<QString, QString> StyleSheet::classes() const
 }
 void StyleSheet::setContents(const QString& css)
 {
-    QStringList classes = css.split('}', QString::SkipEmptyParts);
+    QStringList classes = css.split('}', Qt::SkipEmptyParts);
     Q_FOREACH(const QString &cssClass, classes)
     {
-        QStringList selectorContent = cssClass.split('{', QString::SkipEmptyParts);
+        QStringList selectorContent = cssClass.split('{', Qt::SkipEmptyParts);
         if (selectorContent.count() == 2) {
             d->classes.insert(selectorContent[0], selectorContent[1]);
         }
     }
-    
 }

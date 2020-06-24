@@ -40,6 +40,7 @@ class ContentList : public QAbstractListModel, public QQmlParserStatus
 {
     Q_OBJECT
     Q_CLASSINFO("DefaultProperty", "queries")
+    Q_INTERFACES(QQmlParserStatus)
     /**
      * \brief The list of query parameters that make up this search.
      */

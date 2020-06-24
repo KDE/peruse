@@ -135,7 +135,7 @@ bool Body::swapPages(Page* swapThis, Page* withThis)
     int index1 = d->pages.indexOf(swapThis);
     int index2 = d->pages.indexOf(withThis);
     if(index1 > -1 && index2 > -1) {
-        d->pages.swap(index1, index2);
+        d->pages.swapItemsAt(index1, index2);
         emit pageCountChanged();
         return true;
     }

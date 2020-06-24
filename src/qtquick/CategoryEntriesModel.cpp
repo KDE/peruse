@@ -415,7 +415,7 @@ QObject* CategoryEntriesModel::bookFromFile(QString filename)
         if(QFileInfo::exists(filename)) {
             QFileInfo info(filename);
             obj->setProperty("title", info.completeBaseName());
-            obj->setProperty("created", info.created());
+            obj->setProperty("created", info.birthTime());
 
             KFileMetaData::UserMetaData data(filename);
             if (data.hasAttribute("peruse.currentPage")) {

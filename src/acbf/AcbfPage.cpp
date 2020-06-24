@@ -359,7 +359,7 @@ void Page::addFrame(int index)
 bool Page::swapFrames(int swapThis, int withThis)
 {
     if(swapThis > -1 && withThis > -1) {
-        d->frames.swap(swapThis, withThis);
+        d->frames.swapItemsAt(swapThis, withThis);
         emit framePointStringsChanged();
         return true;
     }
@@ -426,7 +426,7 @@ void Page::removeJump(int index)
 bool Page::swapJumps(int swapThis, int withThis)
 {
     if(swapThis > -1 && withThis > -1) {
-        d->jumps.swap(swapThis, withThis);
+        d->jumps.swapItemsAt(swapThis, withThis);
         emit jumpPointStringsChanged();
         return true;
     }

@@ -122,7 +122,7 @@ bool Jump::swapPoints(const QPoint& swapThis, const QPoint& withThis)
     int index1 = d->points.indexOf(swapThis);
     int index2 = d->points.indexOf(withThis);
     if(index1 > -1 && index2 > -1) {
-        d->points.swap(index1, index2);
+        d->points.swapItemsAt(index1, index2);
         emit pointCountChanged();
         return true;
     }

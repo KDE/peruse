@@ -52,7 +52,7 @@ QVariantMap ContentListerBase::metaDataForFile(const QString& file)
 
     QFileInfo info(file);
     metadata["lastModified"] = info.lastModified();
-    metadata["created"] = info.created();
+    metadata["created"] = info.birthTime();
     metadata["lastRead"] = info.lastRead();
 
     KFileMetaData::UserMetaData data(file);

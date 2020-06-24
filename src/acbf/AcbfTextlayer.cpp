@@ -159,7 +159,7 @@ void Textlayer::removeTextarea(int index)
 bool Textlayer::swapTextareas(int swapThis, int withThis)
 {
     if(swapThis > -1 && withThis > -1) {
-        d->textareas.swap(swapThis, withThis);
+        d->textareas.swapItemsAt(swapThis, withThis);
         emit textareaPointStringsChanged();
         return true;
     }

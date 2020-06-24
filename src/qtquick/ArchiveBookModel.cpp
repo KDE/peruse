@@ -881,70 +881,70 @@ bool ArchiveBookModel::loadComicInfoXML(QString xmlDocument, QObject *acbfData, 
                 //Authors...
                 else if(xmlReader.name() == QStringLiteral("Writer"))
                 {
-                    QStringList people = xmlReader.readElementText().split(",", QString::SkipEmptyParts);
+                    QStringList people = xmlReader.readElementText().split(",", Qt::SkipEmptyParts);
                     for (int i=0; i < people.size(); i++) {
                         acbfDocument->metaData()->bookInfo()->addAuthor("Writer", "", "", "", "", people.at(i).trimmed(), empty, empty);
                     }
                 }
                 else if(xmlReader.name() == QStringLiteral("Plotter"))
                 {
-                    QStringList people = xmlReader.readElementText().split(",", QString::SkipEmptyParts);
+                    QStringList people = xmlReader.readElementText().split(",", Qt::SkipEmptyParts);
                     for (int i=0; i < people.size(); i++) {
                         acbfDocument->metaData()->bookInfo()->addAuthor("Writer", "", "", "", "", people.at(i).trimmed(), empty, empty);
                     }
                 }
                 else if(xmlReader.name() == QStringLiteral("Scripter"))
                 {
-                    QStringList people = xmlReader.readElementText().split(",", QString::SkipEmptyParts);
+                    QStringList people = xmlReader.readElementText().split(",", Qt::SkipEmptyParts);
                     for (int i=0; i < people.size(); i++) {
                         acbfDocument->metaData()->bookInfo()->addAuthor("Writer", "", "", "", "", people.at(i).trimmed(), empty, empty);
                     }
                 }
                 else if(xmlReader.name() == QStringLiteral("Penciller"))
                 {
-                    QStringList people = xmlReader.readElementText().split(",", QString::SkipEmptyParts);
+                    QStringList people = xmlReader.readElementText().split(",", Qt::SkipEmptyParts);
                     for (int i=0; i < people.size(); i++) {
                         acbfDocument->metaData()->bookInfo()->addAuthor("Penciller", "", "", "", "", people.at(i).trimmed(), empty, empty);
                     }
                 }
                 else if(xmlReader.name() == QStringLiteral("Inker"))
                 {
-                    QStringList people = xmlReader.readElementText().split(",", QString::SkipEmptyParts);
+                    QStringList people = xmlReader.readElementText().split(",", Qt::SkipEmptyParts);
                     for (int i=0; i < people.size(); i++) {
                         acbfDocument->metaData()->bookInfo()->addAuthor("Inker", "", "", "", "", people.at(i).trimmed(), empty, empty);
                     }
                 }
                 else if(xmlReader.name() == QStringLiteral("Colorist"))
                 {
-                    QStringList people = xmlReader.readElementText().split(",", QString::SkipEmptyParts);
+                    QStringList people = xmlReader.readElementText().split(",", Qt::SkipEmptyParts);
                     for (int i=0; i < people.size(); i++) {
                         acbfDocument->metaData()->bookInfo()->addAuthor("Colorist", "", "", "", "", people.at(i).trimmed(), empty, empty);
                     }
                 }
                 else if(xmlReader.name() == QStringLiteral("CoverArtist"))
                 {
-                    QStringList people = xmlReader.readElementText().split(",", QString::SkipEmptyParts);
+                    QStringList people = xmlReader.readElementText().split(",", Qt::SkipEmptyParts);
                     for (int i=0; i < people.size(); i++) {
                         acbfDocument->metaData()->bookInfo()->addAuthor("CoverArtist", "", "", "", "", people.at(i).trimmed(), empty, empty);
                     }
                 }
                 else if(xmlReader.name() == QStringLiteral("Letterer"))
                 {
-                    QStringList people = xmlReader.readElementText().split(",", QString::SkipEmptyParts);
+                    QStringList people = xmlReader.readElementText().split(",", Qt::SkipEmptyParts);
                     for (int i=0; i < people.size(); i++) {
                         acbfDocument->metaData()->bookInfo()->addAuthor("Letterer", "", "", "", "", people.at(i).trimmed(), empty, empty);
                     }
                 }
                 else if(xmlReader.name() == QStringLiteral("Editor"))
                 {
-                    QStringList people = xmlReader.readElementText().split(",", QString::SkipEmptyParts);
+                    QStringList people = xmlReader.readElementText().split(",", Qt::SkipEmptyParts);
                     for (int i=0; i < people.size(); i++) {
                         acbfDocument->metaData()->bookInfo()->addAuthor("Editor", "", "", "", "", people.at(i).trimmed(), empty, empty);
                     }
                 }
                 else if(xmlReader.name() == QStringLiteral("Other"))
                 {
-                    QStringList people = xmlReader.readElementText().split(",", QString::SkipEmptyParts);
+                    QStringList people = xmlReader.readElementText().split(",", Qt::SkipEmptyParts);
                     for (int i=0; i < people.size(); i++) {
                         acbfDocument->metaData()->bookInfo()->addAuthor("Other", "", "", "", "", people.at(i).trimmed(), empty, empty);
                     }
@@ -952,7 +952,7 @@ bool ArchiveBookModel::loadComicInfoXML(QString xmlDocument, QObject *acbfData, 
                 //Characters...
                 else if(xmlReader.name() == QStringLiteral("Characters"))
                 {
-                    QStringList people = xmlReader.readElementText().split(",", QString::SkipEmptyParts);
+                    QStringList people = xmlReader.readElementText().split(",", Qt::SkipEmptyParts);
                     for (int i=0; i < people.size(); i++) {
                         acbfDocument->metaData()->bookInfo()->addCharacter(people.at(i).trimmed());
                     }
@@ -960,28 +960,28 @@ bool ArchiveBookModel::loadComicInfoXML(QString xmlDocument, QObject *acbfData, 
                 //Throw the rest into the keywords.
                 else if(xmlReader.name() == QStringLiteral("Teams"))
                 {
-                    QStringList teams = xmlReader.readElementText().split(",", QString::SkipEmptyParts);
+                    QStringList teams = xmlReader.readElementText().split(",", Qt::SkipEmptyParts);
                     for (int i=0; i < teams.size(); i++) {
                         keywords.append(teams.at(i).trimmed());
                     }
                 }
                 else if(xmlReader.name() == QStringLiteral("Locations"))
                 {
-                    QStringList locations = xmlReader.readElementText().split(",", QString::SkipEmptyParts);
+                    QStringList locations = xmlReader.readElementText().split(",", Qt::SkipEmptyParts);
                     for (int i=0; i < locations.size(); i++) {
                         keywords.append(locations.at(i).trimmed());
                     }
                 }
                 else if(xmlReader.name() == QStringLiteral("StoryArc"))
                 {
-                    QStringList arc = xmlReader.readElementText().split(",", QString::SkipEmptyParts);
+                    QStringList arc = xmlReader.readElementText().split(",", Qt::SkipEmptyParts);
                     for (int i=0; i < arc.size(); i++) {
                         keywords.append(arc.at(i).trimmed());
                     }
                 }
                 else if(xmlReader.name() == QStringLiteral("SeriesGroup"))
                 {
-                    QStringList group = xmlReader.readElementText().split(",", QString::SkipEmptyParts);
+                    QStringList group = xmlReader.readElementText().split(",", Qt::SkipEmptyParts);
                     for (int i=0; i < group.size(); i++) {
                         keywords.append(group.at(i).trimmed());
                     }

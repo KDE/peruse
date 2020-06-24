@@ -221,7 +221,7 @@ void BookModel::swapPages(int swapThisIndex, int withThisIndex)
     if(swapThisIndex > -1 && withThisIndex > -1 && swapThisIndex < d->entries.count() && withThisIndex < d->entries.count()) {
         QModelIndex firstIndex = createIndex(swapThisIndex, 0);
         QModelIndex secondIndex = createIndex(withThisIndex, 0);
-        d->entries.swap(swapThisIndex, withThisIndex);
+        d->entries.swapItemsAt(swapThisIndex, withThisIndex);
         dataChanged(firstIndex, secondIndex);
     }
 }

@@ -119,23 +119,23 @@ QList<BookEntry*> BookDatabase::loadEntries()
         entry->filename       = allEntries.value(d->fieldNames.indexOf("fileName")).toString();
         entry->filetitle      = allEntries.value(d->fieldNames.indexOf("fileTitle")).toString();
         entry->title          = allEntries.value(d->fieldNames.indexOf("title")).toString();
-        entry->series         = allEntries.value(d->fieldNames.indexOf("series")).toString().split(",", QString::SkipEmptyParts);
-        entry->author         = allEntries.value(d->fieldNames.indexOf("author")).toString().split(",", QString::SkipEmptyParts);
+        entry->series         = allEntries.value(d->fieldNames.indexOf("series")).toString().split(",", Qt::SkipEmptyParts);
+        entry->author         = allEntries.value(d->fieldNames.indexOf("author")).toString().split(",", Qt::SkipEmptyParts);
         entry->publisher      = allEntries.value(d->fieldNames.indexOf("publisher")).toString();
         entry->created        = allEntries.value(d->fieldNames.indexOf("created")).toDateTime();
         entry->lastOpenedTime = allEntries.value(d->fieldNames.indexOf("lastOpenedTime")).toDateTime();
         entry->totalPages     = allEntries.value(d->fieldNames.indexOf("totalPages")).toInt();
         entry->currentPage    = allEntries.value(d->fieldNames.indexOf("currentPage")).toInt();
         entry->thumbnail      = allEntries.value(d->fieldNames.indexOf("thumbnail")).toString();
-        entry->description    = allEntries.value(d->fieldNames.indexOf("description")).toString().split("\n", QString::SkipEmptyParts);
+        entry->description    = allEntries.value(d->fieldNames.indexOf("description")).toString().split("\n", Qt::SkipEmptyParts);
         entry->comment        = allEntries.value(d->fieldNames.indexOf("comment")).toString();
-        entry->tags           = allEntries.value(d->fieldNames.indexOf("tags")).toString().split(",", QString::SkipEmptyParts);
+        entry->tags           = allEntries.value(d->fieldNames.indexOf("tags")).toString().split(",", Qt::SkipEmptyParts);
         entry->rating         = allEntries.value(d->fieldNames.indexOf("rating")).toInt();
-        entry->seriesNumbers  = allEntries.value(d->fieldNames.indexOf("seriesNumbers")).toString().split(",", QString::SkipEmptyParts);
-        entry->seriesVolumes  = allEntries.value(d->fieldNames.indexOf("seriesVolumes")).toString().split(",", QString::SkipEmptyParts);
-        entry->genres         = allEntries.value(d->fieldNames.indexOf("genres")).toString().split(",", QString::SkipEmptyParts);
-        entry->keywords       = allEntries.value(d->fieldNames.indexOf("keywords")).toString().split(",", QString::SkipEmptyParts);
-        entry->characters     = allEntries.value(d->fieldNames.indexOf("characters")).toString().split(",", QString::SkipEmptyParts);
+        entry->seriesNumbers  = allEntries.value(d->fieldNames.indexOf("seriesNumbers")).toString().split(",", Qt::SkipEmptyParts);
+        entry->seriesVolumes  = allEntries.value(d->fieldNames.indexOf("seriesVolumes")).toString().split(",", Qt::SkipEmptyParts);
+        entry->genres         = allEntries.value(d->fieldNames.indexOf("genres")).toString().split(",", Qt::SkipEmptyParts);
+        entry->keywords       = allEntries.value(d->fieldNames.indexOf("keywords")).toString().split(",", Qt::SkipEmptyParts);
+        entry->characters     = allEntries.value(d->fieldNames.indexOf("characters")).toString().split(",", Qt::SkipEmptyParts);
 
         // Since we may change the thumbnailer between updates, but retain the
         // database, this may break so we need to sanitise in case of pdf...
