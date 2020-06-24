@@ -126,7 +126,7 @@ Kirigami.Page {
     Component {
         id: thumbnailComponent;
         Item {
-            width: parent.width;
+            width: parent !== null ? parent.width : height;
             height: Kirigami.Units.gridUnit * 6;
             MouseArea {
                 anchors.fill: parent;
