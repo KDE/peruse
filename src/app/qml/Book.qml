@@ -23,7 +23,7 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12 as QtControls
 import QtQuick.Window 2.12
 
-import org.kde.kirigami 2.7 as Kirigami
+import org.kde.kirigami 2.12 as Kirigami
 
 import org.kde.peruse 0.1 as Peruse
 import "listcomponents" as ListComponents
@@ -397,6 +397,14 @@ Kirigami.Page {
                 onGoNextPage: root.nextPage();
                 onGoPreviousPage: root.previousPage();
             }
+        }
+        Kirigami.PlaceholderMessage {
+            anchors {
+                fill: parent;
+                margins: Kirigami.Units.largeSpacing;
+            }
+            visible: viewLoader.status === Loader.Error;
+            text: i18nc("Message shown on the book reader view when there is an issue loading any reader at all (usually when Okular's qml components are not installed for some reason)", "Failed to load the reader component. This is generally caused by broken packaging. Contact whoever you got this package from and inform them of this error.");
         }
     }
     /**
