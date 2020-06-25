@@ -59,9 +59,10 @@ Kirigami.ApplicationWindow {
     property int deviceTypeDesktop: 0;
     property int deviceTypePhone: 1;
 
+    property bool bookOpen: mainWindow.pageStack.layers.currentItem.objectName === "bookViewer";
     function showBook(filename, currentPage) {
-        if(mainWindow.pageStack.lastItem.objectName === "bookViewer") {
-            mainWindow.pageStack.pop();
+        if(bookOpen) {
+            mainWindow.pageStack.layers.pop();
         }
         mainWindow.pageStack.layers.push(bookViewer, { focus: true, file: filename, currentPage: currentPage })
         peruseConfig.bookOpened(filename);

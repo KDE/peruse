@@ -65,6 +65,7 @@ Kirigami.ScrollablePage {
         applicationWindow().contextDrawer.close();
         applicationWindow().pageStack.pop();
     }
+    property bool isCurrentContext: isCurrentPage && !applicationWindow().bookOpen
     property list<QtObject> mobileActions;
     property list<QtObject> desktopActions: [
         Kirigami.Action {
@@ -72,28 +73,28 @@ Kirigami.ScrollablePage {
             shortcut: bookDetails.sheetOpen ? "" : "Esc";
             iconName: "dialog-close";
             onTriggered: closeShelf();
-            enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop && applicationWindow().pageStack.currentIndex > 0;
+            enabled: root.isCurrentContext && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop && applicationWindow().pageStack.currentIndex > 0;
         },
 //         Kirigami.Action {
 //             text: i18nc("Select the previous book in the list", "Select Previous Book");
 //             shortcut: StandardKey.MoveToPreviousChar
 //             iconName: "go-previous";
 //             onTriggered: shelfList.previousEntry();
-//             enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
+//             enabled: root.isCurrentContext && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
 //         },
 //         Kirigami.Action {
 //             text: i18nc("Select the next book in the list", "Select Next Book");
 //             shortcut: StandardKey.MoveToNextChar;
 //             iconName: "go-next";
 //             onTriggered: shelfList.nextEntry();
-//             enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
+//             enabled: root.isCurrentContext && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
 //         },
         Kirigami.Action {
             text: i18nc("Open the book which is currently selected in the list", "Open Selected Book");
             shortcut: bookDetails.sheetOpen? "" : "Return";
             iconName: "document-open";
             onTriggered: openBook(shelfList.currentIndex);
-            enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
+            enabled: root.isCurrentContext && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
         }
     ]
     actions {
@@ -105,7 +106,7 @@ Kirigami.ScrollablePage {
         text: i18nc("search in the list of books (not inside the books)", "Search Books");
         iconName: "system-search";
         onTriggered: searchBox.activate();
-        enabled: root.isCurrentPage;
+        enabled: root.isCurrentContext;
     }
     Kirigami.Action {
         id: bookDetailsAction;
@@ -113,7 +114,7 @@ Kirigami.ScrollablePage {
         shortcut: bookDetails.sheetOpen ? "Esc" : "";
         iconName: "dialog-cancel";
         onTriggered: bookDetails.close();
-        enabled: root.isCurrentPage;
+        enabled: root.isCurrentContext;
     }
 
     GridView {

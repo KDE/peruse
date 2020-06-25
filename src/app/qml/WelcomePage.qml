@@ -48,6 +48,7 @@ Kirigami.Page {
         startWithThese.updateRecentlyRead();
     }
 
+    property bool isCurrentContext: isCurrentPage && !applicationWindow().bookOpen
     property list<QtObject> mobileActions;
     property list<QtObject> desktopActions: [
         Kirigami.Action {
@@ -55,21 +56,21 @@ Kirigami.Page {
             shortcut: "Return";
             iconName: "document-open";
             onTriggered: bookSelected(startWithThese.currentItem.filename, startWithThese.currentItem.currentPage);
-            enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
+            enabled: root.isCurrentContext && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
         },
         Kirigami.Action {
             text: i18nc("select the previous book entry in the list", "Previous Book");
             shortcut: StandardKey.MoveToPreviousChar;
             iconName: "go-previous";
             onTriggered: startWithThese.selectPrevious();
-            enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
+            enabled: root.isCurrentContext && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
         },
         Kirigami.Action {
             text: i18nc("select the next book entry in the list", "Next Book");
             shortcut: StandardKey.MoveToNextChar;
             iconName: "go-next";
             onTriggered: startWithThese.selectNext();
-            enabled: root.isCurrentPage && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
+            enabled: root.isCurrentContext && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
         }
     ]
 
@@ -79,7 +80,7 @@ Kirigami.Page {
             text: i18nc("search in the list of books (not inside the books)", "Search Books");
             iconName: "system-search";
             onTriggered: searchBox.activate();
-            enabled: root.isCurrentPage;
+            enabled: root.isCurrentContext;
         }
     }
 
