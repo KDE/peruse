@@ -44,6 +44,7 @@
   <summary xml:lang="pl">Narzędzie do tworzenia komiksów</summary>
   <summary xml:lang="pt">Ferramenta de Criação de Bandas Desenhadas</summary>
   <summary xml:lang="sk">Nástroj na vytváranie komiksov</summary>
+  <summary xml:lang="sl">Orodje za ustvarjanje stripov</summary>
   <summary xml:lang="sv">Serietidningsskapare</summary>
   <summary xml:lang="uk">Засіб для створення коміксів</summary>
   <summary xml:lang="x-test">xxComic Book Creation Toolxx</summary>
@@ -69,6 +70,7 @@
     <p xml:lang="pt">Funcionalidades:</p>
     <p xml:lang="ru">Возможности:</p>
     <p xml:lang="sk">Funkcie:</p>
+    <p xml:lang="sl">Zmožnosti:</p>
     <p xml:lang="sv">Funktioner:</p>
     <p xml:lang="uk">Можливості</p>
     <p xml:lang="x-test">xxFeatures:xx</p>
@@ -92,6 +94,7 @@
       <li xml:lang="pl">Zeszyty komiksów (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="pt">Pacote de Banda Desenhada (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="sk">Komiksový archív (cbz, cbr, cb7, cbt, cba)</li>
+      <li xml:lang="sl">Arhivi stripov (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="sv">Serietidningsarkiv (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="uk">Робота із архівами коміксів (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="x-test">xxComic Book Archive (cbz, cbr, cb7, cbt, cba)xx</li>
