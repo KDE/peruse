@@ -22,7 +22,7 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12 as QtControls
 
-import org.kde.kirigami 2.7 as Kirigami
+import org.kde.kirigami 2.8 as Kirigami
 
 import org.kde.peruse 0.1 as Peruse
 import "listcomponents" as ListComponents
@@ -47,7 +47,7 @@ Rectangle {
     height: searchField.focus || searchField.text.length > 0 ? searchHeight : 0;
     Behavior on height { NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
     property int searchHeight: searchField.text.length > 0 ? maxHeight : searchField.height;
-    QtControls.TextField {
+    Kirigami.SearchField {
         id: searchField;
         anchors {
             top: parent.top;
