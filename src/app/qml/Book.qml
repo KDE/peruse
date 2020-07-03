@@ -183,14 +183,14 @@ Kirigami.Page {
             text: applicationWindow().visibility !== Window.FullScreen ? i18nc("Enter full screen mode on a touch-based device", "Go Full Screen") : i18nc("Exit full sceen mode on a touch based device", "Exit Full Screen");
             iconName: "view-fullscreen";
             onTriggered: toggleFullscreen();
-            enabled: root.isCurrentContext && applicationWindow().deviceType === applicationWindow().deviceTypePhone;
+            enabled: root.isCurrentContext && Kirigami.Settings.isMobile
         },
         Kirigami.Action {
             text: i18nc("Action used on touch devices to close the currently open book and return to whatever page was most recently shown", "Close Book");
             shortcut: bookInfo.sheetOpen ? "" : "Esc";
             iconName: "dialog-close";
             onTriggered: closeBook();
-            enabled: root.isCurrentContext && applicationWindow().deviceType === applicationWindow().deviceTypePhone;
+            enabled: root.isCurrentContext && Kirigami.Settings.isMobile
         }
     ]
     property list<QtObject> desktopActions: [
@@ -204,14 +204,14 @@ Kirigami.Page {
                 text: "Left to Right"
                 iconName: "format-text-direction-ltr";
                 shortcut: rtlMode ? "r" : "";
-                enabled: root.isCurrentContext && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop && root.rtlMode === true;
+                enabled: root.isCurrentContext && !Kirigami.Settings.isMobile && root.rtlMode;
                 onTriggered: { root.rtlMode = false; }
             }
             Kirigami.Action {
                 text: "Right to Left"
                 iconName: "format-text-direction-rtl";
                 shortcut: rtlMode ? "" : "r";
-                enabled: root.isCurrentContext && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop && root.rtlMode === false;
+                enabled: root.isCurrentContext && !Kirigami.Settings.isMobile && !root.rtlMode;
                 onTriggered: { root.rtlMode = true; }
             }
 //             QtObject {
@@ -220,19 +220,19 @@ Kirigami.Page {
 //             Kirigami.Action {
 //                 text: "Fit full page"
 //                 iconName: "zoom-fit-best";
-//                 enabled: root.isCurrentContext && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop && root.zoomMode !== Peruse.Config.ZoomFull;
+//                 enabled: root.isCurrentContext && !Kirigami.Settings.isMobile && root.zoomMode !== Peruse.Config.ZoomFull;
 //                 onTriggered: { root.zoomMode = Peruse.Config.ZoomFull; }
 //             }
 //             Kirigami.Action {
 //                 text: "Fit width"
 //                 iconName: "zoom-fit-width";
-//                 enabled: root.isCurrentContext && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop && root.zoomMode !== Peruse.Config.ZoomFitWidth;
+//                 enabled: root.isCurrentContext && !Kirigami.Settings.isMobile && root.zoomMode !== Peruse.Config.ZoomFitWidth;
 //                 onTriggered: { root.zoomMode = Peruse.Config.ZoomFitWidth; }
 //             }
 //             Kirigami.Action {
 //                 text: "Fit height"
 //                 iconName: "zoom-fit-height";
-//                 enabled: root.isCurrentContext && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop && root.zoomMode !== Peruse.Config.ZoomFitHeight;
+//                 enabled: root.isCurrentContext && !Kirigami.Settings.isMobile && root.zoomMode !== Peruse.Config.ZoomFitHeight;
 //                 onTriggered: { root.zoomMode = Peruse.Config.ZoomFitHeight; }
 //             }
 //             QtObject {}
@@ -242,42 +242,42 @@ Kirigami.Page {
             shortcut: root.isCurrentContext && bookInfo.sheetOpen ? "" : StandardKey.MoveToPreviousChar;
             iconName: "go-previous";
             onTriggered: previousFrame();
-            enabled: root.isCurrentContext && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
+            enabled: root.isCurrentContext && !Kirigami.Settings.isMobile
         },
         Kirigami.Action {
             text: i18nc("Go to the next frame on the current page", "Next Frame");
             shortcut: root.isCurrentContext && bookInfo.sheetOpen ? "" : StandardKey.MoveToNextChar;
             iconName: "go-next";
             onTriggered: nextFrame();
-            enabled: root.isCurrentContext && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
+            enabled: root.isCurrentContext && !Kirigami.Settings.isMobile
         },
         Kirigami.Action {
             text: i18nc("Go to the previous page in the book", "Previous Page");
             shortcut: root.isCurrentContext && bookInfo.sheetOpen ? "" : StandardKey.MoveToNextPage;
             iconName: "go-previous";
             onTriggered: previousPage();
-            enabled: root.isCurrentContext && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
+            enabled: root.isCurrentContext && !Kirigami.Settings.isMobile;
         },
         Kirigami.Action {
             text: i18nc("Go to the next page in the book", "Next Page");
             shortcut: bookInfo.sheetOpen ? "" : StandardKey.MoveToNextPage;
             iconName: "go-next";
             onTriggered: nextPage();
-            enabled: root.isCurrentContext && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
+            enabled: root.isCurrentContext && !Kirigami.Settings.isMobile;
         },
         Kirigami.Action {
             text: applicationWindow().visibility !== Window.FullScreen ? i18nc("Enter full screen mode on a non-touch-based device", "Go Full Screen") : i18nc("Exit full sceen mode on a non-touch based device", "Exit Full Screen");
             shortcut: (applicationWindow().visibility === Window.FullScreen) ? (bookInfo.sheetOpen ? "" : "Esc") : "f";
             iconName: "view-fullscreen";
             onTriggered: toggleFullscreen();
-            enabled: root.isCurrentContext && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
+            enabled: root.isCurrentContext && !Kirigami.Settings.isMobile;
         },
         Kirigami.Action {
             text: i18nc("Action used on non-touch devices to close the currently open book and return to whatever page was most recently shown", "Close Book");
             shortcut: (applicationWindow().visibility === Window.FullScreen) ? "" : (bookInfo.sheetOpen ? "" : "Esc");
             iconName: "dialog-close";
             onTriggered: closeBook();
-            enabled: root.isCurrentContext && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
+            enabled: root.isCurrentContext && !Kirigami.Settings.isMobile;
         },
 
         // Invisible actions, for use in bookInfo
@@ -285,23 +285,23 @@ Kirigami.Page {
             visible: false;
             shortcut: bookInfo.sheetOpen ? StandardKey.MoveToPreviousChar : "";
             onTriggered: bookInfo.previousBook();
-            enabled: root.isCurrentContext && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
+            enabled: root.isCurrentContext && !Kirigami.Settings.isMobile;
         },
         Kirigami.Action {
             visible: false;
             shortcut: bookInfo.sheetOpen ? StandardKey.MoveToNextChar : "";
             onTriggered: bookInfo.nextBook();
-            enabled: root.isCurrentContext && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
+            enabled: root.isCurrentContext && !Kirigami.Settings.isMobile;
         },
         Kirigami.Action {
             visible: false;
             shortcut: bookInfo.sheetOpen ? "Return" : "";
             onTriggered: bookInfo.openSelected();
-            enabled: root.isCurrentContext && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
+            enabled: root.isCurrentContext && !Kirigami.Settings.isMobile;
         }
     ]
     actions {
-        contextualActions: applicationWindow().deviceType === applicationWindow().deviceTypePhone ? mobileActions : desktopActions;
+        contextualActions: Kirigami.Settings.isMobile ? mobileActions : desktopActions;
         main: bookInfo.sheetOpen ? bookInfoAction : mainBookAction;
     }
     Kirigami.Action {

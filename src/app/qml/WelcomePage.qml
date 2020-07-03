@@ -56,21 +56,21 @@ Kirigami.Page {
             shortcut: "Return";
             iconName: "document-open";
             onTriggered: bookSelected(startWithThese.currentItem.filename, startWithThese.currentItem.currentPage);
-            enabled: root.isCurrentContext && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
+            enabled: root.isCurrentContext && !Kirigami.Settings.isMobile;
         },
         Kirigami.Action {
             text: i18nc("select the previous book entry in the list", "Previous Book");
             shortcut: StandardKey.MoveToPreviousChar;
             iconName: "go-previous";
             onTriggered: startWithThese.selectPrevious();
-            enabled: root.isCurrentContext && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
+            enabled: root.isCurrentContext && !Kirigami.Settings.isMobile;
         },
         Kirigami.Action {
             text: i18nc("select the next book entry in the list", "Next Book");
             shortcut: StandardKey.MoveToNextChar;
             iconName: "go-next";
             onTriggered: startWithThese.selectNext();
-            enabled: root.isCurrentContext && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
+            enabled: root.isCurrentContext && !Kirigami.Settings.isMobile;
         }
     ]
 

@@ -54,10 +54,6 @@ Kirigami.ApplicationWindow {
     // If the controls are not visible, being able to drag the pagestack feels really weird,
     // so we just turn that ability off :)
     pageStack.interactive: controlsVisible;
-    /// Which type of device we're running on. 0 is desktop, 1 is phone
-    property int deviceType: PLASMA_PLATFORM.substring(0, 5) === "phone" ? 1 : 0;
-    property int deviceTypeDesktop: 0;
-    property int deviceTypePhone: 1;
 
     property bool bookOpen: mainWindow.pageStack.layers.currentItem.objectName === "bookViewer";
     function showBook(filename, currentPage) {

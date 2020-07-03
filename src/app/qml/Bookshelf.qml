@@ -73,32 +73,32 @@ Kirigami.ScrollablePage {
             shortcut: bookDetails.sheetOpen ? "" : "Esc";
             iconName: "dialog-close";
             onTriggered: closeShelf();
-            enabled: root.isCurrentContext && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop && applicationWindow().pageStack.currentIndex > 0;
+            enabled: root.isCurrentContext && !Kirigami.Settings.isMobile && applicationWindow().pageStack.currentIndex > 0;
         },
 //         Kirigami.Action {
 //             text: i18nc("Select the previous book in the list", "Select Previous Book");
 //             shortcut: StandardKey.MoveToPreviousChar
 //             iconName: "go-previous";
 //             onTriggered: shelfList.previousEntry();
-//             enabled: root.isCurrentContext && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
+//             enabled: root.isCurrentContext && !Kirigami.Settings.isMobile;
 //         },
 //         Kirigami.Action {
 //             text: i18nc("Select the next book in the list", "Select Next Book");
 //             shortcut: StandardKey.MoveToNextChar;
 //             iconName: "go-next";
 //             onTriggered: shelfList.nextEntry();
-//             enabled: root.isCurrentContext && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
+//             enabled: root.isCurrentContext && !Kirigami.Settings.isMobile;
 //         },
         Kirigami.Action {
             text: i18nc("Open the book which is currently selected in the list", "Open Selected Book");
             shortcut: bookDetails.sheetOpen? "" : "Return";
             iconName: "document-open";
             onTriggered: openBook(shelfList.currentIndex);
-            enabled: root.isCurrentContext && applicationWindow().deviceType === applicationWindow().deviceTypeDesktop;
+            enabled: root.isCurrentContext && !Kirigami.Settings.isMobile;
         }
     ]
     actions {
-        contextualActions: PLASMA_PLATFORM.substring(0, 5) === "phone" ? mobileActions : desktopActions;
+        contextualActions: Kirigami.Settings.isMobile ? mobileActions : desktopActions;
         main: bookDetails.sheetOpen ? bookDetailsAction : mainShelfAction;
     }
     Kirigami.Action {
