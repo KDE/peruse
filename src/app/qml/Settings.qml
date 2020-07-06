@@ -33,68 +33,48 @@ import "listcomponents" as ListComponents
  * 
  * Its main purpose is to add and remove entries from the list of booklocations.
  */
-Kirigami.Page {
+Kirigami.ScrollablePage {
     id: root;
     property string categoryName: "settingsPage";
     title: i18nc("title of the settings page", "Settings");
 
-    Item {
-        width: root.width - (root.leftPadding + root.rightPadding);
-        height: root.height - (root.topPadding + root.bottomPadding);
-        Column {
-            width: parent.width;
-            height: childrenRect.height;
-            clip: true;
-            Item {
-                width: parent.width;
-                height: Kirigami.Units.largeSpacing;
+    actions.main: Kirigami.Action {
+        icon.name: "list-add"
+        text: i18n("Add folder")
+        onTriggered: {
+            if (Kirigami.Settings.isMobile) {
+                applicationWindow().pageStack.push(folderDlg);
+            } else {
+                desktopFolderDlg.open();
             }
-            Item {
-                height: folderHeader.height;
-                width: parent.width - folderAdd.width - Kirigami.Units.smallSpacing;
-                ListComponents.Section { id: folderHeader; text: i18nc("title of the list of search folders", "Search Folders"); }
-                QtControls.ToolButton {
-                    id: folderAdd;
-                    icon.name: "list-add";
-                    display: AbstractButton.IconOnly;
-                    onClicked: {
-                        if(PLASMA_PLATFORM.substring(0, 5) === "phone") {
-                            applicationWindow().pageStack.push(folderDlg);
-                        }
-                        else {
-                            desktopFolderDlg.open();
-                        }
-                    }
-                    anchors {
-                        verticalCenter: parent.verticalCenter;
-                        left: parent.right;
-                    }
+        }
+    }
+
+    ListView {
+
+        header: Kirigami.Heading {
+            leftPadding: Kirigami.Units.largeSpacing
+            text: i18nc("title of the list of search folders", "Search Folders")
+        }
+
+        model: peruseConfig.bookLocations
+
+        delegate: Kirigami.SwipeListItem {
+            id: listItem;
+            actions: [
+                Kirigami.Action {
+                    text: i18nc("remove the search folder from the list", "Delete");
+                    iconName: "list-remove"
+                    onTriggered: peruseConfig.removeBookLocation(peruseConfig.bookLocations[index]);
                 }
-            }
-            Item {
-                width: parent.width;
-                height: Kirigami.Units.largeSpacing;
-            }
-            Repeater {
-                model: peruseConfig.bookLocations;
-                delegate: Kirigami.SwipeListItem {
-                    id: listItem;
-                    actions: [
-                        Kirigami.Action {
-                            text: i18nc("remove the search folder from the list", "Delete");
-                            iconName: "list-remove"
-                            onTriggered: peruseConfig.removeBookLocation(peruseConfig.bookLocations[index]);
-                        }
-                    ]
-                    QtControls.Label {
-                        anchors {
-                            verticalCenter: parent.verticalCenter;
-                            left: parent.left;
-                            leftMargin: Kirigami.Units.largeSpacing;
-                        }
-                        text: peruseConfig.bookLocations[index];
-                    }
+            ]
+            QtControls.Label {
+                anchors {
+                    verticalCenter: parent.verticalCenter;
+                    left: parent.left;
+                    leftMargin: Kirigami.Units.largeSpacing;
                 }
+                text: peruseConfig.bookLocations[index];
             }
         }
 
@@ -122,7 +102,7 @@ Kirigami.Page {
                 horizontalAlignment: Text.AlignHCenter;
                 text: i18nc("shown with a throbber when searching for books on the device", "Please wait while we find your books...");
             }
-        QtControls.BusyIndicator {
+            QtControls.BusyIndicator {
                 id: loadingSpinner;
                 anchors {
                     top: parent.verticalCenter;
@@ -141,23 +121,23 @@ Kirigami.Page {
                 text: contentList.count;
             }
         }
+    }
 
-        Component {
-            id: folderDlg;
-            Kirigami.Page {
-                id: root;
-                title: "Select a folder"
-                FileFinder {
-                    anchors.fill: parent;
-                    folder: peruseConfig.homeDir();
-                    showFiles: false;
-                    onAccepted: {
-                        peruseConfig.addBookLocation(selectedItem());
-                        applicationWindow().pageStack.pop();
-                        root.doSearch();
-                    }
-                    onAborted: applicationWindow().pageStack.pop();
+    Component {
+        id: folderDlg;
+        Kirigami.Page {
+            id: root;
+            title: "Select a folder"
+            FileFinder {
+                anchors.fill: parent;
+                folder: peruseConfig.homeDir();
+                showFiles: false;
+                onAccepted: {
+                    peruseConfig.addBookLocation(selectedItem());
+                    applicationWindow().pageStack.pop();
+                    root.doSearch();
                 }
+                onAborted: applicationWindow().pageStack.pop();
             }
         }
     }
