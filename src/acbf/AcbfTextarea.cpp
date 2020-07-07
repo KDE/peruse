@@ -50,7 +50,7 @@ Textarea::Textarea(Textlayer* parent)
     , d(new Private)
 {
     qRegisterMetaType<Textarea*>("Textarea*");
-    connect(this, SIGNAL(pointCountChanged()), this, SIGNAL(boundsChanged()));
+    connect(this, &Textarea::pointCountChanged, this, &Textarea::boundsChanged);
 }
 
 Textarea::~Textarea() = default;

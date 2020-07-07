@@ -78,50 +78,50 @@ public:
         if(!titleCategoryModel)
         {
             titleCategoryModel = new CategoryEntriesModel(q);
-            connect(q, SIGNAL(entryDataUpdated(BookEntry*)), titleCategoryModel, SIGNAL(entryDataUpdated(BookEntry*)));
-            connect(q, SIGNAL(entryRemoved(BookEntry*)), titleCategoryModel, SIGNAL(entryRemoved(BookEntry*)));
+            connect(q, &CategoryEntriesModel::entryDataUpdated, titleCategoryModel, &CategoryEntriesModel::entryDataUpdated);
+            connect(q, &CategoryEntriesModel::entryRemoved, titleCategoryModel, &CategoryEntriesModel::entryRemoved);
             emit q->titleCategoryModelChanged();
         }
         if(!newlyAddedCategoryModel)
         {
             newlyAddedCategoryModel = new CategoryEntriesModel(q);
-            connect(q, SIGNAL(entryDataUpdated(BookEntry*)), newlyAddedCategoryModel, SIGNAL(entryDataUpdated(BookEntry*)));
-            connect(q, SIGNAL(entryRemoved(BookEntry*)), newlyAddedCategoryModel, SIGNAL(entryRemoved(BookEntry*)));
+            connect(q, &CategoryEntriesModel::entryDataUpdated, newlyAddedCategoryModel, &CategoryEntriesModel::entryDataUpdated);
+            connect(q, &CategoryEntriesModel::entryRemoved, newlyAddedCategoryModel, &CategoryEntriesModel::entryRemoved);
             emit q->newlyAddedCategoryModelChanged();
         }
         if(!authorCategoryModel)
         {
             authorCategoryModel = new CategoryEntriesModel(q);
-            connect(q, SIGNAL(entryDataUpdated(BookEntry*)), authorCategoryModel, SIGNAL(entryDataUpdated(BookEntry*)));
-            connect(q, SIGNAL(entryRemoved(BookEntry*)), authorCategoryModel, SIGNAL(entryRemoved(BookEntry*)));
+            connect(q, &CategoryEntriesModel::entryDataUpdated, authorCategoryModel, &CategoryEntriesModel::entryDataUpdated);
+            connect(q, &CategoryEntriesModel::entryRemoved, authorCategoryModel, &CategoryEntriesModel::entryRemoved);
             emit q->authorCategoryModelChanged();
         }
         if(!seriesCategoryModel)
         {
             seriesCategoryModel = new CategoryEntriesModel(q);
-            connect(q, SIGNAL(entryDataUpdated(BookEntry*)), seriesCategoryModel, SIGNAL(entryDataUpdated(BookEntry*)));
-            connect(q, SIGNAL(entryRemoved(BookEntry*)), seriesCategoryModel, SIGNAL(entryRemoved(BookEntry*)));
+            connect(q, &CategoryEntriesModel::entryDataUpdated, seriesCategoryModel, &CategoryEntriesModel::entryDataUpdated);
+            connect(q, &CategoryEntriesModel::entryRemoved, seriesCategoryModel, &CategoryEntriesModel::entryRemoved);
             emit q->seriesCategoryModelChanged();
         }
         if(!publisherCategoryModel)
         {
             publisherCategoryModel = new CategoryEntriesModel(q);
-            connect(q, SIGNAL(entryDataUpdated(BookEntry*)), publisherCategoryModel, SIGNAL(entryDataUpdated(BookEntry*)));
-            connect(q, SIGNAL(entryRemoved(BookEntry*)), publisherCategoryModel, SIGNAL(entryRemoved(BookEntry*)));
+            connect(q, &CategoryEntriesModel::entryDataUpdated, publisherCategoryModel, &CategoryEntriesModel::entryDataUpdated);
+            connect(q, &CategoryEntriesModel::entryRemoved, publisherCategoryModel, &CategoryEntriesModel::entryRemoved);
             emit q->publisherCategoryModelChanged();
         }
         if(!keywordCategoryModel)
         {
             keywordCategoryModel = new CategoryEntriesModel(q);
-            connect(q, SIGNAL(entryDataUpdated(BookEntry*)), keywordCategoryModel, SIGNAL(entryDataUpdated(BookEntry*)));
-            connect(q, SIGNAL(entryRemoved(BookEntry*)), keywordCategoryModel, SIGNAL(entryRemoved(BookEntry*)));
+            connect(q, &CategoryEntriesModel::entryDataUpdated, keywordCategoryModel, &CategoryEntriesModel::entryDataUpdated);
+            connect(q, &CategoryEntriesModel::entryRemoved, keywordCategoryModel, &CategoryEntriesModel::entryRemoved);
             emit q->keywordCategoryModelChanged();
         }
         if(!folderCategoryModel)
         {
             folderCategoryModel = new CategoryEntriesModel(q);
-            connect(q, SIGNAL(entryDataUpdated(BookEntry*)), folderCategoryModel, SIGNAL(entryDataUpdated(BookEntry*)));
-            connect(q, SIGNAL(entryRemoved(BookEntry*)), folderCategoryModel, SIGNAL(entryRemoved(BookEntry*)));
+            connect(q, &CategoryEntriesModel::entryDataUpdated, folderCategoryModel, &CategoryEntriesModel::entryDataUpdated);
+            connect(q, &CategoryEntriesModel::entryRemoved, folderCategoryModel, &CategoryEntriesModel::entryRemoved);
             emit q->folderCategoryModel();
         }
     }
@@ -216,7 +216,7 @@ void BookListModel::setContentModel(QObject* newModel)
     d->contentModel = qobject_cast<QAbstractListModel*>(newModel);
     if(d->contentModel)
     {
-        connect(d->contentModel, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(contentModelItemsInserted(QModelIndex,int, int)));
+        connect(d->contentModel, &QAbstractItemModel::rowsInserted, this, &BookListModel::contentModelItemsInserted);
     }
     emit contentModelChanged();
 }

@@ -187,7 +187,7 @@ Baloo::QueryRunnable* BalooContentLister::Private::createQuery(ContentQuery* con
         balooQuery.setSearchString(contentQuery->searchString());
 
     auto runnable = new Baloo::QueryRunnable{balooQuery};
-    connect(runnable, &Baloo::QueryRunnable::queryResult, [this, contentQuery, location](QRunnable*, const QString& file) {
+    connect(runnable, &Baloo::QueryRunnable::queryResult, q, [this, contentQuery, location](QRunnable*, const QString& file) {
         q->queryResult(contentQuery, location, file);
     });
     connect(runnable, &Baloo::QueryRunnable::finished, q, &BalooContentLister::queryCompleted);

@@ -41,7 +41,7 @@ Jump::Jump(Page* parent)
     , d(new Private)
 {
     qRegisterMetaType<Jump*>("Jump*");
-    connect(this, SIGNAL(pointCountChanged()), this, SIGNAL(boundsChanged()));
+    connect(this, &Jump::pointCountChanged, this, &Jump::boundsChanged);
 }
 
 Jump::~Jump() = default;

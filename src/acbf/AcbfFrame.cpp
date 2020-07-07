@@ -40,7 +40,7 @@ Frame::Frame(Page* parent)
     , d(new Private)
 {
     qRegisterMetaType<Frame*>("Frame*");
-    connect(this, SIGNAL(pointCountChanged()), this, SIGNAL(boundsChanged()));
+    connect(this, &Frame::pointCountChanged, this, &Frame::boundsChanged);
 }
 
 Frame::~Frame() = default;

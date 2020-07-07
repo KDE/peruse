@@ -67,8 +67,8 @@ CategoryEntriesModel::CategoryEntriesModel(QObject* parent)
     : QAbstractListModel(parent)
     , d(new Private(this))
 {
-    connect(this, SIGNAL(entryDataUpdated(BookEntry*)), this, SLOT(entryDataChanged(BookEntry*)));
-    connect(this, SIGNAL(entryRemoved(BookEntry*)), this, SLOT(entryRemove(BookEntry*)));
+    connect(this, &CategoryEntriesModel::entryDataUpdated, this, &CategoryEntriesModel::entryDataChanged);
+    connect(this, &CategoryEntriesModel::entryRemoved, this, &CategoryEntriesModel::entryRemove);
 }
 
 CategoryEntriesModel::~CategoryEntriesModel()
@@ -318,8 +318,8 @@ void CategoryEntriesModel::addCategoryEntry(const QString& categoryName, BookEnt
         if(!categoryModel)
         {
             categoryModel = new CategoryEntriesModel(this);
-            connect(this, SIGNAL(entryDataUpdated(BookEntry*)), categoryModel, SIGNAL(entryDataUpdated(BookEntry*)));
-            connect(this, SIGNAL(entryRemoved(BookEntry*)), categoryModel, SIGNAL(entryRemoved(BookEntry*)));
+            connect(this, &CategoryEntriesModel::entryDataUpdated, categoryModel, &CategoryEntriesModel::entryDataUpdated);
+            connect(this, &CategoryEntriesModel::entryRemoved, categoryModel, &CategoryEntriesModel::entryRemoved);
             categoryModel->setName(nextCategory);
 
             int insertionIndex = 0;

@@ -130,9 +130,9 @@ void PreviewRunnable::run()
             d->job = new KIO::PreviewJob(KFileItemList() << KFileItem(QUrl::fromLocalFile(d->id), mimetype, 0), ourSize, &allPlugins);
             d->job->setIgnoreMaximumSize(true);
             d->job->setScaleType(KIO::PreviewJob::ScaledAndCached);
-            connect(d->job, SIGNAL(gotPreview(KFileItem,QPixmap)), SLOT(updatePreview(KFileItem,QPixmap)));
-            connect(d->job, SIGNAL(failed(KFileItem)), SLOT(fallbackPreview(KFileItem)));
-            connect(d->job, SIGNAL(finished(KJob*)), SLOT(finishedPreview(KJob*)));
+            connect(d->job, &KIO::PreviewJob::gotPreview, this, &PreviewRunnable::updatePreview);
+            connect(d->job, &KIO::PreviewJob::failed, this, &PreviewRunnable::fallbackPreview);
+            connect(d->job, &KIO::PreviewJob::finished, this, &PreviewRunnable::finishedPreview);
 
             d->jobCompletion = false;
             if(d->job->exec())
