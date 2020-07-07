@@ -399,10 +399,9 @@ Kirigami.Page {
             }
         }
         Kirigami.PlaceholderMessage {
-            anchors {
-                fill: parent;
-                margins: Kirigami.Units.largeSpacing;
-            }
+            anchors.centerIn: parent
+            width: parent.width - (Kirigami.Units.largeSpacing * 4)
+
             visible: viewLoader.status === Loader.Error;
             text: i18nc("Message shown on the book reader view when there is an issue loading any reader at all (usually when Okular's qml components are not installed for some reason)", "Failed to load the reader component. This is generally caused by broken packaging. Contact whoever you got this package from and inform them of this error.");
         }
