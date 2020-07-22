@@ -22,6 +22,8 @@
 import QtQuick 2.12
 
 import org.kde.kirigami 2.7 as Kirigami
+import QtQuick.Layouts 1.3
+import QtQuick.Controls 2.1 as QQC2
 
 import org.kde.peruse 0.1 as Peruse
 import org.kde.contentlist 0.1
@@ -100,26 +102,52 @@ Kirigami.ApplicationWindow {
     }
 
     globalDrawer: Kirigami.GlobalDrawer {
+        id: globalDrawer
         title: i18nc("application title for the sidebar", "Peruse");
         titleIcon: "peruse";
-        drawerOpen: PLASMA_PLATFORM.substring(0, 5) === "phone" ? false : true;
-        modal: PLASMA_PLATFORM.substring(0, 5) === "phone" ? true : false;
+        drawerOpen: !Kirigami.Settings.isMobile && mainWindow.width > globalDrawer.availableWidth * 3
+        modal: Kirigami.Settings.isMobile || mainWindow.width <= globalDrawer.availableWidth * 3
         actions: []
-    }
-    property list<QtObject> globalDrawerActions: [
-            Kirigami.Action {
-                text: i18nc("Switch to the welcome page", "Welcome");
-                iconName: "start-over";
-                checked: mainWindow.currentCategory === "welcomePage";
-                onTriggered: {
-                    if (changeCategory(welcomePage)) {
-                        pageStack.currentItem.updateRecent();
+
+        // HACK: this is needed because when clicking on the close button, drawerOpen get set to false (instead of the binding)
+        // and when !Kirigami.Settings.isMobile && mainWindow.width > globalDrawer.availableWidth * 3 change, the Binding element
+        // overwrite the last assigment to false and set drawerOpen to true or false depending on the value of the condition
+        Binding {
+            target: globalDrawer
+            property: "drawerOpen"
+            value: !Kirigami.Settings.isMobile && mainWindow.width > globalDrawer.availableWidth * 3
+        }
+
+        header: Kirigami.AbstractApplicationHeader {
+            RowLayout {
+                anchors.fill: parent
+                anchors.leftMargin: Kirigami.Units.smallSpacing * 2
+                anchors.rightMargin: Kirigami.Units.smallSpacing * 2
+
+                Kirigami.Heading {
+                    level: 2
+                    text: i18n("Navigation")
+                    Layout.fillWidth: true
+                }
+
+                QQC2.ToolButton {
+                    icon.name: "go-home"
+
+                    enabled: mainWindow.currentCategory !== "welcomePage";
+                    onClicked: {
+                        if (changeCategory(welcomePage)) {
+                            pageStack.currentItem.updateRecent();
+                        }
+                    }
+
+                    QQC2.ToolTip {
+                        text: i18n("Show intro page")
                     }
                 }
-            },
-            Kirigami.Action {
-                separator: true;
-            },
+            }
+        }
+    }
+    property list<QtObject> globalDrawerActions: [
             Kirigami.Action {
                 text: i18nc("Switch to the listing page showing the most recently discovered books", "Recently Added Books");
                 iconName: "appointment-new";
