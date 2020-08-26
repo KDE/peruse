@@ -55,8 +55,13 @@ class ComicCoverResponse : public QQuickImageResponse
         ComicCoverResponse(const QString &id, const QSize &requestedSize, QThreadPool *pool)
         {
             m_runnable = new ComicCoverRunnable(id, requestedSize);
-            connect(m_runnable, &ComicCoverRunnable::done, this, &ComicCoverResponse::handleDone);
+            m_runnable->setAutoDelete(false);
+            connect(m_runnable, &ComicCoverRunnable::done, this, &ComicCoverResponse::handleDone, Qt::QueuedConnection);
             pool->start(m_runnable);
+        }
+        virtual ~ComicCoverResponse()
+        {
+            m_runnable->deleteLater();
         }
 
         void handleDone(QImage image) {

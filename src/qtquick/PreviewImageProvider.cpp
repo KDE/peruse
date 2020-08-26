@@ -56,8 +56,13 @@ class PreviewResponse : public QQuickImageResponse
         PreviewResponse(const QString &id, const QSize &requestedSize, QThreadPool *pool)
         {
             m_runnable = new PreviewRunnable(id, requestedSize);
-            connect(m_runnable, &PreviewRunnable::done, this, &PreviewResponse::handleDone);
+            m_runnable->setAutoDelete(false);
+            connect(m_runnable, &PreviewRunnable::done, this, &PreviewResponse::handleDone, Qt::QueuedConnection);
             pool->start(m_runnable);
+        }
+        virtual ~PreviewResponse()
+        {
+            m_runnable->deleteLater();
         }
 
         void handleDone(QImage image) {

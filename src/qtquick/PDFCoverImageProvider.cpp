@@ -66,8 +66,13 @@ class PDFCoverResponse : public QQuickImageResponse
         PDFCoverResponse(const QString &id, const QSize &requestedSize, const QDir& thumbDir, QThreadPool *pool)
         {
             m_runnable = new PDFCoverRunnable(id, requestedSize, thumbDir);
-            connect(m_runnable, &PDFCoverRunnable::done, this, &PDFCoverResponse::handleDone);
+            m_runnable->setAutoDelete(false);
+            connect(m_runnable, &PDFCoverRunnable::done, this, &PDFCoverResponse::handleDone, Qt::QueuedConnection);
             pool->start(m_runnable);
+        }
+        virtual ~PDFCoverResponse()
+        {
+            m_runnable->deleteLater();
         }
 
         void handleDone(QImage image) {

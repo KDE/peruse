@@ -64,8 +64,13 @@ class ArchiveImageResponse : public QQuickImageResponse
         ArchiveImageResponse(const QString &id, const QSize &requestedSize, ArchiveBookModel* bookModel, const QString& prefix, QThreadPool *pool)
         {
             m_runnable = new ArchiveImageRunnable(id, requestedSize, bookModel, prefix);
-            connect(m_runnable, &ArchiveImageRunnable::done, this, &ArchiveImageResponse::handleDone);
+            m_runnable->setAutoDelete(false);
+            connect(m_runnable, &ArchiveImageRunnable::done, this, &ArchiveImageResponse::handleDone, Qt::QueuedConnection);
             pool->start(m_runnable);
+        }
+        virtual ~ArchiveImageResponse()
+        {
+            m_runnable->deleteLater();
         }
 
         void handleDone(QImage image) {
