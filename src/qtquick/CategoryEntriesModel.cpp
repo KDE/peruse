@@ -249,6 +249,8 @@ void CategoryEntriesModel::append(BookEntry* entry, Roles compareRole)
             break;
         }
         else if((seriesOne>-1 && seriesTwo>-1)
+                && entry->seriesNumbers.count() > -1 && entry->seriesNumbers.count() <= seriesOne
+                && d->entries.at(insertionIndex)->seriesNumbers.count() > -1 && d->entries.at(insertionIndex)->seriesNumbers.count() <= seriesTwo
                 && entry->seriesNumbers.at(seriesOne).toInt() > 0
                 && d->entries.at(insertionIndex)->seriesNumbers.at(seriesTwo).toInt() > 0)
         {
