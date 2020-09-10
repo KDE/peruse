@@ -252,7 +252,9 @@ void CategoryEntriesModel::append(BookEntry* entry, Roles compareRole)
                 && entry->seriesNumbers.at(seriesOne).toInt() > 0
                 && d->entries.at(insertionIndex)->seriesNumbers.at(seriesTwo).toInt() > 0)
         {
-            if (entry->seriesVolumes.at(seriesOne).toInt() >= d->entries.at(insertionIndex)->seriesVolumes.at(seriesTwo).toInt()
+            if (entry->seriesVolumes.count() > -1 && entry->seriesVolumes.count() <= seriesOne
+                    && d->entries.at(insertionIndex)->seriesVolumes.count() > -1 && d->entries.at(insertionIndex)->seriesVolumes.count() <= seriesTwo
+                    && entry->seriesVolumes.at(seriesOne).toInt() >= d->entries.at(insertionIndex)->seriesVolumes.at(seriesTwo).toInt()
                     && entry->seriesNumbers.at(seriesOne).toInt() > d->entries.at(insertionIndex)->seriesNumbers.at(seriesTwo).toInt())
             {continue;}
             break;
