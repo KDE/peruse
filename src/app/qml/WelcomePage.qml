@@ -494,7 +494,7 @@ Kirigami.Page {
                 bottom: parent.bottom;
             }
             visible: opacity > 0
-            opacity: applicationWindow().isLoading ? 1 : 0;
+            opacity: !globalDrawer.drawerOpen && applicationWindow().isLoading ? 1 : 0;
             Behavior on opacity { NumberAnimation { duration: applicationWindow().animationDuration; } }
             QtControls.Label {
                 anchors {
@@ -514,7 +514,7 @@ Kirigami.Page {
                 }
                 width: Kirigami.Units.iconSizes.huge
                 height: width
-                running: applicationWindow().isLoading;
+                running: !globalDrawer.drawerOpen && applicationWindow().isLoading;
             }
             QtControls.Label {
                 anchors {
