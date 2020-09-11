@@ -30,6 +30,7 @@ find_package(KF5 ${KF5_VERSION} REQUIRED COMPONENTS I18n Declarative Config Cras
 
 find_package(KF5Baloo) # optional - we'll just let it pass if it's missing
 find_package(KF5Archive ${KF5_VERSION} REQUIRED)
+find_package(KF5Declarative ${KF5_VERSION} REQUIRED)
 
 find_package(KF5Kirigami2 ${KF5_VERSION})
 set_package_properties(KF5Kirigami2 PROPERTIES

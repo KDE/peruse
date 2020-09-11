@@ -20,25 +20,30 @@
  */
 
 import QtQuick 2.12
-import QtQuick.Controls 2.12 as QtControls
+import QtQuick.Controls 2.12 as QQC2
 import QtQuick.Dialogs 1.3
+import QtQuick.Layouts 1.3
+import QtQml.Models 2.3
 
-import org.kde.kirigami 2.7 as Kirigami
+import org.kde.kirigami 2.12 as Kirigami
+import org.kde.kcm 1.2 as KCM
 
 import org.kde.peruse 0.1 as Peruse
 
 import "listcomponents" as ListComponents
+
 /**
  * @brief This holds toggles and dials to configure Peruse.
  * 
  * Its main purpose is to add and remove entries from the list of booklocations.
  */
-Kirigami.ScrollablePage {
+KCM.ScrollViewKCM {
     id: root;
     property string categoryName: "settingsPage";
-    title: i18nc("title of the settings page", "Settings");
+    title: i18nc("title of the settings page", "Configure the indexed folders");
 
     actions.main: Kirigami.Action {
+        id: addPathAction
         icon.name: "list-add"
         text: i18n("Add folder")
         onTriggered: {
@@ -50,76 +55,49 @@ Kirigami.ScrollablePage {
         }
     }
 
-    ListView {
+    view: ListView {
+        id:pathList
 
-        header: Kirigami.Heading {
-            leftPadding: Kirigami.Units.largeSpacing
-            text: i18nc("title of the list of search folders", "Search Folders")
+        Layout.fillWidth: true
+        Layout.fillHeight: true
+        boundsBehavior: Flickable.StopAtBounds
+
+        clip: true
+
+        model: DelegateModel {
+            model: peruseConfig.bookLocations
+            delegate: pathDelegate
         }
 
-        model: peruseConfig.bookLocations
+        QQC2.ScrollBar.vertical: QQC2.ScrollBar {
+            id: scrollBar
+        }
 
-        delegate: Kirigami.SwipeListItem {
-            id: listItem;
-            actions: [
-                Kirigami.Action {
-                    text: i18nc("remove the search folder from the list", "Delete");
-                    iconName: "list-remove"
-                    onTriggered: peruseConfig.removeBookLocation(peruseConfig.bookLocations[index]);
+        Component {
+            id: pathDelegate
+            
+            Kirigami.SwipeListItem {
+                id: delegateItem
+                QQC2.Label {
+                    text: modelData
                 }
-            ]
-            QtControls.Label {
-                anchors {
-                    verticalCenter: parent.verticalCenter;
-                    left: parent.left;
-                    leftMargin: Kirigami.Units.largeSpacing;
-                }
-                text: peruseConfig.bookLocations[index];
+                actions: [
+                    Kirigami.Action {
+                        text: i18nc("remove the search folder from the list", "Delete");
+                        iconName: "list-remove"
+                        onTriggered: peruseConfig.removeBookLocation(peruseConfig.bookLocations[index]);
+                    }
+                ]
             }
         }
 
-        Rectangle {
-            id: addingNewBooksProgress;
-            color: Kirigami.Theme.backgroundColor;
-            anchors.fill: parent;
-            opacity: 0;
-            Behavior on opacity { NumberAnimation { duration: applicationWindow().animationDuration; } }
-            Connections {
-                target: contentList.contentModel;
-                onSearchCompleted: addingNewBooksProgress.opacity = 0;
-            }
-            enabled: opacity > 0;
-            MouseArea {
-                enabled: parent.enabled;
-                anchors.fill: parent;
-            }
-            QtControls.Label {
-                anchors {
-                    bottom: parent.verticalCenter;
-                    left: parent.left;
-                    right: parent.right;
-                }
-                horizontalAlignment: Text.AlignHCenter;
-                text: i18nc("shown with a throbber when searching for books on the device", "Please wait while we find your books...");
-            }
-            QtControls.BusyIndicator {
-                id: loadingSpinner;
-                anchors {
-                    top: parent.verticalCenter;
-                    left: parent.left;
-                    right: parent.right;
-                }
-                running: addingNewBooksProgress.enabled;
-            }
-            QtControls.Label {
-                anchors {
-                    top: loadingSpinner.bottom;
-                    left: parent.left;
-                    right: parent.right;
-                }
-                horizontalAlignment: Text.AlignHCenter;
-                text: contentList.count;
-            }
+        Kirigami.PlaceholderMessage {
+            anchors.centerIn: parent
+            width: parent.width - (Kirigami.Units.largeSpacing * 4)
+            visible: pathList.count === 0
+            text: i18n("There are no folder currently indexed.")
+
+            helpfulAction: addPathAction
         }
     }
 
