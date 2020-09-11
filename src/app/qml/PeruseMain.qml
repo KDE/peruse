@@ -50,7 +50,7 @@ Kirigami.ApplicationWindow {
     id: mainWindow;
     title: "Comic Book Reader";
     property int animationDuration: 200;
-    property bool isLoading: true;
+    property bool isLoading: false;
     pageStack.initialPage: welcomePage;
     visible: true;
     // If the controls are not visible, being able to drag the pagestack feels really weird,
@@ -71,10 +71,8 @@ Kirigami.ApplicationWindow {
         contentModel: ContentList {
             autoSearch: false
 
-            onSearchCompleted: {
-                mainWindow.isLoading = false;
-                mainWindow.globalDrawer.actions = globalDrawerActions;
-            }
+            onSearchStarted: { mainWindow.isLoading = true; }
+            onSearchCompleted: { mainWindow.isLoading = false; }
 
             ContentQuery {
                 type: ContentQuery.Comics
@@ -107,7 +105,7 @@ Kirigami.ApplicationWindow {
         titleIcon: "peruse";
         drawerOpen: !Kirigami.Settings.isMobile && mainWindow.width > globalDrawer.availableWidth * 3
         modal: Kirigami.Settings.isMobile || mainWindow.width <= globalDrawer.availableWidth * 3
-        actions: []
+        actions: globalDrawerActions
 
         // HACK: this is needed because when clicking on the close button, drawerOpen get set to false (instead of the binding)
         // and when !Kirigami.Settings.isMobile && mainWindow.width > globalDrawer.availableWidth * 3 change, the Binding element
@@ -144,6 +142,31 @@ Kirigami.ApplicationWindow {
                         text: i18n("Show intro page")
                     }
                 }
+            }
+        }
+        ColumnLayout {
+            opacity: globalDrawer.drawerOpen && mainWindow.isLoading ? 1 : 0
+            visible: opacity > 0
+            Behavior on opacity { NumberAnimation { duration: Kirigami.Units.longDuration } }
+            Layout.fillWidth: true
+            Layout.bottomMargin: Kirigami.Units.largeSpacing
+            Item {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+            }
+            QQC2.Label {
+                Layout.fillWidth: true
+                horizontalAlignment: Text.AlignHCenter;
+                text: i18nc("shown with a throbber when searching for books on the device", "Please wait while we find your books...");
+            }
+            QQC2.BusyIndicator {
+                Layout.fillWidth: true
+                running: mainWindow.isLoading;
+            }
+            QQC2.Label {
+                Layout.fillWidth: true
+                horizontalAlignment: Text.AlignHCenter;
+                text: contentList.count;
             }
         }
     }
