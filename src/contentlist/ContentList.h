@@ -139,6 +139,10 @@ public:
      * \brief Start searching with the current queries list.
      */
     Q_SLOT void startSearch();
+    /**
+     * \brief Fires when a search starts
+     */
+    Q_SIGNAL void searchStarted();
 
     Q_SIGNAL void autoSearchChanged();
     Q_SIGNAL void cacheResultsChanged();

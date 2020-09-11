@@ -125,6 +125,7 @@ QString ContentList::getMimetype(QString filePath)
 void ContentList::startSearch()
 {
     QTimer::singleShot(1, [this]() {
+        Q_EMIT searchStarted();
         d->actualContentList->startSearch(d->queries);
     });
 }
