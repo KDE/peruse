@@ -23,6 +23,8 @@
 #define CONTENTLISTERBASE_H
 
 #include <QObject>
+#include <QSet>
+#include <QString>
 
 class ContentQuery;
 /**
@@ -59,6 +61,10 @@ public:
      * @return the available metadata for the filepath so that it can be searched.
      */
     static QVariantMap metaDataForFile(const QString& file);
+
+protected:
+    friend class ContentList;
+    QSet<QString> knownFiles;
 };
 
 #endif//CONTENTLISTERBASE_H

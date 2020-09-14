@@ -58,9 +58,11 @@ public:
                 if(it.fileInfo().isDir())
                     continue;
 
-                QString mimeType = mimeDb.mimeTypeForFile(filePath).name();
-                if(!m_query->mimeTypes().isEmpty() && !m_query->mimeTypes().contains(mimeType))
-                    continue;
+                if(!m_query->mimeTypes().isEmpty()) {
+                    QString mimeType = mimeDb.mimeTypeForFile(filePath).name();
+                    if(!m_query->mimeTypes().contains(mimeType))
+                        continue;
+                }
 
                 auto metadata = ContentListerBase::metaDataForFile(filePath);
 

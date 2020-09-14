@@ -126,6 +126,7 @@ void ContentList::startSearch()
 {
     QTimer::singleShot(1, [this]() {
         Q_EMIT searchStarted();
+        d->actualContentList->knownFiles = d->knownFiles;
         d->actualContentList->startSearch(d->queries);
     });
 }

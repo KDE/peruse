@@ -44,7 +44,6 @@ public:
 
     Baloo::QueryRunnable* createQuery(ContentQuery* contentQuery, const QString& location = QString{});
 
-    QStringList knownFiles;
     QStringList locations;
     QString searchString;
     QList<Baloo::QueryRunnable*> queries;
@@ -123,7 +122,7 @@ void BalooContentLister::queryCompleted(Baloo::QueryRunnable* query)
 
 void BalooContentLister::queryResult(const ContentQuery* query, const QString& location, const QString& file)
 {
-    if(d->knownFiles.contains(file)) {
+    if(knownFiles.contains(file)) {
         return;
     }
 
