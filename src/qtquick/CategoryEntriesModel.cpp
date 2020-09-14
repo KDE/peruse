@@ -224,7 +224,7 @@ void CategoryEntriesModel::append(BookEntry* entry, Roles compareRole)
         seriesOne = entry->series.indexOf(name());
         if (entry->series.contains(name(), Qt::CaseInsensitive) && seriesOne == -1){
             for (int s=0; s<entry->series.size();s++) {
-                if (name().toLower() == entry->series.at(s).toLower()) {
+                if (QString::compare(name(), entry->series.at(s), Qt::CaseInsensitive)) {
                     seriesOne = s;
                 }
             }
@@ -236,7 +236,7 @@ void CategoryEntriesModel::append(BookEntry* entry, Roles compareRole)
             seriesTwo = d->entries.at(insertionIndex)->series.indexOf(name());
             if ( d->entries.at(insertionIndex)->series.contains(name(), Qt::CaseInsensitive) && seriesTwo == -1){
                 for (int s=0; s< d->entries.at(insertionIndex)->series.size();s++) {
-                    if (name().toLower() ==  d->entries.at(insertionIndex)->series.at(s).toLower()) {
+                    if (QString::compare(name(), d->entries.at(insertionIndex)->series.at(s), Qt::CaseInsensitive)) {
                         seriesTwo = s;
                     }
                 }
@@ -313,7 +313,7 @@ void CategoryEntriesModel::addCategoryEntry(const QString& categoryName, BookEnt
         CategoryEntriesModel* categoryModel = nullptr;
         Q_FOREACH(CategoryEntriesModel* existingModel, d->categoryModels)
         {
-            if(existingModel->name().toLower() == nextCategory.toLower())
+            if(QString::compare(existingModel->name(), nextCategory, Qt::CaseInsensitive))
             {
                 categoryModel = existingModel;
                 break;

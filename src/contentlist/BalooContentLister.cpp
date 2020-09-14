@@ -140,9 +140,11 @@ void BalooContentLister::queryResult(const ContentQuery* query, const QString& l
     }
 
     // It would be nice if Baloo could do mime type filtering on its own...
-    auto mimeType = d->mimeDatabase.mimeTypeForFile(file).name();
-    if(!query->mimeTypes().isEmpty() && !query->mimeTypes().contains(mimeType))
-        return;
+    if(!query->mimeTypes().isEmpty()) {
+        const auto &mimeType = d->mimeDatabase.mimeTypeForFile(file).name();
+        if(!query->mimeTypes().contains(mimeType))
+            return;
+    }
 
     auto metadata = metaDataForFile(file);
 
