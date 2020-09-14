@@ -272,7 +272,7 @@ void CategoryEntriesModel::append(BookEntry* entry, Roles compareRole)
     endInsertRows();
 }
 
-QString CategoryEntriesModel::name() const
+const QString &CategoryEntriesModel::name() const
 {
     return d->name;
 }
@@ -308,12 +308,16 @@ void CategoryEntriesModel::addCategoryEntry(const QString& categoryName, BookEnt
 {
     if(categoryName.length() > 0)
     {
-        QStringList splitName = categoryName.split("/");
-        QString nextCategory = splitName.takeFirst();
+        static const QString splitString{"/"};
+        int splitPos = categoryName.indexOf(splitString);
+        QString desiredCategory{categoryName};
+        if(splitPos > -1) {
+            desiredCategory = categoryName.left(splitPos);
+        }
         CategoryEntriesModel* categoryModel = nullptr;
-        Q_FOREACH(CategoryEntriesModel* existingModel, d->categoryModels)
+        for(CategoryEntriesModel *existingModel : qAsConst(d->categoryModels))
         {
-            if(QString::compare(existingModel->name(), nextCategory, Qt::CaseInsensitive))
+            if(QString::compare(existingModel->name(), desiredCategory, Qt::CaseInsensitive) == 0)
             {
                 categoryModel = existingModel;
                 break;
@@ -324,7 +328,7 @@ void CategoryEntriesModel::addCategoryEntry(const QString& categoryName, BookEnt
             categoryModel = new CategoryEntriesModel(this);
             connect(this, &CategoryEntriesModel::entryDataUpdated, categoryModel, &CategoryEntriesModel::entryDataUpdated);
             connect(this, &CategoryEntriesModel::entryRemoved, categoryModel, &CategoryEntriesModel::entryRemoved);
-            categoryModel->setName(nextCategory);
+            categoryModel->setName(desiredCategory);
 
             int insertionIndex = 0;
             for(; insertionIndex < d->categoryModels.count(); ++insertionIndex)
@@ -341,7 +345,8 @@ void CategoryEntriesModel::addCategoryEntry(const QString& categoryName, BookEnt
         if (categoryModel->indexOfFile(entry->filename) == -1) {
             categoryModel->append(entry, compareRole);
         }
-        categoryModel->addCategoryEntry(splitName.join("/"), entry);
+        if(splitPos > -1)
+            categoryModel->addCategoryEntry(categoryName.mid(splitPos + 1), entry);
     }
 }
 

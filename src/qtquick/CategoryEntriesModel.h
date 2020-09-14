@@ -203,7 +203,7 @@ protected:
     /**
      * @return the name of the model.
      */
-    QString name() const;
+    const QString &name() const;
     /**
      * \brief set the name of the model.
      * @param newName QString with the name.
