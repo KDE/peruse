@@ -1,33 +1,19 @@
 /*
- * Copyright (C) 2016 Dan Leinir Turthra Jensen <admin@leinir.dk>
+ * SPDX-FileCopyrightText: 2016 Dan Leinir Turthra Jensen <admin@leinir.dk>
+ * SPDX-FileCopyrightText: 2020 Carl Schwan <carl@carlschwan.eu>
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) version 3, or any
- * later version accepted by the membership of KDE e.V. (or its
- * successor approved by the membership of KDE e.V.), which shall
- * act as a proxy defined in Section 6 of version 3 of the license.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
+ * SPDX-License-Identifier: LGPL-2.1-only OR LGPL-3.0-only OR LicenseRef-KDE-Accepted-LGPL
  */
 
 import QtQuick 2.12
 import QtQuick.Controls 2.12 as QtControls
-
+import QtQuick.Layouts 1.2
 import org.kde.kirigami 2.7 as Kirigami
 
 /**
  * @brief A button to select a book to read with a nice big thumbnail.
  */
-Item {
+FocusScope {
     id: root;
     property bool selected: false;
     property alias title: bookTitle.text;
@@ -45,10 +31,21 @@ Item {
     /// @see https://bugreports.qt.io/browse/QTBUG-41441
     signal pressAndHold();
 
-    property int neededHeight: bookCover.height + bookTitle.height + Kirigami.Units.largeSpacing;
-    visible: height > 0;
     enabled: visible;
     clip: true;
+
+    Rectangle {
+        id: stateIndicator
+
+        anchors.fill: parent
+        z: 1
+
+        color: "transparent"
+        opacity: 0.4
+
+        radius: 3
+    }
+
     MouseArea {
         anchors.fill: parent;
         onClicked: root.bookSelected(root.filename, root.currentPage);
@@ -56,113 +53,50 @@ Item {
         onPressed: root.pressIndicator ? pressIndicatorAnimation.start():0;
         onReleased: {pressIndicatorAnimation.stop(); pressIndicator.width = 0;pressIndicator.height = 0;}
 
-        // FIXME The duration should ideally be the pressHold interval.
-        ParallelAnimation {
-                id: pressIndicatorAnimation;
-                NumberAnimation {
-                    target: pressIndicator;
-                    from: coverImage.paintedWidth/3;
-                    to: coverOutline.width;
-                    property: "width";
-                    duration: 800;
-                }
-                NumberAnimation {
-                    target: pressIndicator;
-                    from: coverImage.paintedWidth/3;
-                    to: coverOutline.height;
-                    property: "height";
-                    duration: 800;
-                }
-                NumberAnimation {
-                    target: pressIndicator;
-                    from: coverImage.paintedWidth/3;
-                    to: 0;
-                    property: "radius";
-                    duration: 800;
-                }
+        TextMetrics {
+            id: bookTitleSize
+            font: bookTitle.font
+            text: bookTitle.text
         }
-    }
-    Item {
-        id: bookCover;
-        anchors {
-            top: parent.top;
-            horizontalCenter: parent.horizontalCenter;
-            margins: Kirigami.Units.largeSpacing;
-        }
-        width: Math.min(parent.width - Kirigami.Units.largeSpacing * 2, Kirigami.Units.iconSizes.enormous + Kirigami.Units.largeSpacing * 2);
-        height: width;
-        Rectangle {
-            anchors {
-                fill: coverOutline;
-                margins: -Kirigami.Units.smallSpacing;
+
+        ColumnLayout {
+            Layout.margins: Kirigami.Units.largeSpacing
+            Layout.preferredHeight: root.height - 2 * Kirigami.Units.largeSpacing
+            Layout.preferredWidth: root.width - 2 * Kirigami.Units.largeSpacing
+
+            Image {
+                id: coverImage;
+                source: root.thumbnail === "Unknown role" ? "" : root.thumbnail;
+                asynchronous: true;
+                fillMode: Image.PreserveAspectFit;
+                Layout.fillHeight: true
+                Layout.alignment: Qt.AlignHCenter
             }
-            radius: Kirigami.Units.smallSpacing;
-            color: Kirigami.Theme.highlightColor;
-            opacity: root.selected ? 1 : 0;
-            Behavior on opacity { NumberAnimation { duration: Kirigami.Units.shortDuration; } }
-        }
-        Rectangle {
-            id: coverOutline;
-            anchors.centerIn: coverImage;
-            width: Math.max(coverImage.paintedWidth, Kirigami.Units.iconSizes.large) + Kirigami.Units.smallSpacing * 2;
-            height: Math.max(coverImage.paintedHeight, Kirigami.Units.iconSizes.large) + Kirigami.Units.smallSpacing * 2;
-            color: Kirigami.Theme.backgroundColor;
-            border {
-                width: 2;
-                color: Kirigami.Theme.textColor;
+
+            QtControls.Label {
+                id: bookTitle;
+                wrapMode: Text.WrapAtWordBoundaryOrAnywhere;
+                elide: Text.ElideMiddle;
+                horizontalAlignment: Text.AlignHCenter
+                Layout.maximumWidth: root.width * 0.9
+                Layout.minimumWidth: Layout.maximumWidth
+                Layout.maximumHeight: root.author.length === 0 ? bookTitleSize.boundingRect.height * 2 : bookTitleSize.boundingRect.height
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
+                Layout.bottomMargin: root.author.length === 0 ? 0 : Kirigami.Units.smallSpacing
             }
-            radius: 2;
-        }
-        Image {
-            id: coverImage;
-            anchors {
-                fill: parent;
-                margins: Kirigami.Units.largeSpacing;
+
+            QtControls.Label {
+                wrapMode: Text.WrapAtWordBoundaryOrAnywhere;
+                elide: Text.ElideMiddle;
+                visible: root.author.length > 0
+                text: root.author.join(', ')
+                horizontalAlignment: Text.AlignHCenter
+                Layout.maximumWidth: root.width * 0.9
+                Layout.minimumWidth: Layout.maximumWidth
+                Layout.maximumHeight: root.author.length === 0 ? bookTitleSize.boundingRect.height * 2 : bookTitleSize.boundingRect.height
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
+                Layout.bottomMargin: root.author.length === 0 ? 0 : Kirigami.Units.smallSpacing
             }
-            source: root.thumbnail === "Unknown role" ? "" : root.thumbnail;
-            asynchronous: true;
-            fillMode: Image.PreserveAspectFit;
         }
-        QtControls.BusyIndicator {
-            id: loadingSpinner;
-            anchors.centerIn: parent;
-            visible: running;
-            running: coverImage.status === Image.Loading;
-        }
-        Rectangle{
-            id: pressIndicator;
-            anchors.centerIn: coverImage;
-            width: 0;
-            height: 0;
-            color: "transparent";
-            border.color:Kirigami.Theme.highlightColor;
-            border.width:Kirigami.Units.smallSpacing;
-        }
-    }
-    QtControls.Label {
-        id: bookTitle;
-        anchors {
-            top: bookCover.bottom;
-            left: parent.left;
-            right: parent.right;
-            margins: Kirigami.Units.smallSpacing;
-            topMargin: 0;
-        }
-        height: paintedHeight;
-        maximumLineCount: 2;
-        wrapMode: Text.WrapAtWordBoundaryOrAnywhere;
-        elide: Text.ElideMiddle;
-        horizontalAlignment: Text.AlignHCenter;
-    }
-    QtControls.ProgressBar {
-        anchors {
-            top: bookCover.bottom;
-            topMargin: -Kirigami.Units.smallSpacing;
-            left: bookCover.left;
-            right: bookCover.right;
-            bottom: bookTitle.top;
-        }
-        visible: value > 0;
-        value: root.progress > 0 && root.progress <= 1 ? root.progress : 0;
     }
 }
