@@ -23,6 +23,7 @@
 #define ARCHIVEBOOKMODEL_H
 
 #include "BookModel.h"
+#include <QMutex>
 /**
  * \brief Class to hold pages and metadata for archive based books.
  * 
@@ -182,6 +183,7 @@ public:
     friend class ArchiveImageRunnable;
 protected:
     const KArchiveFile* archiveFile(const QString& filePath);
+    QMutex archiveMutex;
 
 private:
     class Private;

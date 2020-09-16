@@ -57,9 +57,13 @@ public:
         , isDirty(false)
         , isLoading(false)
     {}
+    ~Private() {
+        qDeleteAll(archiveFiles.values());
+    }
     ArchiveBookModel* q;
     QQmlEngine* engine;
     KArchive* archive;
+    QHash<QString, const KArchiveFile*> archiveFiles;
     bool readWrite;
     ArchiveImageProvider* imageProvider;
     bool isDirty;
@@ -697,7 +701,10 @@ const KArchiveFile * ArchiveBookModel::archiveFile(const QString& filePath)
 {
     if(d->archive)
     {
-        return d->archive->directory()->file(filePath);
+        if(!d->archiveFiles.contains(filePath)) {
+            d->archiveFiles[filePath] = d->archive->directory()->file(filePath);
+        }
+        return d->archiveFiles[filePath];
     }
     return nullptr;
 }
