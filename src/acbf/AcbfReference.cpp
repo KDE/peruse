@@ -41,7 +41,8 @@ Reference::Reference(References* parent)
     : QObject(parent)
     , d(new Private)
 {
-    qRegisterMetaType<Reference*>("Reference*");
+    static const int typeId = qRegisterMetaType<Reference*>("Reference*");
+    Q_UNUSED(typeId);
 }
 
 Reference::~Reference() = default;
@@ -53,7 +54,7 @@ void Reference::toXml(QXmlStreamWriter* writer)
     /* ACBF 1.2
     writer->writeAttribute(QStringLiteral("lang"), language());
     */
-    Q_FOREACH(const QString& paragraph, d->paragraphs) {
+    for(const QString& paragraph : d->paragraphs) {
         writer->writeStartElement(QStringLiteral("p"));
         writer->writeCharacters(paragraph);
         writer->writeEndElement();

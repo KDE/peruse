@@ -43,7 +43,8 @@ PublishInfo::PublishInfo(Metadata* parent)
     : QObject(parent)
     , d(new Private)
 {
-    qRegisterMetaType<PublishInfo*>("PublishInfo*");
+    static const int typeId = qRegisterMetaType<PublishInfo*>("PublishInfo*");
+    Q_UNUSED(typeId);
 }
 
 PublishInfo::~PublishInfo() = default;

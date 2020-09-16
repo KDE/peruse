@@ -37,7 +37,8 @@ Data::Data(Document* parent)
     : QObject(parent)
     , d(new Private)
 {
-    qRegisterMetaType<Data*>("Data*");
+    static const int typeId = qRegisterMetaType<Data*>("Data*");
+    Q_UNUSED(typeId);
 }
 
 Data::~Data() = default;
@@ -46,7 +47,7 @@ void Data::toXml(QXmlStreamWriter* writer)
 {
     writer->writeStartElement(QStringLiteral("data"));
 
-    Q_FOREACH(Binary* binary, d->binaries) {
+    for(Binary* binary : d->binaries) {
         binary->toXml(writer);
     }
 

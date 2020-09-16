@@ -49,7 +49,8 @@ Textarea::Textarea(Textlayer* parent)
     : QObject(parent)
     , d(new Private)
 {
-    qRegisterMetaType<Textarea*>("Textarea*");
+    static const int typeId = qRegisterMetaType<Textarea*>("Textarea*");
+    Q_UNUSED(typeId);
     connect(this, &Textarea::pointCountChanged, this, &Textarea::boundsChanged);
 }
 
@@ -60,7 +61,7 @@ void Textarea::toXml(QXmlStreamWriter* writer)
     writer->writeStartElement(QStringLiteral("text-area"));
 
     QStringList points;
-    Q_FOREACH(const QPoint& point, d->points) {
+    for(const QPoint& point : d->points) {
         points << QStringLiteral("%1,%2").arg(QString::number(point.x())).arg(QString::number(point.y()));
     }
     writer->writeAttribute(QStringLiteral("points"), points.join(' '));
@@ -83,7 +84,7 @@ void Textarea::toXml(QXmlStreamWriter* writer)
         writer->writeAttribute(QStringLiteral("transparent"), QStringLiteral("true"));
     }
 
-    Q_FOREACH(const QString& paragraph, d->paragraphs) {
+    for(const QString& paragraph : d->paragraphs) {
         writer->writeStartElement(QStringLiteral("p"));
         writer->writeCharacters(paragraph);
         writer->writeEndElement();
@@ -100,9 +101,9 @@ bool Textarea::fromXml(QXmlStreamReader *xmlReader)
     setInverted(xmlReader->attributes().value(QStringLiteral("inverted")).toString().toLower() == QStringLiteral("true"));
     setTransparent(xmlReader->attributes().value(QStringLiteral("transparent")).toString().toLower() == QStringLiteral("true"));
 
-    QStringList points = xmlReader->attributes().value(QStringLiteral("points")).toString().split(' ');
-    Q_FOREACH(const QString& point, points) {
-        QStringList elements = point.split(',');
+    QVector<QStringRef> points = xmlReader->attributes().value(QStringLiteral("points")).split(' ');
+    for(QStringRef point : points) {
+        QVector<QStringRef> elements = point.split(',');
         if(elements.length() == 2)
         {
             addPoint(QPoint(elements.at(0).toInt(), elements.at(1).toInt()));

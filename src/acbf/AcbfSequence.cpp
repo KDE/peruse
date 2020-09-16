@@ -43,7 +43,8 @@ Sequence::Sequence(BookInfo* parent)
     : QObject(parent)
     , d(new Private)
 {
-    qRegisterMetaType<Sequence*>("Sequence*");
+    static const int typeId = qRegisterMetaType<Sequence*>("Sequence*");
+    Q_UNUSED(typeId);
 }
 
 Sequence::~Sequence() = default;

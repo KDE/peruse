@@ -42,7 +42,8 @@ Textlayer::Textlayer(Page* parent)
     : QObject(parent)
     , d(new Private)
 {
-    qRegisterMetaType<Textlayer*>("Textlayer*");
+    static const int typeId = qRegisterMetaType<Textlayer*>("Textlayer*");
+    Q_UNUSED(typeId);
 }
 
 Textlayer::~Textlayer() = default;
@@ -57,7 +58,7 @@ void Textlayer::toXml(QXmlStreamWriter* writer)
         writer->writeAttribute(QStringLiteral("bgcolor"), d->bgcolor);
     }
 
-    Q_FOREACH(Textarea* area, d->textareas) {
+    for(Textarea* area : d->textareas) {
         area->toXml(writer);
     }
 

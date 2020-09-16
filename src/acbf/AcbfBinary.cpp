@@ -41,7 +41,8 @@ Binary::Binary(Data* parent)
     : QObject(parent)
     , d(new Private)
 {
-    qRegisterMetaType<Binary*>("Binary*");
+    static const int typeId = qRegisterMetaType<Binary*>("Binary*");
+    Q_UNUSED(typeId);
 }
 
 Binary::~Binary() = default;

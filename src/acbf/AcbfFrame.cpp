@@ -39,7 +39,8 @@ Frame::Frame(Page* parent)
     : QObject(parent)
     , d(new Private)
 {
-    qRegisterMetaType<Frame*>("Frame*");
+    static const int typeId = qRegisterMetaType<Frame*>("Frame*");
+    Q_UNUSED(typeId);
     connect(this, &Frame::pointCountChanged, this, &Frame::boundsChanged);
 }
 
@@ -47,9 +48,9 @@ Frame::~Frame() = default;
 
 void Frame::toXml(QXmlStreamWriter* writer) {
     writer->writeStartElement(QStringLiteral("frame"));
-    
+
     QStringList points;
-    Q_FOREACH(const QPoint& point, d->points) {
+    for(const QPoint& point : d->points) {
         points << QStringLiteral("%1,%2").arg(QString::number(point.x())).arg(QString::number(point.y()));
     }
     writer->writeAttribute(QStringLiteral("points"), points.join(' '));
@@ -63,10 +64,9 @@ bool Frame::fromXml(QXmlStreamReader *xmlReader)
 {
     setBgcolor(xmlReader->attributes().value(QStringLiteral("bgcolor")).toString());
 
-    QStringList points = xmlReader->attributes().value(QStringLiteral("points")).toString().split(' ');
-
-    Q_FOREACH(const QString& point, points) {
-        QStringList elements = point.split(',');
+    QVector<QStringRef> points = xmlReader->attributes().value(QStringLiteral("points")).split(' ');
+    for(QStringRef point : points) {
+        QVector<QStringRef> elements = point.split(',');
         if(elements.length() == 2)
         {
             addPoint(QPoint(elements.at(0).toInt(), elements.at(1).toInt()));

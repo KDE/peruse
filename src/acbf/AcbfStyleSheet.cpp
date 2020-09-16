@@ -46,7 +46,7 @@ StyleSheet::~StyleSheet() = default;
 void StyleSheet::toXml(QXmlStreamWriter* writer) {
     writer->writeStartElement(QStringLiteral("style"));
     QStringList contents;
-    Q_FOREACH(const QString selector, d->classes.keys())
+    for(const QString& selector : d->classes.keys())
     {
         contents.append(QStringLiteral("%1 {\n%2\n}").arg(selector, d->classes[selector]));
     }
@@ -70,12 +70,12 @@ QHash<QString, QString> StyleSheet::classes() const
 }
 void StyleSheet::setContents(const QString& css)
 {
-    QStringList classes = css.split('}', Qt::SkipEmptyParts);
-    Q_FOREACH(const QString &cssClass, classes)
+    QVector<QStringRef> classes = css.splitRef('}', Qt::SkipEmptyParts);
+    for(QStringRef cssClass : classes)
     {
-        QStringList selectorContent = cssClass.split('{', Qt::SkipEmptyParts);
+        QVector<QStringRef>  selectorContent = cssClass.split('{', Qt::SkipEmptyParts);
         if (selectorContent.count() == 2) {
-            d->classes.insert(selectorContent[0], selectorContent[1]);
+            d->classes.insert(selectorContent[0].toString(), selectorContent[1].toString());
         }
     }
 }

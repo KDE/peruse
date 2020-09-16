@@ -36,15 +36,16 @@ References::References(Document* parent)
     : QObject(parent)
     , d(new Private)
 {
-    qRegisterMetaType<References*>("References*");
+    static const int typeId = qRegisterMetaType<References*>("References*");
+    Q_UNUSED(typeId);
 }
 
 References::~References() = default;
 
 void References::toXml(QXmlStreamWriter* writer) {
     writer->writeStartElement(QStringLiteral("references"));
-    
-    Q_FOREACH(Reference* reference, d->references) {
+
+    for(Reference* reference : d->references) {
         reference->toXml(writer);
     }
     writer->writeEndElement();
