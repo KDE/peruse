@@ -194,6 +194,7 @@ void ArchiveBookModel::setFilename(QString newFilename)
         QString prefix = QString("archivebookpage%1").arg(QString::number(Private::counter()));
         if(d->archive->open(QIODevice::ReadOnly))
         {
+            QMutexLocker locker(&archiveMutex);
             d->imageProvider = new ArchiveImageProvider();
             d->imageProvider->setArchiveBookModel(this);
             d->imageProvider->setPrefix(prefix);
@@ -446,6 +447,7 @@ bool ArchiveBookModel::saveBook()
     bool success = true;
     if(d->isDirty)
     {
+        QMutexLocker locker(&archiveMutex);
         // TODO get new filenames out of acbf
 
         setProcessing(true);
@@ -1067,6 +1069,7 @@ bool ArchiveBookModel::loadCoMet(QStringList xmlDocuments, QObject *acbfData, QS
     KFileMetaData::UserMetaData filedata(filename);
     AdvancedComicBookFormat::Document* acbfDocument = qobject_cast<AdvancedComicBookFormat::Document*>(acbfData);
     Q_FOREACH(const QString xmlDocument, xmlDocuments) {
+        QMutexLocker locker(&archiveMutex);
         const KArchiveFile* archFile = d->archive->directory()->file(xmlDocument);
         QXmlStreamReader xmlReader(archFile->data());
         if(xmlReader.readNextStartElement())
