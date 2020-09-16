@@ -179,6 +179,7 @@ void ArchiveImageRunnable::run()//const QString& id, QSize* size, const QSize& r
     }
 
     if (!d->abort && !success) {
+        QMutexLocker locker(&d->bookModel->archiveMutex);
         const KArchiveFile* entry = d->bookModel->archiveFile(d->id);
 
         if(!d->abort && entry) {
