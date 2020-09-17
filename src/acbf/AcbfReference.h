@@ -35,7 +35,7 @@ namespace AdvancedComicBookFormat
 /**
  * \brief a Class to handle a single ACBF reference.
  * 
- * A reference is a bit of text that can be refered to
+ * A reference is a bit of text that can be referred to
  * with an anchor in any of the other paragraphs. This
  * can be used for footnotes, like translation notes
  * or author's notes.
@@ -92,7 +92,7 @@ public:
      * 
      * Contains allowed sub-elements: strong, emphasis, strikethrough
      * sub, sup, a (with mandatory href attribute only)
-     * Can also contain deprecated sub-elements (superceded by...): code (type option code),
+     * Can also contain deprecated sub-elements (superceeded by...): code (type option code),
      * inverted (textarea option inverted)
      */
     QStringList paragraphs() const;

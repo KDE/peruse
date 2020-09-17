@@ -67,7 +67,7 @@ time64_t ar_entry_get_filetime(ar_archive *ar);
 /* uncompresses the next 'count' bytes of the current entry into buffer; returns false on error */
 bool ar_entry_uncompress(ar_archive *ar, void *buffer, size_t count);
 
-/* copies at most 'count' bytes of the archive's global comment (if any) into buffer; returns the actual amout of bytes copied (or, if 'buffer' is NULL, the required buffer size) */
+/* copies at most 'count' bytes of the archive's global comment (if any) into buffer; returns the actual amount of bytes copied (or, if 'buffer' is NULL, the required buffer size) */
 size_t ar_get_global_comment(ar_archive *ar, void *buffer, size_t count);
 
 /***** rar/rar *****/

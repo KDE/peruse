@@ -39,7 +39,7 @@ namespace AdvancedComicBookFormat
      * The References object holds Reference objects, which
      * in turn have an id, language and a list of paragraphs.
      * 
-     * A reference is a bit of text that can be refered to
+     * A reference is a bit of text that can be referred to
      * with an anchor in any of the other paragraphs. This
      * can be used for footnotes, like translation notes
      * or author's notes.

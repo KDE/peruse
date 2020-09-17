@@ -27,14 +27,14 @@ import org.kde.kirigami 2.7 as Kirigami
  * @brief a special overlay sheet for editing the author information.
  * 
  * Authors can have the full names, nicknames and some contact information
- * like email adress and homepage. They can also be assigned a role
+ * like email address and homepage. They can also be assigned a role
  * from a list of predefined author activities.
  * 
  * Author is used in acbf for both the actual authors as well as the people
  * who handled generating the acbf document, which is why this is
  * a dedicated form.
  * 
- * TODO: Support input for multiple homepage and email adresses.
+ * TODO: Support input for multiple homepage and email addresses.
  */
 Kirigami.OverlaySheet {
     id: root;

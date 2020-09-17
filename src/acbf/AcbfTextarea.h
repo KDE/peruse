@@ -207,7 +207,7 @@ public:
      * 
      * Contains allowed sub-elements: strong, emphasis, strikethrough
      * sub, sup, a (with mandatory href attribute only)
-     * Can also contain deprecated sub-elements (superceded by...): code (type option code),
+     * Can also contain deprecated sub-elements (superceeded by...): code (type option code),
      * inverted (textarea option inverted)
      */
     QStringList paragraphs() const;

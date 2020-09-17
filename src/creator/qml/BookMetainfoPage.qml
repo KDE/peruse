@@ -94,7 +94,7 @@ Kirigami.ScrollablePage {
         QtControls.TextArea {
             id: defaultAnnotation;
             width: parent.width;
-            placeholderText: i18nc("placeholder text for default annotiation text-area", "Write to add default annotation");
+            placeholderText: i18nc("placeholder text for default annotation text-area", "Write to add default annotation");
             text:root.model.acbfData ? root.model.acbfData.metaData.bookInfo.annotation("").join("\n\n") : "";
         }
         Kirigami.Heading {

@@ -44,7 +44,7 @@ namespace AdvancedComicBookFormat
  * closer stylistically to a given acbf file.
  * 
  * This class does some minimal parsing on the css to
- * seperate the definitions and the selectors.
+ * separate the definitions and the selectors.
  */
 class ACBF_EXPORT StyleSheet : public QObject
 {

@@ -194,8 +194,8 @@ private:
      * @param xmlDocument string with the archive value.
      * @param acbfData a pointer pointing to a acbfDocument.
      * @param entries a list of image entries, sorted.
-     * @param filename the file name of the doument, necessary for writing data to kfilemetadata.
-     * @return whether the reading was succesful.
+     * @param filename the file name of the document, necessary for writing data to kfilemetadata.
+     * @return whether the reading was successful.
      */
     bool loadComicInfoXML(QString xmlDocument, QObject* acbfData, QStringList entries, QString filename);
     /**
@@ -203,8 +203,8 @@ private:
      * @param xmlDocument string with the archive value.
      * @param acbfData a pointer pointing to a acbfDocument.
      * @param entries a list of image entries, sorted.
-     * @param filename the file name of the doument, necessary for writing data to kfilemetadata.
-     * @return whether the reading was succesful.
+     * @param filename the file name of the document, necessary for writing data to kfilemetadata.
+     * @return whether the reading was successful.
      */
     bool loadCoMet(QStringList xmlDocuments, QObject* acbfData, QStringList entries, QString filename);
     Private* d;

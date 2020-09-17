@@ -237,8 +237,8 @@ public:
     Q_SIGNAL void processingChanged();
     /**
      * \brief Fires when the book is done loading, and informs whether it was
-     * succesful.
-     * @param success Wether the book's loading was succesful
+     * successful.
+     * @param success Whether the book's loading was successful
      * TODO: This isn't triggered by anything right now?
      */
     Q_SIGNAL void loadingCompleted(bool success);
