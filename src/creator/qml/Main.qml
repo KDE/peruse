@@ -151,7 +151,10 @@ Kirigami.ApplicationWindow {
         id: openDlg;
         title: i18nc("@title:window standard file open dialog used to open a book not in the collection", "Please Choose a Book to Open");
         folder: mainWindow.homeDir();
-        nameFilters: [ "Comic Book Archive zip format (*.cbz)", "All files (*)" ]
+        nameFilters: [
+            i18nc("The file type filter for comic book archives", "Comic Book Archive zip format %1", "(*.cbz)"),
+            i18nc("The file type filter for showing all files", "All files %1", "(*)")
+        ]
         property int splitPos: osIsWindows ? 8 : 7;
         onAccepted: {
             if(openDlg.fileUrl.toString().substring(0, 7) === "file://") {

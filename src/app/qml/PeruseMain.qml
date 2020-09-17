@@ -48,7 +48,7 @@ import org.kde.contentlist 0.1
  */
 Kirigami.ApplicationWindow {
     id: mainWindow;
-    title: "Comic Book Reader";
+    title: i18nc("@title:window the generic descriptive title of the application", "Comic Book Reader");
     property int animationDuration: 200;
     property bool isLoading: false;
     pageStack.initialPage: welcomePage;

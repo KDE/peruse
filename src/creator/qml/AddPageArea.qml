@@ -233,12 +233,12 @@ Kirigami.OverlaySheet {
                     }
                     QtControls.Switch {
                         id: transparentSwitch;
-                        text: "Transparent";
+                        text: i18nc("Option for making the background of a text area transparent", "Transparent");
                         anchors.verticalCenter: parent.verticalCenter;
                     }
                     QtControls.Switch {
                         id: invertedSwitch;
-                        text: "Inverted";
+                        text: i18nc("Option for making the background of a text area cause what is behind it to be inverted", "Inverted");
                         anchors.verticalCenter: parent.verticalCenter;
                     }
 
@@ -290,7 +290,7 @@ Kirigami.OverlaySheet {
             Row {
                 spacing: Kirigami.Units.smallSpacing;
                 QtControls.Label {
-                    text: "Page Index:"
+                    text: i18nc("Label for the dropdown which will let you pick a page a jump will send the reader to when activated", "Page Index:")
                     anchors.verticalCenter: parent.verticalCenter;
                 }
                 QtControls.ComboBox {

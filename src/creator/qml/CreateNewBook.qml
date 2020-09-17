@@ -116,7 +116,10 @@ Kirigami.Page {
                 id: getCoverDlg;
                 title: i18nc("@title:window file dialog used to select the cover image for a new book", "Please Choose Your Cover Image");
                 folder: mainWindow.homeDir();
-                nameFilters: [ "JPEG images (*.jpg, *.jpeg)", "All files (*)" ];
+                nameFilters: [
+                    i18nc("File filter option for displaying only jpeg files", "JPEG images %1", "(*.jpg, *.jpeg)"),
+                    i18nc("File filter option for displaying all files", "All files %1", "(*)")
+                ];
             }
         }
         Item {

@@ -115,7 +115,7 @@ Kirigami.Page {
                     right: parent.right;
                     bottom: parent.verticalCenter;
                 }
-                text: "Peruse";
+                text: i18nc("The name of the application", "Peruse");
                 horizontalAlignment: Text.AlignHCenter;
             }
             QtControls.Label {
@@ -209,8 +209,8 @@ Kirigami.Page {
             }
             Peruse.PropertyContainer {
                 id: fakeBook;
-                property string author: "unnamed";
-                property string title: "unnamed";
+                property string author: i18nc("The generic string used for an unnamed author", "unnamed");
+                property string title: i18nc("The generic string used for an unnamed book", "unnamed");
                 property string filename: "";
                 property string thumbnail: "";
                 property string currentPage: "0";

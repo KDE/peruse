@@ -88,7 +88,7 @@ Item {
             clip: true;
             width: folderView.width;
             onClicked: folderModel.folder = folderModel.parentFolder;
-            label: "(go up one level)";
+            label: i18nc("A fake folder item which if activated will cause the folder list to navigate up through the folder structure by one step", "(go up one level)");
             icon: "go-up";
         }
         delegate: Kirigami.BasicListItem {

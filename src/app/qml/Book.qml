@@ -198,17 +198,17 @@ Kirigami.Page {
             text: i18nc("Top level entry leading to a submenu with options for the book display", "View Options");
             iconName: "configure";
             Kirigami.Action {
-                text: "Reading Direction"
+                text: i18nc("Header title for the section in which the direction the book will be navigated can be picked", "Reading Direction")
             }
             Kirigami.Action {
-                text: "Left to Right"
+                text: i18nc("Title for the option which will make the book navigate from left to right", "Left to Right")
                 iconName: "format-text-direction-ltr";
                 shortcut: rtlMode ? "r" : "";
                 enabled: root.isCurrentContext && !Kirigami.Settings.isMobile && root.rtlMode;
                 onTriggered: { root.rtlMode = false; }
             }
             Kirigami.Action {
-                text: "Right to Left"
+                text: i18nc("Title for the option which will make the book navigate from right to left", "Right to Left")
                 iconName: "format-text-direction-rtl";
                 shortcut: rtlMode ? "" : "r";
                 enabled: root.isCurrentContext && !Kirigami.Settings.isMobile && !root.rtlMode;

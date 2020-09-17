@@ -120,7 +120,7 @@ Kirigami.ScrollablePage {
             model: root.model.acbfData ? root.model.acbfData.metaData.bookInfo.authorNames : 0;
             delegate: QtControls.Label {
                 width: parent.width - removeAuthorButton.width - Kirigami.Units.smallSpacing;
-                text: modelData.length > 0 ? modelData : "(unnamed)";
+                text: modelData.length > 0 ? modelData : i18nc("The text used in place of an author's name if one has not been set", "(unnamed)");
                 QtControls.Button {
                     id: editAuthorButton;
                     anchors {
@@ -790,7 +790,7 @@ Kirigami.ScrollablePage {
             model: root.model.acbfData ? root.model.acbfData.metaData.documentInfo.authorNames : 0;
             delegate: QtControls.Label {
                 width: parent.width - removeDocAuthorButton.width - Kirigami.Units.smallSpacing;
-                text: modelData.length > 0 ? modelData : "(unnamed)";
+                text: modelData.length > 0 ? modelData : i18nc("The text used in place of an author's name if one has not been set", "(unnamed)");
                 QtControls.Button {
                     id: editDocAuthorButton;
                     anchors {

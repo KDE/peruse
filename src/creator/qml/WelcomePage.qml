@@ -56,7 +56,7 @@ Kirigami.Page {
                     right: parent.right;
                     bottom: parent.verticalCenter;
                 }
-                text: "Peruse Creator";
+                text: i18nc("The application's name", "Peruse Creator");
                 horizontalAlignment: Text.AlignHCenter;
             }
             QtControls.Label {
