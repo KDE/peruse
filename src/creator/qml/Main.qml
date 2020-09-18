@@ -20,6 +20,8 @@
  */
 
 import QtQuick 2.12
+import QtQuick.Layouts 1.12
+import QtQuick.Controls 2.12 as QQC2
 import QtQuick.Window 2.12
 import QtQuick.Dialogs 1.3
 
@@ -67,17 +69,35 @@ Kirigami.ApplicationWindow {
         titleIcon: "peruse-creator";
         drawerOpen: true;
         modal: false;
-        actions: [
-            Kirigami.Action {
-                text: i18nc("Switch to the welcome page", "Welcome");
-                iconName: "start-over";
-                checked: mainWindow.currentCategory === "welcomePage";
-                onTriggered: {
-                    changeCategory(welcomePage);
+        header: Kirigami.AbstractApplicationHeader {
+            RowLayout {
+                anchors.fill: parent
+                anchors.leftMargin: Kirigami.Units.smallSpacing * 2
+                anchors.rightMargin: Kirigami.Units.smallSpacing * 2
+
+                Kirigami.Heading {
+                    level: 2
+                    text: i18n("Navigation")
+                    Layout.fillWidth: true
                 }
-            },
-            Kirigami.Action {
-            },
+
+                QQC2.ToolButton {
+                    icon.name: "go-home"
+
+                    enabled: mainWindow.currentCategory !== "welcomePage";
+                    onClicked: {
+                        if (changeCategory(welcomePage)) {
+                            pageStack.currentItem.updateRecent();
+                        }
+                    }
+
+                    QQC2.ToolTip {
+                        text: i18n("Switch to the welcome page")
+                    }
+                }
+            }
+        }
+        actions: [
             Kirigami.Action {
                 text: i18nc("Create a book", "Create a New Book...");
                 iconName: "document-new";
