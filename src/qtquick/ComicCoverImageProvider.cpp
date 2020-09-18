@@ -22,6 +22,7 @@
 #include "ComicCoverImageProvider.h"
 
 #include <KRar.h>
+#include <KZip>
 #include <karchive.h>
 #include <karchivefile.h>
 #include <kiconloader.h>
@@ -156,6 +157,8 @@ void ComicCoverRunnable::run()
     const QMimeType mime = db.mimeTypeForFile(d->id, QMimeDatabase::MatchContent);
     if(!d->abort && (mime.inherits("application/x-cbr") || mime.inherits("application/x-rar"))) {
         archive = new KRar(d->id);
+    } else if(!d->abort && (mime.inherits("application/x-cbz") || mime.inherits("application/zip"))) {
+        archive = new KZip(d->id);
     }
     // FIXME: This goes elsewhere - see below
     // If this code seems familiar, it is adapted from kio-extras/thumbnail/comiccreator.cpp
