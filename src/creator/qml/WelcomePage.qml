@@ -22,7 +22,7 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12 as QtControls
 
-import org.kde.kirigami 2.7 as Kirigami
+import org.kde.kirigami 2.13 as Kirigami
 /**
  * @brief The page on which Peruse Creator opens.
  * 
@@ -32,151 +32,102 @@ import org.kde.kirigami 2.7 as Kirigami
  * - Creating a blank comic.
  * - Creating a comic archive from a selection of images.
  */
-Kirigami.Page {
+Kirigami.ScrollablePage {
     id: root;
     property string categoryName: "welcomePage";
     title: i18nc("title of the welcome page", "Welcome");
 
-    Item {
-        width: root.width - (root.leftPadding + root.rightPadding);
-        height: root.height - root.topPadding;
-
-        Item {
-            id: titleContainer;
-            anchors {
-                top: parent.top;
-                left: parent.left;
-                right: parent.right;
-            }
-            height: appNameLabel.height + appDescriptionLabel.height + Kirigami.Units.largeSpacing;
-            Kirigami.Heading {
-                id: appNameLabel;
-                anchors {
-                    left: parent.left;
-                    right: parent.right;
-                    bottom: parent.verticalCenter;
-                }
-                text: i18nc("The application's name", "Peruse Creator");
-                horizontalAlignment: Text.AlignHCenter;
-            }
-            QtControls.Label {
-                id: appDescriptionLabel;
-                anchors {
-                    top: parent.verticalCenter;
-                    left: parent.left;
-                    right: parent.right;
-                }
-                text: i18nc("application subtitle", "Comic Book Creation Tool");
-                horizontalAlignment: Text.AlignHCenter;
-            }
-            Rectangle {
-                anchors.centerIn: parent;
-                height: 1;
-                color: Kirigami.Theme.textColor;
-                width: appDescriptionLabel.paintedWidth;
-            }
-        }
-
-        Item {
-            id: actionsContainer;
-            anchors {
-                top: titleContainer.bottom;
-                left: parent.left;
-                right: parent.right;
-                bottom: parent.bottom;
-            }
+    ListView {
+        id: startupChoices
+        header: Column {
+            height: titleContainer.height + instructionsCard.height + Kirigami.Units.largeSpacing * 5;
+            width: startupChoices.width;
+            spacing: Kirigami.Units.largeSpacing
+            Item { height: Kirigami.Units.largeSpacing; width: Kirigami.Units.largeSpacing; }
             Item {
-                anchors {
-                    top: parent.top;
-                    left: parent.left;
-                    right: parent.right;
-                    bottom: parent.verticalCenter;
-                    margins: Kirigami.Units.largeSpacing;
+                id: titleContainer;
+                anchors.horizontalCenter: parent.horizontalCenter
+                width: startupChoices.width - Kirigami.Units.largeSpacing * 4
+                height: appNameLabel.height + appDescriptionLabel.height + Kirigami.Units.largeSpacing;
+                Kirigami.Heading {
+                    id: appNameLabel;
+                    anchors {
+                        left: parent.left;
+                        right: parent.right;
+                        bottom: parent.verticalCenter;
+                    }
+                    text: i18nc("The application's name", "Peruse Creator");
+                    horizontalAlignment: Text.AlignHCenter;
                 }
                 QtControls.Label {
-                    anchors.fill: parent;
-                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere;
+                    id: appDescriptionLabel;
+                    anchors {
+                        top: parent.verticalCenter;
+                        left: parent.left;
+                        right: parent.right;
+                    }
+                    text: i18nc("application subtitle", "Comic Book Creation Tool");
                     horizontalAlignment: Text.AlignHCenter;
-                    verticalAlignment: Text.AlignVCenter;
+                }
+                Rectangle {
+                    anchors.centerIn: parent;
+                    height: 1;
+                    color: Kirigami.Theme.textColor;
+                    width: appDescriptionLabel.paintedWidth;
+                }
+            }
+            Kirigami.Card {
+                id: instructionsCard
+                width: startupChoices.width - Kirigami.Units.largeSpacing * 4
+                anchors.horizontalCenter: parent.horizontalCenter
+                contentItem: QtControls.Label {
+                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere;
+                    padding: Kirigami.Units.smallSpacing;
                     text: i18nc("Longer introduction text used on the welcome page", "Welcome to Peruse Creator, a tool designed to assist you in creating comic book archives which can be read with any cbz capable comic book reader app. You can either create entirely new comic book archives from scratch, create one from a set of pictures, or editing existing archives. Once you have created them, you can even publish them directly to the online comic book archive at the KDE Store from within the application, or just share the files with your friends.");
                 }
             }
-            Item {
-                anchors {
-                    top: parent.verticalCenter;
-                    left: parent.left;
-                    right: parent.right;
-                    bottom: parent.bottom;
-                }
-                Item {
-                    id: continueLast;
-                    anchors {
-                        top: parent.top;
-                        left: parent.left;
-                        right: parent.horizontalCenter;
-                        bottom: parent.verticalCenter;
-                    }
-                    QtControls.Button {
-                        anchors.centerIn: parent;
-//                         iconName: "go-next";
-                        text: i18nc("@action:button continue working on the most recently opened comic book archive", "Continue %1", continueLast.mostRecentBook.split('/').pop());
-                        onClicked: mainWindow.openBook(continueLast.mostRecentBook);
-                    }
-                    property string mostRecentBook: "";
-                    Component.onCompleted: {
-                        if(peruseConfig.recentlyOpened.length > 0) {
-                            for(var i = 0; i < peruseConfig.recentlyOpened.length; ++i) {
-                                if(peruseConfig.recentlyOpened[i].toLowerCase().slice(-4) === ".cbz") {
-                                    continueLast.mostRecentBook = peruseConfig.recentlyOpened[i];
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    visible: mostRecentBook.length > 0;
-                }
-                Item {
-                    anchors {
-                        top: parent.top;
-                        left: continueLast.visible ? parent.horizontalCenter : parent.left;
-                        right: parent.right;
-                        bottom: parent.verticalCenter;
-                    }
-                    QtControls.Button {
-                        anchors.centerIn: parent;
-//                         iconName: "document-open";
-                        text: i18nc("@action:button open existing comic book archive", "Open Existing...");
-                        onClicked: mainWindow.openOther();
-                    }
-                }
-                Item {
-                    anchors {
-                        top: parent.verticalCenter;
-                        left: parent.left;
-                        right: parent.horizontalCenter;
-                        bottom: parent.bottom;
-                    }
-                    QtControls.Button {
-                        anchors.centerIn: parent;
-//                         iconName: "document-new";
-                        text: i18nc("@action:button create a new, empty comic book archive", "Create Blank");
-                        onClicked: mainWindow.changeCategory(createNewBookPage);
-                    }
-                }
-                Item {
-                    anchors {
-                        top: parent.verticalCenter;
-                        left: parent.horizontalCenter;
-                        right: parent.right;
-                        bottom: parent.bottom;
-                    }
-                    QtControls.Button {
-                        anchors.centerIn: parent;
-//                         iconName: "folder-open";
-                        text: i18nc("@action:button create a new comic book archive by copying in a bunch of pictures", "Create from Images...");
+            Item { height: Kirigami.Units.largeSpacing; width: Kirigami.Units.largeSpacing; }
+        }
+        Component.onCompleted: {
+            startupChoices.model.append( {
+                text: i18nc("@action:button open existing comic book archive", "Open Existing..."),
+                subtitle: "",
+                icon: "document-open",
+                script: " mainWindow.openOther()"
+            });
+            startupChoices.model.append( {
+                text: i18nc("@action:button create a new, empty comic book archive", "Create Blank"),
+                subtitle: "",
+                icon: "document-new",
+                script: "mainWindow.changeCategory(createNewBookPage)"
+            });
+            startupChoices.model.append( {
+                text: i18nc("@action:button create a new comic book archive by copying in a bunch of pictures", "Create from Images..."),
+                subtitle: "",
+                icon: "folder-open",
+                script: ""
+            });
+            if(peruseConfig.recentlyOpened.length > 0) {
+                for(var i = 0; i < peruseConfig.recentlyOpened.length; ++i) {
+                    if(peruseConfig.recentlyOpened[i].toLowerCase().slice(-4) === ".cbz") {
+                        var recentBook = peruseConfig.recentlyOpened[i];
+                        startupChoices.model.append({
+                            text: i18nc("@action:button continue working on the most recently opened comic book archive", "Continue working on %1", recentBook.split('/').pop()),
+                            subtitle: recentBook,
+                            icon: "image://comiccover/" + recentBook,
+                            script: "mainWindow.openBook(\"" + recentBook + "\")"
+                        });
                     }
                 }
             }
+        }
+        model: ListModel { }
+        delegate: Kirigami.BasicListItem {
+            height: Kirigami.Units.gridUnit * 3
+            text: model.text
+            subtitle: model.subtitle
+            icon: model.icon
+            onClicked: eval(model.script);
         }
     }
 }
