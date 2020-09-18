@@ -20,9 +20,10 @@
  */
 
 import QtQuick 2.12
+import QtQuick.Layouts 1.4
 import QtQuick.Controls 2.12 as QtControls
 
-import org.kde.kirigami 2.7 as Kirigami
+import org.kde.kirigami 2.13 as Kirigami
 
 import org.kde.peruse 0.1 as Peruse
 /**
@@ -143,7 +144,8 @@ Kirigami.ScrollablePage {
 
             ]
             Item {
-                anchors.fill: parent;
+                Layout.fillWidth: true
+                Layout.minimumHeight: Kirigami.Units.iconSizes.enormous
                 Item {
                     id: bookCover;
                     anchors {
