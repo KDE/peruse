@@ -445,7 +445,7 @@ QObject* CategoryEntriesModel::bookFromFile(QString filename)
             obj->setProperty("filename", filename);
 
             QString thumbnail;
-            if(filename.toLower().endsWith("cbr")) {
+            if(filename.toLower().endsWith("cbr") || filename.toLower().endsWith("cbz")) {
                 thumbnail = QString("image://comiccover/").append(filename);
             }
 #ifdef USE_PERUSE_PDFTHUMBNAILER
