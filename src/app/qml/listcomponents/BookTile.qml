@@ -22,7 +22,7 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12 as QtControls
 
-import org.kde.kirigami 2.15 as Kirigami
+import org.kde.kirigami 2.14 as Kirigami
 
 /**
  * @brief small window with book information.

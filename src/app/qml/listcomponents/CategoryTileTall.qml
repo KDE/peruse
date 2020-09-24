@@ -22,7 +22,7 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12 as QtControls
 
-import org.kde.kirigami 2.15 as Kirigami
+import org.kde.kirigami 2.14 as Kirigami
 
 /**
  * @brief A button to select a category to show the categories and books inside.
