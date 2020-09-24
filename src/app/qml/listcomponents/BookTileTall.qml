@@ -22,7 +22,7 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12 as QtControls
 
-import org.kde.kirigami 2.7 as Kirigami
+import org.kde.kirigami 2.15 as Kirigami
 
 /**
  * @brief A button to select a book to read with a nice big thumbnail.
@@ -113,21 +113,15 @@ Item {
             }
             radius: 2;
         }
-        Image {
+        Kirigami.Icon {
             id: coverImage;
             anchors {
                 fill: parent;
                 margins: Kirigami.Units.largeSpacing;
             }
             source: root.thumbnail === "Unknown role" ? "" : root.thumbnail;
-            asynchronous: true;
-            fillMode: Image.PreserveAspectFit;
-        }
-        QtControls.BusyIndicator {
-            id: loadingSpinner;
-            anchors.centerIn: parent;
-            visible: running;
-            running: coverImage.status === Image.Loading;
+            placeholder: "application-vnd.oasis.opendocument.text";
+            fallback: "paint-unknown"
         }
         Rectangle{
             id: pressIndicator;

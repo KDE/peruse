@@ -22,7 +22,7 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12 as QtControls
 
-import org.kde.kirigami 2.7 as Kirigami
+import org.kde.kirigami 2.15 as Kirigami
 
 /**
  * @brief small window with book information.
@@ -98,14 +98,15 @@ Item {
         }
         width: root.width / 3;
         height: width * 1.5;
-        Image {
+        Kirigami.Icon {
             id: coverImage;
             anchors {
                 fill: parent;
-                margins: Kirigami.Units.smallSpacing;
+                margins: Kirigami.Units.largeSpacing;
             }
-            asynchronous: true;
-            fillMode: Image.PreserveAspectFit;
+            source: root.thumbnail === "Unknown role" ? "" : root.thumbnail;
+            placeholder: "application-vnd.oasis.opendocument.text";
+            fallback: "paint-unknown"
         }
         MouseArea {
             anchors.fill: parent;
