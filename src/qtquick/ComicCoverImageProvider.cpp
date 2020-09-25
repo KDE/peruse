@@ -42,7 +42,6 @@ public:
     ~Private() {
         delete imageCache;
     }
-    QThreadPool pool;
     KImageCache* imageCache;
 };
 
@@ -60,12 +59,12 @@ ComicCoverImageProvider::~ComicCoverImageProvider()
 class ComicCoverResponse : public QQuickImageResponse
 {
     public:
-        ComicCoverResponse(const QString &id, const QSize &requestedSize, QThreadPool *pool, KImageCache* imageCache)
+        ComicCoverResponse(const QString &id, const QSize &requestedSize, KImageCache* imageCache)
         {
             m_runnable = new ComicCoverRunnable(id, requestedSize, imageCache);
             m_runnable->setAutoDelete(false);
             connect(m_runnable, &ComicCoverRunnable::done, this, &ComicCoverResponse::handleDone, Qt::QueuedConnection);
-            pool->start(m_runnable);
+            QThreadPool::globalInstance()->start(m_runnable);
         }
         virtual ~ComicCoverResponse()
         {
@@ -93,7 +92,7 @@ class ComicCoverResponse : public QQuickImageResponse
 
 QQuickImageResponse * ComicCoverImageProvider::requestImageResponse(const QString& id, const QSize& requestedSize)
 {
-    ComicCoverResponse* response = new ComicCoverResponse(id, requestedSize, &d->pool, d->imageCache);
+    ComicCoverResponse* response = new ComicCoverResponse(id, requestedSize, d->imageCache);
     return response;
 }
 

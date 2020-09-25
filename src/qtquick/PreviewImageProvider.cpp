@@ -35,7 +35,6 @@ class PreviewImageProvider::Private
 {
 public:
     Private() {};
-    QThreadPool pool;
 };
 
 PreviewImageProvider::PreviewImageProvider()
@@ -53,12 +52,12 @@ PreviewImageProvider::~PreviewImageProvider()
 class PreviewResponse : public QQuickImageResponse
 {
     public:
-        PreviewResponse(const QString &id, const QSize &requestedSize, QThreadPool *pool)
+        PreviewResponse(const QString &id, const QSize &requestedSize)
         {
             m_runnable = new PreviewRunnable(id, requestedSize);
             m_runnable->setAutoDelete(false);
             connect(m_runnable, &PreviewRunnable::done, this, &PreviewResponse::handleDone, Qt::QueuedConnection);
-            pool->start(m_runnable);
+            QThreadPool::globalInstance()->start(m_runnable);
         }
         virtual ~PreviewResponse()
         {
@@ -86,7 +85,7 @@ class PreviewResponse : public QQuickImageResponse
 
 QQuickImageResponse * PreviewImageProvider::requestImageResponse(const QString& id, const QSize& requestedSize)
 {
-    PreviewResponse* response = new PreviewResponse(id, requestedSize, &d->pool);
+    PreviewResponse* response = new PreviewResponse(id, requestedSize);
     return response;
 }
 

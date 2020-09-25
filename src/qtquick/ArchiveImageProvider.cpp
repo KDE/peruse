@@ -41,7 +41,6 @@ class ArchiveImageProvider::Private
 {
 public:
     Private() {}
-    QThreadPool pool;
 
     ArchiveBookModel* bookModel{nullptr};
     QString prefix;
@@ -61,12 +60,12 @@ ArchiveImageProvider::~ArchiveImageProvider()
 class ArchiveImageResponse : public QQuickImageResponse
 {
     public:
-        ArchiveImageResponse(const QString &id, const QSize &requestedSize, ArchiveBookModel* bookModel, const QString& prefix, QThreadPool *pool)
+        ArchiveImageResponse(const QString &id, const QSize &requestedSize, ArchiveBookModel* bookModel, const QString& prefix)
         {
             m_runnable = new ArchiveImageRunnable(id, requestedSize, bookModel, prefix);
             m_runnable->setAutoDelete(false);
             connect(m_runnable, &ArchiveImageRunnable::done, this, &ArchiveImageResponse::handleDone, Qt::QueuedConnection);
-            pool->start(m_runnable);
+            QThreadPool::globalInstance()->start(m_runnable);
         }
         virtual ~ArchiveImageResponse()
         {
@@ -94,7 +93,7 @@ class ArchiveImageResponse : public QQuickImageResponse
 
 QQuickImageResponse * ArchiveImageProvider::requestImageResponse(const QString& id, const QSize& requestedSize)
 {
-    ArchiveImageResponse* response = new ArchiveImageResponse(id, requestedSize, d->bookModel, d->prefix, &d->pool);
+    ArchiveImageResponse* response = new ArchiveImageResponse(id, requestedSize, d->bookModel, d->prefix);
     return response;
 }
 

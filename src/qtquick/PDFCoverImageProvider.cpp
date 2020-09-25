@@ -46,7 +46,6 @@ public:
         thumbDir.cd(subpath);
     }
     QDir thumbDir;
-    QThreadPool pool;
 };
 
 PDFCoverImageProvider::PDFCoverImageProvider()
@@ -63,12 +62,12 @@ PDFCoverImageProvider::~PDFCoverImageProvider()
 class PDFCoverResponse : public QQuickImageResponse
 {
     public:
-        PDFCoverResponse(const QString &id, const QSize &requestedSize, const QDir& thumbDir, QThreadPool *pool)
+        PDFCoverResponse(const QString &id, const QSize &requestedSize, const QDir& thumbDir)
         {
             m_runnable = new PDFCoverRunnable(id, requestedSize, thumbDir);
             m_runnable->setAutoDelete(false);
             connect(m_runnable, &PDFCoverRunnable::done, this, &PDFCoverResponse::handleDone, Qt::QueuedConnection);
-            pool->start(m_runnable);
+            QThreadPool::globalInstance()->start(m_runnable);
         }
         virtual ~PDFCoverResponse()
         {
@@ -96,7 +95,7 @@ class PDFCoverResponse : public QQuickImageResponse
 
 QQuickImageResponse * PDFCoverImageProvider::requestImageResponse(const QString& id, const QSize& requestedSize)
 {
-    PDFCoverResponse* response = new PDFCoverResponse(id, requestedSize, d->thumbDir, &d->pool);
+    PDFCoverResponse* response = new PDFCoverResponse(id, requestedSize, d->thumbDir);
     return response;
 }
 
@@ -144,7 +143,7 @@ void PDFCoverRunnable::run()
             // then we've not already generated a thumbnail, try to make one...
             QProcess thumbnailer;
             QStringList args;
-            args << "-sPageList=1" << "-dLastPage=1" << "-dSAFER" << "-dBATCH" << "-dNOPAUSE" << "-dQUIET" << "-sDEVICE=png16m" << "-dGraphicsAlphaBits=4" << "-r300";
+            args << "-sPageList=1" << "-dLastPage=1" << "-dSAFER" << "-dBATCH" << "-dNOPAUSE" << "-dQUIET" << "-sDEVICE=png16m" << "-dGraphicsAlphaBits=4" << "-r150";
             args << QString("-sOutputFile=%1").arg(outFile) << d->id;
             QString gsApp;
             #ifdef Q_OS_WIN
