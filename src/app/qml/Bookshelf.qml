@@ -137,7 +137,7 @@ Kirigami.ScrollablePage {
         readonly property int availableWidth: shelfList.width - scrollBarSpace - 4
         readonly property int implicitCellWidth: Kirigami.Units.gridUnit * 15
         cellWidth: Math.floor(availableWidth / Math.max(Math.floor(availableWidth / (implicitCellWidth + Kirigami.Units.gridUnit)), 2))
-        cellHeight: cellWidth * 0.8;
+        cellHeight: Kirigami.Units.gridUnit * 13;
 
         currentIndex: -1;
 
