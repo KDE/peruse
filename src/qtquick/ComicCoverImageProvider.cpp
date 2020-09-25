@@ -152,16 +152,14 @@ void ComicCoverRunnable::abort()
 
 void ComicCoverRunnable::run()
 {
-    QImage img;
-    d->imageCache->findImage(d->id, &img);
-
     QSize ourSize(KIconLoader::SizeEnormous, KIconLoader::SizeEnormous);
     if(d->requestedSize.width() > 0 && d->requestedSize.height() > 0)
     {
         ourSize = d->requestedSize;
     }
 
-    if (img.isNull()) {
+    QImage img;
+    if (d->imageCache->findImage(d->id, &img)) {
         KArchive* archive = nullptr;
         QMimeDatabase db;
         db.mimeTypeForFile(d->id, QMimeDatabase::MatchContent);
