@@ -70,13 +70,15 @@ Kirigami.ApplicationWindow {
         drawerOpen: true;
         modal: false;
         header: Kirigami.AbstractApplicationHeader {
+            topPadding: Kirigami.Units.smallSpacing / 2;
+            bottomPadding: Kirigami.Units.smallSpacing / 2;
+            leftPadding: Kirigami.Units.smallSpacing
+            rightPadding: Kirigami.Units.smallSpacing
             RowLayout {
                 anchors.fill: parent
-                anchors.leftMargin: Kirigami.Units.smallSpacing * 2
-                anchors.rightMargin: Kirigami.Units.smallSpacing * 2
 
                 Kirigami.Heading {
-                    level: 2
+                    level: 1
                     text: i18n("Navigation")
                     Layout.fillWidth: true
                 }
