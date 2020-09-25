@@ -35,8 +35,15 @@
 
 class ComicCoverImageProvider::Private {
 public:
-    Private() {}
+    Private() {
+        // We'll just stick with a 100MiB cache for now - something to expose later maybe?
+        imageCache = new KImageCache("peruse-comiccover", 104857600);
+    }
+    ~Private() {
+        delete imageCache;
+    }
     QThreadPool pool;
+    KImageCache* imageCache;
 };
 
 ComicCoverImageProvider::ComicCoverImageProvider()
@@ -53,9 +60,9 @@ ComicCoverImageProvider::~ComicCoverImageProvider()
 class ComicCoverResponse : public QQuickImageResponse
 {
     public:
-        ComicCoverResponse(const QString &id, const QSize &requestedSize, QThreadPool *pool)
+        ComicCoverResponse(const QString &id, const QSize &requestedSize, QThreadPool *pool, KImageCache* imageCache)
         {
-            m_runnable = new ComicCoverRunnable(id, requestedSize);
+            m_runnable = new ComicCoverRunnable(id, requestedSize, imageCache);
             m_runnable->setAutoDelete(false);
             connect(m_runnable, &ComicCoverRunnable::done, this, &ComicCoverResponse::handleDone, Qt::QueuedConnection);
             pool->start(m_runnable);
@@ -86,7 +93,7 @@ class ComicCoverResponse : public QQuickImageResponse
 
 QQuickImageResponse * ComicCoverImageProvider::requestImageResponse(const QString& id, const QSize& requestedSize)
 {
-    ComicCoverResponse* response = new ComicCoverResponse(id, requestedSize, &d->pool);
+    ComicCoverResponse* response = new ComicCoverResponse(id, requestedSize, &d->pool, d->imageCache);
     return response;
 }
 
@@ -96,6 +103,7 @@ public:
     Private() {}
     QString id;
     QSize requestedSize;
+    KImageCache* imageCache;
 
     bool abort{false};
 
@@ -129,11 +137,12 @@ public:
     }
 };
 
-ComicCoverRunnable::ComicCoverRunnable(const QString& id, const QSize& requestedSize)
+ComicCoverRunnable::ComicCoverRunnable(const QString& id, const QSize& requestedSize, KImageCache* imageCache)
     : d(new Private)
 {
     d->id = id;
     d->requestedSize = requestedSize;
+    d->imageCache = imageCache;
 }
 
 void ComicCoverRunnable::abort()
@@ -144,6 +153,7 @@ void ComicCoverRunnable::abort()
 void ComicCoverRunnable::run()
 {
     QImage img;
+    d->imageCache->findImage(d->id, &img);
 
     QSize ourSize(KIconLoader::SizeEnormous, KIconLoader::SizeEnormous);
     if(d->requestedSize.width() > 0 && d->requestedSize.height() > 0)
@@ -151,40 +161,43 @@ void ComicCoverRunnable::run()
         ourSize = d->requestedSize;
     }
 
-    KArchive* archive = nullptr;
-    QMimeDatabase db;
-    db.mimeTypeForFile(d->id, QMimeDatabase::MatchContent);
-    const QMimeType mime = db.mimeTypeForFile(d->id, QMimeDatabase::MatchContent);
-    if(!d->abort && (mime.inherits("application/x-cbr") || mime.inherits("application/x-rar"))) {
-        archive = new KRar(d->id);
-    } else if(!d->abort && (mime.inherits("application/x-cbz") || mime.inherits("application/zip"))) {
-        archive = new KZip(d->id);
-    }
-    // FIXME: This goes elsewhere - see below
-    // If this code seems familiar, it is adapted from kio-extras/thumbnail/comiccreator.cpp
-    // The reason being that this code should be removed once our karchive-rar functionality is merged into
-    // karchive proper.
-    if(!d->abort && archive && archive->open(QIODevice::ReadOnly)) {
-        // Get the archive's directory.
-        const KArchiveDirectory* cArchiveDir = archive->directory();
-        if (!d->abort && cArchiveDir) {
-            QStringList entries;
-            // Get and filter the entries from the archive.
-            d->getArchiveFileList(entries, QString(), cArchiveDir);
-            d->filterImages(entries);
-            if (!d->abort && !entries.isEmpty()) {
-                // Extract the cover file.
-                const KArchiveFile *coverFile = static_cast<const KArchiveFile*>(cArchiveDir->entry(entries[0]));
-                if (!d->abort && coverFile) {
-                    bool success = img.loadFromData(coverFile->data());
-                    if(!d->abort && !success) {
-                        QIcon oops = QIcon::fromTheme("unknown");
-                        img = oops.pixmap(oops.availableSizes().last()).toImage();
-                        qCDebug(QTQUICK_LOG) << "Failed to load image with id:" << d->id;
+    if (img.isNull()) {
+        KArchive* archive = nullptr;
+        QMimeDatabase db;
+        db.mimeTypeForFile(d->id, QMimeDatabase::MatchContent);
+        const QMimeType mime = db.mimeTypeForFile(d->id, QMimeDatabase::MatchContent);
+        if(!d->abort && (mime.inherits("application/x-cbr") || mime.inherits("application/x-rar"))) {
+            archive = new KRar(d->id);
+        } else if(!d->abort && (mime.inherits("application/x-cbz") || mime.inherits("application/zip"))) {
+            archive = new KZip(d->id);
+        }
+        // FIXME: This goes elsewhere - see below
+        // If this code seems familiar, it is adapted from kio-extras/thumbnail/comiccreator.cpp
+        // The reason being that this code should be removed once our karchive-rar functionality is merged into
+        // karchive proper.
+        if(!d->abort && archive && archive->open(QIODevice::ReadOnly)) {
+            // Get the archive's directory.
+            const KArchiveDirectory* cArchiveDir = archive->directory();
+            if (!d->abort && cArchiveDir) {
+                QStringList entries;
+                // Get and filter the entries from the archive.
+                d->getArchiveFileList(entries, QString(), cArchiveDir);
+                d->filterImages(entries);
+                if (!d->abort && !entries.isEmpty()) {
+                    // Extract the cover file.
+                    const KArchiveFile *coverFile = static_cast<const KArchiveFile*>(cArchiveDir->entry(entries[0]));
+                    if (!d->abort && coverFile) {
+                        bool success = img.loadFromData(coverFile->data());
+                        if(!d->abort && !success) {
+                            QIcon oops = QIcon::fromTheme("unknown");
+                            img = oops.pixmap(oops.availableSizes().last()).toImage();
+                            qCDebug(QTQUICK_LOG) << "Failed to load image with id:" << d->id;
+                        }
                     }
                 }
             }
         }
+        d->imageCache->insertImage(d->id, img);
     }
     Q_EMIT done(img.scaled(ourSize, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 }
