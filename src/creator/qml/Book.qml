@@ -39,7 +39,7 @@ Kirigami.ScrollablePage {
     id: root;
     property string categoryName: "book";
     property alias model: bookList.model;
-    title: i18nc("title of the main book editor page", "Pages in %1", root.model.title == "" ? root.filename : root.model.title);
+    title: root.model ? (i18nc("title of the main book editor page", "Pages in %1", root.model.title == "" ? root.filename : root.model.title)) : "";
     property string filename;
 
     actions {
@@ -51,7 +51,7 @@ Kirigami.ScrollablePage {
         text: i18nc("Saves the book to a file on disk", "Save Book");
         iconName: "document-save";
         onTriggered: root.model.saveBook();
-        enabled: root.model.hasUnsavedChanges;
+        enabled: root.model ? root.model.hasUnsavedChanges : false;
     }
     Kirigami.Action {
         id: addPageAction;
@@ -160,7 +160,7 @@ Kirigami.ScrollablePage {
         Rectangle {
             id: processingBackground;
             anchors.fill: parent;
-            opacity: root.model.processing ? 0.5 : 0;
+            opacity: root.model && root.model.processing ? 0.5 : 0;
             Behavior on opacity { NumberAnimation { duration: mainWindow.animationDuration; } }
             MouseArea {
                 anchors.fill: parent;
@@ -181,6 +181,6 @@ Kirigami.ScrollablePage {
 
     AddPageSheet {
         id: addPageSheet;
-        model: root.model;
+        model: root.model ? root.model : null;
     }
 }
