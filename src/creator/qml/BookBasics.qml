@@ -45,16 +45,48 @@ Kirigami.ScrollablePage {
         onTriggered: root.model.saveBook();
         enabled: root.model ? root.model.hasUnsavedChanges : false;
     }
-    Kirigami.FormLayout {
-        Layout.fillWidth: true
-        QtControls.Label {
-            Kirigami.FormData.label: i18nc("The descriptive label for a label which displays the title of the book", "Book Title:")
-            text: root.model ? root.model.title : "";
+    ColumnLayout {
+        spacing: Kirigami.Units.smallSpacing;
+        Item {
+            id: bookCover;
+            Layout.alignment: Qt.AlignHCenter;
+            width: Kirigami.Units.gridUnit * 10;
+            height: width;
+            Rectangle {
+                id: coverOutline;
+                anchors.centerIn: coverImage;
+                width: Math.max(coverImage.paintedWidth, Kirigami.Units.iconSizes.large) + Kirigami.Units.smallSpacing * 2;
+                height: Math.max(coverImage.paintedHeight, Kirigami.Units.iconSizes.large) + Kirigami.Units.smallSpacing * 2;
+                color: Kirigami.Theme.backgroundColor;
+                border {
+                    width: 2;
+                    color: Kirigami.Theme.textColor;
+                }
+                radius: 2;
+            }
+            Kirigami.Icon {
+                id: coverImage;
+                anchors {
+                    fill: parent;
+                    margins: Kirigami.Units.largeSpacing;
+                }
+                source: bookModel.filename === "" ? "" : "image://comiccover/" + bookModel.filename;
+                placeholder: "application-vnd.oasis.opendocument.text";
+                fallback: "paint-unknown";
+            }
         }
-        Kirigami.LinkButton {
-            Kirigami.FormData.label: i18nc("The descriptive label for a link which shows the number of pages in the book", "Pages:")
-            text: i18nc("A link which when clicked shows the book pages editor", "%1 total pages", root.model ? root.model.pageCount : 0)
-            onClicked: root.requestCategoryChange("book");
+        Item { width: parent.width; height: Kirigami.Units.gridUnit * 3; }
+        Kirigami.FormLayout {
+            Layout.fillWidth: true;
+            QtControls.Label {
+                Kirigami.FormData.label: i18nc("The descriptive label for a label which displays the title of the book", "Book Title:");
+                text: root.model ? root.model.title : "";
+            }
+            Kirigami.LinkButton {
+                Kirigami.FormData.label: i18nc("The descriptive label for a link which shows the number of pages in the book", "Pages:");
+                text: i18nc("A link which when clicked shows the book pages editor", "%1 total pages", root.model ? root.model.pageCount : 0);
+                onClicked: root.requestCategoryChange("book");
+            }
         }
     }
 }
