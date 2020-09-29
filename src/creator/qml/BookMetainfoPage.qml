@@ -35,6 +35,7 @@ import "metainfoeditors"
  */
 Kirigami.ScrollablePage {
     id: root;
+    property string categoryName: "bookMetaInfo";
     title: i18nc("title text for the book meta information editor sheet", "Edit Meta Information");
     property QtObject model;
 
@@ -43,9 +44,8 @@ Kirigami.ScrollablePage {
     }
     Kirigami.Action {
         id: saveAndCloseAction;
-        text: i18nc("Saves the remaining unsaved edited fields and closes the metainfo editor", "Save and Close Editor");
+        text: i18nc("Saves the remaining unsaved edited fields", "Save");
         iconName: "dialog-ok";
-        shortcut: "Esc";
         onTriggered: {
             // Save the default title/annotation/keywords.
             root.model.acbfData.metaData.bookInfo.setTitle(defaultTitle.text, "");
@@ -61,7 +61,6 @@ Kirigami.ScrollablePage {
             }
 
             root.model.setDirty();
-            pageStack.pop();
         }
     }
 
