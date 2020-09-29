@@ -40,27 +40,18 @@ Kirigami.ScrollablePage {
     property QtObject model;
 
     actions {
-        main: saveAndCloseAction;
+        main: saveAction;
     }
     Kirigami.Action {
-        id: saveAndCloseAction;
-        text: i18nc("Saves the remaining unsaved edited fields", "Save");
-        iconName: "dialog-ok";
+        id: saveAction;
+        text: i18nc("Saves the book to a file on disk", "Save Book");
+        iconName: "document-save";
         onTriggered: {
-            // Save the default title/annotation/keywords.
-            root.model.acbfData.metaData.bookInfo.setTitle(defaultTitle.text, "");
-            root.model.acbfData.metaData.bookInfo.setAnnotation(defaultAnnotation.text.split("\n\n"), "");
-            var keywords = defaultKeywords.text.split(",")
-            for (var i in keywords) {
-                keywords[i] = keywords[i].trim();
-            }
-            root.model.acbfData.metaData.bookInfo.setKeywords(keywords, "");
             // Ensure there's a default language entry.
             if (root.model.acbfData.metaData.bookInfo.languageEntryList.indexOf("") === -1) {
                 root.model.acbfData.metaData.bookInfo.addLanguage("");
             }
-
-            root.model.setDirty();
+            root.model.saveBook();
         }
     }
 
@@ -82,6 +73,10 @@ Kirigami.ScrollablePage {
             width: parent.width;
             placeholderText: i18nc("placeholder text for default title text-input", "Write to add default title");
             text:root.model.acbfData ? root.model.acbfData.metaData.bookInfo.title("") : "";
+            onTextChanged: {
+                root.model.acbfData.metaData.bookInfo.setTitle(defaultTitle.text, "");
+                root.model.setDirty();
+            }
         }
 
         Kirigami.Heading {
@@ -95,6 +90,10 @@ Kirigami.ScrollablePage {
             width: parent.width;
             placeholderText: i18nc("placeholder text for default annotation text-area", "Write to add default annotation");
             text:root.model.acbfData ? root.model.acbfData.metaData.bookInfo.annotation("").join("\n\n") : "";
+            onTextChanged: {
+                root.model.acbfData.metaData.bookInfo.setAnnotation(defaultAnnotation.text.split("\n\n"), "");
+                root.model.setDirty();
+            }
         }
         Kirigami.Heading {
             width: parent.width;
@@ -107,6 +106,14 @@ Kirigami.ScrollablePage {
             width: parent.width;
             placeholderText: i18nc("placeholder text for the add new keyword text entry", "Write a comma separated list of keywords.");
             text:root.model.acbfData ? root.model.acbfData.metaData.bookInfo.keywords("").join(", ") : "";
+            onTextChanged: {
+                var keywords = defaultKeywords.text.split(",")
+                for (var i in keywords) {
+                    keywords[i] = keywords[i].trim();
+                }
+                root.model.acbfData.metaData.bookInfo.setKeywords(keywords, "");
+                root.model.setDirty();
+            }
         }
 
         Kirigami.Heading {
