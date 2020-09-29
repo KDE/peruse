@@ -39,8 +39,7 @@ Kirigami.ScrollablePage {
     id: root;
     property string categoryName: "book";
     property alias model: bookList.model;
-    title: root.model ? (i18nc("title of the main book editor page", "Pages in %1", root.model.title == "" ? root.filename : root.model.title)) : "";
-    property string filename;
+    title: i18nc("title of the main book editor page", "Pages in %1", root.model && root.model.title !== "" ? root.model.title : "");
 
     actions {
         main: addPageSheet.opened ? closeAddPageSheetAction : saveBookAction;
