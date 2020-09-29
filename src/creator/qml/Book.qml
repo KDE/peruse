@@ -38,7 +38,8 @@ import org.kde.peruse 0.1 as Peruse
 Kirigami.ScrollablePage {
     id: root;
     property string categoryName: "book";
-    title: i18nc("title of the main book editor page", "Editing %1", bookModel.title == "" ? root.filename : bookModel.title);
+    property alias model: bookList.model;
+    title: i18nc("title of the main book editor page", "Editing %1", root.model.title == "" ? root.filename : root.model.title);
     property string filename;
 
     actions {
@@ -50,14 +51,14 @@ Kirigami.ScrollablePage {
         id: saveBookAction;
         text: i18nc("Saves the book to a file on disk", "Save Book");
         iconName: "document-save";
-        onTriggered: bookModel.saveBook();
-        enabled: bookModel.hasUnsavedChanges;
+        onTriggered: root.model.saveBook();
+        enabled: root.model.hasUnsavedChanges;
     }
     Kirigami.Action {
         id: addPageAction;
         text: i18nc("adds a new page at the end of the book", "Add Page");
         iconName: "list-add";
-        onTriggered: addPage(bookModel.pageCount);
+        onTriggered: addPage(root.model.pageCount);
     }
     Kirigami.Action {
         id: defaultMainAction;
@@ -79,22 +80,16 @@ Kirigami.ScrollablePage {
 
     ListView {
         id: bookList;
-        model: Peruse.ArchiveBookModel {
-            id: bookModel;
-            qmlEngine: globalQmlEngine;
-            readWrite: true;
-            filename: root.filename;
-        }
         Component {
             id: editMetaInfo;
             BookMetainfoPage {
-                model: bookModel;
+                model: root.model;
             }
         }
         Component {
             id: editBookPage;
             BookPage {
-                model: bookModel;
+                model: root.model;
                 onSave: {
                    bookList.updateTitle(index, currentPage.title(""));
                 }
@@ -113,21 +108,21 @@ Kirigami.ScrollablePage {
                 Kirigami.Action {
                     text: i18nc("swap the position of this page with the previous one", "Move Up");
                     iconName: "go-up"
-                    onTriggered: { bookModel.swapPages(model.index, model.index - 1); }
+                    onTriggered: { root.model.swapPages(model.index, model.index - 1); }
                     enabled: model.index > 0;
                     visible: enabled;
                 },
                 Kirigami.Action {
                     text: i18nc("swap the position of this page with the next one", "Move Down");
                     iconName: "go-down"
-                    onTriggered: { bookModel.swapPages(model.index, model.index + 1); }
-                    enabled: model.index < bookModel.pageCount - 1;
+                    onTriggered: { root.model.swapPages(model.index, model.index + 1); }
+                    enabled: model.index < root.model.pageCount - 1;
                     visible: enabled;
                 },
                 Kirigami.Action {
                     text: i18nc("remove the page from the book", "Delete Page");
                     iconName: "list-remove"
-                    onTriggered: bookModel.removePage(model.index);
+                    onTriggered: root.model.removePage(model.index);
                 },
                 Kirigami.Action {
                     text: i18nc("add a page to the book after this one", "Add Page After This");
@@ -178,7 +173,7 @@ Kirigami.ScrollablePage {
         Rectangle {
             id: processingBackground;
             anchors.fill: parent;
-            opacity: bookModel.processing ? 0.5 : 0;
+            opacity: root.model.processing ? 0.5 : 0;
             Behavior on opacity { NumberAnimation { duration: mainWindow.animationDuration; } }
             MouseArea {
                 anchors.fill: parent;
@@ -199,6 +194,6 @@ Kirigami.ScrollablePage {
 
     AddPageSheet {
         id: addPageSheet;
-        model: bookModel;
+        model: root.model;
     }
 }

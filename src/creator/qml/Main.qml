@@ -54,11 +54,17 @@ Kirigami.ApplicationWindow {
         return peruseConfig.homeDir();
     }
 
+    Peruse.ArchiveBookModel {
+        id: bookModel;
+        qmlEngine: globalQmlEngine;
+        readWrite: true;
+    }
+
     function openBook(bookFilename) {
-        currentCategory = "";
+        bookModel.filename = bookFilename;
         peruseConfig.bookOpened(bookFilename);
-        mainWindow.pageStack.clear();
-        mainWindow.pageStack.push(bookPage, { filename: bookFilename });
+        mainWindow.changeCategory(bookPage);
+        mainWindow.pageStack.currentItem.model = bookModel;
     }
 
     globalDrawer: Kirigami.GlobalDrawer {
@@ -111,6 +117,20 @@ Kirigami.ApplicationWindow {
                 onTriggered: openOther();
             },
             Kirigami.Action {
+                separator: true;
+            },
+            Kirigami.Action {
+                visible: bookModel.filename !== "";
+                text: i18nc("Switch to the currently open book", "Edit %1", bookModel.title);
+                icon.source: bookModel.filename === "" ? "" : "image://comiccover/" + bookModel.filename;
+                onTriggered: {
+                    changeCategory(bookPage);
+                    mainWindow.pageStack.currentItem.model = bookModel;
+                }
+            },
+            Kirigami.Action {
+                separator: true;
+                visible: bookModel.filename !== "";
             },
             Kirigami.Action {
                 text: i18nc("Open the settings page", "Settings");
