@@ -33,6 +33,7 @@ Kirigami.ScrollablePage {
     id: root;
     property string categoryName: "bookBasics";
     property QtObject model;
+    signal requestCategoryChange(string categoryName);
     title: i18nc("title of the basic book information page", "Your Book At A Glance");
     actions {
         main: saveBookAction;
@@ -45,5 +46,15 @@ Kirigami.ScrollablePage {
         enabled: root.model ? root.model.hasUnsavedChanges : false;
     }
     Kirigami.FormLayout {
+        Layout.fillWidth: true
+        QtControls.Label {
+            Kirigami.FormData.label: i18nc("The descriptive label for a label which displays the title of the book", "Book Title:")
+            text: root.model ? root.model.title : "";
+        }
+        Kirigami.LinkButton {
+            Kirigami.FormData.label: i18nc("The descriptive label for a link which shows the number of pages in the book", "Pages:")
+            text: i18nc("A link which when clicked shows the book pages editor", "%1 total pages", root.model ? root.model.pageCount : 0)
+            onClicked: root.requestCategoryChange("book");
+        }
     }
 }
