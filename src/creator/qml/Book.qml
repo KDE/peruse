@@ -39,12 +39,11 @@ Kirigami.ScrollablePage {
     id: root;
     property string categoryName: "book";
     property alias model: bookList.model;
-    title: i18nc("title of the main book editor page", "Editing %1", root.model.title == "" ? root.filename : root.model.title);
+    title: i18nc("title of the main book editor page", "Pages in %1", root.model.title == "" ? root.filename : root.model.title);
     property string filename;
 
     actions {
-        left: addPageSheet.opened ? null : saveBookAction;
-        main: addPageSheet.opened ? closeAddPageSheetAction : defaultMainAction;
+        main: addPageSheet.opened ? closeAddPageSheetAction : saveBookAction;
         right: addPageSheet.opened ? null : addPageAction;
     }
     Kirigami.Action {
@@ -61,12 +60,6 @@ Kirigami.ScrollablePage {
         onTriggered: addPage(root.model.pageCount);
     }
     Kirigami.Action {
-        id: defaultMainAction;
-        text: i18nc("causes a dialog to show in which the user can edit the meta information for the entire book", "Edit Metainfo");
-        iconName: "document-edit";
-        onTriggered: pageStack.push(editMetaInfo);
-    }
-    Kirigami.Action {
         id: closeAddPageSheetAction;
         text: i18nc("closes the add page sheet", "Do not Add a Page");
         iconName: "dialog-cancel";
@@ -80,12 +73,6 @@ Kirigami.ScrollablePage {
 
     ListView {
         id: bookList;
-        Component {
-            id: editMetaInfo;
-            BookMetainfoPage {
-                model: root.model;
-            }
-        }
         Component {
             id: editBookPage;
             BookPage {
