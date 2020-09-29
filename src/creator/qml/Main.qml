@@ -177,6 +177,11 @@ Kirigami.ApplicationWindow {
     Component {
         id: bookBasicsPage;
         BookBasics {
+            onRequestCategoryChange: {
+                if (categoryName === "book") {
+                    changeCategory(bookPage, {model: bookModel});
+                }
+            }
         }
     }
 
