@@ -116,21 +116,34 @@ Kirigami.ApplicationWindow {
                 iconName: "document-open";
                 onTriggered: openOther();
             },
+
             Kirigami.Action {
+                id: bookActions;
+                visible: bookModel.filename !== "";
                 separator: true;
             },
             Kirigami.Action {
-                visible: bookModel.filename !== "";
-                text: i18nc("Switch to the currently open book", "Edit %1", bookModel.title);
+                visible: bookActions.visible;
+                text: bookModel.title;
                 icon.source: bookModel.filename === "" ? "" : "image://comiccover/" + bookModel.filename;
-                onTriggered: {
-                    changeCategory(bookPage);
-                    mainWindow.pageStack.currentItem.model = bookModel;
-                }
             },
             Kirigami.Action {
+                visible: bookActions.visible;
+                checked: mainWindow.currentCategory === "book";
+                text: i18nc("Switch to the page which displays the pages in the current book", "Pages");
+                iconName: "view-pages-overview"
+                onTriggered: changeCategory(bookPage, {model: bookModel});
+            },
+            Kirigami.Action {
+                visible: bookActions.visible;
+                checked: mainWindow.currentCategory === "bookMetaInfo";
+                text: i18nc("Switch to the page where the user can edit the meta information for the entire book", "Edit Metainfo");
+                iconName: "document-edit";
+                onTriggered: changeCategory(editMetaInfo, {model: bookModel});
+            },
+
+            Kirigami.Action {
                 separator: true;
-                visible: bookModel.filename !== "";
             },
             Kirigami.Action {
                 text: i18nc("Open the settings page", "Settings");
@@ -164,6 +177,11 @@ Kirigami.ApplicationWindow {
         Book {
         }
     }
+    Component {
+        id: editMetaInfo;
+        BookMetainfoPage {
+        }
+    }
 
     Component {
         id: settingsPage;
@@ -178,10 +196,14 @@ Kirigami.ApplicationWindow {
     }
 
     property string currentCategory: "welcomePage";
-    function changeCategory(categoryItem) {
+    function changeCategory(categoryItem, parameters) {
         // Clear all the way to the welcome page if we change the category...
         mainWindow.pageStack.clear();
-        mainWindow.pageStack.push(categoryItem);
+        if (parameters === undefined) {
+            mainWindow.pageStack.push(categoryItem);
+        } else {
+            mainWindow.pageStack.push(categoryItem, parameters);
+        }
         currentCategory = mainWindow.pageStack.currentItem.categoryName;
     }
 
