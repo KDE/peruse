@@ -124,8 +124,10 @@ Kirigami.ApplicationWindow {
             },
             Kirigami.Action {
                 visible: bookActions.visible;
+                checked: mainWindow.currentCategory === "bookBasicsPage";
                 text: bookModel.hasUnsavedChanges ? i18nc("The book's title when there are unsaved changes", "%1 (unsaved)", bookModel.title) : bookModel.title;
                 icon.source: bookModel.filename === "" ? "" : "image://comiccover/" + bookModel.filename;
+                onTriggered: changeCategory(bookBasicsPage, {model: bookModel});
             },
             Kirigami.Action {
                 visible: bookActions.visible;
@@ -169,6 +171,12 @@ Kirigami.ApplicationWindow {
     Component {
         id: createNewBookPage;
         CreateNewBook {
+        }
+    }
+
+    Component {
+        id: bookBasicsPage;
+        BookBasics {
         }
     }
 
