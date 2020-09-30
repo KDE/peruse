@@ -266,7 +266,7 @@ Kirigami.Page {
         imageSource: pageUrl;
         pages: root.pageList;
         bgColor: root.currentPage.bgcolor !== ""? root.currentPage.bgcolor: "#ffffff";
-        textBgColor: root.currentPage.textLayer("").bgcolor !== ""? root.currentPage.textLayer("").bgcolor: bgcolor;
+        textBgColor: root.currentPage.textLayer("").bgcolor !== ""? root.currentPage.textLayer("").bgcolor: bgColor;
         availableTypes: root.textTypes;
         transparent: false;
         inverted: false;
