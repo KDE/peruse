@@ -46,6 +46,7 @@ Kirigami.ApplicationWindow {
     width: Screen.desktopAvailableWidth * 0.6;
     height: Screen.desktopAvailableHeight * 0.7;
     pageStack.initialPage: welcomePage;
+    pageStack.defaultColumnWidth: pageStack.width
 
     Peruse.Config {
         id: peruseConfig;
