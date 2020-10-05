@@ -20,10 +20,11 @@
  */
 
 import QtQuick 2.12
+import QtQuick.Layouts 1.4
 import QtQuick.Controls 2.12 as QtControls
 import QtQuick.Dialogs 1.3
 
-import org.kde.kirigami 2.7 as Kirigami
+import org.kde.kirigami 2.13 as Kirigami
 /**
  * Page that holds an image to edit the frames on.
  */
@@ -51,121 +52,70 @@ Kirigami.ScrollablePage {
         }
     }
 
-    Column {
-        id: contentColumn;
-        width: root.width - (root.leftPadding + root.rightPadding);
-        height: childrenRect.height;
-        spacing: Kirigami.Units.smallSpacing;
-        Kirigami.Heading {
-            width: parent.width;
-            height: paintedHeight + Kirigami.Units.smallSpacing * 2;
-            text: i18nc("label text for the edit field for the page title", "Title");
-        }
-
-        Item { width: parent.width; height: Kirigami.Units.smallSpacing; }
+    Kirigami.FormLayout {
+        Layout.fillWidth: true
         QtControls.TextField {
             id: defaultTitle;
-            width: parent.width;
+            Kirigami.FormData.label: i18nc("label text for the edit field for the page title", "Title");
             placeholderText: i18nc("placeholder text for default page text-input", "Write to add default title");
             text: root.page.title("");
             onEditingFinished: root.page.setTitle(text, "");
         }
-        Kirigami.Heading {
-            width: parent.width;
-            height: paintedHeight + Kirigami.Units.smallSpacing * 2;
-            text: i18nc("label text for the edit field for the page transition type", "Transition");
-        }
-
-        Item { width: parent.width; height: Kirigami.Units.smallSpacing; }
         QtControls.ComboBox {
             id: transition;
-            width: parent.width;
+            Kirigami.FormData.label: i18nc("label text for the edit field for the page transition type", "Transition");
             model: root.page.availableTransitions();
             currentIndex: root.page.transition!==""?
                               root.page.availableTransitions().indexOf(root.page.transition):
                               root.page.availableTransitions().indexOf("none");
             onActivated: root.page.transition = currentText;
         }
-        Kirigami.Heading {
-            width: parent.width;
-            height: paintedHeight + Kirigami.Units.smallSpacing * 2;
-            text: i18nc("label text for the edit field for the page background color", "Background Color");
-        }
-
-        Item { width: parent.width; height: Kirigami.Units.smallSpacing; }
-        Rectangle {
-            id: pageBackgroundColor;
+        Row {
+            Kirigami.FormData.label: i18nc("label text for the edit field for the page background color", "Background Color");
             height: Kirigami.Units.iconSizes.medium;
-            width: Kirigami.Units.iconSizes.huge;
-            radius: 3;
-            border.color: Kirigami.Theme.disabledTextColor;
-            border.width: 1;
-            color: root.page.bgcolor !== ""? root.page.bgcolor: root.colorname;
-            MouseArea {
-                anchors.fill: parent;
-                onClicked: {
-                    backgroundColorDialog.open();
-
-                }
-                hoverEnabled: true;
-                onEntered: parent.border.color = Kirigami.Theme.buttonHoverColor;
-                onExited: parent.border.color = Kirigami.Theme.disabledTextColor;
-            }
-            ColorDialog {
-                id: backgroundColorDialog
-                title: i18nc("@title color choosing dialog","Choose the background color for page");
+            Rectangle {
+                id: pageBackgroundColor;
+                height: Kirigami.Units.iconSizes.medium;
+                width: Kirigami.Units.iconSizes.huge;
+                radius: 3;
+                border.color: Kirigami.Theme.disabledTextColor;
+                border.width: 1;
                 color: root.page.bgcolor !== ""? root.page.bgcolor: root.colorname;
-                onAccepted: root.page.bgcolor = color;
+                MouseArea {
+                    anchors.fill: parent;
+                    onClicked: {
+                        backgroundColorDialog.open();
+
+                    }
+                    hoverEnabled: true;
+                    onEntered: parent.border.color = Kirigami.Theme.buttonHoverColor;
+                    onExited: parent.border.color = Kirigami.Theme.disabledTextColor;
+                }
+                ColorDialog {
+                    id: backgroundColorDialog
+                    title: i18nc("@title color choosing dialog","Choose the background color for page");
+                    color: root.page.bgcolor !== ""? root.page.bgcolor: root.colorname;
+                    onAccepted: root.page.bgcolor = color;
+                }
             }
         }
 
-        Kirigami.Heading {
-            width: parent.width;
-            height: paintedHeight + Kirigami.Units.smallSpacing * 2;
-            text: i18nc("label text for the edit field for the page frames", "Frames");
+        Kirigami.Separator {
+            Kirigami.FormData.label: i18nc("label text for the edit field for the page frames", "Frames");
+            Kirigami.FormData.isSection: true
         }
-        ListView {
-            width: parent.width;
-            height: childrenRect.height;
+
+        Repeater {
             model: page.framePointStrings
-            delegate: Kirigami.SwipeListItem {
-                id: frameItem;
-                height: Kirigami.Units.iconSizes.huge + Kirigami.Units.smallSpacing * 2;
-                width: parent.width;
-                supportsMouseEvents: true;
-                actions: [
-                    Kirigami.Action {
-                        text: i18nc("swap the position of this frame with the previous one", "Move Up");
-                        iconName: "go-up"
-                        onTriggered: { page.swapFrames(index, index - 1); }
-                        enabled: index > 0;
-                        visible: enabled;
-                    },
-                    Kirigami.Action {
-                        text: i18nc("swap the position of this frame with the next one", "Move Down");
-                        iconName: "go-down"
-                        onTriggered: { page.swapFrames(index, index + 1); }
-                        enabled: index < page.framePointStrings.length - 1;
-                        visible: enabled;
-                    },
-                    Kirigami.Action {
-                        text: i18nc("remove the frame from the page", "Delete Frame");
-                        iconName: "list-remove"
-                        onTriggered: page.removeFrame(index);
+            delegate: RowLayout {
+                Kirigami.FormData.label: i18nc("Comic book panel frame name.", "Frame %1", index+1);
+                Layout.fillWidth: true;
+                ColumnLayout {
+                    QtControls.Switch {
+                        text: i18nc("A switch which lets the user change the background colour of the page when this frame is focused", "Change page background color");
+                        
                     }
-                ]
-                Item {
-                    anchors.fill: parent;
-                    QtControls.Label {
-                        id: frameLabel;
-                        text: i18nc("Comic book panel frame name.", "Frame %1", index+1);
-                    }
-                    Row {
-                        anchors {
-                            top: frameLabel.bottom;
-                            topMargin: Kirigami.Units.smallSpacing;
-                        }
-                        spacing: Kirigami.Units.smallSpacing;
+                    RowLayout {
                         QtControls.Label {
                             height: Kirigami.Units.iconSizes.medium;
                             text: i18nc("Label from frame background color.", "Background Color:");
@@ -181,7 +131,6 @@ Kirigami.ScrollablePage {
                                 anchors.fill: parent;
                                 onClicked: {
                                     frameBackgroundColorDialog.open();
-
                                 }
                                 hoverEnabled: true;
                                 onEntered: parent.border.color = Kirigami.Theme.buttonHoverColor;
@@ -196,20 +145,41 @@ Kirigami.ScrollablePage {
                         }
                     }
                 }
+                Item { height: Kirigami.Units.iconSizes.medium; Layout.fillWidth: true; }
+                QtControls.ToolButton {
+                    QtControls.ToolTip.delay: Kirigami.Units.toolTipDelay; QtControls.ToolTip.timeout: 5000; QtControls.ToolTip.visible: parent.visible && (Kirigami.Settings.tabletMode ? pressed : hovered) && QtControls.ToolTip.text.length > 0
+                    QtControls.ToolTip.text: i18nc("swap the position of this frame with the previous one", "Move Up");
+                    icon.name: "go-up"
+                    display: QtControls.AbstractButton.IconOnly
+                    onClicked: { page.swapFrames(index, index - 1); }
+                    enabled: index > 0;
+                    visible: enabled;
+                }
+                QtControls.ToolButton {
+                    QtControls.ToolTip.delay: Kirigami.Units.toolTipDelay; QtControls.ToolTip.timeout: 5000; QtControls.ToolTip.visible: parent.visible && (Kirigami.Settings.tabletMode ? pressed : hovered) && QtControls.ToolTip.text.length > 0
+                    QtControls.ToolTip.text: i18nc("swap the position of this frame with the next one", "Move Down");
+                    icon.name: "go-down"
+                    display: QtControls.AbstractButton.IconOnly
+                    onClicked: { page.swapFrames(index, index + 1); }
+                    enabled: index < page.framePointStrings.length - 1;
+                    visible: enabled;
+                }
+                QtControls.ToolButton {
+                    QtControls.ToolTip.delay: Kirigami.Units.toolTipDelay; QtControls.ToolTip.timeout: 5000; QtControls.ToolTip.visible: parent.visible && (Kirigami.Settings.tabletMode ? pressed : hovered) && QtControls.ToolTip.text.length > 0
+                    QtControls.ToolTip.text: i18nc("remove the frame from the page", "Delete Frame");
+                    icon.name: "list-remove"
+                    display: QtControls.AbstractButton.IconOnly
+                    onClicked: page.removeFrame(index);
+                }
             }
         }
-        Kirigami.Heading {
-            width: parent.width;
-            height: paintedHeight + Kirigami.Units.smallSpacing * 2;
-            text: i18nc("label text for the edit field for the page textareas", "Text Areas");
+        Kirigami.Separator {
+            Kirigami.FormData.label: i18nc("label text for the edit field for the page textareas", "Text Areas");
+            Kirigami.FormData.isSection: true;
         }
         Row {
             spacing: Kirigami.Units.smallSpacing;
-            QtControls.Label {
-                id: textLayerBgcolorLabel;
-                height: textLayerBgColor.height;
-                text: i18nc("Label from textlayer background color.", "Background Color:");
-            }
+            Kirigami.FormData.label: i18nc("Label from textlayer background color.", "Background Color:");
             Rectangle {
                 height: Kirigami.Units.iconSizes.medium;
                 width: Kirigami.Units.iconSizes.huge;
@@ -236,13 +206,11 @@ Kirigami.ScrollablePage {
                 }
             }
         }
-        ListView {
+        Repeater {
             model: page.textLayer("").textareaPointStrings;
-            width: parent.width;
-            height: childrenRect.height;
             delegate: Kirigami.SwipeListItem {
-                id: textAreaItem;
-                height: Kirigami.Units.iconSizes.huge + Kirigami.Units.smallSpacing * 2;
+                Layout.fillWidth: true
+                height: childrenRect.height
                 supportsMouseEvents: true;
                 actions: [
                     Kirigami.Action {
@@ -266,7 +234,8 @@ Kirigami.ScrollablePage {
                     }
                 ]
                 Item {
-                    anchors.fill:parent;
+                    Layout.fillWidth: true;
+                    Layout.fillHeight: true;
                     QtControls.Label {
                         id: textareaLabel;
                         text: i18nc("Comic book panel textarea name.", "Text Area %1", index+1);
@@ -283,18 +252,15 @@ Kirigami.ScrollablePage {
                 }
             }
         }
-        Kirigami.Heading {
-            width: parent.width;
-            height: paintedHeight + Kirigami.Units.smallSpacing * 2;
-            text: i18nc("label text for the edit field for the page jumps", "Jumps");
+        Kirigami.Separator {
+            Kirigami.FormData.label: i18nc("label text for the edit field for the page jumps", "Jumps");
+            Kirigami.FormData.isSection: true;
         }
-        ListView {
+        Repeater {
             model: page.jumpPointStrings
-            width: parent.width;
-            height: childrenRect.height;
             delegate: Kirigami.SwipeListItem {
-                id: jumpItem;
-                height: Kirigami.Units.iconSizes.huge + Kirigami.Units.smallSpacing * 2;
+                Layout.fillWidth: true
+                height: childrenRect.height
                 supportsMouseEvents: true;
                 actions: [
                     Kirigami.Action {
@@ -318,7 +284,8 @@ Kirigami.ScrollablePage {
                     }
                 ]
                 Item {
-                    anchors.fill:parent;
+                    Layout.fillWidth: true;
+                    Layout.fillHeight: true;
                     QtControls.Label {
                         id: jumpLabel;
                         text: i18nc("Comic book panel jump name.", "Jump %1", index+1);
