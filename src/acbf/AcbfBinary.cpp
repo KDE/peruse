@@ -38,7 +38,7 @@ public:
 };
 
 Binary::Binary(Data* parent)
-    : QObject(parent)
+    : InternalReferenceObject(InternalReferenceObject::ReferenceTarget, parent)
     , d(new Private)
 {
     static const int typeId = qRegisterMetaType<Binary*>("Binary*");

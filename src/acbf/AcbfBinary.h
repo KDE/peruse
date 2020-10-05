@@ -24,8 +24,7 @@
 
 #include <memory>
 
-#include <QObject>
-
+#include "AcbfInternalReferenceObject.h"
 #include "acbf_export.h"
 
 class QXmlStreamReader;
@@ -51,7 +50,7 @@ class QXmlStreamWriter;
 namespace AdvancedComicBookFormat
 {
 class Data;
-class ACBF_EXPORT Binary : public QObject
+class ACBF_EXPORT Binary : public InternalReferenceObject
 {
     Q_OBJECT
 public:

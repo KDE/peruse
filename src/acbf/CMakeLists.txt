@@ -11,6 +11,8 @@ set(acbf_SRCS
     AcbfDocument.cpp
     AcbfDocumentinfo.cpp
     AcbfFrame.cpp
+    AcbfInternalReference.cpp
+    AcbfInternalReferenceObject.cpp
     AcbfJump.cpp
     AcbfLanguage.cpp
     AcbfMetadata.cpp

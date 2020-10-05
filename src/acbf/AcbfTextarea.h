@@ -24,6 +24,7 @@
 
 #include <memory>
 
+#include "AcbfInternalReferenceObject.h"
 #include "AcbfTextlayer.h"
 
 #include <QPoint>
@@ -38,7 +39,7 @@
 
 namespace AdvancedComicBookFormat
 {
-class ACBF_EXPORT Textarea : public QObject
+class ACBF_EXPORT Textarea : public InternalReferenceObject
 {
     Q_OBJECT
     Q_PROPERTY(QString bgcolor READ bgcolor WRITE setBgcolor NOTIFY bgcolorChanged)

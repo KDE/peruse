@@ -46,7 +46,7 @@ public:
 };
 
 Textarea::Textarea(Textlayer* parent)
-    : QObject(parent)
+    : InternalReferenceObject(InternalReferenceObject::ReferenceOrigin, parent)
     , d(new Private)
 {
     static const int typeId = qRegisterMetaType<Textarea*>("Textarea*");
