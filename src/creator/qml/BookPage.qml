@@ -73,6 +73,7 @@ Kirigami.Page {
         text: i18nc("Saves the remaining unsaved edited fields and closes the page editor", "Save and Close Page");
         iconName: "dialog-ok";
         shortcut: "Esc";
+        enabled: !addPageArea.sheetOpen
         onTriggered: {
             root.save();
             root.model.setDirty();
