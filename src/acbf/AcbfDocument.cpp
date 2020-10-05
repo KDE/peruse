@@ -51,6 +51,8 @@ Document::Document(QObject* parent)
     : QObject(parent)
     , d(new Private)
 {
+    static const int typeId = qRegisterMetaType<QObjectList>("QObjectList");
+    Q_UNUSED(typeId);
     d->metaData = new Metadata(this);
     d->body = new Body(this);
     d->data = new Data(this);
