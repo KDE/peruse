@@ -29,7 +29,7 @@ using namespace AdvancedComicBookFormat;
 class References::Private {
 public:
     Private() {}
-    QHash<QString, Reference*> referencesById;
+    QMultiHash<QString, Reference*> referencesById;
     QObjectList references;
 };
 
@@ -88,7 +88,7 @@ Reference* References::reference(const QString& id) const
     return d->referencesById.value(id);
 }
 
-void References::setReference(const QString& id, const QStringList& paragraphs, const QString& language) {
+void References::addReference(const QString& id, const QStringList& paragraphs, const QString& language) {
     Reference* ref = new Reference(this);
     ref->setId(id);
     ref->setParagraphs(paragraphs);
@@ -96,6 +96,14 @@ void References::setReference(const QString& id, const QStringList& paragraphs, 
     connect(ref, &QObject::destroyed, this, [this, ref](){
         d->referencesById.remove(d->referencesById.key(ref));
         d->references.removeAll(ref);
+        Q_EMIT referencesChanged();
+    });
+    connect(ref, &Reference::idChanged, this, [this, ref](){
+        QMutableHashIterator<QString, Reference*> iterator(d->referencesById);
+        while(iterator.findNext(ref)) {
+            iterator.remove();
+        }
+        d->referencesById.insert(ref->id(), ref);
         Q_EMIT referencesChanged();
     });
     d->referencesById.insert(ref->id(), ref);

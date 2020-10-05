@@ -30,7 +30,7 @@ using namespace AdvancedComicBookFormat;
 class Data::Private {
 public:
     Private() {}
-    QHash<QString, Binary*> binariesById;
+    QMultiHash<QString, Binary*> binariesById;
     QObjectList binaries;
 };
 
