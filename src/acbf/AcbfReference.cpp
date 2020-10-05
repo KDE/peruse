@@ -21,6 +21,7 @@
 
 #include "AcbfReference.h"
 #include "AcbfReferences.h"
+
 #include <QString>
 #include <QXmlStreamWriter>
 #include <QXmlStreamReader>
@@ -38,7 +39,7 @@ public:
 };
 
 Reference::Reference(References* parent)
-    : QObject(parent)
+    : InternalReferenceObject(InternalReferenceObject::ReferenceOriginAndTarget, parent)
     , d(new Private)
 {
     static const int typeId = qRegisterMetaType<Reference*>("Reference*");
@@ -92,7 +93,10 @@ QString Reference::id() const
 
 void Reference::setId(const QString& newId)
 {
-    d->id = newId;
+    if (d->id != newId) {
+        d->id = newId;
+        Q_EMIT idChanged();
+    }
 }
 
 QString Reference::language() const
@@ -102,7 +106,10 @@ QString Reference::language() const
 
 void Reference::setLanguage(const QString& language)
 {
-    d->language = language;
+    if (d->language != language) {
+        d->language = language;
+        Q_EMIT languageChanged();
+    }
 }
 
 QStringList Reference::paragraphs() const
@@ -112,5 +119,9 @@ QStringList Reference::paragraphs() const
 
 void Reference::setParagraphs(const QStringList& paragraphs)
 {
-    d->paragraphs = paragraphs;
+    if (d->paragraphs != paragraphs) {
+        d->paragraphs = paragraphs;
+        updateForwardReferences();
+        Q_EMIT paragraphsChanged();
+    }
 }
