@@ -103,6 +103,13 @@ public:
      * @return A StyleSheet object with the css.
      */
     StyleSheet* styleSheet() const;
+
+    /**
+     * Find some child object by their string ID
+     * @see AdvancedComicBookFormat::Reference
+     * @see AdvancedComicBookFormat::Binary
+     */
+    QObject* objectByID(const QString& id) const;
 private:
     class Private;
     std::unique_ptr<Private> d;
