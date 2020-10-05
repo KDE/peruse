@@ -144,6 +144,13 @@ Kirigami.ApplicationWindow {
                 iconName: "document-edit";
                 onTriggered: changeCategory(editMetaInfo, {model: bookModel});
             },
+            Kirigami.Action {
+                visible: bookActions.visible;
+                checked: mainWindow.currentCategory === "bookReferences";
+                text: i18nc("Switch to the page where the user can edit the references (that is, snippets of information) found in the book", "Edit References");
+                iconName: "documentation";
+                onTriggered: changeCategory(editReferences, {model: bookModel});
+            },
 
             Kirigami.Action {
                 separator: true;
@@ -194,6 +201,12 @@ Kirigami.ApplicationWindow {
     Component {
         id: editMetaInfo;
         BookMetainfoPage {
+        }
+    }
+
+    Component {
+        id: editReferences;
+        BookReferences {
         }
     }
 

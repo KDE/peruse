@@ -6,6 +6,7 @@
         <file>qml/AddPageSheet.qml</file>
         <file>qml/Book.qml</file>
         <file>qml/BookBasics.qml</file>
+        <file>qml/BookReferences.qml</file>
         <file>qml/BookMetainfoPage.qml</file>
         <file>qml/BookPage.qml</file>
         <file>qml/CreateNewBook.qml</file>
