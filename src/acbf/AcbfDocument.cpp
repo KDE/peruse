@@ -127,7 +127,7 @@ bool Document::fromXml(QString xmlDocument)
             // Ensure that all the internal forward references are up to date, by running through all the paragraphs in all the places
             // That is, run through all objects, check if they're referenceable, and update their forward references if they are
             std::function<void(const QObject* parent)> updateAllForwardReferences;
-            updateAllForwardReferences = [updateAllForwardReferences](const QObject *parent) {
+            updateAllForwardReferences = [&updateAllForwardReferences](const QObject *parent) {
                 for (QObject *child : parent->children()) {
                     InternalReferenceObject* refObj = qobject_cast<InternalReferenceObject*>(child);
                     if (refObj) {
