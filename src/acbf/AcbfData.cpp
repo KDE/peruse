@@ -30,7 +30,8 @@ using namespace AdvancedComicBookFormat;
 class Data::Private {
 public:
     Private() {}
-    QHash<QString, Binary*> binaries;
+    QHash<QString, Binary*> binariesById;
+    QObjectList binaries;
 };
 
 Data::Data(Document* parent)
@@ -47,7 +48,7 @@ void Data::toXml(QXmlStreamWriter* writer)
 {
     writer->writeStartElement(QStringLiteral("data"));
 
-    for(Binary* binary : d->binaries) {
+    for(Binary* binary : d->binariesById) {
         binary->toXml(writer);
     }
 
@@ -64,7 +65,8 @@ bool Data::fromXml(QXmlStreamReader* xmlReader)
             if(!newBinary->fromXml(xmlReader)) {
                 return false;
             }
-            d->binaries.insert(newBinary->id(), newBinary);
+            d->binariesById.insert(newBinary->id(), newBinary);
+            d->binaries << newBinary;
         }
         else
         {
@@ -75,11 +77,18 @@ bool Data::fromXml(QXmlStreamReader* xmlReader)
     if (xmlReader->hasError()) {
         qCWarning(ACBF_LOG) << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader->name() << "(" << xmlReader->lineNumber() << ":" << xmlReader->columnNumber() << ") The reported error was:" << xmlReader->errorString();
     }
-    qCDebug(ACBF_LOG) << Q_FUNC_INFO << "Created data with" << d->binaries.count() << "binaries";
+    qCDebug(ACBF_LOG) << Q_FUNC_INFO << "Created data with" << d->binariesById.count() << "binaries";
+    Q_EMIT binariesChanged();
+
     return !xmlReader->hasError();
 }
 
 Binary* Data::binary(const QString& id) const
 {
-    return d->binaries.value(id);
+    return d->binariesById.value(id);
+}
+
+QObjectList Data::binaries() const
+{
+    return d->binaries;
 }

@@ -29,7 +29,6 @@
 #include <QObject>
 #include <QXmlStreamReader>
 
-
 namespace AdvancedComicBookFormat
 {
 
@@ -49,11 +48,12 @@ namespace AdvancedComicBookFormat
 class ACBF_EXPORT References : public QObject
 {
     Q_OBJECT
-
+    Q_PROPERTY(QObjectList references READ references NOTIFY referencesChanged)
 public:
     explicit References(Document* parent = nullptr);
     ~References() override;
-    
+
+
     /**
      * \brief Write the references into the xml writer.
      */
@@ -63,13 +63,13 @@ public:
      * @return True if the xmlReader encountered no errors.
      */
     bool fromXml(QXmlStreamReader *xmlReader);
-    
+
     /**
      * @param id - the id that is used to reference to this object.
      * @return the reference object referenced by this id.
      */
     Reference* reference(const QString& id) const;
-    
+
     /**
      * @brief Add reference at ID.
      * 
@@ -79,6 +79,8 @@ public:
      */
     void setReference(const QString& id, const QStringList& paragraphs, const QString& language = "");
 
+    QObjectList references() const;
+    Q_SIGNAL void referencesChanged();
 private:
     class Private;
     std::unique_ptr<Private> d;

@@ -29,7 +29,8 @@ using namespace AdvancedComicBookFormat;
 class References::Private {
 public:
     Private() {}
-    QHash<QString, Reference*> references;
+    QHash<QString, Reference*> referencesById;
+    QObjectList references;
 };
 
 References::References(Document* parent)
@@ -45,15 +46,15 @@ References::~References() = default;
 void References::toXml(QXmlStreamWriter* writer) {
     writer->writeStartElement(QStringLiteral("references"));
 
-    for(Reference* reference : d->references) {
-        reference->toXml(writer);
+    for(QObject* reference : d->references) {
+        qobject_cast<Reference*>(reference)->toXml(writer);
     }
     writer->writeEndElement();
 }
 
 bool References::fromXml(QXmlStreamReader *xmlReader)
 {
-
+    qDeleteAll(d->references);
     while(xmlReader->readNextStartElement())
     {
         if(xmlReader->name() == QStringLiteral("reference"))
@@ -62,7 +63,8 @@ bool References::fromXml(QXmlStreamReader *xmlReader)
             if(!newReference->fromXml(xmlReader)) {
                 return false;
             }
-            d->references.insert(newReference->id(), newReference);
+            d->referencesById.insert(newReference->id(), newReference);
+            d->references << newReference;
         }
         else
         {
@@ -76,13 +78,14 @@ bool References::fromXml(QXmlStreamReader *xmlReader)
     }
 
     qCDebug(ACBF_LOG) << Q_FUNC_INFO << "Created reference section with" << d->references.count() << "references";
+    Q_EMIT referencesChanged();
 
     return !xmlReader->hasError();
 }
 
 Reference* References::reference(const QString& id) const
 {
-    return d->references.value(id);
+    return d->referencesById.value(id);
 }
 
 void References::setReference(const QString& id, const QStringList& paragraphs, const QString& language) {
@@ -90,5 +93,17 @@ void References::setReference(const QString& id, const QStringList& paragraphs, 
     ref->setId(id);
     ref->setParagraphs(paragraphs);
     ref->setLanguage(language);
-    d->references.insert(ref->id(), ref);
+    connect(ref, &QObject::destroyed, this, [this, ref](){
+        d->referencesById.remove(d->referencesById.key(ref));
+        d->references.removeAll(ref);
+        Q_EMIT referencesChanged();
+    });
+    d->referencesById.insert(ref->id(), ref);
+    d->references << ref;
+    Q_EMIT referencesChanged();
+}
+
+QObjectList AdvancedComicBookFormat::References::references() const
+{
+    return d->references;
 }

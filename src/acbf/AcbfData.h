@@ -44,6 +44,7 @@ namespace AdvancedComicBookFormat
 class ACBF_EXPORT Data : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QObjectList binaries READ binaries NOTIFY binariesChanged)
 public:
     explicit Data(Document* parent = nullptr);
     ~Data() override;
@@ -63,6 +64,9 @@ public:
      * @return the binary object referenced by this id.
      */
     Binary* binary(const QString& id) const;
+
+    QObjectList binaries() const;
+    Q_SIGNAL void binariesChanged();
 private:
     class Private;
     std::unique_ptr<Private> d;
