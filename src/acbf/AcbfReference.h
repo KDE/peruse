@@ -112,5 +112,6 @@ private:
     std::unique_ptr<Private> d;
 };
 }
+Q_DECLARE_METATYPE(AdvancedComicBookFormat::Reference*)
 
 #endif // ACBFREFERENCE_H
