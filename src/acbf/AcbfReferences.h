@@ -77,7 +77,7 @@ public:
      * @param paragraphs The paragraphs comprising this reference.
      * @param language The language (optional, and 1.2 only)
      */
-    Q_INVOKABLE void addReference(const QString& id, const QStringList& paragraphs, const QString& language = "");
+    Q_INVOKABLE AdvancedComicBookFormat::Reference* addReference(const QString& id, const QStringList& paragraphs, const QString& language = "");
 
     QObjectList references() const;
     Q_SIGNAL void referencesChanged();
