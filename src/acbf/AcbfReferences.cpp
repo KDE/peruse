@@ -88,7 +88,8 @@ Reference* References::reference(const QString& id) const
     return d->referencesById.value(id);
 }
 
-void References::addReference(const QString& id, const QStringList& paragraphs, const QString& language) {
+Reference* AdvancedComicBookFormat::References::addReference(const QString& id, const QStringList& paragraphs, const QString& language)
+{
     Reference* ref = new Reference(this);
     ref->setId(id);
     ref->setParagraphs(paragraphs);
@@ -109,6 +110,7 @@ void References::addReference(const QString& id, const QStringList& paragraphs, 
     d->referencesById.insert(ref->id(), ref);
     d->references << ref;
     Q_EMIT referencesChanged();
+    return ref;
 }
 
 QObjectList AdvancedComicBookFormat::References::references() const
