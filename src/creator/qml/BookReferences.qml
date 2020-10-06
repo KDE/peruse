@@ -58,12 +58,26 @@ Kirigami.ScrollablePage {
         id: referencesList;
         Layout.fillWidth: true;
         model: root.model.acbfData.references.references;
-        header: Kirigami.AbstractCard {
+        header: ColumnLayout {
+            width: referencesList.width - Kirigami.Units.largeSpacing * 4;
             visible: referencesList.count === 0;
-            Layout.fillWidth: true;
-            contentItem: QtControls.Label {
+            Item { height: Kirigami.Units.largeSpacing; Layout.fillWidth: true; }
+            RowLayout {
                 Layout.fillWidth: true;
-                text: i18nc("Help text for the references page, when there are no references", "There is no reference information in your book yet. You can create a new reference piece by clicking on the New Reference control.");
+                Item { height: Kirigami.Units.gridUnit; Layout.fillWidth: true; }
+                Kirigami.AbstractCard {
+                    header: Kirigami.Heading {
+                        text: i18nc("title text for a card which informs the user there are no references, and what references are", "No References");
+                        Layout.fillWidth: true;
+                        elide: Text.ElideRight;
+                    }
+                    contentItem: QtControls.Label {
+                        Layout.fillWidth: true;
+                        wrapMode: Text.Wrap;
+                        text: i18nc("Help text for the references page, when there are no references", "There is no reference information in your book yet. You can create a new reference piece by clicking on the New Reference control. References are collections of paragraphs of text, which you can fill with simple formatting (strong, emphasis, and other simple layouting like that), as well as links to both internal things (other references or one of the pieces of binary data), or to an external resource, such as a website.");
+                    }
+                }
+                Item { height: Kirigami.Units.gridUnit; Layout.fillWidth: true; }
             }
         }
         delegate: Kirigami.AbstractCard {
