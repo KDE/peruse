@@ -42,7 +42,16 @@ Kirigami.ScrollablePage {
         id: newReferenceAction;
         text: i18nc("Action which when triggered adds a new reference to the book and opens the reference editor", "New Reference");
         icon.name: "list-add";
-        onTriggered: { /* Add new reference, open editor on that reference */ }
+        onTriggered: {
+            var newReference = model.acbfData.references.addReference(
+                i18nc("The default ID for new references", "Unnamed Reference"),
+                i18nc("The default text for new references", "Enter the body of your reference document here."));
+            pageStack.push(referenceEditor, { reference: newReference });
+        }
+    }
+    Component {
+        id: referenceEditor;
+        BookReferenceEditor { }
     }
 
     Kirigami.CardsListView {
@@ -58,10 +67,17 @@ Kirigami.ScrollablePage {
             }
         }
         delegate: Kirigami.AbstractCard {
-            header: Kirigami.Heading {
-                Layout.fillWidth: true;
-                text: modelData.id;
-                elide: Text.ElideRight;
+            header: RowLayout {
+            Layout.fillWidth: true;
+                Kirigami.Heading {
+                    Layout.fillWidth: true;
+                    text: modelData.id;
+                    elide: Text.ElideRight;
+                }
+                QtControls.ToolButton {
+                    icon.name: "document-edit";
+                    onClicked: pageStack.push(referenceEditor, { reference: modelData });
+                }
             }
             contentItem: QtControls.Label {
                 Layout.fillWidth: true;
