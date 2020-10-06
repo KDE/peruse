@@ -68,6 +68,7 @@ Kirigami.ApplicationWindow {
         mainWindow.pageStack.currentItem.model = bookModel;
     }
 
+    contextDrawer: Kirigami.ContextDrawer {}
     globalDrawer: Kirigami.GlobalDrawer {
         /// FIXME This causes the text to get cut off on the phone, however if the text is shorter
         /// it fails to expand the sidebar sufficiently to see all the action labels fully. Revisit
