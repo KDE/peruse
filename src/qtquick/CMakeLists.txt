@@ -14,6 +14,7 @@ set(qmlplugin_SRCS
     PeruseConfig.cpp
     PreviewImageProvider.cpp
     PropertyContainer.cpp
+    TextDocumentEditor.cpp
 )
 
 if(USE_PERUSE_PDFTHUMBNAILER)
