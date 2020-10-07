@@ -45,7 +45,7 @@ Kirigami.ScrollablePage {
         onTriggered: {
             var newReference = model.acbfData.references.addReference(
                 i18nc("The default ID for new references", "Unnamed Reference"),
-                i18nc("The default text for new references", "Enter the body of your reference document here."));
+                i18nc("The default text for new references", "<p>Enter the body of your reference document here.</p>\n<p>This is what links look like: <a href=\"destination\">Some Link</a></p>"));
             pageStack.push(referenceEditor, { reference: newReference });
         }
     }
