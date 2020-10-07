@@ -65,14 +65,9 @@ Kirigami.ScrollablePage {
         },
         Kirigami.Action { separator: true; },
         Kirigami.Action {
-            text: currentLink.existingLink ? i18nc("Edit the link the cursor is currently positioned on", "Edit Link") : i18nc("Adds a new link", "Add Link");
+            text: i18nc("Edit the link the cursor is currently positioned on (or convert the selection to a link, or add a new one if there is no selection)", "Edit Link");
             icon.name: "edit-link"
-            onTriggered: {
-                if (currentLink.existingLink) {
-                } else {
-                    linkDetails.open();
-                }
-            }
+            onTriggered: linkDetails.edit();
         }
     ]
     Kirigami.Action {
@@ -91,14 +86,34 @@ Kirigami.ScrollablePage {
         icon.name: "dialog-cancel";
     }
 
-    property QtObject currentLink: QtObject {
-        property bool existingLink: false;
-        property string text: "";
-        property string destination: "";
-    }
     Kirigami.OverlaySheet {
         id: linkDetails;
         showCloseButton: true
+        function edit() {
+            var linkHref = textDocumentEditor.linkHref(textArea.cursorPosition);
+            if (linkHref.length > 0) {
+                linkDestination.text = linkHref;
+                linkText.text = textDocumentEditor.linkText(textArea.cursorPosition);
+                // Select the start and end of the link we're currently sat inside
+                var linkStartEnd = textDocumentEditor.linkStartEnd(textArea.cursorPosition);
+                textArea.select(linkStartEnd.x, linkStartEnd.y);
+            } else {
+                linkDestination.text = "";
+                // If we've got a selection, set that text as our text
+                if (textArea.selectionStart !== textArea.cursorPosition || textArea.selectionEnd !== textArea.cursorPosition) {
+                    linkText.text = textArea.selectedText;
+                }
+            }
+            // set the start and end of the link to the current selection
+            linkDetails.linkStart = textArea.selectionStart;
+            linkDetails.linkEnd = textArea.selectionEnd;
+            linkDetails.open();
+        }
+        // The start of the entire link, including anchor markup
+        property int linkStart;
+        // The end of the entire link, including anchor markup
+        property int linkEnd;
+
         header: RowLayout {
             Kirigami.Heading {
                 text: i18nc("title text for a sheet which lets the user edit the parameters of a link", "Edit Link");
@@ -109,7 +124,8 @@ Kirigami.ScrollablePage {
                 icon.name: "document-save";
                 text: i18nc("label for a button which updates the link in the text with the new information from the link editor", "OK");
                 onClicked: {
-                    // update the link object and change the document
+                    textArea.remove(linkDetails.linkStart, linkDetails.linkEnd);
+                    textArea.insert(linkDetails.linkStart, linkDemonstration.text);
                     linkDetails.close();
                 }
             }
@@ -123,23 +139,37 @@ Kirigami.ScrollablePage {
             QtControls.TextField {
                 id: linkDestination;
                 Kirigami.FormData.label: i18nc("Label for the link destination input field", "Destination");
-                placeholderText: i18nc("Placeholder text for the link destination input field", "Enter the text of your link here");
+                placeholderText: i18nc("Placeholder text for the link destination input field", "Enter the destination for your link here");
             }
             QtControls.Label {
                 id: linkDemonstration;
-                text: "<a href=\"" + linkDestination.text + "\">" + linkText.text + "</a>";
+                Kirigami.FormData.label: i18nc("Label for the link demonstration display field", "Demonstration");
+                text: {
+                    if (linkDestination.text.length > 0 && linkText.text.length > 0) {
+                        return "<a href=\"" + linkDestination.text + "\">" + linkText.text + "</a>";
+                    } else if (linkDestination.text.length > 0) {
+                        return "<a href=\"" + linkDestination.text + "\">" + linkDestination.text + "</a>";
+                    } else if (linkText.text.length > 0) {
+                        return linkText.text;
+                    }
+                    return "";
+                }
             }
         }
     }
 
-    QtControls.TextArea {
+    TextEdit {
         id: textArea
         textFormat: Qt.RichText
-        wrapMode: QtControls.TextArea.Wrap
+        wrapMode: TextEdit.Wrap
         focus: true
         selectByMouse: true
         persistentSelection: true
 
+        Peruse.TextDocumentEditor {
+            id: textDocumentEditor;
+            textDocument: textArea.textDocument;
+        }
         MouseArea {
             acceptedButtons: Qt.RightButton
             anchors.fill: parent
@@ -148,9 +178,27 @@ Kirigami.ScrollablePage {
             }
         }
 
+        function ensureVisible(rectToMakeVisible)
+        {
+            if (root.flickable.contentX >= rectToMakeVisible.x) {
+                root.flickable.contentX = rectToMakeVisible.x;
+            } else if (root.flickable.contentX + root.flickable.width <= rectToMakeVisible.x + rectToMakeVisible.width) {
+                root.flickable.contentX = rectToMakeVisible.x + rectToMakeVisible.width - root.flickable.width;
+            }
+            if (root.flickable.contentY >= rectToMakeVisible.y) {
+                root.flickable.contentY = rectToMakeVisible.y;
+            } else if (root.flickable.contentY + root.flickable.height <= rectToMakeVisible.y + rectToMakeVisible.height) {
+                root.flickable.contentY = rectToMakeVisible.y + rectToMakeVisible.height - root.flickable.height;
+            }
+        }
+        onCursorRectangleChanged: {
+            ensureVisible(cursorRectangle);
+        }
         onLinkActivated: {
-            // set the link details on the sheet
-            linkDetails.open();
+            // This is the nastiest hack... for some reason, clicking a link does not position
+            // the cursor where you clicked, but rather /after/ the link you clicked. Not helpful.
+            textArea.cursorPosition = textArea.cursorPosition - 1;
+            linkDetails.edit();
         }
     }
 }
