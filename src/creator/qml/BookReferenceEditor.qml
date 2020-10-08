@@ -99,10 +99,9 @@ Kirigami.ScrollablePage {
                 textArea.select(linkStartEnd.x, linkStartEnd.y);
             } else {
                 linkDestination.text = "";
-                // If we've got a selection, set that text as our text
-                if (textArea.selectionStart !== textArea.cursorPosition || textArea.selectionEnd !== textArea.cursorPosition) {
-                    linkText.text = textArea.selectedText;
-                }
+                // Even if we don't have a selection, just set the text of the link to the selected
+                // text (empty text if we don't have one, and we need to clear the field anyway)
+                linkText.text = textArea.selectedText;
             }
             // set the start and end of the link to the current selection
             linkDetails.linkStart = textArea.selectionStart;
