@@ -34,6 +34,7 @@ Kirigami.ScrollablePage {
     property string categoryName: "bookReferences";
     title: i18nc("title text for the reference editor page", "Editing %1", (reference ? reference.id : ""));
     property QtObject reference;
+    property QtObject model;
     onReferenceChanged: {
         textArea.text = reference.paragraphs.join("\n");
     }
@@ -135,10 +136,44 @@ Kirigami.ScrollablePage {
                 Kirigami.FormData.label: i18nc("Label for the link text input field", "Text");
                 placeholderText: i18nc("Placeholder text for the link text input field", "Enter the text of your link here");
             }
-            QtControls.TextField {
-                id: linkDestination;
+            ColumnLayout {
                 Kirigami.FormData.label: i18nc("Label for the link destination input field", "Destination");
-                placeholderText: i18nc("Placeholder text for the link destination input field", "Enter the destination for your link here");
+                Layout.fillWidth: true;
+                QtControls.TextField {
+                    id: linkDestination;
+                    Layout.fillWidth: true;
+                    placeholderText: i18nc("Placeholder text for the link destination input field", "Enter the destination for your link here");
+                }
+                ListView {
+                    Layout.fillWidth: true;
+                    Layout.minimumHeight: Math.min(count, 10) * Kirigami.Units.gridUnit + Kirigami.Units.smallSpacing;
+                    Layout.maximumHeight: Layout.minimumHeight;
+                    clip: true;
+                    model: Peruse.FilterProxy {
+                        id: linkDestinationOptionsFilter;
+                        sourceModel: Peruse.IdentifiedObjectModel {
+                            document: root.model.acbfData;
+                        }
+                    }
+                    delegate: QtControls.Label {
+                        width: ListView.view.width;
+                        text: {
+                            switch(model.type) {
+                                case Peruse.IdentifiedObjectModel.ReferenceType:
+                                    return i18nc("Entry in a dropdown list which gives the name of a reference, and identifies it as one such", "%1 (Reference)", model.id)
+                                    break;
+                                case Peruse.IdentifiedObjectModel.BinaryType:
+                                    return i18nc("Entry in a dropdown list which gives the name of a reference, and identifies it as one such", "%1 (Binary)", model.id)
+                                    break;
+                                case Peruse.IdentifiedObjectModel.UnknownType:
+                                default:
+                                    return i18nc("Entry in a dropdown list which gives the name of an identified object of an unknown type, and marks it as one such", "%1 (Unknown Type)", model.id)
+                                    break;
+                            }
+                        }
+                        elide: Text.ElideRight;
+                    }
+                }
             }
             QtControls.Label {
                 id: linkDemonstration;

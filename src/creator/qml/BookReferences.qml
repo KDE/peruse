@@ -46,7 +46,7 @@ Kirigami.ScrollablePage {
             var newReference = model.acbfData.references.addReference(
                 i18nc("The default ID for new references", "Unnamed Reference"),
                 i18nc("The default text for new references", "<p>Enter the body of your reference document here.</p>\n<p>This is what links look like: <a href=\"destination\">Some Link</a></p>"));
-            pageStack.push(referenceEditor, { reference: newReference });
+            pageStack.push(referenceEditor, { reference: newReference, model: root.model });
         }
     }
     Component {
@@ -90,7 +90,7 @@ Kirigami.ScrollablePage {
                 }
                 QtControls.ToolButton {
                     icon.name: "document-edit";
-                    onClicked: pageStack.push(referenceEditor, { reference: modelData });
+                    onClicked: pageStack.push(referenceEditor, { reference: modelData, model: root.model });
                 }
             }
             contentItem: QtControls.Label {
