@@ -28,14 +28,39 @@ using namespace AdvancedComicBookFormat;
 
 class References::Private {
 public:
-    Private() {}
+    Private(References* qq)
+        : q(qq)
+    {}
+    References* q;
     QMultiHash<QString, Reference*> referencesById;
     QObjectList references;
+
+    void addReference(Reference* reference, bool emitListChangeSignal = true) {
+        referencesById.insert(reference->id(), reference);
+        references << reference;
+        QObject::connect(reference, &QObject::destroyed, q, [this, reference](){
+            referencesById.remove(referencesById.key(reference));
+            references.removeAll(reference);
+            Q_EMIT q->referencesChanged();
+        });
+        QObject::connect(reference, &Reference::idChanged, q, [this, reference](){
+            QMutableHashIterator<QString, Reference*> iterator(referencesById);
+            while(iterator.findNext(reference)) {
+                iterator.remove();
+            }
+            referencesById.insert(reference->id(), reference);
+            Q_EMIT q->referencesChanged();
+        });
+        Q_EMIT q->referenceAdded(reference);
+        if (emitListChangeSignal) {
+            Q_EMIT q->referencesChanged();
+        }
+    }
 };
 
 References::References(Document* parent)
     : QObject(parent)
-    , d(new Private)
+    , d(new Private(this))
 {
     static const int typeId = qRegisterMetaType<References*>("References*");
     Q_UNUSED(typeId);
@@ -63,8 +88,7 @@ bool References::fromXml(QXmlStreamReader *xmlReader)
             if(!newReference->fromXml(xmlReader)) {
                 return false;
             }
-            d->referencesById.insert(newReference->id(), newReference);
-            d->references << newReference;
+            d->addReference(newReference, false);
         }
         else
         {
@@ -88,32 +112,22 @@ Reference* References::reference(const QString& id) const
     return d->referencesById.value(id);
 }
 
-Reference* AdvancedComicBookFormat::References::addReference(const QString& id, const QStringList& paragraphs, const QString& language)
+Reference* References::addReference(const QString& id, const QStringList& paragraphs, const QString& language)
 {
     Reference* ref = new Reference(this);
     ref->setId(id);
     ref->setParagraphs(paragraphs);
     ref->setLanguage(language);
-    connect(ref, &QObject::destroyed, this, [this, ref](){
-        d->referencesById.remove(d->referencesById.key(ref));
-        d->references.removeAll(ref);
-        Q_EMIT referencesChanged();
-    });
-    connect(ref, &Reference::idChanged, this, [this, ref](){
-        QMutableHashIterator<QString, Reference*> iterator(d->referencesById);
-        while(iterator.findNext(ref)) {
-            iterator.remove();
-        }
-        d->referencesById.insert(ref->id(), ref);
-        Q_EMIT referencesChanged();
-    });
-    d->referencesById.insert(ref->id(), ref);
-    d->references << ref;
-    Q_EMIT referencesChanged();
+    d->addReference(ref);
     return ref;
 }
 
-QObjectList AdvancedComicBookFormat::References::references() const
+QStringList AdvancedComicBookFormat::References::referenceIds() const
+{
+    return d->referencesById.keys();
+}
+
+QObjectList References::references() const
 {
     return d->references;
 }

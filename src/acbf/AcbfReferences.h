@@ -49,6 +49,7 @@ class ACBF_EXPORT References : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QObjectList references READ references NOTIFY referencesChanged)
+    Q_PROPERTY(QStringList referenceIds READ referenceIds NOTIFY referencesChanged)
 public:
     explicit References(Document* parent = nullptr);
     ~References() override;
@@ -79,8 +80,10 @@ public:
      */
     Q_INVOKABLE AdvancedComicBookFormat::Reference* addReference(const QString& id, const QStringList& paragraphs, const QString& language = "");
 
+    QStringList referenceIds() const;
     QObjectList references() const;
     Q_SIGNAL void referencesChanged();
+    Q_SIGNAL void referenceAdded(QObject *referece);
 private:
     class Private;
     std::unique_ptr<Private> d;
