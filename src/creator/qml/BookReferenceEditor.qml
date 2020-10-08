@@ -37,15 +37,28 @@ Kirigami.ScrollablePage {
     property QtObject model;
     onReferenceChanged: {
         textArea.text = reference.paragraphs.join("\n");
+        referenceIdentifier.text = root.reference.id;
+        referenceLanguage.text = root.reference.language;
+    }
+    function saveReference() {
+        reference.id = referenceIdentifier.text;
+        reference.language = referenceLanguage.text;
+        reference.paragraphs = textArea.text.split("\n");
     }
 
     actions {
         contextualActions: textActions;
-        main: okClose;
-        right: saveReference;
-        left: abortChanges;
+        main: okCloseAction;
+        right: saveReferenceAction;
+        left: abortChangesAction;
     }
     property list<QtObject> textActions: [
+        Kirigami.Action {
+            text: i18nc("Opens a sheet which lets the user change the name and language of the reference", "Edit Details...");
+            icon.name: "documentinfo";
+            onTriggered: referenceDetails.open();
+        },
+        Kirigami.Action { separator: true; },
         Kirigami.Action {
             text: i18nc("Copies the selected text", "Copy");
             icon.name: "edit-copy";
@@ -72,19 +85,56 @@ Kirigami.ScrollablePage {
         }
     ]
     Kirigami.Action {
-        id: okClose;
+        id: okCloseAction;
         text: i18nc("Save the reference and close the editor", "Save and Close Editor");
         icon.name: "dialog-ok";
+        onTriggered: {
+            root.saveReference();
+            pageStack.pop();
+        }
     }
     Kirigami.Action {
-        id: saveReference;
+        id: saveReferenceAction;
         text: i18nc("Save the reference and keep editing", "Save");
         icon.name: "document-save";
+        onTriggered: {
+            root.saveReference();
+        }
     }
     Kirigami.Action {
-        id: abortChanges;
+        id: abortChangesAction;
         text: i18nc("Abort the changes made in the editor, and close the editor", "Abort Changes");
         icon.name: "dialog-cancel";
+        onTriggered: {
+            pageStack.pop();
+        }
+    }
+
+    Kirigami.OverlaySheet {
+        id: referenceDetails;
+        showCloseButton: true
+
+        header: RowLayout {
+            Kirigami.Heading {
+                text: i18nc("title text for a sheet which lets the user edit the details of a reference", "Edit Reference Details");
+                Layout.fillWidth: true;
+                elide: Text.ElideRight;
+            }
+        }
+        Kirigami.FormLayout {
+            QtControls.TextField {
+                id: referenceIdentifier;
+                Layout.fillWidth: true;
+                Kirigami.FormData.label: i18nc("Label for the reference identifier input field", "Unique Identifier");
+                placeholderText: i18nc("Placeholder text for the reference identifier input field", "Enter your reference ID here (should be unique)");
+            }
+            QtControls.TextField {
+                id: referenceLanguage;
+                Layout.fillWidth: true;
+                Kirigami.FormData.label: i18nc("Label for the reference language input field", "Language");
+                placeholderText: i18nc("Placeholder text for the reference language input field", "Enter the language ID here (leave empty for the document default language)");
+            }
+        }
     }
 
     Kirigami.OverlaySheet {
@@ -133,6 +183,7 @@ Kirigami.ScrollablePage {
         Kirigami.FormLayout {
             QtControls.TextField {
                 id: linkText;
+                Layout.fillWidth: true;
                 Kirigami.FormData.label: i18nc("Label for the link text input field", "Text");
                 placeholderText: i18nc("Placeholder text for the link text input field", "Enter the text of your link here");
             }
@@ -143,6 +194,7 @@ Kirigami.ScrollablePage {
                     id: linkDestination;
                     Layout.fillWidth: true;
                     placeholderText: i18nc("Placeholder text for the link destination input field", "Enter the destination for your link here");
+                    onTextChanged: linkDestinationOptionsFilter.setFilterFixedString(linkDestination.text);
                 }
                 ListView {
                     Layout.fillWidth: true;
@@ -160,10 +212,10 @@ Kirigami.ScrollablePage {
                         text: {
                             switch(model.type) {
                                 case Peruse.IdentifiedObjectModel.ReferenceType:
-                                    return i18nc("Entry in a dropdown list which gives the name of a reference, and identifies it as one such", "%1 (Reference)", model.id)
+                                    return i18nc("Entry in a dropdown list which gives the name of a reference object, and identifies it as one such", "%1 (Reference)", model.id)
                                     break;
                                 case Peruse.IdentifiedObjectModel.BinaryType:
-                                    return i18nc("Entry in a dropdown list which gives the name of a reference, and identifies it as one such", "%1 (Binary)", model.id)
+                                    return i18nc("Entry in a dropdown list which gives the name of a binary object, and identifies it as one such", "%1 (Binary)", model.id)
                                     break;
                                 case Peruse.IdentifiedObjectModel.UnknownType:
                                 default:
@@ -177,6 +229,7 @@ Kirigami.ScrollablePage {
             }
             QtControls.Label {
                 id: linkDemonstration;
+                Layout.fillWidth: true;
                 Kirigami.FormData.label: i18nc("Label for the link demonstration display field", "Demonstration");
                 text: {
                     if (linkDestination.text.length > 0 && linkText.text.length > 0) {
