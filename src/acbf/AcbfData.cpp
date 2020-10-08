@@ -29,14 +29,26 @@ using namespace AdvancedComicBookFormat;
 
 class Data::Private {
 public:
-    Private() {}
+    Private(Data* qq)
+        : q(qq)
+    {}
+    Data* q;
     QMultiHash<QString, Binary*> binariesById;
     QObjectList binaries;
+
+    void addBinary(Binary* binary, bool emitListChangeSignal = true) {
+        binariesById.insert(binary->id(), binary);
+        binaries << binary;
+        Q_EMIT q->binaryAdded(binary);
+        if (emitListChangeSignal) {
+            Q_EMIT q->binariesChanged();
+        }
+    }
 };
 
 Data::Data(Document* parent)
     : QObject(parent)
-    , d(new Private)
+    , d(new Private(this))
 {
     static const int typeId = qRegisterMetaType<Data*>("Data*");
     Q_UNUSED(typeId);
@@ -65,8 +77,7 @@ bool Data::fromXml(QXmlStreamReader* xmlReader)
             if(!newBinary->fromXml(xmlReader)) {
                 return false;
             }
-            d->binariesById.insert(newBinary->id(), newBinary);
-            d->binaries << newBinary;
+            d->addBinary(newBinary, false);
         }
         else
         {
@@ -86,6 +97,11 @@ bool Data::fromXml(QXmlStreamReader* xmlReader)
 Binary* Data::binary(const QString& id) const
 {
     return d->binariesById.value(id);
+}
+
+QStringList Data::binaryIds() const
+{
+    return d->binariesById.keys();
 }
 
 QObjectList Data::binaries() const

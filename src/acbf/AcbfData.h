@@ -45,6 +45,7 @@ class ACBF_EXPORT Data : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QObjectList binaries READ binaries NOTIFY binariesChanged)
+    Q_PROPERTY(QStringList binaryIds READ binaryIds NOTIFY binariesChanged)
 public:
     explicit Data(Document* parent = nullptr);
     ~Data() override;
@@ -65,8 +66,10 @@ public:
      */
     Binary* binary(const QString& id) const;
 
+    QStringList binaryIds() const;
     QObjectList binaries() const;
     Q_SIGNAL void binariesChanged();
+    Q_SIGNAL void binaryAdded(QObject *binary);
 private:
     class Private;
     std::unique_ptr<Private> d;
