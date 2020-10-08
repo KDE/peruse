@@ -141,16 +141,30 @@ Kirigami.ApplicationWindow {
             Kirigami.Action {
                 visible: bookActions.visible;
                 checked: mainWindow.currentCategory === "bookMetaInfo";
-                text: i18nc("Switch to the page where the user can edit the meta information for the entire book", "Edit Metainfo");
+                text: i18nc("Switch to the page where the user can edit the meta information for the entire book", "Metainfo");
                 iconName: "document-edit";
                 onTriggered: changeCategory(editMetaInfo, {model: bookModel});
             },
             Kirigami.Action {
                 visible: bookActions.visible;
                 checked: mainWindow.currentCategory === "bookReferences";
-                text: i18nc("Switch to the page where the user can edit the references (that is, snippets of information) found in the book", "Edit References");
+                text: i18nc("Switch to the page where the user can edit the references (that is, snippets of information) found in the book", "References");
                 iconName: "documentation";
                 onTriggered: changeCategory(editReferences, {model: bookModel});
+            },
+            Kirigami.Action {
+                visible: bookActions.visible;
+                checked: mainWindow.currentCategory === "bookBinaries";
+                text: i18nc("Switch to the page where the user can work with the bits of binary data found in the book", "Embedded Data");
+                iconName: "document-multiple";
+                onTriggered: changeCategory(editBinaries, {model: bookModel});
+            },
+            Kirigami.Action {
+                visible: bookActions.visible;
+                checked: mainWindow.currentCategory === "bookStylesheet";
+                text: i18nc("Switch to the page where the user can work with the book's stylesheet", "Stylesheet");
+                iconName: "edit-paste-style";
+                onTriggered: changeCategory(editStylesheet, {model: bookModel});
             },
 
             Kirigami.Action {
@@ -173,14 +187,12 @@ Kirigami.ApplicationWindow {
 
     Component {
         id: welcomePage;
-        WelcomePage {
-        }
+        WelcomePage { }
     }
 
     Component {
         id: createNewBookPage;
-        CreateNewBook {
-        }
+        CreateNewBook { }
     }
 
     Component {
@@ -196,19 +208,23 @@ Kirigami.ApplicationWindow {
 
     Component {
         id: bookPage;
-        Book {
-        }
+        Book { }
     }
     Component {
         id: editMetaInfo;
-        BookMetainfoPage {
-        }
+        BookMetainfoPage { }
     }
-
     Component {
         id: editReferences;
-        BookReferences {
-        }
+        BookReferences { }
+    }
+    Component {
+        id: editBinaries;
+        BookBinaries { }
+    }
+    Component {
+        id: editStylesheet;
+        BookStylesheet { }
     }
 
     Component {
