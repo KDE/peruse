@@ -53,6 +53,9 @@ class Data;
 class ACBF_EXPORT Binary : public InternalReferenceObject
 {
     Q_OBJECT
+    Q_PROPERTY(QString id READ id WRITE setId NOTIFY idChanged)
+    Q_PROPERTY(QString contentType READ contentType WRITE setContentType NOTIFY contentTypeChanged)
+    Q_PROPERTY(int size READ size NOTIFY dataChanged)
 public:
     explicit Binary(Data* parent = nullptr);
     ~Binary() override;
@@ -61,7 +64,7 @@ public:
      *\brief Load binary data into xml.
      */
     void toXml(QXmlStreamWriter *writer);
-    
+
     /**
      * \brief Load binary data from xml.
      * @return True if the xmlReader encountered no errors.
@@ -74,7 +77,7 @@ public:
      * ACBF document.
      */
     QString id() const;
-    
+
     /**
      * \brief Set the ID for this binary element.
      * This is used to reference this element from
@@ -82,33 +85,41 @@ public:
      * @param newId - The new ID as a string.
      */
     void setId(const QString& newId);
+    Q_SIGNAL void idChanged();
 
     /**
-     * @return the mimetype of the binary data as a QString.
+     * @return the mimetype of the binary data as a QString. If one was not defined, the default is application/octet-stream
      */
     QString contentType() const;
-    
+
     /**
      * \brief Indicate the mimetype of the binary data.
      * @param newContentType - the mimetype in string format.
      */
     void setContentType(const QString& newContentType);
+    Q_SIGNAL void contentTypeChanged();
 
     /**
      * @return The binary data as a QByteArray.
      */
     QByteArray data() const;
-    
+    /**
+     * @return The size of the binary data
+     */
+    int size() const;
+
     /**
      * \brief Set the binary data to store in this element.
      * 
      * @param newData - This should be a QByteArray.
      */
     void setData(const QByteArray& newData);
+    Q_SIGNAL void dataChanged();
 private:
     class Private;
     std::unique_ptr<Private> d;
 };
 }
+Q_DECLARE_METATYPE(AdvancedComicBookFormat::Binary*)
 
 #endif // ACBFBINARY_H

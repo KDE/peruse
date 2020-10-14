@@ -33,7 +33,7 @@ class Binary::Private {
 public:
     Private() {}
     QString id;
-    QString contentType;
+    QString contentType{QLatin1String{"application/octet-stream"}};
     QByteArray data;
 };
 
@@ -74,7 +74,10 @@ QString Binary::id() const
 
 void Binary::setId(const QString& newId)
 {
-    d->id = newId;
+    if (d->id != newId) {
+        d->id = newId;
+        Q_EMIT idChanged();
+    }
 }
 
 QString Binary::contentType() const
@@ -84,7 +87,10 @@ QString Binary::contentType() const
 
 void Binary::setContentType(const QString& newContentType)
 {
-    d->contentType = newContentType;
+    if (d->contentType != newContentType) {
+        d->contentType = newContentType;
+        Q_EMIT contentTypeChanged();
+    }
 }
 
 QByteArray Binary::data() const
@@ -92,7 +98,15 @@ QByteArray Binary::data() const
     return d->data;
 }
 
+int Binary::size() const
+{
+    return d->data.size();
+}
+
 void Binary::setData(const QByteArray& newData)
 {
-    d->data = newData;
+    if (d->data != newData) {
+        d->data = newData;
+        dataChanged();
+    }
 }
