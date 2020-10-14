@@ -180,6 +180,14 @@ public:
      */
     Q_INVOKABLE QString createBook(QString folder, QString title, QString coverUrl);
 
+    /**
+     * Get the preview URL for an acbf item with the given ID.
+     * @note If you are requesting a preview for an entry in the ACBF data, prepend the ID with a # symbol
+     * @param id The ID of the item to get a preview URL for
+     * @return The preview URL for the item with the given ID (this is NOT checked for validity, only constructed)
+     */
+    Q_INVOKABLE QString previewForId(const QString& id) const;
+
     friend class ArchiveImageRunnable;
 protected:
     const KArchiveFile* archiveFile(const QString& filePath);

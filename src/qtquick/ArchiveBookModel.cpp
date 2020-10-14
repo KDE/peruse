@@ -1303,3 +1303,11 @@ bool ArchiveBookModel::loadCoMet(QStringList xmlDocuments, QObject *acbfData, QS
     }
     return false;
 }
+
+QString ArchiveBookModel::previewForId(const QString& id) const
+{
+    if (d->imageProvider) {
+        return QString("image://%1/%2").arg(d->imageProvider->prefix()).arg(id);
+    }
+    return QString();
+}
