@@ -22,15 +22,13 @@
 #ifndef ACBFSTYLESHEET_H
 #define ACBFSTYLESHEET_H
 
-#include <QObject>
-#include <memory>
-#include <QHash>
-
 #include "AcbfDocument.h"
+#include "AcbfStyle.h"
+
+#include <memory>
+
 class QXmlStreamWriter;
 class QXmlStreamReader;
-
-
 namespace AdvancedComicBookFormat
 {
 /**
@@ -49,11 +47,11 @@ namespace AdvancedComicBookFormat
 class ACBF_EXPORT StyleSheet : public QObject
 {
     Q_OBJECT
-
+    Q_PROPERTY(QObjectList styles READ styles NOTIFY stylesChanged)
 public:
     explicit StyleSheet(Document* parent = nullptr);
     ~StyleSheet() override;
-    
+
     /**
      * \brief Write the stylesheet into the xml writer.
      */
@@ -63,14 +61,15 @@ public:
      * @return True if the xmlReader encountered no errors.
      */
     bool fromXml(QXmlStreamReader *xmlReader);
-    
+
     /**
-     * @brief the contents of the style section.
-     * 
-     * @return A QHash with Css selectors and their contents;
+     * The styles contained within this stylesheet
+     * @see AdvancedComicBookFormat::Style
      */
-    QHash<QString,QString> classes() const;
-    
+    QObjectList styles() const;
+    Q_SIGNAL void stylesChanged();
+    Q_INVOKABLE AdvancedComicBookFormat::Style* addStyle();
+
     /**
      * @brief set the contents of the style section
      * 
