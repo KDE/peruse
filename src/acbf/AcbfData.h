@@ -66,6 +66,11 @@ public:
      */
     Binary* binary(const QString& id) const;
 
+    /**
+     * Adds a new, empty binary entry to the list, and returns that entry
+     */
+    Q_INVOKABLE AdvancedComicBookFormat::Binary* addBinary(const QString& id);
+
     QStringList binaryIds() const;
     QObjectList binaries() const;
     Q_SIGNAL void binariesChanged();

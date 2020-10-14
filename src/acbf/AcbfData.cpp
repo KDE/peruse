@@ -94,6 +94,15 @@ bool Data::fromXml(QXmlStreamReader* xmlReader)
     return !xmlReader->hasError();
 }
 
+Binary * Data::addBinary(const QString& id)
+{
+    Binary* newBinary = new Binary(this);
+    newBinary->setId(id);
+    d->addBinary(newBinary);
+    return newBinary;
+}
+
+
 Binary* Data::binary(const QString& id) const
 {
     return d->binariesById.value(id);
