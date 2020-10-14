@@ -22,6 +22,7 @@ set(acbf_SRCS
     AcbfReferences.cpp
     AcbfReference.cpp
     AcbfSequence.cpp
+    AcbfStyle.cpp
     AcbfStyleSheet.cpp
     AcbfTextarea.cpp
     AcbfTextlayer.cpp
