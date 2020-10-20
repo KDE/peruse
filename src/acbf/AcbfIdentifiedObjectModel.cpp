@@ -34,20 +34,26 @@ public:
     {}
     IdentifiedObjectModel* q{nullptr};
     Document* document{nullptr};
-    QObjectList identifiedObjects;
+    QList<InternalReferenceObject*> identifiedObjects;
 
-    void addAndConnectChild(QObject* child) {
-        int idx = identifiedObjects.count();
-        q->beginInsertRows(QModelIndex(), idx, idx);
-        identifiedObjects.append(child);
-        q->endInsertRows();
-        QObject::connect(child, &QObject::destroyed, q, [this, child](){
-            int idx = identifiedObjects.indexOf(child);
-            q->beginRemoveRows(QModelIndex(), idx, idx);
-            identifiedObjects.removeOne(child);
-            q->endRemoveRows();
-            child->disconnect(q);
-        });
+    void addAndConnectChild(InternalReferenceObject* child) {
+        if (child) {
+            int idx = identifiedObjects.count();
+            q->beginInsertRows(QModelIndex(), idx, idx);
+            identifiedObjects.append(child);
+            q->endInsertRows();
+            QObject::connect(child, &QObject::destroyed, q, [this, child](){
+                int idx = identifiedObjects.indexOf(child);
+                q->beginRemoveRows(QModelIndex(), idx, idx);
+                identifiedObjects.removeOne(child);
+                q->endRemoveRows();
+                child->disconnect(q);
+            });
+            QObject::connect(child, &InternalReferenceObject::propertyDataChanged, q, [this, child]() {
+                QModelIndex idx = q->index(identifiedObjects.indexOf(child));
+                q->dataChanged(idx, idx);
+            });
+        }
     }
 };
 
@@ -63,6 +69,7 @@ QHash<int, QByteArray> IdentifiedObjectModel::roleNames() const
 {
     static const QHash<int, QByteArray> roleNames{
         {IdRole, "id"},
+        {OriginalIndexRole, "originalIndex"},
         {TypeRole, "type"},
         {ObjectRole, "object"}
     };
@@ -73,7 +80,7 @@ QVariant IdentifiedObjectModel::data(const QModelIndex& index, int role) const
 {
     QVariant data;
     if (checkIndex(index) && d->document) {
-        QObject* object = d->identifiedObjects.value(index.row());
+        InternalReferenceObject* object = d->identifiedObjects.value(index.row());
         if (object) {
             switch(role) {
                 case IdRole:
@@ -87,6 +94,9 @@ QVariant IdentifiedObjectModel::data(const QModelIndex& index, int role) const
                     } else {
                         data.setValue<int>(UnknownType);
                     }
+                    break;
+                case OriginalIndexRole:
+                    data.setValue<int>(object->localIndex());
                     break;
                 case ObjectRole:
                     data.setValue<QObject*>(object);
@@ -133,8 +143,8 @@ void IdentifiedObjectModel::setDocument(QObject* document)
                 }
             };
             findAllIdentifiedObjects(d->document);
-            connect(d->document->data(), &Data::binaryAdded, this, [this](QObject* child){ d->addAndConnectChild(child);});
-            connect(d->document->references(), &References::referenceAdded, this, [this](QObject* child){ d->addAndConnectChild(child);});
+            connect(d->document->data(), &Data::binaryAdded, this, [this](QObject* child){ d->addAndConnectChild(qobject_cast<InternalReferenceObject*>(child));});
+            connect(d->document->references(), &References::referenceAdded, this, [this](QObject* child){ d->addAndConnectChild(qobject_cast<InternalReferenceObject*>(child));});
         }
         endResetModel();
         Q_EMIT documentChanged();

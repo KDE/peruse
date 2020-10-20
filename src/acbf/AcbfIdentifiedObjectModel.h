@@ -44,6 +44,7 @@ public:
 
     enum Roles {
         IdRole = Qt::UserRole + 1, ///< The ID of the object in question. This is supposed to be unique in the document
+        OriginalIndexRole, ///< The position of the object inside its original container
         TypeRole, ///< The type of the object - see IdentifiedObjectTypes for the values this can return
         ObjectRole ///< The underlying object (you can identify the specific type using the Type role)
     };
