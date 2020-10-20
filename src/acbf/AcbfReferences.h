@@ -80,10 +80,49 @@ public:
      */
     Q_INVOKABLE AdvancedComicBookFormat::Reference* addReference(const QString& id, const QStringList& paragraphs, const QString& language = "");
 
+    /**
+     * Returns a list of all known IDs for references
+     * @param A list of reference IDs
+     */
     QStringList referenceIds() const;
+
+    /**
+     * Returns the internal list of references
+     * @return A list of reference objects
+     */
     QObjectList references() const;
+
+    /**
+     * The position in the references object list of the reference passed to the function
+     * @param reference The object you want to get the position of
+     * @return The position of the object, or -1 if the object wasn't found
+     */
+    int referenceIndex(Reference* reference) const;
+
+    /**
+     * Fired whenever the list of references has changed
+     */
     Q_SIGNAL void referencesChanged();
+
+    /**
+     * Fired when a new reference has been added to the list
+     * @param reference The new reference
+     */
     Q_SIGNAL void referenceAdded(QObject *referece);
+
+    /**
+     * Swap the two given references in the ordered list of references
+     * (if either doesn't exist, this will fail quietly)
+     * @param swapThis The first object, which will take the position of the second
+     * @param withThis The second object, which will take the position of the first
+     */
+    Q_INVOKABLE void swapReferences(QObject *swapThis, QObject* withThis);
+    /**
+     * A convenience function for swapping reference positions directly by ID.
+     * @param swapThis The index of the first object, which will take the position of the second
+     * @param withThis The index of the second object, which will take the position of the first
+     */
+    Q_INVOKABLE void swapReferencesByIndex(int swapThis, int withThis);
 private:
     class Private;
     std::unique_ptr<Private> d;

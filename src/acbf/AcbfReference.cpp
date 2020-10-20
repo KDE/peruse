@@ -33,6 +33,8 @@ using namespace AdvancedComicBookFormat;
 class Reference::Private {
 public:
     Private() {}
+    References* parent;
+
     QString id;
     QString language;
     QStringList paragraphs;
@@ -44,6 +46,11 @@ Reference::Reference(References* parent)
 {
     static const int typeId = qRegisterMetaType<Reference*>("Reference*");
     Q_UNUSED(typeId);
+    d->parent = parent;
+    // Hook up properties to the parent's global data change signal
+    connect(this, &Reference::idChanged, &InternalReferenceObject::propertyDataChanged);
+    connect(this, &Reference::languageChanged, &InternalReferenceObject::propertyDataChanged);
+    connect(this, &Reference::paragraphsChanged, &InternalReferenceObject::propertyDataChanged);
 }
 
 Reference::~Reference() = default;
@@ -124,4 +131,12 @@ void Reference::setParagraphs(const QStringList& paragraphs)
         updateForwardReferences();
         Q_EMIT paragraphsChanged();
     }
+}
+
+int Reference::localIndex()
+{
+    if (d->parent) {
+        d->parent->referenceIndex(this);
+    }
+    return -1;
 }

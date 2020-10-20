@@ -20,6 +20,7 @@
  */
 
 #include "AcbfReferences.h"
+#include <QTimer>
 #include <QXmlStreamReader>
 
 #include <acbf_debug.h>
@@ -38,17 +39,19 @@ public:
     void addReference(Reference* reference, bool emitListChangeSignal = true) {
         referencesById.insert(reference->id(), reference);
         references << reference;
-        QObject::connect(reference, &QObject::destroyed, q, [this, reference](){
-            referencesById.remove(referencesById.key(reference));
-            references.removeAll(reference);
-            Q_EMIT q->referencesChanged();
-        });
+        QObject::connect(reference, &Reference::languageChanged, q, &References::referencesChanged);
+        QObject::connect(reference, &Reference::paragraphsChanged, q, &References::referencesChanged);
         QObject::connect(reference, &Reference::idChanged, q, [this, reference](){
             QMutableHashIterator<QString, Reference*> iterator(referencesById);
             while(iterator.findNext(reference)) {
                 iterator.remove();
             }
             referencesById.insert(reference->id(), reference);
+            Q_EMIT q->referencesChanged();
+        });
+        QObject::connect(reference, &QObject::destroyed, q, [this, reference](){
+            referencesById.remove(referencesById.key(reference));
+            references.removeAll(reference);
             Q_EMIT q->referencesChanged();
         });
         Q_EMIT q->referenceAdded(reference);
@@ -122,7 +125,7 @@ Reference* References::addReference(const QString& id, const QStringList& paragr
     return ref;
 }
 
-QStringList AdvancedComicBookFormat::References::referenceIds() const
+QStringList References::referenceIds() const
 {
     return d->referencesById.keys();
 }
@@ -130,4 +133,26 @@ QStringList AdvancedComicBookFormat::References::referenceIds() const
 QObjectList References::references() const
 {
     return d->references;
+}
+
+int References::referenceIndex(Reference* reference) const
+{
+    return d->references.indexOf(reference);
+}
+
+void References::swapReferences(QObject* swapThis, QObject* withThis)
+{
+    int first = d->references.indexOf(swapThis);
+    int second = d->references.indexOf(withThis);
+    swapReferencesByIndex(first, second);
+}
+
+void References::swapReferencesByIndex(int swapThis, int withThis)
+{
+    QObject* first = d->references[swapThis];
+    QObject* second = d->references[withThis];
+    d->references[swapThis] = second;
+    d->references[withThis] = first;
+    Q_EMIT referencesChanged();
+    QTimer::singleShot(100, this, &References::referencesChanged);
 }

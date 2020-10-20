@@ -107,6 +107,13 @@ public:
      */
     void setParagraphs(const QStringList& paragraphs);
     Q_SIGNAL void paragraphsChanged();
+
+    /**
+     * The position of this reference in the list of Reference instances in the
+     * parent References instance.
+     * @return The instance's position
+     */
+    int localIndex() override;
 private:
     class Private;
     std::unique_ptr<Private> d;
