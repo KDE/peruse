@@ -28,6 +28,8 @@
 
 #include <QTimer>
 #include <QFile>
+#include <QFileInfo>
+#include <QMimeDatabase>
 
 class PeruseConfig::Private
 {
@@ -189,6 +191,12 @@ QString PeruseConfig::getFilesystemProperty(QString fileName, QString propertyNa
         value = data.tags().join(",");
     } else if (propertyName == "comment") {
         value = data.userComment();
+    } else if (propertyName == "bytes") {
+        value = QString::number(QFileInfo(fileName).size());
+    } else if (propertyName == "mimetype") {
+        QMimeDatabase db;
+        QMimeType mime = db.mimeTypeForFile(fileName);
+        value = mime.name();
     } else {
         value = data.attribute(QString("peruse.").append(propertyName));
     }
