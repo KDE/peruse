@@ -57,6 +57,9 @@ InternalReferenceObject::InternalReferenceObject(InternalReferenceObject::Suppor
     , d(new Private(this))
 {
     d->supportedReferenceType = supportedReferenceType;
+    connect(this, &InternalReferenceObject::backReferencesChanged, &InternalReferenceObject::propertyDataChanged);
+    connect(this, &InternalReferenceObject::forwardReferencesChanged, &InternalReferenceObject::propertyDataChanged);
+    connect(this, &InternalReferenceObject::localIndexChanged, &InternalReferenceObject::propertyDataChanged);
 }
 
 InternalReferenceObject::~InternalReferenceObject() = default;

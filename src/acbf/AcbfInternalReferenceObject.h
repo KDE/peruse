@@ -51,6 +51,10 @@ class ACBF_EXPORT InternalReferenceObject : public QObject
      * in which there are links that point to this instance)
      */
     Q_PROPERTY(QObjectList backReferences READ backReferences NOTIFY backReferencesChanged)
+    /**
+     * The index of this object in the local list it is a part of
+     */
+    Q_PROPERTY(int localIndex READ localIndex NOTIFY localIndexChanged)
 public:
     enum SupportedReferenceType {
         ReferenceUnknownType = 0,
@@ -73,6 +77,21 @@ public:
      * Function called by other classes which contain links to this reference
      */
     void registerBackReference(InternalReference* ref);
+
+    /**
+     * This is the index of this object in the local list the object is a part of. Specifically,
+     * - Reference instances are in an ordered list inside the References main object
+     * - Binary instances are in an ordered list inside the Data main object
+     * Two objects can consequently have the same local index, but two objects inside the same
+     * main object can't.
+     */
+    virtual int localIndex() = 0;
+    Q_SIGNAL void localIndexChanged();
+
+    /**
+     * This should be fired whenever any of the properties change (so the container model can be updated)
+     */
+    Q_SIGNAL void propertyDataChanged();
 private:
     class Private;
     std::unique_ptr<Private> d;
