@@ -57,7 +57,12 @@ Kirigami.ScrollablePage {
     Kirigami.CardsListView {
         id: referencesList;
         Layout.fillWidth: true;
-        model: root.model.acbfData.references.references;
+        model: Peruse.FilterProxy {
+            filterRole: 259; // TypeRole
+            filterInt: 0; // ReferenceType
+            sortRole: 258; // OriginalIndexRole
+            sourceModel: Peruse.IdentifiedObjectModel { document: root.model.acbfData; }
+        }
         header: ColumnLayout {
             width: referencesList.width - Kirigami.Units.largeSpacing * 4;
             Item { height: Kirigami.Units.largeSpacing; Layout.fillWidth: true; }
@@ -84,21 +89,40 @@ Kirigami.ScrollablePage {
             }
         }
         delegate: Kirigami.AbstractCard {
+            id: referenceDelegate;
             header: RowLayout {
-            Layout.fillWidth: true;
+                Layout.fillWidth: true;
                 Kirigami.Heading {
                     Layout.fillWidth: true;
-                    text: modelData.id;
+                    text: model.id;
                     elide: Text.ElideRight;
                 }
                 QtControls.ToolButton {
+                    text: i18nc("swap the position of this page with the previous one", "Move Up");
+                    icon.name: "go-up"
+                    enabled: index > 0;
+                    visible: enabled;
+                    onClicked: { root.model.acbfData.references.swapReferencesByIndex(index, index - 1); }
+                }
+                QtControls.ToolButton {
+                    text: i18nc("swap the position of this page with the next one", "Move Down");
+                    icon.name: "go-down"
+                    enabled: index < referencesList.count - 1;
+                    visible: enabled;
+                    onClicked: { root.model.acbfData.references.swapReferencesByIndex(index, index + 1); }
+                }
+                Item {
+                    height: Kirigami.Units.largeSpacing
+                    width: Kirigami.Units.largeSpacing
+                }
+                QtControls.ToolButton {
                     icon.name: "document-edit";
-                    onClicked: pageStack.push(referenceEditor, { reference: modelData, model: root.model });
+                    onClicked: pageStack.push(referenceEditor, { reference: model.object, model: root.model });
                 }
             }
             contentItem: QtControls.Label {
                 Layout.fillWidth: true;
-                text: modelData.paragraphs;
+                text: model.object.paragraphs;
             }
         }
     }
