@@ -169,7 +169,7 @@ void ArchiveImageRunnable::run()//const QString& id, QSize* size, const QSize& r
         auto document = qobject_cast<AdvancedComicBookFormat::Document*>(d->bookModel->acbfData());
 
         if (document) {
-            AdvancedComicBookFormat::Binary* binary = document->data()->binary(d->id.mid(1));
+            AdvancedComicBookFormat::Binary* binary = qobject_cast<AdvancedComicBookFormat::Binary*>(document->objectByID(d->id.mid(1)));
 
             if (!d->abort && binary) {
                 success = d->loadImage(&img, binary->data());
