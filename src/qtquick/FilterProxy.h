@@ -23,6 +23,8 @@
 #define FILTERPROXY_H
 
 #include <QSortFilterProxyModel>
+
+#include <memory>
 /**
  * \brief a Filter proxy for handling search with.
  * 
@@ -31,9 +33,42 @@
 class FilterProxy : public QSortFilterProxyModel
 {
     Q_OBJECT
+    Q_PROPERTY(QString filterString READ filterString WRITE setFilterString NOTIFY filterStringChanged)
+    Q_PROPERTY(bool filterBoolean READ filterBoolean WRITE setFilterBoolean NOTIFY filterBooleanChanged)
+    Q_PROPERTY(int filterInt READ filterInt WRITE setFilterInt NOTIFY filterIntChanged)
+    /**
+     * If you for some reason need to toggle the filter off, you can turn the integer filtering off
+     * by toggling this to false. Setting the filterInt property will set this to true.
+     */
+    Q_PROPERTY(bool filterIntEnabled READ filterIntEnabled WRITE setFilterIntEnabled NOTIFY filterIntEnabledChanged)
+    Q_PROPERTY(int count READ count NOTIFY countChanged)
 public:
     explicit FilterProxy(QObject* parent = nullptr);
     ~FilterProxy() override;
+
+    void setFilterString(const QString &string);
+    QString filterString() const;
+    Q_SIGNAL void filterStringChanged();
+
+    void setFilterBoolean(const bool &value);
+    bool filterBoolean() const;
+    Q_SIGNAL void filterBooleanChanged();
+
+    void setFilterInt(const int &value);
+    int filterInt() const;
+    Q_SIGNAL void filterIntChanged();
+
+    void setFilterIntEnabled(const bool &value);
+    bool filterIntEnabled() const;
+    Q_SIGNAL void filterIntEnabledChanged();
+
+    bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
+
+    int count() const;
+    Q_SIGNAL void countChanged();
+private:
+    class Private;
+    std::unique_ptr<Private> d;
 };
 
 #endif//FILTERPROXY_H
