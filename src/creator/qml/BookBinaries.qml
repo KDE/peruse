@@ -22,6 +22,7 @@
 import QtQuick 2.12
 import QtQuick.Layouts 1.4
 import QtQuick.Controls 2.12 as QtControls
+import QtQuick.Dialogs 1.3
 
 import org.kde.kirigami 2.13 as Kirigami
 
@@ -76,6 +77,8 @@ Kirigami.ScrollablePage {
                 icon.name: "document-save";
                 text: i18nc("label for a button which updates the binary with the new details", "OK");
                 onClicked: {
+                    editBinarySheet.binary.id = binaryId.text;
+                    editBinarySheet.binary.contentType = binaryContentType.text;
                     editBinarySheet.close();
                 }
             }
@@ -111,6 +114,66 @@ Kirigami.ScrollablePage {
                     id: binaryDataImport;
                     text: i18nc("Label for the button in the binary editor sheet which lets the user replace the data contained in the current instance", "Import Data...");
                     icon.name: "document-open-data";
+                    property string fileName;
+                    function addFile() {
+                        editBinarySheet.binary.contentType = peruseConfig.getFilesystemProperty(fileName, "mimetype");
+                        editBinarySheet.binary.setDataFromFile(fileName);
+                        binaryContentType.text = editBinarySheet.binary.contentType;
+                        // Reset the ID if and only if the text field is empty, or the ID is the default identifier in the user's language
+                        if (binaryId.text === "" || binaryId.text === i18nc("The initial identifier used for a newly created binary data element", "Unnamed Binary")) {
+                            editBinarySheet.binary.id = fileName.split("/").pop();
+                            binaryId.text = editBinarySheet.binary.id;
+                        }
+                        fileName = "";
+                    }
+                    onClicked: { openDlg.open(); }
+                    FileDialog {
+                        id: openDlg;
+                        title: i18nc("@title:window standard file open dialog used to add file data into the book", "Pick A File To Add");
+                        folder: mainWindow.homeDir();
+                        nameFilters: [
+                            i18nc("The file type filter for showing all files", "All files %1", "(*)")
+                        ]
+                        property int splitPos: osIsWindows ? 8 : 7;
+                        onAccepted: {
+                            if (openDlg.fileUrl.toString().substring(0, 7) === "file://") {
+                                var aOk = false;
+                                binaryDataImport.fileName = openDlg.fileUrl.toString().substring(splitPos);
+                                // Make sure we're not just loading ginormous files, warn after 10MiB of size
+                                var byteSize = peruseConfig.getFilesystemProperty(binaryDataImport.fileName, "bytes");
+                                console.log(binaryDataImport.fileName + " is " + byteSize);
+                                if (byteSize > 0) {
+                                    aOk = true;
+                                }
+                                if (aOk && byteSize > 10485760) {
+                                    aOk = false; // let the user make the choice...
+                                    fileSizeOkSheet.open();
+                                }
+                                // Only keep going if we're all good
+                                if (aOk) {
+                                    binaryDataImport.addFile();
+                                }
+                            }
+                        }
+                        onRejected: {
+                            // Just do nothing, we don't really care...
+                        }
+                    }
+                    MessageBoxSheet {
+                        id: fileSizeOkSheet;
+                        title: i18nc("@title:window a message box used to ask the user if they really want to add a very large file to their book", "Very Large File");
+                        text: i18nc("The main query text for a message box used to ask the user if they really want to add a very large file to their book", "The file you are attempting to add, %1, is more than 10MiB. Are you sure you want to add it to the book?", binaryDataImport.fileName);
+                        actions: [
+                            QtControls.Action {
+                                text: i18nc("The option used to let the user agree to the proposed action", "Yes, Add Large File");
+                                onTriggered: { binaryDataImport.addFile(); }
+                            },
+                            QtControls.Action {
+                                text: i18nc("The option used to let the user abort the proposed action", "Don't Add");
+                                onTriggered: { binaryDataImport.fileName = ""; }
+                            }
+                        ]
+                    }
                 }
             }
         }
@@ -119,7 +182,12 @@ Kirigami.ScrollablePage {
     ListView {
         id: binariesList;
         Layout.fillWidth: true;
-        model: root.model.acbfData.data.binaries;
+        model: Peruse.FilterProxy {
+            filterRole: 259; // TypeRole
+            filterInt: 1; // BinaryType
+            sortRole: 258; // OriginalIndexRole
+            sourceModel: Peruse.IdentifiedObjectModel { document: root.model.acbfData; }
+        }
         header: ColumnLayout {
             width: binariesList.width - Kirigami.Units.largeSpacing * 4;
             Item { height: Kirigami.Units.largeSpacing; Layout.fillWidth: true; }
@@ -150,7 +218,7 @@ Kirigami.ScrollablePage {
             height: Kirigami.Units.iconSizes.huge + Kirigami.Units.smallSpacing * 2;
             supportsMouseEvents: true;
             onClicked: {
-                editBinarySheet.editBinary(modelData);
+                editBinarySheet.editBinary(model.object);
             }
             RowLayout {
                 Layout.fillWidth: true;
@@ -159,27 +227,36 @@ Kirigami.ScrollablePage {
                     Layout.fillHeight: true;
                     Layout.minimumWidth: height;
                     Layout.maximumWidth: height;
-                    Kirigami.Icon {
+                    Image {
                         id: thumbnail;
                         anchors {
                             fill: parent;
                             margins: Kirigami.Units.smallSpacing;
                         }
-                        source: root.model.previewForId("#" + modelData.id);
-                        placeholder: "fileview-preview";
-                        fallback: "fileview-preview";
+                        asynchronous: true;
+                        fillMode: Image.PreserveAspectFit;
+                        source: model.object.size > 0 ? root.model.previewForId("#" + model.id) : "";
+                    }
+                    Kirigami.Icon {
+                        anchors {
+                            fill: parent;
+                            margins: Kirigami.Units.smallSpacing;
+                        }
+                        source: "fileview-preview";
+                        opacity: thumbnail.status == Image.Ready && thumbnail.source !== "" ? 0 : 1
+                        Behavior on opacity { NumberAnimation { duration: Kirigami.Units.shortDuration; } }
                     }
                 }
                 ColumnLayout {
                     Layout.fillWidth: true;
                     Layout.fillHeight: true;
                     QtControls.Label {
-                        text: modelData.id === "" ? i18nc("Title used in the list of binary data when there is no id defined for that entry", "Unnamed piece of data") : modelData.id;
+                        text: model.id === "" ? i18nc("Title used in the list of binary data when there is no id defined for that entry", "Unnamed piece of data") : model.id;
                         Layout.fillWidth: true;
                         Layout.fillHeight: true;
                     }
                     QtControls.Label {
-                        text: i18nc("Label which describes which content type this entry is supposed to be", "Content type: %1", modelData.contentType);
+                        text: i18nc("Label which describes which content type this entry is supposed to be", "Content type: %1", model.object.contentType);
                         Layout.fillWidth: true;
                         Layout.fillHeight: true;
                     }
