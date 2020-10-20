@@ -114,7 +114,23 @@ public:
      * @param newData - This should be a QByteArray.
      */
     void setData(const QByteArray& newData);
+    /**
+     * \brief Set the binary data to store in this element from a file.
+     * Note: This will be read immediately and added with no further checks.
+     * @param fileName The filename of a file on disk. If the file does not exist, the data will be set to empty.
+     */
+    Q_INVOKABLE void setDataFromFile(const QString& fileName);
+    /**
+     * Fired whenever the data contents of the binary changes
+     */
     Q_SIGNAL void dataChanged();
+
+    /**
+     * The position of this binary in the list of Binary instances in the
+     * parent Data instance.
+     * @return The instance's position
+     */
+    int localIndex() override;
 private:
     class Private;
     std::unique_ptr<Private> d;

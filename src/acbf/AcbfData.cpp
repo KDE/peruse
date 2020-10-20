@@ -39,6 +39,21 @@ public:
     void addBinary(Binary* binary, bool emitListChangeSignal = true) {
         binariesById.insert(binary->id(), binary);
         binaries << binary;
+        QObject::connect(binary, &Binary::contentTypeChanged, q, &Data::binariesChanged);
+        QObject::connect(binary, &Binary::dataChanged, q, &Data::binariesChanged);
+        QObject::connect(binary, &Binary::idChanged, q, [this, binary](){
+            QMutableHashIterator<QString, Binary*> iterator(binariesById);
+            while(iterator.findNext(binary)) {
+                iterator.remove();
+            }
+            binariesById.insert(binary->id(), binary);
+            Q_EMIT q->binariesChanged();
+        });
+        QObject::connect(binary, &QObject::destroyed, q, [this, binary](){
+            binariesById.remove(binariesById.key(binary));
+            binaries.removeAll(binary);
+            Q_EMIT q->binariesChanged();
+        });
         Q_EMIT q->binaryAdded(binary);
         if (emitListChangeSignal) {
             Q_EMIT q->binariesChanged();
@@ -116,4 +131,9 @@ QStringList Data::binaryIds() const
 QObjectList Data::binaries() const
 {
     return d->binaries;
+}
+
+int Data::binaryIndex(Binary* binary)
+{
+    return d->binaries.indexOf(binary);
 }

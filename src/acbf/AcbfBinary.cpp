@@ -21,6 +21,7 @@
 
 #include "AcbfBinary.h"
 
+#include <QFile>
 #include <QString>
 #include <QXmlStreamWriter>
 #include <QXmlStreamReader>
@@ -32,6 +33,8 @@ using namespace AdvancedComicBookFormat;
 class Binary::Private {
 public:
     Private() {}
+    Data *parent;
+
     QString id;
     QString contentType{QLatin1String{"application/octet-stream"}};
     QByteArray data;
@@ -43,6 +46,11 @@ Binary::Binary(Data* parent)
 {
     static const int typeId = qRegisterMetaType<Binary*>("Binary*");
     Q_UNUSED(typeId);
+    d->parent = parent;
+    // Hook up properties to the parent's global data change signal
+    connect(this, &Binary::idChanged, &InternalReferenceObject::propertyDataChanged);
+    connect(this, &Binary::contentTypeChanged, &InternalReferenceObject::propertyDataChanged);
+    connect(this, &Binary::dataChanged, &InternalReferenceObject::propertyDataChanged);
 }
 
 Binary::~Binary() = default;
@@ -107,6 +115,25 @@ void Binary::setData(const QByteArray& newData)
 {
     if (d->data != newData) {
         d->data = newData;
-        dataChanged();
+        Q_EMIT dataChanged();
     }
+}
+
+void AdvancedComicBookFormat::Binary::setDataFromFile(const QString& fileName)
+{
+    d->data.clear();
+    QFile file(fileName);
+    if (file.open(QIODevice::ReadOnly)) {
+        d->data = file.readAll();
+        file.close();
+    }
+    Q_EMIT dataChanged();
+}
+
+int Binary::localIndex()
+{
+    if (d->parent) {
+        return d->parent->binaryIndex(this);
+    }
+    return -1;
 }

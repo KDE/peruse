@@ -71,8 +71,15 @@ public:
      */
     Q_INVOKABLE AdvancedComicBookFormat::Binary* addBinary(const QString& id);
 
-    QStringList binaryIds() const;
+    /**
+     * The position in the binaries object list of the binary passed to the function
+     * @param reference The object you want to get the position of
+     * @return The position of the object, or -1 if the object wasn't found
+     */
     QObjectList binaries() const;
+
+    QStringList binaryIds() const;
+    int binaryIndex(Binary* binary);
     Q_SIGNAL void binariesChanged();
     Q_SIGNAL void binaryAdded(QObject *binary);
 private:
