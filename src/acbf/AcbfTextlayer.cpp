@@ -119,6 +119,11 @@ QList<Textarea *> Textlayer::textareas() const
     return d->textareas;
 }
 
+int Textlayer::textAreaIndex(Textarea* textarea)
+{
+    return d->textareas.indexOf(textarea);
+}
+
 Textarea * Textlayer::textarea(int index) const
 {
     return d->textareas.at(index);

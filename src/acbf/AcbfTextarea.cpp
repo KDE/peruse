@@ -36,6 +36,7 @@ public:
         , inverted(false)
         , transparent(false)
     {}
+    Textlayer* parent;
     QString bgcolor;
     QList<QPoint> points;
     int textRotation;
@@ -51,7 +52,17 @@ Textarea::Textarea(Textlayer* parent)
 {
     static const int typeId = qRegisterMetaType<Textarea*>("Textarea*");
     Q_UNUSED(typeId);
+    d->parent = parent;
     connect(this, &Textarea::pointCountChanged, this, &Textarea::boundsChanged);
+
+    connect(this, &Textarea::bgcolorChanged, &InternalReferenceObject::propertyDataChanged);
+    // Don't forward pointsCountChanged, as boundsChanged already fires from that
+    connect(this, &Textarea::boundsChanged, &InternalReferenceObject::propertyDataChanged);
+    connect(this, &Textarea::textRotationChanged, &InternalReferenceObject::propertyDataChanged);
+    connect(this, &Textarea::typeChanged, &InternalReferenceObject::propertyDataChanged);
+    connect(this, &Textarea::invertedChanged, &InternalReferenceObject::propertyDataChanged);
+    connect(this, &Textarea::transparentChanged, &InternalReferenceObject::propertyDataChanged);
+    connect(this, &Textarea::paragraphsChanged, &InternalReferenceObject::propertyDataChanged);
 }
 
 Textarea::~Textarea() = default;
@@ -298,4 +309,12 @@ void Textarea::setParagraphs(const QStringList& paragraphs)
 {
     d->paragraphs = paragraphs;
     emit paragraphsChanged();
+}
+
+int Textarea::localIndex()
+{
+    if (d->parent) {
+        return d->parent->textAreaIndex(this);
+    }
+    return -1;
 }

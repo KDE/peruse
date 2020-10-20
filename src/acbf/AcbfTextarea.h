@@ -222,6 +222,13 @@ public:
      * @brief fires when the paragraphs are set.
      */
     Q_SIGNAL void paragraphsChanged();
+
+    /**
+     * The position of this text area in the list of Textarea instances in the
+     * parent Textlayer instance.
+     * @return The instance's position
+     */
+    int localIndex() override;
 private:
     class Private;
     std::unique_ptr<Private> d;

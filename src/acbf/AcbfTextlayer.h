@@ -92,6 +92,7 @@ public:
      * @returns a list of textareas in this page.
      */
     QList<Textarea*> textareas() const;
+    int textAreaIndex(Textarea* textarea);
     /**
      * @param index - index of the textarea.
      * @return the textarea of that index.
