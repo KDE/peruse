@@ -32,7 +32,9 @@ import org.kde.peruse 0.1 as Peruse
 Kirigami.ScrollablePage {
     id: root;
     property string categoryName: "bookReferences";
-    title: i18nc("title text for the reference editor page", "Editing %1", (reference ? reference.id : ""));
+    title: referenceLanguage.text === ""
+        ? i18nc("title text for the reference editor page, when the reference has no language set", "Editing %1 (default language)", referenceIdentifier.text)
+        : i18nc("title text for the reference editor page", "Editing %1 (language: %2)", referenceIdentifier.text, referenceLanguage.text);
     property QtObject reference;
     property QtObject model;
     onReferenceChanged: {
