@@ -137,3 +137,24 @@ int Data::binaryIndex(Binary* binary)
 {
     return d->binaries.indexOf(binary);
 }
+
+void Data::swapBinaries(QObject* swapThis, QObject* withThis)
+{
+    int first = d->binaries.indexOf(swapThis);
+    int second = d->binaries.indexOf(withThis);
+    swapBinariesByIndex(first, second);
+}
+
+void Data::swapBinariesByIndex(int swapThis, int withThis)
+{
+    if (swapThis > -1 && swapThis < d->binaries.count() && withThis > -1 && withThis < d->binaries.count()) {
+        d->binaries.swapItemsAt(swapThis, withThis);
+        InternalReferenceObject* first = qobject_cast<InternalReferenceObject*>(d->binaries[swapThis]);
+        InternalReferenceObject* second = qobject_cast<InternalReferenceObject*>(d->binaries[withThis]);
+        Q_EMIT first->propertyDataChanged();
+        Q_EMIT second->propertyDataChanged();
+        Q_EMIT binariesChanged();
+    } else {
+        qCWarning(ACBF_LOG) << "There was an attempt to swap two binaries, and at least one of them was outside the bounds of the current list:" << swapThis << withThis;
+    }
+}
