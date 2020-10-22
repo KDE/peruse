@@ -42,6 +42,12 @@ public:
     Q_INVOKABLE QPoint linkStartEnd(int cursorPosition);
     Q_INVOKABLE QString linkText(int cursorPosition);
     Q_INVOKABLE QString linkHref(int cursorPosition);
+
+    /**
+     * Returns the paragraphs of text found in the body of the text document
+     * @return A list of paragraphs of text
+     */
+    Q_INVOKABLE QStringList paragraphs() const;
 private:
     class Private;
     std::unique_ptr<Private> d;

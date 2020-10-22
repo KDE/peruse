@@ -121,3 +121,29 @@ QString TextDocumentEditor::linkHref(int cursorPosition)
     }
     return text;
 }
+
+QStringList TextDocumentEditor::paragraphs() const
+{
+    QStringList paragraphs;
+    if (d->textDocument) {
+        // This is some FUN HEURISTIC STUFF based on QTextDocument's internals, so yay
+        // QTextDocument's toHtml function spits out something which potentially has a bunch of header
+        // and footer info, but we only want the paragraphs and nothing else - that is, only things
+        // that are inside the body tag (which might have more things)
+        paragraphs = d->textDocument->textDocument()->toHtml().split("\n");
+        QMutableStringListIterator it(paragraphs);
+        // First, remove the header bit, which always ends with the string below
+        static const QString headerEnd{"</style></head><body"};
+        while (it.hasNext()) {
+            const QString paragraph = it.next();
+            it.remove();
+            if (paragraph.startsWith(headerEnd)) {
+                break;
+            }
+        }
+        // Then remove the last bit of the last item, which is always just </body></html>
+        QString last = paragraphs.takeLast();
+        paragraphs << last.left(last.length() - 14);
+    }
+    return paragraphs;
+}
