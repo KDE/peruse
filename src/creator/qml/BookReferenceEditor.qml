@@ -45,7 +45,7 @@ Kirigami.ScrollablePage {
     function saveReference() {
         reference.id = referenceIdentifier.text;
         reference.language = referenceLanguage.text;
-        reference.paragraphs = textArea.text.split("\n");
+        reference.paragraphs = textDocumentEditor.paragraphs();
     }
 
     actions {
