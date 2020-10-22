@@ -39,10 +39,16 @@ FilterProxy::FilterProxy(QObject* parent)
     : QSortFilterProxyModel(parent)
     , d(new Private)
 {
-    connect(&d->updateTimer, &QTimer::timeout, this, [this](){ QTimer::singleShot(1, this, [this](){ emit countChanged(); }); } );
+    connect(&d->updateTimer, &QTimer::timeout, this, [this](){
+        Q_EMIT countChanged();
+        sort(0);
+    } );
     connect(this, &QAbstractItemModel::rowsInserted, this, [this](){ d->updateTimer.start(); });
     connect(this, &QAbstractItemModel::rowsRemoved, this, [this](){ d->updateTimer.start(); });
     connect(this, &QAbstractItemModel::dataChanged, this, [this](){ d->updateTimer.start(); });
+    connect(this, &QAbstractItemModel::layoutChanged, this, [this](){ d->updateTimer.start(); });
+    connect(this, &QAbstractItemModel::modelReset, this, [this](){ d->updateTimer.start(); });
+    setDynamicSortFilter(true);
 }
 
 FilterProxy::~FilterProxy() = default;
