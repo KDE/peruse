@@ -149,10 +149,14 @@ void References::swapReferences(QObject* swapThis, QObject* withThis)
 
 void References::swapReferencesByIndex(int swapThis, int withThis)
 {
-    QObject* first = d->references[swapThis];
-    QObject* second = d->references[withThis];
-    d->references[swapThis] = second;
-    d->references[withThis] = first;
-    Q_EMIT referencesChanged();
-    QTimer::singleShot(100, this, &References::referencesChanged);
+    if (swapThis > -1 && swapThis < d->references.count() && withThis > -1 && withThis < d->references.count()) {
+        d->references.swapItemsAt(swapThis, withThis);
+        InternalReferenceObject* first = qobject_cast<InternalReferenceObject*>(d->references[swapThis]);
+        InternalReferenceObject* second = qobject_cast<InternalReferenceObject*>(d->references[withThis]);
+        Q_EMIT first->propertyDataChanged();
+        Q_EMIT second->propertyDataChanged();
+        Q_EMIT referencesChanged();
+    } else {
+        qCWarning(ACBF_LOG) << "There was an attempt to swap two references, and at least one of them was outside the bounds of the current list of references:" << swapThis << withThis;
+    }
 }
