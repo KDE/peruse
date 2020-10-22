@@ -136,7 +136,7 @@ void Reference::setParagraphs(const QStringList& paragraphs)
 int Reference::localIndex()
 {
     if (d->parent) {
-        d->parent->referenceIndex(this);
+        return d->parent->referenceIndex(this);
     }
     return -1;
 }
