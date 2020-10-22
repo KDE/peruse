@@ -7,6 +7,7 @@
         <file>qml/Book.qml</file>
         <file>qml/BookBasics.qml</file>
         <file>qml/BookBinaries.qml</file>
+        <file>qml/BookBinaryEditor.qml</file>
         <file>qml/BookReferenceEditor.qml</file>
         <file>qml/BookReferences.qml</file>
         <file>qml/BookStylesheet.qml</file>
