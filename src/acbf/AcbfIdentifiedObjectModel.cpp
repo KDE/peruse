@@ -144,7 +144,9 @@ void IdentifiedObjectModel::setDocument(QObject* document)
             };
             findAllIdentifiedObjects(d->document);
             connect(d->document->data(), &Data::binaryAdded, this, [this](QObject* child){ d->addAndConnectChild(qobject_cast<InternalReferenceObject*>(child));});
+            connect(d->document->data(), &Data::binariesChanged, this, [this](){ dataChanged(index(0), index(d->identifiedObjects.count())); });
             connect(d->document->references(), &References::referenceAdded, this, [this](QObject* child){ d->addAndConnectChild(qobject_cast<InternalReferenceObject*>(child));});
+            connect(d->document->references(), &References::referencesChanged, this, [this](){ dataChanged(index(0), index(d->identifiedObjects.count())); });
         }
         endResetModel();
         Q_EMIT documentChanged();
