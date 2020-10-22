@@ -100,16 +100,16 @@ Kirigami.ScrollablePage {
                 QtControls.ToolButton {
                     text: i18nc("swap the position of this page with the previous one", "Move Up");
                     icon.name: "go-up"
-                    enabled: index > 0;
+                    enabled: model.originalIndex > 0;
                     visible: enabled;
-                    onClicked: { root.model.acbfData.references.swapReferencesByIndex(index, index - 1); }
+                    onClicked: { root.model.acbfData.references.swapReferencesByIndex(model.originalIndex, model.originalIndex - 1); }
                 }
                 QtControls.ToolButton {
                     text: i18nc("swap the position of this page with the next one", "Move Down");
                     icon.name: "go-down"
-                    enabled: index < referencesList.count - 1;
+                    enabled: model.originalIndex < referencesList.count - 1;
                     visible: enabled;
-                    onClicked: { root.model.acbfData.references.swapReferencesByIndex(index, index + 1); }
+                    onClicked: { root.model.acbfData.references.swapReferencesByIndex(model.originalIndex, model.originalIndex + 1); }
                 }
                 Item {
                     height: Kirigami.Units.largeSpacing
@@ -122,7 +122,7 @@ Kirigami.ScrollablePage {
             }
             contentItem: QtControls.Label {
                 Layout.fillWidth: true;
-                text: model.object.paragraphs;
+                text: model.object.paragraphs.length > 0 ? model.object.paragraphs.join("\n") : "";
             }
         }
     }
