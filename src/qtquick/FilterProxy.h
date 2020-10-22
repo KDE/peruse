@@ -62,10 +62,12 @@ public:
     bool filterIntEnabled() const;
     Q_SIGNAL void filterIntEnabledChanged();
 
-    bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
-
     int count() const;
     Q_SIGNAL void countChanged();
+
+protected:
+    bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
+
 private:
     class Private;
     std::unique_ptr<Private> d;
