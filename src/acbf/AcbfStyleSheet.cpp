@@ -100,7 +100,8 @@ void StyleSheet::setContents(const QString& css)
     for(QStringRef cssClass : classes)
     {
         Style* newStyle = new Style(this);
-        newStyle->fromString(cssClass);
-        d->addStyle(newStyle);
+        if (newStyle->fromString(cssClass.trimmed())) {
+            d->addStyle(newStyle);
+        }
     }
 }
