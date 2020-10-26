@@ -139,13 +139,22 @@ void PreviewRunnable::run()
             connect(d->job, &KIO::PreviewJob::finished, this, &PreviewRunnable::finishedPreview);
 
             d->jobCompletion = false;
+            QElapsedTimer breaker;
+            breaker.start();
             if(d->job->exec())
             {
                 // Do not access the job after this point! As we are requesting that
                 // it be deleted in finishedPreview(), don't expect it to be around.
                 while(!d->jobCompletion) {
                     // Let's let the job do its thing and whatnot...
-                    qApp->processEvents();
+                    qApp->processEvents(QEventLoop::WaitForMoreEvents, 100);
+                    // This is not the prettiest thing ever, but let's not wait too long for previews...
+                    // Short-stop the process at 1.5 seconds
+                    if (breaker.elapsed() == 1500) {
+                        d->job->deleteLater();
+                        qDebug() << "Not awesome, this is taking way too long" << d->id;
+                        break;
+                    }
                 }
                 if(!d->preview.isNull())
                 {
