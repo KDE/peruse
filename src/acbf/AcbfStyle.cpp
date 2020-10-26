@@ -67,7 +67,7 @@ QString Style::toString() const {
         selectors << QString{"inverted=\"True\""};
     }
     if (!d->type.isEmpty()) {
-        selectors << QString{"type=\"\""}.arg(d->type);
+        selectors << QString{"type=\"%1\""}.arg(d->type);
     }
 
     // Now, let's add together all of the fields we've got, and then mash them into some curly braces with semicolons between each bit
@@ -115,32 +115,41 @@ bool Style::fromString(QStringRef style)
     static const QString fontWeightString{"font-weight"};
     static const QString fontStretchString{"font-stretch"};
     static const QString colonString{":"};
+    static const QString semiColonString{";"};
     static const QString commaString{","};
     static const QString quoteString{"\""};
     static const QString equalsString{"="};
     static const QString squareOpenBracketString{"["};
-    static const QString curlyOpenBracketString{"["};
+    static const QString squareEndBracketString{"]"};
+    static const QString curlyOpenBracketString{"{"};
     static const QString trueString{"true"};
+    static const QString newlineString{"\n"};
 
     // First, split the name, type, and possible inversion bits out from the parameters
-    QVector<QStringRef>  split = style.split(curlyOpenBracketString);
+    QVector<QStringRef>  split = style.split(curlyOpenBracketString, Qt::SkipEmptyParts);
     if (split.count() == 2) {
 
         // Then get the name, type and inversion bits sorted out
-        QVector<QStringRef>  splitElement = split.value(0).split(squareOpenBracketString);
+        QVector<QStringRef>  splitElement = split.value(0).split(squareOpenBracketString, Qt::SkipEmptyParts);
         if (splitElement.count() > 0) {
-            d->element = splitElement.value(0).toString().trimmed();
+            d->element = splitElement.value(0).toString().simplified().trimmed();
             if (splitElement.count() == 2) {
-                // There's an end brace in here somewhere, but it's not super important as we detect values on the " anyway
-                QVector<QStringRef>  splitSubSelector = splitElement.value(1).split(commaString);
-                for (QStringRef ref : splitSubSelector) {
-                    QVector<QStringRef>  splitData = ref.split(equalsString);
+                // There's an end brace in here somewhere, and possibly some spaces, so let's get rid of those
+                QStringRef parameters = splitElement.value(1).trimmed();
+                while (parameters.endsWith(squareEndBracketString)) {
+                    parameters = parameters.left(parameters.length() - 1).trimmed();
+                }
+                QVector<QStringRef>  splitParameters = parameters.split(commaString, Qt::SkipEmptyParts);
+                for (QStringRef ref : splitParameters) {
+                    QVector<QStringRef>  splitData = ref.split(equalsString, Qt::SkipEmptyParts);
                     if (splitData.count() == 2) {
                         QStringRef name = splitData.value(0).trimmed();
                         QStringRef value = splitData.value(1);
-                        value = value.chopped(value.lastIndexOf(quoteString)).trimmed();
-                        while (value.startsWith(quoteString)) {
-                            value = value.right(value.length() - 1);
+                        if (value.indexOf(quoteString) > -1) {
+                            value = value.chopped(value.lastIndexOf(quoteString)).trimmed();
+                            while (value.startsWith(quoteString)) {
+                                value = value.right(value.length() - 1);
+                            }
                         }
                         if (name.compare(invertedString, Qt::CaseInsensitive) == 0) {
                             d->inverted = (value.compare(trueString, Qt::CaseInsensitive) == 0);
@@ -148,29 +157,29 @@ bool Style::fromString(QStringRef style)
                             d->type = value.toString();
                         }
                     } else {
-                        qCWarning(ACBF_LOG) << "While attempting to parse the sub-settings part of the selector section, we ended up with something other than a key/value pair (likely a unary value, which is not supported). The entry we attempted to parse was:" << ref;
+                        qCWarning(ACBF_LOG) << "While attempting to parse the sub-settings part of the selector section of of" << style << "we ended up with something other than a key/value pair (likely a unary value, which is not supported). The entry we attempted to parse was:" << ref;
                     }
                 }
             } else if (splitElement.count() == 1) {
                 // If there's only the one thing, it's just a name, so name our thing and keep going
                 d->element = splitElement.value(0).trimmed().toString();
             } else {
-                qCWarning(ACBF_LOG) << "While attempting to parse the selector, we ended up with more than one set of selector details. We don't really know how to handle this, so you just get the whole thing as the element name now. The selector section we attempted to parse was:" << split.value(0);
+                qCWarning(ACBF_LOG) << "While attempting to parse a selector in" << style << "we ended up with more than one set of selector details. We don't really know how to handle this, so you just get the whole thing as the element name now. The selector section we attempted to parse was:" << split.value(0);
                 d->element = split.value(0).toString();
             }
 
             // Now let's figure out the parameters
-            QVector<QStringRef>  splitParameters = split.value(1).split(";");
+            QVector<QStringRef>  splitParameters = split.value(1).split(semiColonString, Qt::SkipEmptyParts);
             // Some more parser helpers
             for (QStringRef parameter : splitParameters) {
-                auto splitParameter = parameter.split(colonString);
+                auto splitParameter = parameter.split(colonString, Qt::SkipEmptyParts);
                 if (splitParameter.count() == 2) {
                     QStringRef name = splitParameter.value(0).trimmed();
                     QStringRef value = splitParameter.value(1).trimmed();
                     if (name.compare(colorString, Qt::CaseInsensitive) == 0) {
                         d->color = value.toString();
                     } else if (name.compare(fontFamilyString, Qt::CaseInsensitive) == 0) {
-                        d->fontFamily = value.toString().split(commaString);
+                        d->fontFamily = value.toString().split(commaString, Qt::SkipEmptyParts);
                     } else if (name.compare(fontStyleString, Qt::CaseInsensitive) == 0) {
                         d->fontStyle = value.toString();
                     } else if (name.compare(fontWeightString, Qt::CaseInsensitive) == 0) {
@@ -178,11 +187,11 @@ bool Style::fromString(QStringRef style)
                     } else if (name.compare(fontStretchString, Qt::CaseInsensitive) == 0) {
                         d->fontStretch = value.toString();
                     } else {
-                        qCWarning(ACBF_LOG) << "While parsing the parameter section, we found an unsupported parameter :" << name << value;
+                        qCWarning(ACBF_LOG) << "While parsing the parameter section of" << style << "we found an unsupported parameter :" << name << value;
                         // This isn't a fatal thing, we'll let it pass...
                     }
                 } else {
-                    qCWarning(ACBF_LOG) << "While parsing the parameter section, we came across a unary value (which we don't support):" << parameter;
+                    qCWarning(ACBF_LOG) << "While parsing the parameter section of" << style << "we came across a unary value (which we don't support):" << parameter;
                     // This isn't a fatal thing, we'll let it pass...
                 }
             }
@@ -191,7 +200,13 @@ bool Style::fromString(QStringRef style)
             success = false;
         }
     } else {
-        qCWarning(ACBF_LOG) << "We encountered something other than exactly one { in a style entry, which suggests a serious problem with the entire stylesheet. The style we attempted to parse was:" << style;
+        // We will occasionally end up with things that are just a bunch of spaces, so... let's not complain
+        // about those, but also we've not successfully created a style, so still return false
+        if (style.isEmpty() || style == newlineString) {
+            qCDebug(ACBF_LOG) << "An empty style was encountered. This is fine, but since styles are supposed to be useful, we'll just quietly report we failed to parse that style.";
+        } else {
+            qCWarning(ACBF_LOG) << "We encountered something other than exactly one { in a style entry, which suggests a serious problem with the entire stylesheet. The style we attempted to parse was:" << style;
+        }
         success = false;
     }
     return success;
