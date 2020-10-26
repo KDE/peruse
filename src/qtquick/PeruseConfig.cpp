@@ -29,6 +29,7 @@
 #include <QTimer>
 #include <QFile>
 #include <QFileInfo>
+#include <QImageReader>
 #include <QMimeDatabase>
 
 class PeruseConfig::Private
@@ -201,4 +202,13 @@ QString PeruseConfig::getFilesystemProperty(QString fileName, QString propertyNa
         value = data.attribute(QString("peruse.").append(propertyName));
     }
     return value;
+}
+
+QStringList PeruseConfig::supportedImageFormats() const
+{
+    QStringList formats;
+    for (const QByteArray& format : QImageReader::supportedImageFormats()) {
+        formats << format;
+    }
+    return formats;
 }

@@ -120,6 +120,13 @@ public:
      * @return the value of the property.
      */
     Q_INVOKABLE QString getFilesystemProperty(QString fileName, QString propertyName);
+
+    /**
+     * Convenience function which simply forwards the information from
+     * QImageReader::supportedImageFormats() in a QML-friendly format.
+     * @return A list of image formats by short name - see the documentation for QImageReader::supportedImageFormats() for further details
+     */
+    Q_INVOKABLE QStringList supportedImageFormats() const;
 private:
     class Private;
     Private* d;
