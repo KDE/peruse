@@ -22,7 +22,7 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
 
-import org.kde.kirigami 2.7 as Kirigami
+import org.kde.kirigami 2.13 as Kirigami
 
 import "helpers" as Helpers
 
@@ -293,6 +293,12 @@ ListView {
                         flick.resizeContent(imageWidth, imageHeight, Qt.point(imageWidth/2, imageHeight/2));
                         flick.returnToBounds();
                     }
+                }
+                Kirigami.PlaceholderMessage {
+                    anchors.centerIn: parent
+                    width: parent.width - (Kirigami.Units.largeSpacing * 4)
+                    visible: image.status === Image.Error;
+                    text: i18nc("Message shown on the book reader view when there is an issue loading the image for a specific page", "Could not load the image for this page.\nThis is most commonly due to a missing image decoder (specifically, the Qt Imageformats package, which Peruse depends on for loading images), and likely a packaging error. Contact whoever you got this package from and inform them of this error.\n\nSpecifically, the image we attempted to load is called %1, and the image formats Qt is aware of are %2. If there is a mismatch there, that will be the problem.\n\nIf not, please report this bug to us, and give as much information as you can to assist us in working out what's wrong.", image.source, peruseConfig.supportedImageFormats().join(", "));
                 }
             }
         }
