@@ -63,6 +63,7 @@ public:
     ArchiveBookModel* q;
     QQmlEngine* engine;
     KArchive* archive;
+    QStringList fileEntries;
     QHash<QString, const KArchiveFile*> archiveFiles;
     bool readWrite;
     ArchiveImageProvider* imageProvider;
@@ -176,6 +177,8 @@ void ArchiveBookModel::setFilename(QString newFilename)
         d->engine->removeImageProvider(d->imageProvider->prefix());
     }
     d->imageProvider = nullptr;
+    d->fileEntries.clear();
+    Q_EMIT fileEntriesChanged();
 
     QMimeDatabase db;
     QMimeType mime = db.mimeTypeForFile(newFilename);
@@ -202,7 +205,9 @@ void ArchiveBookModel::setFilename(QString newFilename)
                 d->engine->addImageProvider(prefix, d->imageProvider);
             }
 
-            QStringList entries = recursiveEntries(d->archive->directory());
+            d->fileEntries = recursiveEntries(d->archive->directory());
+            d->fileEntries.sort();
+            Q_EMIT fileEntriesChanged();
 
             // First check and see if we've got an ACBF document in there...
             QString acbfEntry;
@@ -212,7 +217,7 @@ void ArchiveBookModel::setFilename(QString newFilename)
             QLatin1String ComicInfoXML("comicinfo.xml");
             QLatin1String xmlSuffix(".xml");
             QStringList images;
-            Q_FOREACH(const QString& entry, entries)
+            Q_FOREACH(const QString& entry, d->fileEntries)
             {
                 if(entry.toLower().endsWith(acbfSuffix))
                 {
@@ -275,9 +280,8 @@ void ArchiveBookModel::setFilename(QString newFilename)
             if(!acbfData())
             {
                 // fall back to just handling the files directly if there's no ACBF document...
-                entries.sort();
                 QString undesired = QString("%1").arg("/").append("Thumbs.db");
-                Q_FOREACH(const QString& entry, entries)
+                Q_FOREACH(const QString& entry, d->fileEntries)
                 {
                     const KArchiveEntry* archEntry = d->archive->directory()->entry(entry);
                     if(archEntry->isFile() && !entry.endsWith(undesired))
@@ -440,6 +444,11 @@ void ArchiveBookModel::setDirty(bool isDirty)
 {
     d->isDirty = isDirty;
     emit hasUnsavedChangesChanged();
+}
+
+QStringList ArchiveBookModel::fileEntries() const
+{
+    return d->fileEntries;
 }
 
 bool ArchiveBookModel::saveBook()
@@ -621,6 +630,9 @@ void ArchiveBookModel::addPageFromFile(QString fileUrl, int insertAfter)
         d->archive->close();
         d->archive->open(QIODevice::ReadOnly);
         addPage(QString("image://%1/%2").arg(d->imageProvider->prefix()).arg(archiveFileName), archiveFileName.split("/").last());
+        d->fileEntries << archiveFileName;
+        d->fileEntries.sort();
+        Q_EMIT fileEntriesChanged();
         saveBook();
     }
 }
@@ -690,6 +702,9 @@ QString ArchiveBookModel::createBook(QString folder, QString title, QString cove
     model->d->archive->close();
     model->d->archive->open(QIODevice::ReadWrite);
     model->d->archive->addLocalFile(coverUrl, coverArchiveName);
+    model->d->fileEntries << coverArchiveName;
+    model->d->fileEntries.sort();
+    Q_EMIT model->fileEntriesChanged();
     model->d->archive->close();
 
     model->deleteLater();

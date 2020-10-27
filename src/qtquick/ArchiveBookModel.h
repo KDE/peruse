@@ -40,6 +40,8 @@ class ArchiveBookModel : public BookModel
     Q_PROPERTY(QObject* qmlEngine READ qmlEngine WRITE setQmlEngine NOTIFY qmlEngineChanged)
     Q_PROPERTY(bool readWrite READ readWrite WRITE setReadWrite NOTIFY readWriteChanged)
     Q_PROPERTY(bool hasUnsavedChanges READ hasUnsavedChanges NOTIFY hasUnsavedChangesChanged)
+    Q_PROPERTY(QStringList fileEntries READ fileEntries NOTIFY fileEntriesChanged)
+// Need a model with all the archive contents, including an ambiguous lookup function (for finding a file literally anywhere in the archive with some name - e.g. the fonts bits in the stylesheet in the P&C archive points at a filename, without a folder name)
 public:
     explicit ArchiveBookModel(QObject* parent = nullptr);
     ~ArchiveBookModel() override;
@@ -105,10 +107,20 @@ public:
     Q_SIGNAL void qmlEngineChanged();
 
     /**
-     * TODO: What is this? Only used in book.qml once?
+     * Whether or not this model should function in read/write mode. As this is potentially very expensive,
+     * this option is disabled by default and must be set explicitly to true.
+     * @return Whether or not the model is read/write (true) or in read-only mode (false)
      */
     bool readWrite() const;
+    /**
+     * Sets the readWrite option
+     * @see readWrite()
+     * @param newReadWrite Whether or not the model should be read/write (true) or in read-only mode (false)
+     */
     void setReadWrite(bool newReadWrite);
+    /**
+     * Fired when the read/write property changes
+     */
     Q_SIGNAL void readWriteChanged();
 
     /**
@@ -126,6 +138,16 @@ public:
      * \brief Fires when there are unsaved changes.
      */
     Q_SIGNAL void hasUnsavedChangesChanged();
+
+    /**
+     * A list of every file contained within the archive, not just the pages
+     * @return A list of files relative to the archive root
+     */
+    QStringList fileEntries() const;
+    /**
+     * Fired when the contents of the archive change
+     */
+    Q_SIGNAL void fileEntriesChanged();
 
     /**
      * \brief Saves the archive back to disk
