@@ -45,47 +45,104 @@ Kirigami.ScrollablePage {
         onTriggered: root.model.saveBook();
         enabled: root.model ? root.model.hasUnsavedChanges : false;
     }
-    ColumnLayout {
-        spacing: Kirigami.Units.smallSpacing;
-        Item {
-            id: bookCover;
-            Layout.alignment: Qt.AlignHCenter;
-            width: Kirigami.Units.gridUnit * 10;
-            height: width;
-            Rectangle {
-                id: coverOutline;
-                anchors.centerIn: coverImage;
-                width: Math.max(coverImage.paintedWidth, Kirigami.Units.iconSizes.large) + Kirigami.Units.smallSpacing * 2;
-                height: Math.max(coverImage.paintedHeight, Kirigami.Units.iconSizes.large) + Kirigami.Units.smallSpacing * 2;
-                color: Kirigami.Theme.backgroundColor;
-                border {
-                    width: 2;
-                    color: Kirigami.Theme.textColor;
+    ListView {
+        model: root.model.fileEntries;
+        header: ColumnLayout {
+            width: ListView.view.width
+            spacing: Kirigami.Units.smallSpacing;
+            Item {
+                id: bookCover;
+                Layout.alignment: Qt.AlignHCenter;
+                width: Kirigami.Units.gridUnit * 10;
+                height: width;
+                Rectangle {
+                    id: coverOutline;
+                    anchors.centerIn: coverImage;
+                    width: Math.max(coverImage.paintedWidth, Kirigami.Units.iconSizes.large) + Kirigami.Units.smallSpacing * 2;
+                    height: Math.max(coverImage.paintedHeight, Kirigami.Units.iconSizes.large) + Kirigami.Units.smallSpacing * 2;
+                    color: Kirigami.Theme.backgroundColor;
+                    border {
+                        width: 2;
+                        color: Kirigami.Theme.textColor;
+                    }
+                    radius: 2;
                 }
-                radius: 2;
+                Kirigami.Icon {
+                    id: coverImage;
+                    anchors {
+                        fill: parent;
+                        margins: Kirigami.Units.largeSpacing;
+                    }
+                    source: bookModel.filename === "" ? "" : "image://comiccover/" + bookModel.filename;
+                    placeholder: "application-vnd.oasis.opendocument.text";
+                    fallback: "paint-unknown";
+                }
             }
-            Kirigami.Icon {
-                id: coverImage;
-                anchors {
-                    fill: parent;
-                    margins: Kirigami.Units.largeSpacing;
+            Item { width: parent.width; height: Kirigami.Units.gridUnit * 3; }
+            Kirigami.FormLayout {
+                Layout.fillWidth: true;
+                QtControls.Label {
+                    Kirigami.FormData.label: i18nc("The descriptive label for a label which displays the title of the book", "Book Title:");
+                    text: root.model ? root.model.title : "";
                 }
-                source: bookModel.filename === "" ? "" : "image://comiccover/" + bookModel.filename;
-                placeholder: "application-vnd.oasis.opendocument.text";
-                fallback: "paint-unknown";
+                Kirigami.LinkButton {
+                    Kirigami.FormData.label: i18nc("The descriptive label for a link which shows the number of pages in the book", "Pages:");
+                    text: i18nc("A link which when clicked shows the book pages editor", "%1 total pages", root.model ? root.model.pageCount : 0);
+                    onClicked: root.requestCategoryChange("book");
+                }
+            }
+            Item { width: parent.width; height: Kirigami.Units.gridUnit * 3; }
+            Kirigami.Heading {
+                Layout.fillWidth: true;
+                text: i18nc("Header for a list which shows every file contained in the archive which makes up this book", "Every File In The Book:");
             }
         }
-        Item { width: parent.width; height: Kirigami.Units.gridUnit * 3; }
-        Kirigami.FormLayout {
-            Layout.fillWidth: true;
-            QtControls.Label {
-                Kirigami.FormData.label: i18nc("The descriptive label for a label which displays the title of the book", "Book Title:");
-                text: root.model ? root.model.title : "";
+        delegate: Kirigami.SwipeListItem {
+            id: listItem;
+            height: Kirigami.Units.iconSizes.huge + Kirigami.Units.smallSpacing * 2;
+            supportsMouseEvents: true;
+            onClicked: {
+                // Show a dialog with details for this file...
             }
-            Kirigami.LinkButton {
-                Kirigami.FormData.label: i18nc("The descriptive label for a link which shows the number of pages in the book", "Pages:");
-                text: i18nc("A link which when clicked shows the book pages editor", "%1 total pages", root.model ? root.model.pageCount : 0);
-                onClicked: root.requestCategoryChange("book");
+            actions: [
+                Kirigami.Action {
+                    text: i18nc("remove the file from the book", "Delete File");
+                    iconName: "list-remove"
+                    onTriggered: {
+                        // Dangerous operation, needs much warning...
+                    }
+                }
+            ]
+            Item {
+                Layout.fillWidth: true
+                Layout.minimumHeight: Kirigami.Units.iconSizes.enormous
+                Item {
+                    id: thumbnail;
+                    anchors {
+                        top: parent.top;
+                        left: parent.left;
+                        bottom: parent.bottom;
+                    }
+                    width: height;
+                    Image {
+                        id: coverImage;
+                        anchors {
+                            fill: parent;
+                            margins: Kirigami.Units.smallSpacing;
+                        }
+                        asynchronous: true;
+                        fillMode: Image.PreserveAspectFit;
+                        source: root.model.previewForId(modelData);
+                    }
+                }
+                QtControls.Label {
+                    anchors {
+                        verticalCenter: parent.verticalCenter;
+                        left: thumbnail.right;
+                        leftMargin: Kirigami.Units.largeSpacing;
+                    }
+                    text: modelData;
+                }
             }
         }
     }
