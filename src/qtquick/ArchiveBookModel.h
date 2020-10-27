@@ -212,7 +212,7 @@ public:
 
     friend class ArchiveImageRunnable;
 protected:
-    const KArchiveFile* archiveFile(const QString& filePath);
+    const KArchiveFile* archiveFile(const QString& filePath) const;
     QMutex archiveMutex;
 
 private:

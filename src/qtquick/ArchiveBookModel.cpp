@@ -33,6 +33,7 @@
 
 #include <QCoreApplication>
 #include <QDir>
+#include <QImageReader>
 #include <QMimeDatabase>
 #include <QQmlEngine>
 #include <QTemporaryFile>
@@ -69,6 +70,7 @@ public:
     ArchiveImageProvider* imageProvider;
     bool isDirty;
     bool isLoading;
+    QMimeDatabase mimeDatabase;
 
     static int counter()
     {
@@ -180,8 +182,7 @@ void ArchiveBookModel::setFilename(QString newFilename)
     d->fileEntries.clear();
     Q_EMIT fileEntriesChanged();
 
-    QMimeDatabase db;
-    QMimeType mime = db.mimeTypeForFile(newFilename);
+    QMimeType mime = d->mimeDatabase.mimeTypeForFile(newFilename);
     if(mime.inherits("application/zip"))
     {
         d->archive = new KZip(newFilename);
@@ -714,7 +715,7 @@ QString ArchiveBookModel::createBook(QString folder, QString title, QString cove
     return filename;
 }
 
-const KArchiveFile * ArchiveBookModel::archiveFile(const QString& filePath)
+const KArchiveFile * ArchiveBookModel::archiveFile(const QString& filePath) const
 {
     if(d->archive)
     {
@@ -1321,8 +1322,25 @@ bool ArchiveBookModel::loadCoMet(QStringList xmlDocuments, QObject *acbfData, QS
 
 QString ArchiveBookModel::previewForId(const QString& id) const
 {
-    if (d->imageProvider) {
-        return QString("image://%1/%2").arg(d->imageProvider->prefix()).arg(id);
+    static const QString directorySplit{"/"};
+    static const QString period{"."};
+    static const QString acbfSuffix{"acbf"};
+    if (d->archive) {
+        if (id.splitRef(directorySplit).last().contains(period)) {
+            const QString suffix = id.splitRef(period).last().toString().toLower();
+            if (d->imageProvider && QImageReader::supportedImageFormats().contains(suffix.toLatin1())) {
+                return QString("image://%1/%2").arg(d->imageProvider->prefix()).arg(id);
+            } else if (suffix == acbfSuffix) {
+                return QString{"image://icon/data-information"};
+            } else {
+                QList<QMimeType> mimetypes = d->mimeDatabase.mimeTypesForFileName(id);
+                if (mimetypes.count() > 0) {
+                    return QString("image://icon/").append(mimetypes.first().iconName());
+                }
+            }
+        } else {
+            return QString{"image://icon/folder"};
+        }
     }
     return QString();
 }
