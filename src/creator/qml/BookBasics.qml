@@ -49,10 +49,11 @@ Kirigami.ScrollablePage {
         model: root.model.fileEntries;
         header: ColumnLayout {
             width: ListView.view.width
-            spacing: Kirigami.Units.smallSpacing;
+            spacing: Kirigami.Units.gridUnit;
             Item {
                 id: bookCover;
                 Layout.alignment: Qt.AlignHCenter;
+                Layout.margins: Kirigami.Units.largeSpacing;
                 width: Kirigami.Units.gridUnit * 10;
                 height: width;
                 Rectangle {
@@ -78,9 +79,9 @@ Kirigami.ScrollablePage {
                     fallback: "paint-unknown";
                 }
             }
-            Item { width: parent.width; height: Kirigami.Units.gridUnit * 3; }
             Kirigami.FormLayout {
                 Layout.fillWidth: true;
+                Layout.margins: Kirigami.Units.largeSpacing;
                 QtControls.Label {
                     Kirigami.FormData.label: i18nc("The descriptive label for a label which displays the title of the book", "Book Title:");
                     text: root.model ? root.model.title : "";
@@ -91,9 +92,9 @@ Kirigami.ScrollablePage {
                     onClicked: root.requestCategoryChange("book");
                 }
             }
-            Item { width: parent.width; height: Kirigami.Units.gridUnit * 3; }
             Kirigami.Heading {
                 Layout.fillWidth: true;
+                Layout.margins: Kirigami.Units.largeSpacing;
                 text: i18nc("Header for a list which shows every file contained in the archive which makes up this book", "Every File In The Book:");
             }
         }
