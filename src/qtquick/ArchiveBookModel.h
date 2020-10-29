@@ -41,7 +41,7 @@ class ArchiveBookModel : public BookModel
     Q_PROPERTY(bool readWrite READ readWrite WRITE setReadWrite NOTIFY readWriteChanged)
     Q_PROPERTY(bool hasUnsavedChanges READ hasUnsavedChanges NOTIFY hasUnsavedChangesChanged)
     Q_PROPERTY(QStringList fileEntries READ fileEntries NOTIFY fileEntriesChanged)
-// Need a model with all the archive contents, including an ambiguous lookup function (for finding a file literally anywhere in the archive with some name - e.g. the fonts bits in the stylesheet in the P&C archive points at a filename, without a folder name)
+    Q_PROPERTY(QStringList fileEntriesToDelete READ fileEntriesToDelete NOTIFY fileEntriesToDeleteChanged)
 public:
     explicit ArchiveBookModel(QObject* parent = nullptr);
     ~ArchiveBookModel() override;
@@ -150,6 +150,24 @@ public:
     Q_SIGNAL void fileEntriesChanged();
 
     /**
+     * @brief The list of files currently marked for deletion
+     * @return A list of files marked for deletion on the next save action
+     */
+    QStringList fileEntriesToDelete() const;
+    /**
+     * Fired whenever the list of file entries which should be deleted changes
+     */
+    Q_SIGNAL void fileEntriesToDeleteChanged();
+    /**
+     * @brief Mark a file for removal from the archive
+     * When saving the book, files marked for deletion will not be included in the new archive.
+     *
+     * @param archiveFile The filename of the file to be removed
+     * @param markForDeletion Whether the archive file should be deleted or not
+     */
+    Q_INVOKABLE void markArchiveFileForDeletion(const QString& archiveFile, bool markForDeletion = true);
+
+    /**
      * \brief Saves the archive back to disk
      * @return True if the save was successful
      */
@@ -168,9 +186,12 @@ public:
     /**
      * @brief removePage
      * remove the given page from the book by number.
+     * @note This does not remove the file pointed to by the page
+     * @see markArchiveFileForDeletion(QString,bool)
      * @param pageNumber the number of the page to remove.
      */
     Q_INVOKABLE void removePage(int pageNumber) override;
+
     /**
      * Adds a new page to the book archive on disk, by copying in the file
      * passed to the function. Optionally this can be done at a specific

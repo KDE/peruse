@@ -65,6 +65,7 @@ public:
     QQmlEngine* engine;
     KArchive* archive;
     QStringList fileEntries;
+    QStringList filesMarkedForDeletion;
     QHash<QString, const KArchiveFile*> archiveFiles;
     bool readWrite;
     ArchiveImageProvider* imageProvider;
@@ -452,6 +453,26 @@ QStringList ArchiveBookModel::fileEntries() const
     return d->fileEntries;
 }
 
+QStringList ArchiveBookModel::fileEntriesToDelete() const
+{
+    return d->filesMarkedForDeletion;
+}
+
+void ArchiveBookModel::markArchiveFileForDeletion(const QString& archiveFile, bool markForDeletion)
+{
+    if(markForDeletion) {
+        if (!d->filesMarkedForDeletion.contains(archiveFile)) {
+            d->filesMarkedForDeletion << archiveFile;
+            Q_EMIT fileEntriesToDeleteChanged();
+        }
+    } else {
+        if (d->filesMarkedForDeletion.contains(archiveFile)) {
+            d->filesMarkedForDeletion.removeAll(archiveFile);
+            Q_EMIT fileEntriesToDeleteChanged();
+        }
+    }
+}
+
 bool ArchiveBookModel::saveBook()
 {
     bool success = true;
@@ -484,25 +505,22 @@ bool ArchiveBookModel::saveBook()
         archive->writeData(acbfString.toUtf8(), acbfString.size());
         archive->finishWriting(acbfString.size());
 
-        qCDebug(QTQUICK_LOG) << "Copying across cover page";
-        const KArchiveFile* archFile = archiveFile(acbfDocument->metaData()->bookInfo()->coverpage()->imageHref());
-        if(archFile)
-        {
-            archive->prepareWriting(acbfDocument->metaData()->bookInfo()->coverpage()->imageHref(), fileInfo.owner(), fileInfo.group(), 0);
-            archive->writeData(archFile->data(), archFile->size());
-            archive->finishWriting(archFile->size());
-        }
-
-        Q_FOREACH(AdvancedComicBookFormat::Page* page, acbfDocument->body()->pages())
-        {
+        qCDebug(QTQUICK_LOG) << "Copying across all files not marked for deletion";
+        const QStringList allFiles = fileEntries();
+        const KArchiveFile* archFile{nullptr};
+        for( const QString& file : allFiles) {
             qApp->processEvents();
-            qCDebug(QTQUICK_LOG) << "Copying over" << page->title();
-            archFile = archiveFile(page->imageHref());
-            if(archFile)
-            {
-                archive->prepareWriting(page->imageHref(), archFile->user(), archFile->group(), 0);
-                archive->writeData(archFile->data(), archFile->size());
-                archive->finishWriting(archFile->size());
+            if (d->filesMarkedForDeletion.contains(file)) {
+                qCDebug(QTQUICK_LOG) << "Not copying file marked for deletion:" << file;
+            } else {
+                qCDebug(QTQUICK_LOG) << "Copying over" << file;
+                archFile = archiveFile(file);
+                if(archFile && archFile->isFile())
+                {
+                    archive->prepareWriting(file, archFile->user(), archFile->group(), 0);
+                    archive->writeData(archFile->data(), archFile->size());
+                    archive->finishWriting(archFile->size());
+                }
             }
         }
 
@@ -597,14 +615,24 @@ void ArchiveBookModel::removePage(int pageNumber)
         {
             if(pageNumber == 0)
             {
-                //Page no 0 is the cover page, when removed we'll take the next page.
+                // Page no 0 is the cover page, when removed we'd usually end up with no cover page
+                // Normally we'd want to discourage this, but we do need to support the functionality
+                AdvancedComicBookFormat::Page* cover = acbfDocument->metaData()->bookInfo()->coverpage();
+                if (cover) {
+                    cover->deleteLater();
+                }
                 AdvancedComicBookFormat::Page* page = acbfDocument->body()->page(0);
                 acbfDocument->metaData()->bookInfo()->setCoverpage(page);
-                acbfDocument->body()->removePage(page);
+                if (page) {
+                    acbfDocument->body()->removePage(page);
+                }
             }
             else {
                 AdvancedComicBookFormat::Page* page = acbfDocument->body()->page(pageNumber-1);
-                acbfDocument->body()->removePage(page);
+                if (page) {
+                    acbfDocument->body()->removePage(page);
+                    page->deleteLater();
+                }
             }
         }
     }
