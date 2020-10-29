@@ -100,6 +100,7 @@ Kirigami.ScrollablePage {
         }
         delegate: Kirigami.SwipeListItem {
             id: listItem;
+            property bool markedForDeletion: root.model.fileEntriesToDelete.includes(modelData);
             height: Kirigami.Units.iconSizes.huge + Kirigami.Units.smallSpacing * 2;
             supportsMouseEvents: true;
             onClicked: {
@@ -107,10 +108,12 @@ Kirigami.ScrollablePage {
             }
             actions: [
                 Kirigami.Action {
-                    text: i18nc("remove the file from the book", "Delete File");
-                    iconName: "list-remove"
+                    text: listItem.markedForDeletion
+                        ? i18nc("action which marks the file to be included next time the book is saved", "Include File")
+                        : i18nc("action which marks the file to NOT be included next time the book is saved", "Mark File For Deletion");
+                    iconName: listItem.markedForDeletion ? "list-add" : "list-remove"
                     onTriggered: {
-                        // Dangerous operation, needs much warning...
+                        root.model.markArchiveFileForDeletion(modelData, !listItem.markedForDeletion);
                     }
                 }
             ]
@@ -134,6 +137,18 @@ Kirigami.ScrollablePage {
                         asynchronous: true;
                         fillMode: Image.PreserveAspectFit;
                         source: root.model.previewForId(modelData);
+                    }
+                    Image {
+                        id: include
+                        anchors {
+                            bottom: parent.bottom;
+                            right: parent.right;
+                        }
+                        height: parent.height / 3;
+                        width: height;
+                        source: "image://icon/package-remove";
+                        opacity: listItem.markedForDeletion ? 1 : 0;
+                        Behavior on opacity { NumberAnimation { duration: Kirigami.Units.shortDuration; } }
                     }
                 }
                 QtControls.Label {
