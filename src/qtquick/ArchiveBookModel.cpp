@@ -65,7 +65,7 @@ public:
     QQmlEngine* engine;
     KArchive* archive;
     QStringList fileEntries;
-    QStringList filesMarkedForDeletion;
+    QStringList fileEntriesToDelete;
     QHash<QString, const KArchiveFile*> archiveFiles;
     bool readWrite;
     ArchiveImageProvider* imageProvider;
@@ -455,19 +455,19 @@ QStringList ArchiveBookModel::fileEntries() const
 
 QStringList ArchiveBookModel::fileEntriesToDelete() const
 {
-    return d->filesMarkedForDeletion;
+    return d->fileEntriesToDelete;
 }
 
 void ArchiveBookModel::markArchiveFileForDeletion(const QString& archiveFile, bool markForDeletion)
 {
     if(markForDeletion) {
-        if (!d->filesMarkedForDeletion.contains(archiveFile)) {
-            d->filesMarkedForDeletion << archiveFile;
+        if (!d->fileEntriesToDelete.contains(archiveFile)) {
+            d->fileEntriesToDelete << archiveFile;
             Q_EMIT fileEntriesToDeleteChanged();
         }
     } else {
-        if (d->filesMarkedForDeletion.contains(archiveFile)) {
-            d->filesMarkedForDeletion.removeAll(archiveFile);
+        if (d->fileEntriesToDelete.contains(archiveFile)) {
+            d->fileEntriesToDelete.removeAll(archiveFile);
             Q_EMIT fileEntriesToDeleteChanged();
         }
     }
@@ -510,7 +510,7 @@ bool ArchiveBookModel::saveBook()
         const KArchiveFile* archFile{nullptr};
         for( const QString& file : allFiles) {
             qApp->processEvents();
-            if (d->filesMarkedForDeletion.contains(file)) {
+            if (d->fileEntriesToDelete.contains(file)) {
                 qCDebug(QTQUICK_LOG) << "Not copying file marked for deletion:" << file;
             } else {
                 qCDebug(QTQUICK_LOG) << "Copying over" << file;
@@ -523,6 +523,8 @@ bool ArchiveBookModel::saveBook()
                 }
             }
         }
+        d->fileEntriesToDelete.clear();
+        Q_EMIT fileEntriesToDeleteChanged();
 
         archive->close();
         qCDebug(QTQUICK_LOG) << "Archive created and closed...";
