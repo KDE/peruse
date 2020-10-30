@@ -26,10 +26,11 @@
 #include <AcbfBody.h>
 #include <AcbfBookinfo.h>
 #include <AcbfDocument.h>
+#include <AcbfDocumentinfo.h>
 #include <AcbfMetadata.h>
 #include <AcbfPage.h>
 #include <AcbfPublishinfo.h>
-#include <AcbfDocumentinfo.h>
+#include <AcbfStyleSheet.h>
 
 #include <QCoreApplication>
 #include <QDir>
@@ -234,7 +235,7 @@ void ArchiveBookModel::setFilename(QString newFilename)
                     }
                 }
                 if (entry.toLower().endsWith(".jpg") || entry.toLower().endsWith(".jpeg")
-                        || entry.toLower().endsWith(".gif") || entry.toLower().endsWith(".png")) {
+                        || entry.toLower().endsWith(".gif") || entry.toLower().endsWith(".png") || entry.toLower().endsWith(".webp")) {
                     images.append(entry);
                 }
             }
@@ -451,6 +452,37 @@ void ArchiveBookModel::setDirty(bool isDirty)
 QStringList ArchiveBookModel::fileEntries() const
 {
     return d->fileEntries;
+}
+
+int ArchiveBookModel::fileEntryReferenced(const QString& fileEntry) const
+{
+    int isReferenced{0};
+    AdvancedComicBookFormat::Document* document = qobject_cast<AdvancedComicBookFormat::Document*>(acbfData());
+    if (document->metaData()->bookInfo()->coverpage()->imageHref() == fileEntry) {
+        isReferenced = 1;
+    }
+    if (!isReferenced) {
+        for(const AdvancedComicBookFormat::Page* page : document->body()->pages()) {
+            if (page->imageHref() == fileEntry) {
+                isReferenced = 1;
+                break;
+            }
+        }
+    }
+    if (!isReferenced) {
+        for(const QObject* obj : document->styleSheet()->styles()) {
+            const AdvancedComicBookFormat::Style* style = qobject_cast<const AdvancedComicBookFormat::Style*>(obj);
+            const QString styleString{style->toString()};
+            if (styleString.contains(fileEntry)) {
+                isReferenced = 1;
+                break;
+            } else if (styleString.contains(fileEntry.split("/").last())) {
+                isReferenced = 2;
+                break;
+            }
+        }
+    }
+    return isReferenced;
 }
 
 QStringList ArchiveBookModel::fileEntriesToDelete() const

@@ -150,6 +150,15 @@ public:
     Q_SIGNAL void fileEntriesChanged();
 
     /**
+     * \brief Whether or not a specific file entry is referenced somewhere in the ACBF document.
+     * @param fileEntry The archive filename for the entry you want checked
+     * @return Whether the file is referenced or not. 0 if not, 1 if fully matched, 2 if partially matched
+     * @see fileEntries()
+     * @see markArchiveFileForDeletion(QString,bool)
+     */
+    Q_INVOKABLE int fileEntryReferenced(const QString& fileEntry) const;
+
+    /**
      * @brief The list of files currently marked for deletion
      * @return A list of files marked for deletion on the next save action
      */
@@ -159,7 +168,7 @@ public:
      */
     Q_SIGNAL void fileEntriesToDeleteChanged();
     /**
-     * @brief Mark a file for removal from the archive
+     * \brief Mark a file for removal from the archive
      * When saving the book, files marked for deletion will not be included in the new archive.
      *
      * @param archiveFile The filename of the file to be removed
