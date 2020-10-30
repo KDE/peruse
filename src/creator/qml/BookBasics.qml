@@ -101,6 +101,7 @@ Kirigami.ScrollablePage {
         delegate: Kirigami.SwipeListItem {
             id: listItem;
             property bool markedForDeletion: root.model.fileEntriesToDelete.includes(modelData);
+            property int isReferenced: root.model.fileEntryReferenced(modelData);
             height: Kirigami.Units.iconSizes.huge + Kirigami.Units.smallSpacing * 2;
             supportsMouseEvents: true;
             onClicked: {
@@ -139,7 +140,17 @@ Kirigami.ScrollablePage {
                         source: root.model.previewForId(modelData);
                     }
                     Image {
-                        id: include
+                        anchors {
+                            bottom: parent.bottom;
+                            left: parent.left;
+                        }
+                        height: parent.height / 3;
+                        width: height;
+                        source: "image://icon/emblem-warning";
+                        opacity: listItem.markedForDeletion && listItem.isReferenced > 0 ? 1 : 0;
+                        Behavior on opacity { NumberAnimation { duration: Kirigami.Units.shortDuration; } }
+                    }
+                    Image {
                         anchors {
                             bottom: parent.bottom;
                             right: parent.right;
@@ -151,13 +162,32 @@ Kirigami.ScrollablePage {
                         Behavior on opacity { NumberAnimation { duration: Kirigami.Units.shortDuration; } }
                     }
                 }
-                QtControls.Label {
+                ColumnLayout {
                     anchors {
-                        verticalCenter: parent.verticalCenter;
+                        top: parent.top;
+                        bottom: parent.bottom;
+                        right: parent.right;
                         left: thumbnail.right;
                         leftMargin: Kirigami.Units.largeSpacing;
                     }
-                    text: modelData;
+                    QtControls.Label {
+                        text: modelData;
+                        elide: Text.ElideMiddle;
+                    }
+                    QtControls.Label {
+                        text: {
+                            if (listItem.isReferenced === 0) {
+                                return i18nc("If a file is not referenced at all", "Unreferenced file");
+                            } else if (listItem.isReferenced === 1) {
+                                return i18nc("If a file is referenced by its full path", "Referenced by full path");
+                            } else if (listItem.isReferenced === 2) {
+                                return i18nc("If a file is referenced partially, describe that", "Referenced by filename only");
+                            } else {
+                                return i18nc("What happens if we have an unexpected reference amount", "%1 might be referenced, but in some way we've not accounted for");
+                            }
+                            elide: Text.ElideRight;
+                        }
+                    }
                 }
             }
         }
