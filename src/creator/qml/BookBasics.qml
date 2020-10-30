@@ -100,6 +100,7 @@ Kirigami.ScrollablePage {
         }
         delegate: Kirigami.SwipeListItem {
             id: listItem;
+            property int depth: (modelData.match(/\//g) || []).length;
             property bool isDirectory: root.model.fileEntryIsDirectory(modelData);
             property bool markedForDeletion: root.model.fileEntriesToDelete.includes(modelData);
             property int isReferenced: root.model.fileEntryReferenced(modelData);
@@ -120,17 +121,23 @@ Kirigami.ScrollablePage {
                     visible: !listItem.isDirectory;
                 }
             ]
-            Item {
-                Layout.fillWidth: true
-                Layout.minimumHeight: Kirigami.Units.iconSizes.enormous
+            RowLayout {
+                Layout.fillWidth: true;
+                Layout.fillHeight: true;
+                Repeater {
+                    model: listItem.depth;
+                    Rectangle {
+                        Layout.fillHeight: true;
+                        Layout.minimumWidth: 1;
+                        Layout.maximumWidth: 1;
+                        color: Kirigami.Theme.textColor;
+                    }
+                }
                 Item {
                     id: thumbnail;
-                    anchors {
-                        top: parent.top;
-                        left: parent.left;
-                        bottom: parent.bottom;
-                    }
-                    width: height;
+                    Layout.fillHeight: true;
+                    Layout.minimumWidth: height;
+                    Layout.maximumWidth: height;
                     Image {
                         id: coverImage;
                         anchors {
@@ -165,17 +172,19 @@ Kirigami.ScrollablePage {
                     }
                 }
                 ColumnLayout {
-                    anchors {
-                        top: parent.top;
-                        bottom: parent.bottom;
-                        right: parent.right;
-                        left: thumbnail.right;
-                        leftMargin: Kirigami.Units.largeSpacing;
-                    }
+                    Layout.fillWidth: true;
+                    Layout.fillHeight: true;
                     QtControls.Label {
                         Layout.fillWidth: true;
                         elide: Text.ElideMiddle;
-                        text: modelData;
+                        text: {
+                            if (listItem.depth === 0) {
+                                return modelData;
+                            } else {
+                                var splitData = modelData.split("/");
+                                return splitData[splitData.length - 1];
+                            }
+                        }
                     }
                     QtControls.Label {
                         Layout.fillWidth: true;
