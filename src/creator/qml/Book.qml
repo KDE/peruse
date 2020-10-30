@@ -124,17 +124,14 @@ Kirigami.ScrollablePage {
                 }
 
             ]
-            Item {
-                Layout.fillWidth: true
-                Layout.minimumHeight: Kirigami.Units.iconSizes.enormous
+            RowLayout {
+                Layout.fillWidth: true;
+                Layout.fillHeight: true;
                 Item {
                     id: bookCover;
-                    anchors {
-                        top: parent.top;
-                        left: parent.left;
-                        bottom: parent.bottom;
-                    }
-                    width: height;
+                    Layout.fillHeight: true;
+                    Layout.minimumWidth: height;
+                    Layout.maximumWidth: height;
                     Image {
                         id: coverImage;
                         anchors {
@@ -147,11 +144,8 @@ Kirigami.ScrollablePage {
                     }
                 }
                 QtControls.Label {
-                    anchors {
-                        verticalCenter: parent.verticalCenter;
-                        left: bookCover.right;
-                        leftMargin: Kirigami.Units.largeSpacing;
-                    }
+                    Layout.fillWidth: true;
+                    Layout.fillHeight: true;
                     text: model.title;
                 }
             }
