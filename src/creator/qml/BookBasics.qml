@@ -171,10 +171,13 @@ Kirigami.ScrollablePage {
                         leftMargin: Kirigami.Units.largeSpacing;
                     }
                     QtControls.Label {
-                        text: modelData;
+                        Layout.fillWidth: true;
                         elide: Text.ElideMiddle;
+                        text: modelData;
                     }
                     QtControls.Label {
+                        Layout.fillWidth: true;
+                        elide: Text.ElideRight;
                         text: {
                             if (listItem.isReferenced === 0) {
                                 return i18nc("If a file is not referenced at all", "Unreferenced file");
@@ -185,7 +188,6 @@ Kirigami.ScrollablePage {
                             } else {
                                 return i18nc("What happens if we have an unexpected reference amount", "%1 might be referenced, but in some way we've not accounted for");
                             }
-                            elide: Text.ElideRight;
                         }
                     }
                 }
