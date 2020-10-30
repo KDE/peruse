@@ -485,6 +485,16 @@ int ArchiveBookModel::fileEntryReferenced(const QString& fileEntry) const
     return isReferenced;
 }
 
+bool ArchiveBookModel::fileEntryIsDirectory(const QString& fileEntry) const
+{
+    bool isDirectory{false};
+    const KArchiveEntry* entry = d->archive->directory()->entry(fileEntry);
+    if (entry && entry->isDirectory()) {
+        isDirectory = true;
+    }
+    return isDirectory;
+}
+
 QStringList ArchiveBookModel::fileEntriesToDelete() const
 {
     return d->fileEntriesToDelete;

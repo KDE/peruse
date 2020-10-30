@@ -159,6 +159,16 @@ public:
     Q_INVOKABLE int fileEntryReferenced(const QString& fileEntry) const;
 
     /**
+     * \brief Whether or not an entry is a directory in the archive (as opposed to a file)
+     * This becomes useful for distinguishing what should be done for things that are not actually
+     * files (and consequently not really directly useful in a book, as you can't simply link to
+     * a directory in the archive)
+     * @param fileEntry The entry you wish to check
+     * @return True if the entry passed in is a directory
+     */
+    Q_INVOKABLE bool fileEntryIsDirectory(const QString& fileEntry) const;
+
+    /**
      * @brief The list of files currently marked for deletion
      * @return A list of files marked for deletion on the next save action
      */
