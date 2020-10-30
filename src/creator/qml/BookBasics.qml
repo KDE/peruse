@@ -100,6 +100,7 @@ Kirigami.ScrollablePage {
         }
         delegate: Kirigami.SwipeListItem {
             id: listItem;
+            property bool isDirectory: root.model.fileEntryIsDirectory(modelData);
             property bool markedForDeletion: root.model.fileEntriesToDelete.includes(modelData);
             property int isReferenced: root.model.fileEntryReferenced(modelData);
             height: Kirigami.Units.iconSizes.huge + Kirigami.Units.smallSpacing * 2;
@@ -116,6 +117,7 @@ Kirigami.ScrollablePage {
                     onTriggered: {
                         root.model.markArchiveFileForDeletion(modelData, !listItem.markedForDeletion);
                     }
+                    visible: !listItem.isDirectory;
                 }
             ]
             Item {
@@ -177,6 +179,7 @@ Kirigami.ScrollablePage {
                     }
                     QtControls.Label {
                         Layout.fillWidth: true;
+                        visible: !listItem.isDirectory;
                         elide: Text.ElideRight;
                         text: {
                             if (listItem.isReferenced === 0) {
