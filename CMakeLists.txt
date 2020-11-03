@@ -1,7 +1,7 @@
 project(peruse)
 cmake_minimum_required(VERSION 3.1.0)
 
-set(KF5_DEP_VERSION "5.69.0") # handled by release scripts
+set(KF5_DEP_VERSION "5.75.0") # handled by release scripts
 
 if(POLICY CMP0063)
     cmake_policy (SET CMP0063 NEW)
@@ -26,11 +26,9 @@ elseif(WIN32)
 endif()
 
 find_package(Qt5 5.14 REQUIRED NO_MODULE COMPONENTS Qml Quick Gui Widgets OpenGL Sql)
-find_package(KF5 ${KF5_VERSION} REQUIRED COMPONENTS I18n Declarative Config Crash FileMetaData GuiAddons IconThemes KIO NewStuffQuick)
+find_package(KF5 ${KF5_DEP_VERSION} REQUIRED COMPONENTS Archive I18n Declarative Config Crash FileMetaData GuiAddons IconThemes KIO NewStuffQuick)
 
 find_package(KF5Baloo) # optional - we'll just let it pass if it's missing
-find_package(KF5Archive ${KF5_VERSION} REQUIRED)
-find_package(KF5Declarative ${KF5_VERSION} REQUIRED)
 
 find_package(KF5Kirigami2 ${KF5_VERSION})
 set_package_properties(KF5Kirigami2 PROPERTIES
