@@ -26,6 +26,7 @@
 
 #include <QCoreApplication>
 #include <QDir>
+#include <QElapsedTimer>
 #include <QIcon>
 #include <QMimeDatabase>
 #include <QThreadPool>
