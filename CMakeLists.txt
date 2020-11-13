@@ -36,6 +36,12 @@ set_package_properties(KF5Kirigami2 PROPERTIES
     TYPE RUNTIME
 )
 
+find_package(ZLIB)
+set_package_properties(ZLIB PROPERTIES
+    PURPOSE "Required for the unarr based rar support used for reading books in the CBR format"
+    TYPE REQUIRED
+)
+
 include(FeatureSummary)
 include(KDEInstallDirs)
 include(KDECMakeSettings)

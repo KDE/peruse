@@ -1,7 +1,3 @@
-project(karchive-rar)
-
-find_package(ZLIB)
-
 set(unarr_SRCS
     unarr/rar/uncompress-rar.c
     unarr/rar/huffman-rar.c
@@ -22,30 +18,12 @@ set(unarr_SRCS
     unarr/common/crc32.c
 )
 
-set(karchive_rar_SRCS
-    KRar.cpp
-    KRarFileEntry.cpp
-)
-
 add_library(karchive-c-unarr OBJECT ${unarr_SRCS})
 if (UNIX OR MINGW)
     target_compile_options(karchive-c-unarr PRIVATE -std=gnu99 -fomit-frame-pointer -D_FILE_OFFSET_BITS=64 -fPIC)
     set_property(TARGET karchive-c-unarr PROPERTY AUTOMOC OFF)
 endif (UNIX OR MINGW)
 
-
-add_library(karchive-rar STATIC ${karchive_rar_SRCS} $<TARGET_OBJECTS:karchive-c-unarr>)
-target_link_libraries(karchive-rar
-    PUBLIC KF5::Archive
-)
-target_include_directories(karchive-rar
-    PRIVATE
-    unarr/
-)
-
 if (ZLIB_FOUND)
     target_include_directories(karchive-c-unarr PRIVATE ${ZLIB_INCLUDE_DIRS})
-    target_include_directories(karchive-rar PRIVATE ${ZLIB_INCLUDE_DIRS})
-    target_link_libraries(karchive-rar PRIVATE ${ZLIB_LIBRARIES})
-    add_definitions(-DHAVE_ZLIB)
 endif(ZLIB_FOUND)
