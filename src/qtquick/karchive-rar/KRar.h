@@ -30,7 +30,7 @@
  * @short A class for reading rar archives.
  * @author Dan Leinir Turthra Jensen <admin@leinir.dk>
  */
-class KARCHIVE_EXPORT KRar : public KArchive
+class KRar : public KArchive
 {
 public:
     /**
