@@ -53,6 +53,7 @@
   <summary xml:lang="zh-TW">漫畫書製作工具</summary>
   <description>
     <p>
+      Creating rich digital comic books has long been something of a chore, or required the use of proprietary formats, but the Advanced Comic Book Format aims to fix this by introducing concepts like frame based navigation to go with the more traditional page based methods, reference information such as character information, location notes, and so on, all contained within the book, as well as embedded typesetting information and rich text overlays so translation can be done without requiring multiple images of the same page. Peruse Creator allows you to create these highly interactive and advanced books in a way which is both easy to use, and powerful.
     </p>
     <p>Features:</p>
     <p xml:lang="ca">Característiques:</p>
