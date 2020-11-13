@@ -49,6 +49,3 @@ if (ZLIB_FOUND)
     target_link_libraries(karchive-rar PRIVATE ${ZLIB_LIBRARIES})
     add_definitions(-DHAVE_ZLIB)
 endif(ZLIB_FOUND)
-
-# A little hack, which makes the karchive_rar library think it's a part of KF5Archive
-add_definitions(-DKF5Archive_EXPORTS)

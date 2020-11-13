@@ -59,11 +59,6 @@ target_link_libraries (peruseqmlplugin
     KF5::FileMetaData
     KF5::NewStuffCore
 )
-# A little hack, which makes the karchive_rar library think it's a part of KF5Archive
-# This will also be needed for the qml plugin, as it links that statically, and it
-# will otherwise break on Windows
-add_definitions(-DKF5Archive_EXPORTS)
-
 
 install (TARGETS peruseqmlplugin DESTINATION ${QML_INSTALL_DIR}/org/kde/peruse)
 install (FILES qmldir DESTINATION ${QML_INSTALL_DIR}/org/kde/peruse)
