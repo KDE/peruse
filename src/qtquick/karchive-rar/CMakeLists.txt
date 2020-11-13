@@ -44,6 +44,7 @@ target_include_directories(karchive-rar
 )
 
 if (ZLIB_FOUND)
+    target_include_directories(karchive-c-unarr PRIVATE ${ZLIB_INCLUDE_DIRS})
     target_include_directories(karchive-rar PRIVATE ${ZLIB_INCLUDE_DIRS})
     target_link_libraries(karchive-rar PRIVATE ${ZLIB_LIBRARIES})
     add_definitions(-DHAVE_ZLIB)
