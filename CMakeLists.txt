@@ -12,7 +12,7 @@ if(WIN32)
     set(USE_PERUSE_PDFTHUMBNAILER ON)
 endif()
 
-find_package(ECM ${KF5_VERSION} REQUIRED NO_MODULE)
+find_package(ECM ${KF5_DEP_VERSION} REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" ${ECM_MODULE_PATH})
 
 # Android has no DBus, so we can't use that. Sniff things and tell the code
@@ -28,9 +28,9 @@ endif()
 find_package(Qt5 5.14 REQUIRED NO_MODULE COMPONENTS Qml Quick Gui Widgets OpenGL Sql)
 find_package(KF5 ${KF5_DEP_VERSION} REQUIRED COMPONENTS Archive I18n Declarative Config Crash FileMetaData GuiAddons IconThemes KIO NewStuffQuick)
 
-find_package(KF5Baloo) # optional - we'll just let it pass if it's missing
+find_package(KF5Baloo ${KF5_DEP_VERSION}) # optional - we'll just let it pass if it's missing
 
-find_package(KF5Kirigami2 ${KF5_VERSION})
+find_package(KF5Kirigami2 ${KF5_DEP_VERSION})
 set_package_properties(KF5Kirigami2 PROPERTIES
     PURPOSE "Required at runtime to display the GUI"
     TYPE RUNTIME
