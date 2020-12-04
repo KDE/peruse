@@ -160,6 +160,11 @@ Kirigami.ScrollablePage {
                 enabled: parent.opacity > 0;
                 onClicked: { }
             }
+            Kirigami.PlaceholderMessage {
+                anchors.centerIn: parent
+                width: parent.width - (Kirigami.Units.largeSpacing * 4)
+                text: root.model.processingDescription;
+            }
         }
         QtControls.BusyIndicator {
             anchors {
