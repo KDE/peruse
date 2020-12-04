@@ -60,7 +60,7 @@ public:
         , isLoading(false)
     {}
     ~Private() {
-        qDeleteAll(archiveFiles.values());
+        delete archive;
     }
     ArchiveBookModel* q;
     QQmlEngine* engine;
@@ -73,6 +73,27 @@ public:
     bool isDirty;
     bool isLoading;
     QMimeDatabase mimeDatabase;
+
+    void closeBook() {
+        q->beginResetModel();
+        if(archive)
+        {
+            q->clearPages();
+            archiveFiles.clear();
+            archive->close();
+            delete archive;
+            archive = nullptr;
+        }
+        if(imageProvider && engine) {
+            engine->removeImageProvider(imageProvider->prefix());
+        }
+        imageProvider = nullptr;
+        fileEntries.clear();
+        Q_EMIT q->fileEntriesChanged();
+        fileEntriesToDelete.clear();
+        Q_EMIT q->fileEntriesToDeleteChanged();
+        q->endResetModel();
+    }
 
     static int counter()
     {
@@ -143,6 +164,7 @@ ArchiveBookModel::ArchiveBookModel(QObject* parent)
 
 ArchiveBookModel::~ArchiveBookModel()
 {
+    d->closeBook();
     delete d;
 }
 
@@ -170,19 +192,8 @@ void ArchiveBookModel::setFilename(QString newFilename)
 {
     setProcessing(true);
     d->isLoading = true;
-
-    if(d->archive)
-    {
-        clearPages();
-        delete d->archive;
-    }
-    d->archive = nullptr;
-    if(d->imageProvider && d->engine) {
-        d->engine->removeImageProvider(d->imageProvider->prefix());
-    }
-    d->imageProvider = nullptr;
-    d->fileEntries.clear();
-    Q_EMIT fileEntriesChanged();
+    d->closeBook();
+    beginResetModel();
 
     QMimeType mime = d->mimeDatabase.mimeTypeForFile(newFilename);
     if(mime.inherits("application/zip"))
@@ -324,6 +335,7 @@ void ArchiveBookModel::setFilename(QString newFilename)
     d->isLoading = false;
     emit loadingCompleted(success);
     setProcessing(false);
+    endResetModel();
 }
 
 QString ArchiveBookModel::author() const
@@ -575,7 +587,7 @@ bool ArchiveBookModel::saveBook()
         beginResetModel();
 
         QString actualFile = d->archive->fileName();
-        d->archive->close();
+        d->closeBook();
 
         // This seems roundabout... but it retains ctime and xattrs, which would be gone
         // if we just did a delete+rename
@@ -596,7 +608,9 @@ bool ArchiveBookModel::saveBook()
                 {
                     qCDebug(QTQUICK_LOG) << "Success! Now loading the new archive...";
                     // now load the new thing...
+                    locker.unlock();
                     setFilename(actualFile);
+                    locker.relock();
                 }
                 else
                 {
