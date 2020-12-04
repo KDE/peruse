@@ -41,6 +41,7 @@
 #include <QXmlStreamReader>
 
 #include <KFileMetaData/UserMetaData>
+#include <KLocalizedString>
 #include <karchive.h>
 #include <kzip.h>
 #include "KRar.h" // "" because it's a custom thing for now
@@ -543,12 +544,12 @@ bool ArchiveBookModel::saveBook()
         QString archiveFileName = tmpFile.fileName().append(".cbz");
         QFileInfo fileInfo(tmpFile);
         tmpFile.close();
-        qCDebug(QTQUICK_LOG) << "Creating archive in" << archiveFileName;
+        setProcessingDescription(i18n("Creating archive in %1", archiveFileName));
         KZip* archive = new KZip(archiveFileName);
         archive->open(QIODevice::ReadWrite);
 
         // We're a zip file... size isn't used
-        qCDebug(QTQUICK_LOG) << "Writing in ACBF data";
+        setProcessingDescription(i18n("Writing in ACBF data"));
         archive->prepareWriting("metadata.acbf", fileInfo.owner(), fileInfo.group(), 0);
         AdvancedComicBookFormat::Document* acbfDocument = qobject_cast<AdvancedComicBookFormat::Document*>(acbfData());
         if(!acbfDocument)
@@ -559,7 +560,7 @@ bool ArchiveBookModel::saveBook()
         archive->writeData(acbfString.toUtf8(), acbfString.size());
         archive->finishWriting(acbfString.size());
 
-        qCDebug(QTQUICK_LOG) << "Copying across all files not marked for deletion";
+        setProcessingDescription(i18n("Copying across all files not marked for deletion"));
         const QStringList allFiles = fileEntries();
         const KArchiveFile* archFile{nullptr};
         for( const QString& file : allFiles) {
@@ -567,7 +568,7 @@ bool ArchiveBookModel::saveBook()
             if (d->fileEntriesToDelete.contains(file)) {
                 qCDebug(QTQUICK_LOG) << "Not copying file marked for deletion:" << file;
             } else {
-                qCDebug(QTQUICK_LOG) << "Copying over" << file;
+                setProcessingDescription(i18n("Copying over %1", file));
                 archFile = archiveFile(file);
                 if(archFile && archFile->isFile())
                 {
@@ -596,7 +597,7 @@ bool ArchiveBookModel::saveBook()
         {
             QFile originFile(archiveFileName);
             if(originFile.open(QIODevice::ReadOnly)) {
-                qCDebug(QTQUICK_LOG) << "Copying all content from" << archiveFileName << "to" << actualFile;
+                setProcessingDescription(i18n("Copying all content from %1 to %2", archiveFileName, actualFile));
                 while(!originFile.atEnd())
                 {
                     destinationFile.write(originFile.read(65536));
@@ -606,7 +607,7 @@ bool ArchiveBookModel::saveBook()
                 originFile.close();
                 if(originFile.remove())
                 {
-                    qCDebug(QTQUICK_LOG) << "Success! Now loading the new archive...";
+                    setProcessingDescription(i18n("Successfully replaced old archive with the new archive - now loading the new archive..."));
                     // now load the new thing...
                     locker.unlock();
                     setFilename(actualFile);

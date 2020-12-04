@@ -58,6 +58,7 @@ target_link_libraries (peruseqmlplugin
     Qt5::Sql
     KF5::Archive
     KF5::IconThemes
+    KF5::I18n
     KF5::ConfigCore
     KF5::GuiAddons
     KF5::KIOCore

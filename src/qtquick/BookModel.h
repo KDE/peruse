@@ -79,6 +79,10 @@ class BookModel : public QAbstractListModel
      * \brief Whether or not the book is still being processed.
      */
     Q_PROPERTY(bool processing READ processing WRITE setProcessing NOTIFY processingChanged)
+    /**
+     * \brief When processing, this string will commonly be set to something informational
+     */
+    Q_PROPERTY(QString processingDescription READ processingDescription WRITE setProcessingDescription NOTIFY processingDescriptionChanged)
 public:
     explicit BookModel(QObject* parent = nullptr);
     ~BookModel() override;
@@ -242,6 +246,21 @@ public:
      * TODO: This isn't triggered by anything right now?
      */
     Q_SIGNAL void loadingCompleted(bool success);
+
+    /**
+     * \brief A human readable description of what is currently happening when processing is ongoing
+     * \return The description of what's going on
+     */
+    QString processingDescription() const;
+    /**
+     * \brief Set the human readable description of what is currently happening
+     * \param description The description of what's going on
+     */
+    void setProcessingDescription(const QString& description);
+    /**
+     * \brief Fires when the description of what's going on changes
+     */
+    Q_SIGNAL void processingDescriptionChanged();
 
     /**
      * @brief Swap the two pages at the specified indices
