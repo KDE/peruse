@@ -26,7 +26,7 @@
 /**
  * A KRarFileEntry represents a file in a rar archive.
  */
-class KARCHIVE_EXPORT KRarFileEntry : public KArchiveFile
+class KRarFileEntry : public KArchiveFile
 {
 public:
     /**

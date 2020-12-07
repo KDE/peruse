@@ -73,6 +73,7 @@ Kirigami.Page {
         text: i18nc("Saves the remaining unsaved edited fields and closes the page editor", "Save and Close Page");
         iconName: "dialog-ok";
         shortcut: "Esc";
+        enabled: !addPageArea.sheetOpen
         onTriggered: {
             root.save();
             root.model.setDirty();
@@ -266,7 +267,7 @@ Kirigami.Page {
         imageSource: pageUrl;
         pages: root.pageList;
         bgColor: root.currentPage.bgcolor !== ""? root.currentPage.bgcolor: "#ffffff";
-        textBgColor: root.currentPage.textLayer("").bgcolor !== ""? root.currentPage.textLayer("").bgcolor: bgcolor;
+        textBgColor: root.currentPage.textLayer("").bgcolor !== ""? root.currentPage.textLayer("").bgcolor: bgColor;
         availableTypes: root.textTypes;
         transparent: false;
         inverted: false;

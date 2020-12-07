@@ -20,6 +20,7 @@
  */
 
 #include "AcbfReferences.h"
+#include <QTimer>
 #include <QXmlStreamReader>
 
 #include <acbf_debug.h>
@@ -28,31 +29,60 @@ using namespace AdvancedComicBookFormat;
 
 class References::Private {
 public:
-    Private() {}
-    QHash<QString, Reference*> references;
+    Private(References* qq)
+        : q(qq)
+    {}
+    References* q;
+    QMultiHash<QString, Reference*> referencesById;
+    QObjectList references;
+
+    void addReference(Reference* reference, bool emitListChangeSignal = true) {
+        referencesById.insert(reference->id(), reference);
+        references << reference;
+        QObject::connect(reference, &Reference::languageChanged, q, &References::referencesChanged);
+        QObject::connect(reference, &Reference::paragraphsChanged, q, &References::referencesChanged);
+        QObject::connect(reference, &Reference::idChanged, q, [this, reference](){
+            QMutableHashIterator<QString, Reference*> iterator(referencesById);
+            while(iterator.findNext(reference)) {
+                iterator.remove();
+            }
+            referencesById.insert(reference->id(), reference);
+            Q_EMIT q->referencesChanged();
+        });
+        QObject::connect(reference, &QObject::destroyed, q, [this, reference](){
+            referencesById.remove(referencesById.key(reference));
+            references.removeAll(reference);
+            Q_EMIT q->referencesChanged();
+        });
+        Q_EMIT q->referenceAdded(reference);
+        if (emitListChangeSignal) {
+            Q_EMIT q->referencesChanged();
+        }
+    }
 };
 
 References::References(Document* parent)
     : QObject(parent)
-    , d(new Private)
+    , d(new Private(this))
 {
-    qRegisterMetaType<References*>("References*");
+    static const int typeId = qRegisterMetaType<References*>("References*");
+    Q_UNUSED(typeId);
 }
 
 References::~References() = default;
 
 void References::toXml(QXmlStreamWriter* writer) {
     writer->writeStartElement(QStringLiteral("references"));
-    
-    Q_FOREACH(Reference* reference, d->references) {
-        reference->toXml(writer);
+
+    for(QObject* reference : d->references) {
+        qobject_cast<Reference*>(reference)->toXml(writer);
     }
     writer->writeEndElement();
 }
 
 bool References::fromXml(QXmlStreamReader *xmlReader)
 {
-
+    qDeleteAll(d->references);
     while(xmlReader->readNextStartElement())
     {
         if(xmlReader->name() == QStringLiteral("reference"))
@@ -61,7 +91,7 @@ bool References::fromXml(QXmlStreamReader *xmlReader)
             if(!newReference->fromXml(xmlReader)) {
                 return false;
             }
-            d->references.insert(newReference->id(), newReference);
+            d->addReference(newReference, false);
         }
         else
         {
@@ -75,19 +105,58 @@ bool References::fromXml(QXmlStreamReader *xmlReader)
     }
 
     qCDebug(ACBF_LOG) << Q_FUNC_INFO << "Created reference section with" << d->references.count() << "references";
+    Q_EMIT referencesChanged();
 
     return !xmlReader->hasError();
 }
 
 Reference* References::reference(const QString& id) const
 {
-    return d->references.value(id);
+    return d->referencesById.value(id);
 }
 
-void References::setReference(const QString& id, const QStringList& paragraphs, const QString& language) {
+Reference* References::addReference(const QString& id, const QStringList& paragraphs, const QString& language)
+{
     Reference* ref = new Reference(this);
     ref->setId(id);
     ref->setParagraphs(paragraphs);
     ref->setLanguage(language);
-    d->references.insert(ref->id(), ref);
+    d->addReference(ref);
+    return ref;
+}
+
+QStringList References::referenceIds() const
+{
+    return d->referencesById.keys();
+}
+
+QObjectList References::references() const
+{
+    return d->references;
+}
+
+int References::referenceIndex(Reference* reference) const
+{
+    return d->references.indexOf(reference);
+}
+
+void References::swapReferences(QObject* swapThis, QObject* withThis)
+{
+    int first = d->references.indexOf(swapThis);
+    int second = d->references.indexOf(withThis);
+    swapReferencesByIndex(first, second);
+}
+
+void References::swapReferencesByIndex(int swapThis, int withThis)
+{
+    if (swapThis > -1 && swapThis < d->references.count() && withThis > -1 && withThis < d->references.count()) {
+        d->references.swapItemsAt(swapThis, withThis);
+        InternalReferenceObject* first = qobject_cast<InternalReferenceObject*>(d->references[swapThis]);
+        InternalReferenceObject* second = qobject_cast<InternalReferenceObject*>(d->references[withThis]);
+        Q_EMIT first->propertyDataChanged();
+        Q_EMIT second->propertyDataChanged();
+        Q_EMIT referencesChanged();
+    } else {
+        qCWarning(ACBF_LOG) << "There was an attempt to swap two references, and at least one of them was outside the bounds of the current list of references:" << swapThis << withThis;
+    }
 }

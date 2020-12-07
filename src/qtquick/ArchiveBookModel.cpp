@@ -26,19 +26,22 @@
 #include <AcbfBody.h>
 #include <AcbfBookinfo.h>
 #include <AcbfDocument.h>
+#include <AcbfDocumentinfo.h>
 #include <AcbfMetadata.h>
 #include <AcbfPage.h>
 #include <AcbfPublishinfo.h>
-#include <AcbfDocumentinfo.h>
+#include <AcbfStyleSheet.h>
 
 #include <QCoreApplication>
 #include <QDir>
+#include <QImageReader>
 #include <QMimeDatabase>
 #include <QQmlEngine>
 #include <QTemporaryFile>
 #include <QXmlStreamReader>
 
 #include <KFileMetaData/UserMetaData>
+#include <KLocalizedString>
 #include <karchive.h>
 #include <kzip.h>
 #include "KRar.h" // "" because it's a custom thing for now
@@ -57,13 +60,41 @@ public:
         , isDirty(false)
         , isLoading(false)
     {}
+    ~Private() {
+        delete archive;
+    }
     ArchiveBookModel* q;
     QQmlEngine* engine;
     KArchive* archive;
+    QStringList fileEntries;
+    QStringList fileEntriesToDelete;
+    QHash<QString, const KArchiveFile*> archiveFiles;
     bool readWrite;
     ArchiveImageProvider* imageProvider;
     bool isDirty;
     bool isLoading;
+    QMimeDatabase mimeDatabase;
+
+    void closeBook() {
+        q->beginResetModel();
+        if(archive)
+        {
+            q->clearPages();
+            archiveFiles.clear();
+            archive->close();
+            delete archive;
+            archive = nullptr;
+        }
+        if(imageProvider && engine) {
+            engine->removeImageProvider(imageProvider->prefix());
+        }
+        imageProvider = nullptr;
+        fileEntries.clear();
+        Q_EMIT q->fileEntriesChanged();
+        fileEntriesToDelete.clear();
+        Q_EMIT q->fileEntriesToDeleteChanged();
+        q->endResetModel();
+    }
 
     static int counter()
     {
@@ -134,6 +165,7 @@ ArchiveBookModel::ArchiveBookModel(QObject* parent)
 
 ArchiveBookModel::~ArchiveBookModel()
 {
+    d->closeBook();
     delete d;
 }
 
@@ -161,20 +193,10 @@ void ArchiveBookModel::setFilename(QString newFilename)
 {
     setProcessing(true);
     d->isLoading = true;
+    d->closeBook();
+    beginResetModel();
 
-    if(d->archive)
-    {
-        clearPages();
-        delete d->archive;
-    }
-    d->archive = nullptr;
-    if(d->imageProvider && d->engine) {
-        d->engine->removeImageProvider(d->imageProvider->prefix());
-    }
-    d->imageProvider = nullptr;
-
-    QMimeDatabase db;
-    QMimeType mime = db.mimeTypeForFile(newFilename);
+    QMimeType mime = d->mimeDatabase.mimeTypeForFile(newFilename);
     if(mime.inherits("application/zip"))
     {
         d->archive = new KZip(newFilename);
@@ -190,6 +212,7 @@ void ArchiveBookModel::setFilename(QString newFilename)
         QString prefix = QString("archivebookpage%1").arg(QString::number(Private::counter()));
         if(d->archive->open(QIODevice::ReadOnly))
         {
+            QMutexLocker locker(&archiveMutex);
             d->imageProvider = new ArchiveImageProvider();
             d->imageProvider->setArchiveBookModel(this);
             d->imageProvider->setPrefix(prefix);
@@ -197,7 +220,9 @@ void ArchiveBookModel::setFilename(QString newFilename)
                 d->engine->addImageProvider(prefix, d->imageProvider);
             }
 
-            QStringList entries = recursiveEntries(d->archive->directory());
+            d->fileEntries = recursiveEntries(d->archive->directory());
+            d->fileEntries.sort();
+            Q_EMIT fileEntriesChanged();
 
             // First check and see if we've got an ACBF document in there...
             QString acbfEntry;
@@ -207,7 +232,7 @@ void ArchiveBookModel::setFilename(QString newFilename)
             QLatin1String ComicInfoXML("comicinfo.xml");
             QLatin1String xmlSuffix(".xml");
             QStringList images;
-            Q_FOREACH(const QString& entry, entries)
+            Q_FOREACH(const QString& entry, d->fileEntries)
             {
                 if(entry.toLower().endsWith(acbfSuffix))
                 {
@@ -222,7 +247,7 @@ void ArchiveBookModel::setFilename(QString newFilename)
                     }
                 }
                 if (entry.toLower().endsWith(".jpg") || entry.toLower().endsWith(".jpeg")
-                        || entry.toLower().endsWith(".gif") || entry.toLower().endsWith(".png")) {
+                        || entry.toLower().endsWith(".gif") || entry.toLower().endsWith(".png") || entry.toLower().endsWith(".webp")) {
                     images.append(entry);
                 }
             }
@@ -270,9 +295,8 @@ void ArchiveBookModel::setFilename(QString newFilename)
             if(!acbfData())
             {
                 // fall back to just handling the files directly if there's no ACBF document...
-                entries.sort();
                 QString undesired = QString("%1").arg("/").append("Thumbs.db");
-                Q_FOREACH(const QString& entry, entries)
+                Q_FOREACH(const QString& entry, d->fileEntries)
                 {
                     const KArchiveEntry* archEntry = d->archive->directory()->entry(entry);
                     if(archEntry->isFile() && !entry.endsWith(undesired))
@@ -312,6 +336,7 @@ void ArchiveBookModel::setFilename(QString newFilename)
     d->isLoading = false;
     emit loadingCompleted(success);
     setProcessing(false);
+    endResetModel();
 }
 
 QString ArchiveBookModel::author() const
@@ -437,11 +462,78 @@ void ArchiveBookModel::setDirty(bool isDirty)
     emit hasUnsavedChangesChanged();
 }
 
+QStringList ArchiveBookModel::fileEntries() const
+{
+    return d->fileEntries;
+}
+
+int ArchiveBookModel::fileEntryReferenced(const QString& fileEntry) const
+{
+    int isReferenced{0};
+    AdvancedComicBookFormat::Document* document = qobject_cast<AdvancedComicBookFormat::Document*>(acbfData());
+    if (document->metaData()->bookInfo()->coverpage()->imageHref() == fileEntry) {
+        isReferenced = 1;
+    }
+    if (!isReferenced) {
+        for(const AdvancedComicBookFormat::Page* page : document->body()->pages()) {
+            if (page->imageHref() == fileEntry) {
+                isReferenced = 1;
+                break;
+            }
+        }
+    }
+    if (!isReferenced) {
+        for(const QObject* obj : document->styleSheet()->styles()) {
+            const AdvancedComicBookFormat::Style* style = qobject_cast<const AdvancedComicBookFormat::Style*>(obj);
+            const QString styleString{style->toString()};
+            if (styleString.contains(fileEntry)) {
+                isReferenced = 1;
+                break;
+            } else if (styleString.contains(fileEntry.split("/").last())) {
+                isReferenced = 2;
+                break;
+            }
+        }
+    }
+    return isReferenced;
+}
+
+bool ArchiveBookModel::fileEntryIsDirectory(const QString& fileEntry) const
+{
+    bool isDirectory{false};
+    const KArchiveEntry* entry = d->archive->directory()->entry(fileEntry);
+    if (entry && entry->isDirectory()) {
+        isDirectory = true;
+    }
+    return isDirectory;
+}
+
+QStringList ArchiveBookModel::fileEntriesToDelete() const
+{
+    return d->fileEntriesToDelete;
+}
+
+void ArchiveBookModel::markArchiveFileForDeletion(const QString& archiveFile, bool markForDeletion)
+{
+    if(markForDeletion) {
+        if (!d->fileEntriesToDelete.contains(archiveFile)) {
+            d->fileEntriesToDelete << archiveFile;
+            Q_EMIT fileEntriesToDeleteChanged();
+        }
+    } else {
+        if (d->fileEntriesToDelete.contains(archiveFile)) {
+            d->fileEntriesToDelete.removeAll(archiveFile);
+            Q_EMIT fileEntriesToDeleteChanged();
+        }
+    }
+}
+
 bool ArchiveBookModel::saveBook()
 {
     bool success = true;
     if(d->isDirty)
     {
+        QMutexLocker locker(&archiveMutex);
         // TODO get new filenames out of acbf
 
         setProcessing(true);
@@ -452,12 +544,12 @@ bool ArchiveBookModel::saveBook()
         QString archiveFileName = tmpFile.fileName().append(".cbz");
         QFileInfo fileInfo(tmpFile);
         tmpFile.close();
-        qCDebug(QTQUICK_LOG) << "Creating archive in" << archiveFileName;
+        setProcessingDescription(i18n("Creating archive in %1", archiveFileName));
         KZip* archive = new KZip(archiveFileName);
         archive->open(QIODevice::ReadWrite);
 
         // We're a zip file... size isn't used
-        qCDebug(QTQUICK_LOG) << "Writing in ACBF data";
+        setProcessingDescription(i18n("Writing in ACBF data"));
         archive->prepareWriting("metadata.acbf", fileInfo.owner(), fileInfo.group(), 0);
         AdvancedComicBookFormat::Document* acbfDocument = qobject_cast<AdvancedComicBookFormat::Document*>(acbfData());
         if(!acbfDocument)
@@ -468,27 +560,26 @@ bool ArchiveBookModel::saveBook()
         archive->writeData(acbfString.toUtf8(), acbfString.size());
         archive->finishWriting(acbfString.size());
 
-        qCDebug(QTQUICK_LOG) << "Copying across cover page";
-        const KArchiveFile* archFile = archiveFile(acbfDocument->metaData()->bookInfo()->coverpage()->imageHref());
-        if(archFile)
-        {
-            archive->prepareWriting(acbfDocument->metaData()->bookInfo()->coverpage()->imageHref(), fileInfo.owner(), fileInfo.group(), 0);
-            archive->writeData(archFile->data(), archFile->size());
-            archive->finishWriting(archFile->size());
-        }
-
-        Q_FOREACH(AdvancedComicBookFormat::Page* page, acbfDocument->body()->pages())
-        {
+        setProcessingDescription(i18n("Copying across all files not marked for deletion"));
+        const QStringList allFiles = fileEntries();
+        const KArchiveFile* archFile{nullptr};
+        for( const QString& file : allFiles) {
             qApp->processEvents();
-            qCDebug(QTQUICK_LOG) << "Copying over" << page->title();
-            archFile = archiveFile(page->imageHref());
-            if(archFile)
-            {
-                archive->prepareWriting(page->imageHref(), archFile->user(), archFile->group(), 0);
-                archive->writeData(archFile->data(), archFile->size());
-                archive->finishWriting(archFile->size());
+            if (d->fileEntriesToDelete.contains(file)) {
+                qCDebug(QTQUICK_LOG) << "Not copying file marked for deletion:" << file;
+            } else {
+                setProcessingDescription(i18n("Copying over %1", file));
+                archFile = archiveFile(file);
+                if(archFile && archFile->isFile())
+                {
+                    archive->prepareWriting(file, archFile->user(), archFile->group(), 0);
+                    archive->writeData(archFile->data(), archFile->size());
+                    archive->finishWriting(archFile->size());
+                }
             }
         }
+        d->fileEntriesToDelete.clear();
+        Q_EMIT fileEntriesToDeleteChanged();
 
         archive->close();
         qCDebug(QTQUICK_LOG) << "Archive created and closed...";
@@ -497,7 +588,7 @@ bool ArchiveBookModel::saveBook()
         beginResetModel();
 
         QString actualFile = d->archive->fileName();
-        d->archive->close();
+        d->closeBook();
 
         // This seems roundabout... but it retains ctime and xattrs, which would be gone
         // if we just did a delete+rename
@@ -506,7 +597,7 @@ bool ArchiveBookModel::saveBook()
         {
             QFile originFile(archiveFileName);
             if(originFile.open(QIODevice::ReadOnly)) {
-                qCDebug(QTQUICK_LOG) << "Copying all content from" << archiveFileName << "to" << actualFile;
+                setProcessingDescription(i18n("Copying all content from %1 to %2", archiveFileName, actualFile));
                 while(!originFile.atEnd())
                 {
                     destinationFile.write(originFile.read(65536));
@@ -516,9 +607,11 @@ bool ArchiveBookModel::saveBook()
                 originFile.close();
                 if(originFile.remove())
                 {
-                    qCDebug(QTQUICK_LOG) << "Success! Now loading the new archive...";
+                    setProcessingDescription(i18n("Successfully replaced old archive with the new archive - now loading the new archive..."));
                     // now load the new thing...
+                    locker.unlock();
                     setFilename(actualFile);
+                    locker.relock();
                 }
                 else
                 {
@@ -581,14 +674,24 @@ void ArchiveBookModel::removePage(int pageNumber)
         {
             if(pageNumber == 0)
             {
-                //Page no 0 is the cover page, when removed we'll take the next page.
+                // Page no 0 is the cover page, when removed we'd usually end up with no cover page
+                // Normally we'd want to discourage this, but we do need to support the functionality
+                AdvancedComicBookFormat::Page* cover = acbfDocument->metaData()->bookInfo()->coverpage();
+                if (cover) {
+                    cover->deleteLater();
+                }
                 AdvancedComicBookFormat::Page* page = acbfDocument->body()->page(0);
                 acbfDocument->metaData()->bookInfo()->setCoverpage(page);
-                acbfDocument->body()->removePage(page);
+                if (page) {
+                    acbfDocument->body()->removePage(page);
+                }
             }
             else {
                 AdvancedComicBookFormat::Page* page = acbfDocument->body()->page(pageNumber-1);
-                acbfDocument->body()->removePage(page);
+                if (page) {
+                    acbfDocument->body()->removePage(page);
+                    page->deleteLater();
+                }
             }
         }
     }
@@ -615,6 +718,9 @@ void ArchiveBookModel::addPageFromFile(QString fileUrl, int insertAfter)
         d->archive->close();
         d->archive->open(QIODevice::ReadOnly);
         addPage(QString("image://%1/%2").arg(d->imageProvider->prefix()).arg(archiveFileName), archiveFileName.split("/").last());
+        d->fileEntries << archiveFileName;
+        d->fileEntries.sort();
+        Q_EMIT fileEntriesChanged();
         saveBook();
     }
 }
@@ -684,6 +790,9 @@ QString ArchiveBookModel::createBook(QString folder, QString title, QString cove
     model->d->archive->close();
     model->d->archive->open(QIODevice::ReadWrite);
     model->d->archive->addLocalFile(coverUrl, coverArchiveName);
+    model->d->fileEntries << coverArchiveName;
+    model->d->fileEntries.sort();
+    Q_EMIT model->fileEntriesChanged();
     model->d->archive->close();
 
     model->deleteLater();
@@ -693,11 +802,14 @@ QString ArchiveBookModel::createBook(QString folder, QString title, QString cove
     return filename;
 }
 
-const KArchiveFile * ArchiveBookModel::archiveFile(const QString& filePath)
+const KArchiveFile * ArchiveBookModel::archiveFile(const QString& filePath) const
 {
     if(d->archive)
     {
-        return d->archive->directory()->file(filePath);
+        if(!d->archiveFiles.contains(filePath)) {
+            d->archiveFiles[filePath] = d->archive->directory()->file(filePath);
+        }
+        return d->archiveFiles[filePath];
     }
     return nullptr;
 }
@@ -1060,6 +1172,7 @@ bool ArchiveBookModel::loadCoMet(QStringList xmlDocuments, QObject *acbfData, QS
     KFileMetaData::UserMetaData filedata(filename);
     AdvancedComicBookFormat::Document* acbfDocument = qobject_cast<AdvancedComicBookFormat::Document*>(acbfData);
     Q_FOREACH(const QString xmlDocument, xmlDocuments) {
+        QMutexLocker locker(&archiveMutex);
         const KArchiveFile* archFile = d->archive->directory()->file(xmlDocument);
         QXmlStreamReader xmlReader(archFile->data());
         if(xmlReader.readNextStartElement())
@@ -1292,4 +1405,29 @@ bool ArchiveBookModel::loadCoMet(QStringList xmlDocuments, QObject *acbfData, QS
         }
     }
     return false;
+}
+
+QString ArchiveBookModel::previewForId(const QString& id) const
+{
+    static const QString directorySplit{"/"};
+    static const QString period{"."};
+    static const QString acbfSuffix{"acbf"};
+    if (d->archive) {
+        if (id.splitRef(directorySplit).last().contains(period)) {
+            const QString suffix = id.splitRef(period).last().toString().toLower();
+            if (d->imageProvider && QImageReader::supportedImageFormats().contains(suffix.toLatin1())) {
+                return QString("image://%1/%2").arg(d->imageProvider->prefix()).arg(id);
+            } else if (suffix == acbfSuffix) {
+                return QString{"image://icon/data-information"};
+            } else {
+                QList<QMimeType> mimetypes = d->mimeDatabase.mimeTypesForFileName(id);
+                if (mimetypes.count() > 0) {
+                    return QString("image://icon/").append(mimetypes.first().iconName());
+                }
+            }
+        } else {
+            return QString{"image://icon/folder"};
+        }
+    }
+    return QString();
 }

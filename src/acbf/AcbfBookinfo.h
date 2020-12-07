@@ -43,7 +43,7 @@
  * ACBF can hold multiple authors per book. Authors have their own object.
  * 
  * ACBF can hold titles, annotations(summaries or descriptions) and
- * a list of comma seperated keywords in several languages.
+ * a list of comma separated keywords in several languages.
  * 
  * Annotations in particular are a stringlist of paragraphs.
  * 
@@ -135,7 +135,7 @@ public:
      * @param lastName - the family name of the author.
      * @param nickName - the nickname of the author.
      * @param homePages - a homepage url to associate with this author.
-     * @param emails - an email adress to associate with this author.
+     * @param emails - an email address to associate with this author.
      */
     Q_INVOKABLE void addAuthor(QString activity, QString language, QString firstName, QString middleName, QString lastName, QString nickName, QStringList homePages, QStringList emails);
     /**
@@ -149,7 +149,7 @@ public:
      * @param lastName - the family name of the author.
      * @param nickName - the nickname of the author.
      * @param homePages - a homepage url to associate with this author.
-     * @param emails - an email adress to associate with this author.
+     * @param emails - an email address to associate with this author.
      */
     Q_INVOKABLE void setAuthor(int index, QString activity, QString language, QString firstName, QString middleName, QString lastName, QString nickName, QStringList homePages, QStringList emails);
     /**
@@ -277,7 +277,7 @@ public:
     /**
      * \brief set an annotation for the given language.
      * @param annotation - A stringlist of paragraphs which make
-     * up the annotiation.
+     * up the annotation.
      * @param language - The language for which to set the annotation in
      * language code, country code format joined by a dash (not an underscore).
      */

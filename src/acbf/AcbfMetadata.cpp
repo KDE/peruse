@@ -47,7 +47,8 @@ Metadata::Metadata(Document* parent)
     : QObject(parent)
     , d(new Private)
 {
-    qRegisterMetaType<Metadata*>("Metadata*");
+    static const int typeId = qRegisterMetaType<Metadata*>("Metadata*");
+    Q_UNUSED(typeId);
     d->bookInfo = new BookInfo(this);
     d->publishInfo = new PublishInfo(this);
     d->documentInfo = new DocumentInfo(this);

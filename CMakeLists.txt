@@ -1,7 +1,7 @@
 project(peruse)
-cmake_minimum_required(VERSION 2.8.12)
+cmake_minimum_required(VERSION 3.1.0)
 
-set(KF5_DEP_VERSION "5.69.0") # handled by release scripts
+set(KF5_DEP_VERSION "5.75.0") # handled by release scripts
 
 if(POLICY CMP0063)
     cmake_policy (SET CMP0063 NEW)
@@ -12,7 +12,7 @@ if(WIN32)
     set(USE_PERUSE_PDFTHUMBNAILER ON)
 endif()
 
-find_package(ECM ${KF5_VERSION} REQUIRED NO_MODULE)
+find_package(ECM ${KF5_DEP_VERSION} REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" ${ECM_MODULE_PATH})
 
 # Android has no DBus, so we can't use that. Sniff things and tell the code
@@ -26,16 +26,20 @@ elseif(WIN32)
 endif()
 
 find_package(Qt5 5.14 REQUIRED NO_MODULE COMPONENTS Qml Quick Gui Widgets OpenGL Sql)
-find_package(KF5 ${KF5_VERSION} REQUIRED COMPONENTS I18n Declarative Config Crash FileMetaData IconThemes KIO NewStuffQuick)
+find_package(KF5 ${KF5_DEP_VERSION} REQUIRED COMPONENTS Archive I18n Declarative Config Crash FileMetaData GuiAddons IconThemes KIO NewStuffQuick)
 
-find_package(KF5Baloo) # optional - we'll just let it pass if it's missing
-find_package(KF5Archive ${KF5_VERSION} REQUIRED)
-find_package(KF5Declarative ${KF5_VERSION} REQUIRED)
+find_package(KF5Baloo ${KF5_DEP_VERSION}) # optional - we'll just let it pass if it's missing
 
-find_package(KF5Kirigami2 ${KF5_VERSION})
+find_package(KF5Kirigami2 ${KF5_DEP_VERSION})
 set_package_properties(KF5Kirigami2 PROPERTIES
     PURPOSE "Required at runtime to display the GUI"
     TYPE RUNTIME
+)
+
+find_package(ZLIB)
+set_package_properties(ZLIB PROPERTIES
+    PURPOSE "Required for the unarr based rar support used for reading books in the CBR format"
+    TYPE REQUIRED
 )
 
 include(FeatureSummary)

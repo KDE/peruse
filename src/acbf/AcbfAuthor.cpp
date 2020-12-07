@@ -45,7 +45,8 @@ Author::Author(Metadata* parent)
     : QObject(parent)
     , d(new Private())
 {
-    qRegisterMetaType<Author*>("Author*");
+    static const int typeId = qRegisterMetaType<Author*>("Author*");
+    Q_UNUSED(typeId);
 }
 
 Author::~Author() = default;
@@ -81,13 +82,13 @@ void Author::toXml(QXmlStreamWriter* writer)
     writer->writeTextElement(QStringLiteral("middle-name"), d->middleName);
     writer->writeTextElement(QStringLiteral("last-name"), d->lastName);
     writer->writeTextElement(QStringLiteral("nickname"), d->nickName);
-    Q_FOREACH(const QString& url, d->homePage) {
+    for(const QString& url : d->homePage) {
         writer->writeTextElement(QStringLiteral("home-page"), url);
     }
-    Q_FOREACH(const QString& address, d->email) {
+    for(const QString& address : d->email) {
         writer->writeTextElement(QStringLiteral("email"), address);
     }
-    
+
     writer->writeEndElement();  
 }
 

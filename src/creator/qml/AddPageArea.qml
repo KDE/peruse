@@ -20,10 +20,11 @@
  */
 
 import QtQuick 2.12
+import QtQuick.Layouts 1.4
 import QtQuick.Controls 2.12 as QtControls
 import QtQuick.Dialogs 1.3
 
-import org.kde.kirigami 2.7 as Kirigami
+import org.kde.kirigami 2.12 as Kirigami
 /**
  * @brief a special overlay sheet for adding frames/textareas/jumps
  */
@@ -65,58 +66,20 @@ Kirigami.OverlaySheet {
         preview.y = 0-(topLeft.y*multiplier);
     }
 
-    Column {
-        height: childrenRect.height;
-        spacing: Kirigami.Units.smallSpacing;
-        Kirigami.Heading {
-            width: parent.width;
-            height: paintedHeight;
-            text: i18nc("title text for the add page area sheet", "Add Page Area");
-            QtControls.Button {
-                id: closeButton;
-                anchors {
-                    right: saveButton.left;
-                    rightMargin: Kirigami.Units.smallSpacing;
-                }
-                contentItem: Kirigami.Icon {
-                    source: "dialog-cancel";
-                }
-                height: parent.height;
-                width: height;
-                Keys.onReturnPressed: root.close();
-                onClicked: root.close();
-            }
-            QtControls.Button {
-                id: saveButton;
-                anchors {
-                    right: parent.right;
-                    leftMargin: Kirigami.Units.smallSpacing;
-                }
-                contentItem: Kirigami.Icon {
-                    source: "dialog-ok";
-                }
-                height: parent.height;
-                width: height;
-                Keys.onReturnPressed: saveAndClose();
-                onClicked: saveAndClose();
+    showCloseButton: true
+    header: Kirigami.Heading {
+        text: i18nc("title text for the add page area sheet", "Add Page Area");
+        Layout.fillWidth: true
+        elide: Text.ElideRight
+    }
 
-                function saveAndClose() {
-                    root.save();
-                    root.close();
-                }
-            }
-        }
-        Item {
-            width: parent.width;
-            height: Kirigami.Units.largeSpacing;
-        }
-
+    ColumnLayout {
         Rectangle {
             id: clipRectangle;
             clip:true;
             width: Kirigami.Units.iconSizes.huge*3;
             height: Kirigami.Units.iconSizes.huge*3;
-            anchors.horizontalCenter: parent.horizontalCenter;
+            Layout.alignment: Qt.AlignHCenter;
             Image {
                 id: preview
                 source: root.imageSource;
@@ -131,37 +94,21 @@ Kirigami.OverlaySheet {
                 rotation: 360-textRotation.value;
                 visible: typeComboBox.currentIndex == 1;
             }
-
         }
 
-        QtControls.Label {
-            width: parent.width;
-            height: paintedHeight;
-            text: i18nc("label for the page area combobox", "Page area type:");
-            wrapMode: Text.WrapAtWordBoundaryOrAnywhere;
-        }
-        QtControls.ComboBox {
-            id: typeComboBox;
-            model: [i18n("Frame"), i18n("Textarea"), i18n("Jump")]
-            width: parent.width - Kirigami.Units.smallSpacing;
-        }
+        Kirigami.FormLayout {
+            Layout.fillWidth: true;
+            QtControls.ComboBox {
+                id: typeComboBox;
+                Kirigami.FormData.label: i18nc("label for the page area combobox", "Page area type:");
+                model: [i18n("Frame"), i18n("Textarea"), i18n("Jump")]
+                popup.z: 999; // HACK This is an absolute hack, but combos inside OverlaySheets have their popups show up underneath, because of fun z ordering stuff
+            }
 
-        Item {
-            width: parent.width;
-            height: Kirigami.Units.largeSpacing;
-        }
-
-        Item {
-            id: frameAreaOptions;
-            width: parent.width - Kirigami.Units.smallSpacing;
-            height: childrenRect.height;
-            visible: typeComboBox.currentIndex == 0;
             Row {
+                Kirigami.FormData.label: i18nc("Label for background color button", "Background color:")
+                visible: typeComboBox.currentIndex == 0;
                 spacing: Kirigami.Units.smallSpacing;
-                QtControls.Label {
-                    text: i18nc("Label for background color button", "Background color:")
-                    anchors.verticalCenter: parent.verticalCenter;
-                }
                 Rectangle {
                     id: frameBackgroundColor;
                     height: Kirigami.Units.iconSizes.medium;
@@ -188,116 +135,92 @@ Kirigami.OverlaySheet {
                     }
                 }
             }
-        }
 
-        Item {
-            id: textAreaOptions;
-            width: parent.width - Kirigami.Units.smallSpacing;
-            height: childrenRect.height;
-            visible: typeComboBox.currentIndex == 1;
-            Column {
-                width: parent.width;
+            Row {
+                visible: typeComboBox.currentIndex == 1;
+                Kirigami.FormData.label: i18nc("Label for background color button", "Background color:")
                 spacing: Kirigami.Units.smallSpacing;
-                Row {
-                    spacing: Kirigami.Units.smallSpacing;
+                height: Kirigami.Units.iconSizes.medium;
+                Rectangle {
+                    id: textAreaBackgroundColor;
                     height: Kirigami.Units.iconSizes.medium;
-                    QtControls.Label {
-                        text: i18nc("Label for background color button", "Background color:")
-                        anchors.verticalCenter: parent.verticalCenter;
+                    width: Kirigami.Units.iconSizes.huge;
+                    radius: 3;
+                    border.color: Kirigami.Theme.disabledTextColor;
+                    border.width: 1;
+                    color: root.textBgColor;
+                    anchors.verticalCenter: parent.verticalCenter;
+                    MouseArea {
+                        anchors.fill: parent;
+                        onClicked: {
+                            textAreaBackgroundColorDialog.open();
+
+                        }
+                        hoverEnabled: true;
+                        onEntered: parent.border.color = Kirigami.Theme.buttonHoverColor;
+                        onExited: parent.border.color = Kirigami.Theme.disabledTextColor;
                     }
-                    Rectangle {
-                        id: textAreaBackgroundColor;
-                        height: Kirigami.Units.iconSizes.medium;
-                        width: Kirigami.Units.iconSizes.huge;
-                        radius: 3;
-                        border.color: Kirigami.Theme.disabledTextColor;
-                        border.width: 1;
+                    ColorDialog {
+                        id: textAreaBackgroundColorDialog
+                        title: i18nc("@title color choosing dialog","Choose the background color for this frame");
                         color: root.textBgColor;
-                        anchors.verticalCenter: parent.verticalCenter;
-                        MouseArea {
-                            anchors.fill: parent;
-                            onClicked: {
-                                textAreaBackgroundColorDialog.open();
-
-                            }
-                            hoverEnabled: true;
-                            onEntered: parent.border.color = Kirigami.Theme.buttonHoverColor;
-                            onExited: parent.border.color = Kirigami.Theme.disabledTextColor;
-                        }
-                        ColorDialog {
-                            id: textAreaBackgroundColorDialog
-                            title: i18nc("@title color choosing dialog","Choose the background color for this frame");
-                            color: root.textBgColor;
-                            onAccepted: root.textBgColor = color;
-                        }
+                        onAccepted: root.textBgColor = color;
                     }
-                    QtControls.Switch {
-                        id: transparentSwitch;
-                        text: "Transparent";
-                        anchors.verticalCenter: parent.verticalCenter;
-                    }
-                    QtControls.Switch {
-                        id: invertedSwitch;
-                        text: "Inverted";
-                        anchors.verticalCenter: parent.verticalCenter;
-                    }
-
-                }
-                Row {
-                    width: parent.width;
-                    QtControls.Label {
-                        id: rotationLabel;
-                        text: i18nc("Label for text rotation slider", "Text rotation:")
-                        anchors.verticalCenter: parent.verticalCenter;
-                    }
-                    spacing: Kirigami.Units.smallSpacing;
-                    QtControls.Slider {
-                        width: parent.width - rotationLabel.width;
-                        id: textRotation;
-                        from: 0
-                        to: 360;
-                    }
-                }
-                Row {
-                    width: parent.width;
-                    QtControls.Label {
-                        id: typeLabel;
-                        text: i18nc("Label for text type combobox", "Type:")
-                    }
-                    spacing: Kirigami.Units.smallSpacing;
-                    QtControls.ComboBox {
-                        id: textType;
-                        width: parent.width - typeLabel.width;
-                        model: root.availableTypes;
-                        currentIndex: 0;
-                    }
-                }
-
-                QtControls.TextArea {
-                    id: textAreaInput;
-                    width: parent.width;
-                    placeholderText: i18nc("Place holder text for text area", "Type to input text for text area here");
                 }
             }
 
+            QtControls.Switch {
+                id: transparentSwitch;
+                visible: typeComboBox.currentIndex == 1;
+                Kirigami.FormData.label: i18nc("Option for making the background of a text area transparent", "Transparent");
+            }
+            QtControls.Switch {
+                id: invertedSwitch;
+                visible: typeComboBox.currentIndex == 1;
+                Kirigami.FormData.label: i18nc("Option for making the background of a text area cause what is behind it to be inverted", "Inverted");
+            }
+            QtControls.Slider {
+                id: textRotation;
+                Kirigami.FormData.label: i18nc("Label for text rotation slider", "Text rotation:")
+                visible: typeComboBox.currentIndex == 1;
+                from: 0
+                to: 360;
+            }
+
+            QtControls.ComboBox {
+                id: textType;
+                Kirigami.FormData.label: i18nc("Label for text type combobox", "Type:")
+                visible: typeComboBox.currentIndex == 1;
+                model: root.availableTypes;
+                currentIndex: 0;
+                popup.z: 999; // HACK This is an absolute hack, but combos inside OverlaySheets have their popups show up underneath, because of fun z ordering stuff
+            }
+
+            QtControls.TextArea {
+                id: textAreaInput;
+                width: parent.width;
+                placeholderText: i18nc("Place holder text for text area", "Type to input text for text area here");
+            }
+
+            QtControls.ComboBox {
+                id: pageIndexComboBox;
+                Kirigami.FormData.label: i18nc("Label for the dropdown which will let you pick a page a jump will send the reader to when activated", "Page Index:")
+                visible: typeComboBox.currentIndex == 2;
+                model: root.pages;
+                popup.z: 999; // HACK This is an absolute hack, but combos inside OverlaySheets have their popups show up underneath, because of fun z ordering stuff
+            }
         }
 
-        Item {
-            id: jumpAreaOptions;
-            width: parent.width - Kirigami.Units.smallSpacing;
-            height: childrenRect.height;
-            visible: typeComboBox.currentIndex == 2;
-            Row {
-                spacing: Kirigami.Units.smallSpacing;
-                QtControls.Label {
-                    text: "Page Index:"
-                    anchors.verticalCenter: parent.verticalCenter;
-                }
-                QtControls.ComboBox {
-                    id: pageIndexComboBox;
-                    model: root.pages;
-                    anchors.verticalCenter: parent.verticalCenter;
-                }
+        QtControls.Button {
+            id: saveButton;
+            Layout.alignment: Qt.AlignRight
+            text: i18nc("Button which saves the page area, and closes the dialog", "Save");
+            Keys.onReturnPressed: saveAndClose();
+            onClicked: saveAndClose();
+
+            function saveAndClose() {
+                root.save();
+                root.close();
             }
         }
     }

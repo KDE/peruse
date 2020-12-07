@@ -41,7 +41,6 @@ class ArchiveImageProvider::Private
 {
 public:
     Private() {}
-    QThreadPool pool;
 
     ArchiveBookModel* bookModel{nullptr};
     QString prefix;
@@ -61,12 +60,12 @@ ArchiveImageProvider::~ArchiveImageProvider()
 class ArchiveImageResponse : public QQuickImageResponse
 {
     public:
-        ArchiveImageResponse(const QString &id, const QSize &requestedSize, ArchiveBookModel* bookModel, const QString& prefix, QThreadPool *pool)
+        ArchiveImageResponse(const QString &id, const QSize &requestedSize, ArchiveBookModel* bookModel, const QString& prefix)
         {
             m_runnable = new ArchiveImageRunnable(id, requestedSize, bookModel, prefix);
             m_runnable->setAutoDelete(false);
             connect(m_runnable, &ArchiveImageRunnable::done, this, &ArchiveImageResponse::handleDone, Qt::QueuedConnection);
-            pool->start(m_runnable);
+            QThreadPool::globalInstance()->start(m_runnable);
         }
         virtual ~ArchiveImageResponse()
         {
@@ -94,7 +93,7 @@ class ArchiveImageResponse : public QQuickImageResponse
 
 QQuickImageResponse * ArchiveImageProvider::requestImageResponse(const QString& id, const QSize& requestedSize)
 {
-    ArchiveImageResponse* response = new ArchiveImageResponse(id, requestedSize, d->bookModel, d->prefix, &d->pool);
+    ArchiveImageResponse* response = new ArchiveImageResponse(id, requestedSize, d->bookModel, d->prefix);
     return response;
 }
 
@@ -170,7 +169,7 @@ void ArchiveImageRunnable::run()//const QString& id, QSize* size, const QSize& r
         auto document = qobject_cast<AdvancedComicBookFormat::Document*>(d->bookModel->acbfData());
 
         if (document) {
-            AdvancedComicBookFormat::Binary* binary = document->data()->binary(d->id.mid(1));
+            AdvancedComicBookFormat::Binary* binary = qobject_cast<AdvancedComicBookFormat::Binary*>(document->objectByID(d->id.mid(1)));
 
             if (!d->abort && binary) {
                 success = d->loadImage(&img, binary->data());
@@ -179,6 +178,7 @@ void ArchiveImageRunnable::run()//const QString& id, QSize* size, const QSize& r
     }
 
     if (!d->abort && !success) {
+        QMutexLocker locker(&d->bookModel->archiveMutex);
         const KArchiveFile* entry = d->bookModel->archiveFile(d->id);
 
         if(!d->abort && entry) {

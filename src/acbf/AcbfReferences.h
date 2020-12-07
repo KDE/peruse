@@ -29,7 +29,6 @@
 #include <QObject>
 #include <QXmlStreamReader>
 
-
 namespace AdvancedComicBookFormat
 {
 
@@ -39,7 +38,7 @@ namespace AdvancedComicBookFormat
      * The References object holds Reference objects, which
      * in turn have an id, language and a list of paragraphs.
      * 
-     * A reference is a bit of text that can be refered to
+     * A reference is a bit of text that can be referred to
      * with an anchor in any of the other paragraphs. This
      * can be used for footnotes, like translation notes
      * or author's notes.
@@ -49,11 +48,13 @@ namespace AdvancedComicBookFormat
 class ACBF_EXPORT References : public QObject
 {
     Q_OBJECT
-
+    Q_PROPERTY(QObjectList references READ references NOTIFY referencesChanged)
+    Q_PROPERTY(QStringList referenceIds READ referenceIds NOTIFY referencesChanged)
 public:
     explicit References(Document* parent = nullptr);
     ~References() override;
-    
+
+
     /**
      * \brief Write the references into the xml writer.
      */
@@ -63,13 +64,13 @@ public:
      * @return True if the xmlReader encountered no errors.
      */
     bool fromXml(QXmlStreamReader *xmlReader);
-    
+
     /**
      * @param id - the id that is used to reference to this object.
      * @return the reference object referenced by this id.
      */
     Reference* reference(const QString& id) const;
-    
+
     /**
      * @brief Add reference at ID.
      * 
@@ -77,8 +78,51 @@ public:
      * @param paragraphs The paragraphs comprising this reference.
      * @param language The language (optional, and 1.2 only)
      */
-    void setReference(const QString& id, const QStringList& paragraphs, const QString& language = "");
+    Q_INVOKABLE AdvancedComicBookFormat::Reference* addReference(const QString& id, const QStringList& paragraphs, const QString& language = "");
 
+    /**
+     * Returns a list of all known IDs for references
+     * @param A list of reference IDs
+     */
+    QStringList referenceIds() const;
+
+    /**
+     * Returns the internal list of references
+     * @return A list of reference objects
+     */
+    QObjectList references() const;
+
+    /**
+     * The position in the references object list of the reference passed to the function
+     * @param reference The object you want to get the position of
+     * @return The position of the object, or -1 if the object wasn't found
+     */
+    int referenceIndex(Reference* reference) const;
+
+    /**
+     * Fired whenever the list of references has changed
+     */
+    Q_SIGNAL void referencesChanged();
+
+    /**
+     * Fired when a new reference has been added to the list
+     * @param reference The new reference
+     */
+    Q_SIGNAL void referenceAdded(QObject *referece);
+
+    /**
+     * Swap the two given references in the ordered list of references
+     * (if either doesn't exist, this will fail quietly)
+     * @param swapThis The first object, which will take the position of the second
+     * @param withThis The second object, which will take the position of the first
+     */
+    Q_INVOKABLE void swapReferences(QObject *swapThis, QObject* withThis);
+    /**
+     * A convenience function for swapping reference positions directly by ID.
+     * @param swapThis The index of the first object, which will take the position of the second
+     * @param withThis The index of the second object, which will take the position of the first
+     */
+    Q_INVOKABLE void swapReferencesByIndex(int swapThis, int withThis);
 private:
     class Private;
     std::unique_ptr<Private> d;

@@ -58,7 +58,8 @@ BookInfo::BookInfo(Metadata* parent)
     : QObject(parent)
     , d(new Private)
 {
-    qRegisterMetaType<BookInfo*>("BookInfo*");
+    static const int typeId = qRegisterMetaType<BookInfo*>("BookInfo*");
+    Q_UNUSED(typeId);
     d->coverPage = new Page(metadata()->document());
     d->coverPage->setIsCoverPage(true);
 }
@@ -74,7 +75,7 @@ void BookInfo::toXml(QXmlStreamWriter* writer)
 {
     writer->writeStartElement(QStringLiteral("book-info"));
 
-    Q_FOREACH(Author* author, d->author) {
+    for(Author* author : d->author) {
         author->toXml(writer);
     }
 
@@ -98,7 +99,7 @@ void BookInfo::toXml(QXmlStreamWriter* writer)
 
     writer->writeStartElement("characters");
     writer->writeCharacters("");
-    Q_FOREACH(const QString& character, d->characters) {
+    for(const QString& character : d->characters) {
         writer->writeStartElement("name");
         writer->writeCharacters(character);
         writer->writeEndElement();
@@ -110,7 +111,7 @@ void BookInfo::toXml(QXmlStreamWriter* writer)
         annotations.next();
         writer->writeStartElement(QStringLiteral("annotation"));
         writer->writeAttribute(QStringLiteral("lang"), annotations.key());
-        Q_FOREACH(const QString& paragraph, annotations.value()) {
+        for(const QString& paragraph : annotations.value()) {
             writer->writeStartElement(QStringLiteral("p"));
             writer->writeCharacters(paragraph);
             writer->writeEndElement();
@@ -130,18 +131,18 @@ void BookInfo::toXml(QXmlStreamWriter* writer)
     d->coverPage->toXml(writer);
 
     writer->writeStartElement(QStringLiteral("languages"));
-    Q_FOREACH(Language* language, d->languages) {
+    for(Language* language : d->languages) {
         language->toXml(writer);
     }
     writer->writeEndElement();
 
-    Q_FOREACH(Sequence* sequence, d->sequence) {
+    for(Sequence* sequence : d->sequence) {
         sequence->toXml(writer);
     }
-    Q_FOREACH(DatabaseRef* ref, d->databaseRef) {
+    for(DatabaseRef* ref : d->databaseRef) {
         ref->toXml(writer);
     }
-    Q_FOREACH(ContentRating* rating, d->contentRating) {
+    for(ContentRating* rating : d->contentRating) {
         rating->toXml(writer);
     }
     

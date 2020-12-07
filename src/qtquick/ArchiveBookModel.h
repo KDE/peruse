@@ -23,6 +23,7 @@
 #define ARCHIVEBOOKMODEL_H
 
 #include "BookModel.h"
+#include <QMutex>
 /**
  * \brief Class to hold pages and metadata for archive based books.
  * 
@@ -39,6 +40,8 @@ class ArchiveBookModel : public BookModel
     Q_PROPERTY(QObject* qmlEngine READ qmlEngine WRITE setQmlEngine NOTIFY qmlEngineChanged)
     Q_PROPERTY(bool readWrite READ readWrite WRITE setReadWrite NOTIFY readWriteChanged)
     Q_PROPERTY(bool hasUnsavedChanges READ hasUnsavedChanges NOTIFY hasUnsavedChangesChanged)
+    Q_PROPERTY(QStringList fileEntries READ fileEntries NOTIFY fileEntriesChanged)
+    Q_PROPERTY(QStringList fileEntriesToDelete READ fileEntriesToDelete NOTIFY fileEntriesToDeleteChanged)
 public:
     explicit ArchiveBookModel(QObject* parent = nullptr);
     ~ArchiveBookModel() override;
@@ -104,10 +107,20 @@ public:
     Q_SIGNAL void qmlEngineChanged();
 
     /**
-     * TODO: What is this? Only used in book.qml once?
+     * Whether or not this model should function in read/write mode. As this is potentially very expensive,
+     * this option is disabled by default and must be set explicitly to true.
+     * @return Whether or not the model is read/write (true) or in read-only mode (false)
      */
     bool readWrite() const;
+    /**
+     * Sets the readWrite option
+     * @see readWrite()
+     * @param newReadWrite Whether or not the model should be read/write (true) or in read-only mode (false)
+     */
     void setReadWrite(bool newReadWrite);
+    /**
+     * Fired when the read/write property changes
+     */
     Q_SIGNAL void readWriteChanged();
 
     /**
@@ -125,6 +138,53 @@ public:
      * \brief Fires when there are unsaved changes.
      */
     Q_SIGNAL void hasUnsavedChangesChanged();
+
+    /**
+     * A list of every file contained within the archive, not just the pages
+     * @return A list of files relative to the archive root
+     */
+    QStringList fileEntries() const;
+    /**
+     * Fired when the contents of the archive change
+     */
+    Q_SIGNAL void fileEntriesChanged();
+
+    /**
+     * \brief Whether or not a specific file entry is referenced somewhere in the ACBF document.
+     * @param fileEntry The archive filename for the entry you want checked
+     * @return Whether the file is referenced or not. 0 if not, 1 if fully matched, 2 if partially matched
+     * @see fileEntries()
+     * @see markArchiveFileForDeletion(QString,bool)
+     */
+    Q_INVOKABLE int fileEntryReferenced(const QString& fileEntry) const;
+
+    /**
+     * \brief Whether or not an entry is a directory in the archive (as opposed to a file)
+     * This becomes useful for distinguishing what should be done for things that are not actually
+     * files (and consequently not really directly useful in a book, as you can't simply link to
+     * a directory in the archive)
+     * @param fileEntry The entry you wish to check
+     * @return True if the entry passed in is a directory
+     */
+    Q_INVOKABLE bool fileEntryIsDirectory(const QString& fileEntry) const;
+
+    /**
+     * @brief The list of files currently marked for deletion
+     * @return A list of files marked for deletion on the next save action
+     */
+    QStringList fileEntriesToDelete() const;
+    /**
+     * Fired whenever the list of file entries which should be deleted changes
+     */
+    Q_SIGNAL void fileEntriesToDeleteChanged();
+    /**
+     * \brief Mark a file for removal from the archive
+     * When saving the book, files marked for deletion will not be included in the new archive.
+     *
+     * @param archiveFile The filename of the file to be removed
+     * @param markForDeletion Whether the archive file should be deleted or not
+     */
+    Q_INVOKABLE void markArchiveFileForDeletion(const QString& archiveFile, bool markForDeletion = true);
 
     /**
      * \brief Saves the archive back to disk
@@ -145,9 +205,12 @@ public:
     /**
      * @brief removePage
      * remove the given page from the book by number.
+     * @note This does not remove the file pointed to by the page
+     * @see markArchiveFileForDeletion(QString,bool)
      * @param pageNumber the number of the page to remove.
      */
     Q_INVOKABLE void removePage(int pageNumber) override;
+
     /**
      * Adds a new page to the book archive on disk, by copying in the file
      * passed to the function. Optionally this can be done at a specific
@@ -179,9 +242,18 @@ public:
      */
     Q_INVOKABLE QString createBook(QString folder, QString title, QString coverUrl);
 
+    /**
+     * Get the preview URL for an acbf item with the given ID.
+     * @note If you are requesting a preview for an entry in the ACBF data, prepend the ID with a # symbol
+     * @param id The ID of the item to get a preview URL for
+     * @return The preview URL for the item with the given ID (this is NOT checked for validity, only constructed)
+     */
+    Q_INVOKABLE QString previewForId(const QString& id) const;
+
     friend class ArchiveImageRunnable;
 protected:
-    const KArchiveFile* archiveFile(const QString& filePath);
+    const KArchiveFile* archiveFile(const QString& filePath) const;
+    QMutex archiveMutex;
 
 private:
     class Private;
@@ -192,8 +264,8 @@ private:
      * @param xmlDocument string with the archive value.
      * @param acbfData a pointer pointing to a acbfDocument.
      * @param entries a list of image entries, sorted.
-     * @param filename the file name of the doument, necessary for writing data to kfilemetadata.
-     * @return whether the reading was succesful.
+     * @param filename the file name of the document, necessary for writing data to kfilemetadata.
+     * @return whether the reading was successful.
      */
     bool loadComicInfoXML(QString xmlDocument, QObject* acbfData, QStringList entries, QString filename);
     /**
@@ -201,8 +273,8 @@ private:
      * @param xmlDocument string with the archive value.
      * @param acbfData a pointer pointing to a acbfDocument.
      * @param entries a list of image entries, sorted.
-     * @param filename the file name of the doument, necessary for writing data to kfilemetadata.
-     * @return whether the reading was succesful.
+     * @param filename the file name of the document, necessary for writing data to kfilemetadata.
+     * @return whether the reading was successful.
      */
     bool loadCoMet(QStringList xmlDocuments, QObject* acbfData, QStringList entries, QString filename);
     Private* d;

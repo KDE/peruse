@@ -44,6 +44,8 @@ namespace AdvancedComicBookFormat
 class ACBF_EXPORT Data : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QObjectList binaries READ binaries NOTIFY binariesChanged)
+    Q_PROPERTY(QStringList binaryIds READ binaryIds NOTIFY binariesChanged)
 public:
     explicit Data(Document* parent = nullptr);
     ~Data() override;
@@ -63,6 +65,37 @@ public:
      * @return the binary object referenced by this id.
      */
     Binary* binary(const QString& id) const;
+
+    /**
+     * Adds a new, empty binary entry to the list, and returns that entry
+     */
+    Q_INVOKABLE AdvancedComicBookFormat::Binary* addBinary(const QString& id);
+
+    /**
+     * The position in the binaries object list of the binary passed to the function
+     * @param reference The object you want to get the position of
+     * @return The position of the object, or -1 if the object wasn't found
+     */
+    QObjectList binaries() const;
+
+    QStringList binaryIds() const;
+    int binaryIndex(Binary* binary);
+    Q_SIGNAL void binariesChanged();
+    Q_SIGNAL void binaryAdded(QObject *binary);
+
+    /**
+     * Swap the two given binaries in the ordered list of binaries
+     * (if either doesn't exist, this will fail quietly)
+     * @param swapThis The first object, which will take the position of the second
+     * @param withThis The second object, which will take the position of the first
+     */
+    Q_INVOKABLE void swapBinaries(QObject *swapThis, QObject* withThis);
+    /**
+     * A convenience function for swapping binary positions directly by ID.
+     * @param swapThis The index of the first object, which will take the position of the second
+     * @param withThis The index of the second object, which will take the position of the first
+     */
+    Q_INVOKABLE void swapBinariesByIndex(int swapThis, int withThis);
 private:
     class Private;
     std::unique_ptr<Private> d;

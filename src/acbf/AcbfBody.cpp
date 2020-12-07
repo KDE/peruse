@@ -40,7 +40,8 @@ Body::Body(Document* parent)
     : QObject(parent)
     , d(new Private)
 {
-    qRegisterMetaType<Body*>("Body*");
+    static const int typeId = qRegisterMetaType<Body*>("Body*");
+    Q_UNUSED(typeId);
 }
 
 Body::~Body() = default;
@@ -54,7 +55,7 @@ void Body::toXml(QXmlStreamWriter *writer)
 {
     writer->writeStartElement(QStringLiteral("body"));
 
-    Q_FOREACH(Page* page, d->pages) {
+    for(Page* page : d->pages) {
         page->toXml(writer);
     }
 

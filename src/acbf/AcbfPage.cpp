@@ -52,7 +52,8 @@ Page::Page(Document* parent)
     : QObject(parent)
     , d(new Private)
 {
-    qRegisterMetaType<Page*>("Page*");
+    static const int typeId = qRegisterMetaType<Page*>("Page*");
+    Q_UNUSED(typeId);
 }
 
 Page::~Page() = default;
@@ -86,15 +87,15 @@ void Page::toXml(QXmlStreamWriter* writer)
     writer->writeAttribute(QStringLiteral("href"), d->imageHref);
     writer->writeEndElement();
 
-    Q_FOREACH(Textlayer* layer, d->textLayers.values()) {
+    for(Textlayer* layer : d->textLayers.values()) {
         layer->toXml(writer);
     }
 
-     Q_FOREACH(Frame* frame, d->frames) {
+     for(Frame* frame : d->frames) {
          frame->toXml(writer);
      }
 
-     Q_FOREACH(Jump* jump, d->jumps) {
+     for(Jump* jump : d->jumps) {
          jump->toXml(writer);
      }
 

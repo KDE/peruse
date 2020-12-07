@@ -21,6 +21,7 @@
 
 #include "AcbfBinary.h"
 
+#include <QFile>
 #include <QString>
 #include <QXmlStreamWriter>
 #include <QXmlStreamReader>
@@ -32,16 +33,24 @@ using namespace AdvancedComicBookFormat;
 class Binary::Private {
 public:
     Private() {}
+    Data *parent;
+
     QString id;
-    QString contentType;
+    QString contentType{QLatin1String{"application/octet-stream"}};
     QByteArray data;
 };
 
 Binary::Binary(Data* parent)
-    : QObject(parent)
+    : InternalReferenceObject(InternalReferenceObject::ReferenceTarget, parent)
     , d(new Private)
 {
-    qRegisterMetaType<Binary*>("Binary*");
+    static const int typeId = qRegisterMetaType<Binary*>("Binary*");
+    Q_UNUSED(typeId);
+    d->parent = parent;
+    // Hook up properties to the parent's global data change signal
+    connect(this, &Binary::idChanged, &InternalReferenceObject::propertyDataChanged);
+    connect(this, &Binary::contentTypeChanged, &InternalReferenceObject::propertyDataChanged);
+    connect(this, &Binary::dataChanged, &InternalReferenceObject::propertyDataChanged);
 }
 
 Binary::~Binary() = default;
@@ -73,7 +82,10 @@ QString Binary::id() const
 
 void Binary::setId(const QString& newId)
 {
-    d->id = newId;
+    if (d->id != newId) {
+        d->id = newId;
+        Q_EMIT idChanged();
+    }
 }
 
 QString Binary::contentType() const
@@ -83,7 +95,10 @@ QString Binary::contentType() const
 
 void Binary::setContentType(const QString& newContentType)
 {
-    d->contentType = newContentType;
+    if (d->contentType != newContentType) {
+        d->contentType = newContentType;
+        Q_EMIT contentTypeChanged();
+    }
 }
 
 QByteArray Binary::data() const
@@ -91,7 +106,34 @@ QByteArray Binary::data() const
     return d->data;
 }
 
+int Binary::size() const
+{
+    return d->data.size();
+}
+
 void Binary::setData(const QByteArray& newData)
 {
-    d->data = newData;
+    if (d->data != newData) {
+        d->data = newData;
+        Q_EMIT dataChanged();
+    }
+}
+
+void AdvancedComicBookFormat::Binary::setDataFromFile(const QString& fileName)
+{
+    d->data.clear();
+    QFile file(fileName);
+    if (file.open(QIODevice::ReadOnly)) {
+        d->data = file.readAll();
+        file.close();
+    }
+    Q_EMIT dataChanged();
+}
+
+int Binary::localIndex()
+{
+    if (d->parent) {
+        return d->parent->binaryIndex(this);
+    }
+    return -1;
 }

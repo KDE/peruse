@@ -5,10 +5,18 @@
         <file>qml/AddPageArea.qml</file>
         <file>qml/AddPageSheet.qml</file>
         <file>qml/Book.qml</file>
+        <file>qml/BookBasics.qml</file>
+        <file>qml/BookBinaries.qml</file>
+        <file>qml/BookBinaryEditor.qml</file>
+        <file>qml/BookReferenceEditor.qml</file>
+        <file>qml/BookReferences.qml</file>
+        <file>qml/BookStylesheet.qml</file>
         <file>qml/BookMetainfoPage.qml</file>
         <file>qml/BookPage.qml</file>
         <file>qml/CreateNewBook.qml</file>
+        <file>qml/LinkEditorSheet.qml</file>
         <file>qml/Main.qml</file>
+        <file>qml/MessageBoxSheet.qml</file>
         <file>qml/PageMetaInfo.qml</file>
         <file>qml/Settings.qml</file>
         <file>qml/WelcomePage.qml</file>

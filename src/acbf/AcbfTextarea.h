@@ -24,6 +24,7 @@
 
 #include <memory>
 
+#include "AcbfInternalReferenceObject.h"
 #include "AcbfTextlayer.h"
 
 #include <QPoint>
@@ -38,7 +39,7 @@
 
 namespace AdvancedComicBookFormat
 {
-class ACBF_EXPORT Textarea : public QObject
+class ACBF_EXPORT Textarea : public InternalReferenceObject
 {
     Q_OBJECT
     Q_PROPERTY(QString bgcolor READ bgcolor WRITE setBgcolor NOTIFY bgcolorChanged)
@@ -207,7 +208,7 @@ public:
      * 
      * Contains allowed sub-elements: strong, emphasis, strikethrough
      * sub, sup, a (with mandatory href attribute only)
-     * Can also contain deprecated sub-elements (superceded by...): code (type option code),
+     * Can also contain deprecated sub-elements (superceeded by...): code (type option code),
      * inverted (textarea option inverted)
      */
     QStringList paragraphs() const;
@@ -221,6 +222,13 @@ public:
      * @brief fires when the paragraphs are set.
      */
     Q_SIGNAL void paragraphsChanged();
+
+    /**
+     * The position of this text area in the list of Textarea instances in the
+     * parent Textlayer instance.
+     * @return The instance's position
+     */
+    int localIndex() override;
 private:
     class Private;
     std::unique_ptr<Private> d;

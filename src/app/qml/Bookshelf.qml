@@ -132,8 +132,13 @@ Kirigami.ScrollablePage {
         }
         clip: true;
         footer: Item { width: parent.width; height: Kirigami.Units.iconSizes.large + Kirigami.Units.largeSpacing; }
-        cellWidth: width / 2;
-        cellHeight: root.height * 3 / 8;
+
+        readonly property int scrollBarSpace: shelfList.QtControls.ScrollBar.vertical.width
+        readonly property int availableWidth: shelfList.width - scrollBarSpace - 4
+        readonly property int implicitCellWidth: Kirigami.Units.gridUnit * 15
+        cellWidth: Math.floor(availableWidth / Math.max(Math.floor(availableWidth / (implicitCellWidth + Kirigami.Units.gridUnit)), 2))
+        cellHeight: Kirigami.Units.gridUnit * 13;
+
         currentIndex: -1;
 
         function previousEntry() {
@@ -147,8 +152,8 @@ Kirigami.ScrollablePage {
             }
         }
         delegate: Item {
-            height: model.categoryEntriesCount === 0 ? bookTile.neededHeight : categoryTile.neededHeight;
-            width: root.width / 2;
+            height: shelfList.cellHeight;
+            width: shelfList.cellWidth;
             ListComponents.CategoryTileTall {
                 id: categoryTile;
                 height: model.categoryEntriesCount > 0 ? neededHeight : 0;

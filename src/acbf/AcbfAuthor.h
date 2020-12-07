@@ -186,12 +186,12 @@ public:
     Q_SIGNAL void homePagesChanged();
     
     /**
-     * @return The email adresses associated with this author as a QStringList.
+     * @return The email addresses associated with this author as a QStringList.
      */
     Q_INVOKABLE QStringList emails() const;
     
     /**
-     * \brief Set the email adress associated with this author.
+     * \brief Set the email address associated with this author.
      * @param email - email as a string.
      */
     Q_INVOKABLE void addEmail(const QString& email);
@@ -201,7 +201,7 @@ public:
      */
     Q_INVOKABLE void removeEmail(const int& index);
     /**
-     * \brief Add an email adresses associated with this author.
+     * \brief Add an email addresses associated with this author.
      * @param emails - email dresses as a stringlist.
      */
     Q_INVOKABLE void setEmails(const QStringList& emails);

@@ -21,6 +21,7 @@
 
 #include "AcbfReference.h"
 #include "AcbfReferences.h"
+
 #include <QString>
 #include <QXmlStreamWriter>
 #include <QXmlStreamReader>
@@ -32,16 +33,24 @@ using namespace AdvancedComicBookFormat;
 class Reference::Private {
 public:
     Private() {}
+    References* parent;
+
     QString id;
     QString language;
     QStringList paragraphs;
 };
 
 Reference::Reference(References* parent)
-    : QObject(parent)
+    : InternalReferenceObject(InternalReferenceObject::ReferenceOriginAndTarget, parent)
     , d(new Private)
 {
-    qRegisterMetaType<Reference*>("Reference*");
+    static const int typeId = qRegisterMetaType<Reference*>("Reference*");
+    Q_UNUSED(typeId);
+    d->parent = parent;
+    // Hook up properties to the parent's global data change signal
+    connect(this, &Reference::idChanged, &InternalReferenceObject::propertyDataChanged);
+    connect(this, &Reference::languageChanged, &InternalReferenceObject::propertyDataChanged);
+    connect(this, &Reference::paragraphsChanged, &InternalReferenceObject::propertyDataChanged);
 }
 
 Reference::~Reference() = default;
@@ -53,7 +62,7 @@ void Reference::toXml(QXmlStreamWriter* writer)
     /* ACBF 1.2
     writer->writeAttribute(QStringLiteral("lang"), language());
     */
-    Q_FOREACH(const QString& paragraph, d->paragraphs) {
+    for(const QString& paragraph : d->paragraphs) {
         writer->writeStartElement(QStringLiteral("p"));
         writer->writeCharacters(paragraph);
         writer->writeEndElement();
@@ -91,7 +100,10 @@ QString Reference::id() const
 
 void Reference::setId(const QString& newId)
 {
-    d->id = newId;
+    if (d->id != newId) {
+        d->id = newId;
+        Q_EMIT idChanged();
+    }
 }
 
 QString Reference::language() const
@@ -101,7 +113,10 @@ QString Reference::language() const
 
 void Reference::setLanguage(const QString& language)
 {
-    d->language = language;
+    if (d->language != language) {
+        d->language = language;
+        Q_EMIT languageChanged();
+    }
 }
 
 QStringList Reference::paragraphs() const
@@ -111,5 +126,17 @@ QStringList Reference::paragraphs() const
 
 void Reference::setParagraphs(const QStringList& paragraphs)
 {
-    d->paragraphs = paragraphs;
+    if (d->paragraphs != paragraphs) {
+        d->paragraphs = paragraphs;
+        updateForwardReferences();
+        Q_EMIT paragraphsChanged();
+    }
+}
+
+int Reference::localIndex()
+{
+    if (d->parent) {
+        return d->parent->referenceIndex(this);
+    }
+    return -1;
 }

@@ -32,7 +32,7 @@ int getMaxTextureSize()
         exit(-1);
     }
 
-    // rather than using a QWindow - which actually dosen't seem to work in this case either!
+    // rather than using a QWindow - which actually doesn't seem to work in this case either!
     QOffscreenSurface surface;
     surface.setFormat( ctx.format() );
     surface.create();

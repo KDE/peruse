@@ -24,21 +24,34 @@
 #include <QXmlStreamWriter>
 #include <QXmlStreamReader>
 
-#include <acbf_debug.h>
+#include "AcbfStyle.h"
+#include "acbf_debug.h"
 
 using namespace AdvancedComicBookFormat;
 
 class StyleSheet::Private
 {
 public:
-    Private(){}
-    QHash<QString, QString> classes;
+    Private(StyleSheet* qq)
+        : q(qq)
+    {}
+    StyleSheet* q;
+    QObjectList styles;
+
+    void addStyle(Style* style) {
+        styles << style;
+        QObject::connect(style, &Style::styleDataChanged, q, &StyleSheet::stylesChanged);
+        QObject::connect(style, &QObject::destroyed, q, [this, style](){ styles.removeAll(style); Q_EMIT q->stylesChanged(); });
+        q->stylesChanged();
+    }
 };
 
 StyleSheet::StyleSheet(Document* parent)
     : QObject(parent)
-    , d(new Private)
+    , d(new Private(this))
 {
+    static const int typeId = qRegisterMetaType<StyleSheet*>("StyleSheet*");
+    Q_UNUSED(typeId);
 }
 
 StyleSheet::~StyleSheet() = default;
@@ -46,9 +59,14 @@ StyleSheet::~StyleSheet() = default;
 void StyleSheet::toXml(QXmlStreamWriter* writer) {
     writer->writeStartElement(QStringLiteral("style"));
     QStringList contents;
-    Q_FOREACH(const QString selector, d->classes.keys())
+    for(QObject* object : d->styles)
     {
-        contents.append(QStringLiteral("%1 {\n%2\n}").arg(selector, d->classes[selector]));
+        Style* style = qobject_cast<Style*>(object);
+        if (style) {
+            contents.append(style->toString());
+        } else {
+            qCWarning(ACBF_LOG) << "We somehow have an entry in our list of styles that is not a Style object, this really should not be possible. The object in question is:" << object;
+        }
     }
     writer->writeCharacters(contents.join("\n"));
     writer->writeEndElement();
@@ -60,22 +78,30 @@ bool StyleSheet::fromXml(QXmlStreamReader *xmlReader)
     if (xmlReader->hasError()) {
         qCWarning(ACBF_LOG) << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader->name() << "(" << xmlReader->lineNumber() << ":" << xmlReader->columnNumber() << ") The reported error was:" << xmlReader->errorString();
     }
-    qCDebug(ACBF_LOG) << Q_FUNC_INFO << "Created a stylesheet section with"<<d->classes.keys().count()<<"classes";
+    qCDebug(ACBF_LOG) << Q_FUNC_INFO << "Created a stylesheet section with"<<d->styles.count()<<"classes";
     return !xmlReader->hasError();
 }
 
-QHash<QString, QString> StyleSheet::classes() const
+QObjectList StyleSheet::styles() const
 {
-    return d->classes;
+    return d->styles;
 }
+
+Style * StyleSheet::addStyle()
+{
+    Style* newStyle = new Style(this);
+    d->addStyle(newStyle);
+    return newStyle;
+}
+
 void StyleSheet::setContents(const QString& css)
 {
-    QStringList classes = css.split('}', Qt::SkipEmptyParts);
-    Q_FOREACH(const QString &cssClass, classes)
+    QVector<QStringRef> classes = css.splitRef('}', Qt::SkipEmptyParts);
+    for(QStringRef cssClass : classes)
     {
-        QStringList selectorContent = cssClass.split('{', Qt::SkipEmptyParts);
-        if (selectorContent.count() == 2) {
-            d->classes.insert(selectorContent[0], selectorContent[1]);
+        Style* newStyle = new Style(this);
+        if (newStyle->fromString(cssClass.trimmed())) {
+            d->addStyle(newStyle);
         }
     }
 }

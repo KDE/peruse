@@ -20,6 +20,8 @@
  */
 
 import QtQuick 2.12
+import QtQuick.Layouts 1.12
+import QtQuick.Controls 2.12 as QQC2
 import QtQuick.Window 2.12
 import QtQuick.Dialogs 1.3
 
@@ -44,6 +46,7 @@ Kirigami.ApplicationWindow {
     width: Screen.desktopAvailableWidth * 0.6;
     height: Screen.desktopAvailableHeight * 0.7;
     pageStack.initialPage: welcomePage;
+    pageStack.defaultColumnWidth: pageStack.width
 
     Peruse.Config {
         id: peruseConfig;
@@ -52,13 +55,20 @@ Kirigami.ApplicationWindow {
         return peruseConfig.homeDir();
     }
 
-    function openBook(bookFilename) {
-        currentCategory = "";
-        peruseConfig.bookOpened(bookFilename);
-        mainWindow.pageStack.clear();
-        mainWindow.pageStack.push(bookPage, { filename: bookFilename });
+    Peruse.ArchiveBookModel {
+        id: bookModel;
+        qmlEngine: globalQmlEngine;
+        readWrite: true;
     }
 
+    function openBook(bookFilename) {
+        bookModel.filename = bookFilename;
+        peruseConfig.bookOpened(bookFilename);
+        mainWindow.changeCategory(bookPage);
+        mainWindow.pageStack.currentItem.model = bookModel;
+    }
+
+    contextDrawer: Kirigami.ContextDrawer {}
     globalDrawer: Kirigami.GlobalDrawer {
         /// FIXME This causes the text to get cut off on the phone, however if the text is shorter
         /// it fails to expand the sidebar sufficiently to see all the action labels fully. Revisit
@@ -67,17 +77,37 @@ Kirigami.ApplicationWindow {
         titleIcon: "peruse-creator";
         drawerOpen: true;
         modal: false;
-        actions: [
-            Kirigami.Action {
-                text: i18nc("Switch to the welcome page", "Welcome");
-                iconName: "start-over";
-                checked: mainWindow.currentCategory === "welcomePage";
-                onTriggered: {
-                    changeCategory(welcomePage);
+        header: Kirigami.AbstractApplicationHeader {
+            topPadding: Kirigami.Units.smallSpacing / 2;
+            bottomPadding: Kirigami.Units.smallSpacing / 2;
+            leftPadding: Kirigami.Units.smallSpacing
+            rightPadding: Kirigami.Units.smallSpacing
+            RowLayout {
+                anchors.fill: parent
+
+                Kirigami.Heading {
+                    level: 1
+                    text: i18n("Navigation")
+                    Layout.fillWidth: true
                 }
-            },
-            Kirigami.Action {
-            },
+
+                QQC2.ToolButton {
+                    icon.name: "go-home"
+
+                    enabled: mainWindow.currentCategory !== "welcomePage";
+                    onClicked: {
+                        if (changeCategory(welcomePage)) {
+                            pageStack.currentItem.updateRecent();
+                        }
+                    }
+
+                    QQC2.ToolTip {
+                        text: i18n("Switch to the welcome page")
+                    }
+                }
+            }
+        }
+        actions: [
             Kirigami.Action {
                 text: i18nc("Create a book", "Create a New Book...");
                 iconName: "document-new";
@@ -88,7 +118,57 @@ Kirigami.ApplicationWindow {
                 iconName: "document-open";
                 onTriggered: openOther();
             },
+
             Kirigami.Action {
+                id: bookActions;
+                visible: bookModel.filename !== "";
+                separator: true;
+            },
+            Kirigami.Action {
+                visible: bookActions.visible;
+                checked: mainWindow.currentCategory === "bookBasics";
+                text: bookModel.hasUnsavedChanges ? i18nc("The book's title when there are unsaved changes", "%1 (unsaved)", bookModel.title) : bookModel.title;
+                icon.source: bookModel.filename === "" ? "" : "image://comiccover/" + bookModel.filename;
+                onTriggered: changeCategory(bookBasicsPage, {model: bookModel});
+            },
+            Kirigami.Action {
+                visible: bookActions.visible;
+                checked: mainWindow.currentCategory === "book";
+                text: i18nc("Switch to the page which displays the pages in the current book", "Pages");
+                iconName: "view-pages-overview"
+                onTriggered: changeCategory(bookPage, {model: bookModel});
+            },
+            Kirigami.Action {
+                visible: bookActions.visible;
+                checked: mainWindow.currentCategory === "bookMetaInfo";
+                text: i18nc("Switch to the page where the user can edit the meta information for the entire book", "Metainfo");
+                iconName: "document-edit";
+                onTriggered: changeCategory(editMetaInfo, {model: bookModel});
+            },
+            Kirigami.Action {
+                visible: bookActions.visible;
+                checked: mainWindow.currentCategory === "bookReferences";
+                text: i18nc("Switch to the page where the user can edit the references (that is, snippets of information) found in the book", "References");
+                iconName: "documentation";
+                onTriggered: changeCategory(editReferences, {model: bookModel});
+            },
+            Kirigami.Action {
+                visible: bookActions.visible;
+                checked: mainWindow.currentCategory === "bookBinaries";
+                text: i18nc("Switch to the page where the user can work with the bits of binary data found in the book", "Embedded Data");
+                iconName: "document-multiple";
+                onTriggered: changeCategory(editBinaries, {model: bookModel});
+            },
+            Kirigami.Action {
+                visible: bookActions.visible;
+                checked: mainWindow.currentCategory === "bookStylesheet";
+                text: i18nc("Switch to the page where the user can work with the book's stylesheet", "Stylesheet");
+                iconName: "edit-paste-style";
+                onTriggered: changeCategory(editStylesheet, {model: bookModel});
+            },
+
+            Kirigami.Action {
+                separator: true;
             },
             Kirigami.Action {
                 text: i18nc("Open the settings page", "Settings");
@@ -107,20 +187,44 @@ Kirigami.ApplicationWindow {
 
     Component {
         id: welcomePage;
-        WelcomePage {
-        }
+        WelcomePage { }
     }
 
     Component {
         id: createNewBookPage;
-        CreateNewBook {
+        CreateNewBook { }
+    }
+
+    Component {
+        id: bookBasicsPage;
+        BookBasics {
+            onRequestCategoryChange: {
+                if (categoryName === "book") {
+                    changeCategory(bookPage, {model: bookModel});
+                }
+            }
         }
     }
 
     Component {
         id: bookPage;
-        Book {
-        }
+        Book { }
+    }
+    Component {
+        id: editMetaInfo;
+        BookMetainfoPage { }
+    }
+    Component {
+        id: editReferences;
+        BookReferences { }
+    }
+    Component {
+        id: editBinaries;
+        BookBinaries { }
+    }
+    Component {
+        id: editStylesheet;
+        BookStylesheet { }
     }
 
     Component {
@@ -136,10 +240,14 @@ Kirigami.ApplicationWindow {
     }
 
     property string currentCategory: "welcomePage";
-    function changeCategory(categoryItem) {
+    function changeCategory(categoryItem, parameters) {
         // Clear all the way to the welcome page if we change the category...
         mainWindow.pageStack.clear();
-        mainWindow.pageStack.push(categoryItem);
+        if (parameters === undefined) {
+            mainWindow.pageStack.push(categoryItem);
+        } else {
+            mainWindow.pageStack.push(categoryItem, parameters);
+        }
         currentCategory = mainWindow.pageStack.currentItem.categoryName;
     }
 
@@ -151,7 +259,10 @@ Kirigami.ApplicationWindow {
         id: openDlg;
         title: i18nc("@title:window standard file open dialog used to open a book not in the collection", "Please Choose a Book to Open");
         folder: mainWindow.homeDir();
-        nameFilters: [ "Comic Book Archive zip format (*.cbz)", "All files (*)" ]
+        nameFilters: [
+            i18nc("The file type filter for comic book archives", "Comic Book Archive zip format %1", "(*.cbz)"),
+            i18nc("The file type filter for showing all files", "All files %1", "(*)")
+        ]
         property int splitPos: osIsWindows ? 8 : 7;
         onAccepted: {
             if(openDlg.fileUrl.toString().substring(0, 7) === "file://") {

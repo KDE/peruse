@@ -40,7 +40,8 @@ Jump::Jump(Page* parent)
     : QObject(parent)
     , d(new Private)
 {
-    qRegisterMetaType<Jump*>("Jump*");
+    static const int typeId = qRegisterMetaType<Jump*>("Jump*");
+    Q_UNUSED(typeId);
     connect(this, &Jump::pointCountChanged, this, &Jump::boundsChanged);
 }
 
@@ -48,14 +49,14 @@ Jump::~Jump() = default;
 
 void Jump::toXml(QXmlStreamWriter* writer) {
     writer->writeStartElement(QStringLiteral("jump"));
-    
+
     QStringList points;
-    Q_FOREACH(const QPoint& point, d->points) {
+    for(const QPoint& point : d->points) {
         points << QStringLiteral("%1,%2").arg(QString::number(point.x())).arg(QString::number(point.y()));
     }
     writer->writeAttribute(QStringLiteral("points"), points.join(' '));
     writer->writeAttribute(QStringLiteral("page"), QString::number(d->pageIndex));
-    
+
     writer->writeEndElement();
 }
 
@@ -63,9 +64,9 @@ bool Jump::fromXml(QXmlStreamReader *xmlReader)
 {
     setPageIndex(xmlReader->attributes().value(QStringLiteral("page")).toInt());
 
-    QStringList points = xmlReader->attributes().value(QStringLiteral("points")).toString().split(' ');
-    Q_FOREACH(const QString& point, points) {
-        QStringList elements = point.split(',');
+    QVector<QStringRef> points = xmlReader->attributes().value(QStringLiteral("points")).split(' ');
+    for(QStringRef point : points) {
+        QVector<QStringRef> elements = point.split(',');
         if(elements.length() == 2)
         {
             addPoint(QPoint(elements.at(0).toInt(), elements.at(1).toInt()));

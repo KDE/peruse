@@ -40,7 +40,8 @@ DatabaseRef::DatabaseRef(BookInfo* parent)
     : QObject(parent)
     , d(new Private)
 {
-    qRegisterMetaType<DatabaseRef*>("DatabaseRef*");
+    static const int typeId = qRegisterMetaType<DatabaseRef*>("DatabaseRef*");
+    Q_UNUSED(typeId);
 }
 
 DatabaseRef::~DatabaseRef() = default;

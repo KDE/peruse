@@ -45,13 +45,14 @@ public:
     Data* data;
     References* references;
     StyleSheet* cssStyleSheet;
-    
 };
 
 Document::Document(QObject* parent)
     : QObject(parent)
     , d(new Private)
 {
+    static const int typeId = qRegisterMetaType<QObjectList>("QObjectList");
+    Q_UNUSED(typeId);
     d->metaData = new Metadata(this);
     d->body = new Body(this);
     d->data = new Data(this);
@@ -125,6 +126,19 @@ bool Document::fromXml(QString xmlDocument)
                     xmlReader.skipCurrentElement();
                 }
             }
+            // Ensure that all the internal forward references are up to date, by running through all the paragraphs in all the places
+            // That is, run through all objects, check if they're referenceable, and update their forward references if they are
+            std::function<void(const QObject* parent)> updateAllForwardReferences;
+            updateAllForwardReferences = [&updateAllForwardReferences](const QObject *parent) {
+                for (QObject *child : parent->children()) {
+                    InternalReferenceObject* refObj = qobject_cast<InternalReferenceObject*>(child);
+                    if (refObj) {
+                        refObj->updateForwardReferences();
+                    }
+                    updateAllForwardReferences(child);
+                }
+            };
+            updateAllForwardReferences(this);
         }
         else {
             qCWarning(ACBF_LOG) << Q_FUNC_INFO << "not an ACBF XML document";
@@ -161,4 +175,27 @@ References * Document::references() const
 StyleSheet * Document::styleSheet() const
 {
     return d->cssStyleSheet;
+}
+
+QObject * Document::objectByID(const QString& id) const
+{
+    QObject* obj{nullptr};
+    // We could introspect for id here, but that would be much more expensive, so let's not
+    for (QObject* child : d->references->references()) {
+        Reference* ref = qobject_cast<Reference*>(child);
+        if (ref->id() == id) {
+            obj = child;
+            break;
+        }
+    }
+    if (!obj) {
+        for (QObject* child : d->data->binaries()) {
+            Binary* ref = qobject_cast<Binary*>(child);
+            if (ref->id() == id) {
+                obj = child;
+                break;
+            }
+        }
+    }
+    return obj;
 }

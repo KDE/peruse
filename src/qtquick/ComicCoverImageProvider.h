@@ -25,6 +25,8 @@
 #include <QQuickAsyncImageProvider>
 #include <QRunnable>
 
+#include <kimagecache.h>
+
 /**
  * \brief Get file previews of Comic Book Archives 
  * 
@@ -58,7 +60,7 @@ private:
 class ComicCoverRunnable : public QObject, public QRunnable {
     Q_OBJECT;
 public:
-    ComicCoverRunnable(const QString &id, const QSize &requestedSize);
+    ComicCoverRunnable(const QString &id, const QSize &requestedSize, KImageCache* imageCache);
 
     void run() override;
 

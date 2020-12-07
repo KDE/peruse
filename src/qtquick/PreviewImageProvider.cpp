@@ -26,6 +26,7 @@
 
 #include <QCoreApplication>
 #include <QDir>
+#include <QElapsedTimer>
 #include <QIcon>
 #include <QMimeDatabase>
 #include <QThreadPool>
@@ -35,7 +36,6 @@ class PreviewImageProvider::Private
 {
 public:
     Private() {};
-    QThreadPool pool;
 };
 
 PreviewImageProvider::PreviewImageProvider()
@@ -53,12 +53,12 @@ PreviewImageProvider::~PreviewImageProvider()
 class PreviewResponse : public QQuickImageResponse
 {
     public:
-        PreviewResponse(const QString &id, const QSize &requestedSize, QThreadPool *pool)
+        PreviewResponse(const QString &id, const QSize &requestedSize)
         {
             m_runnable = new PreviewRunnable(id, requestedSize);
             m_runnable->setAutoDelete(false);
             connect(m_runnable, &PreviewRunnable::done, this, &PreviewResponse::handleDone, Qt::QueuedConnection);
-            pool->start(m_runnable);
+            QThreadPool::globalInstance()->start(m_runnable);
         }
         virtual ~PreviewResponse()
         {
@@ -86,7 +86,7 @@ class PreviewResponse : public QQuickImageResponse
 
 QQuickImageResponse * PreviewImageProvider::requestImageResponse(const QString& id, const QSize& requestedSize)
 {
-    PreviewResponse* response = new PreviewResponse(id, requestedSize, &d->pool);
+    PreviewResponse* response = new PreviewResponse(id, requestedSize);
     return response;
 }
 
@@ -140,13 +140,22 @@ void PreviewRunnable::run()
             connect(d->job, &KIO::PreviewJob::finished, this, &PreviewRunnable::finishedPreview);
 
             d->jobCompletion = false;
+            QElapsedTimer breaker;
+            breaker.start();
             if(d->job->exec())
             {
                 // Do not access the job after this point! As we are requesting that
                 // it be deleted in finishedPreview(), don't expect it to be around.
                 while(!d->jobCompletion) {
                     // Let's let the job do its thing and whatnot...
-                    qApp->processEvents();
+                    qApp->processEvents(QEventLoop::WaitForMoreEvents, 100);
+                    // This is not the prettiest thing ever, but let's not wait too long for previews...
+                    // Short-stop the process at 1.5 seconds
+                    if (breaker.elapsed() == 1500) {
+                        d->job->deleteLater();
+                        qDebug() << "Not awesome, this is taking way too long" << d->id;
+                        break;
+                    }
                 }
                 if(!d->preview.isNull())
                 {

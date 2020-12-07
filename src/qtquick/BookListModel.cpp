@@ -250,7 +250,7 @@ void BookListModel::contentModelItemsInserted(QModelIndex index, int first, int 
         QFileInfo fileinfo(entry->filename);
         entry->title = fileinfo.completeBaseName();
 
-        if(entry->filename.toLower().endsWith("cbr")) {
+        if(entry->filename.toLower().endsWith("cbr") || entry->filename.toLower().endsWith("cbz")) {
             entry->thumbnail = QString("image://comiccover/").append(entry->filename);
         }
 #ifdef USE_PERUSE_PDFTHUMBNAILER

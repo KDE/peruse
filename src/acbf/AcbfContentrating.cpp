@@ -39,7 +39,8 @@ ContentRating::ContentRating(BookInfo* parent)
     : QObject(parent)
     , d(new Private)
 {
-    qRegisterMetaType<ContentRating*>("ContentRating*");
+    static const int typeId = qRegisterMetaType<ContentRating*>("ContentRating*");
+    Q_UNUSED(typeId);
 }
 
 ContentRating::~ContentRating() = default;

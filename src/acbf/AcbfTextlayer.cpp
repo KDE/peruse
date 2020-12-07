@@ -42,7 +42,8 @@ Textlayer::Textlayer(Page* parent)
     : QObject(parent)
     , d(new Private)
 {
-    qRegisterMetaType<Textlayer*>("Textlayer*");
+    static const int typeId = qRegisterMetaType<Textlayer*>("Textlayer*");
+    Q_UNUSED(typeId);
 }
 
 Textlayer::~Textlayer() = default;
@@ -57,7 +58,7 @@ void Textlayer::toXml(QXmlStreamWriter* writer)
         writer->writeAttribute(QStringLiteral("bgcolor"), d->bgcolor);
     }
 
-    Q_FOREACH(Textarea* area, d->textareas) {
+    for(Textarea* area : d->textareas) {
         area->toXml(writer);
     }
 
@@ -118,6 +119,11 @@ QList<Textarea *> Textlayer::textareas() const
     return d->textareas;
 }
 
+int Textlayer::textAreaIndex(Textarea* textarea)
+{
+    return d->textareas.indexOf(textarea);
+}
+
 Textarea * Textlayer::textarea(int index) const
 {
     return d->textareas.at(index);
@@ -158,12 +164,19 @@ void Textlayer::removeTextarea(int index)
 
 bool Textlayer::swapTextareas(int swapThis, int withThis)
 {
-    if(swapThis > -1 && withThis > -1) {
+    bool success{false};
+    if (swapThis > -1 && swapThis < d->textareas.count() && withThis > -1 && withThis < d->textareas.count()) {
         d->textareas.swapItemsAt(swapThis, withThis);
+        InternalReferenceObject* first = qobject_cast<InternalReferenceObject*>(d->textareas[swapThis]);
+        InternalReferenceObject* second = qobject_cast<InternalReferenceObject*>(d->textareas[withThis]);
+        Q_EMIT first->propertyDataChanged();
+        Q_EMIT second->propertyDataChanged();
         emit textareaPointStringsChanged();
-        return true;
+        success = true;
+    } else {
+        qCWarning(ACBF_LOG) << "There was an attempt to swap two textareas, and at least one of them was outside the bounds of the current list of textareas in this layer:" << this << swapThis << withThis;
     }
-    return false;
+    return success;
 }
 
 QStringList Textlayer::textareaPointStrings()

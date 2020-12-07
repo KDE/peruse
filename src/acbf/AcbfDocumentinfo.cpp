@@ -45,7 +45,8 @@ DocumentInfo::DocumentInfo(Metadata* parent)
     : QObject(parent)
     , d(new Private)
 {
-    qRegisterMetaType<DocumentInfo*>("DocumentInfo*");
+    static const int typeId = qRegisterMetaType<DocumentInfo*>("DocumentInfo*");
+    Q_UNUSED(typeId);
 }
 
 DocumentInfo::~DocumentInfo() = default;
@@ -59,7 +60,7 @@ void DocumentInfo::toXml(QXmlStreamWriter *writer)
 {
     writer->writeStartElement(QStringLiteral("document-info"));
 
-    Q_FOREACH(Author* author, d->author) {
+    for(Author* author : d->author) {
         author->toXml(writer);
     }
 
@@ -68,7 +69,7 @@ void DocumentInfo::toXml(QXmlStreamWriter *writer)
     writer->writeEndElement();
 
     writer->writeStartElement(QStringLiteral("source"));
-    Q_FOREACH(const QString& source, d->source) {
+    for(const QString& source : d->source) {
         writer->writeStartElement(QStringLiteral("p"));
         writer->writeCharacters(source);
         writer->writeEndElement();
@@ -84,7 +85,7 @@ void DocumentInfo::toXml(QXmlStreamWriter *writer)
     writer->writeEndElement();
 
     writer->writeStartElement(QStringLiteral("history"));
-    Q_FOREACH(const QString& history, d->history) {
+    for(const QString& history : d->history) {
         writer->writeStartElement(QStringLiteral("p"));
         writer->writeCharacters(history);
         writer->writeEndElement();

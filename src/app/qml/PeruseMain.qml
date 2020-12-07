@@ -43,12 +43,12 @@ import org.kde.contentlist 0.1
  * This also controls the bookViewer, which is a Book object where the
  * main reading of comics is done.
  * 
- * There is also the PeruseContextDrawer, which is only accesible on the book
+ * There is also the PeruseContextDrawer, which is only accessible on the book
  * page and requires flicking in from the right.
  */
 Kirigami.ApplicationWindow {
     id: mainWindow;
-    title: "Comic Book Reader";
+    title: i18nc("@title:window the generic descriptive title of the application", "Comic Book Reader");
     property int animationDuration: 200;
     property bool isLoading: false;
     pageStack.initialPage: welcomePage;
@@ -109,7 +109,7 @@ Kirigami.ApplicationWindow {
 
         // HACK: this is needed because when clicking on the close button, drawerOpen get set to false (instead of the binding)
         // and when !Kirigami.Settings.isMobile && mainWindow.width > globalDrawer.availableWidth * 3 change, the Binding element
-        // overwrite the last assigment to false and set drawerOpen to true or false depending on the value of the condition
+        // overwrite the last assignment to false and set drawerOpen to true or false depending on the value of the condition
         Binding {
             target: globalDrawer
             property: "drawerOpen"
@@ -117,13 +117,16 @@ Kirigami.ApplicationWindow {
         }
 
         header: Kirigami.AbstractApplicationHeader {
+            topPadding: Kirigami.Units.smallSpacing / 2;
+            bottomPadding: Kirigami.Units.smallSpacing / 2;
+            leftPadding: Kirigami.Units.smallSpacing
+            rightPadding: Kirigami.Units.smallSpacing
+
             RowLayout {
                 anchors.fill: parent
-                anchors.leftMargin: Kirigami.Units.smallSpacing * 2
-                anchors.rightMargin: Kirigami.Units.smallSpacing * 2
 
                 Kirigami.Heading {
-                    level: 2
+                    level: 1
                     text: i18n("Navigation")
                     Layout.fillWidth: true
                 }

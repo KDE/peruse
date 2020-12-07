@@ -22,7 +22,7 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12 as QtControls
 
-import org.kde.kirigami 2.7 as Kirigami
+import org.kde.kirigami 2.14 as Kirigami
 
 /**
  * @brief A button to select a category to show the categories and books inside.
@@ -111,15 +111,15 @@ Item {
             }
             radius: 2;
         }
-        Image {
+        Kirigami.Icon {
             id: coverImage;
             anchors {
                 fill: parent;
                 margins: Kirigami.Units.largeSpacing;
             }
             source: root.entriesModel ? root.entriesModel.get(0).readProperty("thumbnail") : "";
-            asynchronous: true;
-            fillMode: Image.PreserveAspectFit;
+            placeholder: "application-vnd.oasis.opendocument.text";
+            fallback: "folder-documents-symbolic"
         }
         Rectangle {
             anchors {

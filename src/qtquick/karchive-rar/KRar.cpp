@@ -27,8 +27,6 @@
 #include <QtCore/QIODevice>
 #include <QDebug>
 
-#include <KFilterDev>
-
 extern "C"
 {
     #include <unarr.h>

@@ -54,6 +54,9 @@ class ACBF_EXPORT Document : public QObject
     Q_OBJECT
     Q_PROPERTY(Metadata* metaData READ metaData NOTIFY metaDataChanged)
     Q_PROPERTY(Body* body READ body NOTIFY bodyChanged)
+    Q_PROPERTY(References* references READ references NOTIFY referencesChanged)
+    Q_PROPERTY(Data* data READ data NOTIFY dataChanged)
+    Q_PROPERTY(StyleSheet* styleSheet READ styleSheet NOTIFY stylesheetChanged)
 public:
     explicit Document(QObject* parent = nullptr);
     ~Document() override;
@@ -93,16 +96,37 @@ public:
      */
     References* references() const;
     /**
+     * Fired when the references change. Not used (track the references inside the References object itself).
+     */
+    Q_SIGNAL void referencesChanged();
+
+    /**
      * @returns the Data object.
      */
     Data* data() const;
-    
+    /**
+     * Fired when the data changes. Not used (track the binary data inside the Data object itself)
+     */
+    Q_SIGNAL void dataChanged();
+
     /**
      * @brief The style section, which contains a css stylesheet.
      * 
      * @return A StyleSheet object with the css.
      */
     StyleSheet* styleSheet() const;
+    /**
+     * Fired when the stylesheet changes.
+     * Not used (track the stylesheet information inside the stylesheet object itself)
+     */
+    Q_SIGNAL void stylesheetChanged();
+
+    /**
+     * Find some child object by their string ID
+     * @see AdvancedComicBookFormat::Reference
+     * @see AdvancedComicBookFormat::Binary
+     */
+    QObject* objectByID(const QString& id) const;
 private:
     class Private;
     std::unique_ptr<Private> d;

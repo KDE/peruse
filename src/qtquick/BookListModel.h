@@ -127,7 +127,7 @@ public:
     Q_SIGNAL void contentModelChanged();
 
     /**
-     * @returns how many entries there are in the catelogue.
+     * @returns how many entries there are in the catalogue.
      */
     int count() const;
     /**

@@ -20,6 +20,7 @@
  */
 
 #include "BookModel.h"
+#include "qtquick_debug.h"
 
 #include <AcbfDocument.h>
 
@@ -46,6 +47,7 @@ public:
     int currentPage;
     AdvancedComicBookFormat::Document* acbfData;
     bool processing;
+    QString processingDescription;
 };
 
 BookModel::BookModel(QObject* parent)
@@ -214,6 +216,18 @@ void BookModel::setProcessing(bool processing)
 {
     d->processing = processing;
     emit processingChanged();
+}
+
+QString BookModel::processingDescription() const
+{
+    return d->processingDescription;
+}
+
+void BookModel::setProcessingDescription ( const QString& description )
+{
+    d->processingDescription = description;
+    qCDebug(QTQUICK_LOG) << description;
+    Q_EMIT processingDescriptionChanged();
 }
 
 void BookModel::swapPages(int swapThisIndex, int withThisIndex)

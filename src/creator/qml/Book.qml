@@ -20,9 +20,10 @@
  */
 
 import QtQuick 2.12
+import QtQuick.Layouts 1.4
 import QtQuick.Controls 2.12 as QtControls
 
-import org.kde.kirigami 2.7 as Kirigami
+import org.kde.kirigami 2.13 as Kirigami
 
 import org.kde.peruse 0.1 as Peruse
 /**
@@ -37,32 +38,25 @@ import org.kde.peruse 0.1 as Peruse
 Kirigami.ScrollablePage {
     id: root;
     property string categoryName: "book";
-    title: i18nc("title of the main book editor page", "Editing %1", bookModel.title == "" ? root.filename : bookModel.title);
-    property string filename;
+    property alias model: bookList.model;
+    title: i18nc("title of the main book editor page", "Pages in %1", root.model && root.model.title !== "" ? root.model.title : "");
 
     actions {
-        left: addPageSheet.opened ? null : saveBookAction;
-        main: addPageSheet.opened ? closeAddPageSheetAction : defaultMainAction;
+        main: addPageSheet.opened ? closeAddPageSheetAction : saveBookAction;
         right: addPageSheet.opened ? null : addPageAction;
     }
     Kirigami.Action {
         id: saveBookAction;
         text: i18nc("Saves the book to a file on disk", "Save Book");
         iconName: "document-save";
-        onTriggered: bookModel.saveBook();
-        enabled: bookModel.hasUnsavedChanges;
+        onTriggered: root.model.saveBook();
+        enabled: root.model ? root.model.hasUnsavedChanges : false;
     }
     Kirigami.Action {
         id: addPageAction;
         text: i18nc("adds a new page at the end of the book", "Add Page");
         iconName: "list-add";
-        onTriggered: addPage(bookModel.pageCount);
-    }
-    Kirigami.Action {
-        id: defaultMainAction;
-        text: i18nc("causes a dialog to show in which the user can edit the meta information for the entire book", "Edit Metainfo");
-        iconName: "document-edit";
-        onTriggered: pageStack.push(editMetaInfo);
+        onTriggered: addPage(root.model.pageCount);
     }
     Kirigami.Action {
         id: closeAddPageSheetAction;
@@ -78,22 +72,10 @@ Kirigami.ScrollablePage {
 
     ListView {
         id: bookList;
-        model: Peruse.ArchiveBookModel {
-            id: bookModel;
-            qmlEngine: globalQmlEngine;
-            readWrite: true;
-            filename: root.filename;
-        }
-        Component {
-            id: editMetaInfo;
-            BookMetainfoPage {
-                model: bookModel;
-            }
-        }
         Component {
             id: editBookPage;
             BookPage {
-                model: bookModel;
+                model: root.model;
                 onSave: {
                    bookList.updateTitle(index, currentPage.title(""));
                 }
@@ -112,21 +94,21 @@ Kirigami.ScrollablePage {
                 Kirigami.Action {
                     text: i18nc("swap the position of this page with the previous one", "Move Up");
                     iconName: "go-up"
-                    onTriggered: { bookModel.swapPages(model.index, model.index - 1); }
+                    onTriggered: { root.model.swapPages(model.index, model.index - 1); }
                     enabled: model.index > 0;
                     visible: enabled;
                 },
                 Kirigami.Action {
                     text: i18nc("swap the position of this page with the next one", "Move Down");
                     iconName: "go-down"
-                    onTriggered: { bookModel.swapPages(model.index, model.index + 1); }
-                    enabled: model.index < bookModel.pageCount - 1;
+                    onTriggered: { root.model.swapPages(model.index, model.index + 1); }
+                    enabled: model.index < root.model.pageCount - 1;
                     visible: enabled;
                 },
                 Kirigami.Action {
                     text: i18nc("remove the page from the book", "Delete Page");
                     iconName: "list-remove"
-                    onTriggered: bookModel.removePage(model.index);
+                    onTriggered: root.model.removePage(model.index);
                 },
                 Kirigami.Action {
                     text: i18nc("add a page to the book after this one", "Add Page After This");
@@ -142,16 +124,14 @@ Kirigami.ScrollablePage {
                 }
 
             ]
-            Item {
-                anchors.fill: parent;
+            RowLayout {
+                Layout.fillWidth: true;
+                Layout.fillHeight: true;
                 Item {
                     id: bookCover;
-                    anchors {
-                        top: parent.top;
-                        left: parent.left;
-                        bottom: parent.bottom;
-                    }
-                    width: height;
+                    Layout.fillHeight: true;
+                    Layout.minimumWidth: height;
+                    Layout.maximumWidth: height;
                     Image {
                         id: coverImage;
                         anchors {
@@ -164,11 +144,8 @@ Kirigami.ScrollablePage {
                     }
                 }
                 QtControls.Label {
-                    anchors {
-                        verticalCenter: parent.verticalCenter;
-                        left: bookCover.right;
-                        leftMargin: Kirigami.Units.largeSpacing;
-                    }
+                    Layout.fillWidth: true;
+                    Layout.fillHeight: true;
                     text: model.title;
                 }
             }
@@ -176,12 +153,17 @@ Kirigami.ScrollablePage {
         Rectangle {
             id: processingBackground;
             anchors.fill: parent;
-            opacity: bookModel.processing ? 0.5 : 0;
+            opacity: root.model && root.model.processing ? 0.5 : 0;
             Behavior on opacity { NumberAnimation { duration: mainWindow.animationDuration; } }
             MouseArea {
                 anchors.fill: parent;
                 enabled: parent.opacity > 0;
                 onClicked: { }
+            }
+            Kirigami.PlaceholderMessage {
+                anchors.centerIn: parent
+                width: parent.width - (Kirigami.Units.largeSpacing * 4)
+                text: root.model.processingDescription;
             }
         }
         QtControls.BusyIndicator {
@@ -197,6 +179,6 @@ Kirigami.ScrollablePage {
 
     AddPageSheet {
         id: addPageSheet;
-        model: bookModel;
+        model: root.model ? root.model : null;
     }
 }

@@ -35,33 +35,23 @@ import "metainfoeditors"
  */
 Kirigami.ScrollablePage {
     id: root;
+    property string categoryName: "bookMetaInfo";
     title: i18nc("title text for the book meta information editor sheet", "Edit Meta Information");
     property QtObject model;
 
     actions {
-        main: saveAndCloseAction;
+        main: saveAction;
     }
     Kirigami.Action {
-        id: saveAndCloseAction;
-        text: i18nc("Saves the remaining unsaved edited fields and closes the metainfo editor", "Save and Close Editor");
-        iconName: "dialog-ok";
-        shortcut: "Esc";
+        id: saveAction;
+        text: i18nc("Saves the book to a file on disk", "Save Book");
+        iconName: "document-save";
         onTriggered: {
-            // Save the default title/annotation/keywords.
-            root.model.acbfData.metaData.bookInfo.setTitle(defaultTitle.text, "");
-            root.model.acbfData.metaData.bookInfo.setAnnotation(defaultAnnotation.text.split("\n\n"), "");
-            var keywords = defaultKeywords.text.split(",")
-            for (var i in keywords) {
-                keywords[i] = keywords[i].trim();
-            }
-            root.model.acbfData.metaData.bookInfo.setKeywords(keywords, "");
             // Ensure there's a default language entry.
             if (root.model.acbfData.metaData.bookInfo.languageEntryList.indexOf("") === -1) {
                 root.model.acbfData.metaData.bookInfo.addLanguage("");
             }
-
-            root.model.setDirty();
-            pageStack.pop();
+            root.model.saveBook();
         }
     }
 
@@ -83,6 +73,10 @@ Kirigami.ScrollablePage {
             width: parent.width;
             placeholderText: i18nc("placeholder text for default title text-input", "Write to add default title");
             text:root.model.acbfData ? root.model.acbfData.metaData.bookInfo.title("") : "";
+            onTextChanged: {
+                root.model.acbfData.metaData.bookInfo.setTitle(defaultTitle.text, "");
+                root.model.setDirty();
+            }
         }
 
         Kirigami.Heading {
@@ -94,8 +88,12 @@ Kirigami.ScrollablePage {
         QtControls.TextArea {
             id: defaultAnnotation;
             width: parent.width;
-            placeholderText: i18nc("placeholder text for default annotiation text-area", "Write to add default annotation");
+            placeholderText: i18nc("placeholder text for default annotation text-area", "Write to add default annotation");
             text:root.model.acbfData ? root.model.acbfData.metaData.bookInfo.annotation("").join("\n\n") : "";
+            onTextChanged: {
+                root.model.acbfData.metaData.bookInfo.setAnnotation(defaultAnnotation.text.split("\n\n"), "");
+                root.model.setDirty();
+            }
         }
         Kirigami.Heading {
             width: parent.width;
@@ -108,6 +106,14 @@ Kirigami.ScrollablePage {
             width: parent.width;
             placeholderText: i18nc("placeholder text for the add new keyword text entry", "Write a comma separated list of keywords.");
             text:root.model.acbfData ? root.model.acbfData.metaData.bookInfo.keywords("").join(", ") : "";
+            onTextChanged: {
+                var keywords = defaultKeywords.text.split(",")
+                for (var i in keywords) {
+                    keywords[i] = keywords[i].trim();
+                }
+                root.model.acbfData.metaData.bookInfo.setKeywords(keywords, "");
+                root.model.setDirty();
+            }
         }
 
         Kirigami.Heading {
@@ -120,7 +126,7 @@ Kirigami.ScrollablePage {
             model: root.model.acbfData ? root.model.acbfData.metaData.bookInfo.authorNames : 0;
             delegate: QtControls.Label {
                 width: parent.width - removeAuthorButton.width - Kirigami.Units.smallSpacing;
-                text: modelData.length > 0 ? modelData : "(unnamed)";
+                text: modelData.length > 0 ? modelData : i18nc("The text used in place of an author's name if one has not been set", "(unnamed)");
                 QtControls.Button {
                     id: editAuthorButton;
                     anchors {
@@ -790,7 +796,7 @@ Kirigami.ScrollablePage {
             model: root.model.acbfData ? root.model.acbfData.metaData.documentInfo.authorNames : 0;
             delegate: QtControls.Label {
                 width: parent.width - removeDocAuthorButton.width - Kirigami.Units.smallSpacing;
-                text: modelData.length > 0 ? modelData : "(unnamed)";
+                text: modelData.length > 0 ? modelData : i18nc("The text used in place of an author's name if one has not been set", "(unnamed)");
                 QtControls.Button {
                     id: editDocAuthorButton;
                     anchors {

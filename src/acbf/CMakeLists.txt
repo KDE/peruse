@@ -11,6 +11,9 @@ set(acbf_SRCS
     AcbfDocument.cpp
     AcbfDocumentinfo.cpp
     AcbfFrame.cpp
+    AcbfIdentifiedObjectModel.cpp
+    AcbfInternalReference.cpp
+    AcbfInternalReferenceObject.cpp
     AcbfJump.cpp
     AcbfLanguage.cpp
     AcbfMetadata.cpp
@@ -19,6 +22,7 @@ set(acbf_SRCS
     AcbfReferences.cpp
     AcbfReference.cpp
     AcbfSequence.cpp
+    AcbfStyle.cpp
     AcbfStyleSheet.cpp
     AcbfTextarea.cpp
     AcbfTextlayer.cpp

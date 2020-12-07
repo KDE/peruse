@@ -105,7 +105,7 @@ KCM.ScrollViewKCM {
         id: folderDlg;
         Kirigami.Page {
             id: root;
-            title: "Select a folder"
+            title: i18nc("@title:window Dialogue used to add a new search folder", "Select a folder")
             FileFinder {
                 anchors.fill: parent;
                 folder: peruseConfig.homeDir();

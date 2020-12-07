@@ -8,7 +8,7 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12 as QtControls
 import QtQuick.Layouts 1.2
-import org.kde.kirigami 2.7 as Kirigami
+import org.kde.kirigami 2.14 as Kirigami
 
 /**
  * @brief A button to select a book to read with a nice big thumbnail.
@@ -50,8 +50,8 @@ FocusScope {
         anchors.fill: parent;
         onClicked: root.bookSelected(root.filename, root.currentPage);
         onPressAndHold: root.pressAndHold(mouse);
-        onPressed: root.pressIndicator ? pressIndicatorAnimation.start():0;
-        onReleased: {pressIndicatorAnimation.stop(); pressIndicator.width = 0;pressIndicator.height = 0;}
+//         onPressed: root.pressIndicator ? pressIndicatorAnimation.start():0;
+//         onReleased: {pressIndicatorAnimation.stop(); pressIndicator.width = 0;pressIndicator.height = 0;}
 
         TextMetrics {
             id: bookTitleSize
@@ -64,11 +64,11 @@ FocusScope {
             Layout.preferredHeight: root.height - 2 * Kirigami.Units.largeSpacing
             Layout.preferredWidth: root.width - 2 * Kirigami.Units.largeSpacing
 
-            Image {
+            Kirigami.Icon {
                 id: coverImage;
                 source: root.thumbnail === "Unknown role" ? "" : root.thumbnail;
-                asynchronous: true;
-                fillMode: Image.PreserveAspectFit;
+                placeholder: "application-vnd.oasis.opendocument.text";
+                fallback: "paint-unknown"
                 Layout.fillHeight: true
                 Layout.alignment: Qt.AlignHCenter
             }
@@ -89,7 +89,7 @@ FocusScope {
                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere;
                 elide: Text.ElideMiddle;
                 visible: root.author.length > 0
-                text: root.author.join(', ')
+                text: visible ? root.author.join(', ') : ""
                 horizontalAlignment: Text.AlignHCenter
                 Layout.maximumWidth: root.width * 0.9
                 Layout.minimumWidth: Layout.maximumWidth

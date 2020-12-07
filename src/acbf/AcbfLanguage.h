@@ -68,7 +68,7 @@ public:
     /**
      * \brief set whether the language entry should be overlaid(true) or is the native
      * language(false).
-     * @param show - wether to overlay or not.
+     * @param show - whether to overlay or not.
      */
     void setShow(bool show);
     /**
