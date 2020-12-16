@@ -54,6 +54,7 @@ void QmlPlugins::initializeEngine(QQmlEngine *engine, const char *)
 
 void QmlPlugins::registerTypes(const char *uri)
 {
+    qmlRegisterType<CategoryEntriesModel>(uri, 0, 1, "CategoryEntriesModel");
     qmlRegisterType<BookListModel>(uri, 0, 1, "BookListModel");
     qmlRegisterType<BookModel>(uri, 0, 1, "BookModel");
     qmlRegisterType<ArchiveBookModel>(uri, 0, 1, "ArchiveBookModel");
