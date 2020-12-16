@@ -33,6 +33,8 @@ public:
     ~Private()
     {
         // No deleting the entries - this is done by the master BookListModel already, so do that at your own risk
+        // If we have manually unwrapped any books, though, those need removing
+        qDeleteAll(unwrappedBooks);
     }
     CategoryEntriesModel* q;
     QString name;
@@ -60,6 +62,31 @@ public:
         obj->setProperty("tags", entry->tags);
         obj->setProperty("rating", QString::number(entry->rating));
         return obj;
+    }
+
+    QList<BookEntry*> unwrappedBooks;
+    BookEntry* unwrapBookEntry(const QObject* obj) {
+        BookEntry* entry = new BookEntry;
+        entry->author = obj->property("author").toStringList();
+        entry->currentPage = obj->property("currentPage").toInt();
+        entry->filename = obj->property("filename").toString();
+        entry->filetitle = obj->property("filetitle").toString();
+        entry->genres = obj->property("genres").toStringList();
+        entry->keywords = obj->property("keywords").toStringList();
+        entry->characters = obj->property("characters").toStringList();
+        entry->created = obj->property("created").toDateTime();
+        entry->lastOpenedTime = obj->property("lastOpenedTime").toDateTime();
+        entry->publisher = obj->property("publisher").toString();
+        entry->series = obj->property("series").toStringList();
+        entry->title = obj->property("title").toString();
+        entry->totalPages = obj->property("totalPages").toInt();
+        entry->thumbnail = obj->property("thumbnail").toString();
+        entry->description = obj->property("description").toStringList();
+        entry->comment = obj->property("comment").toString();
+        entry->tags = obj->property("tags").toStringList();
+        entry->rating = obj->property("rating").toInt();
+        unwrappedBooks << entry;
+        return entry;
     }
 };
 
@@ -219,57 +246,77 @@ int CategoryEntriesModel::rowCount(const QModelIndex& parent) const
 void CategoryEntriesModel::append(BookEntry* entry, Roles compareRole)
 {
     int insertionIndex = 0;
-    int seriesOne = -1; int seriesTwo = -1;
-    if(compareRole == SeriesRole) {
-        seriesOne = entry->series.indexOf(name());
-        if (entry->series.contains(name(), Qt::CaseInsensitive) && seriesOne == -1){
-            for (int s=0; s<entry->series.size();s++) {
-                if (QString::compare(name(), entry->series.at(s), Qt::CaseInsensitive)) {
-                    seriesOne = s;
-                }
-            }
-        }
+    if(compareRole == UnknownRole) {
+        // If we don't know what order to sort by, literally just append the entry
+        insertionIndex = d->entries.count();
     }
-    for(; insertionIndex < d->entries.count(); ++insertionIndex)
-    {
+    else {
+        int seriesOne = -1; int seriesTwo = -1;
         if(compareRole == SeriesRole) {
-            seriesTwo = d->entries.at(insertionIndex)->series.indexOf(name());
-            if ( d->entries.at(insertionIndex)->series.contains(name(), Qt::CaseInsensitive) && seriesTwo == -1){
-                for (int s=0; s< d->entries.at(insertionIndex)->series.size();s++) {
-                    if (QString::compare(name(), d->entries.at(insertionIndex)->series.at(s), Qt::CaseInsensitive)) {
-                        seriesTwo = s;
+            seriesOne = entry->series.indexOf(name());
+            if (entry->series.contains(name(), Qt::CaseInsensitive) && seriesOne == -1){
+                for (int s=0; s<entry->series.size();s++) {
+                    if (QString::compare(name(), entry->series.at(s), Qt::CaseInsensitive)) {
+                        seriesOne = s;
                     }
                 }
             }
         }
-        if(compareRole == CreatedRole)
+        for(; insertionIndex < d->entries.count(); ++insertionIndex)
         {
-            if(entry->created <= d->entries.at(insertionIndex)->created)
-            { continue; }
-            break;
-        }
-        else if((seriesOne>-1 && seriesTwo>-1)
-                && entry->seriesNumbers.count() > -1 && entry->seriesNumbers.count() > seriesOne
-                && d->entries.at(insertionIndex)->seriesNumbers.count() > -1 && d->entries.at(insertionIndex)->seriesNumbers.count() > seriesTwo
-                && entry->seriesNumbers.at(seriesOne).toInt() > 0
-                && d->entries.at(insertionIndex)->seriesNumbers.at(seriesTwo).toInt() > 0)
-        {
-            if (entry->seriesVolumes.count() > -1 && entry->seriesVolumes.count() > seriesOne
-                    && d->entries.at(insertionIndex)->seriesVolumes.count() > -1 && d->entries.at(insertionIndex)->seriesVolumes.count() > seriesTwo
-                    && entry->seriesVolumes.at(seriesOne).toInt() >= d->entries.at(insertionIndex)->seriesVolumes.at(seriesTwo).toInt()
-                    && entry->seriesNumbers.at(seriesOne).toInt() > d->entries.at(insertionIndex)->seriesNumbers.at(seriesTwo).toInt())
-            {continue;}
-            break;
-        }
-        else
-        {
-            if(QString::localeAwareCompare(d->entries.at(insertionIndex)->title, entry->title) > 0)
-            { break; }
+            if(compareRole == SeriesRole) {
+                seriesTwo = d->entries.at(insertionIndex)->series.indexOf(name());
+                if ( d->entries.at(insertionIndex)->series.contains(name(), Qt::CaseInsensitive) && seriesTwo == -1){
+                    for (int s=0; s< d->entries.at(insertionIndex)->series.size();s++) {
+                        if (QString::compare(name(), d->entries.at(insertionIndex)->series.at(s), Qt::CaseInsensitive)) {
+                            seriesTwo = s;
+                        }
+                    }
+                }
+            }
+            if(compareRole == CreatedRole)
+            {
+                if(entry->created <= d->entries.at(insertionIndex)->created)
+                { continue; }
+                break;
+            }
+            else if((seriesOne>-1 && seriesTwo>-1)
+                    && entry->seriesNumbers.count() > -1 && entry->seriesNumbers.count() > seriesOne
+                    && d->entries.at(insertionIndex)->seriesNumbers.count() > -1 && d->entries.at(insertionIndex)->seriesNumbers.count() > seriesTwo
+                    && entry->seriesNumbers.at(seriesOne).toInt() > 0
+                    && d->entries.at(insertionIndex)->seriesNumbers.at(seriesTwo).toInt() > 0)
+            {
+                if (entry->seriesVolumes.count() > -1 && entry->seriesVolumes.count() > seriesOne
+                        && d->entries.at(insertionIndex)->seriesVolumes.count() > -1 && d->entries.at(insertionIndex)->seriesVolumes.count() > seriesTwo
+                        && entry->seriesVolumes.at(seriesOne).toInt() >= d->entries.at(insertionIndex)->seriesVolumes.at(seriesTwo).toInt()
+                        && entry->seriesNumbers.at(seriesOne).toInt() > d->entries.at(insertionIndex)->seriesNumbers.at(seriesTwo).toInt())
+                {continue;}
+                break;
+            }
+            else
+            {
+                if(QString::localeAwareCompare(d->entries.at(insertionIndex)->title, entry->title) > 0)
+                { break; }
+            }
         }
     }
     beginInsertRows(QModelIndex(), insertionIndex, insertionIndex);
     d->entries.insert(insertionIndex, entry);
     endInsertRows();
+}
+
+void CategoryEntriesModel::appendFakeBook ( QObject* book, CategoryEntriesModel::Roles compareRole )
+{
+    append(d->unwrapBookEntry(book), compareRole);
+}
+
+void CategoryEntriesModel::clear()
+{
+    beginResetModel();
+    qDeleteAll(d->unwrappedBooks);
+    d->unwrappedBooks.clear();
+    d->entries.clear();
+    endResetModel();
 }
 
 const QString &CategoryEntriesModel::name() const
@@ -365,6 +412,16 @@ QObject* CategoryEntriesModel::get(int index)
         delete entry;
     }
     return obj;
+}
+
+BookEntry * CategoryEntriesModel::getBookEntry ( int index )
+{
+    BookEntry* entry{nullptr};
+    if(index > -1 && index < d->entries.count())
+    {
+        entry = d->entries.at(index);
+    }
+    return entry;
 }
 
 int CategoryEntriesModel::indexOfFile(QString filename)

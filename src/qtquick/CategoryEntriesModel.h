@@ -30,9 +30,10 @@ class CategoryEntriesModel;
  * \brief A struct for an Entry to the Book Database.
  */
 struct BookEntry {
-    BookEntry()
+    explicit BookEntry()
         : totalPages(0)
         , currentPage(0)
+        , rating(0)
     {}
     QString filename;
     QString filetitle;
@@ -81,6 +82,7 @@ public:
      * \brief Extra roles for the book entry access.
      */
     enum Roles {
+        UnknownRole = Qt::UserRole,
         FilenameRole = Qt::UserRole + 1, /// For getting a string with the full path to the book.
         FiletitleRole, /// For getting a string with the basename of the book.
         TitleRole, /// For getting a string with the proper title of the book.
@@ -104,6 +106,7 @@ public:
         KeywordRole, /// For getting a stringlist with keywords assigned to this book. Where tags are user assigned, keywords come from the book itself.
         CharacterRole /// For getting a stringlist with names of characters in this book.
     };
+    Q_ENUMS(Roles)
 
     /**
      * @returns names for the extra roles defined.
@@ -128,13 +131,26 @@ public:
 
     /**
      * \brief Add a book entry to the CategoryEntriesModel.
-     * 
+     *
      * @param entry The BookEntry to add.
      * @param compareRole The role that determines the data to sort the entry into.
      * Defaults to the Book title.
      */
-    void append(BookEntry* entry, Roles compareRole = TitleRole);
-    
+    Q_INVOKABLE void append(BookEntry* entry, Roles compareRole = TitleRole);
+
+    /**
+     * \brief Add a book entry to the model, using a fake book
+     *
+     * @param book The fake book (such as returned by get(int))
+     * @param compareRole The role that determines the data used to sort the entry (defaults to TitleRole)
+     */
+    Q_INVOKABLE void appendFakeBook(QObject* book, Roles compareRole = TitleRole);
+
+    /**
+     * \brief Remove all entries from the model
+     */
+    Q_INVOKABLE void clear();
+
     /**
      * \brief Add a book entry to a category.
      * 
@@ -147,6 +163,11 @@ public:
      * @returns a QObject wrapper around a BookEntry struct for the given index.
      */
     Q_INVOKABLE QObject* get(int index);
+    /**
+     * @param index an integer index pointing at the desired book.
+     * @returns the BookEntry struct for the given index (owned by this model, do not delete)
+     */
+    Q_INVOKABLE BookEntry* getBookEntry(int index);
     /**
      * TODO: This is backwards... need to fox this to make get return the actual thing, not just a book, and create a getter for books...
      * @return an entry object. This can be either a category or a book.
