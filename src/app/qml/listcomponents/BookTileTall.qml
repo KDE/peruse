@@ -60,17 +60,37 @@ FocusScope {
         }
 
         ColumnLayout {
-            Layout.margins: Kirigami.Units.largeSpacing
-            Layout.preferredHeight: root.height - 2 * Kirigami.Units.largeSpacing
-            Layout.preferredWidth: root.width - 2 * Kirigami.Units.largeSpacing
-
-            Kirigami.Icon {
-                id: coverImage;
-                source: root.thumbnail === "Unknown role" ? "" : root.thumbnail;
-                placeholder: "application-vnd.oasis.opendocument.text";
-                fallback: "paint-unknown"
+            anchors {
+                fill: parent;
+                margins: Kirigami.Units.largeSpacing
+            }
+            Item {
+                id: bookCover;
                 Layout.fillHeight: true
+                Layout.fillWidth: true
                 Layout.alignment: Qt.AlignHCenter
+                Rectangle {
+                    id: tileBg;
+                    anchors.centerIn: coverImage;
+                    width: Math.max(coverImage.paintedWidth, Kirigami.Units.iconSizes.large) + Kirigami.Units.smallSpacing * 2;
+                    height: Math.max(coverImage.paintedHeight, Kirigami.Units.iconSizes.large) + Kirigami.Units.smallSpacing * 2;
+                    color: Kirigami.Theme.backgroundColor;
+                    border {
+                        width: 2;
+                        color: Kirigami.Theme.textColor;
+                    }
+                    radius: 2;
+                }
+                Kirigami.Icon {
+                    id: coverImage;
+                    anchors {
+                        fill: parent;
+                        margins: Kirigami.Units.largeSpacing;
+                    }
+                    source: root.thumbnail === "Unknown role" ? "" : root.thumbnail;
+                    placeholder: "application-vnd.oasis.opendocument.text";
+                    fallback: "paint-unknown"
+                }
             }
 
             QtControls.Label {
@@ -86,10 +106,20 @@ FocusScope {
             }
 
             QtControls.Label {
+                function getCombinedName(stringList) {
+                    var combined = "";
+                    for (var i = 0; i < stringList.length; ++i) {
+                        if (combined.length > 0) {
+                            combined += ", ";
+                        }
+                        combined += stringList[i];
+                    }
+                    return combined;
+                }
                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere;
                 elide: Text.ElideMiddle;
                 visible: root.author.length > 0
-                text: visible ? root.author.join(', ') : ""
+                text: visible ? getCombinedName(root.author) : ""
                 horizontalAlignment: Text.AlignHCenter
                 Layout.maximumWidth: root.width * 0.9
                 Layout.minimumWidth: Layout.maximumWidth
