@@ -115,7 +115,7 @@ Rectangle {
             }
             ListComponents.BookTileTall {
                 id: bookTile;
-                height: model.categoryEntriesCount < 1 ? neededHeight : 0;
+                height: model.categoryEntriesCount < 1 ? parent.height : 0;
                 width: parent.width;
                 author: model.author ? model.author : i18nc("used for the author data in book lists if author is empty", "(unknown)");
                 title: model.title;
