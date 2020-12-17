@@ -197,7 +197,9 @@ void PreviewRunnable::fallbackPreview(const KFileItem& item)
     if(previewJob)
     {
         QMimeDatabase db;
-        QImage preview = QIcon::fromTheme(db.mimeTypeForName(item.mimetype()).iconName()).pixmap(d->requestedSize).toImage();
+        QIcon mimeIcon = QIcon::fromTheme(db.mimeTypeForName(item.mimetype()).iconName());
+        QSize actualSize = mimeIcon.actualSize(d->requestedSize);
+        QImage preview = mimeIcon.pixmap(actualSize).toImage();
         d->preview = preview;
         d->jobCompletion = true;
     }
