@@ -21,6 +21,7 @@
 
 import QtQuick 2.12
 import QtQuick.Controls 2.15 as QtControls
+import QtQuick.Layouts 1.2
 
 import org.kde.kirigami 2.7 as Kirigami
 
@@ -77,20 +78,6 @@ Kirigami.ScrollablePage {
             onTriggered: closeShelf();
             enabled: root.isCurrentContext && !Kirigami.Settings.isMobile && applicationWindow().pageStack.currentIndex > 0;
         },
-//         Kirigami.Action {
-//             text: i18nc("Select the previous book in the list", "Select Previous Book");
-//             shortcut: StandardKey.MoveToPreviousChar
-//             iconName: "go-previous";
-//             onTriggered: shelfList.previousEntry();
-//             enabled: root.isCurrentContext && !Kirigami.Settings.isMobile;
-//         },
-//         Kirigami.Action {
-//             text: i18nc("Select the next book in the list", "Select Next Book");
-//             shortcut: StandardKey.MoveToNextChar;
-//             iconName: "go-next";
-//             onTriggered: shelfList.nextEntry();
-//             enabled: root.isCurrentContext && !Kirigami.Settings.isMobile;
-//         },
         Kirigami.Action {
             text: i18nc("Open the book which is currently selected in the list", "Open Selected Book");
             shortcut: bookDetails.sheetOpen? "" : "Return";
@@ -132,8 +119,28 @@ Kirigami.ScrollablePage {
             model: root.model;
             onBookSelected: root.bookSelected(filename, currentPage);
         }
+        keyNavigationEnabled: true;
         clip: true;
-        footer: Item { width: parent.width; height: Kirigami.Units.iconSizes.large + Kirigami.Units.largeSpacing; }
+        footer: ColumnLayout {
+            width: parent.width;
+            spacing: Kirigami.Units.largeSpacing;
+            opacity: 0.3
+            Item { Layout.fillWidth: true; height: Kirigami.Units.iconSizes.large + Kirigami.Units.largeSpacing; }
+            Rectangle {
+                Layout.alignment: Qt.AlignHCenter;
+                Layout.minimumWidth: parent.width * .7
+                Layout.maximumWidth: Layout.minimumWidth
+                height: 1;
+                color: Kirigami.Theme.textColor;
+            }
+            Kirigami.Icon {
+                Layout.alignment: Qt.AlignHCenter
+                Layout.fillWidth: true
+                height: Kirigami.Units.iconSizes.enormous
+                source: "peruse"
+            }
+            Item { Layout.fillWidth: true; height: Kirigami.Units.iconSizes.large + Kirigami.Units.largeSpacing; }
+        }
 
         readonly property int scrollBarSpace: root.flickable.QtControls.ScrollBar.vertical ? root.flickable.QtControls.ScrollBar.vertical.width : 0
         readonly property int availableWidth: shelfList.width - scrollBarSpace - 4
@@ -143,22 +150,13 @@ Kirigami.ScrollablePage {
 
         currentIndex: -1;
 
-        function previousEntry() {
-            if(currentIndex > 0) {
-                currentIndex--;
-            }
-        }
-        function nextEntry() {
-            if(currentIndex < model.rowCount() - 1) {
-                currentIndex++;
-            }
-        }
         delegate: Item {
             height: shelfList.cellHeight;
             width: shelfList.cellWidth;
             ListComponents.CategoryTileTall {
                 id: categoryTile;
-                height: model.categoryEntriesCount > 0 ? neededHeight : 0;
+                visible: height > 0;
+                height: model.categoryEntriesCount > 0 ? shelfList.cellHeight : 0;
                 width: parent.width;
                 count: model.categoryEntriesCount;
                 title: model.title;
@@ -167,7 +165,8 @@ Kirigami.ScrollablePage {
             }
             ListComponents.BookTileTall {
                 id: bookTile;
-                height: model.categoryEntriesCount < 1 ? parent.height : 0;
+                visible: height > 0;
+                height: model.categoryEntriesCount < 1 ? shelfList.cellHeight : 0;
                 width: parent.width;
                 author: model.author ? model.author : i18nc("used for the author data in book lists if author is empty", "(unknown)");
                 title: model.title;
