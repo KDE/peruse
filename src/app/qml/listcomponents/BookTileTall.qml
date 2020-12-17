@@ -60,6 +60,7 @@ FocusScope {
         }
 
         ColumnLayout {
+            spacing: 0;
             anchors {
                 fill: parent;
                 margins: Kirigami.Units.largeSpacing
@@ -74,10 +75,10 @@ FocusScope {
                     anchors.centerIn: coverImage;
                     width: Math.max(coverImage.paintedWidth, Kirigami.Units.iconSizes.large) + Kirigami.Units.smallSpacing * 2;
                     height: Math.max(coverImage.paintedHeight, Kirigami.Units.iconSizes.large) + Kirigami.Units.smallSpacing * 2;
-                    color: Kirigami.Theme.backgroundColor;
+                    color: root.selected ? Kirigami.Theme.highlightColor : Kirigami.Theme.backgroundColor;
                     border {
                         width: 2;
-                        color: Kirigami.Theme.textColor;
+                        color: root.selected ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor;
                     }
                     radius: 2;
                 }
@@ -91,41 +92,65 @@ FocusScope {
                     placeholder: "application-vnd.oasis.opendocument.text";
                     fallback: "paint-unknown"
                 }
+                Item {
+                    anchors {
+                        right: tileBg.right
+                        bottom: tileBg.bottom
+                        rightMargin: - Kirigami.Units.largeSpacing
+                        bottomMargin: - Kirigami.Units.largeSpacing
+                    }
+                    width: bookTitleSize.boundingRect.height * 2
+                    height: width
+                    visible: root.progress > 0
+                    Rectangle {
+                        anchors.fill: parent
+                        radius: width / 2
+                        opacity: .9
+                        color: Kirigami.Theme.activeBackgroundColor
+                    }
+                    QtControls.Label {
+                        text: i18nc("A percentage of progress", "%1\%", Math.floor(100 * root.progress))
+                        anchors.fill: parent
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        color: Kirigami.Theme.activeTextColor
+                    }
+                }
             }
 
             QtControls.Label {
                 id: bookTitle;
-                wrapMode: Text.WrapAtWordBoundaryOrAnywhere;
                 elide: Text.ElideMiddle;
                 horizontalAlignment: Text.AlignHCenter
-                Layout.maximumWidth: root.width * 0.9
-                Layout.minimumWidth: Layout.maximumWidth
-                Layout.maximumHeight: root.author.length === 0 ? bookTitleSize.boundingRect.height * 2 : bookTitleSize.boundingRect.height
+                Layout.fillWidth: true
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
-                Layout.bottomMargin: root.author.length === 0 ? 0 : Kirigami.Units.smallSpacing
+                Layout.bottomMargin: Kirigami.Units.smallSpacing
             }
 
             QtControls.Label {
                 function getCombinedName(stringList) {
                     var combined = "";
                     for (var i = 0; i < stringList.length; ++i) {
-                        if (combined.length > 0) {
-                            combined += ", ";
+                        if (combined.length > 0 && i == stringList.length - 1) {
+                            combined += i18nc("The last item in a list of author names when there is more than one", ", and %1", stringList[i]);
                         }
-                        combined += stringList[i];
+                        else if (combined.length > 0) {
+                            combined += i18nc("An item in a list of authors (but not the last)", ", %1", stringList[i]);
+                        }
+                        else {
+                            combined += i18nc("The first author in a list of authors", "by %1", stringList[i]);
+                        }
                     }
                     return combined;
                 }
-                wrapMode: Text.WrapAtWordBoundaryOrAnywhere;
                 elide: Text.ElideMiddle;
-                visible: root.author.length > 0
-                text: visible ? getCombinedName(root.author) : ""
+                text: root.author.length > 0 ? getCombinedName(root.author) : i18nc("Author name used when there are no known authors for a book", "by an unknown author");
                 horizontalAlignment: Text.AlignHCenter
-                Layout.maximumWidth: root.width * 0.9
-                Layout.minimumWidth: Layout.maximumWidth
-                Layout.maximumHeight: root.author.length === 0 ? bookTitleSize.boundingRect.height * 2 : bookTitleSize.boundingRect.height
+                Layout.fillWidth: true
+                Layout.maximumHeight: bookTitleSize.boundingRect.height
+                Layout.minimumHeight: Layout.maximumHeight
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
-                Layout.bottomMargin: root.author.length === 0 ? 0 : Kirigami.Units.smallSpacing
+                Layout.bottomMargin: Kirigami.Units.smallSpacing
             }
         }
     }
