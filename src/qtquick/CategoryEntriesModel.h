@@ -74,6 +74,10 @@ struct BookEntry {
 class CategoryEntriesModel : public QAbstractListModel
 {
     Q_OBJECT
+    /**
+     * \brief count holds how many entries there are in the model - equivalent to rowCount, except as a property
+     */
+    Q_PROPERTY(int count READ count NOTIFY countChanged)
 public:
     explicit CategoryEntriesModel(QObject* parent = nullptr);
     ~CategoryEntriesModel() override;
@@ -128,6 +132,15 @@ public:
      * @returns the number of total rows(bookentries and categories) there are.
      */
     int rowCount(const QModelIndex& parent = QModelIndex()) const override;
+
+    /**
+     * @returns how many entries there are in the catalogue.
+     */
+    int count() const;
+    /**
+     * \brief Fires when the count has changed.
+     */
+    Q_SIGNAL void countChanged();
 
     /**
      * \brief Add a book entry to the CategoryEntriesModel.

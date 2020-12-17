@@ -243,6 +243,11 @@ int CategoryEntriesModel::rowCount(const QModelIndex& parent) const
     return d->categoryModels.count() + d->entries.count();
 }
 
+int CategoryEntriesModel::count() const
+{
+    return rowCount();
+}
+
 void CategoryEntriesModel::append(BookEntry* entry, Roles compareRole)
 {
     int insertionIndex = 0;
@@ -302,6 +307,7 @@ void CategoryEntriesModel::append(BookEntry* entry, Roles compareRole)
     }
     beginInsertRows(QModelIndex(), insertionIndex, insertionIndex);
     d->entries.insert(insertionIndex, entry);
+    Q_EMIT countChanged();
     endInsertRows();
 }
 
