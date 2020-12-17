@@ -149,10 +149,14 @@ void PreviewRunnable::run()
                 while(!d->jobCompletion) {
                     // Let's let the job do its thing and whatnot...
                     qApp->processEvents(QEventLoop::WaitForMoreEvents, 100);
+                    if (d->abort) {
+                        d->job->deleteLater();
+                        break;
+                    }
                     // This is not the prettiest thing ever, but let's not wait too long for previews...
                     // Short-stop the process at 1.5 seconds
                     if (breaker.elapsed() == 1500) {
-                        d->job->deleteLater();
+                        abort();
                         qDebug() << "Not awesome, this is taking way too long" << d->id;
                         break;
                     }
