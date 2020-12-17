@@ -36,11 +36,10 @@ Bookshelf {
     property real heightBook: Kirigami.Units.gridUnit * 8
     property string searchText: ""
     property bool searching: searchText.length > 0
-
-//     signal bookSelected(string filename, int currentPage);
+    property bool isLoading: true;
 
     function updateRecent() {
-        startWithThese.updateRecentlyRead();
+        root.updateRecentlyRead();
     }
 
     title: i18nc("title of the welcome page", "Welcome");
@@ -67,12 +66,14 @@ Bookshelf {
     Peruse.CategoryEntriesModel {
         id: recentBooksModel;
     }
-    model: peruseConfig.recentlyOpened.length > 0 ? recentBooksModel : contentList.newlyAddedCategoryModel
+    model: root.isLoading ? null : (recentBooksModel.count > 0 ? recentBooksModel : contentList.newlyAddedCategoryModel)
     function updateRecentlyRead() {
+        root.isLoading = true;
         recentBooksModel.clear();
         for(var i = 0; i < peruseConfig.recentlyOpened.length; ++i) {
             recentBooksModel.appendFakeBook(contentList.bookFromFile(peruseConfig.recentlyOpened[i]), Peruse.CategoryEntriesModel.UnknownRole);
         }
+        root.isLoading = false;
     }
     Connections {
         target: peruseConfig;
@@ -89,7 +90,7 @@ Bookshelf {
 
     pageHeader: Item {
         width: root.width
-        height: mainWindow.isLoading ? root.height : Kirigami.Units.gridUnit * 5
+        height: root.isLoading ? Kirigami.Units.gridUnit * 30 : Kirigami.Units.gridUnit * 5
         Behavior on height { NumberAnimation { duration: Kirigami.Units.longDuration; } }
         visible: !searching && Window.window.width > Kirigami.Units.gridUnit * 30
         Kirigami.Heading {
@@ -125,7 +126,9 @@ Bookshelf {
                 right: parent.right
                 margins: Kirigami.Units.largeSpacing
             }
-            text: peruseConfig.recentlyOpened.length > 0 ? i18nc("title of list of recently opened books", "Continue Reading") : i18nc("title of list of recently discovered books", "Recently Added")
+            opacity: root.isLoading ? 0 : 1
+            Behavior on opacity { NumberAnimation { duration: Kirigami.Units.longDuration; } }
+            text: recentBooksModel.count > 0 ? i18nc("title of list of recently opened books", "Continue Reading") : i18nc("title of list of recently discovered books", "Recently Added")
             level: 2
         }
     }
