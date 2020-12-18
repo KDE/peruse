@@ -46,8 +46,13 @@ ListView {
         running: false
         repeat: false
         onTriggered: {
-            imageBrowser.positionViewAtIndex(imageBrowser.currentIndex, ListView.Center);
-            currentItem.refocusFrame();
+            if (currentItem) {
+                imageBrowser.positionViewAtIndex(imageBrowser.currentIndex, ListView.Center);
+                currentItem.refocusFrame();
+            }
+            else {
+                restorationTimer.start();
+            }
         }
     }
 

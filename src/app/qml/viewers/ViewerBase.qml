@@ -39,7 +39,7 @@ Item {
     signal loadingCompleted(bool success);
     property string file;
     property string title;
-    property int currentPage;
+    property int currentPage: -1;
     property bool rtlMode: false;
     property int zoomMode: 0;
     property int pageCount;
