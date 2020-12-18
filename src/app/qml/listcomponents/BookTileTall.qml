@@ -6,14 +6,14 @@
  */
 
 import QtQuick 2.12
-import QtQuick.Controls 2.12 as QtControls
+import QtQuick.Controls 2.12 as QQC2
 import QtQuick.Layouts 1.2
 import org.kde.kirigami 2.14 as Kirigami
 
 /**
  * @brief A button to select a book to read with a nice big thumbnail.
  */
-FocusScope {
+QQC2.AbstractButton {
     id: root;
     property bool selected: false;
     property alias title: bookTitle.text;
@@ -34,17 +34,62 @@ FocusScope {
     enabled: visible;
     clip: true;
 
-    Rectangle {
-        id: stateIndicator
-
+    ColumnLayout {
         anchors.fill: parent
-        z: 1
+        TapHandler {
+            onTapped: root.bookSelected(root.filename, root.currentPage)
+            onLongPressed: root.pressAndHold(mouse)
+        }
 
-        color: "transparent"
-        opacity: 0.4
+        Kirigami.Icon {
+            id: coverImage;
+            Layout.fillWidth: true
+            Layout.preferredHeight: Kirigami.Units.gridUnit * 4
+            source: root.thumbnail === "Unknown role" ? "" : root.thumbnail;
+            placeholder: "application-vnd.oasis.opendocument.text";
+            fallback: "paint-unknown"
+        }
+        QQC2.Label {
+            id: bookTitle;
+            elide: Text.ElideMiddle;
+            horizontalAlignment: Text.AlignHCenter
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
+            Layout.bottomMargin: Kirigami.Units.smallSpacing
+        }
 
-        radius: 3
+        QQC2.Label {
+            function getCombinedName(stringList) {
+                var combined = "";
+                for (var i = 0; i < stringList.length; ++i) {
+                    if (combined.length > 0 && i == stringList.length - 1) {
+                        combined += i18nc("The last item in a list of author names when there is more than one", ", and %1", stringList[i]);
+                    }
+                    else if (combined.length > 0) {
+                        combined += i18nc("An item in a list of authors (but not the last)", ", %1", stringList[i]);
+                    }
+                    else {
+                        combined += i18nc("The first author in a list of authors", "by %1", stringList[i]);
+                    }
+                }
+                return combined;
+            }
+            font.pointSize: Kirigami.Theme.defaultFont.pointSize * 0.9
+            elide: Text.ElideMiddle;
+            text: root.author.length > 0 ? getCombinedName(root.author) : i18nc("Author name used when there are no known authors for a book", "by an unknown author");
+            horizontalAlignment: Text.AlignHCenter
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
+            Layout.bottomMargin: Kirigami.Units.smallSpacing
+        }
     }
+}
+/*
+
+
+
+
+
 
     MouseArea {
         anchors.fill: parent;
@@ -81,16 +126,6 @@ FocusScope {
                         color: root.selected ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor;
                     }
                     radius: 2;
-                }
-                Kirigami.Icon {
-                    id: coverImage;
-                    anchors {
-                        fill: parent;
-                        margins: Kirigami.Units.largeSpacing;
-                    }
-                    source: root.thumbnail === "Unknown role" ? "" : root.thumbnail;
-                    placeholder: "application-vnd.oasis.opendocument.text";
-                    fallback: "paint-unknown"
                 }
                 Item {
                     anchors {
@@ -154,4 +189,4 @@ FocusScope {
             }
         }
     }
-}
+}*/

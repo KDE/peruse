@@ -66,7 +66,7 @@ Bookshelf {
     Peruse.CategoryEntriesModel {
         id: recentBooksModel;
     }
-    model: root.isLoading ? null : (recentBooksModel.count > 0 ? recentBooksModel : contentList.newlyAddedCategoryModel)
+    bookModel: root.isLoading ? null : (recentBooksModel.count > 0 ? recentBooksModel : contentList.newlyAddedCategoryModel)
     function updateRecentlyRead() {
         root.isLoading = true;
         recentBooksModel.clear();

@@ -270,7 +270,7 @@ Kirigami.ApplicationWindow {
     Component {
         id: bookshelfTitle;
         Bookshelf {
-            model: contentList.titleCategoryModel;
+            bookModel: contentList.titleCategoryModel;
             headerText: i18nc("Title of the page with books grouped by the title start letters", "Group by Title");
             onBookSelected: mainWindow.showBook(filename, currentPage);
             categoryName: "bookshelfTitle";
@@ -280,7 +280,7 @@ Kirigami.ApplicationWindow {
     Component {
         id: bookshelfAdded;
         Bookshelf {
-            model: contentList.newlyAddedCategoryModel;
+            bookModel: contentList.newlyAddedCategoryModel;
             headerText: i18nc("Title of the page with all books ordered by which was added most recently", "Recently Added Books");
             sectionRole: "created";
             sectionCriteria: ViewSection.FullString;
@@ -292,7 +292,7 @@ Kirigami.ApplicationWindow {
     Component {
         id: bookshelfSeries;
         Bookshelf {
-            model: contentList.seriesCategoryModel;
+            bookModel: contentList.seriesCategoryModel;
             headerText: i18nc("Title of the page with books grouped by what series they are in", "Group by Series");
             onBookSelected: mainWindow.showBook(filename, currentPage);
             categoryName: "bookshelfSeries";
@@ -302,7 +302,7 @@ Kirigami.ApplicationWindow {
     Component {
         id: bookshelfAuthor;
         Bookshelf {
-            model: contentList.authorCategoryModel;
+            bookModel: contentList.authorCategoryModel;
             headerText: i18nc("Title of the page with books grouped by author", "Group by Author");
             onBookSelected: mainWindow.showBook(filename, currentPage);
             categoryName: "bookshelfAuthor";
@@ -312,7 +312,7 @@ Kirigami.ApplicationWindow {
     Component {
         id: bookshelfPublisher;
         Bookshelf {
-            model: contentList.publisherCategoryModel;
+            bookModel: contentList.publisherCategoryModel;
             headerText: i18nc("Title of the page with books grouped by who published them", "Group by Publisher");
             onBookSelected: mainWindow.showBook(filename, currentPage);
             categoryName: "bookshelfPublisher";
@@ -322,7 +322,7 @@ Kirigami.ApplicationWindow {
     Component {
         id: bookshelfKeywords;
         Bookshelf {
-            model: contentList.keywordCategoryModel;
+            bookModel: contentList.keywordCategoryModel;
             headerText: i18nc("Title of the page with books grouped by keywords, character or genres", "Group by Keywords, Characters and Genres");
             onBookSelected: mainWindow.showBook(filename, currentPage);
             categoryName: "bookshelfKeywords";
@@ -332,7 +332,7 @@ Kirigami.ApplicationWindow {
     Component {
         id: bookshelfFolder;
         Bookshelf {
-            model: contentList.folderCategoryModel;
+            bookModel: contentList.folderCategoryModel;
             headerText: i18nc("Title of the page with books grouped by what folder they are in", "Filter by Folder");
             onBookSelected: mainWindow.showBook(filename, currentPage);
             categoryName: "bookshelfFolder";

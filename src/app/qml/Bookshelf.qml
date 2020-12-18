@@ -23,7 +23,8 @@ import QtQuick 2.12
 import QtQuick.Controls 2.15 as QtControls
 import QtQuick.Layouts 1.2
 
-import org.kde.kirigami 2.7 as Kirigami
+import org.kde.kirigami 2.14 as Kirigami
+import org.kde.kitemmodels 1.0
 
 import org.kde.peruse 0.1 as Peruse
 import "listcomponents" as ListComponents
@@ -42,15 +43,17 @@ import "listcomponents" as ListComponents
  */
 Kirigami.ScrollablePage {
     id: root;
-    property alias pageHeader: shelfList.header;
-    title: headerText;
-    property string categoryName: "bookshelf";
     objectName: "bookshelf";
-    property alias model: shelfList.model;
+
+    property alias pageHeader: shelfList.header;
+    property string categoryName: "bookshelf";
+    required property var bookModel;
     property string sectionRole: "title";
     property int sectionCriteria: ViewSection.FirstCharacter;
     signal bookSelected(string filename, int currentPage);
     property string headerText;
+
+    title: headerText;
 
     function openBook(index) {
         applicationWindow().contextDrawer.close();
@@ -106,53 +109,38 @@ Kirigami.ScrollablePage {
         enabled: root.isCurrentContext;
     }
 
+    header: Kirigami.SearchField {
+        id: searchField
+    }
+
     GridView {
         id: shelfList;
-        SearchBox {
-            id: searchBox;
-            anchors {
-                top: parent.top;
-                left: parent.left;
-                right: parent.right;
-            }
-            maxHeight: parent.height;
-            model: root.model;
-            onBookSelected: root.bookSelected(filename, currentPage);
-        }
-        keyNavigationEnabled: true;
-        clip: true;
-        footer: ColumnLayout {
-            width: parent.width;
-            spacing: Kirigami.Units.largeSpacing;
-            opacity: 0.3
-            Item { Layout.fillWidth: true; height: Kirigami.Units.iconSizes.large + Kirigami.Units.largeSpacing; }
-            Rectangle {
-                Layout.alignment: Qt.AlignHCenter;
-                Layout.minimumWidth: parent.width * .7
-                Layout.maximumWidth: Layout.minimumWidth
-                height: 1;
-                color: Kirigami.Theme.textColor;
-            }
-            Kirigami.Icon {
-                Layout.alignment: Qt.AlignHCenter
-                Layout.fillWidth: true
-                height: Kirigami.Units.iconSizes.enormous
-                source: "peruse"
-            }
-            Item { Layout.fillWidth: true; height: Kirigami.Units.iconSizes.large + Kirigami.Units.largeSpacing; }
-        }
 
         readonly property int scrollBarSpace: root.flickable.QtControls.ScrollBar.vertical ? root.flickable.QtControls.ScrollBar.vertical.width : 0
-        readonly property int availableWidth: shelfList.width - scrollBarSpace - 4
-        readonly property int implicitCellWidth: Kirigami.Units.gridUnit * 15
-        cellWidth: Math.floor(availableWidth / Math.max(Math.floor(availableWidth / (implicitCellWidth + Kirigami.Units.gridUnit)), 2))
-        cellHeight: Kirigami.Units.gridUnit * 13;
+        readonly property int bookWidth: Kirigami.Units.gridUnit * 6;
+        cellWidth: {
+            const availableWidth = shelfList.width - scrollBarSpace - 4;
+            const numberOfBookPerRow = Math.trunc(availableWidth / bookWidth);
+            const rightGap = availableWidth - numberOfBookPerRow * bookWidth;
+            const finalBookWidth = bookWidth + (rightGap / numberOfBookPerRow);
+            return finalBookWidth;
+        }
+        cellHeight: Kirigami.Units.gridUnit * 10
 
         currentIndex: -1;
 
+        keyNavigationEnabled: true;
+        clip: true;
+
+        model: KSortFilterProxyModel {
+            id: searchFilterProxy
+            sourceModel: root.bookModel
+            filterRowCallback: root.bookModel.data(root.bookModel.index(row, 0), Peruse.CategoryEntriesModel.TitleRole).includes(searchField.text) || root.bookModel.data(root.bookModel.index(row, 0), Peruse.CategoryEntriesModel.AuthorRole).includes(searchField.text)
+        }
+
         delegate: Item {
             height: shelfList.cellHeight;
-            width: shelfList.cellWidth;
+            width: shelfList.bookWidth
             ListComponents.CategoryTileTall {
                 id: categoryTile;
                 visible: height > 0;
