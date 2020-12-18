@@ -65,6 +65,7 @@ public:
     int count() const;
     Q_SIGNAL void countChanged();
 
+    Q_INVOKABLE int sourceIndex(const int &filterIndex);
 protected:
     bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
 

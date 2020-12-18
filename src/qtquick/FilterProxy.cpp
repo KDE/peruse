@@ -119,3 +119,13 @@ void FilterProxy::setFilterIntEnabled(const bool& value)
         Q_EMIT filterIntEnabledChanged();
     }
 }
+
+int FilterProxy::sourceIndex ( const int& filterIndex )
+{
+    int mappedIndex{-1};
+    QModelIndex ourIndex = index(filterIndex, 0);
+    if (ourIndex.isValid() && sourceModel()) {
+        mappedIndex = mapToSource(ourIndex).row();
+    }
+    return mappedIndex;
+}
