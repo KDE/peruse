@@ -9,7 +9,6 @@
         <file>qml/MobileMain.qml</file>
         <file>qml/PeruseContextDrawer.qml</file>
         <file>qml/PeruseMain.qml</file>
-        <file>qml/SearchBox.qml</file>
         <file>qml/Settings.qml</file>
         <file>qml/Store.qml</file>
         <file>qml/WelcomePage.qml</file>
