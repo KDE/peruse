@@ -23,7 +23,7 @@ import QtQuick 2.12
 import QtQuick.Controls 2.15 as QtControls
 import QtQuick.Layouts 1.2
 
-import org.kde.kirigami 2.7 as Kirigami
+import org.kde.kirigami 2.14 as Kirigami
 
 import org.kde.peruse 0.1 as Peruse
 import "listcomponents" as ListComponents
@@ -46,20 +46,28 @@ Kirigami.ScrollablePage {
     title: headerText;
     property string categoryName: "bookshelf";
     objectName: "bookshelf";
-    property alias model: shelfList.model;
+    property QtObject model;
+    /**
+     * Allows you to override the default behaviour of searching inside the shelf (such as
+     * for the welcome page where we want to search the global list)
+     */
+    property alias searchModel: searchFilterProxy.sourceModel;
     property string sectionRole: "title";
     property int sectionCriteria: ViewSection.FirstCharacter;
     signal bookSelected(string filename, int currentPage);
     property string headerText;
+    property bool isSearching: searchFilterProxy.filterString.length > 0;
 
     function openBook(index) {
         applicationWindow().contextDrawer.close();
-        if(shelfList.model.indexIsBook(index)) {
-            var book = shelfList.model.get(index);
+        var whatModel = isSearching ? searchFilterProxy.sourceModel : shelfList.model;
+        var whatIndex = isSearching ? searchFilterProxy.sourceIndex(index) : index;
+        if(whatModel.indexIsBook(whatIndex)) {
+            var book = whatModel.get(whatIndex);
             root.bookSelected(book.readProperty("filename"), book.readProperty("currentPage"));
         }
         else {
-            var catEntry = shelfList.model.getEntry(index);
+            var catEntry = whatModel.getEntry(whatIndex);
             applicationWindow().pageStack.push(bookshelf, { focus: true, headerText: catEntry.readProperty("title"), model: catEntry.readProperty("entriesModel") });
         }
     }
@@ -96,6 +104,27 @@ Kirigami.ScrollablePage {
         iconName: "system-search";
         onTriggered: searchBox.activate();
         enabled: root.isCurrentContext;
+        displayComponent: Kirigami.SearchField {
+            id: searchField
+            focus: true
+            placeholderText: i18nc("placeholder text for the search field", "Tap and type to search");
+            onTextChanged: {
+                searchText = text
+                if(text.length > 0) {
+                    searchTimer.start();
+                } else {
+                    searchTimer.stop();
+                    searchFilterProxy.filterString = "";
+                }
+            }
+            Timer {
+                id: searchTimer;
+                interval: 250;
+                repeat: false;
+                running: false;
+                onTriggered: searchFilterProxy.filterString = searchField.text;
+            }
+        }
     }
     Kirigami.Action {
         id: bookDetailsAction;
@@ -108,16 +137,10 @@ Kirigami.ScrollablePage {
 
     GridView {
         id: shelfList;
-        SearchBox {
-            id: searchBox;
-            anchors {
-                top: parent.top;
-                left: parent.left;
-                right: parent.right;
-            }
-            maxHeight: parent.height;
-            model: root.model;
-            onBookSelected: root.bookSelected(filename, currentPage);
+        model: isSearching ? searchFilterProxy : root.model;
+        Peruse.FilterProxy {
+            id: searchFilterProxy;
+            sourceModel: shelfList.model;
         }
         keyNavigationEnabled: true;
         clip: true;
