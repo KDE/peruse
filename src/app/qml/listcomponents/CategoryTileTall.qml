@@ -21,7 +21,7 @@
 
 import QtQuick 2.12
 import QtQuick.Controls 2.12 as QtControls
-
+import QtQuick.Layouts 1.2
 import org.kde.kirigami 2.14 as Kirigami
 
 /**
@@ -30,7 +30,7 @@ import org.kde.kirigami 2.14 as Kirigami
  * It distinguishes itself from a book by drawing two rectangles behind the thumbnail,
  * to indicate 'multiple books'.
  */
-Item {
+FocusScope {
     id: root;
     property bool selected: false;
     property alias count: categoryCount.text;
@@ -45,114 +45,114 @@ Item {
         onClicked: {
             applicationWindow().pageStack.push(bookshelf, { focus: true, headerText: root.title, model: root.entriesModel })
         }
-    }
-    Rectangle {
-        anchors.fill: parent;
-        color: Kirigami.Theme.highlightColor;
-        opacity: root.selected ? 1 : 0;
-        Behavior on opacity { NumberAnimation { duration: Kirigami.Units.shortDuration; } }
-    }
-    Item {
-        id: categoryImage;
-        anchors {
-            top: parent.top;
-            horizontalCenter: parent.horizontalCenter;
-            margins: Kirigami.Units.largeSpacing;
+
+        TextMetrics {
+            id: categoryTitleSize
+            font: categoryTitle.font
+            text: categoryTitle.text
         }
-        width: Math.min(parent.width - Kirigami.Units.largeSpacing * 2, Kirigami.Units.iconSizes.enormous + Kirigami.Units.largeSpacing * 2);
-        height: width;
-        Rectangle {
-            anchors.centerIn: coverImage;
-            width: tileBg.width;
-            height: tileBg.height;
-            color: Kirigami.Theme.backgroundColor;
-            border {
-                width: 2;
-                color: Kirigami.Theme.textColor;
-            }
-            rotation: 16;
-            radius: 2;
-            Rectangle {
-                anchors {
-                    fill: parent;
-                    margins: Kirigami.Units.smallSpacing;
-                }
-                color: Kirigami.Theme.textColor;
-            }
-        }
-        Rectangle {
-            anchors.centerIn: coverImage;
-            width: tileBg.width;
-            height: tileBg.height;
-            color: Kirigami.Theme.backgroundColor;
-            border {
-                width: 2;
-                color: Kirigami.Theme.textColor;
-            }
-            rotation: 8;
-            radius: 2;
-            Rectangle {
-                anchors {
-                    fill: parent;
-                    margins: Kirigami.Units.smallSpacing;
-                }
-                color: Kirigami.Theme.textColor;
-            }
-        }
-        Rectangle {
-            id: tileBg;
-            anchors.centerIn: coverImage;
-            width: Math.max(coverImage.paintedWidth, Kirigami.Units.iconSizes.large) + Kirigami.Units.smallSpacing * 2;
-            height: Math.max(coverImage.paintedHeight, Kirigami.Units.iconSizes.large) + Kirigami.Units.smallSpacing * 2;
-            color: Kirigami.Theme.backgroundColor;
-            border {
-                width: 2;
-                color: Kirigami.Theme.textColor;
-            }
-            radius: 2;
-        }
-        Kirigami.Icon {
-            id: coverImage;
+
+        ColumnLayout {
+            spacing: 0;
             anchors {
                 fill: parent;
-                margins: Kirigami.Units.largeSpacing;
+                margins: Kirigami.Units.largeSpacing
             }
-            source: root.entriesModel ? root.entriesModel.get(0).readProperty("thumbnail") : "";
-            placeholder: "application-vnd.oasis.opendocument.text";
-            fallback: "folder-documents-symbolic"
-        }
-        Rectangle {
-            anchors {
-                fill: categoryCount;
-                margins: -Kirigami.Units.smallSpacing;
+            Item {
+                id: categoryImage;
+                Layout.fillHeight: true
+                Layout.fillWidth: true
+                Layout.alignment: Qt.AlignHCenter
+                Rectangle {
+                    anchors.centerIn: coverImage;
+                    width: tileBg.width;
+                    height: tileBg.height;
+                    color: root.selected ? Kirigami.Theme.highlightColor : Kirigami.Theme.backgroundColor;
+                    border {
+                        width: 2;
+                        color: root.selected ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor;
+                    }
+                    radius: 2;
+                    rotation: 16;
+                    Rectangle {
+                        anchors {
+                            fill: parent;
+                            margins: Kirigami.Units.smallSpacing;
+                        }
+                        color: root.selected ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor;
+                    }
+                }
+                Rectangle {
+                    anchors.centerIn: coverImage;
+                    width: tileBg.width;
+                    height: tileBg.height;
+                    color: root.selected ? Kirigami.Theme.highlightColor : Kirigami.Theme.backgroundColor;
+                    border {
+                        width: 2;
+                        color: root.selected ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor;
+                    }
+                    radius: 2;
+                    rotation: 8;
+                    Rectangle {
+                        anchors {
+                            fill: parent;
+                            margins: Kirigami.Units.smallSpacing;
+                        }
+                        color: root.selected ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor;
+                    }
+                }
+                Rectangle {
+                    id: tileBg;
+                    anchors.centerIn: coverImage;
+                    width: Math.max(coverImage.paintedWidth, Kirigami.Units.iconSizes.large) + Kirigami.Units.smallSpacing * 2;
+                    height: Math.max(coverImage.paintedHeight, Kirigami.Units.iconSizes.large) + Kirigami.Units.smallSpacing * 2;
+                    color: root.selected ? Kirigami.Theme.highlightColor : Kirigami.Theme.backgroundColor;
+                    border {
+                        width: 2;
+                        color: root.selected ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor;
+                    }
+                    radius: 2;
+                }
+                Kirigami.Icon {
+                    id: coverImage;
+                    anchors {
+                        fill: parent;
+                        margins: Kirigami.Units.largeSpacing;
+                    }
+                    source: root.entriesModel ? root.entriesModel.get(0).readProperty("thumbnail") : "";
+                    placeholder: "application-vnd.oasis.opendocument.text";
+                    fallback: "folder-documents-symbolic"
+                }
+                Rectangle {
+                    anchors {
+                        fill: categoryCount;
+                        margins: -Kirigami.Units.smallSpacing;
+                    }
+                    radius: height / 2;
+                    color: Kirigami.Theme.highlightColor;
+                }
+                QtControls.Label {
+                    id: categoryCount;
+                    anchors {
+                        bottom: tileBg.bottom;
+                        right: tileBg.right;
+                    }
+                    height: paintedHeight;
+                    width: paintedWidth;
+                    color: Kirigami.Theme.highlightedTextColor;
+                }
             }
-            radius: height / 2;
-            color: Kirigami.Theme.highlightColor;
-        }
-        QtControls.Label {
-            id: categoryCount;
-            anchors {
-                bottom: tileBg.bottom;
-                right: tileBg.right;
+
+            QtControls.Label {
+                id: categoryTitle;
+                elide: Text.ElideMiddle;
+                horizontalAlignment: Text.AlignHCenter
+                Layout.maximumHeight: categoryTitleSize.boundingRect.height
+                Layout.minimumHeight: Layout.maximumHeight
+                Layout.fillWidth: true
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
+                Layout.bottomMargin: Kirigami.Units.smallSpacing
             }
-            height: paintedHeight;
-            width: paintedWidth;
-            color: Kirigami.Theme.highlightedTextColor;
         }
-    }
-    QtControls.Label {
-        id: categoryTitle;
-        anchors {
-            top: categoryImage.bottom;
-            left: parent.left;
-            right: parent.right;
-            margins: Kirigami.Units.smallSpacing;
-            topMargin: 0;
-        }
-        height: paintedHeight;
-        maximumLineCount: 2;
-        wrapMode: Text.WrapAtWordBoundaryOrAnywhere;
-        elide: Text.ElideMiddle;
-        horizontalAlignment: Text.AlignHCenter;
     }
 }
