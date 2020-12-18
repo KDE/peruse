@@ -77,7 +77,13 @@ Bookshelf {
     }
     Connections {
         target: peruseConfig;
-        onRecentlyOpenedChanged: root.updateRecentlyRead();
+        onRecentlyOpenedChanged: updateRecentlyReadTimer.start();
+        property QtObject updateRecentlyReadTimer: Timer {
+            interval: 500
+            running: false
+            repeat: false
+            onTriggered: { root.updateRecentlyRead(); }
+        }
     }
     Connections {
         target: applicationWindow();
