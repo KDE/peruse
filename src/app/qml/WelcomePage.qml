@@ -44,28 +44,10 @@ Bookshelf {
 
     title: i18nc("title of the welcome page", "Welcome");
 
-    actions.main: Kirigami.Action {
-        text: i18nc("search in the list of books (not inside the books)", "Search Books");
-        iconName: "system-search";
-        enabled: root.isCurrentContext;
-        displayComponent: Kirigami.SearchField {
-            id: searchField
-            focus: true
-            placeholderText: i18nc("placeholder text for the search field", "Tap and type to search");
-            onTextChanged: {
-                searchText = text
-                if(text.length > 0) {
-                    searchTimer.start();
-                } else {
-                    searchTimer.stop();
-                }
-            }
-        }
-    }
-
     Peruse.CategoryEntriesModel {
         id: recentBooksModel;
     }
+    searchModel: contentList.newlyAddedCategoryModel
     model: root.isLoading ? null : (recentBooksModel.count > 0 ? recentBooksModel : contentList.newlyAddedCategoryModel)
     function updateRecentlyRead() {
         root.isLoading = true;
