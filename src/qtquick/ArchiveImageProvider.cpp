@@ -149,6 +149,12 @@ ArchiveImageRunnable::ArchiveImageRunnable(const QString& id, const QSize& reque
     d->prefix = prefix;
 }
 
+ArchiveImageRunnable::~ArchiveImageRunnable()
+{
+    abort();
+    delete d;
+}
+
 void ArchiveImageRunnable::abort()
 {
     d->abort = true;

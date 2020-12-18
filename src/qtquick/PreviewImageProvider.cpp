@@ -86,7 +86,12 @@ class PreviewResponse : public QQuickImageResponse
 
 QQuickImageResponse * PreviewImageProvider::requestImageResponse(const QString& id, const QSize& requestedSize)
 {
-    PreviewResponse* response = new PreviewResponse(id, requestedSize);
+    // We sometimes get malformed IDs (that is, extra slashes at the start), so fix those up
+    QString adjustedId{id};
+    while (adjustedId.startsWith("//")) {
+        adjustedId = adjustedId.mid(1);
+    }
+    PreviewResponse* response = new PreviewResponse(adjustedId, requestedSize);
     return response;
 }
 
@@ -100,7 +105,7 @@ public:
 
     QImage preview;
     bool jobCompletion{false};
-    KIO::PreviewJob* job{nullptr};
+    QPointer<KIO::PreviewJob> job{nullptr};
 };
 
 PreviewRunnable::PreviewRunnable(const QString& id, const QSize& requestedSize)
@@ -108,6 +113,12 @@ PreviewRunnable::PreviewRunnable(const QString& id, const QSize& requestedSize)
 {
     d->id = id;
     d->requestedSize = requestedSize;
+}
+
+PreviewRunnable::~PreviewRunnable()
+{
+    abort();
+    delete d;
 }
 
 void PreviewRunnable::run()
@@ -148,14 +159,14 @@ void PreviewRunnable::run()
                 // it be deleted in finishedPreview(), don't expect it to be around.
                 while(!d->jobCompletion) {
                     // Let's let the job do its thing and whatnot...
-                    qApp->processEvents(QEventLoop::WaitForMoreEvents, 100);
+                    qApp->processEvents(QEventLoop::AllEvents, 100);
                     if (d->abort) {
                         d->job->deleteLater();
                         break;
                     }
                     // This is not the prettiest thing ever, but let's not wait too long for previews...
                     // Short-stop the process at 1.5 seconds
-                    if (breaker.elapsed() == 1500) {
+                    if (breaker.elapsed() == 3000) {
                         abort();
                         qDebug() << "Not awesome, this is taking way too long" << d->id;
                         break;

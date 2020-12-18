@@ -58,7 +58,8 @@ private:
 class PreviewRunnable : public QObject, public QRunnable {
     Q_OBJECT;
 public:
-    PreviewRunnable(const QString &id, const QSize &requestedSize);
+    explicit PreviewRunnable(const QString &id, const QSize &requestedSize);
+    virtual ~PreviewRunnable();
 
     void run() override;
 

@@ -144,6 +144,11 @@ ComicCoverRunnable::ComicCoverRunnable(const QString& id, const QSize& requested
     d->imageCache = imageCache;
 }
 
+ComicCoverRunnable::~ComicCoverRunnable()
+{
+    abort();
+}
+
 void ComicCoverRunnable::abort()
 {
     d->abort = true;

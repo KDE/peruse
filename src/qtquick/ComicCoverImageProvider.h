@@ -26,6 +26,7 @@
 #include <QRunnable>
 
 #include <kimagecache.h>
+#include <memory.h>
 
 /**
  * \brief Get file previews of Comic Book Archives 
@@ -60,7 +61,8 @@ private:
 class ComicCoverRunnable : public QObject, public QRunnable {
     Q_OBJECT;
 public:
-    ComicCoverRunnable(const QString &id, const QSize &requestedSize, KImageCache* imageCache);
+    explicit ComicCoverRunnable(const QString &id, const QSize &requestedSize, KImageCache* imageCache);
+    virtual ~ComicCoverRunnable();
 
     void run() override;
 
@@ -76,7 +78,7 @@ public:
     Q_SIGNAL void done(QImage image);
 private:
     class Private;
-    Private* d;
+    std::unique_ptr<Private> d;
 };
 
 #endif//COMICCOVERIMAGEPROVIDER_H
