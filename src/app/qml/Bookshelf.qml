@@ -208,7 +208,9 @@ Kirigami.ScrollablePage {
         Kirigami.OverlaySheet {
             id: bookDetails;
             function showBookInfo(index) {
-                currentBook = root.model.getEntry(index);
+                var whatModel = isSearching ? searchFilterProxy.sourceModel : shelfList.model;
+                var whatIndex = isSearching ? searchFilterProxy.sourceIndex(index) : index;
+                currentBook = whatModel.getEntry(whatIndex);
                 open();
             }
             property QtObject currentBook: fakeBook;
