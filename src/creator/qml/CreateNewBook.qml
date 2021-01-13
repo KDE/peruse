@@ -80,13 +80,13 @@ Kirigami.Page {
         QtControls.Label {
             width: parent.width - getFolderButton.width;
             text: getFolderDlg.folder;
-            QtControls.Button {
+            QtControls.ToolButton {
                 id: getFolderButton;
                 anchors.left: parent.right;
                 height: parent.height;
                 width: height;
                 contentItem: Kirigami.Icon {
-                    source: "folder-open"
+                    source: "folder-open-symbolic"
                 }
                 onClicked: getFolderDlg.open();
             }
@@ -102,13 +102,13 @@ Kirigami.Page {
             width: parent.width - getCoverButton.width;
             height: paintedHeight + Kirigami.Units.smallSpacing * 2;
             text: i18nc("label text for the edit field for the cover image for the book", "Cover Image");
-            QtControls.Button {
+            QtControls.ToolButton {
                 id: getCoverButton;
                 anchors.left: parent.right;
                 height: getFolderButton.height;
                 width: height;
                 contentItem: Kirigami.Icon {
-                    source: "folder-open"
+                    source: "folder-open-symbolic"
                 }
                 onClicked: getCoverDlg.open();
             }
