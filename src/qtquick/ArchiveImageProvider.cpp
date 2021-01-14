@@ -119,6 +119,11 @@ public:
     QSize requestedSize;
 
     bool abort{false};
+    QMutex abortMutex;
+    bool isAborted() {
+        QMutexLocker locker(&abortMutex);
+        return abort;
+    }
 
     ArchiveBookModel* bookModel{nullptr};
     QString prefix;
@@ -157,6 +162,7 @@ ArchiveImageRunnable::~ArchiveImageRunnable()
 
 void ArchiveImageRunnable::abort()
 {
+    QMutexLocker locker(&d->abortMutex);
     d->abort = true;
 }
 
@@ -177,22 +183,22 @@ void ArchiveImageRunnable::run()//const QString& id, QSize* size, const QSize& r
         if (document) {
             AdvancedComicBookFormat::Binary* binary = qobject_cast<AdvancedComicBookFormat::Binary*>(document->objectByID(d->id.mid(1)));
 
-            if (!d->abort && binary) {
+            if (!d->isAborted() && binary) {
                 success = d->loadImage(&img, binary->data());
             }
         }
     }
 
-    if (!d->abort && !success) {
+    if (!d->isAborted() && !success) {
         QMutexLocker locker(&d->bookModel->archiveMutex);
         const KArchiveFile* entry = d->bookModel->archiveFile(d->id);
 
-        if(!d->abort && entry) {
+        if(!d->isAborted() && entry) {
             success = d->loadImage(&img, entry->data());
         }
     }
 
-    if (!d->abort && !success) {
+    if (!d->isAborted() && !success) {
         QIcon oops = QIcon::fromTheme("unknown");
         img = oops.pixmap(oops.availableSizes().last()).toImage();
         QPainter thing(&img);

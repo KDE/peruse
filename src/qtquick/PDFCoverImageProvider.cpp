@@ -27,6 +27,7 @@
 #include <QDir>
 #include <QIcon>
 #include <QMimeDatabase>
+#include <QMutex>
 #include <QProcess>
 #include <QStandardPaths>
 #include <QThreadPool>
@@ -106,6 +107,11 @@ public:
     QSize requestedSize;
 
     bool abort{false};
+    QMutex abortMutex;
+    bool isAborted() {
+        QMutexLocker locker(&abortMutex);
+        return abort;
+    }
 
     QDir thumbDir;
 };
@@ -120,6 +126,7 @@ PDFCoverRunnable::PDFCoverRunnable(const QString& id, const QSize& requestedSize
 
 void PDFCoverRunnable::abort()
 {
+    QMutexLocker locker(&d->abortMutex);
     d->abort = true;
 }
 
@@ -136,10 +143,10 @@ void PDFCoverRunnable::run()
     QMimeDatabase db;
     db.mimeTypeForFile(d->id, QMimeDatabase::MatchContent);
     const QMimeType mime = db.mimeTypeForFile(d->id, QMimeDatabase::MatchContent);
-    if(!d->abort && mime.inherits("application/pdf")) {
+    if(!d->isAborted() && mime.inherits("application/pdf")) {
         //-sOutputFile=FILENAME.png FILENAME
         QString outFile = QString("%1/%2.png").arg(d->thumbDir.absolutePath()).arg(QUrl(d->id).toString().replace("/", "-").replace(":", "-"));
-        if(!d->abort && !QFile::exists(outFile)) {
+        if(!d->isAborted() && !QFile::exists(outFile)) {
             // then we've not already generated a thumbnail, try to make one...
             QProcess thumbnailer;
             QStringList args;
@@ -165,10 +172,10 @@ void PDFCoverRunnable::run()
         }
         bool success = false;
         // Now, does it exist this time?
-        if(!d->abort && QFile::exists(outFile)) {
+        if(!d->isAborted() && QFile::exists(outFile)) {
             success = img.load(outFile);
         }
-        if(!d->abort && !success) {
+        if(!d->isAborted() && !success) {
             QIcon oops = QIcon::fromTheme("application-pdf");
             img = oops.pixmap(oops.availableSizes().last()).toImage();
             qCDebug(QTQUICK_LOG) << "Failed to load image with id" << d->id << "from thumbnail file" << outFile;

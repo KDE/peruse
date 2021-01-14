@@ -29,6 +29,7 @@
 
 #include <QIcon>
 #include <QMimeDatabase>
+#include <QMutex>
 #include <QThreadPool>
 
 #include <qtquick_debug.h>
@@ -105,6 +106,11 @@ public:
     KImageCache* imageCache;
 
     bool abort{false};
+    QMutex abortMutex;
+    bool isAborted() {
+        QMutexLocker locker(&abortMutex);
+        return abort;
+    }
 
     QStringList entries;
     void filterImages(QStringList& entries)
@@ -151,6 +157,7 @@ ComicCoverRunnable::~ComicCoverRunnable()
 
 void ComicCoverRunnable::abort()
 {
+    QMutexLocker locker(&d->abortMutex);
     d->abort = true;
 }
 
@@ -168,29 +175,29 @@ void ComicCoverRunnable::run()
         QMimeDatabase db;
         db.mimeTypeForFile(d->id, QMimeDatabase::MatchContent);
         const QMimeType mime = db.mimeTypeForFile(d->id, QMimeDatabase::MatchContent);
-        if(!d->abort && (mime.inherits("application/x-cbr") || mime.inherits("application/x-rar"))) {
+        if(!d->isAborted() && (mime.inherits("application/x-cbr") || mime.inherits("application/x-rar"))) {
             archive = new KRar(d->id);
-        } else if(!d->abort && (mime.inherits("application/x-cbz") || mime.inherits("application/zip"))) {
+        } else if(!d->isAborted() && (mime.inherits("application/x-cbz") || mime.inherits("application/zip"))) {
             archive = new KZip(d->id);
         }
         // FIXME: This goes elsewhere - see below
         // If this code seems familiar, it is adapted from kio-extras/thumbnail/comiccreator.cpp
         // The reason being that this code should be removed once our karchive-rar functionality is merged into
         // karchive proper.
-        if(!d->abort && archive && archive->open(QIODevice::ReadOnly)) {
+        if(!d->isAborted() && archive && archive->open(QIODevice::ReadOnly)) {
             // Get the archive's directory.
             const KArchiveDirectory* cArchiveDir = archive->directory();
-            if (!d->abort && cArchiveDir) {
+            if (!d->isAborted() && cArchiveDir) {
                 QStringList entries;
                 // Get and filter the entries from the archive.
                 d->getArchiveFileList(entries, QString(), cArchiveDir);
                 d->filterImages(entries);
-                if (!d->abort && !entries.isEmpty()) {
+                if (!d->isAborted() && !entries.isEmpty()) {
                     // Extract the cover file.
                     const KArchiveFile *coverFile = static_cast<const KArchiveFile*>(cArchiveDir->entry(entries[0]));
-                    if (!d->abort && coverFile) {
+                    if (!d->isAborted() && coverFile) {
                         bool success = img.loadFromData(coverFile->data());
-                        if(!d->abort && !success) {
+                        if(!d->isAborted() && !success) {
                             QIcon oops = QIcon::fromTheme("unknown");
                             img = oops.pixmap(oops.availableSizes().last()).toImage();
                             qCDebug(QTQUICK_LOG) << "Failed to load image with id:" << d->id;

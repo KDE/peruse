@@ -29,6 +29,7 @@
 #include <QElapsedTimer>
 #include <QIcon>
 #include <QMimeDatabase>
+#include <QMutex>
 #include <QThreadPool>
 #include <QDebug>
 
@@ -102,6 +103,11 @@ public:
     QSize requestedSize;
 
     bool abort{false};
+    QMutex abortMutex;
+    bool isAborted() {
+        QMutexLocker locker(&abortMutex);
+        return abort;
+    }
 
     QImage preview;
     bool jobCompletion{false};
@@ -141,9 +147,10 @@ void PreviewRunnable::run()
             mimetype = mimetypes.first().name();
         }
 
-        if(!d->abort) {
+        if(!d->isAborted()) {
             static QStringList allPlugins{KIO::PreviewJob::availablePlugins()};
             d->job = new KIO::PreviewJob(KFileItemList() << KFileItem(QUrl::fromLocalFile(d->id), mimetype, 0), ourSize, &allPlugins);
+            d->job->setAutoDelete(false);
             d->job->setIgnoreMaximumSize(true);
             d->job->setScaleType(KIO::PreviewJob::ScaledAndCached);
             connect(d->job, &KIO::PreviewJob::gotPreview, this, &PreviewRunnable::updatePreview);
@@ -160,7 +167,7 @@ void PreviewRunnable::run()
                 while(!d->jobCompletion) {
                     // Let's let the job do its thing and whatnot...
                     qApp->processEvents(QEventLoop::AllEvents, 100);
-                    if (d->abort) {
+                    if (d->isAborted()) {
                         d->job->deleteLater();
                         break;
                     }
@@ -197,6 +204,7 @@ void PreviewRunnable::run()
 void PreviewRunnable::abort()
 {
     if (d->job) {
+        QMutexLocker locker(&d->abortMutex);
         d->abort = true;
         d->job->kill();
     }
