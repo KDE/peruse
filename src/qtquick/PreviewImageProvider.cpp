@@ -150,7 +150,6 @@ void PreviewRunnable::run()
         if(!d->isAborted()) {
             static QStringList allPlugins{KIO::PreviewJob::availablePlugins()};
             d->job = new KIO::PreviewJob(KFileItemList() << KFileItem(QUrl::fromLocalFile(d->id), mimetype, 0), ourSize, &allPlugins);
-            d->job->setAutoDelete(false);
             d->job->setIgnoreMaximumSize(true);
             d->job->setScaleType(KIO::PreviewJob::ScaledAndCached);
             connect(d->job, &KIO::PreviewJob::gotPreview, this, &PreviewRunnable::updatePreview);
@@ -168,7 +167,6 @@ void PreviewRunnable::run()
                     // Let's let the job do its thing and whatnot...
                     qApp->processEvents(QEventLoop::AllEvents, 100);
                     if (d->isAborted()) {
-                        d->job->deleteLater();
                         break;
                     }
                     // This is not the prettiest thing ever, but let's not wait too long for previews...
