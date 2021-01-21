@@ -62,7 +62,7 @@ class ACBF_EXPORT Page : public QObject
     Q_PROPERTY(QString imageHref READ imageHref WRITE setImageHref NOTIFY imageHrefChanged)
     Q_PROPERTY(QStringList textLayerLanguages READ textLayerLanguages NOTIFY textLayerLanguagesChanged)
     Q_PROPERTY(QStringList framePointStrings READ framePointStrings NOTIFY framePointStringsChanged)
-    Q_PROPERTY(QStringList jumpPointStrings READ jumpPointStrings NOTIFY jumpPointStringsChanged)
+    Q_PROPERTY(QObjectList jumps READ jumps NOTIFY jumpsChanged)
 public:
     // Pages can also be cover pages, which means they can also be children of BookInfo
     explicit Page(Document* parent = nullptr);
@@ -257,7 +257,7 @@ public:
     /**
      * @return the list of jump objects for this page.
      */
-    QList<Jump*> jumps() const;
+    QObjectList jumps() const;
     /**
      * @param index - the index for which you want the jump object.
      * @return a jump object for the given frame.
@@ -299,15 +299,9 @@ public:
      */
     Q_INVOKABLE bool swapJumps(int swapThis, int withThis);
     /**
-     * @brief the amount of jumps on this page.
-     * This is a hack to ensure QML updates properly when swapJumps is called.
-     * @returns a QStringlist with the jump's points.
+     * @brief changes when the jumps change.
      */
-    QStringList jumpPointStrings();
-    /**
-     * @brief changes when the jump point strings change.
-     */
-    Q_SIGNAL void jumpPointStringsChanged();
+    Q_SIGNAL void jumpsChanged();
 
     /**
      * @returns whether this is the cover page.

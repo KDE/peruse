@@ -44,7 +44,7 @@ public:
     QString imageHref;
     QHash<QString, Textlayer*> textLayers;
     QList<Frame*> frames;
-    QList<Jump*> jumps;
+    QObjectList jumps;
     bool isCoverPage;
 };
 
@@ -95,8 +95,8 @@ void Page::toXml(QXmlStreamWriter* writer)
          frame->toXml(writer);
      }
 
-     for(Jump* jump : d->jumps) {
-         jump->toXml(writer);
+     for(QObject* jump : d->jumps) {
+         qobject_cast<Jump*>(jump)->toXml(writer);
      }
 
     writer->writeEndElement();
@@ -377,17 +377,18 @@ QStringList Page::framePointStrings()
         }
         frameList.append(framePoints.join(" "));
     }
+    
     return frameList;
 }
 
-QList<Jump *> Page::jumps() const
+QObjectList Page::jumps() const
 {
     return d->jumps;
 }
 
-Jump * Page::jump(int index) const
+Jump* Page::jump(int index) const
 {
-    return d->jumps.at(index);
+    return qobject_cast<Jump*>(d->jumps.at(index));
 }
 
 int Page::jumpIndex(Jump* jump) const
@@ -403,7 +404,7 @@ void Page::addJump(Jump* jump, int index)
     else {
         d->jumps.append(jump);
     }
-    emit jumpPointStringsChanged();
+    emit jumpsChanged();
 }
 
 void Page::addJump(int pageIndex, int index)
@@ -416,7 +417,7 @@ void Page::addJump(int pageIndex, int index)
 void Page::removeJump(Jump* jump)
 {
     d->jumps.removeAll(jump);
-    emit jumpPointStringsChanged();
+    emit jumpsChanged();
 }
 
 void Page::removeJump(int index)
@@ -428,23 +429,10 @@ bool Page::swapJumps(int swapThis, int withThis)
 {
     if(swapThis > -1 && withThis > -1) {
         d->jumps.swapItemsAt(swapThis, withThis);
-        emit jumpPointStringsChanged();
+        emit jumpsChanged();
         return true;
     }
     return false;
-}
-
-QStringList Page::jumpPointStrings()
-{
-    QStringList jumpList;
-    for (int i=0; i<d->jumps.size(); i++) {
-        QStringList points;
-        for (int p=0; p< jump(i)->pointCount(); p++) {
-            points.append(QString("%1,%2").arg(jump(i)->point(p).x()).arg(jump(i)->point(p).y()));
-        }
-        jumpList.append(points.join(" "));
-    }
-    return jumpList;
 }
 
 bool Page::isCoverPage() const
