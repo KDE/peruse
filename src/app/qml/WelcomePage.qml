@@ -8,7 +8,6 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12 as QtControls
 import QtQuick.Layouts 1.12
-import QtQuick.Window 2.15
 
 import org.kde.kirigami 2.12 as Kirigami
 
@@ -80,7 +79,7 @@ Bookshelf {
         width: root.width
         height: root.isLoading ? Kirigami.Units.gridUnit * 30 : Kirigami.Units.gridUnit * 5
         Behavior on height { NumberAnimation { duration: Kirigami.Units.longDuration; } }
-        visible: !searching && Window.window.width > Kirigami.Units.gridUnit * 30
+        visible: !searching && applicationWindow().width > Kirigami.Units.gridUnit * 30
         Kirigami.Heading {
             id: appNameLabel;
             anchors {

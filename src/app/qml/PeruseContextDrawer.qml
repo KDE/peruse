@@ -49,7 +49,7 @@ OverlayDrawer {
     property var actions: pageStack.layers.depth > 1
         ? pageStack.layers.currentItem.contextualActions
         : (pageStack.currentItem ? pageStack.currentItem.contextualActions : null)
-    enabled: actions !== undefined && actions.length > 0;
+    enabled: actions !== undefined && actions !== null && actions.length > 0;
     edge: Qt.RightEdge
     drawerOpen: false
 
