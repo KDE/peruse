@@ -464,14 +464,11 @@ int CategoryEntriesModel::bookCount() const
 QObject* CategoryEntriesModel::getEntry(int index)
 {
     PropertyContainer* obj = new PropertyContainer("book", this);
-    if(index < 0 && index > rowCount() -1) {
-        // don't be a silly person, you can't get a nothing...
-    }
-    else if(index > d->categoryModels.count() - 1) {
+    if(index > d->categoryModels.count() - 1 && index < rowCount()) {
         // This is a book - get a book!
         obj = qobject_cast<PropertyContainer*>(get(index - d->categoryModels.count()));
     }
-    else {
+    else if (index >= 0 && index < d->categoryModels.count()) {
         CategoryEntriesModel* catEntry = d->categoryModels.at(index);
         obj->setProperty("title", catEntry->name());
         obj->setProperty("categoryEntriesCount", catEntry->bookCount());
