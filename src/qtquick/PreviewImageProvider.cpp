@@ -26,7 +26,7 @@
 
 #include <QCoreApplication>
 #include <QDir>
-#include <QElapsedTimer>
+#include <QTimer>
 #include <QIcon>
 #include <QMimeDatabase>
 #include <QMutex>
@@ -110,7 +110,6 @@ public:
     }
 
     QImage preview;
-    bool jobCompletion{false};
     QPointer<KIO::PreviewJob> job{nullptr};
 };
 
@@ -129,7 +128,6 @@ PreviewRunnable::~PreviewRunnable()
 
 void PreviewRunnable::run()
 {
-    QImage image;
 
     QSize ourSize(KIconLoader::SizeEnormous, KIconLoader::SizeEnormous);
     if(d->requestedSize.width() > 0 && d->requestedSize.height() > 0)
@@ -155,48 +153,26 @@ void PreviewRunnable::run()
             connect(d->job, &KIO::PreviewJob::gotPreview, this, &PreviewRunnable::updatePreview);
             connect(d->job, &KIO::PreviewJob::failed, this, &PreviewRunnable::fallbackPreview);
             connect(d->job, &KIO::PreviewJob::finished, this, &PreviewRunnable::finishedPreview);
+            d->job->start();
 
-            d->jobCompletion = false;
-            QElapsedTimer breaker;
-            breaker.start();
-            if(d->job->exec())
-            {
-                // Do not access the job after this point! As we are requesting that
-                // it be deleted in finishedPreview(), don't expect it to be around.
-                while(!d->jobCompletion) {
-                    // Let's let the job do its thing and whatnot...
-                    qApp->processEvents(QEventLoop::AllEvents, 100);
-                    if (d->isAborted()) {
-                        break;
-                    }
-                    // This is not the prettiest thing ever, but let's not wait too long for previews...
-                    // Short-stop the process at 1.5 seconds
-                    if (breaker.elapsed() == 3000) {
-                        abort();
-                        qDebug() << "Not awesome, this is taking way too long" << d->id;
-                        break;
-                    }
+            QTimer* breaker = new QTimer();
+            breaker->moveToThread(thread());
+            breaker->setParent(this);
+            breaker->setSingleShot(true);
+            breaker->setInterval(3000);
+            connect(breaker, &QTimer::timeout, this, [this](){
+                if (!d->isAborted()) {
+                    abort();
+                    qDebug() << "Not awesome, this is taking way too long" << d->id;
                 }
-                if(!d->preview.isNull())
-                {
-                    if(d->requestedSize.width() > 0 && d->requestedSize.height() > 0)
-                    {
-                        image = d->preview.scaled(d->requestedSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-                    }
-                    else
-                    {
-                        image = d->preview;
-                    }
-                }
-            }
+            });
+            QTimer::singleShot(0, breaker, [breaker](){ breaker->start(); });
         }
     }
     else
     {
-        image = QImage(ourSize, QImage::Format_ARGB32);
+        Q_EMIT done(QImage(ourSize, QImage::Format_ARGB32));
     }
-
-    Q_EMIT done(image);
 }
 
 void PreviewRunnable::abort()
@@ -204,6 +180,7 @@ void PreviewRunnable::abort()
     if (d->job) {
         QMutexLocker locker(&d->abortMutex);
         d->abort = true;
+        locker.unlock();
         d->job->kill();
     }
 }
@@ -216,9 +193,7 @@ void PreviewRunnable::fallbackPreview(const KFileItem& item)
         QMimeDatabase db;
         QIcon mimeIcon = QIcon::fromTheme(db.mimeTypeForName(item.mimetype()).iconName());
         QSize actualSize = mimeIcon.actualSize(d->requestedSize);
-        QImage preview = mimeIcon.pixmap(actualSize).toImage();
-        d->preview = preview;
-        d->jobCompletion = true;
+        d->preview = mimeIcon.pixmap(actualSize).toImage();
     }
 }
 
@@ -233,5 +208,12 @@ void PreviewRunnable::updatePreview(const KFileItem&, const QPixmap& p)
 
 void PreviewRunnable::finishedPreview(KJob* /*job*/)
 {
-    d->jobCompletion = true;
+    if(!d->isAborted() && !d->preview.isNull())
+    {
+        if(d->requestedSize.width() > 0 && d->requestedSize.height() > 0)
+        {
+            d->preview = d->preview.scaled(d->requestedSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        }
+    }
+    Q_EMIT done(d->preview);
 }
