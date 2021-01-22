@@ -33,8 +33,6 @@ Bookshelf {
     property string categoryName: "welcomePage";
     property bool isCurrentContext: isCurrentPage && !applicationWindow().bookOpen
     property real heightBook: Kirigami.Units.gridUnit * 8
-    property string searchText: ""
-    property bool searching: searchText.length > 0
     property bool isLoading: true;
 
     function updateRecent() {

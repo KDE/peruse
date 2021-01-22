@@ -56,6 +56,8 @@ Kirigami.ScrollablePage {
     property int sectionCriteria: ViewSection.FirstCharacter;
     signal bookSelected(string filename, int currentPage);
     property string headerText;
+    property string searchText: ""
+    property bool searching: searchText.length > 0
     property bool isSearching: searchFilterProxy.filterString.length > 0;
 
     function openBook(index) {
@@ -140,7 +142,7 @@ Kirigami.ScrollablePage {
         model: isSearching ? searchFilterProxy : root.model;
         Peruse.FilterProxy {
             id: searchFilterProxy;
-            sourceModel: shelfList.model;
+            sourceModel: root.model;
         }
         keyNavigationEnabled: true;
         clip: true;
