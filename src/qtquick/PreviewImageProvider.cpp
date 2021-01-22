@@ -111,6 +111,7 @@ public:
 
     QImage preview;
     QPointer<KIO::PreviewJob> job{nullptr};
+    QString mimetype;
 };
 
 PreviewRunnable::PreviewRunnable(const QString& id, const QSize& requestedSize)
@@ -139,15 +140,14 @@ void PreviewRunnable::run()
     {
         QMimeDatabase db;
         QList<QMimeType> mimetypes = db.mimeTypesForFileName(d->id);
-        QString mimetype;
         if(mimetypes.count() > 0)
         {
-            mimetype = mimetypes.first().name();
+            d->mimetype = mimetypes.first().name();
         }
 
         if(!d->isAborted()) {
             static QStringList allPlugins{KIO::PreviewJob::availablePlugins()};
-            d->job = new KIO::PreviewJob(KFileItemList() << KFileItem(QUrl::fromLocalFile(d->id), mimetype, 0), ourSize, &allPlugins);
+            d->job = new KIO::PreviewJob(KFileItemList() << KFileItem(QUrl::fromLocalFile(d->id), d->mimetype, 0), ourSize, &allPlugins);
             d->job->setIgnoreMaximumSize(true);
             d->job->setScaleType(KIO::PreviewJob::ScaledAndCached);
             connect(d->job, &KIO::PreviewJob::gotPreview, this, &PreviewRunnable::updatePreview);
@@ -208,10 +208,15 @@ void PreviewRunnable::updatePreview(const KFileItem&, const QPixmap& p)
 
 void PreviewRunnable::finishedPreview(KJob* /*job*/)
 {
-    if(!d->isAborted() && !d->preview.isNull())
-    {
-        if(d->requestedSize.width() > 0 && d->requestedSize.height() > 0)
-        {
+    if(d->isAborted()) {
+        if (d->preview.isNull()) {
+            QMimeDatabase db;
+            QIcon mimeIcon = QIcon::fromTheme(db.mimeTypeForName(d->mimetype).iconName());
+            QSize actualSize = mimeIcon.actualSize(d->requestedSize);
+            d->preview = mimeIcon.pixmap(actualSize).toImage();
+        }
+    } else {
+        if(d->requestedSize.width() > 0 && d->requestedSize.height() > 0) {
             d->preview = d->preview.scaled(d->requestedSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
         }
     }
