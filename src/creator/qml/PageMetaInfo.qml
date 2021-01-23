@@ -257,7 +257,8 @@ Kirigami.ScrollablePage {
             Kirigami.FormData.isSection: true;
         }
         Repeater {
-            model: page.jumpPointStrings
+            id: jumpsRepeater;
+            model: page.jumps
             delegate: Kirigami.SwipeListItem {
                 Layout.fillWidth: true
                 height: childrenRect.height
@@ -274,7 +275,7 @@ Kirigami.ScrollablePage {
                         text: i18nc("swap the position of this jump with the next one", "Move Down");
                         iconName: "go-down"
                         onTriggered: { page.swapJumps(index, index + 1); }
-                        enabled: index < page.jumpPointStrings.length - 1;
+                        enabled: index < jumpsRepeater.count - 1;
                         visible: enabled;
                     },
                     Kirigami.Action {
@@ -310,10 +311,10 @@ Kirigami.ScrollablePage {
                         from: 0;
                         to: 99;
                         id: jumpIndexSpin;
-                        value: page.jump(index).pageIndex;
+                        value: modelData.pageIndex;
                         onValueChanged: {
-                            if (page.jump(index).pageIndex !== value) {
-                                page.jump(index).pageIndex = value;
+                            if (modelData.pageIndex !== value) {
+                                modelData.pageIndex = value;
                             }
                         }
                     }

@@ -160,13 +160,13 @@ Kirigami.Page {
         }
 
         Repeater {
-            model: root.currentPage.jumpPointStrings
+            model: root.currentPage.jumps
 
             Rectangle {
-                width: coverImage.muliplierWidth * root.currentPage.jump(index).bounds.width;
-                height: coverImage.muliplierHeight * root.currentPage.jump(index).bounds.height;
-                x: coverImage.muliplierWidth * root.currentPage.jump(index).bounds.x + coverImage.offsetX
-                y: coverImage.muliplierHeight * root.currentPage.jump(index).bounds.y + coverImage.offsetY;
+                width: coverImage.muliplierWidth * modelData.bounds.width;
+                height: coverImage.muliplierHeight * modelData.bounds.height;
+                x: coverImage.muliplierWidth * modelData.bounds.x + coverImage.offsetX
+                y: coverImage.muliplierHeight * modelData.bounds.y + coverImage.offsetY;
                 border.color: "green";
                 color: "transparent";
                 opacity: 0.5;
@@ -300,7 +300,7 @@ Kirigami.Page {
                 root.textTypes = root.currentPage.textLayer("").textarea(index).availableTypes();
                 root.currentPage.textLayer("").textarea(index).textRotation = rotation;
             } else if (type===2) {
-                index = root.currentPage.jumpPointStrings.length;
+                index = root.currentPage.jumps.length;
                 root.currentPage.addJump(index);
                 root.currentPage.jump(index).setPointsFromRect(topLeft, bottomRight);
                 root.currentPage.jump(index).pageIndex = pageIndex;
