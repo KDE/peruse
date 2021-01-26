@@ -44,7 +44,7 @@ public:
     QString imageHref;
     QHash<QString, Textlayer*> textLayers;
     QList<Frame*> frames;
-    QObjectList jumps;
+    QList<Jump*> jumps;
     bool isCoverPage;
 };
 
@@ -95,8 +95,8 @@ void Page::toXml(QXmlStreamWriter* writer)
          frame->toXml(writer);
      }
 
-     for(QObject* jump : d->jumps) {
-         qobject_cast<Jump*>(jump)->toXml(writer);
+     for(Jump* jump : d->jumps) {
+         jump->toXml(writer);
      }
 
     writer->writeEndElement();
@@ -383,12 +383,18 @@ QStringList Page::framePointStrings()
 
 QObjectList Page::jumps() const
 {
-    return d->jumps;
+    QObjectList jumpsList;
+    
+    for(int i = 0; i < d->jumps.size(); i++) {
+        jumpsList.append(d->jumps.at(i));
+    }
+    
+    return jumpsList;
 }
 
 Jump* Page::jump(int index) const
 {
-    return qobject_cast<Jump*>(d->jumps.at(index));
+    return d->jumps.at(index);
 }
 
 int Page::jumpIndex(Jump* jump) const
