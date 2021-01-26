@@ -28,6 +28,7 @@
 #include <QHash>
 #include <QXmlStreamReader>
 #include <QTimer>
+#include <QtGlobal>
 
 #include <acbf_debug.h>
 
@@ -413,16 +414,11 @@ int Page::jumpIndex(Jump* jump) const
 
 void Page::addJump(Jump* jump, int index)
 {
-    QObject::connect(jump, &Jump::pointCountChanged, &d->jumpsUpdateTimer, [this]() {
-        d->jumpsUpdateTimer.start();
-    });
-    QObject::connect(jump, &Jump::boundsChanged, &d->jumpsUpdateTimer, [this]() {
-        d->jumpsUpdateTimer.start();
-    });
-    QObject::connect(jump, &Jump::pageIndexChanged, &d->jumpsUpdateTimer, [this]() {
-        d->jumpsUpdateTimer.start();
-    });
-    QObject::connect(jump, &QObject::destroyed, &d->jumpsUpdateTimer, [this]() {
+    QObject::connect(jump, &Jump::pointCountChanged, &d->jumpsUpdateTimer, QOverload<>::of(&QTimer::start));
+    QObject::connect(jump, &Jump::boundsChanged, &d->jumpsUpdateTimer, QOverload<>::of(&QTimer::start));
+    QObject::connect(jump, &Jump::pageIndexChanged, &d->jumpsUpdateTimer, QOverload<>::of(&QTimer::start));
+    QObject::connect(jump, &QObject::destroyed, &d->jumpsUpdateTimer, [this, jump]() {
+        d->jumps.removeAll(jump);
         d->jumpsUpdateTimer.start();
     });
     
