@@ -61,7 +61,7 @@ Page::Page(Document* parent)
     Q_UNUSED(typeId);
     
     QObject::connect(&d->jumpsUpdateTimer, &QTimer::timeout, &d->jumpsUpdateTimer, [this]() {
-        emit jumpsChanged();
+        Q_EMIT jumpsChanged();
     });
 }
 
