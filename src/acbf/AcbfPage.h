@@ -299,7 +299,7 @@ public:
      */
     Q_INVOKABLE bool swapJumps(int swapThis, int withThis);
     /**
-     * @brief changes when the jumps change.
+     * @brief Emitted when the list of jumps changes.
      */
     Q_SIGNAL void jumpsChanged();
 
