@@ -27,6 +27,7 @@
 
 #include <QHash>
 #include <QXmlStreamReader>
+#include <QTimer>
 
 #include <acbf_debug.h>
 
@@ -37,7 +38,10 @@ class Page::Private
 public:
     Private()
         : isCoverPage(false)
-    {}
+    {
+        jumpsUpdateTimer.setSingleShot(true);
+        jumpsUpdateTimer.setInterval(0);
+    }
     QString bgcolor;
     QString transition;
     QHash<QString, QString> title;
@@ -45,6 +49,7 @@ public:
     QHash<QString, Textlayer*> textLayers;
     QList<Frame*> frames;
     QList<Jump*> jumps;
+    QTimer jumpsUpdateTimer;
     bool isCoverPage;
 };
 
@@ -54,6 +59,10 @@ Page::Page(Document* parent)
 {
     static const int typeId = qRegisterMetaType<Page*>("Page*");
     Q_UNUSED(typeId);
+    
+    QObject::connect(&d->jumpsUpdateTimer, &QTimer::timeout, &d->jumpsUpdateTimer, [this]() {
+        emit jumpsChanged();
+    });
 }
 
 Page::~Page() = default;
@@ -150,7 +159,7 @@ bool Page::fromXml(QXmlStreamReader *xmlReader)
              }
              
              // Jumps have no child elements, so we need to force the reader to go to the next one.
-             d->jumps.append(newJump);
+             addJump(newJump, -1);
              xmlReader->readNext();
          }
         else
@@ -404,12 +413,25 @@ int Page::jumpIndex(Jump* jump) const
 
 void Page::addJump(Jump* jump, int index)
 {
-    if(index > -1 && d->jumps.count() < index) {
+    QObject::connect(jump, &Jump::pointCountChanged, &d->jumpsUpdateTimer, [this]() {
+        d->jumpsUpdateTimer.start();
+    });
+    QObject::connect(jump, &Jump::boundsChanged, &d->jumpsUpdateTimer, [this]() {
+        d->jumpsUpdateTimer.start();
+    });
+    QObject::connect(jump, &Jump::pageIndexChanged, &d->jumpsUpdateTimer, [this]() {
+        d->jumpsUpdateTimer.start();
+    });
+    QObject::connect(jump, &QObject::destroyed, &d->jumpsUpdateTimer, [this]() {
+        d->jumpsUpdateTimer.start();
+    });
+    
+    if(index > -1 && index < d->jumps.count()) {
         d->jumps.insert(index, jump);
-    }
-    else {
+    } else {
         d->jumps.append(jump);
     }
+    
     emit jumpsChanged();
 }
 
