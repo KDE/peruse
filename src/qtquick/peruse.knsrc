@@ -1,4 +1,5 @@
 [KNewStuff3]
+Name=Books
 ProvidersUrl=https://autoconfig.kde.org/ocs/providers.xml
 Categories=Comics,Sci-Fi,Fantasy
 XdgTargetDir=comics
