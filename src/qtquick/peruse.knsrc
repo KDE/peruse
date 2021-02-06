@@ -1,5 +1,11 @@
 [KNewStuff3]
 Name=Books
+Name[ca]=Llibres
+Name[nl]=Boeken
+Name[pt]=Livros
+Name[sv]=Böcker
+Name[uk]=Книги
+Name[x-test]=xxBooksxx
 ProvidersUrl=https://autoconfig.kde.org/ocs/providers.xml
 Categories=Comics,Sci-Fi,Fantasy
 XdgTargetDir=comics
