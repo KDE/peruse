@@ -74,6 +74,7 @@ public:
     bool isDirty;
     bool isLoading;
     QMimeDatabase mimeDatabase;
+    QString acbfEntryName;
 
     void closeBook() {
         q->beginResetModel();
@@ -94,6 +95,7 @@ public:
         fileEntriesToDelete.clear();
         Q_EMIT q->fileEntriesToDeleteChanged();
         q->endResetModel();
+        acbfEntryName.clear();
     }
 
     static int counter()
@@ -225,7 +227,6 @@ void ArchiveBookModel::setFilename(QString newFilename)
             Q_EMIT fileEntriesChanged();
 
             // First check and see if we've got an ACBF document in there...
-            QString acbfEntry;
             QString comicInfoEntry;
             QStringList xmlFiles;
             QLatin1String acbfSuffix(".acbf");
@@ -236,7 +237,7 @@ void ArchiveBookModel::setFilename(QString newFilename)
             {
                 if(entry.toLower().endsWith(acbfSuffix))
                 {
-                    acbfEntry = entry;
+                    d->acbfEntryName = entry;
                     break;
                 }
                 if(entry.toLower().endsWith(xmlSuffix)) {
@@ -252,10 +253,10 @@ void ArchiveBookModel::setFilename(QString newFilename)
                 }
             }
             images.sort();
-            if(!acbfEntry.isEmpty())
+            if(!d->acbfEntryName.isEmpty())
             {
                 AdvancedComicBookFormat::Document* acbfDocument = new AdvancedComicBookFormat::Document(this);
-                const KArchiveFile* archFile = d->archive->directory()->file(acbfEntry);
+                const KArchiveFile* archFile = d->archive->directory()->file(d->acbfEntryName);
                 if(acbfDocument->fromXml(QString(archFile->data())))
                 {
                     setAcbfData(acbfDocument);
@@ -548,9 +549,16 @@ bool ArchiveBookModel::saveBook()
         KZip* archive = new KZip(archiveFileName);
         archive->open(QIODevice::ReadWrite);
 
+        QString acbfFileName{d->acbfEntryName};
+        if (acbfFileName.isEmpty()) {
+            acbfFileName = QStringLiteral("metadata.acbf");
+        } else {
+            // If we actually /have/ an acbf filename already, let's not copy the old one across...
+            d->fileEntriesToDelete << acbfFileName;
+        }
         // We're a zip file... size isn't used
         setProcessingDescription(i18n("Writing in ACBF data"));
-        archive->prepareWriting("metadata.acbf", fileInfo.owner(), fileInfo.group(), 0);
+        archive->prepareWriting(acbfFileName, fileInfo.owner(), fileInfo.group(), 0);
         AdvancedComicBookFormat::Document* acbfDocument = qobject_cast<AdvancedComicBookFormat::Document*>(acbfData());
         if(!acbfDocument)
         {
