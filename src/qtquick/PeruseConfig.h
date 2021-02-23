@@ -45,6 +45,10 @@ class PeruseConfig : public QObject
      * \brief new stuff location is for the location of the KNewStuff config for the GHNS protocol.
      */
     Q_PROPERTY(QString newstuffLocation READ newstuffLocation NOTIFY newstuffLocationChanged)
+    /**
+     * \brief boolean representing whether or not we should animate jumps on the page
+     */
+    Q_PROPERTY(bool animateJumpAreas READ animateJumpAreas WRITE setAnimateJumpAreas NOTIFY animateJumpAreasChanged)
 public:
     /**
      * \brief Enum holding the preferred zoom mode.
@@ -100,6 +104,22 @@ public:
      * \brief Fires when the location to the KNewStuff config is changed.
      */
     Q_SIGNAL void newstuffLocationChanged();
+
+    /**
+     * @return a boolean representing  value of animateJumpAreas property
+     */
+    bool animateJumpAreas() const;
+
+    /**
+     * \biref sets the animateJumpAreas property value to the passed parameter
+     * @param animate the new value for animateJumpAreas property
+     */
+    void setAnimateJumpAreas(bool animate);
+
+    /**
+     * \biref Fires when the animateJumpAreas property gets changed
+     */
+    Q_SIGNAL void animateJumpAreasChanged();
 
     /**
      * \brief Fires when there is an config error message to show.

@@ -52,6 +52,7 @@ PeruseConfig::PeruseConfig(QObject* parent)
         locations << QStandardPaths::standardLocations(QStandardPaths::DownloadLocation);
         locations << QString("%1/comics").arg(QStandardPaths::standardLocations(QStandardPaths::GenericDataLocation).first());
         d->config.group("general").writeEntry("book locations", locations);
+        d->config.group("general").writeEntry("animate jump areas", true);
         d->config.sync();
     }
 }
@@ -161,6 +162,22 @@ QString PeruseConfig::newstuffLocation() const
         knsrc = knsrc.prepend("/usr").prepend(qgetenv("APPDIR"));
     }
     return knsrc;
+}
+
+bool PeruseConfig::animateJumpAreas() const
+{
+    return d->config.group("general").readEntry("animate jump areas", true);
+}
+
+void PeruseConfig::setAnimateJumpAreas(bool animate)
+{
+    bool animateJumpAreasCurrentVal = animateJumpAreas();
+
+    if(animateJumpAreasCurrentVal != animate) {
+        d->config.group("general").writeEntry("animate jump areas", animate);
+        d->config.sync();
+        emit animateJumpAreasChanged();
+    }
 }
 
 QString PeruseConfig::homeDir() const

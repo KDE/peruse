@@ -95,6 +95,7 @@ ViewerBase {
         }
         onGoNextPage: root.goNextPage();
         onGoPreviousPage: root.goPreviousPage();
+        onGoPage: root.goPage(pageNumber);
         imageWidth: root.width;
         imageHeight: root.height;
     }

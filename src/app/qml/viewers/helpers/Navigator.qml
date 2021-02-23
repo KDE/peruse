@@ -36,6 +36,8 @@ Item {
     signal rightRequested()
     signal tapped(point eventPoint);
     signal doubleTapped(point eventPoint);
+    
+    property bool acceptTaps: true;
 
     Timer {
         id: swipeTimer
@@ -103,12 +105,13 @@ Item {
         }
         width: parent.width / 6;
         TapHandler {
+            enabled: acceptTaps;
             onTapped: component.leftRequested();
         }
         MouseArea {
             anchors.fill: parent
-            enabled: !Kirigami.Settings.tabletMode
-            hoverEnabled: true;
+            enabled: !Kirigami.Settings.tabletMode && acceptTaps;
+            hoverEnabled: acceptTaps;
             acceptedButtons: Qt.NoButton
             onPositionChanged: {
                 var hWidth = width/2;
@@ -121,6 +124,10 @@ Item {
             }
             onExited: {
                 leftPageIcon.opacity = 0;
+            }
+            onHoverEnabledChanged: {
+                if(!hoverEnabled)
+                    leftPageIcon.opacity = 0;
             }
         }
 
@@ -148,6 +155,7 @@ Item {
             bottom: parent.bottom
         }
         TapHandler {
+            enabled: acceptTaps;
             onTapped: component.tapped(eventPoint.position);
             onDoubleTapped: component.doubleTapped(eventPoint.position);
         }
@@ -161,12 +169,13 @@ Item {
         }
         width: parent.width / 6;
         TapHandler {
+            enabled: acceptTaps;
             onTapped: component.rightRequested();
         }
         MouseArea {
             anchors.fill: parent
-            enabled: !Kirigami.Settings.tabletMode
-            hoverEnabled: true;
+            enabled: !Kirigami.Settings.tabletMode && acceptTaps;
+            hoverEnabled: acceptTaps;
             acceptedButtons: Qt.NoButton
             onPositionChanged: {
                 var hWidth = width/2;
@@ -179,6 +188,11 @@ Item {
             }
             onExited: {
                 rightPageIcon.opacity = 0;
+            }
+            onHoverEnabledChanged: {
+                if(!hoverEnabled) {
+                    rightPageIcon.opacity = 0;
+                }
             }
         }
 

@@ -110,6 +110,9 @@ Kirigami.Page {
             bookInfo.showBookInfo(file);
         }
     }
+    function setCurrentPage(pageNumber) {
+        viewLoader.item.currentPage = pageNumber;
+    }
     function closeBook() {
         applicationWindow().contextDrawer.close();
         // also for storing current page (otherwise postponed a bit after page change, done here as well to ensure it really happens)
@@ -396,6 +399,7 @@ Kirigami.Page {
                 }
                 onGoNextPage: root.nextPage();
                 onGoPreviousPage: root.previousPage();
+                onGoPage: root.setCurrentPage(pageNumber);
             }
         }
         Kirigami.PlaceholderMessage {

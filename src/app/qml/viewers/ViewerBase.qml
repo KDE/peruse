@@ -34,6 +34,7 @@ Item {
     id: root;
     signal goNextPage();
     signal goPreviousPage();
+    signal goPage(int pageNumber);
     // Fired when the viewer has completed loading the file.
     // Success is true if this was successful, and false otherwise.
     signal loadingCompleted(bool success);

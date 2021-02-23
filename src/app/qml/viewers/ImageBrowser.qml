@@ -37,6 +37,7 @@ ListView {
     function goPreviousFrame() { root.currentItem.goPreviousFrame(); }
     signal goNextPage();
     signal goPreviousPage();
+    signal goPage(int pageNumber);
 
     onWidthChanged: restorationTimer.start()
     onHeightChanged: restorationTimer.start()
@@ -54,6 +55,11 @@ ListView {
                 restorationTimer.start();
             }
         }
+    }
+
+    function navigateTo(pageNo, frameNo = -1) {
+        goPage(pageNo);
+        root.currentItem.currentFrame = frameNo;
     }
 
     interactive: false // No interactive flicky stuff here, we'll handle that with the navigator instance
@@ -90,6 +96,7 @@ ListView {
         contentHeight: imageHeight
         interactive: (contentWidth > width || contentHeight > height) && (totalFrames === 0)
         z: interactive ? 1000 : 0
+        property bool hasInteractiveObjects: false;
         function goNextFrame() { image.nextFrame(); }
         function goPreviousFrame() { image.previousFrame(); }
         function setColouredHole(holeRect,holeColor) {
@@ -255,11 +262,71 @@ ListView {
                 property int currentFrame: -1;
                 property QtObject currentFrameObj: image.currentPageObject && image.totalFrames > 0 && image.currentFrame > -1 ? image.currentPageObject.frame(currentFrame) : noFrame;
                 onCurrentFrameObjChanged: {
+                    checkForInteractiveObjectsTimer.start();
                     focusOnFrame(image.currentFrame);
                 }
                 property QtObject noFrame: QtObject {
                     property rect bounds: image.paintedRect
                     property color bgcolor: image.currentPageObject? image.currentPageObject.bgcolor: "transparent";
+                }
+                
+                /**
+                 * \brief returns true if the sent jump bounds are within the image's current frame
+                 * @param jumpObj - the given jump object
+                 */
+                function frameContainsJump(jumpObj) {
+                    if(flick.ListView.isCurrentItem) {
+                        if(image.currentFrameObj === noFrame) {
+                            return true;
+                        } 
+                        
+                        return jumpObj.bounds.x >= image.currentFrameObj.bounds.x && 
+                                jumpObj.bounds.y >= image.currentFrameObj.bounds.y &&
+                                (jumpObj.bounds.x + jumpObj.bounds.width) <= (image.currentFrameObj.bounds.x + image.currentFrameObj.bounds.width) &&
+                                (jumpObj.bounds.y + jumpObj.bounds.height) <= (image.currentFrameObj.bounds.y + image.currentFrameObj.bounds.height);
+                    }
+                    
+                    return false;
+                }
+                
+                Timer {
+                    id: checkForInteractiveObjectsTimer;
+                    interval: 1;
+                    running: false;
+                    repeat: false;
+                    onTriggered: {
+                        for(var i = 0; i < jumpsRepeater.count; i++) {
+                            if(image.frameContainsJump(jumpsRepeater.itemAt(i).jumpObject)) {
+                                flick.hasInteractiveObjects = true;
+                                return;
+                            }
+                        }
+                        
+                        flick.hasInteractiveObjects = false;
+                    }
+                }
+                
+                Repeater {
+                    id: jumpsRepeater;
+                    model: image.currentPageObject.jumps;
+                    
+                    Helpers.JumpHandler {
+                        jumpObject: modelData;
+                        
+                        offsetX: image.offsetX;
+                        offsetY: image.offsetY;
+                        
+                        widthMultiplier: image.muliplier;
+                        heightMultiplier: image.muliplier;
+                        
+                        visible: opacity > 0
+                        opacity: image.frameContainsJump(jumpObject) ? 1 : 0
+                        Behavior on opacity { NumberAnimation { duration: Kirigami.Units.shortDuration; easing.type: Easing.InOutQuad; } }
+                        
+                        onActivated: {
+                            root.navigateTo(jumpObject.pageIndex);
+                        }
+                    }
                 }
 
                 Repeater {
@@ -289,6 +356,7 @@ ListView {
                         bottomBorder: height - (frameRect.y + frameRect.height);
                     }
                 }
+                
                 MouseArea {
                     anchors.fill: parent;
                     enabled: flick.interactive;
@@ -311,6 +379,7 @@ ListView {
 
     Helpers.Navigator {
         enabled: root.currentItem ? !root.currentItem.interactive : false;
+        acceptTaps: !root.currentItem.hasInteractiveObjects;
         anchors.fill: parent;
         onLeftRequested: root.layoutDirection === Qt.RightToLeft? root.goNextFrame(): root.goPreviousFrame();
         onRightRequested: root.layoutDirection === Qt.RightToLeft? root.goPreviousFrame(): root.goNextFrame();

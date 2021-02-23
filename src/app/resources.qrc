@@ -26,5 +26,6 @@
         <file>qml/viewers/ViewerBase.qml</file>
         <file>qml/viewers/helpers/HolyRectangle.qml</file>
         <file>qml/viewers/helpers/Navigator.qml</file>
+        <file>qml/viewers/helpers/JumpHandler.qml</file>
     </qresource>
 </RCC>
