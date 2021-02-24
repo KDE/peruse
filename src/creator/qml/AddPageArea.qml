@@ -31,13 +31,15 @@ import org.kde.kirigami 2.12 as Kirigami
 Kirigami.OverlaySheet {
     id: root;
     signal save();
+    property string pageBgColor: "";
+    property string pageTextBgColor: "";
     property alias type: typeComboBox.currentIndex;
     property point topLeft;
     property point bottomRight;
     property string imageSource;
-    property string bgColor: "#ffffff";
-    property string textBgColor: bgColor;
-    property int pageIndex: pageIndexComboBox.currentIndex+1;
+    property string bgColor: pageBgColor !== ""? pageBgColor : "#ffffff";
+    property string textBgColor: pageTextBgColor !== ""? pageTextBgColor : bgColor;
+    property int pageIndex: pageIndexComboBox.currentIndex + 1;
     property var pages: [];
     property var availableTypes: [];
 
@@ -46,6 +48,18 @@ Kirigami.OverlaySheet {
     property alias paragraphs: textAreaInput.text;
     property alias rotation: textRotation.value;
     property alias textTypeIndex: textType.currentIndex;
+    
+    function resetFields() {
+        textAreaInput.text = "";
+        invertedSwitch.checked = false;
+        transparentSwitch.checked = false;
+        textRotation.value = 0;
+        textType.currentIndex = 0;
+        typeComboBox.currentIndex = 0;
+        pageIndexComboBox.currentIndex = 0;
+        bgColor = pageBgColor !== ""? pageBgColor : "#ffffff";
+        textBgColor = pageTextBgColor !== ""? pageTextBgColor : bgColor;
+    }
 
     onBottomRightChanged: {
         var widthFull = Math.max(bottomRight.x, topLeft.x) - Math.min(bottomRight.x, topLeft.x);

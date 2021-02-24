@@ -266,8 +266,8 @@ Kirigami.Page {
         id: addPageArea
         imageSource: pageUrl;
         pages: root.pageList;
-        bgColor: root.currentPage.bgcolor !== ""? root.currentPage.bgcolor: "#ffffff";
-        textBgColor: root.currentPage.textLayer("").bgcolor !== ""? root.currentPage.textLayer("").bgcolor: bgColor;
+        pageBgColor: root.currentPage.bgColor? root.currentPage.bgColor : "";
+        pageTextBgColor: root.currentPage.textLayer("").bgColor? root.currentPage.textLayer("").bgColor : "";
         availableTypes: root.textTypes;
         transparent: false;
         inverted: false;
@@ -305,24 +305,12 @@ Kirigami.Page {
                 root.currentPage.jump(index).setPointsFromRect(topLeft, bottomRight);
                 root.currentPage.jump(index).pageIndex = pageIndex;
             }
-            resetEverything();
+            resetFields();
         }
         onSheetOpenChanged: {
             if (sheetOpen) {
-                resetEverything();
+                resetFields();
             }
-        }
-
-        function resetEverything() {
-            // Reset everything again.
-            paragraphs = "";
-            inverted = false;
-            transparent = false;
-            rotation = 0;
-            bgColor = root.currentPage.bgcolor !== ""? root.currentPage.bgcolor: "#ffffff";
-            textBgColor = root.currentPage.textLayer("").bgcolor !== ""? root.currentPage.textLayer("").bgcolor: bgColor;
-            textTypeIndex = 0;
-            pageIndex = 0;
         }
     }
 
