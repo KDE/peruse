@@ -564,9 +564,9 @@ bool ArchiveBookModel::saveBook()
         {
             acbfDocument = d->createNewAcbfDocumentFromLegacyInformation();
         }
-        QString acbfString = acbfDocument->toXml();
-        archive->writeData(acbfString.toUtf8(), acbfString.size());
-        archive->finishWriting(acbfString.size());
+        QByteArray acbfStringUtf8 = acbfDocument->toXml().toUtf8();
+        archive->writeData(acbfStringUtf8, acbfStringUtf8.size());
+        archive->finishWriting(acbfStringUtf8.size());
 
         setProcessingDescription(i18n("Copying across all files not marked for deletion"));
         const QStringList allFiles = fileEntries();
