@@ -307,6 +307,17 @@ ListView {
                     frameJumps = newFrameJumps;
                 }
 
+                Repeater {
+                    property QtObject textLayer: image.currentPageObject.textLayer("")
+                    model: textLayer ? textLayer.textareas : 0;
+                    Helpers.TextAreaHandler {
+                        multiplier: image.muliplier
+                        offsetX: image.offsetX
+                        offsetY: image.offsetY
+                        textArea: modelData
+                    }
+                }
+
                 /**
                  * \brief returns true if the sent jump bounds are within the image's current frame
                  * @param jumpObj - the given jump object
