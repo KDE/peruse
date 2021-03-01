@@ -152,6 +152,9 @@ QList<QPoint> Textarea::points() const
 
 QPoint Textarea::point(int index) const
 {
+    if (index < 0 || index >= d->points.count()) {
+        return QPoint{};
+    }
     return d->points.at(index);
 }
 
