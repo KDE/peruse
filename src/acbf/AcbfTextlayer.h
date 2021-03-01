@@ -42,6 +42,7 @@ class ACBF_EXPORT Textlayer : public QObject
     Q_PROPERTY(QString language READ language WRITE setLanguage NOTIFY languageChanged)
     Q_PROPERTY(QString bgcolor READ bgcolor WRITE setBgcolor NOTIFY bgcolorChanged)
     Q_PROPERTY(QStringList textareaPointStrings READ textareaPointStrings NOTIFY textareaPointStringsChanged)
+    Q_PROPERTY(QObjectList textareas READ textareas NOTIFY textareasChanged)
 public:
     explicit Textlayer(Page* parent = nullptr);
     ~Textlayer() override;
@@ -91,7 +92,11 @@ public:
     /**
      * @returns a list of textareas in this page.
      */
-    QList<Textarea*> textareas() const;
+    QObjectList textareas() const;
+    /**
+     * Fires when textareas changes
+     */
+    Q_SIGNAL void textareasChanged();
     int textAreaIndex(Textarea* textarea);
     /**
      * @param index - index of the textarea.

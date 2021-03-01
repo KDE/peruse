@@ -114,9 +114,13 @@ void Textlayer::setBgcolor(const QString& newColor)
     emit bgcolorChanged();
 }
 
-QList<Textarea *> Textlayer::textareas() const
+QObjectList Textlayer::textareas() const
 {
-    return d->textareas;
+    QObjectList areas;
+    for (Textarea* area : d->textareas) {
+        areas << area;
+    }
+    return areas;
 }
 
 int Textlayer::textAreaIndex(Textarea* textarea)
@@ -142,7 +146,8 @@ void Textlayer::addTextarea(Textarea* textarea, int index)
     else {
         d->textareas.append(textarea);
     }
-    emit textareaPointStringsChanged();
+    Q_EMIT textareasChanged();
+    Q_EMIT textareaPointStringsChanged();
 }
 
 void Textlayer::addTextarea(int index)
@@ -154,7 +159,8 @@ void Textlayer::addTextarea(int index)
 void Textlayer::removeTextarea(Textarea* textarea)
 {
     d->textareas.removeAll(textarea);
-    emit textareaPointStringsChanged();
+    Q_EMIT textareasChanged();
+    Q_EMIT textareaPointStringsChanged();
 }
 
 void Textlayer::removeTextarea(int index)
@@ -171,7 +177,8 @@ bool Textlayer::swapTextareas(int swapThis, int withThis)
         InternalReferenceObject* second = qobject_cast<InternalReferenceObject*>(d->textareas[withThis]);
         Q_EMIT first->propertyDataChanged();
         Q_EMIT second->propertyDataChanged();
-        emit textareaPointStringsChanged();
+        Q_EMIT textareasChanged();
+        Q_EMIT textareaPointStringsChanged();
         success = true;
     } else {
         qCWarning(ACBF_LOG) << "There was an attempt to swap two textareas, and at least one of them was outside the bounds of the current list of textareas in this layer:" << this << swapThis << withThis;
