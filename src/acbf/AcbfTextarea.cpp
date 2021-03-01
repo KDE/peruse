@@ -231,6 +231,12 @@ QRect Textarea::bounds() const
 
 QString Textarea::bgcolor() const
 {
+    if (d->bgcolor.isEmpty()) {
+        Textlayer* layer = qobject_cast<Textlayer*>(parent());
+        if (layer) {
+            return layer->bgcolor();
+        }
+    }
     return d->bgcolor;
 }
 
