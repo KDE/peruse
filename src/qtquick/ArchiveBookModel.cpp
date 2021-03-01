@@ -34,6 +34,7 @@
 
 #include <QCoreApplication>
 #include <QDir>
+#include <QFontDatabase>
 #include <QImageReader>
 #include <QMimeDatabase>
 #include <QQmlEngine>
@@ -47,6 +48,7 @@
 #include "KRar.h" // "" because it's a custom thing for now
 
 #include <qtquick_debug.h>
+#include <AcbfData.h>
 
 class ArchiveBookModel::Private
 {
@@ -61,6 +63,9 @@ public:
         , isLoading(false)
     {}
     ~Private() {
+        for (int fontId : fontIdByFilename.values()) {
+            fontDatabase.removeApplicationFont(fontId);
+        }
         delete archive;
     }
     ArchiveBookModel* q;
@@ -74,6 +79,8 @@ public:
     bool isDirty;
     bool isLoading;
     QMimeDatabase mimeDatabase;
+    QFontDatabase fontDatabase;
+    QHash<QString, int> fontIdByFilename;
     QString acbfEntryName;
 
     void closeBook() {
@@ -1438,4 +1445,66 @@ QString ArchiveBookModel::previewForId(const QString& id) const
         }
     }
     return QString();
+}
+
+QString ArchiveBookModel::fontFamilyName(const QString& fontFileName)
+{
+    QString familyName;
+    if (!fontFileName.isEmpty()) {
+        if (d->fontIdByFilename.contains(fontFileName)) {
+            familyName = QFontDatabase::applicationFontFamilies(d->fontIdByFilename.value(fontFileName)).first();
+        } else {
+            AdvancedComicBookFormat::Document* acbf = qobject_cast<AdvancedComicBookFormat::Document*>(acbfData());
+            if (acbf) {
+                AdvancedComicBookFormat::Binary* binary = qobject_cast<AdvancedComicBookFormat::Binary*>(acbf->objectByID(fontFileName));
+                if (binary) {
+                    int id = QFontDatabase::addApplicationFontFromData(binary->data());
+                    if (id > -1) {
+                        d->fontIdByFilename[fontFileName] = id;
+                        familyName = QFontDatabase::applicationFontFamilies(d->fontIdByFilename.value(fontFileName)).first();
+                    }
+                }
+            }
+            if (familyName.isEmpty()) {
+                QString foundEntry;
+                // If there's more files by the same name, just assume it's the first one in a DFS, because it won't be sensibly deducible anyway
+                for (const QString& entry : d->fileEntries) {
+                    if (entry.endsWith(fontFileName)) {
+                        foundEntry = entry;
+                        break;
+                    }
+                }
+                auto file = archiveFile(foundEntry);
+                if (file) {
+                    int id = QFontDatabase::addApplicationFontFromData(file->data());
+                    if (id > -1) {
+                        d->fontIdByFilename[fontFileName] = id;
+                        familyName = QFontDatabase::applicationFontFamilies(d->fontIdByFilename.value(fontFileName)).first();
+                    }
+                }
+            }
+        }
+    }
+    return familyName;
+}
+
+QString ArchiveBookModel::firstAvailableFont(const QStringList& fontList)
+{
+    QString availableFont;
+    for (const QString& fontName : fontList) {
+        QString actualName = fontName;
+        if (fontName.toLower().endsWith("ttf") || fontName.toLower().endsWith("ttc")) {
+            actualName = fontFamilyName(fontName);
+        }
+        if (actualName.isEmpty()) {
+            if (d->fontDatabase.hasFamily(fontName)) {
+                actualName = fontName;
+            }
+        }
+        if (!actualName.isEmpty()) {
+            availableFont = actualName;
+            break;
+        }
+    }
+    return availableFont;
 }

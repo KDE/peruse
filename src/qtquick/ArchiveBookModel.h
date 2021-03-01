@@ -250,6 +250,24 @@ public:
      */
     Q_INVOKABLE QString previewForId(const QString& id) const;
 
+    /**
+     * Get the family name for a font by its filename as stored in the ACBF data, or in the archive.
+     * The font will be loaded on the first call of this function, and removed when the model
+     * is destructed.
+     * @param fontFileName The filename, in the acbf document or archive, of the font you wish to load
+     * @return The first family name in the font, or an empty string if none was found
+     */
+    Q_INVOKABLE QString fontFamilyName(const QString& fontFileName);
+
+    /**
+     * Goes through a list of font families (such as that in a stylesheet) and returns the first one
+     * available in the system. This function will also attempt to load any fonts that are in the
+     * acbf data, or in the archive (using the fontFamilyName(QString) function)
+     * @param fontList The ordered list of fonts to attempt to locate, in a fail-through fashion
+     * @param The first font in the list that's available on the system. If none is found, an empty string is returned.
+     */
+    Q_INVOKABLE QString firstAvailableFont(const QStringList& fontList);
+
     friend class ArchiveImageRunnable;
 protected:
     const KArchiveFile* archiveFile(const QString& filePath) const;
