@@ -71,6 +71,11 @@ public:
     Q_INVOKABLE AdvancedComicBookFormat::Style* addStyle();
 
     /**
+     * Fetch a specific style based on the identifying markers
+     */
+    Q_INVOKABLE QObject* style(const QString& element, const QString& type, bool inverted);
+
+    /**
      * @brief set the contents of the style section
      * 
      * @param css a QString containing a css stylesheet.

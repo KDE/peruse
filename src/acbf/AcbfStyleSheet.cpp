@@ -94,6 +94,65 @@ Style * StyleSheet::addStyle()
     return newStyle;
 }
 
+static void imposeStyle(Style* imposeThis, Style* onThis) {
+    if (imposeThis && onThis) {
+        if (!imposeThis->color().isEmpty()) {
+            onThis->setColor(imposeThis->color());
+        }
+        if (!imposeThis->fontFamily().isEmpty()) {
+            onThis->setFontFamily(imposeThis->fontFamily());
+        }
+        if (!imposeThis->fontStyle().isEmpty()) {
+            onThis->setFontStyle(imposeThis->fontStyle());
+        }
+        if (!imposeThis->fontWeight().isEmpty()) {
+            onThis->setFontWeight(imposeThis->fontWeight());
+        }
+        if (!imposeThis->fontStretch().isEmpty()) {
+            onThis->setFontStretch(imposeThis->fontStretch());
+        }
+    }
+}
+
+QObject * AdvancedComicBookFormat::StyleSheet::style(const QString& element, const QString& type, bool inverted)
+{
+// 0) Apply the * style
+    Style* everyStyle{nullptr};
+// 1) Apply the style for the element, if one exists (e.g. \<text-area\>)
+    Style* elementStyle{nullptr};
+// 2) If there is a type specified, apply the style for the specified type, if one exists (e.g. \<text-area type=\"commentary\">)
+    Style* typeStyle{nullptr};
+// 3) If the element is marked as inverted, apply that element's inverted style, if one exists (e.g. \<text-area inverted=true\>)
+    Style* invertedStyle{nullptr};
+// 4) If the element is both a specified type and marked as inverted, apply the style for that type's inverted style, if one exists (e.g. \<text-area type=\"thought\" inverted=true\>)
+    Style* invertedTypeStyle{nullptr};
+
+    for( QObject* obj: d->styles) {
+        Style* aStyle = qobject_cast<Style*>(obj);
+        if (aStyle->element() == element && aStyle->type() == type && aStyle->inverted() == true) {
+            invertedTypeStyle = aStyle;
+        } else if (aStyle->element() == element && aStyle->type() == type && aStyle->inverted() == false) {
+            invertedStyle = aStyle;
+        } else if (aStyle->element() == element && aStyle->type() == type) {
+            typeStyle = aStyle;
+        } else if (aStyle->element() == element && aStyle->type().isEmpty()) {
+            elementStyle = aStyle;
+        } else if (aStyle->element() == QStringLiteral("*")) {
+            everyStyle = aStyle;
+        }
+    }
+    Style* aStyle = new Style(this);
+    imposeStyle(everyStyle, aStyle);
+    imposeStyle(elementStyle, aStyle);
+    imposeStyle(typeStyle, aStyle);
+    if (inverted) {
+        imposeStyle(invertedStyle, aStyle);
+        imposeStyle(invertedTypeStyle, aStyle);
+    }
+    qCDebug(ACBF_LOG) << aStyle->fontFamily() << aStyle->color();
+    return elementStyle;
+}
+
 void StyleSheet::setContents(const QString& css)
 {
     QVector<QStringRef> classes = css.splitRef('}', Qt::SkipEmptyParts);
