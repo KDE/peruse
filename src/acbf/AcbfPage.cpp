@@ -262,7 +262,7 @@ QList<Textlayer *> Page::textLayersForAllLanguages() const
 
 Textlayer * Page::textLayer(const QString& language) const
 {
-    if (!d->textLayers.keys().contains("") && language == QString()) {
+    if (!d->textLayers.keys().contains("") && language == QString() && d->textLayers.count() > 0) {
         return d->textLayers.values().at(0);
     }
     return d->textLayers.value(language);
