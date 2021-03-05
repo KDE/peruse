@@ -22,13 +22,15 @@
 import QtQuick 2.12
 import QtQuick.Shapes 1.15
 import org.kde.kirigami 2.7 as Kirigami
+import org.kde.peruse 0.1 as Peruse
 
 Item {
     id: component
-    property double multiplier
-    property int offsetX
-    property int offsetY
-    property var textArea
+    property QtObject model
+    property real multiplier: 1
+    property int offsetX: 0
+    property int offsetY: 0
+    property QtObject textArea: null
 
     property rect textareaRect: Qt.rect((component.multiplier * textArea.bounds.x) + component.offsetX,
                         (component.multiplier * textArea.bounds.y) + component.offsetY,
@@ -58,30 +60,15 @@ Item {
             }
         }
     }
-    Text {
+    Peruse.TextViewerItem {
+        id: textEdit
         anchors.fill: parent
-        textFormat: Text.StyledText
-        wrapMode: Text.Wrap
-        horizontalAlignment: Text.AlignHCenter
-        verticalAlignment: Text.AlignVCenter
-        fontSizeMode: Text.Fit
-        property QtObject style: root.model.acbfData.styleSheet.style("text-area", textArea.type, textArea.inverted);
-        color: style.color
-        minimumPixelSize: 10
-        font {
-            pixelSize: 250
-            family: root.model.firstAvailableFont(style.fontFamily)
-            italic: style.fontStyle === "italic"
-//             weight: style.fontWeight
-//             stretch: style.fontStretch
-        }
-        text: {
-            var allText = "";
-            for (var i = 0; i < textArea.paragraphs.length; ++i) {
-                allText += "<p>" + textArea.paragraphs[i] + "</p>";
-            }
-            //console.log("Constructing " + textArea.paragraphs.length + " paragraphs of text for " + textArea.bounds + allText + textArea.paragraphs);
-            return allText;
-        }
+
+        paragraphs: component.textArea.paragraphs
+        shape: component.textArea.points
+        shapeOffset: Qt.point((component.multiplier * component.textArea.bounds.x), (component.multiplier * component.textArea.bounds.y))
+        shapeMultiplier: component.multiplier
+        style: component.model.acbfData.styleSheet.style("text-area", textArea.type, textArea.inverted);
+        fontFamily: style ? component.model.firstAvailableFont(style.fontFamily) : ""
     }
 }
