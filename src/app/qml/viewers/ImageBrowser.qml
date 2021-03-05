@@ -308,9 +308,10 @@ ListView {
                 }
 
                 Repeater {
-                    property QtObject textLayer: image.currentPageObject.textLayer("")
+                    property QtObject textLayer: image.currentPageObject.textLayer("en")
                     model: textLayer ? textLayer.textareas : 0;
                     Helpers.TextAreaHandler {
+                        model: root.model
                         multiplier: image.muliplier
                         offsetX: image.offsetX
                         offsetY: image.offsetY
