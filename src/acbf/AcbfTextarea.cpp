@@ -145,9 +145,13 @@ bool Textarea::fromXml(QXmlStreamReader *xmlReader)
     return !xmlReader->hasError();
 }
 
-QList<QPoint> Textarea::points() const
+QVariantList Textarea::points() const
 {
-    return d->points;
+    QVariantList list;
+    for (const QPoint& point : d->points) {
+        list << point;
+    }
+    return list;
 }
 
 QPoint Textarea::point(int index) const

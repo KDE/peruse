@@ -50,6 +50,7 @@ class ACBF_EXPORT Textarea : public InternalReferenceObject
     Q_PROPERTY(bool inverted READ inverted WRITE setInverted NOTIFY invertedChanged)
     Q_PROPERTY(bool transparent READ transparent WRITE setTransparent NOTIFY transparentChanged)
     Q_PROPERTY(QStringList paragraphs READ paragraphs WRITE setParagraphs NOTIFY paragraphsChanged)
+    Q_PROPERTY(QVariantList points READ points NOTIFY pointCountChanged)
 
 public:
     explicit Textarea(Textlayer* parent = nullptr);
@@ -73,7 +74,7 @@ public:
     /**
      * @return a list of points that encompasses the textarea.
      */
-    QList<QPoint> points() const;
+    QVariantList points() const;
     /**
      * @param index - the index of the desired point.
      * @return a point for an index.
