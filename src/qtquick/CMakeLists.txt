@@ -15,6 +15,7 @@ set(qmlplugin_SRCS
     PreviewImageProvider.cpp
     PropertyContainer.cpp
     TextDocumentEditor.cpp
+    TextViewerItem.cpp
 )
 
 set(karchive_rar_SRCS
@@ -48,6 +49,7 @@ target_include_directories(peruseqmlplugin
     karchive-rar
     karchive-rar/unarr
     acbf
+    ${Qt5Quick_PRIVATE_INCLUDE_DIRS}
 )
 target_link_libraries (peruseqmlplugin
     PUBLIC

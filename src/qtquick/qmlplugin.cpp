@@ -34,6 +34,7 @@
 #include "FilterProxy.h"
 #include "PropertyContainer.h"
 #include "TextDocumentEditor.h"
+#include "TextViewerItem.h"
 
 #include "AcbfBinary.h"
 #include "AcbfReference.h"
@@ -64,6 +65,7 @@ void QmlPlugins::registerTypes(const char *uri)
     qmlRegisterType<FilterProxy>(uri, 0, 1, "FilterProxy");
 
     qmlRegisterType<TextDocumentEditor>(uri, 0, 1, "TextDocumentEditor");
+    qmlRegisterType<TextViewerItem>(uri, 0, 1, "TextViewerItem");
 
     qmlRegisterUncreatableType<AdvancedComicBookFormat::Reference>(uri, 0, 1, "Reference", "Don't attempt to create ACBF types directly, use the convenience functions on their container types for creating them");
     qmlRegisterUncreatableType<AdvancedComicBookFormat::Binary>(uri, 0, 1, "Binary", "Don't attempt to create ACBF types directly, use the convenience functions on their container types for creating them");
