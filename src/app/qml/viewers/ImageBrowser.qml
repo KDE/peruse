@@ -316,6 +316,7 @@ ListView {
                         offsetX: image.offsetX
                         offsetY: image.offsetY
                         textArea: modelData
+                        enabled: image.frameContainsJump(modelData)
                     }
                 }
 

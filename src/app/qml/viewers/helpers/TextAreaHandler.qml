@@ -64,11 +64,12 @@ Item {
         id: textEdit
         anchors.fill: parent
 
+        enabled: component.enabled
         paragraphs: component.textArea.paragraphs
         shape: component.textArea.points
         shapeOffset: Qt.point((component.multiplier * component.textArea.bounds.x), (component.multiplier * component.textArea.bounds.y))
         shapeMultiplier: component.multiplier
-        style: component.model.acbfData.styleSheet.style("text-area", textArea.type, textArea.inverted);
+        style: component.model.acbfData.styleSheet.style("text-area", component.textArea.type, component.textArea.inverted);
         fontFamily: style ? component.model.firstAvailableFont(style.fontFamily) : ""
     }
 }
