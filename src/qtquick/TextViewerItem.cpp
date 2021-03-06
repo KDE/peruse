@@ -201,8 +201,6 @@ public:
         layouts.clear();
 
         for (int p = 0; p < internalParagraphs.size(); ++p) {
-            qDebug() << "Setting up for" << internalParagraphs[p];
-
             // Use a separate text layout for each paragraph in the document.
             QTextLayout *textLayout = new QTextLayout(internalParagraphs[p], font);
             QTextOption option = QTextOption(Qt::AlignCenter);
@@ -341,6 +339,14 @@ TextViewerItem::TextViewerItem(QQuickItem* parent)
     connect(this, &QQuickItem::xChanged, d->throttle, QOverload<>::of(&QTimer::start));
     connect(this, &QQuickItem::yChanged, d->throttle, QOverload<>::of(&QTimer::start));
     connect(this, &QQuickItem::enabledChanged, d->throttle, QOverload<>::of(&QTimer::start));
+    connect(this, &QQuickItem::enabledChanged, this, [this](){
+        if (isEnabled()) {
+            d->throttle->start();
+        } else {
+            d->layouts.clear();
+            update();
+        }
+    });
 }
 
 TextViewerItem::~TextViewerItem()
