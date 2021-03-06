@@ -149,10 +149,11 @@ ListView {
         property alias totalFrames: image.totalFrames;
         property alias currentFrame: image.currentFrame;
         pixelAligned: true
-        Behavior on contentX { NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
-        Behavior on contentY { NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
-        Behavior on contentWidth { NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
-        Behavior on contentHeight { NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
+        property bool actuallyMoving: moving || xMover.running || yMover.running || widthMover.running || heightMover.running
+        Behavior on contentX { NumberAnimation { id: xMover; duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
+        Behavior on contentY { NumberAnimation { id: yMover; duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
+        Behavior on contentWidth { NumberAnimation { id: widthMover; duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
+        Behavior on contentHeight { NumberAnimation { id: heightMover; duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
         PinchArea {
             width: Math.max(flick.contentWidth, flick.width)
             height: Math.max(flick.contentHeight, flick.height)
@@ -316,7 +317,7 @@ ListView {
                         offsetX: image.offsetX
                         offsetY: image.offsetY
                         textArea: modelData
-                        enabled: image.frameContainsJump(modelData)
+                        enabled: image.frameContainsJump(modelData) && !flick.actuallyMoving
                     }
                 }
 
