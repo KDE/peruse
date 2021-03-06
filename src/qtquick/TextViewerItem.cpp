@@ -22,6 +22,7 @@
 #include "AcbfStyle.h"
 
 #include <QFontMetrics>
+#include <qmath.h>
 #include <QTimer>
 #include <private/qquicktextnode_p.h>
 
@@ -29,11 +30,18 @@ class TextViewerItem::Private {
 public:
     Private(TextViewerItem* qq)
         : q(qq)
-    {}
+    {
+        throttle = new QTimer(qq);
+        throttle->setInterval(1);
+        throttle->setSingleShot(true);
+        QObject::connect(throttle, &QTimer::timeout, qq, &QQuickItem::polish);
+
+    }
     ~Private() {
         qDeleteAll(layouts);
     }
     TextViewerItem* q;
+    QTimer* throttle{nullptr};
     QStringList paragraphs;
     QList<QPoint> shape;
     QPoint shapeOffset{0, 0};
@@ -282,15 +290,22 @@ public:
     }
 
     void positionLayouts() {
-        // Now attempt to do the text layouting, squeezing it upwards as long as it fits
-        int pixelSize{10};
-        font.setPixelSize(pixelSize);
-        while (attemptLayout() && pixelSize < 150) {
-            ++pixelSize;
+        int pixelSize{2};
+        if (paragraphs.count() > 0 && q->height() > (margin * 2) + pixelSize) {
+            // Now attempt to do the text layouting, squeezing it upwards until it no longer fits
+            // Cap it at the size of the polygon, divided by the number of paragraphs, minus our margin
+            int maximumSize{(qFloor(q->height()) / paragraphs.count()) - margin * 2};
             font.setPixelSize(pixelSize);
+            while (attemptLayout() && pixelSize < maximumSize) {
+                ++pixelSize;
+                font.setPixelSize(pixelSize);
+            }
+            font.setPixelSize(pixelSize - 1);
+            attemptLayout();
+//             qDebug() << "Ended up with a text which has size" << pixelSize - 1 << "for text" << paragraphs;
+        } else {
+            layouts.clear();
         }
-        font.setPixelSize(pixelSize - 1);
-        attemptLayout();
     }
 
     void buildPolygon() {
@@ -312,17 +327,18 @@ TextViewerItem::TextViewerItem(QQuickItem* parent)
 {
     setFlag(ItemHasContents, true);
 
-    connect(this, &TextViewerItem::shapeChanged, &QQuickItem::polish);
-    connect(this, &TextViewerItem::shapeOffsetChanged, &QQuickItem::polish);
-    connect(this, &TextViewerItem::shapeMultiplierChanged, &QQuickItem::polish);
-    connect(this, &TextViewerItem::paragraphsChanged, &QQuickItem::polish);
-    connect(this, &TextViewerItem::styleChanged, &QQuickItem::polish);
-    connect(this, &TextViewerItem::fontFamilyChanged, &QQuickItem::polish);
+    connect(this, &TextViewerItem::shapeChanged, d->throttle, QOverload<>::of(&QTimer::start));
+    connect(this, &TextViewerItem::shapeOffsetChanged, d->throttle, QOverload<>::of(&QTimer::start));
+    connect(this, &TextViewerItem::shapeMultiplierChanged, d->throttle, QOverload<>::of(&QTimer::start));
+    connect(this, &TextViewerItem::paragraphsChanged, d->throttle, QOverload<>::of(&QTimer::start));
+    connect(this, &TextViewerItem::styleChanged, d->throttle, QOverload<>::of(&QTimer::start));
+    connect(this, &TextViewerItem::fontFamilyChanged, d->throttle, QOverload<>::of(&QTimer::start));
 
-    connect(this, &QQuickItem::heightChanged, &QQuickItem::polish);
-    connect(this, &QQuickItem::widthChanged, &QQuickItem::polish);
-    connect(this, &QQuickItem::xChanged, &QQuickItem::polish);
-    connect(this, &QQuickItem::yChanged, &QQuickItem::polish);
+    connect(this, &QQuickItem::heightChanged, d->throttle, QOverload<>::of(&QTimer::start));
+    connect(this, &QQuickItem::widthChanged, d->throttle, QOverload<>::of(&QTimer::start));
+    connect(this, &QQuickItem::xChanged, d->throttle, QOverload<>::of(&QTimer::start));
+    connect(this, &QQuickItem::yChanged, d->throttle, QOverload<>::of(&QTimer::start));
+    connect(this, &QQuickItem::enabledChanged, d->throttle, QOverload<>::of(&QTimer::start));
 }
 
 TextViewerItem::~TextViewerItem()
@@ -417,10 +433,12 @@ void TextViewerItem::setFontFamily(const QString& newFontFamily)
 
 void TextViewerItem::updatePolish()
 {
-    d->buildPolygon();
-    d->adjustFormats();
-    d->positionLayouts();
-    update();
+    if (isEnabled()) {
+        d->buildPolygon();
+        d->adjustFormats();
+        d->positionLayouts();
+        update();
+    }
 }
 
 QSGNode * TextViewerItem::updatePaintNode(QSGNode* node, QQuickItem::UpdatePaintNodeData* data)
@@ -440,5 +458,5 @@ void TextViewerItem::geometryChanged(const QRectF& newGeometry, const QRectF& ol
 {
     Q_UNUSED(newGeometry)
     Q_UNUSED(oldGeometry)
-    polish();
+    d->throttle->start();
 }
