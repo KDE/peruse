@@ -201,6 +201,7 @@ public:
         layouts.clear();
 
         for (int p = 0; p < internalParagraphs.size(); ++p) {
+            qDebug() << "Setting up for" << internalParagraphs[p];
 
             // Use a separate text layout for each paragraph in the document.
             QTextLayout *textLayout = new QTextLayout(internalParagraphs[p], font);
@@ -213,59 +214,60 @@ public:
             QTextLine line = textLayout->createLine();
 
             while (line.isValid()) {
-
-                // We use lines at the top, middle, and bottom of the planned
-                // location for the text.
-                QLineF topLine = QLineF(0, y, q->width(), y);
-                QLineF centerLine = topLine;
-                centerLine.translate(0, lineHeight / 2);
-                QLineF bottomLine = topLine;
-                bottomLine.translate(0, lineHeight);
-
-                // Obtain all x-coordinates where intersections occur.
-                QVector<qreal> xCoords;
-
-                for (int i = 0; (i+1) < shapePolygon.size(); ++i) {
-                    QLineF pLine = QLineF(shapePolygon[i], shapePolygon[i+1]);
-                    QPointF p;
-                    if (pLine.intersects(topLine, &p) == QLineF::BoundedIntersection) {
-                        xCoords.append(p.x());
+                QPolygonF intersection = shapePolygon.intersected(QPolygonF(QRectF(0, y, q->width(), y + lineHeight)));
+                if (intersection.size() > 0) {
+                    qreal xLeft(margin);
+                    qreal xRight(q->width() - margin);
+                    // find leftmost and rightmost x values along top and bottom lines,
+                    // and pick the innermost of those as the left/right bits of our current line
+                    QVector<qreal> topAndBottom{y, y + lineHeight};
+                    for (const qreal& position : topAndBottom) {
+                        QVector<qreal> coords;
+                        for (const QPointF& point : intersection) {
+                            if (point.y() == position) {
+                                coords.append(point.x());
+                            }
+                        }
+                        if (coords.count() > 0) {
+                            std::sort(coords.begin(), coords.end());
+                            if (xLeft < coords.first() + margin) {
+                                xLeft = coords.first() + margin;
+                            }
+                            if (xRight > coords.first() - margin) {
+                                xRight = coords.last() - margin;
+                            }
+                            coords.clear();
+                        }
                     }
-//                     if (pLine.intersects(centerLine, &p) == QLineF::BoundedIntersection) {
-//                         xCoords.append(p.x());
-//                     }
-//                     if (pLine.intersects(bottomLine, &p) == QLineF::BoundedIntersection) {
-//                         xCoords.append(p.x());
-//                     }
-                }
+                    // At this point it's entirely possible that we might still have an overlap, if the polygon
+                    // we're fitting things into has bits poking /in/ rather than out along the sides, so...
+                    // maybe we want to try and figure this out. Maybe store the four innermost corner points,
+                    // and then find them on each side, and pick the innermost x coord from that list of points
+                    // on the polygon.
+                    // top, leftmost y and leftmost y+lineheight
+                    //     use one as start and the other as end
+                    //     find the rightmost x in that list of points
+                    // bottom, leftmost y and leftmost y+lineheight
+                    //     use one as start and the other as end
+                    //     find the leftmost x in that list of points
+                    // we now have our true xLeft and xRight
 
-                // If intersections occurred, sort them and use the innermost
-                // x-coordinates as horizontal delimiters to mark the area in
-                // which text can be written.
-                qreal left;
-                qreal right;
-
-                if (xCoords.size() > 0 && (xCoords.size() % 2) == 0) {
-                    std::sort(xCoords.begin(), xCoords.end());
-
-                    left = xCoords[xCoords.size()/2 - 1] + margin;
-                    right = xCoords[xCoords.size()/2] - margin;
-
-                    line.setPosition(QPointF(left, y));
-                    line.setLineWidth(right - left);
+                    line.setPosition(QPointF(xLeft, y));
+                    line.setLineWidth(xRight - xLeft);
 
                     y += line.height();
 
                     // If the text is wider than the available space, move the
                     // text onto the next line if there is space.
-                    if (line.naturalTextWidth() <= (right - left) && y <= ymax)
+                    if (line.naturalTextWidth() <= (xRight - xLeft) && y <= ymax) {
                         line = textLayout->createLine();
+                    }
                 } else {
                     y += lineHeight;
                 }
 
                 // Break if there isn't enough space for another line.
-                if (y > ymax) {
+                if (y + lineHeight > ymax) {
                     break;
                 }
             }
