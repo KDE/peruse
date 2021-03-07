@@ -339,14 +339,7 @@ TextViewerItem::TextViewerItem(QQuickItem* parent)
     connect(this, &QQuickItem::xChanged, d->throttle, QOverload<>::of(&QTimer::start));
     connect(this, &QQuickItem::yChanged, d->throttle, QOverload<>::of(&QTimer::start));
     connect(this, &QQuickItem::enabledChanged, d->throttle, QOverload<>::of(&QTimer::start));
-    connect(this, &QQuickItem::enabledChanged, this, [this](){
-        if (isEnabled()) {
-            d->throttle->start();
-        } else {
-            d->layouts.clear();
-            update();
-        }
-    });
+    connect(this, &QQuickItem::enabledChanged, d->throttle, QOverload<>::of(&QTimer::start));
 }
 
 TextViewerItem::~TextViewerItem()
