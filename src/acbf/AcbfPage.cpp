@@ -20,10 +20,11 @@
  */
 
 #include "AcbfPage.h"
-#include "AcbfTextlayer.h"
+#include "AcbfBody.h"
 #include "AcbfFrame.h"
 #include "AcbfJump.h"
 #include "AcbfTextarea.h"
+#include "AcbfTextlayer.h"
 
 #include <QHash>
 #include <QXmlStreamReader>
@@ -178,6 +179,12 @@ bool Page::fromXml(QXmlStreamReader *xmlReader)
 
 QString Page::bgcolor() const
 {
+    if (d->bgcolor.isEmpty()) {
+        Document* document = qobject_cast<Document*>(parent());
+        if (document && document->body()) {
+            return document->body()->bgcolor();
+        }
+    }
     return d->bgcolor;
 }
 

@@ -105,6 +105,12 @@ void Textlayer::setLanguage(const QString& language)
 
 QString Textlayer::bgcolor() const
 {
+    if (d->bgcolor.isEmpty()) {
+        Page* page = qobject_cast<Page*>(parent());
+        if (page) {
+            return page->bgcolor();
+        }
+    }
     return d->bgcolor;
 }
 
