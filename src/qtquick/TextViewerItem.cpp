@@ -193,6 +193,7 @@ public:
         bool managedToFitEverything{true};
         QFontMetricsF fm(font);
         qreal lineHeight = fm.height();
+        qreal averageCharWidth = fm.averageCharWidth();
 
         qreal y = margin;
         qreal ymax = shapePolygon.boundingRect().height() - margin * 2;
@@ -212,13 +213,15 @@ public:
             QTextLine line = textLayout->createLine();
 
             while (line.isValid()) {
-                QPolygonF intersection = shapePolygon.intersected(QPolygonF(QRectF(0, y, q->width(), y + lineHeight)));
+                QPolygonF intersection = shapePolygon.intersected(QPolygonF(QRectF(0, y, q->width(), lineHeight)));
                 if (intersection.size() > 0) {
-                    qreal xLeft(margin);
-                    qreal xRight(q->width() - margin);
+                    qreal xLeft{0};
+                    qreal xRight{q->width()};
                     // find leftmost and rightmost x values along top and bottom lines,
                     // and pick the innermost of those as the left/right bits of our current line
                     QVector<qreal> topAndBottom{y, y + lineHeight};
+                    QVector<QPointF> cornerPoints{QPolygonF(intersection.boundingRect())};
+                    int step{0};
                     for (const qreal& position : topAndBottom) {
                         QVector<qreal> coords;
                         for (const QPointF& point : intersection) {
@@ -228,44 +231,80 @@ public:
                         }
                         if (coords.count() > 0) {
                             std::sort(coords.begin(), coords.end());
-                            if (xLeft < coords.first() + margin) {
-                                xLeft = coords.first() + margin;
+                            if (xLeft < coords.first()) {
+                                xLeft = coords.first();
                             }
-                            if (xRight > coords.first() - margin) {
-                                xRight = coords.last() - margin;
+                            if (xRight > coords.last()) {
+                                xRight = coords.last();
                             }
-                            coords.clear();
+                            cornerPoints[(step == 0) ? 0 : 3] = QPointF(coords.first(), position);
+                            cornerPoints[(step == 0) ? 1 : 2] = QPointF(coords.last(), position);
                         }
+                        coords.clear();
+                        ++step;
                     }
+
                     // At this point it's entirely possible that we might still have an overlap, if the polygon
                     // we're fitting things into has bits poking /in/ rather than out along the sides, so...
                     // maybe we want to try and figure this out. Maybe store the four innermost corner points,
                     // and then find them on each side, and pick the innermost x coord from that list of points
                     // on the polygon.
-                    // top, leftmost y and leftmost y+lineheight
-                    //     use one as start and the other as end
-                    //     find the rightmost x in that list of points
-                    // bottom, leftmost y and leftmost y+lineheight
-                    //     use one as start and the other as end
-                    //     find the leftmost x in that list of points
+
+                    // First, we've no idea of where the polygon actually starts, so let's make sure it's the top-left corner
+                    int firstPointPosition{intersection.indexOf(cornerPoints[0])};
+                    if (firstPointPosition > 0) {
+                        QPolygonF snippet{intersection.mid(0, firstPointPosition)};
+                        intersection.remove(0, firstPointPosition);
+                        intersection.append(snippet);
+                    }
+                    QPolygonF::const_iterator i;
+                    step = 0;
+                    for (i = intersection.constBegin(); i != intersection.constEnd(); ++i) {
+                        if (step == 1) {
+                            // From top-rightmost to bottom-rightmost
+                            // find the leftmost x in that list of points
+                            if (xRight > i->x()) {
+                                xRight = i->x();
+                            }
+                        } else if (step == 4) {
+                            // From bottom-leftmost to end
+                            // find the leftmost x in that list of points
+                            if (xLeft < i->x()) {
+                                xLeft = i->x();
+                            }
+                        }
+                        if (*i == cornerPoints[step]) {
+                            ++step;
+                        }
+                    }
+                    xLeft = xLeft - margin;
+                    xRight = xRight - margin;
                     // we now have our true xLeft and xRight
 
                     line.setPosition(QPointF(xLeft, y));
                     line.setLineWidth(xRight - xLeft);
 
-                    y += line.height();
+                    // Does it fit the first string here...
+                    // Would be kind of nice to just be able to ask QTextLine whether it is able to
+                    // fit the any part of the text it's requested to fit before wrapping
+                    if (line.width() < averageCharWidth * (line.textLength() + 1)) {
+                        // We can't actually fit the first word here, so... let's push the line one pixel and try again
+                        y += 1;
+                    } else {
+                        y += line.height();
 
-                    // If the text is wider than the available space, move the
-                    // text onto the next line if there is space.
-                    if (line.naturalTextWidth() <= (xRight - xLeft) && y <= ymax) {
-                        line = textLayout->createLine();
+                        // If the text is wider than the available space, move the
+                        // text onto the next line if there is space.
+                        if (line.naturalTextWidth() <= (xRight - xLeft) && y <= ymax) {
+                            line = textLayout->createLine();
+                        }
                     }
                 } else {
-                    y += lineHeight;
+                    y += margin;
                 }
 
                 // Break if there isn't enough space for another line.
-                if (y + lineHeight > ymax) {
+                if (y + lineHeight > ymax && line.isValid()) {
                     break;
                 }
             }
@@ -289,8 +328,9 @@ public:
         return managedToFitEverything;
     }
 
-    void positionLayouts() {
+    void performLayout() {
         int pixelSize{2};
+        margin = shapeMultiplier;
         if (paragraphs.count() > 0 && q->height() > (margin * 2) + pixelSize) {
             // Now attempt to do the text layouting, squeezing it upwards until it no longer fits
             // Cap it at the size of the polygon, divided by the number of paragraphs, minus our margin
@@ -302,7 +342,6 @@ public:
             }
             font.setPixelSize(pixelSize - 1);
             attemptLayout();
-//             qDebug() << "Ended up with a text which has size" << pixelSize - 1 << "for text" << paragraphs;
         } else {
             layouts.clear();
         }
@@ -437,7 +476,7 @@ void TextViewerItem::updatePolish()
     if (isEnabled()) {
         d->buildPolygon();
         d->adjustFormats();
-        d->positionLayouts();
+        d->performLayout();
         update();
     }
 }
