@@ -63,6 +63,7 @@ Item {
     Peruse.TextViewerItem {
         id: textEdit
         anchors.fill: parent
+        rotation: 360 - component.textArea.textRotation
 
         enabled: component.enabled
         paragraphs: component.textArea.paragraphs

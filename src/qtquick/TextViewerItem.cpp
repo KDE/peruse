@@ -300,7 +300,7 @@ public:
                         }
                     }
                 } else {
-                    y += margin;
+                    y += 1;
                 }
 
                 // Break if there isn't enough space for another line.
@@ -357,6 +357,10 @@ public:
             points << QPointF(x, y);
         }
         shapePolygon = QPolygonF(points);
+        QTransform transform;
+        transform.rotate(360 - q->rotation());
+        shapePolygon = transform.map(shapePolygon);
+        q->transform();
     }
 };
 
@@ -365,6 +369,8 @@ TextViewerItem::TextViewerItem(QQuickItem* parent)
     , d(new Private(this))
 {
     setFlag(ItemHasContents, true);
+    // Because that's what ACBF wants from us, so default that one
+    setTransformOrigin(QQuickItem::TopLeft);
 
     connect(this, &TextViewerItem::shapeChanged, d->throttle, QOverload<>::of(&QTimer::start));
     connect(this, &TextViewerItem::shapeOffsetChanged, d->throttle, QOverload<>::of(&QTimer::start));
@@ -377,6 +383,7 @@ TextViewerItem::TextViewerItem(QQuickItem* parent)
     connect(this, &QQuickItem::widthChanged, d->throttle, QOverload<>::of(&QTimer::start));
     connect(this, &QQuickItem::xChanged, d->throttle, QOverload<>::of(&QTimer::start));
     connect(this, &QQuickItem::yChanged, d->throttle, QOverload<>::of(&QTimer::start));
+    connect(this, &QQuickItem::rotationChanged, d->throttle, QOverload<>::of(&QTimer::start));
     connect(this, &QQuickItem::enabledChanged, d->throttle, QOverload<>::of(&QTimer::start));
     connect(this, &QQuickItem::enabledChanged, d->throttle, QOverload<>::of(&QTimer::start));
 }
