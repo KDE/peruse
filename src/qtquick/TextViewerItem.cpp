@@ -35,7 +35,6 @@ public:
         throttle->setInterval(1);
         throttle->setSingleShot(true);
         QObject::connect(throttle, &QTimer::timeout, qq, &QQuickItem::polish);
-
     }
     ~Private() {
         qDeleteAll(layouts);
@@ -189,7 +188,7 @@ public:
         }
     }
 
-    bool attemptLayout() {
+    bool attemptLayout(bool debug = false) {
         bool managedToFitEverything{true};
         QFontMetricsF fm(font);
         qreal lineHeight = fm.height();
@@ -202,6 +201,10 @@ public:
         layouts.clear();
 
         for (int p = 0; p < internalParagraphs.size(); ++p) {
+            if (y + lineHeight > ymax) {
+                break;
+            }
+
             // Use a separate text layout for each paragraph in the document.
             QTextLayout *textLayout = new QTextLayout(internalParagraphs[p], font);
             QTextOption option = QTextOption(Qt::AlignCenter);
@@ -221,6 +224,7 @@ public:
                     // and pick the innermost of those as the left/right bits of our current line
                     QVector<qreal> topAndBottom{y, y + lineHeight};
                     QVector<QPointF> cornerPoints{QPolygonF(intersection.boundingRect())};
+                    if (debug) qDebug() << "intersection:" << intersection;
                     int step{0};
                     for (const qreal& position : topAndBottom) {
                         QVector<qreal> coords;
@@ -265,12 +269,14 @@ public:
                             // find the leftmost x in that list of points
                             if (xRight > i->x()) {
                                 xRight = i->x();
+                                if (debug) qDebug() << "Discovered new right hand innermost";
                             }
                         } else if (step == 4) {
                             // From bottom-leftmost to end
                             // find the leftmost x in that list of points
                             if (xLeft < i->x()) {
                                 xLeft = i->x();
+                                if (debug) qDebug() << "Discovered new left hand innermost";
                             }
                         }
                         if (*i == cornerPoints[step]) {
@@ -290,13 +296,16 @@ public:
                     if (line.width() < averageCharWidth * (line.textLength() + 1)) {
                         // We can't actually fit the first word here, so... let's push the line one pixel and try again
                         y += 1;
+                        if (debug) qDebug() << "Could not fit the line, move down a pixel and try again";
                     } else {
                         y += line.height();
 
                         // If the text is wider than the available space, move the
                         // text onto the next line if there is space.
-                        if (line.naturalTextWidth() <= (xRight - xLeft) && y <= ymax) {
+                        if (line.naturalTextWidth() <= (xRight - xLeft)) {
                             line = textLayout->createLine();
+                        } else {
+                            line = QTextLine();
                         }
                     }
                 } else {
@@ -318,9 +327,6 @@ public:
             textLayout->endLayout();
             layouts.append(textLayout);
 
-            if (y > ymax) {
-                break;
-            }
             if (!managedToFitEverything) {
                 break;
             }
@@ -328,20 +334,45 @@ public:
         return managedToFitEverything;
     }
 
+    bool sizeAccepted(int size) {
+        font.setPixelSize(size);
+        return attemptLayout();
+    }
+
+    int findMaxSize(int searchMin, int searchMax) {
+        int largestAccepted{searchMin};
+        if (searchMax > searchMin + 1) {
+            int middle = searchMin + ((searchMax - searchMin) / 2);
+            if (sizeAccepted(middle)) {
+                largestAccepted = findMaxSize(middle, searchMax);
+            } else if (searchMin < middle) {
+                largestAccepted = findMaxSize(searchMin, middle - 1);
+            }
+         }
+        return largestAccepted;
+    }
+
     void performLayout() {
+        bool debugLayout{false};
         int pixelSize{2};
         margin = shapeMultiplier;
         if (paragraphs.count() > 0 && q->height() > (margin * 2) + pixelSize) {
             // Now attempt to do the text layouting, squeezing it upwards until it no longer fits
             // Cap it at the size of the polygon, divided by the number of paragraphs, minus our margin
             int maximumSize{(qFloor(q->height()) / paragraphs.count()) - margin * 2};
-            font.setPixelSize(pixelSize);
-            while (attemptLayout() && pixelSize < maximumSize) {
-                ++pixelSize;
-                font.setPixelSize(pixelSize);
+            int bestSize = findMaxSize(pixelSize, maximumSize);
+            font.setPixelSize(bestSize);
+            attemptLayout(debugLayout);
+            if (debugLayout) {
+                for (QTextLayout* layout : layouts) {
+                    qDebug() << layout->lineCount() << "layouts at size" << pixelSize - 1 << "to fit into" << shapePolygon.boundingRect() << "the following text:" << layout->text();
+                    qDebug() << shapePolygon;
+                    for (int i = 0; i < layout->lineCount(); ++i) {
+                        QTextLine line = layout->lineAt(i);
+                        qDebug() << line.position() << line.width();
+                    }
+                }
             }
-            font.setPixelSize(pixelSize - 1);
-            attemptLayout();
         } else {
             layouts.clear();
         }
