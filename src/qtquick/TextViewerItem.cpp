@@ -55,6 +55,14 @@ public:
     QList<QVector<QTextLayout::FormatRange> > formats;
     QList<QTextLayout*> layouts;
 
+    QString fromHtmlEscaped(QString html) {
+        html.replace("&quot;", "\"", Qt::CaseInsensitive);
+        html.replace("&gt;", ">", Qt::CaseInsensitive);
+        html.replace("&lt;", "<", Qt::CaseInsensitive);
+        html.replace("&amp;", "&", Qt::CaseInsensitive);
+        return html;
+    }
+
     void adjustFormats() {
         internalParagraphs.clear();
         formats.clear();
@@ -115,25 +123,6 @@ public:
         }
         baseFormat.setFont(font);
 
-        QTextCharFormat boldFormat = baseFormat;
-        boldFormat.setFontWeight(QFont::Bold);
-
-        QTextCharFormat headingFormat = boldFormat;
-        headingFormat.setFontPointSize(font.pointSize() + 6.0);
-
-        QTextCharFormat italicFormat = baseFormat;
-        italicFormat.setFontItalic(true);
-
-        QTextCharFormat codeFormat;
-        codeFormat.setFontFamily("Courier");
-        codeFormat.setFontPointSize(qMax(4, font.pointSize() - 2));
-
-        QHash<QString,QTextCharFormat> formatHash;
-        formatHash["bold"] = boldFormat;
-        formatHash["italic"] = italicFormat;
-        formatHash["heading"] = headingFormat;
-        formatHash["code"] = codeFormat;
-
         for (const QString& para : paragraphs) {
 
             int i = 0;
@@ -144,37 +133,81 @@ public:
             currentFormat.start = -1;
             currentFormat.length = -1;
 
+            static const QLatin1String strongTag{"strong"};
+            static const QLatin1String emTag{"emphasis"};
+            static const QLatin1String strikethroughTag{"strikethrough"};
+            static const QLatin1String subTag{"sub"};
+            static const QLatin1String supTag{"sup"};
+            static const QLatin1String aTag{"a"};
+            static const QLatin1String commentaryTag{"commentary"};
+            static const QLatin1String codeTag{"code"};
+            static const QLatin1String invertedTag{"inverted"};
+
             while (i < para.size()) {
                 QChar c = para[i];
-//                 if (c == '\\') {
-//                     if (i + 1 < para.size() && para[i+1] == '\\') {
-//                         text += '\\';
-//                         i += 2;
-//                         continue;
-//                     }
-// 
-//                     int at = para.indexOf("{", i + 1);
-//                     if (at != -1) {
-//                         QString command = para.mid(i + 1, at - i - 1);
-//                         if (formatHash.contains(command)) {
-//                             currentFormat.format = formatHash[command];
-//                             currentFormat.start = text.size();
-//                             i = at + 1;
-//                             continue;
-//                         }
-//                     }
-//                 } else if (c == '}') {
-//                     if (currentFormat.start != -1) {
-//                         currentFormat.length = text.size() - currentFormat.start;
-//                         lineFormats.append(currentFormat);
-//                         currentFormat.start = -1;
-//                         ++i;
-//                         continue;
-//                     }
-//                 }
-
-                text += c;
-                ++i;
+                /*
+                 * Paragraphs in ACBF can contain a highly specific subset of html
+                 * See the documentation for AdvancedComicBookFormat::Textarea for
+                 * details, but here is a quick rundown of just the elements:
+                <p>
+                    <strong>...</strong>
+                    <emphasis>...</emphasis>
+                    <strikethrough>...</strikethrough>
+                    <sub>...</sub>
+                    <sup>...</sup>
+                    <a href="">...</a>
+                    <!-- the following are deprecated, but we probably still need to handle them -->
+                    <commentary>...</commentary>
+                    <code>...</code>
+                    <inverted>...</inverted>
+                </p>
+                */
+                if (c == '<') {
+                    // Start of some kind of formatting tag
+                    int tagEnd = para.indexOf('>', i + 1);
+                    // Skip past end tags, because we kind of already handle those...
+                    if (i + 1 < para.size() && para[i+1] != '/') {
+                        QTextCharFormat format = currentFormat.format;
+                        // We're starting a new tag, let's see which that is...
+                        const QStringList thisIsStarting = para.mid(i + 1, tagEnd - i - 1).split(" ", Qt::SkipEmptyParts);
+                        if (thisIsStarting[0] == strongTag) {
+                            format.setFontWeight(QFont::Bold);
+                        } else if (thisIsStarting[0] == emTag) {
+                            format.setFontItalic(true);
+                        } else if (thisIsStarting[0] == strikethroughTag) {
+                            format.setFontStrikeOut(true);
+                        } else if (thisIsStarting[0] == subTag) {
+                            format.setVerticalAlignment(QTextCharFormat::AlignSubScript);
+                        } else if (thisIsStarting[0] == supTag) {
+                            format.setVerticalAlignment(QTextCharFormat::AlignSuperScript);
+                        } else if (thisIsStarting[0] == aTag) {
+                            format.setAnchor(true);
+                            for (const QString& parameter : thisIsStarting) {
+                                format.setAnchorHref(parameter);
+                            }
+                        } else if (thisIsStarting[0] == commentaryTag) {
+                        } else if (thisIsStarting[0] == codeTag) {
+                        } else if (thisIsStarting[0] == invertedTag) {
+                        }
+                        currentFormat.length = para.indexOf(QLatin1String("</%1>").arg(thisIsStarting[0]), text.size()) - text.size() - thisIsStarting[0].length() - 2;
+                        currentFormat.format = format;
+                        currentFormat.start = text.size();
+                        lineFormats.append(currentFormat);
+                        currentFormat.start = -1;
+                    }
+                    i = tagEnd + 1;
+                } else if (c == '&') {
+                    int entityEnd = para.indexOf(';', i);
+                    if (entityEnd > 0) {
+                        text += fromHtmlEscaped(para.mid(i, entityEnd - i + 1));
+                        i = entityEnd + 1;
+                    } else {
+                        ++i;
+                    }
+                } else {
+                    text += c;
+                    ++i;
+                }
             }
 
             if (currentFormat.start != -1) {
@@ -334,8 +367,20 @@ public:
         return managedToFitEverything;
     }
 
-    bool sizeAccepted(int size) {
+    // This sets the font size for everything (including our "many" stored character formats)
+    void setFontSize(int size) {
         font.setPixelSize(size);
+        for (QVector<QTextLayout::FormatRange>& formatRange : formats) {
+            for (QTextLayout::FormatRange& format : formatRange) {
+                QFont tempFont = format.format.font();
+                tempFont.setPixelSize(size);
+                format.format.setFont(tempFont);
+            }
+        }
+    }
+
+    bool sizeAccepted(int size) {
+        setFontSize(size);
         return attemptLayout();
     }
 
@@ -361,7 +406,7 @@ public:
             // Cap it at the size of the polygon, divided by the number of paragraphs, minus our margin
             int maximumSize{(qFloor(q->height()) / paragraphs.count()) - margin * 2};
             int bestSize = findMaxSize(pixelSize, maximumSize);
-            font.setPixelSize(bestSize);
+            setFontSize(bestSize);
             attemptLayout(debugLayout);
             if (debugLayout) {
                 for (QTextLayout* layout : layouts) {
