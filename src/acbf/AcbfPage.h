@@ -76,7 +76,7 @@ public:
      * \brief load a page element into this object.
      * @return True if the xmlReader encountered no errors.
      */
-    bool fromXml(QXmlStreamReader *xmlReader);
+    bool fromXml(QXmlStreamReader *xmlReader, const QString& xmlData);
 
     /**
      * @return the background color as a QString.

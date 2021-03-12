@@ -70,13 +70,13 @@ void Metadata::toXml(QXmlStreamWriter *writer)
     writer->writeEndElement();
 }
 
-bool Metadata::fromXml(QXmlStreamReader *xmlReader)
+bool Metadata::fromXml(QXmlStreamReader *xmlReader, const QString& xmlData)
 {
     while(xmlReader->readNextStartElement())
     {
         if(xmlReader->name() == QStringLiteral("book-info"))
         {
-            if(!d->bookInfo->fromXml(xmlReader)) {
+            if(!d->bookInfo->fromXml(xmlReader, xmlData)) {
                 return false;
             }
         }

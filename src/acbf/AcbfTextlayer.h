@@ -55,7 +55,7 @@ public:
      * \brief load a textlayer element into this object.
      * @return True if the xmlReader encountered no errors.
      */
-    bool fromXml(QXmlStreamReader *xmlReader);
+    bool fromXml(QXmlStreamReader *xmlReader, const QString& xmlData);
 
     /**
      * @returns the language for this text-layer.

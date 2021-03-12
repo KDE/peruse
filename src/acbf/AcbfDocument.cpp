@@ -92,13 +92,13 @@ bool Document::fromXml(QString xmlDocument)
             {
                 if(xmlReader.name() == QStringLiteral("meta-data"))
                 {
-                    if(!d->metaData->fromXml(&xmlReader)) {
+                    if(!d->metaData->fromXml(&xmlReader, xmlDocument)) {
                         break;
                     }
                 }
                 else if(xmlReader.name() == QStringLiteral("body"))
                 {
-                    if(!d->body->fromXml(&xmlReader)) {
+                    if(!d->body->fromXml(&xmlReader, xmlDocument)) {
                         break;
                     }
                 }

@@ -65,7 +65,7 @@ void Textlayer::toXml(QXmlStreamWriter* writer)
     writer->writeEndElement();
 }
 
-bool Textlayer::fromXml(QXmlStreamReader *xmlReader)
+bool Textlayer::fromXml(QXmlStreamReader *xmlReader, const QString& xmlData)
 {
     setBgcolor(xmlReader->attributes().value(QStringLiteral("bgcolor")).toString());
     setLanguage(xmlReader->attributes().value(QStringLiteral("lang")).toString());
@@ -74,7 +74,7 @@ bool Textlayer::fromXml(QXmlStreamReader *xmlReader)
         if(xmlReader->name() == QStringLiteral("text-area"))
         {
             Textarea* newArea = new Textarea(this);
-            if(!newArea->fromXml(xmlReader)) {
+            if(!newArea->fromXml(xmlReader, xmlData)) {
                 return false;
             }
             d->textareas.append(newArea);

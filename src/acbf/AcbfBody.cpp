@@ -62,7 +62,7 @@ void Body::toXml(QXmlStreamWriter *writer)
     writer->writeEndElement();
 }
 
-bool Body::fromXml(QXmlStreamReader *xmlReader)
+bool Body::fromXml(QXmlStreamReader *xmlReader, const QString& xmlData)
 {
     setBgcolor(xmlReader->attributes().value(QStringLiteral("bgcolor")).toString());
     while(xmlReader->readNextStartElement())
@@ -70,7 +70,7 @@ bool Body::fromXml(QXmlStreamReader *xmlReader)
         if(xmlReader->name() == QStringLiteral("page"))
         {
             Page* newPage = new Page(document());
-            if(!newPage->fromXml(xmlReader)) {
+            if(!newPage->fromXml(xmlReader, xmlData)) {
                 return false;
             }
             d->pages.append(newPage);

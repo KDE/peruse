@@ -69,7 +69,7 @@ public:
      * \brief load a textarea element into this object.
      * @return True if the xmlReader encountered no errors.
      */
-    bool fromXml(QXmlStreamReader *xmlReader);
+    bool fromXml(QXmlStreamReader *xmlReader, const QString& xmlData);
 
     /**
      * @return a list of points that encompasses the textarea.

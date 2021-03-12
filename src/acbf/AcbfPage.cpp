@@ -113,7 +113,7 @@ void Page::toXml(QXmlStreamWriter* writer)
     writer->writeEndElement();
 }
 
-bool Page::fromXml(QXmlStreamReader *xmlReader)
+bool Page::fromXml(QXmlStreamReader *xmlReader, const QString& xmlData)
 {
     setBgcolor(xmlReader->attributes().value(QStringLiteral("bgcolor")).toString());
     setTransition(xmlReader->attributes().value(QStringLiteral("transition")).toString());
@@ -137,7 +137,7 @@ bool Page::fromXml(QXmlStreamReader *xmlReader)
         else if(xmlReader->name() == QStringLiteral("text-layer"))
         {
             Textlayer* newLayer = new Textlayer(this);
-            if(!newLayer->fromXml(xmlReader)) {
+            if(!newLayer->fromXml(xmlReader, xmlData)) {
                 return false;
             }
             d->textLayers[newLayer->language()] = newLayer;

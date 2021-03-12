@@ -106,7 +106,7 @@ public:
      * \brief load the whole book-info section from the xml into this object.
      * @return True if the xmlReader encountered no errors.
      */
-    bool fromXml(QXmlStreamReader *xmlReader);
+    bool fromXml(QXmlStreamReader *xmlReader, const QString& xmlData);
 
     /**
      * @return The list of authors that worked on this book as author objects.

@@ -157,7 +157,7 @@ void BookInfo::toXml(QXmlStreamWriter* writer)
     writer->writeEndElement();
 }
 
-bool BookInfo::fromXml(QXmlStreamReader *xmlReader)
+bool BookInfo::fromXml(QXmlStreamReader *xmlReader, const QString& xmlData)
 {
     while(xmlReader->readNextStartElement())
     {
@@ -212,7 +212,7 @@ bool BookInfo::fromXml(QXmlStreamReader *xmlReader)
         }
         else if(xmlReader->name() == QStringLiteral("coverpage"))
         {
-            if(!d->coverPage->fromXml(xmlReader)) {
+            if(!d->coverPage->fromXml(xmlReader, xmlData)) {
                 return false;
             }
         }

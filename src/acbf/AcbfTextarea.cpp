@@ -104,7 +104,7 @@ void Textarea::toXml(QXmlStreamWriter* writer)
     writer->writeEndElement();
 }
 
-bool Textarea::fromXml(QXmlStreamReader *xmlReader)
+bool Textarea::fromXml(QXmlStreamReader *xmlReader, const QString& xmlData)
 {
     setBgcolor(xmlReader->attributes().value(QStringLiteral("bgcolor")).toString());
     setTextRotation(xmlReader->attributes().value(QStringLiteral("text-rotation")).toInt());
@@ -130,7 +130,15 @@ bool Textarea::fromXml(QXmlStreamReader *xmlReader)
     {
         if(xmlReader->name() == QStringLiteral("p"))
         {
-            d->paragraphs.append(xmlReader->readElementText(QXmlStreamReader::IncludeChildElements));
+            int startPoint = xmlReader->characterOffset();
+            int endPoint{startPoint};
+            while(xmlReader->readNext()) {
+                if (xmlReader->isEndElement() && xmlReader->name() == QStringLiteral("p")) {
+                    endPoint = xmlReader->characterOffset();
+                    break;
+                }
+            }
+            d->paragraphs.append(xmlData.mid(startPoint, endPoint - startPoint - 4));
         }
         else
         {
@@ -141,7 +149,7 @@ bool Textarea::fromXml(QXmlStreamReader *xmlReader)
     if (xmlReader->hasError()) {
         qCWarning(ACBF_LOG) << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader->name() << "(" << xmlReader->lineNumber() << ":" << xmlReader->columnNumber() << ") The reported error was:" << xmlReader->errorString();
     }
-    qCDebug(ACBF_LOG) << Q_FUNC_INFO << "Created a text area of type" << type();
+    qCDebug(ACBF_LOG) << Q_FUNC_INFO << "Created a text area of type" << type() << "with the paragraphs" << d->paragraphs;
     return !xmlReader->hasError();
 }
 

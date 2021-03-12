@@ -63,7 +63,7 @@ public:
      * \brief Load data from the xml into this body object.
      * @return True if the xmlReader encountered no errors.
      */
-    bool fromXml(QXmlStreamReader *xmlReader);
+    bool fromXml(QXmlStreamReader *xmlReader, const QString& xmlData);
 
     /**
      * @return the background color as a QString.

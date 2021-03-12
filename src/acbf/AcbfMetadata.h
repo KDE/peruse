@@ -63,7 +63,7 @@ public:
      * \brief load the metadata element into this object.
      * @return True if the xmlReader encountered no errors.
      */
-    bool fromXml(QXmlStreamReader *xmlReader);
+    bool fromXml(QXmlStreamReader *xmlReader, const QString& xmlData);
 
     /**
      * @return the bookinfo object.
