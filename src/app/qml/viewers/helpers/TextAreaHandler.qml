@@ -31,6 +31,7 @@ Item {
     property int offsetX: 0
     property int offsetY: 0
     property QtObject textArea: null
+    signal linkActivated(string link);
 
     property rect textareaRect: Qt.rect((component.multiplier * textArea.bounds.x) + component.offsetX,
                         (component.multiplier * textArea.bounds.y) + component.offsetY,
@@ -72,5 +73,9 @@ Item {
         shapeMultiplier: component.multiplier
         style: component.model.acbfData.styleSheet.style("text-area", component.textArea.type, component.textArea.inverted);
         fontFamily: style ? component.model.firstAvailableFont(style.fontFamily) : ""
+
+        function onLinkActivated(link) {
+            component.linkActivated(link);
+        }
     }
 }

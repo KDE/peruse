@@ -318,6 +318,9 @@ ListView {
                         offsetY: image.offsetY
                         textArea: modelData
                         enabled: image.frameContainsJump(modelData) && !flick.actuallyMoving
+                        function onLinkActivated(link) {
+                            // work through the various options for what a link might actually be here...
+                        }
                     }
                 }
 
