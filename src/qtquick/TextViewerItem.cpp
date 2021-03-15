@@ -21,6 +21,7 @@
 
 #include "AcbfStyle.h"
 
+#include <QCursor>
 #include <QFontMetrics>
 #include <qmath.h>
 #include <QTimer>
@@ -53,7 +54,14 @@ public:
     QFont font;
     QStringList internalParagraphs;
     QList<QVector<QTextLayout::FormatRange> > formats;
+    // First is the index in formats, and second is the index is the list at that index
+    QHash<QPair<int,int>, QList<QRectF>> anchorRects;
     QList<QTextLayout*> layouts;
+
+    // State tracker for making sure that if the user moves outside of the anchor they originally
+    // clicked on, we don't actually suggest it was clicked
+    QPair<int, int> clickedAnchor{-1, -1};
+    QString hoveredLink;
 
     QString fromHtmlEscaped(QString html) {
         html.replace("&quot;", "\"", Qt::CaseInsensitive);
@@ -397,6 +405,61 @@ public:
         return largestAccepted;
     }
 
+    void updateAnchorRects() {
+        int layoutIndex{0};
+        for (const QTextLayout* layout : layouts) {
+            int formatIndex{0};
+            for (const QTextLayout::FormatRange& format : layout->formats()) {
+                if (!format.format.anchorHref().isEmpty()) {
+                    QList<QRectF> rects;
+                    // get all the lines, so we can store all the bounding rects for this anchor...
+                    int textPos = 0;
+                    QTextLine previousLine;
+                    while (textPos < format.length) {
+                        QTextLine currentLine = layout->lineForTextPosition(format.start + textPos);
+                        if (previousLine.isValid() && currentLine.textStart() != previousLine.textStart()) {
+                            previousLine = currentLine;
+                            QPointF topLeft(currentLine.cursorToX(textPos), currentLine.y());
+                            QSizeF size(currentLine.width() - (currentLine.x() - topLeft.x()), currentLine.height());
+                            rects << QRectF(topLeft, size);
+                            textPos += currentLine.textLength();
+                        } else {
+                            ++textPos;
+                        }
+                    }
+                    anchorRects[QPair<int, int>(layoutIndex, formatIndex)] = rects;
+                }
+                ++formatIndex;
+            }
+            ++layoutIndex;
+        }
+    }
+
+    /**
+     * Find the identifier pair (used to find formats in the anchorRects variable)
+     * which identifies the format for the given local position. If there is none,
+     * the function will return a pair with the values (-1, -1), which would both
+     * be invalid positions in the formats list.
+     * @param localPos The position to identify a pair for
+     * @return An identifying pair, or an invalid pair if none was found
+     */
+    QPair<int, int> getAnchor(const QPointF& localPos) {
+        QPair<int, int> anchor{-1, -1};
+        QHash<QPair<int, int>, QList<QRectF>>::const_iterator i;
+        for (i = anchorRects.constBegin(); i != anchorRects.constEnd(); ++i) {
+            for (const QRectF& rect : i.value()) {
+                if (rect.contains(localPos)) {
+                    anchor = i.key();
+                    break;
+                }
+            }
+            if (anchor.first > -1 && anchor.second > -1) {
+                break;
+            }
+        }
+        return anchor;
+    }
+
     void performLayout() {
         bool debugLayout{false};
         int pixelSize{2};
@@ -421,6 +484,7 @@ public:
         } else {
             layouts.clear();
         }
+        updateAnchorRects();
     }
 
     void buildPolygon() {
@@ -445,6 +509,7 @@ TextViewerItem::TextViewerItem(QQuickItem* parent)
     , d(new Private(this))
 {
     setFlag(ItemHasContents, true);
+    setAcceptedMouseButtons(Qt::AllButtons);
     // Because that's what ACBF wants from us, so default that one
     setTransformOrigin(QQuickItem::TopLeft);
 
@@ -554,6 +619,11 @@ void TextViewerItem::setFontFamily(const QString& newFontFamily)
     }
 }
 
+QString TextViewerItem::hoveredLink() const
+{
+    return d->hoveredLink;
+}
+
 void TextViewerItem::updatePolish()
 {
     if (isEnabled()) {
@@ -582,4 +652,39 @@ void TextViewerItem::geometryChanged(const QRectF& newGeometry, const QRectF& ol
     Q_UNUSED(newGeometry)
     Q_UNUSED(oldGeometry)
     d->throttle->start();
+}
+
+void TextViewerItem::mouseMoveEvent(QMouseEvent* event)
+{
+    QPair<int, int> anchor = d->getAnchor(event->localPos());
+    // Only really need one of the point's items to be greater than -1 to know there's an anchor, no need to check more
+    if (anchor.first > -1) {
+        setCursor(Qt::PointingHandCursor);
+        QTextLayout::FormatRange format = d->formats.value(anchor.first).value(anchor.second);
+        if (d->hoveredLink != format.format.anchorHref()) {
+            d->hoveredLink = format.format.anchorHref();
+            Q_EMIT hoveredLinkChanged();
+            Q_EMIT linkHovered(d->hoveredLink);
+        }
+    } else {
+        if (!d->hoveredLink.isEmpty()) {
+            d->hoveredLink.clear();
+            Q_EMIT hoveredLinkChanged();
+        }
+        unsetCursor();
+    }
+}
+
+void TextViewerItem::mousePressEvent(QMouseEvent* event)
+{
+    d->clickedAnchor = d->getAnchor(event->localPos());
+}
+
+void TextViewerItem::mouseReleaseEvent(QMouseEvent* event)
+{
+    QPair<int, int> eventAnchor = d->getAnchor(event->localPos());
+    if (eventAnchor.first > -1 && eventAnchor == d->clickedAnchor) {
+        QTextLayout::FormatRange format = d->formats.value(eventAnchor.first).value(eventAnchor.second);
+        Q_EMIT linkActivated(format.format.anchorHref());
+    }
 }

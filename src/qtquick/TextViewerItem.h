@@ -31,6 +31,7 @@ class TextViewerItem : public QQuickItem
     Q_PROPERTY(double shapeMultiplier READ shapeMultiplier WRITE setShapeMultiplier NOTIFY shapeMultiplierChanged)
     Q_PROPERTY(QObject* style READ style WRITE setStyle NOTIFY styleChanged)
     Q_PROPERTY(QString fontFamily READ fontFamily WRITE setFontFamily NOTIFY fontFamilyChanged)
+    Q_PROPERTY(QString hoveredLink READ hoveredLink NOTIFY hoveredLinkChanged)
 public:
     explicit TextViewerItem(QQuickItem *parent = nullptr);
     virtual ~TextViewerItem();
@@ -59,10 +60,17 @@ public:
     void setFontFamily(const QString& newFontFamily);
     Q_SIGNAL void fontFamilyChanged();
 
+    QString hoveredLink() const;
+    Q_SIGNAL void hoveredLinkChanged();
+    Q_SIGNAL void linkHovered(const QString& link);
+    Q_SIGNAL void linkActivated(const QString& link);
 protected:
     void updatePolish() override;
     QSGNode *updatePaintNode(QSGNode *, UpdatePaintNodeData *) override;
     void geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry) override;
+    void mouseMoveEvent(QMouseEvent * event) override;
+    void mousePressEvent(QMouseEvent *event) override;
+    void mouseReleaseEvent(QMouseEvent * event) override;
 
 private:
     class Private;
