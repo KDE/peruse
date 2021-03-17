@@ -75,7 +75,7 @@ Item {
         style: component.model.acbfData.styleSheet.style("text-area", component.textArea.type, component.textArea.inverted);
         fontFamily: style ? component.model.firstAvailableFont(style.fontFamily) : ""
 
-        function onLinkActivated(link) {
+        onLinkActivated: {
             component.linkActivated(link);
         }
     }
