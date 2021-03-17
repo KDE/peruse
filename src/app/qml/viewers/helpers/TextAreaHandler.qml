@@ -20,6 +20,7 @@
  */
 
 import QtQuick 2.12
+import QtQuick.Controls 2.12 as QQC2
 import QtQuick.Shapes 1.15
 import org.kde.kirigami 2.7 as Kirigami
 import org.kde.peruse 0.1 as Peruse
@@ -77,5 +78,9 @@ Item {
         function onLinkActivated(link) {
             component.linkActivated(link);
         }
+    }
+    QQC2.ToolTip {
+        text: textEdit.hoveredLink
+        visible: textEdit.hoveredLink !== ""
     }
 }
