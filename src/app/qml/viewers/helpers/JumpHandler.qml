@@ -82,7 +82,7 @@ Item {
     /**
      * Boolean flag indicating whether or not we should highlight the Jump marker
      */
-    property bool highlightMarker: highlightingTimer.highlightingState;
+    property bool highlightMarker: highlightingTimer.highlightingState || focused;
     
     property color highlightingColor: Kirigami.Theme.highlightColor;
     property color dimmingColor: Qt.darker(Kirigami.Theme.highlightColor, 2);
@@ -91,6 +91,8 @@ Item {
      * Boolean flag that listens to the actual hovering event
      */
     property bool hovered: jumpHoverEventHandler.hovered;
+    
+    property bool focused: false;
     
     /**
      * Gets fired whenever the Handler is clicked/tapped
@@ -112,8 +114,8 @@ Item {
             PathAngleArc {
                 centerX: component.width / 2;
                 centerY: component.height / 2;
-                radiusX: jumpHoverEventHandler.hovered? markerRadius - (radiusMultiplier * Kirigami.Units.smallSpacing) : markerRadius - (radiusMultiplier * Kirigami.Units.smallSpacing * 2);
-                radiusY: jumpHoverEventHandler.hovered? markerRadius - (radiusMultiplier * Kirigami.Units.smallSpacing) : markerRadius - (radiusMultiplier * Kirigami.Units.smallSpacing * 2);
+                radiusX: hovered || focused? markerRadius - (radiusMultiplier * Kirigami.Units.smallSpacing) : markerRadius - (radiusMultiplier * Kirigami.Units.smallSpacing * 2);
+                radiusY: hovered || focused? markerRadius - (radiusMultiplier * Kirigami.Units.smallSpacing) : markerRadius - (radiusMultiplier * Kirigami.Units.smallSpacing * 2);
                 
                 startAngle: -180;
                 sweepAngle: 360;
@@ -130,8 +132,8 @@ Item {
             PathAngleArc {
                 centerX: component.width / 2;
                 centerY: component.height / 2;
-                radiusX: jumpHoverEventHandler.hovered? markerRadius + (radiusMultiplier * Kirigami.Units.smallSpacing) : markerRadius;
-                radiusY: jumpHoverEventHandler.hovered? markerRadius + (radiusMultiplier * Kirigami.Units.smallSpacing) : markerRadius;
+                radiusX: hovered || focused? markerRadius + (radiusMultiplier * Kirigami.Units.smallSpacing) : markerRadius;
+                radiusY: hovered || focused? markerRadius + (radiusMultiplier * Kirigami.Units.smallSpacing) : markerRadius;
                 
                 startAngle: -180;
                 sweepAngle: 360;

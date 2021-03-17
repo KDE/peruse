@@ -20,6 +20,7 @@
  */
 
 import QtQuick 2.12
+import org.kde.kirigami 2.13 as Kirigami
 
 import org.kde.peruse 0.1 as Peruse
 /**
@@ -70,6 +71,21 @@ ViewerBase {
     }
     NumberAnimation { id: pageChangeAnimation; target: imageBrowser; property: "contentX"; duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; }
 
+    viewerActions: [
+        Kirigami.Action {
+            shortcut: "Tab";
+            visible: false;
+            onTriggered: imageBrowser.switchToNextJump();
+            enabled: !Kirigami.Settings.isMobile;
+        },
+        Kirigami.Action {
+            shortcut: "Return";
+            visible: false;
+            onTriggered: imageBrowser.activateCurrentJump();
+            enabled: !Kirigami.Settings.isMobile;
+        }
+    ]
+    
     Timer {
         id: initialPageChange;
         interval: applicationWindow().animationDuration;

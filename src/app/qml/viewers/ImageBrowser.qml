@@ -61,6 +61,14 @@ ListView {
         goPage(pageNo);
         root.currentItem.currentFrame = frameNo;
     }
+    
+    function switchToNextJump() {
+        root.currentItem.nextJump();
+    }
+
+    function activateCurrentJump() {
+        root.currentItem.activateCurrentJump();
+    }
 
     interactive: false // No interactive flicky stuff here, we'll handle that with the navigator instance
     property int imageWidth
@@ -96,7 +104,7 @@ ListView {
         contentHeight: imageHeight
         interactive: (contentWidth > width || contentHeight > height) && (totalFrames === 0)
         z: interactive ? 1000 : 0
-        property bool hasInteractiveObjects: false;
+        property bool hasInteractiveObjects: image.frameJumps.length > 0;
         function goNextFrame() { image.nextFrame(); }
         function goPreviousFrame() { image.previousFrame(); }
         function setColouredHole(holeRect,holeColor) {
@@ -126,6 +134,12 @@ ListView {
                 }
                 setColouredHole(image.paintedRect, holeColor);
             }
+        }
+        function nextJump() {
+            image.nextJump();
+        }
+        function activateCurrentJump() {
+            image.activateCurrentJump();
         }
         ListView.onIsCurrentItemChanged: resetHole();
         Connections {
@@ -262,7 +276,7 @@ ListView {
                 property int currentFrame: -1;
                 property QtObject currentFrameObj: image.currentPageObject && image.totalFrames > 0 && image.currentFrame > -1 ? image.currentPageObject.frame(currentFrame) : noFrame;
                 onCurrentFrameObjChanged: {
-                    checkForInteractiveObjectsTimer.start();
+                    initFrame();
                     focusOnFrame(image.currentFrame);
                 }
                 property QtObject noFrame: QtObject {
@@ -270,6 +284,29 @@ ListView {
                     property color bgcolor: image.currentPageObject? image.currentPageObject.bgcolor: "transparent";
                 }
                 
+                // if we're on touch screen, we set the currentJumpIndex to -1 by default
+                // otherwise we set it to the first available jump on the frame
+                property int currentJumpIndex: Kirigami.Settings.isMobile? -1 : 0;
+                property var frameJumps: [];
+                
+                function initFrame() {
+                    currentJumpIndex = Kirigami.Settings.isMobile? -1 : 0;
+                    var newFrameJumps = [];
+                    
+                    if(currentFrameObj === noFrame) {
+                        newFrameJumps = image.currentPageObject.jumps;
+                    } else {
+                        for(var i = 0; i < image.currentPageObject.jumps.length; i++) {
+                            var jumpObj = image.currentPageObject.jump(i);
+                            if(frameContainsJump(jumpObj)) {
+                                newFrameJumps.push(jumpObj);
+                            }
+                        }
+                    }
+                    
+                    frameJumps = newFrameJumps;
+                }
+
                 /**
                  * \brief returns true if the sent jump bounds are within the image's current frame
                  * @param jumpObj - the given jump object
@@ -289,28 +326,24 @@ ListView {
                     return false;
                 }
                 
-                Timer {
-                    id: checkForInteractiveObjectsTimer;
-                    interval: 1;
-                    running: false;
-                    repeat: false;
-                    onTriggered: {
-                        for(var i = 0; i < jumpsRepeater.count; i++) {
-                            if(image.frameContainsJump(jumpsRepeater.itemAt(i).jumpObject)) {
-                                flick.hasInteractiveObjects = true;
-                                return;
-                            }
-                        }
-                        
-                        flick.hasInteractiveObjects = false;
+                function nextJump() {
+                    if(image.currentJumpIndex === -1 || !jumpsRepeater.itemAt(image.currentJumpIndex).hovered) {
+                        image.currentJumpIndex = (image.currentJumpIndex + 1) % image.frameJumps.length;
+                    }
+                    //image.currentJumpIndex = image.currentJumpIndex === image.frameJumps.length - 1? 0 : ++image.currentJumpIndex;
+                }
+
+                function activateCurrentJump() {
+                    if(currentJumpIndex !== -1 && jumpsRepeater.itemAt(currentJumpIndex)) {
+                        jumpsRepeater.itemAt(currentJumpIndex).activated();
                     }
                 }
                 
                 Repeater {
                     id: jumpsRepeater;
-                    model: image.currentPageObject.jumps;
+                    model: image.frameJumps;
                     
-                    Helpers.JumpHandler {
+                    Helpers.JumpHandler {                        
                         jumpObject: modelData;
                         
                         offsetX: image.offsetX;
@@ -319,13 +352,15 @@ ListView {
                         widthMultiplier: image.muliplier;
                         heightMultiplier: image.muliplier;
                         
-                        visible: opacity > 0
-                        opacity: image.frameContainsJump(jumpObject) ? 1 : 0
+                        focused: image.currentJumpIndex === index;
+                        
                         Behavior on opacity { NumberAnimation { duration: Kirigami.Units.shortDuration; easing.type: Easing.InOutQuad; } }
                         
                         onActivated: {
                             root.navigateTo(jumpObject.pageIndex);
                         }
+                        
+                        onHoveredChanged: image.currentJumpIndex = (hovered ? index : -1);
                     }
                 }
 

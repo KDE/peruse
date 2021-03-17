@@ -307,6 +307,13 @@ Kirigami.Page {
         contextualActions: Kirigami.Settings.isMobile ? mobileActions : desktopActions;
         main: bookInfo.sheetOpen ? bookInfoAction : mainBookAction;
     }
+    
+    function addViewerActions(viewerActions) {
+        for(var i = 0; i < viewerActions.length; i++) {
+            actions.contextualActions.push(viewerActions[i]);
+        }
+    }
+    
     Kirigami.Action {
         id: mainBookAction;
         text: applicationWindow().visibility !== Window.FullScreen ? i18nc("Enter full screen mode on any device type", "Go Full Screen") : i18nc("Exit full screen mode on any device type", "Exit Full Screen");
@@ -379,6 +386,7 @@ Kirigami.Page {
                             root.totalPages = viewLoader.item.pageCount;
                         }
                         viewLoader.item.currentPage = root.currentPage;
+                        root.addViewerActions(viewLoader.item.viewerActions);
                         viewLoader.loadingCompleted = true;
                         applicationWindow().globalDrawer.close();
                     }

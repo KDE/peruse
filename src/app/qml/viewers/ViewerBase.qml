@@ -45,6 +45,7 @@ Item {
     property int zoomMode: 0;
     property int pageCount;
     property var pagesModel;
+    property list<QtObject> viewerActions;
     property Component thumbnailComponent;
     signal restoreCurrentPage();
 
