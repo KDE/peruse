@@ -20,6 +20,7 @@
  */
 
 import QtQuick 2.12
+import QtQuick.Controls 2.12 as QQC2
 import org.kde.kirigami 2.13 as Kirigami
 
 import org.kde.peruse 0.1 as Peruse
@@ -83,9 +84,35 @@ ViewerBase {
             visible: false;
             onTriggered: imageBrowser.activateCurrentJump();
             enabled: !Kirigami.Settings.isMobile;
+        },
+        Kirigami.Action {
+            id: translationsAction
+            text: i18nc("A submenu which allows the user to chose between translations of the book", "Translations")
+            visible: imageBrowser.model.acbfData.metaData.bookInfo.languages.length > 0
+            Kirigami.Action {
+                text: i18nc("The option used to show no translation should be used", "No Translation")
+                onTriggered: imageBrowser.currentLanguage = null
+                checked: imageBrowser.currentLanguage === null
+                checkable: true
+                QQC2.ActionGroup.group: translationSelectionGroup
+            }
         }
     ]
-    
+    QQC2.ActionGroup { id: translationSelectionGroup }
+    Component {
+        id: translationActionEntry
+        Kirigami.Action {
+            id: control
+            text: language.language
+            visible: language.show
+            property QtObject language
+            onTriggered: { imageBrowser.currentLanguage = control.language; }
+            checked: imageBrowser.currentLanguage && imageBrowser.currentLanguage === control.language
+            checkable: true
+            QQC2.ActionGroup.group: translationSelectionGroup
+        }
+    }
+
     Timer {
         id: initialPageChange;
         interval: applicationWindow().animationDuration;
@@ -96,12 +123,20 @@ ViewerBase {
     ImageBrowser {
         id: imageBrowser;
         anchors.fill: parent;
+        property QtObject currentLanguage: null; // this should probably be read out of the system somehow, or we let the user pick a default preferred?
         model: Peruse.ArchiveBookModel {
             filename: root.file;
             qmlEngine: globalQmlEngine;
             onLoadingCompleted: {
                 root.loadingCompleted(success);
-                initialPageChange.start();
+                if (success) {
+                    initialPageChange.start();
+                    for (var i = 0 ; i < imageBrowser.model.acbfData.metaData.bookInfo.languages.length ; ++i) {
+                        var language = imageBrowser.model.acbfData.metaData.bookInfo.languages[i];
+                        var action = translationActionEntry.createObject(translationsAction, {language: language});
+                        translationsAction.children.push(action);
+                    }
+                }
             }
         }
         onCurrentIndexChanged: {
