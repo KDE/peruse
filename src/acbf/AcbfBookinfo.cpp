@@ -549,15 +549,19 @@ void BookInfo::setCoverpage(Page* newCover)
     d->coverPage = newCover;
 }
 
-QList<Language *> BookInfo::languages()
+QObjectList BookInfo::languages()
 {
-    return d->languages;
+    QObjectList list;
+    for (Language* language : d->languages) {
+        list << language;
+    }
+    return list;
 }
 
 void BookInfo::addLanguage(Language* language)
 {
     d->languages.append(language);
-    emit languageEntryListChanged();
+    Q_EMIT languagesChanged();
 }
 
 QStringList BookInfo::languageEntryList()
@@ -580,7 +584,7 @@ void BookInfo::addLanguage(QString language, bool show)
 void BookInfo::removeLanguage(Language* language)
 {
     d->languages.removeAll(language);
-    emit languageEntryListChanged();
+    Q_EMIT languagesChanged();
 }
 
 void BookInfo::removeLanguage(int index)

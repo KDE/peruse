@@ -64,7 +64,10 @@ bool Language::fromXml(QXmlStreamReader *xmlReader)
 
 void Language::setLanguage(const QString& language)
 {
-    d->language = language;
+    if (d->language != language) {
+        d->language = language;
+        Q_EMIT languageChanged();
+    }
 }
 
 QString Language::language() const
@@ -74,7 +77,10 @@ QString Language::language() const
 
 void Language::setShow(bool show)
 {
-    d->show = show;
+    if (d->show != show) {
+        d->show = show;
+        Q_EMIT showChanged();
+    }
 }
 
 bool Language::show() const

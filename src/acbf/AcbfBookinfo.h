@@ -86,7 +86,8 @@ class ACBF_EXPORT BookInfo : public QObject
     Q_PROPERTY(QStringList titleLanguages READ titleLanguages NOTIFY titleChanged)
     Q_PROPERTY(QStringList genres READ genres NOTIFY genresChanged)
     Q_PROPERTY(QStringList characters READ characters WRITE setCharacters NOTIFY charactersChanged)
-    Q_PROPERTY(QStringList languageEntryList READ languageEntryList NOTIFY languageEntryListChanged)
+    Q_PROPERTY(QObjectList languages READ languages NOTIFY languagesChanged)
+    Q_PROPERTY(QStringList languageEntryList READ languageEntryList NOTIFY languagesChanged)
     Q_PROPERTY(int sequenceCount READ sequenceCount NOTIFY sequenceCountChanged)
     Q_PROPERTY(int databaseRefCount READ databaseRefCount NOTIFY databaseRefCountChanged)
     Q_PROPERTY(int contentRatingCount READ contentRatingCount NOTIFY contentRatingCountChanged)
@@ -313,7 +314,11 @@ public:
     /**
      * @return a list of language objects for determining translations.
      */
-    QList<Language*> languages();
+    QObjectList languages();
+    /**
+     * Fired when the list of languages changes
+     */
+    Q_SIGNAL void languagesChanged();
     /**
      * \brief add a language to the list of translations.
      * @param language - language object to add.
@@ -325,10 +330,6 @@ public:
      * @return a list of languages for the language text layers.
      */
     QStringList languageEntryList();
-    /**
-     * @brief fires when the language entry list changes.
-     */
-    Q_SIGNAL void languageEntryListChanged();
 
     /**
      * \brief add a language to the list of translations.

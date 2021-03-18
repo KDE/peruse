@@ -40,6 +40,8 @@ namespace AdvancedComicBookFormat
 class ACBF_EXPORT Language : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QString language READ language NOTIFY languageChanged)
+    Q_PROPERTY(bool show READ show NOTIFY showChanged)
 public:
     explicit Language(BookInfo* parent = nullptr);
     ~Language() override;
@@ -55,27 +57,29 @@ public:
     bool fromXml(QXmlStreamReader *xmlReader);
 
     /**
+     * @returns the language of this language entry.
+     */
+    QString language() const;
+    /**
      * \brief set the language of this language entry.
      * @param language - the language of the entry in language code, country
      * code format joined by a dash (not an underscore).
      */
     void setLanguage(const QString& language);
-    /**
-     * @returns the language of this language entry.
-     */
-    QString language() const;
+    Q_SIGNAL void languageChanged();
 
+    /**
+     * @return whether the language entry should be overlaid(true) or is the native
+     * language(false).
+     */
+    bool show() const;
     /**
      * \brief set whether the language entry should be overlaid(true) or is the native
      * language(false).
      * @param show - whether to overlay or not.
      */
     void setShow(bool show);
-    /**
-     * @return whether the language entry should be overlaid(true) or is the native
-     * language(false).
-     */
-    bool show() const;
+    Q_SIGNAL void showChanged();
 private:
     class Private;
     std::unique_ptr<Private> d;
