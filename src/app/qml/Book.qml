@@ -307,13 +307,17 @@ Kirigami.Page {
         contextualActions: Kirigami.Settings.isMobile ? mobileActions : desktopActions;
         main: bookInfo.sheetOpen ? bookInfoAction : mainBookAction;
     }
-    
-    function addViewerActions(viewerActions) {
-        for(var i = 0; i < viewerActions.length; i++) {
-            actions.contextualActions.push(viewerActions[i]);
+
+    function updateContextualActions() {
+        actions.contextualActions.length = 0;
+        var newList = Kirigami.Settings.isMobile ? mobileActions : desktopActions;
+        for(var i = 0; i < viewLoader.item.viewerActions.length; ++i) {
+            var action = viewLoader.item.viewerActions[i];
+            newList.push(action);
         }
+        actions.contextualActions = newList;
     }
-    
+
     Kirigami.Action {
         id: mainBookAction;
         text: applicationWindow().visibility !== Window.FullScreen ? i18nc("Enter full screen mode on any device type", "Go Full Screen") : i18nc("Exit full screen mode on any device type", "Exit Full Screen");
@@ -386,8 +390,8 @@ Kirigami.Page {
                             root.totalPages = viewLoader.item.pageCount;
                         }
                         viewLoader.item.currentPage = root.currentPage;
-                        root.addViewerActions(viewLoader.item.viewerActions);
                         viewLoader.loadingCompleted = true;
+                        root.updateContextualActions();
                         applicationWindow().globalDrawer.close();
                     }
                 }
@@ -405,6 +409,7 @@ Kirigami.Page {
                     thumbnailMovementAnimation.to = newPos;
                     thumbnailMovementAnimation.running = true;
                 }
+                onViewerActionsChanged: root.updateContextualActions();
                 onGoNextPage: root.nextPage();
                 onGoPreviousPage: root.previousPage();
                 onGoPage: root.setCurrentPage(pageNumber);
