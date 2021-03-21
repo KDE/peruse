@@ -321,6 +321,7 @@ ListView {
                         function onLinkActivated(link) {
                             // work through the various options for what a link might actually be here...
                         }
+                        // for mobile, make tooltip a tap instead (or tap-and-hold), and tap-to-dismiss
                         // hover on bin link, show name in tooltip, if image show thumbnail in tooltop, on click open in popup if we know how, offer external if we don't (maybe in that popup?)
                         // hover on ref link, show small snippet in tooltip, on click open first in popup, if already in popup, open in full display reader
                         // hover on page(/frame), tooltip shows destination in some pleasant format (if page has non-numeric title, show the title)
