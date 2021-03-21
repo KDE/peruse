@@ -14,6 +14,7 @@
         <file>qml/BookMetainfoPage.qml</file>
         <file>qml/BookPage.qml</file>
         <file>qml/CreateNewBook.qml</file>
+        <file>qml/EditPageArea.qml</file>
         <file>qml/LinkEditorSheet.qml</file>
         <file>qml/Main.qml</file>
         <file>qml/MessageBoxSheet.qml</file>

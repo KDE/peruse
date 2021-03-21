@@ -38,6 +38,11 @@ Kirigami.Page {
     property var textTypes: ["speech", "commentary", "formal", "letter", "code", "heading"];
     signal save();
 
+    enum FieldTypes {
+        Frame,
+        Textarea,
+        Jump
+    }
 
     onIndexChanged: {
         if (root.index===0) {
@@ -128,6 +133,14 @@ Kirigami.Page {
                     color: "blue";
                     font.weight: Font.Bold;
                 }
+
+                MouseArea {
+                    anchors.fill: parent;
+
+                    onClicked: {
+                        editPageArea.editObject(root.currentPage.frame(index), BookPage.FieldTypes.Frame);
+                    }
+                }
             }
         }
 
@@ -155,6 +168,14 @@ Kirigami.Page {
                     }
                     color: "red";
                     font.weight: Font.Bold;
+                }
+
+                MouseArea {
+                    anchors.fill: parent;
+
+                    onClicked: {
+                        editPageArea.editObject(root.currentPage.textLayer("").textarea(index), BookPage.FieldTypes.Textarea);
+                    }
                 }
             }
         }
@@ -184,6 +205,14 @@ Kirigami.Page {
                     color: "green";
                     font.weight: Font.Bold;
                 }
+
+                MouseArea {
+                    anchors.fill: parent;
+
+                    onClicked: {
+                        editPageArea.editObject(modelData, BookPage.FieldTypes.Jump)
+                    }
+                }
             }
         }
         MouseArea {
@@ -193,7 +222,17 @@ Kirigami.Page {
             property point endPoint: Qt.point(0,0);
             property bool dragging: false;
             //hoverEnabled: true;
-            preventStealing: true;
+            preventStealing: false;
+            propagateComposedEvents: true;
+            property bool createNewObject: false;
+
+            onClicked: {
+                if(!createNewObject) {
+                    mouse.accepted = false;
+                } else {
+                    createNewObject = false;
+                }
+            }
 
             onPressed: {
                 if (dragging == false) {
@@ -216,10 +255,12 @@ Kirigami.Page {
                 if (dragging) {
                     if (Qt.point(mouse.x, mouse.y)!==startPoint) {
                         endPoint = Qt.point(mouse.x, mouse.y);
-                        dragging = false;
+                        createNewObject = true;
                         createFrame();
                         mouse.accepted
                     }
+
+                    dragging = false;
                 }
 
             }
@@ -227,6 +268,7 @@ Kirigami.Page {
                 dragging = false;
                 endPoint: Qt.point(0,0);
                 startPoint: Qt.point(0,0);
+                mouse.accepted = false;
             }
 
             Rectangle {
@@ -265,53 +307,38 @@ Kirigami.Page {
     AddPageArea {
         id: addPageArea
         imageSource: pageUrl;
-        pages: root.pageList;
-        pageBgColor: root.currentPage.bgColor? root.currentPage.bgColor : "";
-        pageTextBgColor: root.currentPage.textLayer("").bgColor? root.currentPage.textLayer("").bgColor : "";
-        availableTypes: root.textTypes;
-        transparent: false;
-        inverted: false;
-        rotation: 0;
-        onSave: {
+        onAccepted: {
             var index = 0;
-            if (type===0) {
+            var createdObject;
+            if (type===BookPage.FieldTypes.Frame) {
                 index = root.currentPage.framePointStrings.length;
                 root.currentPage.addFrame(index);
                 root.currentPage.frame(index).setPointsFromRect(topLeft, bottomRight);
-                if (bgColor !== root.model.acbfData.body.bgcolor
-                        && bgColor !== root.currentPage.bgcolor
-                        && bgColor !== "#ffffff") {
-                    root.currentPage.frame(index).bgcolor = bgColor;
-                }
-            } else if (type===1) {
+
+                createdObject = root.currentPage.frame(index);
+            } else if (type===BookPage.FieldTypes.Textarea) {
                 index = root.currentPage.textLayer("").textareaPointStrings.length;
                 root.currentPage.textLayer("").addTextarea(index);
-                if (textBgColor !== root.currentPage.textLayer("").bgcolor
-                        && textBgColor !== root.model.acbfData.body.bgcolor
-                        && textBgColor !== root.currentPage.bgcolor
-                        && textBgColor !== "#ffffff") {
-                    root.currentPage.textLayer("").textarea(index).bgcolor = textBgColor;
-                }
-                root.currentPage.textLayer("").textarea(index).transparent = transparent;
-                root.currentPage.textLayer("").textarea(index).inverted = inverted;
-                root.currentPage.textLayer("").textarea(index).paragraphs = paragraphs.split("\n\n");
                 root.currentPage.textLayer("").textarea(index).setPointsFromRect(topLeft, bottomRight);
-                root.currentPage.textLayer("").textarea(index).type = availableTypes[textTypeIndex];
-                root.textTypes = root.currentPage.textLayer("").textarea(index).availableTypes();
-                root.currentPage.textLayer("").textarea(index).textRotation = rotation;
-            } else if (type===2) {
+
+                createdObject = root.currentPage.textLayer("").textarea(index);
+            } else if (type===BookPage.FieldTypes.Jump) {
                 index = root.currentPage.jumps.length;
-                root.currentPage.addJump(index);
+                root.currentPage.addJump(0, index);
                 root.currentPage.jump(index).setPointsFromRect(topLeft, bottomRight);
-                root.currentPage.jump(index).pageIndex = pageIndex;
+
+                createdObject = root.currentPage.jump(index);
             }
-            resetFields();
-        }
-        onSheetOpenChanged: {
-            if (sheetOpen) {
-                resetFields();
-            }
+
+            editPageArea.editObject(createdObject, type);
         }
     }
 
+    EditPageArea {
+        id: editPageArea;
+
+        imageSource: pageUrl;
+        pages: root.pageList;
+        availableTypes: root.textTypes;
+    }
 }

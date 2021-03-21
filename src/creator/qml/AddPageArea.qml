@@ -30,36 +30,12 @@ import org.kde.kirigami 2.12 as Kirigami
  */
 Kirigami.OverlaySheet {
     id: root;
-    signal save();
-    property string pageBgColor: "";
-    property string pageTextBgColor: "";
-    property alias type: typeComboBox.currentIndex;
+    signal accepted(int type);
+
+    property string imageSource;
+
     property point topLeft;
     property point bottomRight;
-    property string imageSource;
-    property string bgColor: pageBgColor !== ""? pageBgColor : "#ffffff";
-    property string textBgColor: pageTextBgColor !== ""? pageTextBgColor : bgColor;
-    property int pageIndex: pageIndexComboBox.currentIndex + 1;
-    property var pages: [];
-    property var availableTypes: [];
-
-    property alias inverted: invertedSwitch.checked;
-    property alias transparent: transparentSwitch.checked;
-    property alias paragraphs: textAreaInput.text;
-    property alias rotation: textRotation.value;
-    property alias textTypeIndex: textType.currentIndex;
-    
-    function resetFields() {
-        textAreaInput.text = "";
-        invertedSwitch.checked = false;
-        transparentSwitch.checked = false;
-        textRotation.value = 0;
-        textType.currentIndex = 0;
-        typeComboBox.currentIndex = 0;
-        pageIndexComboBox.currentIndex = 0;
-        bgColor = pageBgColor !== ""? pageBgColor : "#ffffff";
-        textBgColor = pageTextBgColor !== ""? pageTextBgColor : bgColor;
-    }
 
     onBottomRightChanged: {
         var widthFull = Math.max(bottomRight.x, topLeft.x) - Math.min(bottomRight.x, topLeft.x);
@@ -98,143 +74,49 @@ Kirigami.OverlaySheet {
                 id: preview
                 source: root.imageSource;
             }
-            Text {
-                id: textRotationGuide;
-                anchors.centerIn: parent;
-                height: 1;
-                color: "red";
-                text: i18n("Text Rotation Guide");
-                wrapMode: Text.WrapAtWordBoundaryOrAnywhere;
-                rotation: 360-textRotation.value;
-                visible: typeComboBox.currentIndex == 1;
-            }
         }
 
-        Kirigami.FormLayout {
-            Layout.fillWidth: true;
-            QtControls.ComboBox {
-                id: typeComboBox;
-                Kirigami.FormData.label: i18nc("label for the page area combobox", "Page area type:");
-                model: [i18n("Frame"), i18n("Textarea"), i18n("Jump")]
-                popup.z: 999; // HACK This is an absolute hack, but combos inside OverlaySheets have their popups show up underneath, because of fun z ordering stuff
-            }
+        RowLayout {
+            QtControls.Button {
+                id: createFrameButton;
+                Layout.alignment: Qt.AlignLeft;
+                Layout.fillWidth: true;
+                text: i18nc("Button which creates a new frame, and closes the dialog", "Create Frame");
+                Keys.onReturnPressed: createAndClose();
+                onClicked: createAndClose();
 
-            Row {
-                Kirigami.FormData.label: i18nc("Label for background color button", "Background color:")
-                visible: typeComboBox.currentIndex == 0;
-                spacing: Kirigami.Units.smallSpacing;
-                Rectangle {
-                    id: frameBackgroundColor;
-                    height: Kirigami.Units.iconSizes.medium;
-                    width: Kirigami.Units.iconSizes.huge;
-                    radius: 3;
-                    border.color: Kirigami.Theme.disabledTextColor;
-                    border.width: 1;
-                    color: root.bgColor;
-                    MouseArea {
-                        anchors.fill: parent;
-                        onClicked: {
-                            backgroundColorDialog.open();
-
-                        }
-                        hoverEnabled: true;
-                        onEntered: parent.border.color = Kirigami.Theme.buttonHoverColor;
-                        onExited: parent.border.color = Kirigami.Theme.disabledTextColor;
-                    }
-                    ColorDialog {
-                        id: backgroundColorDialog
-                        title: i18nc("@title color choosing dialog","Choose the background color for this frame");
-                        color: root.bgColor;
-                        onAccepted: root.bgColor = color;
-                    }
+                function createAndClose() {
+                    root.accepted(BookPage.FieldTypes.Frame);
+                    root.close();
                 }
             }
 
-            Row {
-                visible: typeComboBox.currentIndex == 1;
-                Kirigami.FormData.label: i18nc("Label for background color button", "Background color:")
-                spacing: Kirigami.Units.smallSpacing;
-                height: Kirigami.Units.iconSizes.medium;
-                Rectangle {
-                    id: textAreaBackgroundColor;
-                    height: Kirigami.Units.iconSizes.medium;
-                    width: Kirigami.Units.iconSizes.huge;
-                    radius: 3;
-                    border.color: Kirigami.Theme.disabledTextColor;
-                    border.width: 1;
-                    color: root.textBgColor;
-                    anchors.verticalCenter: parent.verticalCenter;
-                    MouseArea {
-                        anchors.fill: parent;
-                        onClicked: {
-                            textAreaBackgroundColorDialog.open();
+            QtControls.Button {
+                id: createTextareaButton;
+                Layout.alignment: Qt.AlignCenter;
+                Layout.fillWidth: true;
+                text: i18nc("Button which creates new textarea, and closes the dialog", "Create Textarea");
+                Keys.onReturnPressed: createAndClose();
+                onClicked: createAndClose();
 
-                        }
-                        hoverEnabled: true;
-                        onEntered: parent.border.color = Kirigami.Theme.buttonHoverColor;
-                        onExited: parent.border.color = Kirigami.Theme.disabledTextColor;
-                    }
-                    ColorDialog {
-                        id: textAreaBackgroundColorDialog
-                        title: i18nc("@title color choosing dialog","Choose the background color for this frame");
-                        color: root.textBgColor;
-                        onAccepted: root.textBgColor = color;
-                    }
+                function createAndClose() {
+                    root.accepted(BookPage.FieldTypes.Textarea);
+                    root.close();
                 }
             }
 
-            QtControls.Switch {
-                id: transparentSwitch;
-                visible: typeComboBox.currentIndex == 1;
-                Kirigami.FormData.label: i18nc("Option for making the background of a text area transparent", "Transparent");
-            }
-            QtControls.Switch {
-                id: invertedSwitch;
-                visible: typeComboBox.currentIndex == 1;
-                Kirigami.FormData.label: i18nc("Option for making the background of a text area cause what is behind it to be inverted", "Inverted");
-            }
-            QtControls.Slider {
-                id: textRotation;
-                Kirigami.FormData.label: i18nc("Label for text rotation slider", "Text rotation:")
-                visible: typeComboBox.currentIndex == 1;
-                from: 0
-                to: 360;
-            }
+            QtControls.Button {
+                id: createJumpButton;
+                Layout.alignment: Qt.AlignRight;
+                Layout.fillWidth: true;
+                text: i18nc("Button which creates a new jump, and closes the dialog", "Create Jump");
+                Keys.onReturnPressed: createAndClose();
+                onClicked: createAndClose();
 
-            QtControls.ComboBox {
-                id: textType;
-                Kirigami.FormData.label: i18nc("Label for text type combobox", "Type:")
-                visible: typeComboBox.currentIndex == 1;
-                model: root.availableTypes;
-                currentIndex: 0;
-                popup.z: 999; // HACK This is an absolute hack, but combos inside OverlaySheets have their popups show up underneath, because of fun z ordering stuff
-            }
-
-            QtControls.TextArea {
-                id: textAreaInput;
-                width: parent.width;
-                placeholderText: i18nc("Place holder text for text area", "Type to input text for text area here");
-            }
-
-            QtControls.ComboBox {
-                id: pageIndexComboBox;
-                Kirigami.FormData.label: i18nc("Label for the dropdown which will let you pick a page a jump will send the reader to when activated", "Page Index:")
-                visible: typeComboBox.currentIndex == 2;
-                model: root.pages;
-                popup.z: 999; // HACK This is an absolute hack, but combos inside OverlaySheets have their popups show up underneath, because of fun z ordering stuff
-            }
-        }
-
-        QtControls.Button {
-            id: saveButton;
-            Layout.alignment: Qt.AlignRight
-            text: i18nc("Button which saves the page area, and closes the dialog", "Save");
-            Keys.onReturnPressed: saveAndClose();
-            onClicked: saveAndClose();
-
-            function saveAndClose() {
-                root.save();
-                root.close();
+                function createAndClose() {
+                    root.accepted(BookPage.FieldTypes.Jump);
+                    root.close();
+                }
             }
         }
     }
