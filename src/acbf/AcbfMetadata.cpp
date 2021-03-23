@@ -88,7 +88,7 @@ bool Metadata::fromXml(QXmlStreamReader *xmlReader, const QString& xmlData)
         }
         else if(xmlReader->name() == QStringLiteral("document-info"))
         {
-            if(!d->documentInfo->fromXml(xmlReader)) {
+            if(!d->documentInfo->fromXml(xmlReader, xmlData)) {
                 return false;
             }
         }
