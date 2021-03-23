@@ -20,10 +20,12 @@
  */
 
 import QtQuick 2.12
+import QtQuick.Layouts 1.12
 import QtQuick.Window 2.12
 
 import org.kde.kirigami 2.13 as Kirigami
 
+import org.kde.peruse 0.1 as Peruse
 import "helpers" as Helpers
 
 /**
@@ -77,6 +79,10 @@ ListView {
     orientation: ListView.Horizontal
     snapMode: ListView.SnapOneItem
     cacheBuffer: 3000
+
+    readonly property QtObject identifiedObjects: Peruse.IdentifiedObjectModel {
+        document: root.model.acbfData
+    }
 
     // This ensures that the current index is always up to date, which we need to ensure we can track the current page
     // as required by the thumbnail navigator, and the resume-reading-from functionality
@@ -312,14 +318,49 @@ ListView {
                     property QtObject textLayer: root.currentLanguage ? image.currentPageObject.textLayer(root.currentLanguage.language) : null
                     model: textLayer ? textLayer.textareas : 0;
                     Helpers.TextAreaHandler {
+                        id: textAreaHandler
                         model: root.model
+                        identifiedObjects: root.identifiedObjects
                         multiplier: image.muliplier
                         offsetX: image.offsetX
                         offsetY: image.offsetY
                         textArea: modelData
                         enabled: image.frameContainsJump(modelData) && !flick.actuallyMoving
                         function onLinkActivated(link) {
-                            // work through the various options for what a link might actually be here...
+                            if (link.startsWith("#")) {
+                                // Then it's one of our internally identified objects with an explicit name
+                                var linkedObject = textAreaHandler.objectById(link.slice(1));
+                                if (linkedObject) {
+                                    if (linkedObject.objectType === "Reference" || linkedObject.objectType === "Binary") {
+                                        // show a popup with the reference or binary in
+                                        // if we've got a sensible way of showing it:
+                                        // pdf
+                                        // various image formats
+                                        infoDisplay.showInfo(linkedObject);
+                                    } else if (linkedObject.objectType === "Page") {
+                                        // navigate to this page
+                                        root.navigateTo(linkedObject.localIndex);
+                                    } else if (linkedObject.objectType === "Frame") {
+                                        // navigate to this frame/page combo
+                                        root.navigateTo(linkedObject.parent.localIndex, linkedObject.localIndex);
+                                    } else {
+                                        // sorry, dunno what to do with these yet, we should probably say that...
+                                    }
+                                } else {
+                                    // we didn't find an object with that name - popup to tell the user maybe?
+                                }
+                            } else if (link.startsWith("http://") || link.startsWith("https://") || link.startsWith("mailto:")) {
+                                // This is an external link, let's try and support those in a graceful manner
+                            } else if (link.startsWith("file://")) {
+                                // This is a link to a local file on the file system
+                            } else if (link.startsWith("zip:")) {
+                                // This is a bit of an oddity - link to a file in a zip archive
+                                // link format for e.g.: zip:path/to/file.zip!/path/to/file/page1.jpg
+                                // zip location can be either relative or absolute, so we need to deal with that...
+                            } else {
+                                // If none of the above match, assume we have a link to some internal archive
+                                // file, so let's see if the thing it's trying to link to actually exists...
+                            }
                         }
                         // for mobile, make tooltip a tap instead (or tap-and-hold), and tap-to-dismiss
                         // hover on bin link, show name in tooltip, if image show thumbnail in tooltop, on click open in popup if we know how, offer external if we don't (maybe in that popup?)
@@ -430,6 +471,43 @@ ListView {
                     visible: image.status === Image.Error;
                     text: i18nc("Message shown on the book reader view when there is an issue loading the image for a specific page", "Could not load the image for this page.\nThis is most commonly due to a missing image decoder (specifically, the Qt Imageformats package, which Peruse depends on for loading images), and likely a packaging error. Contact whoever you got this package from and inform them of this error.\n\nSpecifically, the image we attempted to load is called %1, and the image formats Qt is aware of are %2. If there is a mismatch there, that will be the problem.\n\nIf not, please report this bug to us, and give as much information as you can to assist us in working out what's wrong.", image.source, peruseConfig.supportedImageFormats().join(", "));
                 }
+            }
+        }
+    }
+
+    Kirigami.OverlaySheet {
+        id: infoDisplay
+        function showInfo(theObject) {
+            infoDisplay.theObject = theObject;
+            infoDisplay.open();
+        }
+        property QtObject theObject
+        showCloseButton: true
+        header: Kirigami.Heading {
+            text: infoDisplay.theObject ? infoDisplay.theObject.id : ""
+            Layout.fillWidth: true
+            elide: Text.ElideRight
+        }
+        ColumnLayout {
+            Text {
+                visible: infoDisplay.theObject && infoDisplay.theObject.objectType === "Reference"
+                Layout.fillWidth: true
+                Layout.preferredWidth: root.width - Kirigami.Units.largeSpacing * 2
+                textFormat: Qt.RichText
+                wrapMode: TextEdit.Wrap
+                // We need some pleasant way to get the paragraphs and turn them into sensibly rich-text styled text (perhaps on Stylesheet? Throw it a qstringlist and it spits out a formatted html string with the styles etc?)
+                text: visible ? infoDisplay.theObject.paragraphs.join("\n") : ""
+                onLinkActivated: {
+                    // Open in /this/ popup (we should be tracking the navigation history, just store the objects in a list...)
+                }
+                onLinkHovered: {
+                    // Show first line in a popup, or destination, etc, as for Textareas
+                }
+            }
+            Image {
+                visible: infoDisplay.theObject && infoDisplay.theObject.objectType === "Binary"
+                fillMode: Image.PreserveAspectFit
+                source: visible ? root.model.previewForId("#" + infoDisplay.theObject.id) : ""
             }
         }
     }
