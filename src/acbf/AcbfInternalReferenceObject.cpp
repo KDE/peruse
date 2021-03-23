@@ -21,7 +21,6 @@
 
 #include "AcbfInternalReferenceObject.h"
 #include "AcbfInternalReference.h"
-#include "AcbfReference.h"
 #include "AcbfDocument.h"
 
 #include <QVariant>
@@ -126,6 +125,16 @@ void InternalReferenceObject::updateForwardReferences()
 QObjectList InternalReferenceObject::backReferences() const
 {
     return d->backReferences;
+}
+
+QString InternalReferenceObject::objectType() const
+{
+    QString objType{metaObject()->className()};
+    static const QLatin1String namespaceBit{"AdvancedComicBookFormat::"};
+    if (objType.startsWith(namespaceBit)) {
+        objType = objType.splitRef(QLatin1String("::")).last().toString();
+    }
+    return objType;
 }
 
 void InternalReferenceObject::registerBackReference(InternalReference* ref)

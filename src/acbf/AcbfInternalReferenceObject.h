@@ -55,6 +55,12 @@ class ACBF_EXPORT InternalReferenceObject : public QObject
      * The index of this object in the local list it is a part of
      */
     Q_PROPERTY(int localIndex READ localIndex NOTIFY localIndexChanged)
+    /**
+     * The ACBF type name of this object (this will usually be either Reference, Binary, or Textarea).
+     * This might be used for more granular identification of the object, if the reference type is
+     * not sufficient.
+     */
+    Q_PROPERTY(QString objectType READ objectType CONSTANT)
 public:
     enum SupportedReferenceType {
         ReferenceUnknownType = 0,
@@ -73,6 +79,7 @@ public:
     void updateForwardReferences();
     QObjectList backReferences() const;
     Q_SIGNAL void backReferencesChanged();
+    QString objectType() const;
     /**
      * Function called by other classes which contain links to this reference
      */
