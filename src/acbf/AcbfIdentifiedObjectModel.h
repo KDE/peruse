@@ -77,6 +77,14 @@ public:
     QObject* document() const;
     void setDocument(QObject* document);
     Q_SIGNAL void documentChanged();
+
+    /**
+     * Get the first object from the model which has the given ID
+     * \note If identifying for link purposes, don't include the #
+     * @param id The ID of the object you wish to get
+     * @return Either an object with the given ID, or null if none was found
+     */
+    Q_INVOKABLE QObject* objectById(const QString& id);
 private:
     class Private;
     std::unique_ptr<Private> d;

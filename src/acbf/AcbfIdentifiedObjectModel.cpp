@@ -152,3 +152,18 @@ void IdentifiedObjectModel::setDocument(QObject* document)
         Q_EMIT documentChanged();
     }
 }
+
+QObject * IdentifiedObjectModel::objectById(const QString& id)
+{
+    QObject* identified{nullptr};
+    static const char* idProp{"id"};
+    for (InternalReferenceObject* object : d->identifiedObjects) {
+        if (object->supportedReferenceType() & InternalReferenceObject::ReferenceTarget) {
+            if (object->property(idProp).toString() == id) {
+                identified = object;
+                break;
+            }
+        }
+    }
+    return identified;
+}
