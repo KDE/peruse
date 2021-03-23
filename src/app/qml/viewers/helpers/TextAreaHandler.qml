@@ -28,6 +28,10 @@ import org.kde.peruse 0.1 as Peruse
 Item {
     id: component
     property QtObject model
+    // identifiedObjects should be an instance of Peruse.IdentifiedObjectsModel, based on the acbf document of the model above
+    // It would be possible to create one here, but the model is expensive to instantiate, and having a global one ensures that
+    // we just have the one copy (which is also nice)
+    property QtObject identifiedObjects
     property real multiplier: 1
     property int offsetX: 0
     property int offsetY: 0
