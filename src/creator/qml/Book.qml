@@ -163,7 +163,7 @@ Kirigami.ScrollablePage {
             Kirigami.PlaceholderMessage {
                 anchors.centerIn: parent
                 width: parent.width - (Kirigami.Units.largeSpacing * 4)
-                text: root.model.processingDescription;
+                text: root.model ? root.model.processingDescription : "";
             }
         }
         QtControls.BusyIndicator {
