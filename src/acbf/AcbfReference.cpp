@@ -70,7 +70,7 @@ void Reference::toXml(QXmlStreamWriter* writer)
     writer->writeEndElement();
 }
 
-bool Reference::fromXml(QXmlStreamReader *xmlReader)
+bool Reference::fromXml(QXmlStreamReader *xmlReader, const QString& xmlData)
 {
     setId(xmlReader->attributes().value(QStringLiteral("id")).toString());
     setLanguage(xmlReader->attributes().value(QStringLiteral("lang")).toString());
@@ -78,7 +78,15 @@ bool Reference::fromXml(QXmlStreamReader *xmlReader)
     {
         if(xmlReader->name() == QStringLiteral("p"))
         {
-            d->paragraphs.append(xmlReader->readElementText(QXmlStreamReader::IncludeChildElements));
+            int startPoint = xmlReader->characterOffset();
+            int endPoint{startPoint};
+            while(xmlReader->readNext()) {
+                if (xmlReader->isEndElement() && xmlReader->name() == QStringLiteral("p")) {
+                    endPoint = xmlReader->characterOffset();
+                    break;
+                }
+            }
+            d->paragraphs.append(xmlData.mid(startPoint, endPoint - startPoint - 4));
         }
         else
         {

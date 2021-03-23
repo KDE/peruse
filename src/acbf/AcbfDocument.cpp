@@ -110,13 +110,13 @@ bool Document::fromXml(QString xmlDocument)
                 }
                 else if(xmlReader.name() == QStringLiteral("references"))
                 {
-                    if(!d->references->fromXml(&xmlReader)) {
+                    if(!d->references->fromXml(&xmlReader, xmlDocument)) {
                         break;
                     }
                 }
                 else if(xmlReader.name() == QStringLiteral("style"))
                 {
-                    if(!d->cssStyleSheet->fromXml(&xmlReader)) {
+                    if(!d->cssStyleSheet->fromXml(&xmlReader, xmlDocument)) {
                         break;
                     }
                 }

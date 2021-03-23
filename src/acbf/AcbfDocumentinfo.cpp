@@ -95,7 +95,7 @@ void DocumentInfo::toXml(QXmlStreamWriter *writer)
     writer->writeEndElement();
 }
 
-bool DocumentInfo::fromXml(QXmlStreamReader *xmlReader)
+bool DocumentInfo::fromXml(QXmlStreamReader *xmlReader, const QString& xmlData)
 {
     while(xmlReader->readNextStartElement())
     {
@@ -121,7 +121,15 @@ bool DocumentInfo::fromXml(QXmlStreamReader *xmlReader)
         {
             while(xmlReader->readNextStartElement()) {
                 if(xmlReader->name() == QStringLiteral("p")) {
-                    d->source.append(xmlReader->readElementText(QXmlStreamReader::IncludeChildElements));
+                    int startPoint = xmlReader->characterOffset();
+                    int endPoint{startPoint};
+                    while(xmlReader->readNext()) {
+                        if (xmlReader->isEndElement() && xmlReader->name() == QStringLiteral("p")) {
+                            endPoint = xmlReader->characterOffset();
+                            break;
+                        }
+                    }
+                    d->source.append(xmlData.mid(startPoint, endPoint - startPoint - 4));
                 }
                 else {
                     xmlReader->skipCurrentElement();
@@ -140,7 +148,15 @@ bool DocumentInfo::fromXml(QXmlStreamReader *xmlReader)
         {
             while(xmlReader->readNextStartElement()) {
                 if(xmlReader->name() == QStringLiteral("p")) {
-                    d->history.append(xmlReader->readElementText(QXmlStreamReader::IncludeChildElements));
+                    int startPoint = xmlReader->characterOffset();
+                    int endPoint{startPoint};
+                    while(xmlReader->readNext()) {
+                        if (xmlReader->isEndElement() && xmlReader->name() == QStringLiteral("p")) {
+                            endPoint = xmlReader->characterOffset();
+                            break;
+                        }
+                    }
+                    d->history.append(xmlData.mid(startPoint, endPoint - startPoint - 4));
                 }
                 else {
                     xmlReader->skipCurrentElement();

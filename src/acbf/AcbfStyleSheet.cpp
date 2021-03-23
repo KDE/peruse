@@ -72,9 +72,17 @@ void StyleSheet::toXml(QXmlStreamWriter* writer) {
     writer->writeEndElement();
 }
 
-bool StyleSheet::fromXml(QXmlStreamReader *xmlReader)
+bool StyleSheet::fromXml(QXmlStreamReader *xmlReader, const QString& xmlData)
 {
-    setContents(xmlReader->readElementText(QXmlStreamReader::IncludeChildElements));
+    int startPoint = xmlReader->characterOffset();
+    int endPoint{startPoint};
+    while(xmlReader->readNext()) {
+        if (xmlReader->isEndElement() && xmlReader->name() == QStringLiteral("style")) {
+            endPoint = xmlReader->characterOffset();
+            break;
+        }
+    }
+    setContents(xmlData.mid(startPoint, endPoint - startPoint - 8));
     if (xmlReader->hasError()) {
         qCWarning(ACBF_LOG) << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader->name() << "(" << xmlReader->lineNumber() << ":" << xmlReader->columnNumber() << ") The reported error was:" << xmlReader->errorString();
     }

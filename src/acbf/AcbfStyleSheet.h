@@ -60,7 +60,7 @@ public:
      * \brief load a stylesheet element into this object.
      * @return True if the xmlReader encountered no errors.
      */
-    bool fromXml(QXmlStreamReader *xmlReader);
+    bool fromXml(QXmlStreamReader *xmlReader, const QString& xmlData);
 
     /**
      * The styles contained within this stylesheet

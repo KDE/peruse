@@ -197,7 +197,15 @@ bool BookInfo::fromXml(QXmlStreamReader *xmlReader, const QString& xmlData)
             QStringList paragraphs;
             while(xmlReader->readNextStartElement()) {
                 if(xmlReader->name() == QStringLiteral("p")) {
-                    paragraphs.append(xmlReader->readElementText(QXmlStreamReader::IncludeChildElements));
+                    int startPoint = xmlReader->characterOffset();
+                    int endPoint{startPoint};
+                    while(xmlReader->readNext()) {
+                        if (xmlReader->isEndElement() && xmlReader->name() == QStringLiteral("p")) {
+                            endPoint = xmlReader->characterOffset();
+                            break;
+                        }
+                    }
+                    paragraphs.append(xmlData.mid(startPoint, endPoint - startPoint - 4));
                 }
                 else {
                     xmlReader->skipCurrentElement();

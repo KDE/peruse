@@ -80,7 +80,7 @@ void References::toXml(QXmlStreamWriter* writer) {
     writer->writeEndElement();
 }
 
-bool References::fromXml(QXmlStreamReader *xmlReader)
+bool References::fromXml(QXmlStreamReader *xmlReader, const QString& xmlData)
 {
     qDeleteAll(d->references);
     while(xmlReader->readNextStartElement())
@@ -88,7 +88,7 @@ bool References::fromXml(QXmlStreamReader *xmlReader)
         if(xmlReader->name() == QStringLiteral("reference"))
         {
             Reference* newReference = new Reference(this);
-            if(!newReference->fromXml(xmlReader)) {
+            if(!newReference->fromXml(xmlReader, xmlData)) {
                 return false;
             }
             d->addReference(newReference, false);

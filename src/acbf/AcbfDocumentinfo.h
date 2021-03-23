@@ -61,7 +61,7 @@ public:
      * \brief load the DocumentInfo into this object.
      * @return True if the xmlReader encountered no errors.
      */
-    bool fromXml(QXmlStreamReader *xmlReader);
+    bool fromXml(QXmlStreamReader *xmlReader, const QString& xmlData);
 
     /**
      * \brief the list of authors that worked on this specific acbf.
