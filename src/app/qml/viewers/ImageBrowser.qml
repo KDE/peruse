@@ -40,6 +40,7 @@ ListView {
     signal goNextPage();
     signal goPreviousPage();
     signal goPage(int pageNumber);
+    signal activateExternalLink(string link);
 
     onWidthChanged: restorationTimer.start()
     onHeightChanged: restorationTimer.start()
@@ -63,7 +64,47 @@ ListView {
         goPage(pageNo);
         root.currentItem.currentFrame = frameNo;
     }
-    
+
+    function handleLink(link) {
+        var lowerLink = link.toLowerCase();
+        if (link.startsWith("#")) {
+            // Then it's one of our internally identified objects with an explicit name
+            var linkedObject = root.identifiedObjects.objectById(link.slice(1));
+            if (linkedObject) {
+                if (linkedObject.objectType === "Reference" || linkedObject.objectType === "Binary") {
+                    // show a popup with the reference or binary in
+                    // if we've got a sensible way of showing it:
+                    // pdf
+                    // various image formats
+                    infoDisplay.showInfo(linkedObject);
+                } else if (linkedObject.objectType === "Page") {
+                    // navigate to this page
+                    root.navigateTo(linkedObject.localIndex);
+                } else if (linkedObject.objectType === "Frame") {
+                    // navigate to this frame/page combo
+                    root.navigateTo(linkedObject.parent.localIndex, linkedObject.localIndex);
+                } else {
+                    // sorry, dunno what to do with these yet, let's tell the user
+                    applicationWindow().showPassiveNotification(i18n("The link you just activated goes to something we don't really know what to do with. This suggests the book you are reading does not conform to the Advanced Comic Book Format specification, but we would still like to know about it. Please report a bug, and make the book available to us, so we can try and work out how to handle this!"));
+                }
+            } else {
+                // we didn't find an object with that name, so let's inform the user about that
+                applicationWindow().showPassiveNotification(i18n("The link you activated doesn't seem to go anywhere. We tried to find something with the ID %1 but didn't locate anything. This is likely an error in the book, and the author would probably like to know about it.", link));
+            }
+        } else if (lowerLink.startsWith("http://") || lowerLink.startsWith("https://") || lowerLink.startsWith("mailto:") || lowerLink.startsWith("file://")) {
+            // This is an external link (relative to the archive), let's try and support those in a graceful manner
+            // Be safe, show the link before launching it
+            root.activateExternalLink(link);
+        } else if (lowerLink.startsWith("zip:")) {
+            // This is a bit of an oddity - link to a file in a zip archive
+            // link format for e.g.: zip:path/to/file.zip!/path/to/file/page1.jpg
+            // zip location can be either relative or absolute, so we need to deal with that...
+        } else {
+            // If none of the above match, assume we have a link to some internal archive
+            // file, so let's see if the thing it's trying to link to actually exists...
+        }
+    }
+
     function switchToNextJump() {
         root.currentItem.nextJump();
     }
@@ -326,42 +367,7 @@ ListView {
                         offsetY: image.offsetY
                         textArea: modelData
                         enabled: image.frameContainsJump(modelData) && !flick.actuallyMoving
-                        function onLinkActivated(link) {
-                            if (link.startsWith("#")) {
-                                // Then it's one of our internally identified objects with an explicit name
-                                var linkedObject = textAreaHandler.objectById(link.slice(1));
-                                if (linkedObject) {
-                                    if (linkedObject.objectType === "Reference" || linkedObject.objectType === "Binary") {
-                                        // show a popup with the reference or binary in
-                                        // if we've got a sensible way of showing it:
-                                        // pdf
-                                        // various image formats
-                                        infoDisplay.showInfo(linkedObject);
-                                    } else if (linkedObject.objectType === "Page") {
-                                        // navigate to this page
-                                        root.navigateTo(linkedObject.localIndex);
-                                    } else if (linkedObject.objectType === "Frame") {
-                                        // navigate to this frame/page combo
-                                        root.navigateTo(linkedObject.parent.localIndex, linkedObject.localIndex);
-                                    } else {
-                                        // sorry, dunno what to do with these yet, we should probably say that...
-                                    }
-                                } else {
-                                    // we didn't find an object with that name - popup to tell the user maybe?
-                                }
-                            } else if (link.startsWith("http://") || link.startsWith("https://") || link.startsWith("mailto:")) {
-                                // This is an external link, let's try and support those in a graceful manner
-                            } else if (link.startsWith("file://")) {
-                                // This is a link to a local file on the file system
-                            } else if (link.startsWith("zip:")) {
-                                // This is a bit of an oddity - link to a file in a zip archive
-                                // link format for e.g.: zip:path/to/file.zip!/path/to/file/page1.jpg
-                                // zip location can be either relative or absolute, so we need to deal with that...
-                            } else {
-                                // If none of the above match, assume we have a link to some internal archive
-                                // file, so let's see if the thing it's trying to link to actually exists...
-                            }
-                        }
+                        function onLinkActivated(link) { root.handleLink(link); }
                         // for mobile, make tooltip a tap instead (or tap-and-hold), and tap-to-dismiss
                         // hover on bin link, show name in tooltip, if image show thumbnail in tooltop, on click open in popup if we know how, offer external if we don't (maybe in that popup?)
                         // hover on ref link, show small snippet in tooltip, on click open first in popup, if already in popup, open in full display reader
@@ -490,22 +496,24 @@ ListView {
         }
         ColumnLayout {
             Text {
-                visible: infoDisplay.theObject && infoDisplay.theObject.objectType === "Reference"
+                opacity: infoDisplay.theObject && infoDisplay.theObject.objectType === "Reference" ? 1 : 0
+                Behavior on opacity { NumberAnimation { duration: Kirigami.Units.shortDuration; } }
+                visible: opacity > 1
                 Layout.fillWidth: true
                 Layout.preferredWidth: root.width - Kirigami.Units.largeSpacing * 2
                 textFormat: Qt.RichText
                 wrapMode: TextEdit.Wrap
                 // We need some pleasant way to get the paragraphs and turn them into sensibly rich-text styled text (perhaps on Stylesheet? Throw it a qstringlist and it spits out a formatted html string with the styles etc?)
                 text: visible ? infoDisplay.theObject.paragraphs.join("\n") : ""
-                onLinkActivated: {
-                    // Open in /this/ popup (we should be tracking the navigation history, just store the objects in a list...)
-                }
+                onLinkActivated: { root.handleLink(link); }
                 onLinkHovered: {
                     // Show first line in a popup, or destination, etc, as for Textareas
                 }
             }
             Image {
-                visible: infoDisplay.theObject && infoDisplay.theObject.objectType === "Binary"
+                opacity: infoDisplay.theObject && infoDisplay.theObject.objectType === "Binary" ? 1 : 0
+                Behavior on opacity { NumberAnimation { duration: Kirigami.Units.shortDuration; } }
+                visible: opacity > 0
                 fillMode: Image.PreserveAspectFit
                 source: visible ? root.model.previewForId("#" + infoDisplay.theObject.id) : ""
             }
