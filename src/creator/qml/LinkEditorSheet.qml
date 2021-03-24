@@ -72,8 +72,16 @@ Kirigami.OverlaySheet {
             icon.name: "document-save";
             text: i18nc("label for a button which updates the link in the text with the new information from the link editor", "OK");
             onClicked: {
+                var theLink = "";
+                if (linkDestination.text.length > 0 && linkText.text.length > 0) {
+                    theLink = "<a href=\"" + linkDestination.text + "\">" + linkText.text + "</a>";
+                } else if (linkDestination.text.length > 0) {
+                    theLink = "<a href=\"" + linkDestination.text + "\">" + linkDestination.text + "</a>";
+                } else if (linkText.text.length > 0) {
+                    theLink = linkText.text;
+                }
                 textField.remove(component.linkStart, component.linkEnd);
-                textField.insert(component.linkStart, linkDemonstration.text);
+                textField.insert(component.linkStart, theLink);
                 component.close();
             }
         }
@@ -115,6 +123,8 @@ Kirigami.OverlaySheet {
                             case Peruse.IdentifiedObjectModel.BinaryType:
                                 return i18nc("Entry in a dropdown list which gives the name of a binary object, and identifies it as one such", "%1 (Binary)", model.id)
                                 break;
+                            case Peruse.IdentifiedObjectModel.TextareaType:
+                                return i18nc("Entry in a dropdown list which gives the base details of a Textarea object, and identifies it as one such", "Textarea (%1)", model.object.paragraphs[0]);
                             case Peruse.IdentifiedObjectModel.UnknownType:
                             default:
                                 return i18nc("Entry in a dropdown list which gives the name of an identified object of an unknown type, and marks it as one such", "%1 (Unknown Type)", model.id)
@@ -129,6 +139,7 @@ Kirigami.OverlaySheet {
             id: linkDemonstration;
             Layout.fillWidth: true;
             Kirigami.FormData.label: i18nc("Label for the link demonstration display field", "Demonstration");
+            textFormat: Text.StyledText
             text: {
                 if (linkDestination.text.length > 0 && linkText.text.length > 0) {
                     return "<a href=\"" + linkDestination.text + "\">" + linkText.text + "</a>";
