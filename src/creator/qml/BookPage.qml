@@ -340,5 +340,6 @@ Kirigami.Page {
         imageSource: pageUrl;
         pages: root.pageList;
         availableTypes: root.textTypes;
+        model: root.model;
     }
 }

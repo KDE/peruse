@@ -25,12 +25,16 @@ import QtQuick.Controls 2.12 as QtControls
 import QtQuick.Dialogs 1.3
 
 import org.kde.kirigami 2.12 as Kirigami
+
+import org.kde.peruse 0.1 as Peruse
+
 /**
  * @brief a special overlay sheet for editing frames/textareas/jumps
  */
 Kirigami.OverlaySheet {
     id: root;
 
+    property QtObject model;
     property QtObject objectToBeEdited;
     property int objectToBeEditedType;
 
@@ -58,7 +62,7 @@ Kirigami.OverlaySheet {
                     invertedSwitch.checked = objectToBeEdited.inverted;
                     textRotation.value = objectToBeEdited.textRotation;
                     textType.currentIndex = availableTypes.indexOf(objectToBeEdited.type);
-                    textAreaInput.text = objectToBeEdited.paragraphs.join("\n\n");
+                    textAreaInput.text = objectToBeEdited.paragraphs.join("\n");
                     break;
                 case BookPage.FieldTypes.Jump:
                     pageIndexComboBox.currentIndex = objectToBeEdited.pageIndex;
@@ -225,11 +229,60 @@ Kirigami.OverlaySheet {
                 popup.z: 999; // HACK This is an absolute hack, but combos inside OverlaySheets have their popups show up underneath, because of fun z ordering stuff
             }
 
+            Kirigami.ActionToolBar {
+                visible: textAreaInput.visible
+                actions: [
+                    Kirigami.Action {
+                        text: i18nc("Edit the link the cursor is currently positioned on (or convert the selection to a link, or add a new one if there is no selection)", "Edit Link");
+                        icon.name: "edit-link"
+                        onTriggered: linkDetails.edit();
+                    }
+                ]
+            }
             QtControls.TextArea {
                 id: textAreaInput;
-                width: parent.width;
-                placeholderText: i18nc("Place holder text for text area", "Type to input text for text area here");
+                Layout.fillWidth: true;
+                Kirigami.FormData.label: i18nc("Label for the text area body field", "Textarea Body:");
                 visible: objectToBeEditedType === BookPage.FieldTypes.Textarea;
+                textFormat: Qt.RichText
+                wrapMode: TextEdit.Wrap
+                focus: true
+                selectByMouse: true
+                persistentSelection: true
+                Peruse.TextDocumentEditor {
+                    id: textDocumentEditor;
+                    textDocument: textAreaInput.textDocument;
+                }
+                MouseArea {
+                    acceptedButtons: Qt.RightButton
+                    anchors.fill: parent
+                    onClicked: {
+                        mainWindow.contextDrawer.open()
+                    }
+                }
+
+                function ensureVisible(rectToMakeVisible)
+                {
+                    //if (root.flickable.contentX >= rectToMakeVisible.x) {
+                        //root.flickable.contentX = rectToMakeVisible.x;
+                    //} else if (root.flickable.contentX + root.flickable.width <= rectToMakeVisible.x + rectToMakeVisible.width) {
+                        //root.flickable.contentX = rectToMakeVisible.x + rectToMakeVisible.width - root.flickable.width;
+                    //}
+                    //if (root.flickable.contentY >= rectToMakeVisible.y) {
+                        //root.flickable.contentY = rectToMakeVisible.y;
+                    //} else if (root.flickable.contentY + root.flickable.height <= rectToMakeVisible.y + rectToMakeVisible.height) {
+                        //root.flickable.contentY = rectToMakeVisible.y + rectToMakeVisible.height - root.flickable.height;
+                    //}
+                }
+                onCursorRectangleChanged: {
+                    ensureVisible(cursorRectangle);
+                }
+                onLinkActivated: {
+                    // This is the nastiest hack... for some reason, clicking a link does not position
+                    // the cursor where you clicked, but rather /after/ the link you clicked. Not helpful.
+                    textAreaInput.cursorPosition = textAreaInput.cursorPosition - 1;
+                    linkDetails.edit();
+                }
             }
 
             QtControls.ComboBox {
@@ -259,7 +312,7 @@ Kirigami.OverlaySheet {
                             root.objectToBeEdited.bgcolor = textAreaBackgroundColor.color;
                             root.objectToBeEdited.transparent = transparentSwitch.checked;
                             root.objectToBeEdited.inverted = invertedSwitch.checked;
-                            root.objectToBeEdited.paragraphs = textAreaInput.text.split("\n\n");
+                            root.objectToBeEdited.paragraphs = textDocumentEditor.paragraphs();
                             root.objectToBeEdited.type = availableTypes[textType.currentIndex];
                             root.objectToBeEdited.textRotation = textRotation.value;
 
@@ -276,6 +329,14 @@ Kirigami.OverlaySheet {
 
                 root.close();
             }
+        }
+
+        LinkEditorSheet {
+            id: linkDetails;
+            textField: textAreaInput;
+            editorHelper: textDocumentEditor;
+            model: root.model;
+            rootItem.z: 200
         }
     }
 }
