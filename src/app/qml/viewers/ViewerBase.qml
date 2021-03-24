@@ -20,6 +20,9 @@
  */
 
 import QtQuick 2.12
+import QtQuick.Controls 2.12 as QtControls
+import QtQuick.Layouts 1.12 as QtLayouts
+import org.kde.kirigami 2.13 as Kirigami
 
 /**
  * @brief a base for holding the image browser.
@@ -77,6 +80,92 @@ Item {
             }
             else {
                 applicationWindow().controlsVisible = true;
+            }
+        }
+    }
+
+    function activateExternalLink(link) {
+        linkActivator.showLink(link);
+    }
+
+    Kirigami.OverlaySheet {
+        id: linkActivator
+        function showLink(link) {
+            linkActivator.link = link;
+            open();
+        }
+        showCloseButton: true
+        header: QtLayouts.RowLayout {
+            Kirigami.Heading {
+                text: i18nc("Title for a dialog offering the user to open a link to some external resource", "Open External Link?")
+                QtLayouts.Layout.fillWidth: true;
+                elide: Text.ElideRight;
+            }
+            QtControls.ToolButton {
+                icon.name: "dialog-ok";
+                text: i18nc("label for a button which activates an external link", "Open Link");
+                onClicked: {
+                    Qt.openUrlExternally(linkActivator.link);
+                    linkActivator.close();
+                }
+            }
+        }
+        property string link
+        QtLayouts.ColumnLayout {
+            QtControls.Label {
+                text: i18n("The link you just clicked points to somewhere outside of the book. Please check the details of the link below, to make sure that you really do want to open it, or just close this sheet.")
+                wrapMode: Text.Wrap
+            }
+            QtControls.Label {
+                id: httpOrFileLink
+                // For the http(s) case, if we got to here, we can assume we have been given a reasonably laid out link
+                visible: linkActivator.link.toLowerCase().startsWith("http") || linkActivator.link.toLowerCase().startsWith("file:")
+                textFormat: Text.PlainText
+                QtLayouts.Layout.fillWidth: true
+                wrapMode: Text.Wrap
+                text: linkActivator.link
+            }
+            QtControls.Label {
+                id: mailtoLink
+                visible: linkActivator.link.toLowerCase().startsWith("mailto:")
+                textFormat: Text.PlainText
+                QtLayouts.Layout.fillWidth: true
+                wrapMode: Text.Wrap
+                text: {
+                    if (theThings.length > 2) {
+                        // This is a weird one, and likely means there's things like a BCC or whatnot in there,
+                        // so let's just show people the entire link
+                        return i18n("Compose an email to %1, based on the following link:\n\n%2", email, linkActivator.link);
+                    } else if (subject.length > 0 && body.length > 0) {
+                        return i18n("Compose an email for %1 with the subject \"%2\" and the following body:\n\n%3", email, subject, body);
+                    } else if (subject.length > 0) {
+                        return i18n("Compose an email for %1 with the subject \"%2\"", email, subject);
+                    } else {
+                        return i18n("Compose email for: %1", email)
+                    }
+                }
+                property string email: linkActivator.link.slice(0, linkActivator.link.indexOf("?") - 1)
+                property string subject: getThingValue("subject", theThings)
+                property string body: getThingValue("body", theThings)
+
+                property var theThings: linkActivator.link.slice(linkActivator.link.indexOf("?")).split("&")
+                // Technically we could just refer to theThings directly, but this way we can use this bindingly
+                function getThingValue(whatThing, fromWhat) {
+                    var theValue = "";
+                    for (var i = 0; i < fromWhat.length; ++i) {
+                        if (fromWhat[i].toLowerCase().startsWith(whatThing + "=")) {
+                            theValue = fromWhat[i].slice(whatThing.length);
+                        }
+                    }
+                    return theValue;
+                }
+            }
+            QtControls.Label {
+                visible: mailtoLink.visible === false && httpOrFileLink.visible === false
+                textFormat: Text.PlainText
+                QtLayouts.Layout.fillWidth: true
+                wrapMode: Text.Wrap
+                text: linkActivator.link
             }
         }
     }

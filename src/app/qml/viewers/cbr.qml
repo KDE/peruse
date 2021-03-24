@@ -147,6 +147,7 @@ ViewerBase {
         onGoNextPage: root.goNextPage();
         onGoPreviousPage: root.goPreviousPage();
         onGoPage: root.goPage(pageNumber);
+        onActivateExternalLink: root.activateExternalLink(link);
         imageWidth: root.width;
         imageHeight: root.height;
     }
