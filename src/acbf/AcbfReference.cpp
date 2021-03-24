@@ -64,7 +64,8 @@ void Reference::toXml(QXmlStreamWriter* writer)
     */
     for(const QString& paragraph : d->paragraphs) {
         writer->writeStartElement(QStringLiteral("p"));
-        writer->writeCharacters(paragraph);
+        writer->writeCharacters("");  // to ensure we close the tag correctly and don't end up with a <p />
+        writer->device()->write(paragraph.toUtf8().constData(), paragraph.toUtf8().length());
         writer->writeEndElement();
     }
     writer->writeEndElement();

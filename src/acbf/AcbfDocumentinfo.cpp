@@ -71,7 +71,8 @@ void DocumentInfo::toXml(QXmlStreamWriter *writer)
     writer->writeStartElement(QStringLiteral("source"));
     for(const QString& source : d->source) {
         writer->writeStartElement(QStringLiteral("p"));
-        writer->writeCharacters(source);
+        writer->writeCharacters("");  // to ensure we close the tag correctly and don't end up with a <p />
+        writer->device()->write(source.toUtf8().constData(), source.toUtf8().length());
         writer->writeEndElement();
     }
     writer->writeEndElement();
@@ -87,7 +88,8 @@ void DocumentInfo::toXml(QXmlStreamWriter *writer)
     writer->writeStartElement(QStringLiteral("history"));
     for(const QString& history : d->history) {
         writer->writeStartElement(QStringLiteral("p"));
-        writer->writeCharacters(history);
+        writer->writeCharacters("");  // to ensure we close the tag correctly and don't end up with a <p />
+        writer->device()->write(history.toUtf8().constData(), history.toUtf8().length());
         writer->writeEndElement();
     }
     writer->writeEndElement();

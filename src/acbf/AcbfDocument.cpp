@@ -30,6 +30,7 @@
 #include <QXmlStreamReader>
 
 #include <acbf_debug.h>
+#include <QBuffer>
 
 using namespace AdvancedComicBookFormat;
 
@@ -64,7 +65,9 @@ Document::~Document() = default;
 
 QString Document::toXml()
 {
-    QString output;
+    QByteArray bytes;
+    QBuffer output(&bytes);
+    output.open(QIODevice::WriteOnly);
     QXmlStreamWriter writer(&output);
     writer.setAutoFormatting(true);
     writer.writeStartDocument();
@@ -75,7 +78,7 @@ QString Document::toXml()
     writer.writeEndElement();
     writer.writeEndDocument();
 
-    return output;
+    return QString{bytes};
 }
 
 bool Document::fromXml(QString xmlDocument)
