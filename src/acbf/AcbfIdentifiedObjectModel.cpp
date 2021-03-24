@@ -24,6 +24,7 @@
 #include "AcbfInternalReferenceObject.h"
 #include "AcbfData.h"
 #include "AcbfReferences.h"
+#include "AcbfTextarea.h"
 
 using namespace AdvancedComicBookFormat;
 
@@ -91,6 +92,8 @@ QVariant IdentifiedObjectModel::data(const QModelIndex& index, int role) const
                         data.setValue<int>(ReferenceType);
                     } else if (qobject_cast<Binary*>(object)) {
                         data.setValue<int>(BinaryType);
+                    } else if (qobject_cast<Textarea*>(object)) {
+                        data.setValue<int>(TextareaType);
                     } else {
                         data.setValue<int>(UnknownType);
                     }
