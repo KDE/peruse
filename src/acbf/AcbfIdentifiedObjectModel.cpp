@@ -161,7 +161,7 @@ QObject * IdentifiedObjectModel::objectById(const QString& id)
     QObject* identified{nullptr};
     static const char* idProp{"id"};
     for (InternalReferenceObject* object : d->identifiedObjects) {
-        if (object->supportedReferenceType() & InternalReferenceObject::ReferenceTarget) {
+        if ((object->supportedReferenceType() & InternalReferenceObject::ReferenceTarget) == InternalReferenceObject::ReferenceTarget) {
             if (object->property(idProp).toString() == id) {
                 identified = object;
                 break;
