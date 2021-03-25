@@ -20,6 +20,7 @@
  */
 
 import QtQuick 2.12
+import QtQuick.Controls 2.12 as QQC2
 
 import org.kde.kirigami 2.7 as Kirigami
 /**
@@ -31,6 +32,8 @@ Kirigami.Page {
     title: i18nc("title of the page editing sub-page for the book editor", "Page %1", root.pageTitle === "" ? root.index : root.pageTitle);
     property QtObject model;
     property QtObject currentPage;
+    property QtObject currentLanguage: null;
+    property string currentLanguageCode: currentLanguage ? currentLanguage.language : ""
     property int index: -1;
     property string pageUrl: "";
     property string pageTitle: "";
@@ -50,7 +53,7 @@ Kirigami.Page {
         } else if (root.index > 0) {
             root.currentPage = root.model.acbfData.body.page(root.index-1);
         }
-        root.pageTitle = root.currentPage.title("");
+        root.pageTitle = root.currentPage.title(root.currentLanguageCode);
         // Let's ensure there's always a default text-layer.
         if (root.currentPage.textLayerLanguages.length === 0) {
             root.currentPage.addTextLayer("")
@@ -60,7 +63,7 @@ Kirigami.Page {
 
         pageList = [];
         for (var i=0; i<model.acbfData.body.pageCount; i++){
-            var t = model.acbfData.body.page(i).title("")
+            var t = model.acbfData.body.page(i).title(root.currentLanguageCode)
             if (t !== "") {
                 pageList.push(t);
             } else {
@@ -68,10 +71,27 @@ Kirigami.Page {
             }
         }
     }
+    Component.onCompleted: {
+        root.updateTranslationActions();
+    }
 
     actions {
         main: saveAndCloseAction;
         right: editPageDataAction;
+        contextualActions: [
+            Kirigami.Action {
+                id: translationsAction
+                text: i18nc("A submenu which allows the user to chose between translations of the book", "Translations")
+                visible: root.model.acbfData.metaData.bookInfo.languages.length > 0
+                Kirigami.Action {
+                    text: i18nc("The option used to show no translation should be used", "No Translation")
+                    onTriggered: root.currentLanguage = null
+                    checked: root.currentLanguage === null
+                    checkable: true
+                    QQC2.ActionGroup.group: translationSelectionGroup
+                }
+            }
+        ]
     }
     Kirigami.Action {
         id: saveAndCloseAction;
@@ -90,6 +110,28 @@ Kirigami.Page {
         text: i18nc("Edit the page data in detail", "Edit Page Data");
         iconName: "document-edit"
         onTriggered: pageStack.push(pageInfo)
+    }
+
+    function updateTranslationActions() {
+        for (var i = 0 ; i < root.model.acbfData.metaData.bookInfo.languages.length ; ++i) {
+            var language = root.model.acbfData.metaData.bookInfo.languages[i];
+            var action = translationActionEntry.createObject(translationsAction, {language: language});
+            translationsAction.children.push(action);
+        }
+    }
+    QQC2.ActionGroup { id: translationSelectionGroup }
+    Component {
+        id: translationActionEntry
+        Kirigami.Action {
+            id: control
+            text: language.language
+            visible: language.show
+            property QtObject language
+            onTriggered: { root.currentLanguage = control.language; }
+            checked: root.currentLanguage && root.currentLanguage === control.language
+            checkable: true
+            QQC2.ActionGroup.group: translationSelectionGroup
+        }
     }
 
     Image {
@@ -145,13 +187,13 @@ Kirigami.Page {
         }
 
         Repeater {
-            model: root.currentPage.textLayer("").textareaPointStrings
+            model: root.currentPage.textLayer(root.currentLanguageCode).textareaPointStrings
 
             Rectangle {
-                width: coverImage.muliplierWidth * root.currentPage.textLayer("").textarea(index).bounds.width;
-                height: coverImage.muliplierHeight * root.currentPage.textLayer("").textarea(index).bounds.height;
-                x: coverImage.muliplierWidth * root.currentPage.textLayer("").textarea(index).bounds.x + coverImage.offsetX
-                y: coverImage.muliplierHeight * root.currentPage.textLayer("").textarea(index).bounds.y + coverImage.offsetY;
+                width: coverImage.muliplierWidth * root.currentPage.textLayer(root.currentLanguageCode).textarea(index).bounds.width;
+                height: coverImage.muliplierHeight * root.currentPage.textLayer(root.currentLanguageCode).textarea(index).bounds.height;
+                x: coverImage.muliplierWidth * root.currentPage.textLayer(root.currentLanguageCode).textarea(index).bounds.x + coverImage.offsetX
+                y: coverImage.muliplierHeight * root.currentPage.textLayer(root.currentLanguageCode).textarea(index).bounds.y + coverImage.offsetY;
                 border.color: "red";
                 color: "transparent";
                 opacity: 0.5;
@@ -174,7 +216,7 @@ Kirigami.Page {
                     anchors.fill: parent;
 
                     onClicked: {
-                        editPageArea.editObject(root.currentPage.textLayer("").textarea(index), BookPage.FieldTypes.Textarea);
+                        editPageArea.editObject(root.currentPage.textLayer(root.currentLanguageCode).textarea(index), BookPage.FieldTypes.Textarea);
                     }
                 }
             }
@@ -300,7 +342,7 @@ Kirigami.Page {
         PageMetaInfo {
             colorname: root.model.acbfData.body.bgcolor !== ""? root.model.acbfData.body.bgcolor: "#ffffff";
             page: root.currentPage;
-            onSave: {root.pageTitle = page.title(""); root.model.setDirty();}
+            onSave: {root.pageTitle = page.title(root.currentLanguageCode); root.model.setDirty();}
         }
     }
 
@@ -317,11 +359,11 @@ Kirigami.Page {
 
                 createdObject = root.currentPage.frame(index);
             } else if (type===BookPage.FieldTypes.Textarea) {
-                index = root.currentPage.textLayer("").textareaPointStrings.length;
-                root.currentPage.textLayer("").addTextarea(index);
-                root.currentPage.textLayer("").textarea(index).setPointsFromRect(topLeft, bottomRight);
+                index = root.currentPage.textLayer(root.currentLanguageCode).textareaPointStrings.length;
+                root.currentPage.textLayer(root.currentLanguageCode).addTextarea(index);
+                root.currentPage.textLayer(root.currentLanguageCode).textarea(index).setPointsFromRect(topLeft, bottomRight);
 
-                createdObject = root.currentPage.textLayer("").textarea(index);
+                createdObject = root.currentPage.textLayer(root.currentLanguageCode).textarea(index);
             } else if (type===BookPage.FieldTypes.Jump) {
                 index = root.currentPage.jumps.length;
                 root.currentPage.addJump(0, index);
