@@ -191,7 +191,10 @@ public:
                         } else if (thisIsStarting[0] == aTag) {
                             format.setAnchor(true);
                             for (const QString& parameter : thisIsStarting) {
-                                format.setAnchorHref(parameter);
+                                if (parameter.toLower().startsWith("href=\"")) {
+                                    format.setAnchorHref(parameter.mid(6, parameter.length() - 7));
+                                    break;
+                                }
                             }
                         } else if (thisIsStarting[0] == commentaryTag) {
                         } else if (thisIsStarting[0] == codeTag) {
@@ -414,12 +417,10 @@ public:
                     QList<QRectF> rects;
                     // get all the lines, so we can store all the bounding rects for this anchor...
                     int textPos = 0;
-                    QTextLine previousLine;
                     while (textPos < format.length) {
                         QTextLine currentLine = layout->lineForTextPosition(format.start + textPos);
-                        if (previousLine.isValid() && currentLine.textStart() != previousLine.textStart()) {
-                            previousLine = currentLine;
-                            QPointF topLeft(currentLine.cursorToX(textPos), currentLine.y());
+                        if (currentLine.isValid()) {
+                            QPointF topLeft(currentLine.cursorToX(format.start + textPos), currentLine.y());
                             QSizeF size(currentLine.width() - (currentLine.x() - topLeft.x()), currentLine.height());
                             rects << QRectF(topLeft, size);
                             textPos += currentLine.textLength();
@@ -510,6 +511,7 @@ TextViewerItem::TextViewerItem(QQuickItem* parent)
 {
     setFlag(ItemHasContents, true);
     setAcceptedMouseButtons(Qt::AllButtons);
+    setAcceptHoverEvents(true);
     // Because that's what ACBF wants from us, so default that one
     setTransformOrigin(QQuickItem::TopLeft);
 
@@ -654,9 +656,9 @@ void TextViewerItem::geometryChanged(const QRectF& newGeometry, const QRectF& ol
     d->throttle->start();
 }
 
-void TextViewerItem::mouseMoveEvent(QMouseEvent* event)
+void TextViewerItem::hoverMoveEvent(QHoverEvent* event)
 {
-    QPair<int, int> anchor = d->getAnchor(event->localPos());
+    QPair<int, int> anchor = d->getAnchor(event->pos());
     // Only really need one of the point's items to be greater than -1 to know there's an anchor, no need to check more
     if (anchor.first > -1) {
         setCursor(Qt::PointingHandCursor);
@@ -678,6 +680,7 @@ void TextViewerItem::mouseMoveEvent(QMouseEvent* event)
 void TextViewerItem::mousePressEvent(QMouseEvent* event)
 {
     d->clickedAnchor = d->getAnchor(event->localPos());
+    event->accept();
 }
 
 void TextViewerItem::mouseReleaseEvent(QMouseEvent* event)
@@ -686,5 +689,6 @@ void TextViewerItem::mouseReleaseEvent(QMouseEvent* event)
     if (eventAnchor.first > -1 && eventAnchor == d->clickedAnchor) {
         QTextLayout::FormatRange format = d->formats.value(eventAnchor.first).value(eventAnchor.second);
         Q_EMIT linkActivated(format.format.anchorHref());
+        event->accept();
     }
 }
