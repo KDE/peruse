@@ -496,17 +496,18 @@ ListView {
             Layout.fillWidth: true
             elide: Text.ElideRight
         }
-        ColumnLayout {
+        contentItem: ColumnLayout {
+            Layout.fillWidth: true
+            Layout.preferredWidth: root.width * .8
             Text {
                 opacity: infoDisplay.theObject && infoDisplay.theObject.objectType === "Reference" ? 1 : 0
                 Behavior on opacity { NumberAnimation { duration: Kirigami.Units.shortDuration; } }
-                visible: opacity > 1
                 Layout.fillWidth: true
                 Layout.preferredWidth: root.width - Kirigami.Units.largeSpacing * 2
-                textFormat: Qt.RichText
-                wrapMode: TextEdit.Wrap
+                textFormat: Text.StyledText
+                wrapMode: Text.Wrap
                 // We need some pleasant way to get the paragraphs and turn them into sensibly rich-text styled text (perhaps on Stylesheet? Throw it a qstringlist and it spits out a formatted html string with the styles etc?)
-                text: visible ? infoDisplay.theObject.paragraphs.join("\n") : ""
+                text: opacity > 0 ? "<p>" + infoDisplay.theObject.paragraphs.join("</p><p>") + "</p>": ""
                 onLinkActivated: { root.handleLink(link); }
                 onLinkHovered: {
                     // Show first line in a popup, or destination, etc, as for Textareas
@@ -515,9 +516,8 @@ ListView {
             Image {
                 opacity: infoDisplay.theObject && infoDisplay.theObject.objectType === "Binary" ? 1 : 0
                 Behavior on opacity { NumberAnimation { duration: Kirigami.Units.shortDuration; } }
-                visible: opacity > 0
                 fillMode: Image.PreserveAspectFit
-                source: visible ? root.model.previewForId("#" + infoDisplay.theObject.id) : ""
+                source: opacity > 0 ? root.model.previewForId("#" + infoDisplay.theObject.id) : ""
             }
         }
     }
