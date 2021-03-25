@@ -65,6 +65,7 @@ ListView {
         root.currentItem.currentFrame = frameNo;
     }
 
+    property string hoveredLink
     function handleLink(link) {
         var lowerLink = link.toLowerCase();
         if (link.startsWith("#")) {
@@ -367,7 +368,8 @@ ListView {
                         offsetY: image.offsetY
                         textArea: modelData
                         enabled: image.frameContainsJump(modelData) && !flick.actuallyMoving
-                        function onLinkActivated(link) { root.handleLink(link); }
+                        onLinkActivated: { root.handleLink(link); }
+                        onHoveredLinkChanged: { root.hoveredLink = textAreaHandler.hoveredLink; }
                         // for mobile, make tooltip a tap instead (or tap-and-hold), and tap-to-dismiss
                         // hover on bin link, show name in tooltip, if image show thumbnail in tooltop, on click open in popup if we know how, offer external if we don't (maybe in that popup?)
                         // hover on ref link, show small snippet in tooltip, on click open first in popup, if already in popup, open in full display reader
@@ -463,7 +465,7 @@ ListView {
                 
                 MouseArea {
                     anchors.fill: parent;
-                    enabled: flick.interactive;
+                    enabled: root.hoveredLink === "" && flick.interactive;
                     onClicked: startToggleControls();
                     onDoubleClicked: {
                         abortToggleControls();
@@ -522,7 +524,7 @@ ListView {
 
     Helpers.Navigator {
         enabled: root.currentItem ? !root.currentItem.interactive : false;
-        acceptTaps: !root.currentItem.hasInteractiveObjects;
+        acceptTaps: root.hoveredLink === "" && !root.currentItem.hasInteractiveObjects;
         anchors.fill: parent;
         onLeftRequested: root.layoutDirection === Qt.RightToLeft? root.goNextFrame(): root.goPreviousFrame();
         onRightRequested: root.layoutDirection === Qt.RightToLeft? root.goPreviousFrame(): root.goNextFrame();
