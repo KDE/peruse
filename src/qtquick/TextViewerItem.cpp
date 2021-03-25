@@ -177,30 +177,30 @@ public:
                     if (i + 1 < para.size() && para[i+1] != '/') {
                         QTextCharFormat format = currentFormat.format;
                         // We're starting a new tag, let's see which that is...
-                        const QStringList thisIsStarting = para.mid(i + 1, tagEnd - i - 1).split(" ", Qt::SkipEmptyParts);
-                        if (thisIsStarting[0] == strongTag) {
+                        const QString thisIsStarting = para.midRef(i + 1, tagEnd - i - 1).left(para.indexOf(" ")).trimmed().toString();
+                        if (thisIsStarting == strongTag) {
                             format.setFontWeight(QFont::Bold);
-                        } else if (thisIsStarting[0] == emTag) {
+                        } else if (thisIsStarting == emTag) {
                             format.setFontItalic(true);
-                        } else if (thisIsStarting[0] == strikethroughTag) {
+                        } else if (thisIsStarting == strikethroughTag) {
                             format.setFontStrikeOut(true);
-                        } else if (thisIsStarting[0] == subTag) {
+                        } else if (thisIsStarting == subTag) {
                             format.setVerticalAlignment(QTextCharFormat::AlignSubScript);
-                        } else if (thisIsStarting[0] == supTag) {
+                        } else if (thisIsStarting == supTag) {
                             format.setVerticalAlignment(QTextCharFormat::AlignSuperScript);
-                        } else if (thisIsStarting[0] == aTag) {
+                        } else if (thisIsStarting == aTag) {
                             format.setAnchor(true);
-                            for (const QString& parameter : thisIsStarting) {
-                                if (parameter.toLower().startsWith("href=\"")) {
-                                    format.setAnchorHref(parameter.mid(6, parameter.length() - 7));
-                                    break;
-                                }
+                            // Technically, a is the only thing to allow any further parameters, and it allows exactly
+                            // one, so... let's just make some assumptions here for simplicity's sake
+                            const QString parameters = para.mid(i + thisIsStarting.length() + 2, tagEnd - i - thisIsStarting.length() - 2);
+                            if (parameters.toLower().startsWith("href=\"")) {
+                                format.setAnchorHref(parameters.mid(6, parameters.length() - 7));
                             }
-                        } else if (thisIsStarting[0] == commentaryTag) {
-                        } else if (thisIsStarting[0] == codeTag) {
-                        } else if (thisIsStarting[0] == invertedTag) {
+                        } else if (thisIsStarting == commentaryTag) {
+                        } else if (thisIsStarting == codeTag) {
+                        } else if (thisIsStarting == invertedTag) {
                         }
-                        currentFormat.length = para.indexOf(QLatin1String("</%1>").arg(thisIsStarting[0]), text.size()) - text.size() - thisIsStarting[0].length() - 2;
+                        currentFormat.length = para.indexOf(QLatin1String("</%1>").arg(thisIsStarting), text.size()) - text.size() - thisIsStarting.length() - 2;
                         currentFormat.format = format;
                         currentFormat.start = text.size();
                         lineFormats.append(currentFormat);
