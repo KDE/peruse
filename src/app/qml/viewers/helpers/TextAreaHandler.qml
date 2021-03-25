@@ -37,6 +37,7 @@ Item {
     property int offsetY: 0
     property QtObject textArea: null
     signal linkActivated(string link);
+    property alias hoveredLink: textViewer.hoveredLink
 
     property rect textareaRect: Qt.rect((component.multiplier * textArea.bounds.x) + component.offsetX,
                         (component.multiplier * textArea.bounds.y) + component.offsetY,
@@ -67,7 +68,7 @@ Item {
         }
     }
     Peruse.TextViewerItem {
-        id: textEdit
+        id: textViewer
         anchors.fill: parent
         rotation: 360 - component.textArea.textRotation
 
@@ -84,7 +85,7 @@ Item {
         }
     }
     QQC2.ToolTip {
-        text: textEdit.hoveredLink
-        visible: textEdit.hoveredLink !== ""
+        text: textViewer.hoveredLink
+        visible: textViewer.hoveredLink !== ""
     }
 }
