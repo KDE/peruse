@@ -677,6 +677,16 @@ void TextViewerItem::hoverMoveEvent(QHoverEvent* event)
     }
 }
 
+void TextViewerItem::hoverLeaveEvent(QHoverEvent* event)
+{
+    if (!d->hoveredLink.isEmpty()) {
+        d->hoveredLink.clear();
+        Q_EMIT hoveredLinkChanged();
+        unsetCursor();
+        event->accept();
+    }
+}
+
 void TextViewerItem::mousePressEvent(QMouseEvent* event)
 {
     d->clickedAnchor = d->getAnchor(event->localPos());
