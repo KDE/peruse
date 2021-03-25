@@ -126,24 +126,62 @@ QStringList TextDocumentEditor::paragraphs() const
 {
     QStringList paragraphs;
     if (d->textDocument) {
-        // This is some FUN HEURISTIC STUFF based on QTextDocument's internals, so yay
-        // QTextDocument's toHtml function spits out something which potentially has a bunch of header
-        // and footer info, but we only want the paragraphs and nothing else - that is, only things
-        // that are inside the body tag (which might have more things)
-        paragraphs = d->textDocument->textDocument()->toHtml().split("\n");
-        QMutableStringListIterator it(paragraphs);
-        // First, remove the header bit, which always ends with the string below
-        static const QString headerEnd{"</style></head><body"};
-        while (it.hasNext()) {
-            const QString paragraph = it.next();
-            it.remove();
-            if (paragraph.startsWith(headerEnd)) {
-                break;
+        QTextBlock block = d->textDocument->textDocument()->firstBlock();
+        while (block.isValid()) {
+            QString paragraph;
+            QStringList tagStack;
+            QTextBlock::iterator it;
+            for (it = block.begin(); !(it.atEnd()); ++it) {
+                QTextFragment fragment = it.fragment();
+                if (fragment.isValid()) {
+                    QTextCharFormat format = fragment.charFormat();
+                    if (fragment.isValid()) {
+                        QStringList endStack;
+                        // First set all the tags that ACBF supports, and add the tags we need to close to our tag stack
+                        // <strong>...</strong>
+                        if (format.fontWeight() == QFont::Bold) {
+                            paragraph += "<strong>";
+                            endStack << "</strong>";
+                        }
+                        // <emphasis>...</emphasis>
+                        if (format.fontItalic()) {
+                            paragraph += "<emphasis>";
+                            endStack << "</emphasis>";
+                        }
+                        // <strikethrough>...</strikethrough>
+                        if (format.fontStrikeOut()) {
+                            paragraph += "<strikethrough>";
+                            endStack << "</strikethrough>";
+                        }
+                        // <sub>...</sub>
+                        if (format.verticalAlignment() == QTextCharFormat::AlignSubScript) {
+                            paragraph += "<sub>";
+                            endStack << "</sub>";
+                        }
+                        // <sup>...</sup>
+                        if (format.verticalAlignment() == QTextCharFormat::AlignSuperScript) {
+                            paragraph += "<sup>";
+                            endStack << "</sup>";
+                        }
+                        // <a href="">...</a>
+                        if (format.isAnchor()) {
+                            paragraph += QString("<a href=\"%1\">").arg(format.anchorHref().toHtmlEscaped());
+                            endStack << "</a>";
+                        }
+
+                        // Add in the fragment's text contents
+                        paragraph += fragment.text().toHtmlEscaped();
+
+                        // Finally, close our own tags again, from the inside
+                        while (endStack.count() > 0) {
+                            paragraph += endStack.takeLast();
+                        }
+                    }
+                }
             }
+            paragraphs << paragraph;
+            block = block.next();
         }
-        // Then remove the last bit of the last item, which is always just </body></html>
-        QString last = paragraphs.takeLast();
-        paragraphs << last.left(last.length() - 14);
     }
     return paragraphs;
 }
