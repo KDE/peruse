@@ -68,7 +68,9 @@ void StyleSheet::toXml(QXmlStreamWriter* writer) {
             qCWarning(ACBF_LOG) << "We somehow have an entry in our list of styles that is not a Style object, this really should not be possible. The object in question is:" << object;
         }
     }
-    writer->writeCharacters(contents.join("\n"));
+    writer->writeCharacters("");  // to ensure we close the tag correctly and don't end up with a <p />
+    const QString styleText = contents.join("\n");
+    writer->device()->write(styleText.toUtf8().constData(), styleText.toUtf8().length());
     writer->writeEndElement();
 }
 
