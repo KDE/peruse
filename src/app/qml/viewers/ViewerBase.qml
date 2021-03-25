@@ -112,7 +112,9 @@ Item {
         }
         property string link
         QtLayouts.ColumnLayout {
+            QtLayouts.Layout.preferredWidth: root.width * .7
             QtControls.Label {
+                QtLayouts.Layout.fillWidth: true
                 text: i18n("The link you just clicked points to somewhere outside of the book. Please check the details of the link below, to make sure that you really do want to open it, or just close this sheet.")
                 wrapMode: Text.Wrap
             }
@@ -123,6 +125,7 @@ Item {
                 textFormat: Text.PlainText
                 QtLayouts.Layout.fillWidth: true
                 wrapMode: Text.Wrap
+                horizontalAlignment: Text.AlignHCenter
                 text: linkActivator.link
             }
             QtControls.Label {
