@@ -22,20 +22,50 @@
 
 #include <QQuickItem>
 
+/**
+ * A QQuickItem which fits a set of paragraphs of text with a given style into an arbitrary polygon
+ * Particularly, this is designed to render data from AdvancedComicBookFormat::Textarea instances.
+ */
 class TextViewerItem : public QQuickItem
 {
     Q_OBJECT
+    /**
+     * A list of paragraphs which should be displayed inside the polygon
+     * These are expected to be in the format returned by AdvancedComicBookFormat::Textarea::paragraphs()
+     */
     Q_PROPERTY(QStringList paragraphs READ paragraphs WRITE setParagraphs NOTIFY paragraphsChanged)
+    /**
+     * A list of points which make up the polygon the text should fit inside.
+     * This is expected to be in the format returned by AdvancedComicBookFormat::Textarea::points()
+     */
     Q_PROPERTY(QVariantList shape READ shape WRITE setShape NOTIFY shapeChanged)
+    /**
+     * The offset of the shape relative to the page (useful when the item is nested inside others,
+     * such as our own TextAreaHandler component).
+     */
     Q_PROPERTY(QPoint shapeOffset READ shapeOffset WRITE setShapeOffset NOTIFY shapeOffsetChanged)
+    /**
+     * The zoom ratio of the view port
+     */
     Q_PROPERTY(double shapeMultiplier READ shapeMultiplier WRITE setShapeMultiplier NOTIFY shapeMultiplierChanged)
+    /**
+     * The style which should be used to render the text in this item. This must be
+     * an instance of AdvancedComicBookFormat::Style.
+     */
     Q_PROPERTY(QObject* style READ style WRITE setStyle NOTIFY styleChanged)
+    /**
+     * The specific font family to be used for the text. This is expected to exist on the system
+     * and works best in conjunction with the ArchiveBookModel::fontFamilyName(QString) function.
+     */
     Q_PROPERTY(QString fontFamily READ fontFamily WRITE setFontFamily NOTIFY fontFamilyChanged)
     /**
      * This is a list of all the active rects in the item (in essence, anywhere there is an anchor
-     * in one of the paragraphs, there will be a corresponding rect in this list)
+     * in one of the paragraphs, there will be a corresponding rect in this list).
      */
     Q_PROPERTY(QVariantList linkRects READ linkRects NOTIFY linkRectsChanged)
+    /**
+     * The address for the link currently underneath the pointer (empty if none).
+     */
     Q_PROPERTY(QString hoveredLink READ hoveredLink NOTIFY hoveredLinkChanged)
 public:
     explicit TextViewerItem(QQuickItem *parent = nullptr);

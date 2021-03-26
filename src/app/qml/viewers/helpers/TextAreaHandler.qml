@@ -27,17 +27,55 @@ import org.kde.peruse 0.1 as Peruse
 
 Item {
     id: component
+    /**
+     * The ArchiveBookModel instance this textarea is contained within
+     */
     property QtObject model
-    // identifiedObjects should be an instance of Peruse.IdentifiedObjectsModel, based on the acbf document of the model above
-    // It would be possible to create one here, but the model is expensive to instantiate, and having a global one ensures that
-    // we just have the one copy (which is also nice)
+
+    /**
+     * An instance of Peruse.IdentifiedObjectsModel pointed at the ACBF Document
+     * this TextAreaHandler's Textarea comes from
+     * \note It would be possible to create one here, but the model is expensive to
+     * instantiate, and having a global one ensures that we just have the one
+     * copy (which is also nice)
+     */
     property QtObject identifiedObjects
+
+    /**
+     * The zoom ratio of the view port
+     */
     property real multiplier: 1
+
+    /**
+     * Horizontal offset of the Textarea in the viewport
+     */
     property int offsetX: 0
+
+    /**
+     * Vertical offset of the Textarea in the viewport
+     */
     property int offsetY: 0
+
+    /**
+     * The Textarea object itself (an AdvancedComicBookFormat::Textarea object instance)
+     */
     property QtObject textArea: null
+
+    /**
+     * Fired when the user clicks/taps on a link in the Textarea
+     * \note To work out if this is every likely for a specific instance, use linkRects to check whether there are any links
+     */
     signal linkActivated(string link);
+    /**
+     * Fired when the user hovers over a link in the Textarea
+     * \note To work out if this is every likely for a specific instance, use linkRects to check whether there are any links
+     */
     property alias hoveredLink: textViewer.hoveredLink
+    /**
+     * A list of rectangles (with item-local coordinates) covering the areas
+     * of this item which contain links (that is, things which should be
+     * interactible)
+     */
     property alias linkRects: textViewer.linkRects
 
     property rect textareaRect: Qt.rect((component.multiplier * textArea.bounds.x) + component.offsetX,
