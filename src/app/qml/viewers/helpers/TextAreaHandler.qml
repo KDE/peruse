@@ -38,6 +38,7 @@ Item {
     property QtObject textArea: null
     signal linkActivated(string link);
     property alias hoveredLink: textViewer.hoveredLink
+    property alias linkRects: textViewer.linkRects
 
     property rect textareaRect: Qt.rect((component.multiplier * textArea.bounds.x) + component.offsetX,
                         (component.multiplier * textArea.bounds.y) + component.offsetY,
