@@ -31,6 +31,11 @@ class TextViewerItem : public QQuickItem
     Q_PROPERTY(double shapeMultiplier READ shapeMultiplier WRITE setShapeMultiplier NOTIFY shapeMultiplierChanged)
     Q_PROPERTY(QObject* style READ style WRITE setStyle NOTIFY styleChanged)
     Q_PROPERTY(QString fontFamily READ fontFamily WRITE setFontFamily NOTIFY fontFamilyChanged)
+    /**
+     * This is a list of all the active rects in the item (in essence, anywhere there is an anchor
+     * in one of the paragraphs, there will be a corresponding rect in this list)
+     */
+    Q_PROPERTY(QVariantList linkRects READ linkRects NOTIFY linkRectsChanged)
     Q_PROPERTY(QString hoveredLink READ hoveredLink NOTIFY hoveredLinkChanged)
 public:
     explicit TextViewerItem(QQuickItem *parent = nullptr);
@@ -59,6 +64,9 @@ public:
     QString fontFamily() const;
     void setFontFamily(const QString& newFontFamily);
     Q_SIGNAL void fontFamilyChanged();
+
+    QVariantList linkRects() const;
+    Q_SIGNAL void linkRectsChanged();
 
     QString hoveredLink() const;
     Q_SIGNAL void hoveredLinkChanged();

@@ -410,6 +410,7 @@ public:
 
     void updateAnchorRects() {
         int layoutIndex{0};
+        anchorRects.clear();
         for (const QTextLayout* layout : layouts) {
             int formatIndex{0};
             for (const QTextLayout::FormatRange& format : layout->formats()) {
@@ -434,6 +435,7 @@ public:
             }
             ++layoutIndex;
         }
+        Q_EMIT q->linkRectsChanged();
     }
 
     /**
@@ -619,6 +621,18 @@ void TextViewerItem::setFontFamily(const QString& newFontFamily)
         d->fontFamily = newFontFamily;
         Q_EMIT fontFamilyChanged();
     }
+}
+
+QVariantList TextViewerItem::linkRects() const
+{
+    QVariantList rects;
+    QHash<QPair<int, int>, QList<QRectF>>::const_iterator i;
+    for (i = d->anchorRects.constBegin(); i != d->anchorRects.constEnd(); ++i) {
+        for (const QRectF& rect : i.value()) {
+            rects << rect;
+        }
+    }
+    return rects;
 }
 
 QString TextViewerItem::hoveredLink() const
