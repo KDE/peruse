@@ -245,10 +245,6 @@ public:
         layouts.clear();
 
         for (int p = 0; p < internalParagraphs.size(); ++p) {
-            if (y + lineHeight > ymax) {
-                break;
-            }
-
             // Use a separate text layout for each paragraph in the document.
             QTextLayout *textLayout = new QTextLayout(internalParagraphs[p], font);
             QTextOption option = QTextOption(Qt::AlignCenter);
@@ -374,6 +370,9 @@ public:
             if (!managedToFitEverything) {
                 break;
             }
+            if (y + lineHeight > ymax) {
+                break;
+            }
         }
         return managedToFitEverything;
     }
@@ -397,14 +396,15 @@ public:
 
     int findMaxSize(int searchMin, int searchMax) {
         int largestAccepted{searchMin};
-        if (searchMax > searchMin + 1) {
-            int middle = searchMin + ((searchMax - searchMin) / 2);
+        int searchSpace = searchMax - searchMin;
+        if (searchSpace > 1) {
+            int middle = searchMin + searchSpace / 2;
             if (sizeAccepted(middle)) {
                 largestAccepted = findMaxSize(middle, searchMax);
             } else if (searchMin < middle) {
                 largestAccepted = findMaxSize(searchMin, middle - 1);
             }
-         }
+        }
         return largestAccepted;
     }
 
@@ -470,11 +470,12 @@ public:
         if (paragraphs.count() > 0 && q->height() > (margin * 2) + pixelSize) {
             // Now attempt to do the text layouting, squeezing it upwards until it no longer fits
             // Cap it at the size of the polygon, divided by the number of paragraphs, minus our margin
-            int maximumSize{(qFloor(q->height()) / paragraphs.count()) - margin * 2};
+            int maximumSize{(qFloor(shapePolygon.boundingRect().height()) / paragraphs.count()) - margin * 2};
             int bestSize = findMaxSize(pixelSize, maximumSize);
             setFontSize(bestSize);
-            attemptLayout(debugLayout);
+            bool layoutSuccessful = attemptLayout(debugLayout);
             if (debugLayout) {
+                qDebug() << "Layout was successful?" << layoutSuccessful << "for the paragraphs" << internalParagraphs;
                 for (QTextLayout* layout : layouts) {
                     qDebug() << layout->lineCount() << "layouts at size" << pixelSize - 1 << "to fit into" << shapePolygon.boundingRect() << "the following text:" << layout->text();
                     qDebug() << shapePolygon;
