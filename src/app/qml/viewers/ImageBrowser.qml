@@ -152,7 +152,7 @@ ListView {
         contentHeight: imageHeight
         interactive: (contentWidth > width || contentHeight > height) && (totalFrames === 0)
         z: interactive ? 1000 : 0
-        property bool hasInteractiveObjects: image.frameJumps.length > 0;
+        property bool hasInteractiveObjects: image.frameJumps.length > 0 || image.frameLinkRects.length > 0;
         function goNextFrame() { image.nextFrame(); }
         function goPreviousFrame() { image.previousFrame(); }
         function setColouredHole(holeRect,holeColor) {
@@ -332,16 +332,16 @@ ListView {
                     property rect bounds: image.paintedRect
                     property color bgcolor: image.currentPageObject? image.currentPageObject.bgcolor: "transparent";
                 }
-                
+
                 // if we're on touch screen, we set the currentJumpIndex to -1 by default
                 // otherwise we set it to the first available jump on the frame
                 property int currentJumpIndex: Kirigami.Settings.isMobile? -1 : 0;
                 property var frameJumps: [];
-                
+
                 function initFrame() {
                     currentJumpIndex = Kirigami.Settings.isMobile? -1 : 0;
                     var newFrameJumps = [];
-                    
+
                     if(currentFrameObj === noFrame) {
                         newFrameJumps = image.currentPageObject.jumps;
                     } else {
@@ -352,12 +352,27 @@ ListView {
                             }
                         }
                     }
-                    
                     frameJumps = newFrameJumps;
+                    updateFrameLinkRects();
+                }
+
+                property var frameLinkRects: [];
+                function updateFrameLinkRects() {
+                    var newLinkRects = [];
+                    for(var i = 0; i < textAreaRepeater.model.length; i++) {
+                        if (frameContainsJump(textAreaRepeater.model[i])) {
+                            for(var j = 0; j < textAreaRepeater.count; j++) {
+                                newLinkRects.push(textAreaRepeater.itemAt(j).linkRects[j]);
+                            }
+                        }
+                    }
+                    frameLinkRects = newLinkRects;
                 }
 
                 Repeater {
+                    id: textAreaRepeater
                     property QtObject textLayer: root.currentLanguage ? image.currentPageObject.textLayer(root.currentLanguage.language) : null
+                    onTextLayerChanged: { image.updateFrameLinkRects(); }
                     model: textLayer ? textLayer.textareas : 0;
                     Helpers.TextAreaHandler {
                         id: textAreaHandler
@@ -465,7 +480,7 @@ ListView {
                 
                 MouseArea {
                     anchors.fill: parent;
-                    enabled: root.hoveredLink === "" && flick.interactive;
+                    enabled: flick.interactive && !root.currentItem.hasInteractiveObjects;
                     onClicked: startToggleControls();
                     onDoubleClicked: {
                         abortToggleControls();
@@ -524,7 +539,7 @@ ListView {
 
     Helpers.Navigator {
         enabled: root.currentItem ? !root.currentItem.interactive : false;
-        acceptTaps: root.hoveredLink === "" && !root.currentItem.hasInteractiveObjects;
+        acceptTaps: !root.currentItem.hasInteractiveObjects;
         anchors.fill: parent;
         onLeftRequested: root.layoutDirection === Qt.RightToLeft? root.goNextFrame(): root.goPreviousFrame();
         onRightRequested: root.layoutDirection === Qt.RightToLeft? root.goPreviousFrame(): root.goNextFrame();
