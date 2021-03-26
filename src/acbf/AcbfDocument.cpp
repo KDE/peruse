@@ -72,7 +72,7 @@ QString Document::toXml()
     writer.setAutoFormatting(true);
     writer.writeStartDocument();
     writer.writeStartElement(QStringLiteral("ACBF"));
-    writer.writeAttribute(QStringLiteral("xmlns"), QStringLiteral("http://www.acbf.info/xml/acbf/1.1"));
+    writer.writeAttribute(QStringLiteral("xmlns"), QStringLiteral("http://www.acbf.info/xml/acbf/1.2"));
     d->metaData->toXml(&writer);
     d->cssStyleSheet->toXml(&writer);
     d->body->toXml(&writer);
