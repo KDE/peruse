@@ -42,6 +42,7 @@ namespace AdvancedComicBookFormat
 class ACBF_EXPORT Textarea : public InternalReferenceObject
 {
     Q_OBJECT
+    Q_PROPERTY(QString id READ id WRITE setId NOTIFY idChanged)
     Q_PROPERTY(QString bgcolor READ bgcolor WRITE setBgcolor NOTIFY bgcolorChanged)
     Q_PROPERTY(int pointCount READ pointCount NOTIFY pointCountChanged)
     Q_PROPERTY(QRect bounds READ bounds NOTIFY boundsChanged)
@@ -70,6 +71,22 @@ public:
      * @return True if the xmlReader encountered no errors.
      */
     bool fromXml(QXmlStreamReader *xmlReader, const QString& xmlData);
+
+    /**
+     * @return The ID of this text area as a QString.
+     * Used to identify it from other parts of the
+     * ACBF document.
+     */
+    QString id() const;
+
+    /**
+     * \brief Set the ID for this text area.
+     * This is used to reference this element from
+     * other parts of the ACBF document.
+     * @param newId - The new ID as a string.
+     */
+    void setId(const QString& newId);
+    Q_SIGNAL void idChanged();
 
     /**
      * @return a list of points that encompasses the textarea.

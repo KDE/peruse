@@ -44,6 +44,7 @@ public:
         jumpsUpdateTimer.setSingleShot(true);
         jumpsUpdateTimer.setInterval(0);
     }
+    QString id;
     QString bgcolor;
     QString transition;
     QHash<QString, QString> title;
@@ -56,15 +57,23 @@ public:
 };
 
 Page::Page(Document* parent)
-    : QObject(parent)
+    : InternalReferenceObject(InternalReferenceObject::ReferenceTarget, parent)
     , d(new Private)
 {
     static const int typeId = qRegisterMetaType<Page*>("Page*");
     Q_UNUSED(typeId);
-    
+
     QObject::connect(&d->jumpsUpdateTimer, &QTimer::timeout, &d->jumpsUpdateTimer, [this]() {
         Q_EMIT jumpsChanged();
     });
+
+    connect(this, &Page::idChanged, this, &InternalReferenceObject::propertyDataChanged);
+    connect(this, &Page::bgcolorChanged, this, &InternalReferenceObject::propertyDataChanged);
+    connect(this, &Page::transitionChanged, this, &InternalReferenceObject::propertyDataChanged);
+    connect(this, &Page::imageHrefChanged, this, &InternalReferenceObject::propertyDataChanged);
+    connect(this, &Page::textLayerLanguagesChanged, this, &InternalReferenceObject::propertyDataChanged);
+    connect(this, &Page::framePointStringsChanged, this, &InternalReferenceObject::propertyDataChanged);
+    connect(this, &Page::jumpsChanged, this, &InternalReferenceObject::propertyDataChanged);
 }
 
 Page::~Page() = default;
@@ -76,6 +85,9 @@ void Page::toXml(QXmlStreamWriter* writer)
     }
     else {
         writer->writeStartElement(QStringLiteral("page"));
+    }
+    if(!d->id.isEmpty()) {
+        writer->writeAttribute(QStringLiteral("id"), id());
     }
 
     if(!d->bgcolor.isEmpty()) {
@@ -115,6 +127,7 @@ void Page::toXml(QXmlStreamWriter* writer)
 
 bool Page::fromXml(QXmlStreamReader *xmlReader, const QString& xmlData)
 {
+    setId(xmlReader->attributes().value(QStringLiteral("id")).toString());
     setBgcolor(xmlReader->attributes().value(QStringLiteral("bgcolor")).toString());
     setTransition(xmlReader->attributes().value(QStringLiteral("transition")).toString());
     while(xmlReader->readNextStartElement())
@@ -159,7 +172,6 @@ bool Page::fromXml(QXmlStreamReader *xmlReader, const QString& xmlData)
              if(!newJump->fromXml(xmlReader)) {
                  return false;
              }
-             
              // Jumps have no child elements, so we need to force the reader to go to the next one.
              addJump(newJump, -1);
              xmlReader->readNext();
@@ -175,6 +187,19 @@ bool Page::fromXml(QXmlStreamReader *xmlReader, const QString& xmlData)
     }
     qCDebug(ACBF_LOG) << Q_FUNC_INFO << "Created page for image" << d->imageHref;
     return !xmlReader->hasError();
+}
+
+QString Page::id() const
+{
+    return d->id;
+}
+
+void Page::setId(const QString& newId)
+{
+    if (d->id != newId) {
+        d->id = newId;
+        Q_EMIT idChanged();
+    }
 }
 
 QString Page::bgcolor() const
@@ -280,10 +305,14 @@ void Page::setTextLayer(Textlayer* textlayer, const QString& language)
     if(textlayer)
     {
         d->textLayers[language] = textlayer;
+        Q_EMIT textLayerAdded(textlayer);
     }
     else
     {
-        d->textLayers.remove(language);
+        Textlayer* layer = d->textLayers.take(language);
+        if (layer) {
+            layer->deleteLater();
+        }
     }
     emit textLayerLanguagesChanged();
 }
@@ -354,6 +383,7 @@ void Page::addFrame(Frame* frame, int index)
     else {
         d->frames.append(frame);
     }
+    Q_EMIT frameAdded(frame);
     emit framePointStringsChanged();
 }
 
@@ -474,4 +504,13 @@ bool Page::isCoverPage() const
 void Page::setIsCoverPage(bool isCoverPage)
 {
     d->isCoverPage = isCoverPage;
+}
+
+int Page::localIndex()
+{
+    Document* document = qobject_cast<Document*>(parent());
+    if (document && document->body()) {
+        return document->body()->pageIndex(this);
+    }
+    return -1;
 }

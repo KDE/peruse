@@ -20,9 +20,11 @@
  */
 
 #include "AcbfIdentifiedObjectModel.h"
+#include "AcbfBody.h"
 #include "AcbfDocument.h"
 #include "AcbfInternalReferenceObject.h"
 #include "AcbfData.h"
+#include "AcbfFrame.h"
 #include "AcbfReferences.h"
 #include "AcbfTextarea.h"
 
@@ -54,6 +56,29 @@ public:
                 QModelIndex idx = q->index(identifiedObjects.indexOf(child));
                 q->dataChanged(idx, idx);
             });
+
+            // Some special handling for pages, because pages are special and potentially contain things, including some that can also have reference objects
+            Page* page = qobject_cast<Page*>(child);
+            if (page) {
+                connect(page, &Page::frameAdded, q, [this](QObject* child) { addAndConnectChild(qobject_cast<InternalReferenceObject*>(child)); });
+                connect(page, &Page::framePointStringsChanged, q, [this]() { q->dataChanged(q->index(0), q->index(identifiedObjects.count())); });
+                for (Frame* frame : page->frames()) {
+                    addAndConnectChild(frame);
+                }
+                connect(page, &Page::textLayerAdded, q, [this](QObject* child) { addAndConnectChild(qobject_cast<InternalReferenceObject*>(child)); });
+                connect(page, &Page::textLayerLanguagesChanged, q, [this](){ q->dataChanged(q->index(0), q->index(identifiedObjects.count())); });
+                for (Textlayer* textlayer : page->textLayersForAllLanguages()) {
+                    connectTextLayer(textlayer);
+                }
+            }
+        }
+    }
+    void connectTextLayer(Textlayer* textlayer) {
+        connect(textlayer, &Textlayer::textareaAdded, q, [this](QObject* child) { addAndConnectChild(qobject_cast<InternalReferenceObject*>(child)); });
+        connect(textlayer, &Textlayer::textareasChanged, q, [this](){ q->dataChanged(q->index(0), q->index(identifiedObjects.count())); });
+        for (QObject* obj : textlayer->textareas()) {
+            Textarea* textarea = qobject_cast<Textarea*>(obj);
+            addAndConnectChild(textarea);
         }
     }
 };
@@ -94,6 +119,10 @@ QVariant IdentifiedObjectModel::data(const QModelIndex& index, int role) const
                         data.setValue<int>(BinaryType);
                     } else if (qobject_cast<Textarea*>(object)) {
                         data.setValue<int>(TextareaType);
+                    } else if (qobject_cast<Frame*>(object)) {
+                        data.setValue<int>(FrameType);
+                    } else if (qobject_cast<Page*>(object)) {
+                        data.setValue<int>(PageType);
                     } else {
                         data.setValue<int>(UnknownType);
                     }
@@ -146,10 +175,12 @@ void IdentifiedObjectModel::setDocument(QObject* document)
                 }
             };
             findAllIdentifiedObjects(d->document);
-            connect(d->document->data(), &Data::binaryAdded, this, [this](QObject* child){ d->addAndConnectChild(qobject_cast<InternalReferenceObject*>(child));});
+            connect(d->document->data(), &Data::binaryAdded, this, [this](QObject* child){ d->addAndConnectChild(qobject_cast<InternalReferenceObject*>(child)); });
             connect(d->document->data(), &Data::binariesChanged, this, [this](){ dataChanged(index(0), index(d->identifiedObjects.count())); });
-            connect(d->document->references(), &References::referenceAdded, this, [this](QObject* child){ d->addAndConnectChild(qobject_cast<InternalReferenceObject*>(child));});
+            connect(d->document->references(), &References::referenceAdded, this, [this](QObject* child){ d->addAndConnectChild(qobject_cast<InternalReferenceObject*>(child)); });
             connect(d->document->references(), &References::referencesChanged, this, [this](){ dataChanged(index(0), index(d->identifiedObjects.count())); });
+            connect(d->document->body(), &Body::pageCountChanged, this, [this](){ dataChanged(index(0), index(d->identifiedObjects.count())); });
+            connect(d->document->body(), &Body::pageAdded, this, [this](QObject* child) { d->addAndConnectChild(qobject_cast<InternalReferenceObject*>(child)); });
         }
         endResetModel();
         Q_EMIT documentChanged();

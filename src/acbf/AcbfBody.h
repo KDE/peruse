@@ -87,27 +87,37 @@ public:
      * @return a QList of all the pages stored currently.
      */
     QList<Page*> pages() const;
-    
+
+    /**
+     * @brief Fires when a new page is added to the list of pages
+     * @param The newly added page
+     */
+    Q_SIGNAL void pageAdded(Page* newPage);
+
     /**
      * @param index - the index of the page.
      * @return the page object at the given index.
      */
     Q_INVOKABLE Page* page(int index) const;
-    
+
     /**
      * @param page - The page for which to return the index.
      * @return index of the page given, will return -1 if the page isn't in this document.
      */
     int pageIndex(Page* page) const;
 
-    // If afterIndex is larger than zero, the insertion will happen at that index
+    /**
+     * Add a page to the list, optionally at a specified position in the list
+     * @param page The page to add to the list
+     * @param index The position at which to insert the page (if -1, the page will be appended)
+     */
     void addPage(Page* page, int index = -1);
-    
+
     /**
      * \brief remove the given page object from this body.
      * @param page - the page to remove.
      */
-    void removePage(Page* page);    
+    void removePage(Page* page);
     /**
      * \brief Swap two pages in the list.
      * @param swapThis - the first page to swap.

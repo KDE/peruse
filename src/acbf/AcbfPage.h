@@ -23,6 +23,7 @@
 #define ACBFPAGE_H
 
 #include "AcbfDocument.h"
+#include "AcbfInternalReferenceObject.h"
 /**
  * \brief Class to handle page objects.
  * 
@@ -54,9 +55,10 @@ namespace AdvancedComicBookFormat
 class Textlayer;
 class Frame;
 class Jump;
-class ACBF_EXPORT Page : public QObject
+class ACBF_EXPORT Page : public InternalReferenceObject
 {
     Q_OBJECT
+    Q_PROPERTY(QString id READ id WRITE setId NOTIFY idChanged)
     Q_PROPERTY(QString bgcolor READ bgcolor WRITE setBgcolor NOTIFY bgcolorChanged)
     Q_PROPERTY(QString transition READ transition WRITE setTransition NOTIFY transitionChanged)
     Q_PROPERTY(QString imageHref READ imageHref WRITE setImageHref NOTIFY imageHrefChanged)
@@ -77,6 +79,22 @@ public:
      * @return True if the xmlReader encountered no errors.
      */
     bool fromXml(QXmlStreamReader *xmlReader, const QString& xmlData);
+
+    /**
+     * @return The ID of this page as a QString.
+     * Used to identify it from other parts of the
+     * ACBF document.
+     */
+    QString id() const;
+
+    /**
+     * \brief Set the ID for this page.
+     * This is used to reference this element from
+     * other parts of the ACBF document.
+     * @param newId - The new ID as a string.
+     */
+    void setId(const QString& newId);
+    Q_SIGNAL void idChanged();
 
     /**
      * @return the background color as a QString.
@@ -156,6 +174,7 @@ public:
      * @returns all the textlayers objects.
      */
     QList<Textlayer*> textLayersForAllLanguages() const;
+    Q_SIGNAL void textLayerAdded(Textlayer* newTextlayer);
     /**
      * @param language - the language of the entry in language code, country
      * code format joined by a dash (not an underscore).
@@ -203,6 +222,7 @@ public:
      * @returns a list of frames in this page.
      */
     QList<Frame*> frames() const;
+    Q_SIGNAL void frameAdded(Frame* newFrame);
     /**
      * @param index - index of the frame.
      * @return the frame of that index.
@@ -312,6 +332,12 @@ public:
      * 
      */
     void setIsCoverPage(bool isCoverPage = false);
+
+    /**
+     * The position of this page in the body instance holding the list of pages.
+     * @return The instance's position
+     */
+    int localIndex() override;
 private:
     class Private;
     std::unique_ptr<Private> d;

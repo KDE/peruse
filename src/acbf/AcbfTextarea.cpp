@@ -37,6 +37,7 @@ public:
         , transparent(false)
     {}
     Textlayer* parent;
+    QString id;
     QString bgcolor;
     QList<QPoint> points;
     int textRotation;
@@ -47,7 +48,7 @@ public:
 };
 
 Textarea::Textarea(Textlayer* parent)
-    : InternalReferenceObject(InternalReferenceObject::ReferenceOrigin, parent)
+    : InternalReferenceObject(InternalReferenceObject::ReferenceOriginAndTarget, parent)
     , d(new Private)
 {
     static const int typeId = qRegisterMetaType<Textarea*>("Textarea*");
@@ -55,6 +56,7 @@ Textarea::Textarea(Textlayer* parent)
     d->parent = parent;
     connect(this, &Textarea::pointCountChanged, this, &Textarea::boundsChanged);
 
+    connect(this, &Textarea::idChanged, &InternalReferenceObject::propertyDataChanged);
     connect(this, &Textarea::bgcolorChanged, &InternalReferenceObject::propertyDataChanged);
     // Don't forward pointsCountChanged, as boundsChanged already fires from that
     connect(this, &Textarea::boundsChanged, &InternalReferenceObject::propertyDataChanged);
@@ -70,6 +72,9 @@ Textarea::~Textarea() = default;
 void Textarea::toXml(QXmlStreamWriter* writer)
 {
     writer->writeStartElement(QStringLiteral("text-area"));
+    if(!d->id.isEmpty()) {
+        writer->writeAttribute(QStringLiteral("id"), id());
+    }
 
     QStringList points;
     for(const QPoint& point : d->points) {
@@ -107,6 +112,7 @@ void Textarea::toXml(QXmlStreamWriter* writer)
 
 bool Textarea::fromXml(QXmlStreamReader *xmlReader, const QString& xmlData)
 {
+    setId(xmlReader->attributes().value(QStringLiteral("id")).toString());
     setBgcolor(xmlReader->attributes().value(QStringLiteral("bgcolor")).toString());
     setTextRotation(xmlReader->attributes().value(QStringLiteral("text-rotation")).toInt());
     setType(xmlReader->attributes().value(QStringLiteral("type")).toString());
@@ -152,6 +158,19 @@ bool Textarea::fromXml(QXmlStreamReader *xmlReader, const QString& xmlData)
     }
     qCDebug(ACBF_LOG) << Q_FUNC_INFO << "Created a text area of type" << type() << "with the paragraphs" << d->paragraphs;
     return !xmlReader->hasError();
+}
+
+QString Textarea::id() const
+{
+    return d->id;
+}
+
+void Textarea::setId(const QString& newId)
+{
+    if (d->id != newId) {
+        d->id = newId;
+        Q_EMIT idChanged();
+    }
 }
 
 QVariantList Textarea::points() const

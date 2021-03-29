@@ -93,6 +93,7 @@ public:
      * @returns a list of textareas in this page.
      */
     QObjectList textareas() const;
+    Q_SIGNAL void textareaAdded(Textarea* newArea);
     /**
      * Fires when textareas changes
      */

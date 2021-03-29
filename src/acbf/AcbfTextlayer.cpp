@@ -152,6 +152,7 @@ void Textlayer::addTextarea(Textarea* textarea, int index)
     else {
         d->textareas.append(textarea);
     }
+    Q_EMIT textareaAdded(textarea);
     Q_EMIT textareasChanged();
     Q_EMIT textareaPointStringsChanged();
 }

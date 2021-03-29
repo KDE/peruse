@@ -122,6 +122,7 @@ void Body::addPage(Page* page, int index)
     else {
         d->pages.append(page);
     }
+    Q_EMIT pageAdded(page);
     emit pageCountChanged();
 }
 

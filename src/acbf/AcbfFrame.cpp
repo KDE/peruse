@@ -31,23 +31,31 @@ class Frame::Private
 public:
     Private()
     {}
+    QString id;
     QString bgcolor;
     QList<QPoint> points;
 };
 
 Frame::Frame(Page* parent)
-    : QObject(parent)
+    : InternalReferenceObject(InternalReferenceObject::ReferenceTarget, parent)
     , d(new Private)
 {
     static const int typeId = qRegisterMetaType<Frame*>("Frame*");
     Q_UNUSED(typeId);
     connect(this, &Frame::pointCountChanged, this, &Frame::boundsChanged);
+
+    connect(this, &Frame::idChanged, this, &InternalReferenceObject::propertyDataChanged);
+    connect(this, &Frame::bgcolorChanged, this, &InternalReferenceObject::propertyDataChanged);
+    connect(this, &Frame::boundsChanged, this, &InternalReferenceObject::propertyDataChanged);
 }
 
 Frame::~Frame() = default;
 
 void Frame::toXml(QXmlStreamWriter* writer) {
     writer->writeStartElement(QStringLiteral("frame"));
+    if(!d->id.isEmpty()) {
+        writer->writeAttribute(QStringLiteral("id"), id());
+    }
 
     QStringList points;
     for(const QPoint& point : d->points) {
@@ -62,6 +70,7 @@ void Frame::toXml(QXmlStreamWriter* writer) {
 
 bool Frame::fromXml(QXmlStreamReader *xmlReader)
 {
+    setId(xmlReader->attributes().value(QStringLiteral("id")).toString());
     setBgcolor(xmlReader->attributes().value(QStringLiteral("bgcolor")).toString());
 
     QVector<QStringRef> points = xmlReader->attributes().value(QStringLiteral("points")).split(' ');
@@ -84,6 +93,19 @@ bool Frame::fromXml(QXmlStreamReader *xmlReader)
     qCDebug(ACBF_LOG) << Q_FUNC_INFO << "Created a frame with " << points.count() << "points";
 
     return !xmlReader->hasError();
+}
+
+QString Frame::id() const
+{
+    return d->id;
+}
+
+void Frame::setId(const QString& newId)
+{
+    if (d->id != newId) {
+        d->id = newId;
+        Q_EMIT idChanged();
+    }
 }
 
 QList<QPoint> Frame::points() const
@@ -180,4 +202,14 @@ void Frame::setBgcolor(const QString& newColor)
 {
     d->bgcolor = newColor;
     emit bgcolorChanged();
+}
+
+int AdvancedComicBookFormat::Frame::localIndex()
+{
+    int idx{-1};
+    Page* page = qobject_cast<Page*>(parent());
+    if (page) {
+        idx = page->frameIndex(this);
+    }
+    return idx;
 }

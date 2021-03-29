@@ -53,6 +53,8 @@ public:
         ReferenceType = 0,
         BinaryType = 1,
         TextareaType = 2,
+        FrameType = 3,
+        PageType = 4,
     };
     Q_ENUM(IdentifiedObjectTypes)
 

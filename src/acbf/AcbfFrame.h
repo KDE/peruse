@@ -22,9 +22,9 @@
 #ifndef ACBFFRAME_H
 #define ACBFFRAME_H
 
-#include <QObject>
 #include <memory>
 
+#include "AcbfInternalReferenceObject.h"
 #include "AcbfPage.h"
 
 #include <QPoint>
@@ -44,16 +44,17 @@
  */
 namespace AdvancedComicBookFormat
 {
-class ACBF_EXPORT Frame : public QObject
+class ACBF_EXPORT Frame : public InternalReferenceObject
 {
     Q_OBJECT
+    Q_PROPERTY(QString id READ id WRITE setId NOTIFY idChanged)
     Q_PROPERTY(QString bgcolor READ bgcolor WRITE setBgcolor NOTIFY bgcolorChanged)
     Q_PROPERTY(int pointCount READ pointCount NOTIFY pointCountChanged)
     Q_PROPERTY(QRect bounds READ bounds NOTIFY boundsChanged)
 public:
     explicit Frame(Page* parent = nullptr);
     ~Frame() override;
-    
+
     /**
      * \brief Write the frame into the xml writer.
      */
@@ -63,6 +64,22 @@ public:
      * @return True if the xmlReader encountered no errors.
      */
     bool fromXml(QXmlStreamReader *xmlReader);
+
+    /**
+     * @return The ID of this frame as a QString.
+     * Used to identify it from other parts of the
+     * ACBF document.
+     */
+    QString id() const;
+
+    /**
+     * \brief Set the ID for this frame.
+     * This is used to reference this element from
+     * other parts of the ACBF document.
+     * @param newId - The new ID as a string.
+     */
+    void setId(const QString& newId);
+    Q_SIGNAL void idChanged();
 
     /**
      * @return a list of points that encompasses the frame.
@@ -134,6 +151,13 @@ public:
      * @brief fires when the background color changes.
      */
     Q_SIGNAL void bgcolorChanged();
+
+    /**
+     * The position of this Frame in the list of Frames in the
+     * parent Page instance.
+     * @return The instance's position
+     */
+    int localIndex() override;
 
 private:
     class Private;
