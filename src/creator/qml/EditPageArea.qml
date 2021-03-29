@@ -54,9 +54,11 @@ Kirigami.OverlaySheet {
             // Explicitly setting the controls
             switch(objectToBeEditedType) {
                 case BookPage.FieldTypes.Frame:
+                    areaId.text = objectToBeEdited.id;
                     frameBackgroundColor.color = objectToBeEdited.bgcolor;
                     break;
                 case BookPage.FieldTypes.Textarea:
+                    areaId.text = objectToBeEdited.id;
                     textAreaBackgroundColor.color = objectToBeEdited.bgcolor;
                     transparentSwitch.checked = objectToBeEdited.transparent;
                     invertedSwitch.checked = objectToBeEdited.inverted;
@@ -140,6 +142,12 @@ Kirigami.OverlaySheet {
         Kirigami.FormLayout {
             Layout.fillWidth: true;
 
+            QtControls.TextField {
+                id: areaId
+                Kirigami.FormData.label: i18nc("Label for the ID input field", "ID:")
+                placeholderText: i18nc("Placeholder text for the page area ID text-field", "Write to add an ID");
+                visible: objectToBeEditedType == BookPage.FieldTypes.Frame || objectToBeEditedType == BookPage.FieldTypes.Textarea
+            }
             Row {
                 Kirigami.FormData.label: i18nc("Label for background color button", "Background color:")
                 visible: objectToBeEditedType == BookPage.FieldTypes.Frame;
@@ -305,21 +313,22 @@ Kirigami.OverlaySheet {
                 if(root.objectToBeEdited) {
                     switch(root.objectToBeEditedType) {
                         case BookPage.FieldTypes.Frame:
+                            root.objectToBeEdited.id = areaId.text;
                             root.objectToBeEdited.bgcolor = frameBackgroundColor.color;
-
                             break;
+
                         case BookPage.FieldTypes.Textarea:
+                            root.objectToBeEdited.id = areaId.text;
                             root.objectToBeEdited.bgcolor = textAreaBackgroundColor.color;
                             root.objectToBeEdited.transparent = transparentSwitch.checked;
                             root.objectToBeEdited.inverted = invertedSwitch.checked;
                             root.objectToBeEdited.paragraphs = textDocumentEditor.paragraphs();
                             root.objectToBeEdited.type = availableTypes[textType.currentIndex];
                             root.objectToBeEdited.textRotation = textRotation.value;
-
                             break;
+
                         case BookPage.FieldTypes.Jump:
                             root.objectToBeEdited.pageIndex = pageIndexComboBox.currentIndex;
-
                             break;
 
                         default:
