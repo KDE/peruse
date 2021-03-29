@@ -57,9 +57,16 @@ Kirigami.ScrollablePage {
         QtControls.TextField {
             id: defaultTitle;
             Kirigami.FormData.label: i18nc("label text for the edit field for the page title", "Title");
-            placeholderText: i18nc("placeholder text for default page text-input", "Write to add default title");
+            placeholderText: i18nc("placeholder text for the page title text-input", "Write to add default title");
             text: root.page.title("");
             onEditingFinished: root.page.setTitle(text, "");
+        }
+        QtControls.TextField {
+            id: pageId;
+            Kirigami.FormData.label: i18nc("label text for the edit field for the page id", "ID");
+            placeholderText: i18nc("placeholder text for page ID text-input", "Write to add an ID");
+            text: root.page.id
+            onEditingFinished: root.page.id = text
         }
         QtControls.ComboBox {
             id: transition;
