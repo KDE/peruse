@@ -100,7 +100,13 @@ Kirigami.OverlaySheet {
                 id: linkDestination;
                 Layout.fillWidth: true;
                 placeholderText: i18nc("Placeholder text for the link destination input field", "Enter the destination for your link here");
-                onTextChanged: linkDestinationOptionsFilter.setFilterFixedString(linkDestination.text);
+                onTextChanged: {
+                    if (linkDestination.text.startsWith("#")) {
+                        linkDestinationOptionsFilter.setFilterFixedString(linkDestination.text.slice(1));
+                    } else {
+                        linkDestinationOptionsFilter.setFilterFixedString(linkDestination.text);
+                    }
+                }
             }
             ListView {
                 Layout.fillWidth: true;
@@ -109,6 +115,7 @@ Kirigami.OverlaySheet {
                 clip: true;
                 model: Peruse.FilterProxy {
                     id: linkDestinationOptionsFilter;
+                    filterRole: 257 // the ID role in IdentifiedObjectModel
                     sourceModel: Peruse.IdentifiedObjectModel {
                         document: component.model.acbfData;
                     }
@@ -118,13 +125,20 @@ Kirigami.OverlaySheet {
                     text: {
                         switch(model.type) {
                             case Peruse.IdentifiedObjectModel.ReferenceType:
-                                return i18nc("Entry in a dropdown list which gives the name of a reference object, and identifies it as one such", "%1 (Reference)", model.id)
+                                return i18nc("Entry in a dropdown list which gives the name of a reference object, and identifies it as one such", "%1 (Reference)", (model.id.length > 0 ? model.id : "no ID"))
                                 break;
                             case Peruse.IdentifiedObjectModel.BinaryType:
-                                return i18nc("Entry in a dropdown list which gives the name of a binary object, and identifies it as one such", "%1 (Binary)", model.id)
+                                return i18nc("Entry in a dropdown list which gives the name of a binary object, and identifies it as one such", "%1 (Binary)", (model.id.length > 0 ? model.id : "no ID"))
                                 break;
                             case Peruse.IdentifiedObjectModel.TextareaType:
-                                return i18nc("Entry in a dropdown list which gives the base details of a Textarea object, and identifies it as one such", "Textarea (%1)", model.object.paragraphs[0]);
+                                return i18nc("Entry in a dropdown list which gives the base details of a Textarea object, and identifies it as one such", "Textarea (ID: %1, text: %2)", (model.id.length > 0 ? model.id : "no ID"), model.object.paragraphs[0]);
+                                break;
+                            case Peruse.IdentifiedObjectModel.FrameType:
+                                return i18nc("Entry in a dropdown list which gives the name of a frame object, and identifies it as one such", "%1 (Frame)", (model.id.length > 0 ? model.id : "no ID"))
+                                break;
+                            case Peruse.IdentifiedObjectModel.PageType:
+                                return i18nc("Entry in a dropdown list which gives the title and ID of a page", "Page \"%1\" (ID: %2)", model.object.title(), (model.id.length > 0 ? model.id : "no ID"));
+                                break;
                             case Peruse.IdentifiedObjectModel.UnknownType:
                             default:
                                 return i18nc("Entry in a dropdown list which gives the name of an identified object of an unknown type, and marks it as one such", "%1 (Unknown Type)", model.id)
