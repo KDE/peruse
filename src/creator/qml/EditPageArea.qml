@@ -68,6 +68,7 @@ Kirigami.OverlaySheet {
                     break;
                 case BookPage.FieldTypes.Jump:
                     pageIndexComboBox.currentIndex = objectToBeEdited.pageIndex;
+                    jumpHref.text = objectToBeEdited.href;
                     break;
 
                 default:
@@ -293,6 +294,12 @@ Kirigami.OverlaySheet {
                 }
             }
 
+            QtControls.TextField {
+                id: jumpHref;
+                Kirigami.FormData.label: i18nc("Label for a text input box in which to input a hyperlink destination", "Jump Destination:");
+                visible: objectToBeEditedType == BookPage.FieldTypes.Jump;
+                placeholderText: i18nc("Placeholder text for a text input box in which to input a hyperlink destination", "Enter the jump destination here");
+            }
             QtControls.ComboBox {
                 id: pageIndexComboBox;
                 Kirigami.FormData.label: i18nc("Label for the dropdown which will let you pick a page a jump will send the reader to when activated", "Page Index:")
@@ -329,6 +336,7 @@ Kirigami.OverlaySheet {
 
                         case BookPage.FieldTypes.Jump:
                             root.objectToBeEdited.pageIndex = pageIndexComboBox.currentIndex;
+                            root.objectToBeEdited.href = jumpHref.text;
                             break;
 
                         default:
