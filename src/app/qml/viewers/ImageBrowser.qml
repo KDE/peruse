@@ -402,16 +402,16 @@ ListView {
                         if(image.currentFrameObj === noFrame) {
                             return true;
                         } 
-                        
+
                         return jumpObj.bounds.x >= image.currentFrameObj.bounds.x && 
                                 jumpObj.bounds.y >= image.currentFrameObj.bounds.y &&
                                 (jumpObj.bounds.x + jumpObj.bounds.width) <= (image.currentFrameObj.bounds.x + image.currentFrameObj.bounds.width) &&
                                 (jumpObj.bounds.y + jumpObj.bounds.height) <= (image.currentFrameObj.bounds.y + image.currentFrameObj.bounds.height);
                     }
-                    
+
                     return false;
                 }
-                
+
                 function nextJump() {
                     if(image.currentJumpIndex === -1 || !jumpsRepeater.itemAt(image.currentJumpIndex).hovered) {
                         image.currentJumpIndex = (image.currentJumpIndex + 1) % image.frameJumps.length;
@@ -424,28 +424,34 @@ ListView {
                         jumpsRepeater.itemAt(currentJumpIndex).activated();
                     }
                 }
-                
+
                 Repeater {
                     id: jumpsRepeater;
                     model: image.frameJumps;
-                    
-                    Helpers.JumpHandler {                        
+
+                    Helpers.JumpHandler {
                         jumpObject: modelData;
-                        
+
                         offsetX: image.offsetX;
                         offsetY: image.offsetY;
-                        
+
                         widthMultiplier: image.muliplier;
                         heightMultiplier: image.muliplier;
-                        
+
                         focused: image.currentJumpIndex === index;
-                        
+
                         Behavior on opacity { NumberAnimation { duration: Kirigami.Units.shortDuration; easing.type: Easing.InOutQuad; } }
-                        
+
                         onActivated: {
-                            root.navigateTo(jumpObject.pageIndex);
+                            // href for jumps is fairly new, so we need to fall back gracefully
+                            // (also this allows jumps to link to unnamed pages)
+                            if (jumpObject.href.length > 0) {
+                                root.handleLink(jumpObject.href);
+                            } else {
+                                root.navigateTo(jumpObject.pageIndex);
+                            }
                         }
-                        
+
                         onHoveredChanged: image.currentJumpIndex = (hovered ? index : -1);
                     }
                 }
