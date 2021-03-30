@@ -25,6 +25,7 @@
 #include "AcbfInternalReferenceObject.h"
 #include "AcbfData.h"
 #include "AcbfFrame.h"
+#include "AcbfJump.h"
 #include "AcbfReferences.h"
 #include "AcbfTextarea.h"
 
@@ -60,12 +61,17 @@ public:
             // Some special handling for pages, because pages are special and potentially contain things, including some that can also have reference objects
             Page* page = qobject_cast<Page*>(child);
             if (page) {
+                connect(page, &Page::jumpAdded, q, [this](QObject* child) { addAndConnectChild(qobject_cast<InternalReferenceObject*>(child)); });
+                connect(page, &Page::jumpsChanged, q,  [this]() { q->dataChanged(q->index(0), q->index(identifiedObjects.count())); });
+                for (QObject* obj: page->jumps()) {
+                    addAndConnectChild(qobject_cast<InternalReferenceObject*>(obj));
+                }
                 connect(page, &Page::frameAdded, q, [this](QObject* child) { addAndConnectChild(qobject_cast<InternalReferenceObject*>(child)); });
                 connect(page, &Page::framePointStringsChanged, q, [this]() { q->dataChanged(q->index(0), q->index(identifiedObjects.count())); });
                 for (Frame* frame : page->frames()) {
                     addAndConnectChild(frame);
                 }
-                connect(page, &Page::textLayerAdded, q, [this](QObject* child) { addAndConnectChild(qobject_cast<InternalReferenceObject*>(child)); });
+                connect(page, &Page::textLayerAdded, q, [this](QObject* child) { connectTextLayer(qobject_cast<Textlayer*>(child)); });
                 connect(page, &Page::textLayerLanguagesChanged, q, [this](){ q->dataChanged(q->index(0), q->index(identifiedObjects.count())); });
                 for (Textlayer* textlayer : page->textLayersForAllLanguages()) {
                     connectTextLayer(textlayer);
@@ -123,6 +129,8 @@ QVariant IdentifiedObjectModel::data(const QModelIndex& index, int role) const
                         data.setValue<int>(FrameType);
                     } else if (qobject_cast<Page*>(object)) {
                         data.setValue<int>(PageType);
+                    } else if (qobject_cast<Jump*>(object)) {
+                        data.setValue<int>(JumpType);
                     } else {
                         data.setValue<int>(UnknownType);
                     }

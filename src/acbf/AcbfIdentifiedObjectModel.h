@@ -55,6 +55,7 @@ public:
         TextareaType = 2,
         FrameType = 3,
         PageType = 4,
+        JumpType = 5,
     };
     Q_ENUM(IdentifiedObjectTypes)
 
