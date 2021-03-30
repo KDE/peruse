@@ -76,11 +76,37 @@ QObjectList InternalReferenceObject::forwardReferences() const
 
 void InternalReferenceObject::updateForwardReferences()
 {
-    QStringList paragraphs = property("paragraphs").toStringList();
-    QXmlStreamReader reader;
-    int paragraphIndex = 0;
     Document* document = d->document();
     if (document) {
+        auto ensureReferenceExists = [this, document](QObject* destination, int paragraphIndex, int characterOffset){
+            InternalReference* internalReference{nullptr};
+            // Check whether we already have an internal reference registered for this link
+            for (QObject* obj : d->forwardReferences) {
+                InternalReference* ref = qobject_cast<InternalReference*>(obj);
+                if (ref->paragraph() == paragraphIndex && ref->character() == characterOffset && ref->to() == destination) {
+                    internalReference = ref;
+                    break;
+                }
+            }
+            // If we don't, let's make one, and tell the object we're linking to that we're doing that
+            if (!internalReference) {
+                InternalReferenceObject* destinationObject = qobject_cast<InternalReferenceObject*>(destination);
+                internalReference = new InternalReference(this, paragraphIndex, characterOffset, destinationObject, document);
+                d->forwardReferences << internalReference;
+                connect(internalReference, &QObject::destroyed, this, [this, internalReference](){
+                    d->forwardReferences.removeOne(internalReference);
+                    Q_EMIT forwardReferencesChanged();
+                });
+                if (destinationObject && destinationObject->supportedReferenceType() & ReferenceOrigin) {
+                    destinationObject->registerBackReference(internalReference);
+                }
+            }
+        };
+
+        // First, let's handle situations where the object has some paragraphs (Textareas and References)
+        QStringList paragraphs = property("paragraphs").toStringList();
+        QXmlStreamReader reader;
+        int paragraphIndex = 0;
         for (const QString& paragraph : paragraphs) {
             reader.clear();
             reader.addData(paragraph);
@@ -91,26 +117,7 @@ void InternalReferenceObject::updateForwardReferences()
                     int characterOffset = reader.characterOffset();
                     QString destinationID = reader.attributes().value("href").toString();
                     QObject* destination = document->objectByID(destinationID);
-                    InternalReference* internalReference{nullptr};
-                    for (QObject* obj : d->forwardReferences) {
-                        InternalReference* ref = qobject_cast<InternalReference*>(obj);
-                        if (ref->paragraph() == paragraphIndex && ref->character() == characterOffset && ref->to() == destination) {
-                            internalReference = ref;
-                            break;
-                        }
-                    }
-                    if (!internalReference) {
-                        InternalReferenceObject* destinationObject = qobject_cast<InternalReferenceObject*>(destination);
-                        internalReference = new InternalReference(this, paragraphIndex, characterOffset, destinationObject, document);
-                        d->forwardReferences << internalReference;
-                        connect(internalReference, &QObject::destroyed, this, [this, internalReference](){
-                            d->forwardReferences.removeOne(internalReference);
-                            Q_EMIT forwardReferencesChanged();
-                        });
-                        if (destinationObject && destinationObject->supportedReferenceType() & ReferenceOrigin) {
-                            destinationObject->registerBackReference(internalReference);
-                        }
-                    }
+                    ensureReferenceExists(destination, paragraphIndex, characterOffset);
                 }
                 else
                 {
@@ -118,6 +125,13 @@ void InternalReferenceObject::updateForwardReferences()
                 }
             }
             ++paragraphIndex;
+        }
+
+        // Now let's handle situations where it's just outright an object that's a reference (Jumps)
+        QString directHref = property("href").toString();
+        if (!directHref.isEmpty()) {
+            QObject* destination = document->objectByID(directHref);
+            ensureReferenceExists(destination, -1, -1);
         }
     }
 }
