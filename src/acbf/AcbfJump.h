@@ -33,30 +33,31 @@ namespace AdvancedComicBookFormat
 {
 /**
  * \brief a Class to handle ACBF jumps.
- * 
- * Jumps are areas that point at a specific page.
- * 
+ *
+ * Jumps are areas that point at a specific page, or since ACBF 1.3 any href style destination.
+ *
  * This allows for a table of contents page that
  * can switch to a specific story by the user selecting
  * a jump area drawn around the icon for the specific
  * story and pointing at the beginning of the story.
- * 
+ *
  * Other uses included choose your own adventure style books.
- * 
+ *
  * Within ACBF, Jumps are areas defined by a polygon of points,
  * with an index pointing at the page to jump to.
  */
-class ACBF_EXPORT Jump : public QObject
+class ACBF_EXPORT Jump : public InternalReferenceObject
 {
     Q_OBJECT
     Q_PROPERTY(int pointCount READ pointCount NOTIFY pointCountChanged)
     Q_PROPERTY(QRect bounds READ bounds NOTIFY boundsChanged)
     Q_PROPERTY(int pageIndex READ pageIndex WRITE setPageIndex NOTIFY pageIndexChanged)
+    Q_PROPERTY(QString href READ href WRITE setHref NOTIFY hrefChanged)
 
 public:
     explicit Jump(Page* parent = nullptr);
     ~Jump() override;
-    
+
     /**
      * \brief Write the jump into the xml writer.
      */
@@ -127,10 +128,10 @@ public:
      * @return int that points at the index of the page to jump to.
      */
     int pageIndex() const;
-    
+
     /**
      * @brief set the page to jump to.
-     * 
+     * \note This was deprecated in ACBF 1.3, in favour of using href
      * @param pageNumber An integer for the index of the page in the
      * page list.
      */
@@ -140,6 +141,28 @@ public:
      */
     Q_SIGNAL void pageIndexChanged();
 
+    /**
+     * A link, either to a remote resource, or an internal ID, identified by
+     * prepending the ID with a # symbol.
+     * @return Either a URI to a remote resource, or a # followed by the ID of an internal object
+     */
+    QString href() const;
+    /**
+     * Set the new destination for this jump (see link() for details)
+     * @param newHref The new destination
+     */
+    void setHref(const QString& newHref);
+    /**
+     * Fired whenever the link destination for this jump changes
+     */
+    Q_SIGNAL void hrefChanged();
+
+    /**
+     * The position of this jump in the list of Jump instances in the
+     * parent Page instance.
+     * @return The instance's position
+     */
+    int localIndex() override;
 private:
     class Private;
     std::unique_ptr<Private> d;

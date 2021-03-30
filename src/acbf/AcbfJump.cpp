@@ -30,19 +30,23 @@ class Jump::Private
 {
 public:
     Private()
-        : pageIndex(0)
     {}
     QList<QPoint> points;
-    int pageIndex;
+    int pageIndex{-1};
+    QString href;
 };
 
 Jump::Jump(Page* parent)
-    : QObject(parent)
+    : InternalReferenceObject(InternalReferenceObject::ReferenceOrigin, parent)
     , d(new Private)
 {
     static const int typeId = qRegisterMetaType<Jump*>("Jump*");
     Q_UNUSED(typeId);
     connect(this, &Jump::pointCountChanged, this, &Jump::boundsChanged);
+
+    connect(this, &Jump::boundsChanged, this, &InternalReferenceObject::propertyDataChanged);
+    connect(this, &Jump::pageIndexChanged, this, &InternalReferenceObject::propertyDataChanged);
+    connect(this, &Jump::hrefChanged, this, &InternalReferenceObject::propertyDataChanged);
 }
 
 Jump::~Jump() = default;
@@ -55,7 +59,12 @@ void Jump::toXml(QXmlStreamWriter* writer) {
         points << QStringLiteral("%1,%2").arg(QString::number(point.x())).arg(QString::number(point.y()));
     }
     writer->writeAttribute(QStringLiteral("points"), points.join(' '));
-    writer->writeAttribute(QStringLiteral("page"), QString::number(d->pageIndex));
+    if (d->pageIndex > -1) {
+        writer->writeAttribute(QStringLiteral("page"), QString::number(d->pageIndex));
+    }
+    if (!d->href.isEmpty()) {
+        writer->writeAttribute(QStringLiteral("href"), d->href);
+    }
 
     writer->writeEndElement();
 }
@@ -180,4 +189,26 @@ void Jump::setPageIndex(const int& pageNumber)
 {
     d->pageIndex = pageNumber;
     emit pageIndexChanged();
+}
+
+QString Jump::href() const
+{
+    return d->href;
+}
+
+void Jump::setHref(const QString& newHref)
+{
+    if (d->href != newHref) {
+        d->href = newHref;
+        Q_EMIT hrefChanged();
+    }
+}
+
+int Jump::localIndex()
+{
+    Page* page = qobject_cast<Page*>(parent());
+    if (page) {
+        return page->jumpIndex(this);
+    }
+    return -1;
 }
