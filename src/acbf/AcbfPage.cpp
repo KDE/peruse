@@ -424,18 +424,18 @@ QStringList Page::framePointStrings()
         }
         frameList.append(framePoints.join(" "));
     }
-    
+
     return frameList;
 }
 
 QObjectList Page::jumps() const
 {
     QObjectList jumpsList;
-    
+
     for(int i = 0; i < d->jumps.size(); i++) {
         jumpsList.append(d->jumps.at(i));
     }
-    
+
     return jumpsList;
 }
 
@@ -458,13 +458,13 @@ void Page::addJump(Jump* jump, int index)
         d->jumps.removeAll(jump);
         d->jumpsUpdateTimer.start();
     });
-    
+
     if(index > -1 && index < d->jumps.count()) {
         d->jumps.insert(index, jump);
     } else {
         d->jumps.append(jump);
     }
-    
+    Q_EMIT jumpAdded(jump);
     emit jumpsChanged();
 }
 

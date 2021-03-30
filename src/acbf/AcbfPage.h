@@ -279,6 +279,10 @@ public:
      */
     QObjectList jumps() const;
     /**
+     * Fired whenever a new jump is added to the page
+     */
+    Q_SIGNAL void jumpAdded(Jump* newJump);
+    /**
      * @param index - the index for which you want the jump object.
      * @return a jump object for the given frame.
      */
