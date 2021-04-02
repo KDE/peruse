@@ -29,6 +29,9 @@ find_package(Qt5 5.14 REQUIRED NO_MODULE COMPONENTS Qml Quick Gui Widgets OpenGL
 find_package(KF5 ${KF5_DEP_VERSION} REQUIRED COMPONENTS Archive I18n Declarative Config Crash FileMetaData GuiAddons IconThemes KIO NewStuffQuick)
 
 find_package(KF5Baloo ${KF5_DEP_VERSION}) # optional - we'll just let it pass if it's missing
+set_package_properties(KF5Baloo PROPERTIES
+    PURPOSE "Used by the ContentLister library to find books on the system if available (if unavailable, we will fall back to a classic file system scraper)"
+)
 
 find_package(KF5Kirigami2 ${KF5_DEP_VERSION})
 set_package_properties(KF5Kirigami2 PROPERTIES
