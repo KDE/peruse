@@ -26,15 +26,46 @@ elseif(WIN32)
 endif()
 
 find_package(Qt5 5.14 REQUIRED NO_MODULE COMPONENTS Qml Quick Gui Widgets OpenGL Sql)
-find_package(KF5 ${KF5_DEP_VERSION} REQUIRED COMPONENTS Archive I18n Declarative Config Crash FileMetaData GuiAddons IconThemes KIO NewStuffQuick)
 
+find_package(KF5 ${KF5_DEP_VERSION} REQUIRED
+    COMPONENTS
+    Archive
+    Config
+    Crash
+    Declarative
+    GuiAddons
+    FileMetaData
+    I18n
+    IconThemes
+    KIO
+    NewStuffQuick
+    # For some reason, these show up in the OPTIONAL section if they're not explicitly listed, and that's just confusing, so...
+    Attica
+    Auth
+    Codecs
+    Completion
+    ConfigWidgets
+    CoreAddons
+    ItemViews
+    JobWidgets
+    NewStuffCore
+    Package
+    Service
+    Solid
+    WidgetsAddons
+    WindowSystem
+    XmlGui
+)
 find_package(KF5Baloo ${KF5_DEP_VERSION}) # optional - we'll just let it pass if it's missing
 set_package_properties(KF5Baloo PROPERTIES
+    DESCRIPTION "KDE's Framework which implements file indexing"
     PURPOSE "Used by the ContentLister library to find books on the system if available (if unavailable, we will fall back to a classic file system scraper)"
+    TYPE OPTIONAL
 )
-
 find_package(KF5Kirigami2 ${KF5_DEP_VERSION})
 set_package_properties(KF5Kirigami2 PROPERTIES
+    DESCRIPTION "KDE's lightweight user interface framework for mobile and convergent applications"
+    URL "https://techbase.kde.org/Kirigami"
     PURPOSE "Required at runtime to display the GUI"
     TYPE RUNTIME
 )
