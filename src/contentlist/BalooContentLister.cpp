@@ -66,22 +66,29 @@ BalooContentLister::~BalooContentLister()
 
 bool BalooContentLister::balooEnabled() const
 {
-    Baloo::IndexerConfig config;
-    bool result = config.fileIndexingEnabled();
+    // Baloo is not intended to be used outside of Plasma sessions
+    // and so we can bypass all the testing if we are not actually
+    // in a full KDE session.
+    bool result{qEnvironmentVariableIsSet("KDE_FULL_SESSION")};
 
-    if(result)
-    {
-        // It would be terribly nice with a bit of baloo engine exporting, so
-        // we can ask the database about whether or not it is accessible...
-        // But, this is a catch-all check anyway, so we get a complete "everything's broken"
-        // result if anything is broken... guess it will do :)
-        QProcess statuscheck;
-        statuscheck.start("balooctl", QStringList() << "status");
-        statuscheck.waitForFinished();
-        QString output = statuscheck.readAll();
-        if(statuscheck.exitStatus() == QProcess::CrashExit || statuscheck.exitCode() != 0)
+    if (result) {
+        Baloo::IndexerConfig config;
+        result = config.fileIndexingEnabled();
+
+        if(result)
         {
-            result = false;
+            // It would be terribly nice with a bit of baloo engine exporting, so
+            // we can ask the database about whether or not it is accessible...
+            // But, this is a catch-all check anyway, so we get a complete "everything's broken"
+            // result if anything is broken... guess it will do :)
+            QProcess statuscheck;
+            statuscheck.start("balooctl", QStringList() << "status");
+            statuscheck.waitForFinished();
+            QString output = statuscheck.readAll();
+            if(statuscheck.exitStatus() == QProcess::CrashExit || statuscheck.exitCode() != 0)
+            {
+                result = false;
+            }
         }
     }
 
