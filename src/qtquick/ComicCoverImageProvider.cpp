@@ -65,16 +65,13 @@ class ComicCoverResponse : public QQuickImageResponse
             m_runnable = new ComicCoverRunnable(id, requestedSize, imageCache);
             m_runnable->setAutoDelete(false);
             connect(m_runnable, &ComicCoverRunnable::done, this, &ComicCoverResponse::handleDone, Qt::QueuedConnection);
+            connect(this, &QQuickImageResponse::finished, m_runnable, &QObject::deleteLater,  Qt::QueuedConnection);
             QThreadPool::globalInstance()->start(m_runnable);
-        }
-        virtual ~ComicCoverResponse()
-        {
-            m_runnable->deleteLater();
         }
 
         void handleDone(QImage image) {
             m_image = image;
-            emit finished();
+            Q_EMIT finished();
         }
 
         QQuickTextureFactory *textureFactory() const override

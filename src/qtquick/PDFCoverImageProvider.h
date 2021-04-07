@@ -34,7 +34,7 @@ class PDFCoverImageProvider : public QQuickAsyncImageProvider
 {
 public:
     explicit PDFCoverImageProvider();
-    virtual ~PDFCoverImageProvider();
+    ~PDFCoverImageProvider() override;
 
     /**
      * \brief Get an image.

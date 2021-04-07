@@ -59,16 +59,13 @@ class PreviewResponse : public QQuickImageResponse
             m_runnable = new PreviewRunnable(id, requestedSize);
             m_runnable->setAutoDelete(false);
             connect(m_runnable, &PreviewRunnable::done, this, &PreviewResponse::handleDone, Qt::QueuedConnection);
+            connect(this, &QQuickImageResponse::finished, m_runnable, &QObject::deleteLater,  Qt::QueuedConnection);
             QThreadPool::globalInstance()->start(m_runnable);
-        }
-        virtual ~PreviewResponse()
-        {
-            m_runnable->deleteLater();
         }
 
         void handleDone(QImage image) {
             m_image = image;
-            emit finished();
+            Q_EMIT finished();
         }
 
         QQuickTextureFactory *textureFactory() const override
@@ -163,15 +160,16 @@ void PreviewRunnable::run()
             connect(breaker, &QTimer::timeout, this, [this](){
                 if (!d->isAborted()) {
                     abort();
-                    qDebug() << "Not awesome, this is taking way too long" << d->id;
                 }
             });
             QTimer::singleShot(0, breaker, [breaker](){ breaker->start(); });
+        } else {
+            finishedPreview(nullptr);
         }
     }
     else
     {
-        Q_EMIT done(QImage(ourSize, QImage::Format_ARGB32));
+        finishedPreview(nullptr);
     }
 }
 

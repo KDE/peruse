@@ -68,16 +68,13 @@ class PDFCoverResponse : public QQuickImageResponse
             m_runnable = new PDFCoverRunnable(id, requestedSize, thumbDir);
             m_runnable->setAutoDelete(false);
             connect(m_runnable, &PDFCoverRunnable::done, this, &PDFCoverResponse::handleDone, Qt::QueuedConnection);
+            connect(this, &QQuickImageResponse::finished, m_runnable, &QObject::deleteLater,  Qt::QueuedConnection);
             QThreadPool::globalInstance()->start(m_runnable);
-        }
-        virtual ~PDFCoverResponse()
-        {
-            m_runnable->deleteLater();
         }
 
         void handleDone(QImage image) {
             m_image = image;
-            emit finished();
+            Q_EMIT finished();
         }
 
         QQuickTextureFactory *textureFactory() const override
@@ -114,6 +111,7 @@ public:
     }
 
     QDir thumbDir;
+    QProcess thumbnailer;
 };
 
 PDFCoverRunnable::PDFCoverRunnable(const QString& id, const QSize& requestedSize, const QDir& thumbDir)
@@ -128,6 +126,7 @@ void PDFCoverRunnable::abort()
 {
     QMutexLocker locker(&d->abortMutex);
     d->abort = true;
+    d->thumbnailer.kill();
 }
 
 void PDFCoverRunnable::run()
@@ -148,7 +147,6 @@ void PDFCoverRunnable::run()
         QString outFile = QString("%1/%2.png").arg(d->thumbDir.absolutePath()).arg(QUrl(d->id).toString().replace("/", "-").replace(":", "-"));
         if(!d->isAborted() && !QFile::exists(outFile)) {
             // then we've not already generated a thumbnail, try to make one...
-            QProcess thumbnailer;
             QStringList args;
             args << "-sPageList=1" << "-dLastPage=1" << "-dSAFER" << "-dBATCH" << "-dNOPAUSE" << "-dQUIET" << "-sDEVICE=png16m" << "-dGraphicsAlphaBits=4" << "-r150";
             args << QString("-sOutputFile=%1").arg(outFile) << d->id;
@@ -167,8 +165,8 @@ void PDFCoverRunnable::run()
             #else
                 gsApp = "gs";
             #endif
-            thumbnailer.start(gsApp, args);
-            thumbnailer.waitForFinished();
+            d->thumbnailer.start(gsApp, args);
+            d->thumbnailer.waitForFinished();
         }
         bool success = false;
         // Now, does it exist this time?

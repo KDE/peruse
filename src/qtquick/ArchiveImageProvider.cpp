@@ -65,16 +65,13 @@ class ArchiveImageResponse : public QQuickImageResponse
             m_runnable = new ArchiveImageRunnable(id, requestedSize, bookModel, prefix);
             m_runnable->setAutoDelete(false);
             connect(m_runnable, &ArchiveImageRunnable::done, this, &ArchiveImageResponse::handleDone, Qt::QueuedConnection);
+            connect(this, &QQuickImageResponse::finished, m_runnable, &QObject::deleteLater,  Qt::QueuedConnection);
             QThreadPool::globalInstance()->start(m_runnable);
-        }
-        virtual ~ArchiveImageResponse()
-        {
-            m_runnable->deleteLater();
         }
 
         void handleDone(QImage image) {
             m_image = image;
-            emit finished();
+            Q_EMIT finished();
         }
 
         QQuickTextureFactory *textureFactory() const override

@@ -76,7 +76,7 @@ class ArchiveImageRunnable : public QObject, public QRunnable {
     Q_OBJECT;
 public:
     explicit ArchiveImageRunnable(const QString &id, const QSize &requestedSize, ArchiveBookModel* bookModel, const QString& prefix);
-    virtual ~ArchiveImageRunnable();
+    ~ArchiveImageRunnable() override;
 
     void run() override;
 
