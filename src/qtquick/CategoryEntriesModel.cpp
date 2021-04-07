@@ -346,7 +346,7 @@ QObject * CategoryEntriesModel::leafModelForEntry(BookEntry* entry)
     }
     else
     {
-        Q_FOREACH(CategoryEntriesModel* testModel, d->categoryModels)
+        for(CategoryEntriesModel* testModel : d->categoryModels)
         {
             model = testModel->leafModelForEntry(entry);
             if(model) {
@@ -430,12 +430,12 @@ BookEntry * CategoryEntriesModel::getBookEntry ( int index )
     return entry;
 }
 
-int CategoryEntriesModel::indexOfFile(QString filename)
+int CategoryEntriesModel::indexOfFile(const QString& filename)
 {
     int index = -1, i = 0;
     if(QFile::exists(filename))
     {
-        Q_FOREACH(BookEntry* entry, d->entries)
+        for(BookEntry* entry : d->entries)
         {
             if(entry->filename == filename)
             {
@@ -477,7 +477,7 @@ QObject* CategoryEntriesModel::getEntry(int index)
     return obj;
 }
 
-QObject* CategoryEntriesModel::bookFromFile(QString filename)
+QObject* CategoryEntriesModel::bookFromFile(const QString& filename)
 {
     PropertyContainer* obj = qobject_cast<PropertyContainer*>(get(indexOfFile(filename)));
     if(obj->property("filename").toString().isEmpty()) {

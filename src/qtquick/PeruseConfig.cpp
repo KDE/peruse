@@ -104,11 +104,11 @@ void PeruseConfig::addBookLocation(const QString& location)
 #else
         QString newLocation = location.mid(7);
 #endif
-        QStringList locations = bookLocations();
+        const QStringList locations = bookLocations();
         // First, get rid of all the entries which start with the newly added location, because that's silly
         QStringList newLocations;
         bool alreadyInThere = false;
-        Q_FOREACH(QString entry, locations) {
+        for(const QString& entry : locations) {
             if(!entry.startsWith(newLocation))
             {
                 newLocations.append(entry);

@@ -192,12 +192,12 @@ public:
      * read books.
      * @param filename the filename associated with an entry object.
      */
-    Q_INVOKABLE QObject* bookFromFile(QString filename);
+    Q_INVOKABLE QObject* bookFromFile(const QString &filename);
     /**
      * @return an entry index for the given filename.
      * @param filename the filename associated with an entry object.
      */
-    Q_INVOKABLE int indexOfFile(QString filename);
+    Q_INVOKABLE int indexOfFile(const QString &filename);
     /**
      * @return whether the entry is a bookentry or a category entry.
      * @param index the index of the entry.

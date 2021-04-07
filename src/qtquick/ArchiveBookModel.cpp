@@ -182,14 +182,14 @@ QStringList recursiveEntries(const KArchiveDirectory* dir)
 {
     QStringList entries = dir->entries();
     QStringList allEntries = entries;
-    Q_FOREACH(const QString& entryName, entries)
+    for(const QString& entryName : entries)
     {
         const KArchiveEntry* entry = dir->entry(entryName);
         if(entry->isDirectory())
         {
             const KArchiveDirectory* subDir = static_cast<const KArchiveDirectory*>(entry);
             QStringList subEntries = recursiveEntries(subDir);
-            Q_FOREACH(const QString& subEntry, subEntries)
+            for(const QString& subEntry : subEntries)
             {
                 entries.append(entryName + "/" + subEntry);
             }
@@ -240,7 +240,7 @@ void ArchiveBookModel::setFilename(QString newFilename)
             QLatin1String ComicInfoXML("comicinfo.xml");
             QLatin1String xmlSuffix(".xml");
             QStringList images;
-            Q_FOREACH(const QString& entry, d->fileEntries)
+            for(const QString& entry : d->fileEntries)
             {
                 if(entry.toLower().endsWith(acbfSuffix))
                 {
@@ -268,7 +268,7 @@ void ArchiveBookModel::setFilename(QString newFilename)
                 {
                     setAcbfData(acbfDocument);
                     addPage(QString("image://%1/%2").arg(prefix).arg(acbfDocument->metaData()->bookInfo()->coverpage()->imageHref()), acbfDocument->metaData()->bookInfo()->coverpage()->title());
-                    Q_FOREACH(AdvancedComicBookFormat::Page* page, acbfDocument->body()->pages())
+                    for(AdvancedComicBookFormat::Page* page : acbfDocument->body()->pages())
                     {
                         addPage(QString("image://%1/%2").arg(prefix).arg(page->imageHref()), page->title());
                     }
@@ -294,7 +294,7 @@ void ArchiveBookModel::setFilename(QString newFilename)
                     setAcbfData(acbfDocument);
                     QString undesired = QString("%1").arg("/").append("Thumbs.db");
                     addPage(QString("image://%1/%2").arg(prefix).arg(acbfDocument->metaData()->bookInfo()->coverpage()->imageHref()), acbfDocument->metaData()->bookInfo()->coverpage()->title());
-                    Q_FOREACH(AdvancedComicBookFormat::Page* page, acbfDocument->body()->pages())
+                    for(AdvancedComicBookFormat::Page* page : acbfDocument->body()->pages())
                     {
                         addPage(QString("image://%1/%2").arg(prefix).arg(page->imageHref()), page->title());
                     }
@@ -304,7 +304,7 @@ void ArchiveBookModel::setFilename(QString newFilename)
             {
                 // fall back to just handling the files directly if there's no ACBF document...
                 QString undesired = QString("%1").arg("/").append("Thumbs.db");
-                Q_FOREACH(const QString& entry, d->fileEntries)
+                for(const QString& entry : qAsConst(d->fileEntries))
                 {
                     const KArchiveEntry* archEntry = d->archive->directory()->entry(entry);
                     if(archEntry->isFile() && !entry.endsWith(undesired))
@@ -325,7 +325,7 @@ void ArchiveBookModel::setFilename(QString newFilename)
 //     if(dir.exists())
 //     {
 //         QFileInfoList entries = dir.entryInfoList(QDir::Files, QDir::Name);
-//         Q_FOREACH(const QFileInfo& entry, entries)
+//         for(const QFileInfo& entry : entries)
 //         {
 //             addPage(QString("file://").append(entry.canonicalFilePath()), entry.fileName());
 //         }
@@ -1186,7 +1186,7 @@ bool ArchiveBookModel::loadCoMet(QStringList xmlDocuments, QObject *acbfData, QS
 {
     KFileMetaData::UserMetaData filedata(filename);
     AdvancedComicBookFormat::Document* acbfDocument = qobject_cast<AdvancedComicBookFormat::Document*>(acbfData);
-    Q_FOREACH(const QString xmlDocument, xmlDocuments) {
+    for(const QString& xmlDocument : qAsConst(xmlDocuments)) {
         QMutexLocker locker(&archiveMutex);
         const KArchiveFile* archFile = d->archive->directory()->file(xmlDocument);
         QXmlStreamReader xmlReader(archFile->data());
@@ -1372,7 +1372,7 @@ bool ArchiveBookModel::loadCoMet(QStringList xmlDocuments, QObject *acbfData, QS
                         cover->setImageHref(url);
                         acbfDocument->metaData()->bookInfo()->setCoverpage(cover);
                         entries.removeAll(url);
-                        Q_FOREACH(QString entry, entries) {
+                        for(const QString& entry : qAsConst(entries)) {
                             AdvancedComicBookFormat::Page* page = new AdvancedComicBookFormat::Page(acbfDocument);
                             page->setImageHref(entry);
                             acbfDocument->body()->addPage(page);

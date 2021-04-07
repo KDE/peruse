@@ -164,7 +164,7 @@ public:
             initializeSubModels(q);
         }
         int i = 0;
-        foreach(BookEntry* entry, entries)
+        for(BookEntry* entry : entries)
         {
             /*
              * This might turn out a little slow, but we should avoid having entries
@@ -358,7 +358,7 @@ QObject * BookListModel::seriesCategoryModel() const
 
 QObject * BookListModel::seriesModelForEntry(QString fileName)
 {
-    Q_FOREACH(BookEntry* entry, d->entries)
+    for(BookEntry* entry : d->entries)
     {
         if(entry->filename == fileName)
         {
@@ -390,7 +390,7 @@ int BookListModel::count() const
 
 void BookListModel::setBookData(QString fileName, QString property, QString value)
 {
-    Q_FOREACH(BookEntry* entry, d->entries)
+    for(BookEntry* entry : d->entries)
     {
         if(entry->filename == fileName)
         {
@@ -431,7 +431,7 @@ void BookListModel::removeBook(QString fileName, bool deleteFile)
         job->start();
     }
 
-    Q_FOREACH(BookEntry* entry, d->entries)
+    for(BookEntry* entry : d->entries)
     {
         if(entry->filename == fileName)
         {
@@ -446,7 +446,7 @@ void BookListModel::removeBook(QString fileName, bool deleteFile)
 QStringList BookListModel::knownBookFiles() const
 {
     QStringList files;
-    foreach(BookEntry* entry, d->entries) {
+    for(BookEntry* entry : d->entries) {
         files.append(entry->filename);
     }
     return files;

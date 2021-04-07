@@ -114,7 +114,7 @@ public:
     {
         /// Sort case-insensitive, then remove non-image entries.
         QMap<QString, QString> entryMap;
-        Q_FOREACH(const QString& entry, entries) {
+        for(const QString& entry : qAsConst(entries)) {
             if (entry.endsWith(QLatin1String(".gif"), Qt::CaseInsensitive) ||
                     entry.endsWith(QLatin1String(".jpg"), Qt::CaseInsensitive) ||
                     entry.endsWith(QLatin1String(".jpeg"), Qt::CaseInsensitive) ||
@@ -127,7 +127,7 @@ public:
     void getArchiveFileList(QStringList& entries, const QString& prefix, const KArchiveDirectory *dir)
     {
         /// Recursively list all files in the ZIP archive into 'entries'.
-        Q_FOREACH (const QString& entry, dir->entries()) {
+        for (const QString& entry : dir->entries()) {
             const KArchiveEntry *e = dir->entry(entry);
             if (e->isDirectory()) {
             getArchiveFileList(entries, prefix + entry + '/',
