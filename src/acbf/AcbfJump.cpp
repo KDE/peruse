@@ -72,6 +72,7 @@ void Jump::toXml(QXmlStreamWriter* writer) {
 bool Jump::fromXml(QXmlStreamReader *xmlReader)
 {
     setPageIndex(xmlReader->attributes().value(QStringLiteral("page")).toInt());
+    setHref(xmlReader->attributes().value(QStringLiteral("href")).toString());
 
     QVector<QStringRef> points = xmlReader->attributes().value(QStringLiteral("points")).split(' ');
     for(QStringRef point : points) {
