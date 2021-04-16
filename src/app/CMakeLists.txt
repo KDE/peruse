@@ -25,6 +25,10 @@ target_link_libraries(peruse
     KF5::Declarative
     peruse_helpers
 )
+target_include_directories(peruse
+    PRIVATE
+    "${CMAKE_BINARY_DIR}"
+)
 
 install(TARGETS peruse ${INSTALL_TARGETS_DEFAULT_ARGS})
 install(FILES org.kde.peruse.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})

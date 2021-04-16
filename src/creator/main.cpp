@@ -29,6 +29,7 @@
 
 #include <iostream>
 #include "peruse_helpers.h"
+#include "config-peruse.h"
 
 int main(int argc, char** argv)
 {
@@ -40,8 +41,8 @@ int main(int argc, char** argv)
     app.setOrganizationDomain("kde.org");
 
     KLocalizedString::setApplicationDomain("peruse");
-    KAboutData about(QStringLiteral("perusecreator"), i18n("Peruse Creator"), "2.0", i18n("Comic Book Creator by KDE"),
-                     KAboutLicense::GPL, i18n("© 2016-2019 KDE"));
+    KAboutData about(QStringLiteral("perusecreator"), i18n("Peruse Creator"), PERUSE_VERSION_STRING, i18n("Comic Book Creator by KDE"),
+                     KAboutLicense::GPL, i18n("© 2016-2021 KDE"));
     about.addAuthor(i18n("Dan Leinir Turthra Jensen"), QString("Maintainer and Lead Developer"), QStringLiteral("admin@leinir.dk"), QStringLiteral("https://leinir.dk/"), QStringLiteral("leinir"));
     about.setProductName("peruse/perusecreator");
     about.setProgramLogo(app.windowIcon());
