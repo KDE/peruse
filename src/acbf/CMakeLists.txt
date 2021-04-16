@@ -1,5 +1,3 @@
-project(acbf)
-
 set(acbf_SRCS
     AcbfAuthor.cpp
     AcbfBinary.cpp
@@ -44,8 +42,9 @@ target_link_libraries(acbf
 )
 
 set_target_properties(acbf PROPERTIES
-   VERSION 0.1
-   SOVERSION 0.1
+   VERSION ${PROJECT_VERSION}
+   SOVERSION ${PERUSE_SOVERSION}
+   OUTPUT_NAME acbf
    EXPORT_NAME AdvancedComicBookFormat
 )
 
