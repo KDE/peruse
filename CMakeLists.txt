@@ -1,4 +1,5 @@
-project(peruse)
+cmake_policy(SET CMP0048 NEW)
+project(peruse VERSION "1.80.0")
 cmake_minimum_required(VERSION 3.1.0)
 
 set(KF5_DEP_VERSION "5.75.0") # handled by release scripts
@@ -109,13 +110,20 @@ include(KDEInstallDirs)
 include(KDECMakeSettings)
 include(KDECompilerSettings)
 include(GenerateExportHeader)
-include(ECMInstallIcons)
 include(ECMAddAppIcon)
+include(ECMInstallIcons)
+include(ECMSetupVersion)
 include(ECMQtDeclareLoggingCategory)
 
 set(CMAKE_AUTORCC ON)
 
 kde_enable_exceptions()
+
+ecm_setup_version(${PROJECT_VERSION}
+    VARIABLE_PREFIX PERUSE
+    SOVERSION ${PROJECT_VERSION_MAJOR}
+    VERSION_HEADER "${CMAKE_BINARY_DIR}/config-peruse.h"
+)
 
 add_subdirectory(src)
 
