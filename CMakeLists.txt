@@ -3,15 +3,22 @@ project(peruse VERSION "1.80.0")
 cmake_minimum_required(VERSION 3.1.0)
 
 set(KF5_DEP_VERSION "5.75.0") # handled by release scripts
+set(QT5_DEP_VERSION "5.14")
 
 if(POLICY CMP0063)
     cmake_policy (SET CMP0063 NEW)
 endif(POLICY CMP0063)
 
+include(FeatureSummary)
+
 option(USE_PERUSE_PDFTHUMBNAILER "Use the internal thumbnail generator for PDF files (defaults to true on windows)" OFF)
+add_feature_info(USE_PERUSE_PDFTHUMBNAILER ${USE_PERUSE_PDFTHUMBNAILER} "Use the internal thumbnail generator for PDF files (defaults to true on windows)")
 if(WIN32)
     set(USE_PERUSE_PDFTHUMBNAILER ON)
 endif()
+
+option(BUILD_QCH "Build API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)" OFF)
+add_feature_info(QCH ${BUILD_QCH} "API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)")
 
 find_package(ECM ${KF5_DEP_VERSION} REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" ${ECM_MODULE_PATH})
@@ -26,7 +33,7 @@ elseif(WIN32)
     add_definitions(-DWINDOWS)
 endif()
 
-find_package(Qt5 5.14 REQUIRED NO_MODULE COMPONENTS Qml Quick Gui Widgets OpenGL Sql)
+find_package(Qt5 ${QT5_DEP_VERSION} REQUIRED NO_MODULE COMPONENTS Qml Quick Gui Widgets OpenGL Sql)
 
 find_package(KF5 ${KF5_DEP_VERSION} REQUIRED
     COMPONENTS
@@ -105,12 +112,12 @@ macro(CHECK_QT5_PRIVATE_INCLUDE_DIRS _qt_component _header)
 endmacro()
 CHECK_QT5_PRIVATE_INCLUDE_DIRS(Quick private/qquicktextnode_p.h)
 
-include(FeatureSummary)
 include(KDEInstallDirs)
 include(KDECMakeSettings)
 include(KDECompilerSettings)
 include(GenerateExportHeader)
 include(ECMAddAppIcon)
+include(ECMAddQch)
 include(ECMInstallIcons)
 include(ECMSetupVersion)
 include(ECMQtDeclareLoggingCategory)

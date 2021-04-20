@@ -1,0 +1,7 @@
+@PACKAGE_INIT@
+
+include(CMakeFindDependencyMacro)
+find_dependency(Qt5Core "@QT5_DEP_VERSION@")
+
+include("${CMAKE_CURRENT_LIST_DIR}/AdvancedComicBookFormatTargets.cmake")
+@PACKAGE_INCLUDE_CORE_QCHTARGETS@
