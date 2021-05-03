@@ -19,6 +19,7 @@
   <name xml:lang="it">Peruse</name>
   <name xml:lang="ko">Peruse</name>
   <name xml:lang="nl">Peruse</name>
+  <name xml:lang="pa">ਪੇਰੁਸ</name>
   <name xml:lang="pl">Peruse</name>
   <name xml:lang="pt">Peruse</name>
   <name xml:lang="ru">Peruse</name>
@@ -43,6 +44,7 @@
   <summary xml:lang="it">Lettore di fumetti</summary>
   <summary xml:lang="ko">만화책 뷰어</summary>
   <summary xml:lang="nl">Stripboekreader</summary>
+  <summary xml:lang="pa">ਕਾਮਿਕਸ ਬੁੱਕ ਰੀਡਰ</summary>
   <summary xml:lang="pl">Czytnik komiksów</summary>
   <summary xml:lang="pt">Leitor de Bandas Desenhadas</summary>
   <summary xml:lang="sk">Čítačka komiksoc</summary>
@@ -117,6 +119,7 @@
     <p xml:lang="it">Funzionalità:</p>
     <p xml:lang="ko">기능:</p>
     <p xml:lang="nl">Mogelijkheden:</p>
+    <p xml:lang="pa">ਫੀਚਰ:</p>
     <p xml:lang="pl">Możliwości:</p>
     <p xml:lang="pt">Funcionalidades:</p>
     <p xml:lang="ru">Возможности:</p>
@@ -143,6 +146,7 @@
       <li xml:lang="it">Archivi di fumetti (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="ko">만화책 압축 파일(cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="nl">Archief voor stripboeken (cbz, cbr, cb7, cbt, cba)</li>
+      <li xml:lang="pa">ਕਾਮਿਕਸ ਬੁੱਕ ਅਕਾਇਵ (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="pl">Zeszyty komiksów (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="pt">Pacote de Banda Desenhada (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="sk">Komiksový archív (cbz, cbr, cb7, cbt, cba)</li>
@@ -166,6 +170,7 @@
       <li xml:lang="it">Formato di documenti portabili (pdf)</li>
       <li xml:lang="ko">PDF(Portable Document Format)</li>
       <li xml:lang="nl">Portable Document Format (pdf)</li>
+      <li xml:lang="pa">ਪੋਰਟੇਬਲ ਡੌਕੂਮੈਂਟ ਫਾਰਮੈਟ (pdf)</li>
       <li xml:lang="pl">Przenośny Format Dokumentów (pdf)</li>
       <li xml:lang="pt">Formato de Documento Portátil (pdf)</li>
       <li xml:lang="sk">Portable Document Format (pdf)</li>
@@ -189,6 +194,7 @@
       <li xml:lang="it">Libri ePub (epub)</li>
       <li xml:lang="ko">ePub 전자책(epub)</li>
       <li xml:lang="nl">ePub boeken (epub)</li>
+      <li xml:lang="pa">ePub ਕਿਤਾਬਾਂ (epub)</li>
       <li xml:lang="pl">Książki ePub (epub)</li>
       <li xml:lang="pt">Livros ePub (epub)</li>
       <li xml:lang="sk">Knihy ePub (epub)</li>
@@ -257,6 +263,7 @@
       <li xml:lang="it">Aiuto compilato (chm)</li>
       <li xml:lang="ko">컴파일된 도움말(chm)</li>
       <li xml:lang="nl">Gecompileerde help (chm)</li>
+      <li xml:lang="pa">ਕੰਪਾਇਲ ਕੀਤੀ ਮਦਦ (chm)</li>
       <li xml:lang="pl">Skompilowana pomoc (chm)</li>
       <li xml:lang="pt">Ajuda Compilada (chm)</li>
       <li xml:lang="sk">Kompilovaná nápoveda (chm)</li>
