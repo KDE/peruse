@@ -15,6 +15,7 @@
 #include <KDeclarative/KDeclarative>
 #include <KAboutData>
 #include <KCrash>
+#include <KLocalizedContext>
 
 #include "peruse_helpers.h"
 
@@ -52,7 +53,7 @@ int init(QString &path, QApplication& app, const QString &filename) {
     QQmlEngine engine;
     kdeclarative.setDeclarativeEngine(&engine);
     kdeclarative.setupEngine(&engine);
-    kdeclarative.setupContext();
+    engine.rootContext()->setContextObject(new KLocalizedContext(&app));
 
     bool osIsWindows = false;
 #ifdef Q_OS_WIN
