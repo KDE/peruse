@@ -22,11 +22,12 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
 import QtQuick.Dialogs 1.3
+import org.kde.kirigami 2.7 as Kirigami
 
 PeruseMain {
     id: root;
-    width: Screen.desktopAvailableWidth * 0.6;
-    height: Screen.desktopAvailableHeight * 0.7;
+    width: Math.min(Screen.desktopAvailableWidth * 0.6, Kirigami.Units.gridUnit * 80);
+    height: Math.min(Screen.desktopAvailableHeight * 0.7, Kirigami.Units.gridUnit * 60);
 
     function openOther() {
         openDlg.open();

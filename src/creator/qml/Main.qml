@@ -43,8 +43,8 @@ import org.kde.peruse 0.1 as Peruse
 Kirigami.ApplicationWindow {
     id: mainWindow;
     property int animationDuration: 200;
-    width: Screen.desktopAvailableWidth * 0.6;
-    height: Screen.desktopAvailableHeight * 0.7;
+    width: Math.min(Screen.desktopAvailableWidth * 0.6, Kirigami.Units.gridUnit * 80);
+    height: Math.min(Screen.desktopAvailableHeight * 0.7, Kirigami.Units.gridUnit * 60);
     pageStack.initialPage: welcomePage;
     pageStack.defaultColumnWidth: pageStack.width
 
