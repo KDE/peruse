@@ -3,7 +3,7 @@ project(peruse VERSION "1.80.0")
 cmake_minimum_required(VERSION 3.1.0)
 
 set(KF5_DEP_VERSION "5.75.0") # handled by release scripts
-set(QT5_DEP_VERSION "5.14")
+set(QT5_DEP_VERSION "5.15")
 
 if(POLICY CMP0063)
     cmake_policy (SET CMP0063 NEW)
