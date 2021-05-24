@@ -56,7 +56,7 @@ Bookshelf {
     }
     Connections {
         target: peruseConfig;
-        onRecentlyOpenedChanged: updateRecentlyReadTimer.start();
+        function onRecentlyOpenedChanged() { updateRecentlyReadTimer.start(); }
         property QtObject updateRecentlyReadTimer: Timer {
             interval: 500
             running: false
@@ -66,7 +66,7 @@ Bookshelf {
     }
     Connections {
         target: applicationWindow();
-        onIsLoadingChanged: {
+        function onIsLoadingChanged() {
             if(applicationWindow().isLoading === false) {
                 root.updateRecentlyRead();
             }

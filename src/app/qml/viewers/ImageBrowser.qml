@@ -192,7 +192,7 @@ ListView {
         ListView.onIsCurrentItemChanged: resetHole();
         Connections {
             target: image
-            onStatusChanged: refocusFrame();
+            function onStatusChanged() { refocusFrame(); }
         }
         property alias totalFrames: image.totalFrames;
         property alias currentFrame: image.currentFrame;

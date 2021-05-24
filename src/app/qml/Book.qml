@@ -376,7 +376,7 @@ Kirigami.Page {
             }
             Connections {
                 target: viewLoader.item;
-                onLoadingCompleted: {
+                function onLoadingCompleted(success) {
                     if(success) {
                         thumbnailNavigator.model = viewLoader.item.pagesModel;
                         if(viewLoader.item.thumbnailComponent) {
@@ -395,8 +395,8 @@ Kirigami.Page {
                         applicationWindow().globalDrawer.close();
                     }
                 }
-                onTitleChanged: root.title = viewLoader.item.title;
-                onCurrentPageChanged: {
+                function onTitleChanged() { root.title = viewLoader.item.title; }
+                function onCurrentPageChanged() {
                     if(root.currentPage !== viewLoader.item.currentPage && viewLoader.loadingCompleted) {
                         root.currentPage = viewLoader.item.currentPage;
                     }
@@ -409,10 +409,10 @@ Kirigami.Page {
                     thumbnailMovementAnimation.to = newPos;
                     thumbnailMovementAnimation.running = true;
                 }
-                onViewerActionsChanged: root.updateContextualActions();
-                onGoNextPage: root.nextPage();
-                onGoPreviousPage: root.previousPage();
-                onGoPage: root.setCurrentPage(pageNumber);
+                function onViewerActionsChanged() { root.updateContextualActions(); }
+                function onGoNextPage() { root.nextPage(); }
+                function onGoPreviousPage() { root.previousPage(); }
+                function onGoPage() { root.setCurrentPage(pageNumber); }
             }
         }
         Kirigami.PlaceholderMessage {
