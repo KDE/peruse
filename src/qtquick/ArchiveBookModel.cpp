@@ -182,14 +182,14 @@ QStringList recursiveEntries(const KArchiveDirectory* dir)
 {
     QStringList entries = dir->entries();
     QStringList allEntries = entries;
-    for(const QString& entryName : entries)
+    for(const QString& entryName : qAsConst(entries))
     {
         const KArchiveEntry* entry = dir->entry(entryName);
         if(entry->isDirectory())
         {
             const KArchiveDirectory* subDir = static_cast<const KArchiveDirectory*>(entry);
             QStringList subEntries = recursiveEntries(subDir);
-            for(const QString& subEntry : subEntries)
+            for(const QString& subEntry : qAsConst(subEntries))
             {
                 entries.append(entryName + "/" + subEntry);
             }
@@ -240,7 +240,7 @@ void ArchiveBookModel::setFilename(QString newFilename)
             QLatin1String ComicInfoXML("comicinfo.xml");
             QLatin1String xmlSuffix(".xml");
             QStringList images;
-            for(const QString& entry : d->fileEntries)
+            for(const QString& entry : qAsConst(d->fileEntries))
             {
                 if(entry.toLower().endsWith(acbfSuffix))
                 {
