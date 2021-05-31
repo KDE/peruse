@@ -167,7 +167,7 @@ void ComicCoverRunnable::run()
     }
 
     QImage img;
-    if (d->imageCache->findImage(d->id, &img)) {
+    if (!d->imageCache->findImage(d->id, &img)) {
         KArchive* archive = nullptr;
         QMimeDatabase db;
         db.mimeTypeForFile(d->id, QMimeDatabase::MatchContent);
