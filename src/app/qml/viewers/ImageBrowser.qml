@@ -343,7 +343,7 @@ ListView {
                     var newFrameJumps = [];
 
                     if(currentFrameObj === noFrame) {
-                        newFrameJumps = image.currentPageObject.jumps;
+                        newFrameJumps = image.currentPageObject? image.currentPageObject.jumps : [];
                     } else {
                         for(var i = 0; i < image.currentPageObject.jumps.length; i++) {
                             var jumpObj = image.currentPageObject.jump(i);

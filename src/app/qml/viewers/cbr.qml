@@ -38,6 +38,7 @@ ViewerBase {
     title: imageBrowser.model.title;
     pagesModel: imageBrowser.model;
     pageCount: imageBrowser.model.pageCount;
+    property int languageCount: imageBrowser.model.acbfData? imageBrowser.model.acbfData.metaData.bookInfo.languages.length: 0;
     onRtlModeChanged: {
         if(rtlMode === true) {
             imageBrowser.layoutDirection = Qt.RightToLeft;
@@ -88,7 +89,7 @@ ViewerBase {
         Kirigami.Action {
             id: translationsAction
             text: i18nc("A submenu which allows the user to chose between translations of the book", "Translations")
-            visible: imageBrowser.model.acbfData.metaData.bookInfo.languages.length > 0
+            visible: languageCount > 0;
             Kirigami.Action {
                 text: i18nc("The option used to show no translation should be used", "No Translation")
                 onTriggered: imageBrowser.currentLanguage = null
@@ -131,7 +132,7 @@ ViewerBase {
                 root.loadingCompleted(success);
                 if (success) {
                     initialPageChange.start();
-                    for (var i = 0 ; i < imageBrowser.model.acbfData.metaData.bookInfo.languages.length ; ++i) {
+                    for (var i = 0 ; i < root.languageCount; ++i) {
                         var language = imageBrowser.model.acbfData.metaData.bookInfo.languages[i];
                         var action = translationActionEntry.createObject(translationsAction, {language: language});
                         translationsAction.children.push(action);
