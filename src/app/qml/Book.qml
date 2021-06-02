@@ -440,7 +440,7 @@ Kirigami.Page {
             seriesListView.currentIndex = newIndex;
         }
         function nextBook() {
-            if(seriesListView.currentIndex < seriesListView.model.rowCount() - 1) {
+            if(seriesListView.model && seriesListView.currentIndex < seriesListView.model.rowCount() - 1) {
                 setNewCurrentIndex(seriesListView.currentIndex + 1);
             }
         }
@@ -509,7 +509,7 @@ Kirigami.Page {
                 description: bookInfo.currentBook.readProperty("description");
                 onBookSelected: {
                     if(root.file !== fileSelected) {
-                        openSelected();
+                        bookInfo.openSelected();
                     }
                 }
                 onBookDeleteRequested: {
@@ -549,7 +549,9 @@ Kirigami.Page {
                     selected: seriesListView.currentIndex === model.index;
                 }
                 onCurrentIndexChanged: {
-                    bookInfo.currentBook = model.get(currentIndex);
+                    if (model) {
+                        bookInfo.currentBook = model.get(currentIndex);
+                    }
                 }
             }
         }
