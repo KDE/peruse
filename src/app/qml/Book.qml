@@ -530,7 +530,7 @@ Kirigami.Page {
                 orientation: ListView.Horizontal;
                 NumberAnimation { id: seriesListAnimation; target: seriesListView; property: "contentX"; duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; }
                 delegate: ListComponents.BookTileTall {
-                    height: model.filename !== "" ? neededHeight : 1;
+                    height: model.filename !== "" ? seriesListView.height : 1;
                     width: seriesListView.width / 3;
                     author: model.author;
                     title: model.title;
