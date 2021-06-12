@@ -64,13 +64,15 @@ Kirigami.ScrollablePage {
         applicationWindow().contextDrawer.close();
         var whatModel = isSearching ? searchFilterProxy.sourceModel : shelfList.model;
         var whatIndex = isSearching ? searchFilterProxy.sourceIndex(index) : index;
-        if(whatModel.indexIsBook(whatIndex)) {
-            var book = whatModel.get(whatIndex);
-            root.bookSelected(book.readProperty("filename"), book.readProperty("currentPage"));
-        }
-        else {
-            var catEntry = whatModel.getEntry(whatIndex);
-            applicationWindow().pageStack.push(bookshelf, { focus: true, headerText: catEntry.readProperty("title"), model: catEntry.readProperty("entriesModel") });
+        if (whatModel) {
+            if(whatModel.indexIsBook(whatIndex)) {
+                var book = whatModel.get(whatIndex);
+                root.bookSelected(book.readProperty("filename"), book.readProperty("currentPage"));
+            }
+            else {
+                var catEntry = whatModel.getEntry(whatIndex);
+                applicationWindow().pageStack.push(bookshelf, { focus: true, headerText: catEntry.readProperty("title"), model: catEntry.readProperty("entriesModel") });
+            }
         }
     }
 
