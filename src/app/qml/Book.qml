@@ -509,7 +509,7 @@ Kirigami.Page {
                 description: bookInfo.currentBook.readProperty("description");
                 onBookSelected: {
                     if(root.file !== fileSelected) {
-                        openSelected();
+                        bookInfo.openSelected();
                     }
                 }
                 onBookDeleteRequested: {
