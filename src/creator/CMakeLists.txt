@@ -23,8 +23,8 @@ target_include_directories(perusecreator
     "${CMAKE_BINARY_DIR}"
 )
 
-install(TARGETS perusecreator ${INSTALL_TARGETS_DEFAULT_ARGS})
-install(FILES org.kde.perusecreator.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
+install(TARGETS perusecreator ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
+install(FILES org.kde.perusecreator.desktop DESTINATION ${KDE_INSTALL_APPDIR})
 install(FILES org.kde.perusecreator.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
 
 add_subdirectory(icon)

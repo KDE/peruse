@@ -75,6 +75,6 @@ if (ZLIB_FOUND)
     add_definitions(-DHAVE_ZLIB)
 endif(ZLIB_FOUND)
 
-install (TARGETS peruseqmlplugin DESTINATION ${QML_INSTALL_DIR}/org/kde/peruse)
-install (FILES qmldir DESTINATION ${QML_INSTALL_DIR}/org/kde/peruse)
+install (TARGETS peruseqmlplugin DESTINATION ${KDE_INSTALL_QMLDIR}/org/kde/peruse)
+install (FILES qmldir DESTINATION ${KDE_INSTALL_QMLDIR}/org/kde/peruse)
 install (FILES peruse.knsrc DESTINATION ${KDE_INSTALL_KNSRCDIR})

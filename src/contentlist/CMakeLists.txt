@@ -28,5 +28,5 @@ if(KF5Baloo_FOUND)
     )
 endif()
 
-install (TARGETS contentlistqmlplugin DESTINATION ${QML_INSTALL_DIR}/org/kde/contentlist)
-install (FILES qmldir DESTINATION ${QML_INSTALL_DIR}/org/kde/contentlist)
+install (TARGETS contentlistqmlplugin DESTINATION ${KDE_INSTALL_QMLDIR}/org/kde/contentlist)
+install (FILES qmldir DESTINATION ${KDE_INSTALL_QMLDIR}/org/kde/contentlist)
