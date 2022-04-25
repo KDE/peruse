@@ -49,7 +49,6 @@ find_package(KF5 ${KF5_DEP_VERSION} REQUIRED
     NewStuffQuick
     # For some reason, these show up in the OPTIONAL section if they're not explicitly listed, and that's just confusing, so...
     Attica
-    Auth
     Codecs
     Completion
     ConfigWidgets
@@ -64,6 +63,11 @@ find_package(KF5 ${KF5_DEP_VERSION} REQUIRED
     WindowSystem
     XmlGui
 )
+
+if (NOT WIN32)
+    find_package(KF5 ${KF5_DEP_VERSION} REQUIRED COMPONENTS Auth)
+endif()
+
 find_package(KF5Baloo ${KF5_DEP_VERSION}) # optional - we'll just let it pass if it's missing
 set_package_properties(KF5Baloo PROPERTIES
     DESCRIPTION "KDE's Framework which implements file indexing"
