@@ -313,7 +313,7 @@ void ArchiveBookModel::setFilename(QString newFilename)
                     }
                 }
             }
-
+            d->archive->close();
             success = true;
         }
         else {
