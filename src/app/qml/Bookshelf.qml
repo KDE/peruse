@@ -148,10 +148,20 @@ Kirigami.ScrollablePage {
         }
         keyNavigationEnabled: true;
         clip: true;
+
+        Kirigami.PlaceholderMessage {
+            id: placeholderMessage
+            width: parent.width - (Kirigami.Units.largeSpacing * 8)
+            visible: shelfList.count === 0
+            anchors.centerIn: parent
+            text: i18nc("Placeholder Text when there are no comics in the library that match the filter", "No matches")
+        }
+
         footer: ColumnLayout {
             width: parent.width;
             spacing: Kirigami.Units.largeSpacing;
             opacity: 0.3
+            visible: !placeholderMessage.visible
             Item { Layout.fillWidth: true; height: Kirigami.Units.iconSizes.large + Kirigami.Units.largeSpacing; }
             Rectangle {
                 Layout.alignment: Qt.AlignHCenter;
