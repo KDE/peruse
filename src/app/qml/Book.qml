@@ -23,7 +23,7 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12 as QtControls
 import QtQuick.Window 2.12
 
-import org.kde.kirigami 2.12 as Kirigami
+import org.kde.kirigami 2.16 as Kirigami
 
 import org.kde.peruse 0.1 as Peruse
 import "listcomponents" as ListComponents
@@ -417,10 +417,13 @@ Kirigami.Page {
         }
         Kirigami.PlaceholderMessage {
             anchors.centerIn: parent
-            width: parent.width - (Kirigami.Units.largeSpacing * 4)
+            width: parent.width - (Kirigami.Units.largeSpacing * 8)
 
             visible: viewLoader.status === Loader.Error;
-            text: i18nc("Message shown on the book reader view when there is an issue loading any reader at all (usually when Okular's qml components are not installed for some reason)", "Failed to load the reader component. This is generally caused by broken packaging. Contact whoever you got this package from and inform them of this error.");
+
+            icon.name: "emblem-error"
+            text: i18nc("Message shown on the book reader view when there is an issue loading any reader at all (usually when Okular's qml components are not installed for some reason)", "Failed to load the reader component")
+            explanation: i18nc("Message shown on the book reader view when there is an issue loading any reader at all (usually when Okular's qml components are not installed for some reason)", "This is generally caused by broken packaging. Contact whomever you got this package from and inform them of this error.");
         }
     }
     /**
