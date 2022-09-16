@@ -145,7 +145,7 @@ install(FILES
     DESTINATION "${KDE_INSTALL_INCLUDEDIR_KF5}/AdvancedComicBookFormat" COMPONENT Devel
 )
 
-install(TARGETS acbf EXPORT AdvancedComicBookFormatTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS})
+install(TARGETS acbf EXPORT AdvancedComicBookFormatTargets ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 install(EXPORT AdvancedComicBookFormatTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FILE AdvancedComicBookFormatTargets.cmake )
 ecm_qt_install_logging_categories(
     EXPORT AdvancedComicBookFormat
