@@ -17,6 +17,7 @@
   <name xml:lang="gl">Peruse</name>
   <name xml:lang="id">Peruse</name>
   <name xml:lang="it">Peruse</name>
+  <name xml:lang="ka">Peruse</name>
   <name xml:lang="ko">Peruse</name>
   <name xml:lang="nl">Peruse</name>
   <name xml:lang="pa">ਪੇਰੁਸ</name>
@@ -43,6 +44,7 @@
   <summary xml:lang="gl">Ferramenta de creación de libros de banda deseñada</summary>
   <summary xml:lang="id">Alat Penciptaan Buku Komik</summary>
   <summary xml:lang="it">Strumento per la creazione di fumetti</summary>
+  <summary xml:lang="ka">კომიქსების წიგნის შექმნის პროგრამა</summary>
   <summary xml:lang="ko">만화책 생성 도구</summary>
   <summary xml:lang="nl">Hulpmiddel voor maken van stripboeken</summary>
   <summary xml:lang="pa">ਕਾਮਿਕ ਕਿਤਾਬ ਨਿਰਮਾਣ ਲਈ ਸਾਧਨ</summary>
@@ -89,6 +91,7 @@
     <p xml:lang="gl">Funcionalidades:</p>
     <p xml:lang="id">Fitur:</p>
     <p xml:lang="it">Funzionalità:</p>
+    <p xml:lang="ka">თვისებები:</p>
     <p xml:lang="ko">기능:</p>
     <p xml:lang="nl">Mogelijkheden:</p>
     <p xml:lang="pa">ਫੀਚਰ:</p>
@@ -117,6 +120,7 @@
       <li xml:lang="gl">Arquivo de libro de banda deseñada (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="id">Arsip Buku Komik (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="it">Archivio di fumetti (cbz, cbr, cb7, cbt, cba)</li>
+      <li xml:lang="ka">კომიქსების წიგნის არქივი (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="ko">만화책 압축 파일(cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="nl">Archief voor stripboeken (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="pa">ਕਾਮਿਕਸ ਬੁੱਕ ਅਕਾਇਵ (cbz, cbr, cb7, cbt, cba)</li>
