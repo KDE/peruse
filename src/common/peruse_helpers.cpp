@@ -12,10 +12,10 @@
 #include <QDir>
 #include <QtQuick/QQuickView>
 
-#include <KDeclarative/KDeclarative>
 #include <KAboutData>
 #include <KCrash>
 #include <KLocalizedContext>
+#include <KQuickIconProvider>
 
 #include "peruse_helpers.h"
 
@@ -49,10 +49,8 @@ int getMaxTextureSize()
 }
 
 int init(QString &path, QApplication& app, const QString &filename) {
-    KDeclarative::KDeclarative kdeclarative;
     QQmlEngine engine;
-    kdeclarative.setDeclarativeEngine(&engine);
-    kdeclarative.setupEngine(&engine);
+    engine.addImageProvider(QStringLiteral("icon"), new KQuickIconProvider);
     engine.rootContext()->setContextObject(new KLocalizedContext(&app));
 
     bool osIsWindows = false;
