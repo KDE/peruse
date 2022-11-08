@@ -779,7 +779,7 @@ msgstr "Crea un salt"
 #, kde-format
 msgctxt "title text for the add page sheet"
 msgid "Add a Page?"
-msgstr "Afig una pàgina?"
+msgstr "Voleu afegir una pàgina?"
 
 #: creator/qml/AddPageSheet.qml:47
 #, kde-format
