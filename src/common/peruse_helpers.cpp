@@ -62,8 +62,6 @@ int init(QString &path, QApplication& app, const QString &filename) {
     engine.addImportPath(appdir.canonicalPath() + "/lib/qml");
     engine.addImportPath(appdir.canonicalPath() + "/qml");
     osIsWindows = true;
-    // Hey, let's try and avoid all those extra stale processes, right?
-    qputenv("KDE_FORK_SLAVES", "true");
 #endif
 
     engine.rootContext()->setContextProperty("osIsWindows", osIsWindows);
