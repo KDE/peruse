@@ -1,19 +1,20 @@
 # Xavier Besnard <xavier.besnard@neuf.fr>, 2020, 2021, 2022.
 # Simon Depiets <sdepiets@gmail.com>, 2020.
+# Xavier BESNARD <xavier.besnard]neuf.fr>, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: peruse\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-07-19 00:43+0000\n"
-"PO-Revision-Date: 2022-07-08 09:52+0200\n"
-"Last-Translator: Xavier Besnard <xavier.besnard@neuf.fr>\n"
-"Language-Team: French <kde-francophone@kde.org>\n"
+"PO-Revision-Date: 2023-01-11 07:22+0100\n"
+"Last-Translator: Xavier BESNARD <xavier.besnard]neuf.fr>\n"
+"Language-Team: fr\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.04.2\n"
+"X-Generator: Lokalize 22.12.1\n"
 "X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
@@ -36,7 +37,7 @@ msgstr "Lecteur Peruse"
 #: app/main.cpp:49
 #, kde-format
 msgid "Comic Book Reader by KDE"
-msgstr "Un lecteur de « Comic Book » par KDE"
+msgstr "Un lecteur de bandes dessinées de KDE"
 
 #: app/main.cpp:50 creator/main.cpp:45
 #, kde-format
@@ -77,7 +78,7 @@ msgctxt ""
 "Action used on touch devices to close the currently open book and return to "
 "whatever page was most recently shown"
 msgid "Close Book"
-msgstr "Fermer le Comic Book"
+msgstr "Fermer une BD"
 
 #: app/qml/Book.qml:201
 #, kde-format
@@ -150,7 +151,7 @@ msgctxt ""
 "Action used on non-touch devices to close the currently open book and return "
 "to whatever page was most recently shown"
 msgid "Close Book"
-msgstr "Fermer le Comic Book"
+msgstr "Fermer une BD"
 
 #: app/qml/Book.qml:323
 #, kde-format
@@ -238,13 +239,13 @@ msgstr "Retour"
 #, kde-format
 msgctxt "Open the book which is currently selected in the list"
 msgid "Open Selected Book"
-msgstr "Ouvrir le Comic Book sélectionné"
+msgstr "Ouvrir la bande dessinée sélectionnée"
 
 #: app/qml/Bookshelf.qml:107
 #, kde-format
 msgctxt "search in the list of books (not inside the books)"
 msgid "Search Books"
-msgstr "Rechercher des Comic Books"
+msgstr "Rechercher des BD"
 
 #: app/qml/Bookshelf.qml:114
 #, kde-format
@@ -327,7 +328,7 @@ msgstr "(Aucun commentaire)"
 msgctxt ""
 "Placeholder text for the book description field when no description is set"
 msgid "(no description available for this book)"
-msgstr "(aucune description disponible pour ce Comic Book)"
+msgstr "(aucune description disponible pour cette BD)"
 
 #: app/qml/listcomponents/BookTileTall.qml:112
 #, kde-format
@@ -370,7 +371,7 @@ msgctxt ""
 "@title:window standard file open dialog used to open a book not in the "
 "collection"
 msgid "Please Choose a Comic to Open"
-msgstr "Veuillez choisir un Comic Book à ouvrir"
+msgstr "Veuillez choisir une bande dessinée à ouvrir"
 
 #: app/qml/MobileMain.qml:42
 #, kde-format
@@ -378,7 +379,7 @@ msgctxt ""
 "Title of a page which lets you open comics not in your collection by using a "
 "standard touch-friendly dig-down style filesystem browser"
 msgid "Open Comics not in Your Collection"
-msgstr "Ouvrir un Comic Book hors de votre collection"
+msgstr "Ouvrir une bande dessinée BD hors de votre collection"
 
 #: app/qml/PeruseContextDrawer.qml:37
 #, kde-format
@@ -416,13 +417,13 @@ msgstr "Afficher la page d'introduction"
 #, kde-format
 msgctxt "shown with a throbber when searching for books on the device"
 msgid "Please wait while we find your books..."
-msgstr "Veuillez patienter pendant que nous cherchons vos Comic Books..."
+msgstr "Veuillez patienter pendant que nous cherchons vos BD..."
 
 #: app/qml/PeruseMain.qml:178
 #, kde-format
 msgctxt "Switch to the listing page showing the most recently discovered books"
 msgid "Recently Added Books"
-msgstr "Comic Books ajoutés récemment"
+msgstr "BD ajoutées récemment"
 
 #: app/qml/PeruseMain.qml:184
 #, kde-format
@@ -572,7 +573,7 @@ msgstr "Sélectionner un dossier"
 #, kde-format
 msgctxt "title of the book store page"
 msgid "Book Store"
-msgstr "Boutique de Comic Books"
+msgstr "Boutique de BD"
 
 #: app/qml/Store.qml:97
 #, kde-format
@@ -584,7 +585,7 @@ msgid ""
 "Sorry, no books.\n"
 "This is unusual, and likely means your internet is down, or the store is."
 msgstr ""
-"Désolé, aucun Comic Book.\n"
+"Désolé, aucune BD.\n"
 "Ceci est inhabituel et peut vouloir signifier que votre connexion internet "
 "ou la boutique sont indisponibles."
 
@@ -731,7 +732,7 @@ msgstr "Bienvenue"
 #, kde-format
 msgctxt "application subtitle"
 msgid "Comic Book Reader"
-msgstr "Lecteur de Comic Books"
+msgstr "Lecteur de bandes dessinées"
 
 #: app/qml/WelcomePage.qml:116
 #, kde-format
@@ -753,7 +754,7 @@ msgstr "Peruse Creator"
 #: creator/main.cpp:44
 #, kde-format
 msgid "Comic Book Creator by KDE"
-msgstr "Créateur de « Comic Book » par KDE"
+msgstr "Créateur de bandes dessinées par KDE"
 
 #: creator/qml/AddPageArea.qml:61
 #, kde-format
@@ -837,7 +838,7 @@ msgstr "Pages parmi %1"
 #, kde-format
 msgctxt "Saves the book to a file on disk"
 msgid "Save Book"
-msgstr "Enregistrer un Comic Book"
+msgstr "Enregistrer une BD"
 
 #: creator/qml/Book.qml:57
 #, kde-format
@@ -1403,7 +1404,8 @@ msgstr "Couleur d'arrière plan pour la page générale"
 #, kde-format
 msgctxt "@title color choosing dialog"
 msgid "Choose the general background color for this comic"
-msgstr "Sélectionner la couleur d'arrière-plan général pour ce Comic Book"
+msgstr ""
+"Sélectionner la couleur d'arrière-plan général pour cette bande dessinée"
 
 #: creator/qml/BookPage.qml:32
 #, kde-format
@@ -1723,13 +1725,13 @@ msgstr "%1 (sous-type : %2)"
 #, kde-format
 msgctxt "title of the new book creation page"
 msgid "Create New Book"
-msgstr "Créer un nouveau Comic Book"
+msgstr "Créer une nouvelle bande dessinée"
 
 #: creator/qml/CreateNewBook.qml:42
 #, kde-format
 msgctxt "Accept button which will create a new book"
 msgid "Create Book"
-msgstr "Créer un Comic Book"
+msgstr "Créer une nouvelle bande dessinée"
 
 #: creator/qml/CreateNewBook.qml:72
 #, kde-format
@@ -1748,7 +1750,7 @@ msgstr "Dossier"
 #, kde-format
 msgctxt "@title:window folder dialog used to select the location of a new book"
 msgid "Please Choose the Location for the Book"
-msgstr "Veuillez choisir l'emplacement du Comic Book."
+msgstr "Veuillez choisir l'emplacement d'une bande dessinée."
 
 #: creator/qml/CreateNewBook.qml:104
 #, kde-format
@@ -1976,7 +1978,7 @@ msgstr "Basculer vers la page de bienvenue"
 #, kde-format
 msgctxt "Create a book"
 msgid "Create a New Book..."
-msgstr "Créer un nouveau Comic Book…"
+msgstr "Créer une nouvelle bande dessinée..."
 
 #: creator/qml/Main.qml:130
 #, kde-format
@@ -2026,7 +2028,7 @@ msgctxt ""
 "@title:window standard file open dialog used to open a book not in the "
 "collection"
 msgid "Please Choose a Book to Open"
-msgstr "Veuillez choisir un Comic Book à ouvrir"
+msgstr "Veuillez choisir une bande dessinée à ouvrir"
 
 #: creator/qml/Main.qml:263
 #, kde-format
@@ -2337,7 +2339,7 @@ msgstr "Créateur de Peruse"
 #, kde-format
 msgctxt "application subtitle"
 msgid "Comic Book Creation Tool"
-msgstr "Outil de création de Comic Book"
+msgstr "Outil de création de bandes dessinées"
 
 #: creator/qml/WelcomePage.qml:86
 #, kde-format
@@ -2352,13 +2354,12 @@ msgid ""
 "files with your friends."
 msgstr ""
 "Bienvenue à l'outil « Peruse Creator ». Cet outil est conçu pour vous aider "
-"à créer des archives de Comic Books, qui peuvent ensuite être lu avec "
-"n'importe quelle application de lecture de Comic Books. Vous pouvez soit "
-"créer des archives nouvelles de Comic Books à partir de rien, en créer une à "
-"partir d'un ensemble d'images ou modifier des archives existantes. Une fois "
-"créés, vous pouvez même les publier directement sur l'archive de Comic Books "
-"sur le magasin de KDE à partir de l'application ou juste partager les "
-"fichiers avec vos ami(e)s."
+"à créer des archives de BD, qui peuvent ensuite être lu avec n'importe "
+"quelle application de lecture de BD. Vous pouvez soit créer des archives "
+"nouvelles de BD à partir de rien, en créer une à partir d'un ensemble "
+"d'images ou modifier des archives existantes. Une fois créés, vous pouvez "
+"même les publier directement sur l'archive de BD sur le magasin de KDE à "
+"partir de l'application ou juste partager les fichiers avec vos ami(e)s."
 
 #: creator/qml/WelcomePage.qml:93
 #, kde-format
@@ -2370,7 +2371,7 @@ msgstr "Ouvrir ceux présents..."
 #, kde-format
 msgctxt "@action:button create a new, empty comic book archive"
 msgid "Create Blank"
-msgstr "Créer un Comic Book vide"
+msgstr "Créer une BD vide"
 
 #: creator/qml/WelcomePage.qml:105
 #, kde-format
