@@ -473,7 +473,7 @@ msgctxt ""
 "Open a book from somewhere on disk (uses the open dialog, or a drilldown on "
 "touch devices)"
 msgid "Open Other..."
-msgstr "Obri altres..."
+msgstr "Obri'n altres..."
 
 #: app/qml/PeruseMain.qml:228
 #, kde-format
