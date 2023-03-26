@@ -819,6 +819,9 @@ QString ArchiveBookModel::createBook(QString folder, QString title, QString cove
 
 const KArchiveFile * ArchiveBookModel::archiveFile(const QString& filePath) const
 {
+    if(d->archive->isOpen() == false){
+        d->archive->open(QIODevice::ReadOnly);
+    }
     if(d->archive)
     {
         if(!d->archiveFiles.contains(filePath)) {
