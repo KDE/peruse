@@ -19,11 +19,11 @@
  *
  */
 
-import QtQuick 2.12
+import QtQuick 2.15
 
-import org.kde.kirigami 2.7 as Kirigami
+import org.kde.kirigami 2.14 as Kirigami
 import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.1 as QQC2
+import QtQuick.Controls 2.14 as QQC2
 
 import org.kde.peruse 0.1 as Peruse
 import org.kde.contentlist 0.1
@@ -48,21 +48,32 @@ import org.kde.contentlist 0.1
  */
 Kirigami.ApplicationWindow {
     id: mainWindow;
-    title: i18nc("@title:window the generic descriptive title of the application", "Comic Book Reader");
-    property int animationDuration: 200;
-    property bool isLoading: false;
-    pageStack.initialPage: welcomePage;
-    visible: true;
-    // If the controls are not visible, being able to drag the pagestack feels really weird,
-    // so we just turn that ability off :)
-    pageStack.interactive: controlsVisible;
 
-    property bool bookOpen: mainWindow.pageStack.layers.currentItem.objectName === "bookViewer";
+    property int animationDuration: 200
+    property bool isLoading: true
+    property bool bookOpen: mainWindow.pageStack.layers.currentItem.objectName === "bookViewer"
+
+    title: i18nc("@title:window the generic descriptive title of the application", "Comic Book Reader");
+
+    pageStack {
+        defaultColumnWidth: Kirigami.Units.gridUnit * 30
+        initialPage: welcomePage
+        globalToolBar {
+            canContainHandles: true
+            style: Kirigami.ApplicationHeaderStyle.ToolBar
+            showNavigationButtons: applicationWindow().pageStack.currentIndex > 0 ? Kirigami.ApplicationHeaderStyle.ShowBackButton : 0
+        }
+    }
+
     function showBook(filename, currentPage) {
         if(bookOpen) {
             mainWindow.pageStack.layers.pop();
         }
-        mainWindow.pageStack.layers.push(bookViewer, { focus: true, file: filename, currentPage: currentPage })
+        mainWindow.pageStack.layers.push(bookViewer, {
+            focus: true,
+            file: filename,
+            currentPage: currentPage,
+        });
         peruseConfig.bookOpened(filename);
     }
 
@@ -99,153 +110,192 @@ Kirigami.ApplicationWindow {
         id: contextDrawer;
     }
 
-    globalDrawer: Kirigami.GlobalDrawer {
-        id: globalDrawer
-        title: i18nc("application title for the sidebar", "Peruse");
-        titleIcon: "peruse";
-        drawerOpen: !Kirigami.Settings.isMobile && mainWindow.width > globalDrawer.availableWidth * 3
-        modal: Kirigami.Settings.isMobile || mainWindow.width <= globalDrawer.availableWidth * 3
-        actions: globalDrawerActions
+    globalDrawer: Kirigami.OverlayDrawer {
+        edge: Qt.application.layoutDirection === Qt.RightToLeft ? Qt.RightEdge : Qt.LeftEdge
+        modal: Kirigami.Settings.isMobile || (applicationWindow().width < Kirigami.Units.gridUnit * 50 && !collapsed) // Only modal when not collapsed, otherwise collapsed won't show.
+        z: modal ? Math.round(position * 10000000) : 100
+        drawerOpen: !Kirigami.Settings.isMobile && enabled
+        width: Kirigami.Units.gridUnit * 16
+        Behavior on width {
+            NumberAnimation {
+                duration: Kirigami.Units.longDuration
+                easing.type: Easing.InOutQuad
+            }
+        }
+        Kirigami.Theme.colorSet: Kirigami.Theme.Window
 
-        // HACK: this is needed because when clicking on the close button, drawerOpen get set to false (instead of the binding)
-        // and when !Kirigami.Settings.isMobile && mainWindow.width > globalDrawer.availableWidth * 3 change, the Binding element
-        // overwrite the last assignment to false and set drawerOpen to true or false depending on the value of the condition
-        Binding {
-            target: globalDrawer
-            property: "drawerOpen"
-            value: !Kirigami.Settings.isMobile && mainWindow.width > globalDrawer.availableWidth * 3
+        handleClosedIcon.source: modal ? null : "sidebar-expand-left"
+        handleOpenIcon.source: modal ? null : "sidebar-collapse-left"
+        handleVisible: modal
+        onModalChanged: if (!modal) {
+            drawerOpen = true;
         }
 
-        header: Kirigami.AbstractApplicationHeader {
-            topPadding: Kirigami.Units.smallSpacing / 2;
-            bottomPadding: Kirigami.Units.smallSpacing / 2;
-            leftPadding: Kirigami.Units.smallSpacing
-            rightPadding: Kirigami.Units.smallSpacing
+        leftPadding: 0
+        rightPadding: 0
+        topPadding: 0
+        bottomPadding: 0
 
-            RowLayout {
-                anchors.fill: parent
+        contentItem: ColumnLayout {
+            spacing: 0
 
-                Kirigami.Heading {
-                    level: 1
-                    text: i18n("Navigation")
-                    Layout.fillWidth: true
-                }
+            QQC2.ToolBar {
+                Layout.fillWidth: true
+                Layout.preferredHeight: mainWindow.pageStack.globalToolBar.preferredHeight
 
-                QQC2.ToolButton {
-                    icon.name: "go-home"
+                leftPadding: Kirigami.Units.smallSpacing
+                rightPadding: Kirigami.Units.smallSpacing
+                topPadding: Kirigami.Units.smallSpacing
+                bottomPadding: Kirigami.Units.smallSpacing
 
-                    enabled: mainWindow.currentCategory !== "welcomePage";
-                    onClicked: {
-                        if (changeCategory(welcomePage)) {
+                contentItem: RowLayout {
+                    Kirigami.Heading {
+                        text: i18n("Peruse")
+                        Layout.fillWidth: true
+                    }
+
+                    QQC2.ToolButton {
+                        icon.name: "go-home"
+
+                        enabled: mainWindow.currentCategory !== "welcomePage";
+                        onClicked: if (changeCategory(welcomePage)) {
                             pageStack.currentItem.updateRecent();
                         }
-                    }
 
-                    QQC2.ToolTip {
-                        text: i18n("Show intro page")
+                        QQC2.ToolTip.text: i18n("Show intro page")
+                        QQC2.ToolTip.visible: hovered
+                        QQC2.ToolTip.delay: Kirigami.Units.toolTipDelay
                     }
                 }
             }
-        }
-        ColumnLayout {
-            opacity: globalDrawer.drawerOpen && mainWindow.isLoading ? 1 : 0
-            visible: opacity > 0
-            Behavior on opacity { NumberAnimation { duration: Kirigami.Units.longDuration } }
-            Layout.fillWidth: true
-            Layout.bottomMargin: Kirigami.Units.largeSpacing
-            Item {
+
+            QQC2.ButtonGroup {
+                id: placeGroup
+            }
+
+            QQC2.ScrollView {
+                id: scrollView
+
+                Layout.fillHeight: true
                 Layout.fillWidth: true
+
+                contentWidth: availableWidth
+
+                component PlaceItem : Kirigami.BasicListItem {
+                    id: item
+                    signal triggered;
+                    checkable: true
+                    Layout.fillWidth: true
+                    Keys.onDownPressed: nextItemInFocusChain().forceActiveFocus(Qt.TabFocusReason)
+                    Keys.onUpPressed: nextItemInFocusChain(false).forceActiveFocus(Qt.TabFocusReason)
+                    Accessible.role: Accessible.MenuItem
+                    highlighted: checked
+                    onToggled: if (checked) {
+                        item.triggered();
+                    }
+                }
+
+                ColumnLayout {
+                    spacing: 1
+                    width: scrollView.width
+                    PlaceItem {
+                        text: i18nc("Switch to the listing page showing the most recently read books", "Home");
+                        icon: "go-home";
+                        checked: true
+                        QQC2.ButtonGroup.group: placeGroup
+                        onTriggered: {
+                            if (changeCategory(welcomePage)) {
+                                pageStack.currentItem.updateRecent();
+                            }
+                        }
+                    }
+                    PlaceItem {
+                        text: i18nc("Switch to the listing page showing the most recently discovered books", "Recently Added Books");
+                        icon: "appointment-new";
+                        QQC2.ButtonGroup.group: placeGroup
+                        onTriggered: changeCategory(bookshelfAdded);
+                    }
+                    PlaceItem {
+                        text: i18nc("Open a book from somewhere on disk (uses the open dialog, or a drilldown on touch devices)", "Open Other...");
+                        icon: "document-open";
+                        onClicked: openOther();
+                        QQC2.ButtonGroup.group: undefined
+                        checkable: false
+                    }
+                    Kirigami.ListSectionHeader {
+                        text: i18nc("Heading for switching to listing page showing items grouped by some properties", "Group By")
+                    }
+                    PlaceItem {
+                        text: i18nc("Switch to the listing page showing items grouped by title", "Title");
+                        icon: "view-media-title";
+                        onTriggered: changeCategory(bookshelfTitle);
+                        QQC2.ButtonGroup.group: placeGroup
+                    }
+                    PlaceItem {
+                        text: i18nc("Switch to the listing page showing items grouped by author", "Author");
+                        icon: "actor";
+                        onTriggered: changeCategory(bookshelfAuthor);
+                        QQC2.ButtonGroup.group: placeGroup
+                    }
+                    PlaceItem {
+                        text: i18nc("Switch to the listing page showing items grouped by series", "Series");
+                        icon: "edit-group";
+                        onTriggered: changeCategory(bookshelfSeries);
+                        QQC2.ButtonGroup.group: placeGroup
+                    }
+                    PlaceItem {
+                        text: i18nc("Switch to the listing page showing items grouped by publisher", "Publisher");
+                        icon: "view-media-publisher";
+                        onTriggered: changeCategory(bookshelfPublisher);
+                        QQC2.ButtonGroup.group: placeGroup
+                    }
+                    PlaceItem {
+                        text: i18nc("Switch to the listing page showing items grouped by keywords, characters or genres", "Keywords");
+                        icon: "tag";
+                        onTriggered: changeCategory(bookshelfKeywords);
+                        QQC2.ButtonGroup.group: placeGroup
+                    }
+                    PlaceItem {
+                        text: i18nc("Switch to the listing page showing items grouped by their filesystem folder", "Folder");
+                        icon: "tag-folder";
+                        onTriggered: changeCategory(bookshelfFolder);
+                        QQC2.ButtonGroup.group: placeGroup
+                    }
+
+                }
+            }
+
+            Item {
                 Layout.fillHeight: true
             }
+
             QQC2.Label {
                 Layout.fillWidth: true
                 horizontalAlignment: Text.AlignHCenter;
-                text: i18nc("shown with a throbber when searching for books on the device", "Please wait while we find your books...");
+                text: i18nc("shown with a throbber when searching for books on the device", "Please wait while we find your books...")
+                visible: mainWindow.isLoading
             }
+
             QQC2.BusyIndicator {
                 Layout.fillWidth: true
-                running: mainWindow.isLoading;
+                running: mainWindow.isLoading
             }
-            QQC2.Label {
-                Layout.fillWidth: true
-                horizontalAlignment: Text.AlignHCenter;
-                text: contentList.count;
+
+            PlaceItem {
+                text: i18nc("Open the settings page", "Settings");
+                icon: "configure"
+                onTriggered: changeCategory(settingsPage);
+                QQC2.ButtonGroup.group: placeGroup
+            }
+
+            PlaceItem {
+                text: i18nc("Open the about page", "About");
+                icon: "help-about"
+                onTriggered: changeCategory(aboutPage);
+                QQC2.ButtonGroup.group: placeGroup
             }
         }
     }
-    property list<QtObject> globalDrawerActions: [
-            Kirigami.Action {
-                text: i18nc("Switch to the listing page showing the most recently discovered books", "Recently Added Books");
-                iconName: "appointment-new";
-                checked: mainWindow.currentCategory === "bookshelfAdded";
-                onTriggered: changeCategory(bookshelfAdded);
-            },
-            Kirigami.Action {
-                text: i18nc("Switch to the listing page showing items grouped by title", "Group by Title");
-                iconName: "view-media-title";
-                checked: mainWindow.currentCategory === "bookshelfTitle";
-                onTriggered: changeCategory(bookshelfTitle);
-            },
-            Kirigami.Action {
-                text: i18nc("Switch to the listing page showing items grouped by author", "Group by Author");
-                iconName: "actor";
-                checked: mainWindow.currentCategory === "bookshelfAuthor";
-                onTriggered: changeCategory(bookshelfAuthor);
-            },
-            Kirigami.Action {
-                text: i18nc("Switch to the listing page showing items grouped by series", "Group by Series");
-                iconName: "edit-group";
-                checked: currentCategory === "bookshelfSeries";
-                onTriggered: changeCategory(bookshelfSeries);
-            },
-            Kirigami.Action {
-                text: i18nc("Switch to the listing page showing items grouped by publisher", "Group by Publisher");
-                iconName: "view-media-publisher";
-                checked: mainWindow.currentCategory === "bookshelfPublisher";
-                onTriggered: changeCategory(bookshelfPublisher);
-            },
-            Kirigami.Action {
-                text: i18nc("Switch to the listing page showing items grouped by keywords, characters or genres", "Group by Keywords");
-                iconName: "tag";
-                checked: mainWindow.currentCategory === "bookshelfKeywords";
-                onTriggered: changeCategory(bookshelfKeywords);
-            },
-            Kirigami.Action {
-                text: i18nc("Switch to the listing page showing items grouped by their filesystem folder", "Filter by Folder");
-                iconName: "tag-folder";
-                checked: mainWindow.currentCategory === "bookshelfFolder";
-                onTriggered: changeCategory(bookshelfFolder);
-            },
-            Kirigami.Action {
-                separator: true;
-            },
-            Kirigami.Action {
-                text: i18nc("Open a book from somewhere on disk (uses the open dialog, or a drilldown on touch devices)", "Open Other...");
-                iconName: "document-open";
-                onTriggered: openOther();
-            },
-            Kirigami.Action {
-                text: i18nc("Switch to the book store page", "Get Hot New Books");
-                iconName: "get-hot-new-stuff";
-                checked: mainWindow.currentCategory === "storePage";
-                onTriggered: changeCategory(storePage);
-            },
-            Kirigami.Action {
-                separator: true;
-            },
-            Kirigami.Action {
-                text: i18nc("Open the settings page", "Settings");
-                iconName: "configure"
-                checked: mainWindow.currentCategory === "settingsPage";
-                onTriggered: changeCategory(settingsPage);
-            },
-            Kirigami.Action {
-                text: i18nc("Open the about page", "About");
-                iconName: "help-about"
-                checked: mainWindow.currentCategory === "aboutPage";
-                onTriggered: changeCategory(aboutPage);
-            }
-        ]
 
     Component {
         id: welcomePage;

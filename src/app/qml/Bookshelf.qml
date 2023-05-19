@@ -151,32 +151,10 @@ Kirigami.ScrollablePage {
 
         Kirigami.PlaceholderMessage {
             id: placeholderMessage
-            width: parent.width - (Kirigami.Units.largeSpacing * 8)
+            width: parent.width - (Kirigami.Units.gridUnit * 4)
             visible: shelfList.count === 0
             anchors.centerIn: parent
             text: i18nc("Placeholder Text when there are no comics in the library that match the filter", "No matches")
-        }
-
-        footer: ColumnLayout {
-            width: parent.width;
-            spacing: Kirigami.Units.largeSpacing;
-            opacity: 0.3
-            visible: !placeholderMessage.visible
-            Item { Layout.fillWidth: true; height: Kirigami.Units.iconSizes.large + Kirigami.Units.largeSpacing; }
-            Rectangle {
-                Layout.alignment: Qt.AlignHCenter;
-                Layout.minimumWidth: parent.width * .7
-                Layout.maximumWidth: Layout.minimumWidth
-                height: 1;
-                color: Kirigami.Theme.textColor;
-            }
-            Kirigami.Icon {
-                Layout.alignment: Qt.AlignHCenter
-                Layout.fillWidth: true
-                height: Kirigami.Units.iconSizes.enormous
-                source: "peruse"
-            }
-            Item { Layout.fillWidth: true; height: Kirigami.Units.iconSizes.large + Kirigami.Units.largeSpacing; }
         }
 
         readonly property int scrollBarSpace: root.flickable.QtControls.ScrollBar.vertical ? root.flickable.QtControls.ScrollBar.vertical.width : 0

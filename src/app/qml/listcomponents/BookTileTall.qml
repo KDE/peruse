@@ -78,9 +78,9 @@ FocusScope {
                     color: root.selected ? Kirigami.Theme.highlightColor : Kirigami.Theme.backgroundColor;
                     border {
                         width: 2;
-                        color: root.selected ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor;
+                        color: root.selected ? Kirigami.Theme.highlightedTextColor : "transparent"
                     }
-                    radius: 2;
+                    radius: 7
                 }
                 Kirigami.Icon {
                     id: coverImage;

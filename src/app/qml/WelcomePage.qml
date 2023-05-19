@@ -24,7 +24,7 @@ import "listcomponents" as ListComponents
  * for selecting the recently opened and new books, which the user is most likely
  * to look at when they want to read.
  * 
- * It uses BookTileTall to show the selectable books, SearchFiedl to search books
+ * It uses BookTileTall to show the selectable books, SearchField to search books
  * and Section to indicate a subsection.
  */
 Bookshelf {
@@ -57,7 +57,7 @@ Bookshelf {
     Connections {
         target: peruseConfig;
         function onRecentlyOpenedChanged() { updateRecentlyReadTimer.start(); }
-        property QtObject updateRecentlyReadTimer: Timer {
+        property Timer updateRecentlyReadTimer: Timer {
             interval: 500
             running: false
             repeat: false
@@ -73,48 +73,17 @@ Bookshelf {
         }
     }
 
-    pageHeader: Item {
-        width: root.width
-        height: root.isLoading ? Kirigami.Units.gridUnit * 30 : Kirigami.Units.gridUnit * 5
-        Behavior on height { NumberAnimation { duration: Kirigami.Units.longDuration; } }
-        visible: !searching && applicationWindow().width > Kirigami.Units.gridUnit * 30
-        Kirigami.Heading {
-            id: appNameLabel;
-            anchors {
-                left: parent.left;
-                right: parent.right;
-                bottom: parent.verticalCenter;
-            }
-            text: "Peruse";
-            horizontalAlignment: Text.AlignHCenter;
-        }
-        QtControls.Label {
-            id: appDescriptionLabel;
-            anchors {
-                top: parent.verticalCenter;
-                left: parent.left;
-                right: parent.right;
-            }
-            text: i18nc("application subtitle", "Comic Book Reader");
-            horizontalAlignment: Text.AlignHCenter;
-        }
-        Rectangle {
-            anchors.centerIn: parent;
-            height: 1;
-            color: Kirigami.Theme.textColor;
-            width: appDescriptionLabel.paintedWidth;
-        }
-        Kirigami.Heading {
-            anchors {
-                bottom: parent.bottom
-                left: parent.left
-                right: parent.right
-                margins: Kirigami.Units.largeSpacing
-            }
-            opacity: root.isLoading ? 0 : 1
-            Behavior on opacity { NumberAnimation { duration: Kirigami.Units.longDuration; } }
-            text: recentBooksModel.count > 0 ? i18nc("title of list of recently opened books", "Continue Reading") : i18nc("title of list of recently discovered books", "Recently Added")
-            level: 2
+    pageHeader: Kirigami.Heading {
+        leftPadding: Kirigami.Units.gridUnit
+        rightPadding: Kirigami.Units.gridUnit
+        topPadding: Kirigami.Units.gridUnit
+
+        level: 2
+
+        text: if (recentBooksModel.count > 0) {
+            return i18nc("title of list of recently opened books", "Continue Reading");
+        } else {
+            return i18nc("title of list of recently discovered books", "Recently Added");
         }
     }
 }
