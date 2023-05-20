@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: peruse\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-07-19 00:43+0000\n"
+"POT-Creation-Date: 2023-05-20 00:44+0000\n"
 "PO-Revision-Date: 2022-07-09 17:56+0200\n"
 "Last-Translator: Víctor Rodrigo Córdoba <vrcordoba@gmail.com>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
@@ -265,7 +265,7 @@ msgctxt ""
 msgid "No matches"
 msgstr "Sin resultados"
 
-#: app/qml/Bookshelf.qml:208
+#: app/qml/Bookshelf.qml:186
 #, kde-format
 msgctxt "used for the author data in book lists if author is empty"
 msgid "(unknown)"
@@ -389,80 +389,37 @@ msgstr "Acciones"
 msgid "Back"
 msgstr "Atrás"
 
-#: app/qml/PeruseMain.qml:51
+#: app/qml/PeruseMain.qml:56
 #, kde-format
 msgctxt "@title:window the generic descriptive title of the application"
 msgid "Comic Book Reader"
 msgstr "Lector de libros de cómic"
 
-#: app/qml/PeruseMain.qml:104
-#, kde-format
-msgctxt "application title for the sidebar"
+#: app/qml/PeruseMain.qml:153
+#, fuzzy, kde-format
+#| msgctxt "application title for the sidebar"
+#| msgid "Peruse"
 msgid "Peruse"
 msgstr "Peruse"
 
-#: app/qml/PeruseMain.qml:130 creator/qml/Main.qml:90
-#, kde-format
-msgid "Navigation"
-msgstr "Navegación"
-
-#: app/qml/PeruseMain.qml:145
+#: app/qml/PeruseMain.qml:165
 #, kde-format
 msgid "Show intro page"
 msgstr "Mostrar página de inicio"
 
-#: app/qml/PeruseMain.qml:163
+#: app/qml/PeruseMain.qml:202
 #, kde-format
-msgctxt "shown with a throbber when searching for books on the device"
-msgid "Please wait while we find your books..."
-msgstr "Por favor, espere mientras encontramos sus libros..."
+msgctxt "Switch to the listing page showing the most recently read books"
+msgid "Home"
+msgstr ""
 
-#: app/qml/PeruseMain.qml:178
+#: app/qml/PeruseMain.qml:213
 #, kde-format
 msgctxt "Switch to the listing page showing the most recently discovered books"
 msgid "Recently Added Books"
 msgstr "Libros añadidos recientemente"
 
-#: app/qml/PeruseMain.qml:184
-#, kde-format
-msgctxt "Switch to the listing page showing items grouped by title"
-msgid "Group by Title"
-msgstr "Agrupar por título"
-
-#: app/qml/PeruseMain.qml:190
-#, kde-format
-msgctxt "Switch to the listing page showing items grouped by author"
-msgid "Group by Author"
-msgstr "Agrupar por autor"
-
-#: app/qml/PeruseMain.qml:196
-#, kde-format
-msgctxt "Switch to the listing page showing items grouped by series"
-msgid "Group by Series"
-msgstr "Agrupar por serie"
-
-#: app/qml/PeruseMain.qml:202
-#, kde-format
-msgctxt "Switch to the listing page showing items grouped by publisher"
-msgid "Group by Publisher"
-msgstr "Agrupar por editor"
-
-#: app/qml/PeruseMain.qml:208
-#, kde-format
-msgctxt ""
-"Switch to the listing page showing items grouped by keywords, characters or "
-"genres"
-msgid "Group by Keywords"
-msgstr "Agrupar por palabras claves"
-
-#: app/qml/PeruseMain.qml:214
-#, kde-format
-msgctxt ""
-"Switch to the listing page showing items grouped by their filesystem folder"
-msgid "Filter by Folder"
-msgstr "Filtrar por carpeta"
-
-#: app/qml/PeruseMain.qml:223 creator/qml/Main.qml:117
+#: app/qml/PeruseMain.qml:219 creator/qml/Main.qml:117
 #, kde-format
 msgctxt ""
 "Open a book from somewhere on disk (uses the open dialog, or a drilldown on "
@@ -470,62 +427,124 @@ msgctxt ""
 msgid "Open Other..."
 msgstr "Abrir otro..."
 
-#: app/qml/PeruseMain.qml:228
-#, kde-format
-msgctxt "Switch to the book store page"
-msgid "Get Hot New Books"
-msgstr "Conseguir libros nuevos"
+#: app/qml/PeruseMain.qml:226
+#, fuzzy, kde-format
+#| msgctxt "Switch to the listing page showing items grouped by title"
+#| msgid "Group by Title"
+msgctxt ""
+"Heading for switching to listing page showing items grouped by some "
+"properties"
+msgid "Group By"
+msgstr "Agrupar por título"
 
-#: app/qml/PeruseMain.qml:237 creator/qml/Main.qml:174
+#: app/qml/PeruseMain.qml:229
+#, fuzzy, kde-format
+#| msgctxt "label text for the edit field for the book title"
+#| msgid "Title"
+msgctxt "Switch to the listing page showing items grouped by title"
+msgid "Title"
+msgstr "Título"
+
+#: app/qml/PeruseMain.qml:235
+#, fuzzy, kde-format
+#| msgctxt "Label for the author field"
+#| msgid "Author:"
+msgctxt "Switch to the listing page showing items grouped by author"
+msgid "Author"
+msgstr "Autor:"
+
+#: app/qml/PeruseMain.qml:241
+#, fuzzy, kde-format
+#| msgctxt "Label for the series field"
+#| msgid "Series:"
+msgctxt "Switch to the listing page showing items grouped by series"
+msgid "Series"
+msgstr "Serie:"
+
+#: app/qml/PeruseMain.qml:247
+#, fuzzy, kde-format
+#| msgctxt "Label for publisher"
+#| msgid "Publisher"
+msgctxt "Switch to the listing page showing items grouped by publisher"
+msgid "Publisher"
+msgstr "Editor"
+
+#: app/qml/PeruseMain.qml:253
+#, fuzzy, kde-format
+#| msgctxt "label text for the edit field for the keyword list"
+#| msgid "Keywords"
+msgctxt ""
+"Switch to the listing page showing items grouped by keywords, characters or "
+"genres"
+msgid "Keywords"
+msgstr "Palabras clave"
+
+#: app/qml/PeruseMain.qml:259
+#, fuzzy, kde-format
+#| msgctxt ""
+#| "label text for the edit field for the file system location for the book"
+#| msgid "Folder"
+msgctxt ""
+"Switch to the listing page showing items grouped by their filesystem folder"
+msgid "Folder"
+msgstr "Carpeta"
+
+#: app/qml/PeruseMain.qml:275
+#, kde-format
+msgctxt "shown with a throbber when searching for books on the device"
+msgid "Please wait while we find your books..."
+msgstr "Por favor, espere mientras encontramos sus libros..."
+
+#: app/qml/PeruseMain.qml:285 creator/qml/Main.qml:174
 #, kde-format
 msgctxt "Open the settings page"
 msgid "Settings"
 msgstr "Preferencias"
 
-#: app/qml/PeruseMain.qml:243 creator/qml/Main.qml:180
+#: app/qml/PeruseMain.qml:292 creator/qml/Main.qml:180
 #, kde-format
 msgctxt "Open the about page"
 msgid "About"
 msgstr "Acerca de"
 
-#: app/qml/PeruseMain.qml:274
+#: app/qml/PeruseMain.qml:324
 #, kde-format
 msgctxt "Title of the page with books grouped by the title start letters"
 msgid "Group by Title"
 msgstr "Agrupar por título"
 
-#: app/qml/PeruseMain.qml:284
+#: app/qml/PeruseMain.qml:334
 #, kde-format
 msgctxt ""
 "Title of the page with all books ordered by which was added most recently"
 msgid "Recently Added Books"
 msgstr "Libros añadidos recientemente"
 
-#: app/qml/PeruseMain.qml:296
+#: app/qml/PeruseMain.qml:346
 #, kde-format
 msgctxt "Title of the page with books grouped by what series they are in"
 msgid "Group by Series"
 msgstr "Agrupar por serie"
 
-#: app/qml/PeruseMain.qml:306
+#: app/qml/PeruseMain.qml:356
 #, kde-format
 msgctxt "Title of the page with books grouped by author"
 msgid "Group by Author"
 msgstr "Agrupar por autor"
 
-#: app/qml/PeruseMain.qml:316
+#: app/qml/PeruseMain.qml:366
 #, kde-format
 msgctxt "Title of the page with books grouped by who published them"
 msgid "Group by Publisher"
 msgstr "Agrupar por editor"
 
-#: app/qml/PeruseMain.qml:326
+#: app/qml/PeruseMain.qml:376
 #, kde-format
 msgctxt "Title of the page with books grouped by keywords, character or genres"
 msgid "Group by Keywords, Characters and Genres"
 msgstr "Agrupar por palabras claves, personajes y géneros"
 
-#: app/qml/PeruseMain.qml:336
+#: app/qml/PeruseMain.qml:386
 #, kde-format
 msgctxt "Title of the page with books grouped by what folder they are in"
 msgid "Filter by Folder"
@@ -719,19 +738,13 @@ msgctxt "title of the welcome page"
 msgid "Welcome"
 msgstr "Bienvenido"
 
-#: app/qml/WelcomePage.qml:98
-#, kde-format
-msgctxt "application subtitle"
-msgid "Comic Book Reader"
-msgstr "Lector de cómics"
-
-#: app/qml/WelcomePage.qml:116
+#: app/qml/WelcomePage.qml:84
 #, kde-format
 msgctxt "title of list of recently opened books"
 msgid "Continue Reading"
 msgstr "Continuar leyendo"
 
-#: app/qml/WelcomePage.qml:116
+#: app/qml/WelcomePage.qml:86
 #, kde-format
 msgctxt "title of list of recently discovered books"
 msgid "Recently Added"
@@ -1952,6 +1965,11 @@ msgctxt "application title for the sidebar"
 msgid "Peruse Creator"
 msgstr "Creador de Peruse"
 
+#: creator/qml/Main.qml:90
+#, kde-format
+msgid "Navigation"
+msgstr "Navegación"
+
 #: creator/qml/Main.qml:105
 #, kde-format
 msgid "Switch to the welcome page"
@@ -2403,6 +2421,38 @@ msgid ""
 msgstr ""
 "Se remplazó exitosamente el antiguo archivo con el nuevo - cargando ahora el "
 "nuevo archivo... "
+
+#~ msgctxt "Switch to the listing page showing items grouped by author"
+#~ msgid "Group by Author"
+#~ msgstr "Agrupar por autor"
+
+#~ msgctxt "Switch to the listing page showing items grouped by series"
+#~ msgid "Group by Series"
+#~ msgstr "Agrupar por serie"
+
+#~ msgctxt "Switch to the listing page showing items grouped by publisher"
+#~ msgid "Group by Publisher"
+#~ msgstr "Agrupar por editor"
+
+#~ msgctxt ""
+#~ "Switch to the listing page showing items grouped by keywords, characters "
+#~ "or genres"
+#~ msgid "Group by Keywords"
+#~ msgstr "Agrupar por palabras claves"
+
+#~ msgctxt ""
+#~ "Switch to the listing page showing items grouped by their filesystem "
+#~ "folder"
+#~ msgid "Filter by Folder"
+#~ msgstr "Filtrar por carpeta"
+
+#~ msgctxt "Switch to the book store page"
+#~ msgid "Get Hot New Books"
+#~ msgstr "Conseguir libros nuevos"
+
+#~ msgctxt "application subtitle"
+#~ msgid "Comic Book Reader"
+#~ msgstr "Lector de cómics"
 
 #~ msgctxt "Enter full screen mode on any device type"
 #~ msgid "Go Full Screen"

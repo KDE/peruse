@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: peruse\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-07-19 00:43+0000\n"
+"POT-Creation-Date: 2023-05-20 00:44+0000\n"
 "PO-Revision-Date: 2022-07-14 14:27+0200\n"
 "Last-Translator: Vit Pelcak <vpelcak@suse.cz>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -262,7 +262,7 @@ msgctxt ""
 msgid "No matches"
 msgstr "Žádné shody"
 
-#: app/qml/Bookshelf.qml:208
+#: app/qml/Bookshelf.qml:186
 #, kde-format
 msgctxt "used for the author data in book lists if author is empty"
 msgid "(unknown)"
@@ -386,80 +386,37 @@ msgstr "Činnosti"
 msgid "Back"
 msgstr "Zpět"
 
-#: app/qml/PeruseMain.qml:51
+#: app/qml/PeruseMain.qml:56
 #, kde-format
 msgctxt "@title:window the generic descriptive title of the application"
 msgid "Comic Book Reader"
 msgstr "Čtečka komixů"
 
-#: app/qml/PeruseMain.qml:104
-#, kde-format
-msgctxt "application title for the sidebar"
+#: app/qml/PeruseMain.qml:153
+#, fuzzy, kde-format
+#| msgctxt "application title for the sidebar"
+#| msgid "Peruse"
 msgid "Peruse"
 msgstr "Peruse"
 
-#: app/qml/PeruseMain.qml:130 creator/qml/Main.qml:90
-#, kde-format
-msgid "Navigation"
-msgstr "Navigace"
-
-#: app/qml/PeruseMain.qml:145
+#: app/qml/PeruseMain.qml:165
 #, kde-format
 msgid "Show intro page"
 msgstr "Zobrazit úvodní stránku"
 
-#: app/qml/PeruseMain.qml:163
+#: app/qml/PeruseMain.qml:202
 #, kde-format
-msgctxt "shown with a throbber when searching for books on the device"
-msgid "Please wait while we find your books..."
+msgctxt "Switch to the listing page showing the most recently read books"
+msgid "Home"
 msgstr ""
 
-#: app/qml/PeruseMain.qml:178
+#: app/qml/PeruseMain.qml:213
 #, kde-format
 msgctxt "Switch to the listing page showing the most recently discovered books"
 msgid "Recently Added Books"
 msgstr "Nedávno přidané knihy"
 
-#: app/qml/PeruseMain.qml:184
-#, kde-format
-msgctxt "Switch to the listing page showing items grouped by title"
-msgid "Group by Title"
-msgstr ""
-
-#: app/qml/PeruseMain.qml:190
-#, kde-format
-msgctxt "Switch to the listing page showing items grouped by author"
-msgid "Group by Author"
-msgstr "Seskupit podle autora"
-
-#: app/qml/PeruseMain.qml:196
-#, kde-format
-msgctxt "Switch to the listing page showing items grouped by series"
-msgid "Group by Series"
-msgstr "Seskupit podle seriálu"
-
-#: app/qml/PeruseMain.qml:202
-#, kde-format
-msgctxt "Switch to the listing page showing items grouped by publisher"
-msgid "Group by Publisher"
-msgstr ""
-
-#: app/qml/PeruseMain.qml:208
-#, kde-format
-msgctxt ""
-"Switch to the listing page showing items grouped by keywords, characters or "
-"genres"
-msgid "Group by Keywords"
-msgstr "Seskupit podle klíčových slov"
-
-#: app/qml/PeruseMain.qml:214
-#, kde-format
-msgctxt ""
-"Switch to the listing page showing items grouped by their filesystem folder"
-msgid "Filter by Folder"
-msgstr "Filtrovat podle složky"
-
-#: app/qml/PeruseMain.qml:223 creator/qml/Main.qml:117
+#: app/qml/PeruseMain.qml:219 creator/qml/Main.qml:117
 #, kde-format
 msgctxt ""
 "Open a book from somewhere on disk (uses the open dialog, or a drilldown on "
@@ -467,62 +424,124 @@ msgctxt ""
 msgid "Open Other..."
 msgstr "Otevřít jinou..."
 
-#: app/qml/PeruseMain.qml:228
+#: app/qml/PeruseMain.qml:226
+#, fuzzy, kde-format
+#| msgctxt "Switch to the listing page showing items grouped by author"
+#| msgid "Group by Author"
+msgctxt ""
+"Heading for switching to listing page showing items grouped by some "
+"properties"
+msgid "Group By"
+msgstr "Seskupit podle autora"
+
+#: app/qml/PeruseMain.qml:229
+#, fuzzy, kde-format
+#| msgctxt "label text for the edit field for the book title"
+#| msgid "Title"
+msgctxt "Switch to the listing page showing items grouped by title"
+msgid "Title"
+msgstr "Název"
+
+#: app/qml/PeruseMain.qml:235
+#, fuzzy, kde-format
+#| msgctxt "Label for the author field"
+#| msgid "Author:"
+msgctxt "Switch to the listing page showing items grouped by author"
+msgid "Author"
+msgstr "Autor:"
+
+#: app/qml/PeruseMain.qml:241
+#, fuzzy, kde-format
+#| msgctxt "Label for the series field"
+#| msgid "Series:"
+msgctxt "Switch to the listing page showing items grouped by series"
+msgid "Series"
+msgstr "Série:"
+
+#: app/qml/PeruseMain.qml:247
+#, fuzzy, kde-format
+#| msgctxt "Label for publisher"
+#| msgid "Publisher"
+msgctxt "Switch to the listing page showing items grouped by publisher"
+msgid "Publisher"
+msgstr "Vydavatel"
+
+#: app/qml/PeruseMain.qml:253
+#, fuzzy, kde-format
+#| msgctxt "label text for the edit field for the keyword list"
+#| msgid "Keywords"
+msgctxt ""
+"Switch to the listing page showing items grouped by keywords, characters or "
+"genres"
+msgid "Keywords"
+msgstr "Klíčová slova"
+
+#: app/qml/PeruseMain.qml:259
+#, fuzzy, kde-format
+#| msgctxt ""
+#| "label text for the edit field for the file system location for the book"
+#| msgid "Folder"
+msgctxt ""
+"Switch to the listing page showing items grouped by their filesystem folder"
+msgid "Folder"
+msgstr "Složka"
+
+#: app/qml/PeruseMain.qml:275
 #, kde-format
-msgctxt "Switch to the book store page"
-msgid "Get Hot New Books"
+msgctxt "shown with a throbber when searching for books on the device"
+msgid "Please wait while we find your books..."
 msgstr ""
 
-#: app/qml/PeruseMain.qml:237 creator/qml/Main.qml:174
+#: app/qml/PeruseMain.qml:285 creator/qml/Main.qml:174
 #, kde-format
 msgctxt "Open the settings page"
 msgid "Settings"
 msgstr "Nastavení"
 
-#: app/qml/PeruseMain.qml:243 creator/qml/Main.qml:180
+#: app/qml/PeruseMain.qml:292 creator/qml/Main.qml:180
 #, kde-format
 msgctxt "Open the about page"
 msgid "About"
 msgstr "O aplikaci"
 
-#: app/qml/PeruseMain.qml:274
+#: app/qml/PeruseMain.qml:324
 #, kde-format
 msgctxt "Title of the page with books grouped by the title start letters"
 msgid "Group by Title"
 msgstr ""
 
-#: app/qml/PeruseMain.qml:284
+#: app/qml/PeruseMain.qml:334
 #, kde-format
 msgctxt ""
 "Title of the page with all books ordered by which was added most recently"
 msgid "Recently Added Books"
 msgstr "Nedávno přidané knihy"
 
-#: app/qml/PeruseMain.qml:296
+#: app/qml/PeruseMain.qml:346
 #, kde-format
 msgctxt "Title of the page with books grouped by what series they are in"
 msgid "Group by Series"
 msgstr "Seskupit podle seriálu"
 
-#: app/qml/PeruseMain.qml:306
+#: app/qml/PeruseMain.qml:356
 #, kde-format
 msgctxt "Title of the page with books grouped by author"
 msgid "Group by Author"
 msgstr "Seskupit podle autora"
 
-#: app/qml/PeruseMain.qml:316
+#: app/qml/PeruseMain.qml:366
 #, kde-format
 msgctxt "Title of the page with books grouped by who published them"
 msgid "Group by Publisher"
 msgstr ""
 
-#: app/qml/PeruseMain.qml:326
+#: app/qml/PeruseMain.qml:376
 #, kde-format
 msgctxt "Title of the page with books grouped by keywords, character or genres"
 msgid "Group by Keywords, Characters and Genres"
 msgstr ""
 
-#: app/qml/PeruseMain.qml:336
+#: app/qml/PeruseMain.qml:386
 #, kde-format
 msgctxt "Title of the page with books grouped by what folder they are in"
 msgid "Filter by Folder"
@@ -683,19 +702,13 @@ msgctxt "title of the welcome page"
 msgid "Welcome"
 msgstr "Vítejte"
 
-#: app/qml/WelcomePage.qml:98
-#, kde-format
-msgctxt "application subtitle"
-msgid "Comic Book Reader"
-msgstr "Čtečka komixů"
-
-#: app/qml/WelcomePage.qml:116
+#: app/qml/WelcomePage.qml:84
 #, kde-format
 msgctxt "title of list of recently opened books"
 msgid "Continue Reading"
 msgstr "Pokračovat ve čtení"
 
-#: app/qml/WelcomePage.qml:116
+#: app/qml/WelcomePage.qml:86
 #, kde-format
 msgctxt "title of list of recently discovered books"
 msgid "Recently Added"
@@ -1875,6 +1888,11 @@ msgctxt "application title for the sidebar"
 msgid "Peruse Creator"
 msgstr "Tvůrce Peruse"
 
+#: creator/qml/Main.qml:90
+#, kde-format
+msgid "Navigation"
+msgstr "Navigace"
+
 #: creator/qml/Main.qml:105
 #, kde-format
 msgid "Switch to the welcome page"
@@ -2317,3 +2335,23 @@ msgid ""
 "Successfully replaced old archive with the new archive - now loading the new "
 "archive..."
 msgstr ""
+
+#~ msgctxt "Switch to the listing page showing items grouped by series"
+#~ msgid "Group by Series"
+#~ msgstr "Seskupit podle seriálu"
+
+#~ msgctxt ""
+#~ "Switch to the listing page showing items grouped by keywords, characters "
+#~ "or genres"
+#~ msgid "Group by Keywords"
+#~ msgstr "Seskupit podle klíčových slov"
+
+#~ msgctxt ""
+#~ "Switch to the listing page showing items grouped by their filesystem "
+#~ "folder"
+#~ msgid "Filter by Folder"
+#~ msgstr "Filtrovat podle složky"
+
+#~ msgctxt "application subtitle"
+#~ msgid "Comic Book Reader"
+#~ msgstr "Čtečka komixů"
