@@ -1,16 +1,16 @@
 # Translation of peruse.po to Catalan (Valencian)
-# Copyright (C) 2018-2022 This_file_is_part_of_KDE
+# Copyright (C) 2018-2023 This_file_is_part_of_KDE
 # This file is distributed under the license LGPL version 2.1 or
 # version 3 or later versions approved by the membership of KDE e.V.
 #
-# Josep M. Ferrer <txemaq@gmail.com>, 2018, 2019, 2020, 2021, 2022.
+# Josep M. Ferrer <txemaq@gmail.com>, 2018, 2019, 2020, 2021, 2022, 2023.
 # Antoni Bella Pérez <antonibella5@yahoo.com>, 2018, 2020, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: peruse\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-20 00:44+0000\n"
-"PO-Revision-Date: 2022-07-07 10:19+0200\n"
+"PO-Revision-Date: 2023-05-20 10:03+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -401,9 +401,7 @@ msgid "Comic Book Reader"
 msgstr "Lector de llibres de còmic"
 
 #: app/qml/PeruseMain.qml:153
-#, fuzzy, kde-format
-#| msgctxt "application title for the sidebar"
-#| msgid "Peruse"
+#, kde-format
 msgid "Peruse"
 msgstr "Peruse"
 
@@ -416,7 +414,7 @@ msgstr "Mostra la pàgina d'introducció"
 #, kde-format
 msgctxt "Switch to the listing page showing the most recently read books"
 msgid "Home"
-msgstr ""
+msgstr "Inici"
 
 #: app/qml/PeruseMain.qml:213
 #, kde-format
@@ -433,51 +431,39 @@ msgid "Open Other..."
 msgstr "Obri'n altres..."
 
 #: app/qml/PeruseMain.qml:226
-#, fuzzy, kde-format
-#| msgctxt "Switch to the listing page showing items grouped by title"
-#| msgid "Group by Title"
+#, kde-format
 msgctxt ""
 "Heading for switching to listing page showing items grouped by some "
 "properties"
 msgid "Group By"
-msgstr "Agrupa per títol"
+msgstr "Agrupa per"
 
 #: app/qml/PeruseMain.qml:229
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the book title"
-#| msgid "Title"
+#, kde-format
 msgctxt "Switch to the listing page showing items grouped by title"
 msgid "Title"
 msgstr "Títol"
 
 #: app/qml/PeruseMain.qml:235
-#, fuzzy, kde-format
-#| msgctxt "Label for the author field"
-#| msgid "Author:"
+#, kde-format
 msgctxt "Switch to the listing page showing items grouped by author"
 msgid "Author"
-msgstr "Autoria:"
+msgstr "Autoria"
 
 #: app/qml/PeruseMain.qml:241
-#, fuzzy, kde-format
-#| msgctxt "Label for the series field"
-#| msgid "Series:"
+#, kde-format
 msgctxt "Switch to the listing page showing items grouped by series"
 msgid "Series"
-msgstr "Sèries:"
+msgstr "Sèries"
 
 #: app/qml/PeruseMain.qml:247
-#, fuzzy, kde-format
-#| msgctxt "Label for publisher"
-#| msgid "Publisher"
+#, kde-format
 msgctxt "Switch to the listing page showing items grouped by publisher"
 msgid "Publisher"
 msgstr "Editorial"
 
 #: app/qml/PeruseMain.qml:253
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the keyword list"
-#| msgid "Keywords"
+#, kde-format
 msgctxt ""
 "Switch to the listing page showing items grouped by keywords, characters or "
 "genres"
@@ -485,10 +471,7 @@ msgid "Keywords"
 msgstr "Paraules clau"
 
 #: app/qml/PeruseMain.qml:259
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "label text for the edit field for the file system location for the book"
-#| msgid "Folder"
+#, kde-format
 msgctxt ""
 "Switch to the listing page showing items grouped by their filesystem folder"
 msgid "Folder"
@@ -2422,35 +2405,3 @@ msgid ""
 msgstr ""
 "S'ha reemplaçat correctament l'arxiu antic per l'arxiu nou - ara es carrega "
 "l'arxiu nou..."
-
-#~ msgctxt "Switch to the listing page showing items grouped by author"
-#~ msgid "Group by Author"
-#~ msgstr "Agrupa per autor"
-
-#~ msgctxt "Switch to the listing page showing items grouped by series"
-#~ msgid "Group by Series"
-#~ msgstr "Agrupa per sèries"
-
-#~ msgctxt "Switch to the listing page showing items grouped by publisher"
-#~ msgid "Group by Publisher"
-#~ msgstr "Agrupa per editorial"
-
-#~ msgctxt ""
-#~ "Switch to the listing page showing items grouped by keywords, characters "
-#~ "or genres"
-#~ msgid "Group by Keywords"
-#~ msgstr "Agrupa per paraules clau"
-
-#~ msgctxt ""
-#~ "Switch to the listing page showing items grouped by their filesystem "
-#~ "folder"
-#~ msgid "Filter by Folder"
-#~ msgstr "Filtra per carpeta"
-
-#~ msgctxt "Switch to the book store page"
-#~ msgid "Get Hot New Books"
-#~ msgstr "Obtín llibres nous candents"
-
-#~ msgctxt "application subtitle"
-#~ msgid "Comic Book Reader"
-#~ msgstr "Lector de llibres de còmic"

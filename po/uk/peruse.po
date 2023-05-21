@@ -3,13 +3,13 @@
 # This file is distributed under the license LGPL version 2.1 or
 # version 3 or later versions approved by the membership of KDE e.V.
 #
-# Yuri Chornoivan <yurchor@ukr.net>, 2018, 2019, 2020, 2021, 2022.
+# Yuri Chornoivan <yurchor@ukr.net>, 2018, 2019, 2020, 2021, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: peruse\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-20 00:44+0000\n"
-"PO-Revision-Date: 2022-07-07 09:14+0300\n"
+"PO-Revision-Date: 2023-05-20 08:42+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -398,9 +398,7 @@ msgid "Comic Book Reader"
 msgstr "Програма для читання коміксів"
 
 #: app/qml/PeruseMain.qml:153
-#, fuzzy, kde-format
-#| msgctxt "application title for the sidebar"
-#| msgid "Peruse"
+#, kde-format
 msgid "Peruse"
 msgstr "Peruse"
 
@@ -413,7 +411,7 @@ msgstr "Показати вступну сторінку"
 #, kde-format
 msgctxt "Switch to the listing page showing the most recently read books"
 msgid "Home"
-msgstr ""
+msgstr "Домівка"
 
 #: app/qml/PeruseMain.qml:213
 #, kde-format
@@ -430,51 +428,39 @@ msgid "Open Other..."
 msgstr "Відкрити інший…"
 
 #: app/qml/PeruseMain.qml:226
-#, fuzzy, kde-format
-#| msgctxt "Switch to the listing page showing items grouped by title"
-#| msgid "Group by Title"
+#, kde-format
 msgctxt ""
 "Heading for switching to listing page showing items grouped by some "
 "properties"
 msgid "Group By"
-msgstr "Групувати за заголовками"
+msgstr "Згрупувати за"
 
 #: app/qml/PeruseMain.qml:229
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the book title"
-#| msgid "Title"
+#, kde-format
 msgctxt "Switch to the listing page showing items grouped by title"
 msgid "Title"
 msgstr "Заголовок"
 
 #: app/qml/PeruseMain.qml:235
-#, fuzzy, kde-format
-#| msgctxt "Label for the author field"
-#| msgid "Author:"
+#, kde-format
 msgctxt "Switch to the listing page showing items grouped by author"
 msgid "Author"
-msgstr "Автор:"
+msgstr "Автор"
 
 #: app/qml/PeruseMain.qml:241
-#, fuzzy, kde-format
-#| msgctxt "Label for the series field"
-#| msgid "Series:"
+#, kde-format
 msgctxt "Switch to the listing page showing items grouped by series"
 msgid "Series"
-msgstr "Варіант:"
+msgstr "Цикл"
 
 #: app/qml/PeruseMain.qml:247
-#, fuzzy, kde-format
-#| msgctxt "Label for publisher"
-#| msgid "Publisher"
+#, kde-format
 msgctxt "Switch to the listing page showing items grouped by publisher"
 msgid "Publisher"
 msgstr "Видавець"
 
 #: app/qml/PeruseMain.qml:253
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the keyword list"
-#| msgid "Keywords"
+#, kde-format
 msgctxt ""
 "Switch to the listing page showing items grouped by keywords, characters or "
 "genres"
@@ -482,10 +468,7 @@ msgid "Keywords"
 msgstr "Ключові слова"
 
 #: app/qml/PeruseMain.qml:259
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "label text for the edit field for the file system location for the book"
-#| msgid "Folder"
+#, kde-format
 msgctxt ""
 "Switch to the listing page showing items grouped by their filesystem folder"
 msgid "Folder"

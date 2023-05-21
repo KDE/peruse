@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This file is copyright:
 # This file is distributed under the same license as the peruse package.
 #
-# Emir SARI <emir_sari@icloud.com>, 2022.
+# Emir SARI <emir_sari@icloud.com>, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: peruse\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-20 00:44+0000\n"
-"PO-Revision-Date: 2022-07-07 11:22+0300\n"
+"PO-Revision-Date: 2023-05-20 12:43+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.04.2\n"
+"X-Generator: Lokalize 23.03.70\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -395,9 +395,7 @@ msgid "Comic Book Reader"
 msgstr "Çizgi Roman Okuyucu"
 
 #: app/qml/PeruseMain.qml:153
-#, fuzzy, kde-format
-#| msgctxt "application title for the sidebar"
-#| msgid "Peruse"
+#, kde-format
 msgid "Peruse"
 msgstr "Peruse"
 
@@ -410,7 +408,7 @@ msgstr "Giriş sayfasını göster"
 #, kde-format
 msgctxt "Switch to the listing page showing the most recently read books"
 msgid "Home"
-msgstr ""
+msgstr "Ana Sayfa"
 
 #: app/qml/PeruseMain.qml:213
 #, kde-format
@@ -427,51 +425,39 @@ msgid "Open Other..."
 msgstr "Başka Aç..."
 
 #: app/qml/PeruseMain.qml:226
-#, fuzzy, kde-format
-#| msgctxt "Switch to the listing page showing items grouped by title"
-#| msgid "Group by Title"
+#, kde-format
 msgctxt ""
 "Heading for switching to listing page showing items grouped by some "
 "properties"
 msgid "Group By"
-msgstr "Başlığa Göre Sırala"
+msgstr "Şuna Göre Sırala"
 
 #: app/qml/PeruseMain.qml:229
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the book title"
-#| msgid "Title"
+#, kde-format
 msgctxt "Switch to the listing page showing items grouped by title"
 msgid "Title"
 msgstr "Başlık"
 
 #: app/qml/PeruseMain.qml:235
-#, fuzzy, kde-format
-#| msgctxt "Label for the author field"
-#| msgid "Author:"
+#, kde-format
 msgctxt "Switch to the listing page showing items grouped by author"
 msgid "Author"
-msgstr "Yazar:"
+msgstr "Yazar"
 
 #: app/qml/PeruseMain.qml:241
-#, fuzzy, kde-format
-#| msgctxt "Label for the series field"
-#| msgid "Series:"
+#, kde-format
 msgctxt "Switch to the listing page showing items grouped by series"
 msgid "Series"
-msgstr "Dizi:"
+msgstr "Dizi"
 
 #: app/qml/PeruseMain.qml:247
-#, fuzzy, kde-format
-#| msgctxt "Label for publisher"
-#| msgid "Publisher"
+#, kde-format
 msgctxt "Switch to the listing page showing items grouped by publisher"
 msgid "Publisher"
 msgstr "Yayımcı"
 
 #: app/qml/PeruseMain.qml:253
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the keyword list"
-#| msgid "Keywords"
+#, kde-format
 msgctxt ""
 "Switch to the listing page showing items grouped by keywords, characters or "
 "genres"
@@ -479,10 +465,7 @@ msgid "Keywords"
 msgstr "Anahtar Sözcükler"
 
 #: app/qml/PeruseMain.qml:259
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "label text for the edit field for the file system location for the book"
-#| msgid "Folder"
+#, kde-format
 msgctxt ""
 "Switch to the listing page showing items grouped by their filesystem folder"
 msgid "Folder"
