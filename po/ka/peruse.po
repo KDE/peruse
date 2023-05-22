@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: peruse\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-20 00:44+0000\n"
-"PO-Revision-Date: 2023-01-22 17:00+0100\n"
+"PO-Revision-Date: 2023-05-21 05:34+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -31,12 +31,12 @@ msgstr "Temuri.doghonadze@gmail.com"
 #: app/main.cpp:49
 #, kde-format
 msgid "Peruse Reader"
-msgstr ""
+msgstr "წამკითხველი Peruse"
 
 #: app/main.cpp:49
 #, kde-format
 msgid "Comic Book Reader by KDE"
-msgstr ""
+msgstr "კომიქსების წიგნების წამკითხავი KDE-სგან"
 
 #: app/main.cpp:50 creator/main.cpp:45
 #, kde-format
@@ -56,7 +56,7 @@ msgstr ""
 #: app/main.cpp:58 creator/main.cpp:52
 #, kde-format
 msgid "Open file in peruse."
-msgstr ""
+msgstr "გახსენით ფაილი Peruse-ში."
 
 #: app/qml/Book.qml:186
 #, kde-format
@@ -394,9 +394,7 @@ msgid "Comic Book Reader"
 msgstr "კომიქსების წიგნების წამკითხავი"
 
 #: app/qml/PeruseMain.qml:153
-#, fuzzy, kde-format
-#| msgctxt "application title for the sidebar"
-#| msgid "Peruse"
+#, kde-format
 msgid "Peruse"
 msgstr "Peruse"
 
@@ -409,13 +407,13 @@ msgstr "შესავალი გვერდის ჩვენება"
 #, kde-format
 msgctxt "Switch to the listing page showing the most recently read books"
 msgid "Home"
-msgstr ""
+msgstr "მთავარი"
 
 #: app/qml/PeruseMain.qml:213
 #, kde-format
 msgctxt "Switch to the listing page showing the most recently discovered books"
 msgid "Recently Added Books"
-msgstr ""
+msgstr "ახლახანს დამატებული წიგნები"
 
 #: app/qml/PeruseMain.qml:219 creator/qml/Main.qml:117
 #, kde-format
@@ -426,51 +424,39 @@ msgid "Open Other..."
 msgstr "სხვის გახსნა..."
 
 #: app/qml/PeruseMain.qml:226
-#, fuzzy, kde-format
-#| msgctxt "Switch to the listing page showing items grouped by title"
-#| msgid "Group by Title"
+#, kde-format
 msgctxt ""
 "Heading for switching to listing page showing items grouped by some "
 "properties"
 msgid "Group By"
-msgstr "სათაურით დაჯგუფება"
+msgstr "დაჯგუფების პირობა"
 
 #: app/qml/PeruseMain.qml:229
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the book title"
-#| msgid "Title"
+#, kde-format
 msgctxt "Switch to the listing page showing items grouped by title"
 msgid "Title"
 msgstr "სათაური"
 
 #: app/qml/PeruseMain.qml:235
-#, fuzzy, kde-format
-#| msgctxt "Label for the author field"
-#| msgid "Author:"
+#, kde-format
 msgctxt "Switch to the listing page showing items grouped by author"
 msgid "Author"
-msgstr "ავტორი:"
+msgstr "ავტორი"
 
 #: app/qml/PeruseMain.qml:241
-#, fuzzy, kde-format
-#| msgctxt "Label for the series field"
-#| msgid "Series:"
+#, kde-format
 msgctxt "Switch to the listing page showing items grouped by series"
 msgid "Series"
-msgstr "სერიები:"
+msgstr "სერიები"
 
 #: app/qml/PeruseMain.qml:247
-#, fuzzy, kde-format
-#| msgctxt "Label for publisher"
-#| msgid "Publisher"
+#, kde-format
 msgctxt "Switch to the listing page showing items grouped by publisher"
 msgid "Publisher"
 msgstr "გამომცემელი"
 
 #: app/qml/PeruseMain.qml:253
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the keyword list"
-#| msgid "Keywords"
+#, kde-format
 msgctxt ""
 "Switch to the listing page showing items grouped by keywords, characters or "
 "genres"
@@ -478,10 +464,7 @@ msgid "Keywords"
 msgstr "საკვანძო სიტყვები"
 
 #: app/qml/PeruseMain.qml:259
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "label text for the edit field for the file system location for the book"
-#| msgid "Folder"
+#, kde-format
 msgctxt ""
 "Switch to the listing page showing items grouped by their filesystem folder"
 msgid "Folder"
@@ -516,7 +499,7 @@ msgstr "სათაურით დაჯგუფება"
 msgctxt ""
 "Title of the page with all books ordered by which was added most recently"
 msgid "Recently Added Books"
-msgstr ""
+msgstr "ახლახანს დამატებული წიგნები"
 
 #: app/qml/PeruseMain.qml:346
 #, kde-format
@@ -552,7 +535,7 @@ msgstr "საქაღალდით გაფილტვრა"
 #, kde-format
 msgctxt "title of the settings page"
 msgid "Configure the indexed folders"
-msgstr ""
+msgstr "დაინდექსებული საქაღალდეების მორგება"
 
 #: app/qml/Settings.qml:48
 #, kde-format
@@ -568,7 +551,7 @@ msgstr "წაშლა"
 #: app/qml/Settings.qml:98
 #, kde-format
 msgid "There are no folder currently indexed."
-msgstr ""
+msgstr "ამჟამად დაინდექსებული საქაღალდე არ გაქვთ."
 
 #: app/qml/Settings.qml:108
 #, kde-format
@@ -735,13 +718,13 @@ msgstr "გვერდის ადგილის დამატება"
 #, kde-format
 msgctxt "Button which creates a new frame, and closes the dialog"
 msgid "Create Frame"
-msgstr ""
+msgstr "ჩარჩოს შექმნა"
 
 #: creator/qml/AddPageArea.qml:98
 #, kde-format
 msgctxt "Button which creates new textarea, and closes the dialog"
 msgid "Create Textarea"
-msgstr ""
+msgstr "TextArea-ის შექმნა"
 
 #: creator/qml/AddPageArea.qml:112
 #, kde-format
@@ -900,19 +883,19 @@ msgstr "ფაილის წასაშლელად მონიშვნ�
 #, kde-format
 msgctxt "If a file is not referenced at all"
 msgid "Unreferenced file"
-msgstr ""
+msgstr "ფაილს არაფერი მიმართავს"
 
 #: creator/qml/BookBasics.qml:197
 #, kde-format
 msgctxt "If a file is referenced by its full path"
 msgid "Referenced by full path"
-msgstr ""
+msgstr "მიმართულია სრული ბილიკით"
 
 #: creator/qml/BookBasics.qml:199
 #, kde-format
 msgctxt "If a file is referenced partially, describe that"
 msgid "Referenced by filename only"
-msgstr ""
+msgstr "მიმართულია მხოლოდ ფაილის სახელით"
 
 #: creator/qml/BookBasics.qml:201
 #, kde-format
@@ -938,7 +921,7 @@ msgstr "ფაილის დამატება..."
 #, kde-format
 msgctxt "The initial identifier used for a newly created binary data element"
 msgid "Unnamed Binary"
-msgstr ""
+msgstr "უსახელო ბინარული ელემენტი"
 
 #: creator/qml/BookBinaries.qml:81
 #, kde-format
@@ -995,7 +978,7 @@ msgstr "შემცველობის ტიპი: %1"
 #, kde-format
 msgctxt "title text for a sheet which lets the user edit a binary entry"
 msgid "Edit Binary"
-msgstr ""
+msgstr "ბინარული ელემენტის ჩასწორება"
 
 #: creator/qml/BookBinaryEditor.qml:52
 #, kde-format
@@ -1064,7 +1047,7 @@ msgstr "მონაცემების შემოტანა..."
 msgctxt ""
 "@title:window standard file open dialog used to add file data into the book"
 msgid "Pick A File To Add"
-msgstr ""
+msgstr "აირჩიეთ დასამატებელი ფაილი"
 
 #: creator/qml/BookBinaryEditor.qml:109 creator/qml/Main.qml:264
 #, kde-format
@@ -1130,7 +1113,7 @@ msgstr "ანოტაცია"
 #, kde-format
 msgctxt "placeholder text for default annotation text-area"
 msgid "Write to add default annotation"
-msgstr ""
+msgstr "აკრიფეთ ნაგულისხმები ანოტაციის დასამატებლად"
 
 #: creator/qml/BookMetainfoPage.qml:101
 #, kde-format
@@ -1142,7 +1125,7 @@ msgstr "საკვანძო სიტყვები"
 #, kde-format
 msgctxt "placeholder text for the add new keyword text entry"
 msgid "Write a comma separated list of keywords."
-msgstr ""
+msgstr "აკრიფეთ მძიმით გამოყოფილი საკვანძო სიტყვები."
 
 #: creator/qml/BookMetainfoPage.qml:122
 #, kde-format
@@ -1160,7 +1143,7 @@ msgstr "(უსახელო)"
 #, kde-format
 msgctxt "placeholder text for the add new author text entry"
 msgid "Write to add new author (nickname)"
-msgstr ""
+msgstr "აკრიფეთ ახალი ავტორის დასამატებლად (მეტსახელი)"
 
 #: creator/qml/BookMetainfoPage.qml:197
 #, kde-format
@@ -1178,7 +1161,7 @@ msgstr "სიმბოლოები"
 #, kde-format
 msgctxt "placeholder text for the add new character text entry"
 msgid "Write to add new character"
-msgstr ""
+msgstr "აკრიფეთ ახალი სიმბოლოს დასამატებლად"
 
 #: creator/qml/BookMetainfoPage.qml:333
 #, kde-format
@@ -1202,25 +1185,25 @@ msgstr "ტომი:"
 #, kde-format
 msgctxt "placeholder text for the add new series text entry"
 msgid "Write to add new series"
-msgstr ""
+msgstr "აკრიფეთ ახალი სერიების დასამატებლად"
 
 #: creator/qml/BookMetainfoPage.qml:460
 #, kde-format
 msgctxt "label text for the edit field for the database reference list"
 msgid "Database References"
-msgstr ""
+msgstr "ბაზასთან მიმართველი"
 
 #: creator/qml/BookMetainfoPage.qml:501
 #, kde-format
 msgctxt "placeholder text for the add reference type text entry"
 msgid "Write to add reference type"
-msgstr ""
+msgstr "აკრიფეთ მიმართვის ტიპის დასამატებლად"
 
 #: creator/qml/BookMetainfoPage.qml:538
 #, kde-format
 msgctxt "placeholder text for the add new reference text entry"
 msgid "Write to add new reference"
-msgstr ""
+msgstr "აკრიფეთ ახალი მიმართვის დასამატებლად"
 
 #: creator/qml/BookMetainfoPage.qml:548
 #, kde-format
@@ -1232,19 +1215,19 @@ msgstr ""
 #, kde-format
 msgctxt "label text for the edit field for the content rating list"
 msgid "Content Ratings"
-msgstr ""
+msgstr "შემცველობის შეფასებები"
 
 #: creator/qml/BookMetainfoPage.qml:587 creator/qml/BookMetainfoPage.qml:633
 #, kde-format
 msgctxt "placeholder text for the add content rating text entry"
 msgid "Write to add rating label."
-msgstr ""
+msgstr "აკრიფეთ შეფასების ჭდის დასამატებლად."
 
 #: creator/qml/BookMetainfoPage.qml:598 creator/qml/BookMetainfoPage.qml:643
 #, kde-format
 msgctxt "placeholder text for the add content rating system text entry"
 msgid "Write to add rating system."
-msgstr ""
+msgstr "აკრიფეთ შეფასების სისტემის დასამატებლად."
 
 #: creator/qml/BookMetainfoPage.qml:663
 #, kde-format
@@ -1352,7 +1335,7 @@ msgstr "გვერდის ფონის საერთო ფერი"
 #, kde-format
 msgctxt "@title color choosing dialog"
 msgid "Choose the general background color for this comic"
-msgstr ""
+msgstr "აირჩიეთ ამ კომიქსის ზოგადი ფონის ფერი"
 
 #: creator/qml/BookPage.qml:32
 #, kde-format
@@ -1389,7 +1372,7 @@ msgstr ""
 #, kde-format
 msgctxt "title text for the reference editor page"
 msgid "Editing %1 (language: %2)"
-msgstr ""
+msgstr "რედაქტირება %1 (ენა: %2)"
 
 #: creator/qml/BookReferenceEditor.qml:59
 #, kde-format
@@ -1730,7 +1713,7 @@ msgstr "ფონის ფერი:"
 #, kde-format
 msgctxt "@title color choosing dialog"
 msgid "Choose the background color for this frame"
-msgstr ""
+msgstr "აირჩიეთ ამ ჩარჩოს ფონის ფერი"
 
 #: creator/qml/EditPageArea.qml:218
 #, kde-format
@@ -1837,7 +1820,7 @@ msgctxt ""
 "Entry in a dropdown list which gives the name of a reference object, and "
 "identifies it as one such"
 msgid "%1 (Reference)"
-msgstr ""
+msgstr "%1 (მიმართვა)"
 
 #: creator/qml/LinkEditorSheet.qml:131
 #, kde-format
@@ -1845,7 +1828,7 @@ msgctxt ""
 "Entry in a dropdown list which gives the name of a binary object, and "
 "identifies it as one such"
 msgid "%1 (Binary)"
-msgstr ""
+msgstr "%1 (ბინარული)"
 
 #: creator/qml/LinkEditorSheet.qml:134
 #, kde-format
@@ -1853,7 +1836,7 @@ msgctxt ""
 "Entry in a dropdown list which gives the base details of a Textarea object, "
 "and identifies it as one such"
 msgid "Textarea (ID: %1, text: %2)"
-msgstr ""
+msgstr "Textarea (ID: %1 , ტექსტი: %2)"
 
 #: creator/qml/LinkEditorSheet.qml:137
 #, kde-format
@@ -1861,7 +1844,7 @@ msgctxt ""
 "Entry in a dropdown list which gives the name of a frame object, and "
 "identifies it as one such"
 msgid "%1 (Frame)"
-msgstr ""
+msgstr "%1 (ჩარჩო)"
 
 #: creator/qml/LinkEditorSheet.qml:140
 #, kde-format
@@ -1875,7 +1858,7 @@ msgctxt ""
 "Entry in a dropdown list which gives the name of an identified object of an "
 "unknown type, and marks it as one such"
 msgid "%1 (Unknown Type)"
-msgstr ""
+msgstr "%1 (უცნობი ტიპი)"
 
 #: creator/qml/LinkEditorSheet.qml:155
 #, kde-format
@@ -1953,13 +1936,13 @@ msgctxt ""
 "@title:window standard file open dialog used to open a book not in the "
 "collection"
 msgid "Please Choose a Book to Open"
-msgstr ""
+msgstr "აირჩიეთ წიგნი გასახსნელად"
 
 #: creator/qml/Main.qml:263
 #, kde-format
 msgctxt "The file type filter for comic book archives"
 msgid "Comic Book Archive zip format %1"
-msgstr ""
+msgstr "კომიქსის წიგნის არქივის ZIP ფორმატი %1"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:73
 #, kde-format
@@ -1971,7 +1954,7 @@ msgstr "ავტორის ჩასწორება"
 #, kde-format
 msgctxt "help text for the edit author sheet"
 msgid "Please complete the information for this author."
-msgstr ""
+msgstr "დაასრულეთ ინფორმაცია ამ ავტორის შესახებ."
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:109
 #, kde-format
@@ -2104,7 +2087,7 @@ msgstr "ID-ის დასამატებლად აკრიფეთ"
 #, kde-format
 msgctxt "label text for the edit field for the page transition type"
 msgid "Transition"
-msgstr ""
+msgstr "გადასვლა"
 
 #: creator/qml/PageMetaInfo.qml:81
 #, kde-format
@@ -2116,7 +2099,7 @@ msgstr "ფონის ფერი"
 #, kde-format
 msgctxt "@title color choosing dialog"
 msgid "Choose the background color for page"
-msgstr ""
+msgstr "აირჩიეთ ფონის ფერი გვერდისთვის"
 
 #: creator/qml/PageMetaInfo.qml:111
 #, kde-format
@@ -2128,7 +2111,7 @@ msgstr "კადრები"
 #, kde-format
 msgctxt "Comic book panel frame name."
 msgid "Frame %1"
-msgstr ""
+msgstr "ჩარჩო %1"
 
 #: creator/qml/PageMetaInfo.qml:122
 #, kde-format
@@ -2148,7 +2131,7 @@ msgstr "ფონის ფერი:"
 #, kde-format
 msgctxt "@title color choosing dialog"
 msgid "Choose background color for this frame"
-msgstr ""
+msgstr "აირჩიეთ ამ ჩარჩოს ფონის ფერი"
 
 #: creator/qml/PageMetaInfo.qml:158
 #, kde-format
@@ -2166,7 +2149,7 @@ msgstr "ჩამოწევა"
 #, kde-format
 msgctxt "remove the frame from the page"
 msgid "Delete Frame"
-msgstr ""
+msgstr "ჩარჩოს წაშლა"
 
 #: creator/qml/PageMetaInfo.qml:184
 #, kde-format

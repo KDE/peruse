@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: peruse\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-20 00:44+0000\n"
-"PO-Revision-Date: 2022-07-07 11:10+0100\n"
+"PO-Revision-Date: 2023-05-20 22:26+0100\n"
 "Last-Translator: José Nuno Coelho Pires <zepires@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-pt@kde.org>\n"
 "Language: pt\n"
@@ -392,9 +392,7 @@ msgid "Comic Book Reader"
 msgstr "Leitor de Bandas Desenhadas"
 
 #: app/qml/PeruseMain.qml:153
-#, fuzzy, kde-format
-#| msgctxt "application title for the sidebar"
-#| msgid "Peruse"
+#, kde-format
 msgid "Peruse"
 msgstr "Peruse"
 
@@ -407,7 +405,7 @@ msgstr "Mostrar a página introdutória"
 #, kde-format
 msgctxt "Switch to the listing page showing the most recently read books"
 msgid "Home"
-msgstr ""
+msgstr "Início"
 
 #: app/qml/PeruseMain.qml:213
 #, kde-format
@@ -424,51 +422,39 @@ msgid "Open Other..."
 msgstr "Abrir Outro..."
 
 #: app/qml/PeruseMain.qml:226
-#, fuzzy, kde-format
-#| msgctxt "Switch to the listing page showing items grouped by title"
-#| msgid "Group by Title"
+#, kde-format
 msgctxt ""
 "Heading for switching to listing page showing items grouped by some "
 "properties"
 msgid "Group By"
-msgstr "Agrupar pelo Título"
+msgstr "Agrupar Por"
 
 #: app/qml/PeruseMain.qml:229
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the book title"
-#| msgid "Title"
+#, kde-format
 msgctxt "Switch to the listing page showing items grouped by title"
 msgid "Title"
 msgstr "Título"
 
 #: app/qml/PeruseMain.qml:235
-#, fuzzy, kde-format
-#| msgctxt "Label for the author field"
-#| msgid "Author:"
+#, kde-format
 msgctxt "Switch to the listing page showing items grouped by author"
 msgid "Author"
-msgstr "Autor:"
+msgstr "Autor"
 
 #: app/qml/PeruseMain.qml:241
-#, fuzzy, kde-format
-#| msgctxt "Label for the series field"
-#| msgid "Series:"
+#, kde-format
 msgctxt "Switch to the listing page showing items grouped by series"
 msgid "Series"
-msgstr "Série:"
+msgstr "Série"
 
 #: app/qml/PeruseMain.qml:247
-#, fuzzy, kde-format
-#| msgctxt "Label for publisher"
-#| msgid "Publisher"
+#, kde-format
 msgctxt "Switch to the listing page showing items grouped by publisher"
 msgid "Publisher"
 msgstr "Publicador"
 
 #: app/qml/PeruseMain.qml:253
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the keyword list"
-#| msgid "Keywords"
+#, kde-format
 msgctxt ""
 "Switch to the listing page showing items grouped by keywords, characters or "
 "genres"
@@ -476,10 +462,7 @@ msgid "Keywords"
 msgstr "Palavras-Chave"
 
 #: app/qml/PeruseMain.qml:259
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "label text for the edit field for the file system location for the book"
-#| msgid "Folder"
+#, kde-format
 msgctxt ""
 "Switch to the listing page showing items grouped by their filesystem folder"
 msgid "Folder"
@@ -2417,43 +2400,3 @@ msgid ""
 msgstr ""
 "Foi substituído com sucesso o pacote antigo pelo novo - agora a carregar o "
 "pacote novo..."
-
-#~ msgctxt "Switch to the listing page showing items grouped by author"
-#~ msgid "Group by Author"
-#~ msgstr "Agrupar pelo Autor"
-
-#~ msgctxt "Switch to the listing page showing items grouped by series"
-#~ msgid "Group by Series"
-#~ msgstr "Agrupar pela Série"
-
-#~ msgctxt "Switch to the listing page showing items grouped by publisher"
-#~ msgid "Group by Publisher"
-#~ msgstr "Agrupar pelo Publicador"
-
-#~ msgctxt ""
-#~ "Switch to the listing page showing items grouped by keywords, characters "
-#~ "or genres"
-#~ msgid "Group by Keywords"
-#~ msgstr "Agrupar pelas Palavras-Chave"
-
-#~ msgctxt ""
-#~ "Switch to the listing page showing items grouped by their filesystem "
-#~ "folder"
-#~ msgid "Filter by Folder"
-#~ msgstr "Filtrar pela Pasta"
-
-#~ msgctxt "Switch to the book store page"
-#~ msgid "Get Hot New Books"
-#~ msgstr "Obter Livros Novos"
-
-#~ msgctxt "application subtitle"
-#~ msgid "Comic Book Reader"
-#~ msgstr "Leitor de Bandas Desenhadas"
-
-#~ msgctxt "Enter full screen mode on any device type"
-#~ msgid "Go Full Screen"
-#~ msgstr "Ir para o Ecrã Completo"
-
-#~ msgctxt "Exit full screen mode on any device type"
-#~ msgid "Exit Full Screen"
-#~ msgstr "Sair do Ecrã Completo"
