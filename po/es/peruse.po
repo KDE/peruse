@@ -1,14 +1,14 @@
 # Copyright (C) YEAR This file is copyright:
 # This file is distributed under the same license as the peruse package.
 #
-# Víctor Rodrigo Córdoba <vrcordoba@gmail.com>, 2018, 2019, 2020, 2021, 2022, %Y.
+# Víctor Rodrigo Córdoba <vrcordoba@gmail.com>, 2018, 2019, 2020, 2021, 2022, 2023, %Y.
 # Eloy Cuadra <ecuadra@eloihr.net>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: peruse\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-20 00:44+0000\n"
-"PO-Revision-Date: 2022-07-09 17:56+0200\n"
+"PO-Revision-Date: 2023-05-27 17:22+0200\n"
 "Last-Translator: Víctor Rodrigo Córdoba <vrcordoba@gmail.com>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -396,9 +396,7 @@ msgid "Comic Book Reader"
 msgstr "Lector de libros de cómic"
 
 #: app/qml/PeruseMain.qml:153
-#, fuzzy, kde-format
-#| msgctxt "application title for the sidebar"
-#| msgid "Peruse"
+#, kde-format
 msgid "Peruse"
 msgstr "Peruse"
 
@@ -411,7 +409,7 @@ msgstr "Mostrar página de inicio"
 #, kde-format
 msgctxt "Switch to the listing page showing the most recently read books"
 msgid "Home"
-msgstr ""
+msgstr "Inicio"
 
 #: app/qml/PeruseMain.qml:213
 #, kde-format
@@ -428,51 +426,39 @@ msgid "Open Other..."
 msgstr "Abrir otro..."
 
 #: app/qml/PeruseMain.qml:226
-#, fuzzy, kde-format
-#| msgctxt "Switch to the listing page showing items grouped by title"
-#| msgid "Group by Title"
+#, kde-format
 msgctxt ""
 "Heading for switching to listing page showing items grouped by some "
 "properties"
 msgid "Group By"
-msgstr "Agrupar por título"
+msgstr "Agrupar por"
 
 #: app/qml/PeruseMain.qml:229
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the book title"
-#| msgid "Title"
+#, kde-format
 msgctxt "Switch to the listing page showing items grouped by title"
 msgid "Title"
 msgstr "Título"
 
 #: app/qml/PeruseMain.qml:235
-#, fuzzy, kde-format
-#| msgctxt "Label for the author field"
-#| msgid "Author:"
+#, kde-format
 msgctxt "Switch to the listing page showing items grouped by author"
 msgid "Author"
-msgstr "Autor:"
+msgstr "Autor"
 
 #: app/qml/PeruseMain.qml:241
-#, fuzzy, kde-format
-#| msgctxt "Label for the series field"
-#| msgid "Series:"
+#, kde-format
 msgctxt "Switch to the listing page showing items grouped by series"
 msgid "Series"
-msgstr "Serie:"
+msgstr "Serie"
 
 #: app/qml/PeruseMain.qml:247
-#, fuzzy, kde-format
-#| msgctxt "Label for publisher"
-#| msgid "Publisher"
+#, kde-format
 msgctxt "Switch to the listing page showing items grouped by publisher"
 msgid "Publisher"
 msgstr "Editor"
 
 #: app/qml/PeruseMain.qml:253
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the keyword list"
-#| msgid "Keywords"
+#, kde-format
 msgctxt ""
 "Switch to the listing page showing items grouped by keywords, characters or "
 "genres"
@@ -480,10 +466,7 @@ msgid "Keywords"
 msgstr "Palabras clave"
 
 #: app/qml/PeruseMain.qml:259
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "label text for the edit field for the file system location for the book"
-#| msgid "Folder"
+#, kde-format
 msgctxt ""
 "Switch to the listing page showing items grouped by their filesystem folder"
 msgid "Folder"
@@ -2421,43 +2404,3 @@ msgid ""
 msgstr ""
 "Se remplazó exitosamente el antiguo archivo con el nuevo - cargando ahora el "
 "nuevo archivo... "
-
-#~ msgctxt "Switch to the listing page showing items grouped by author"
-#~ msgid "Group by Author"
-#~ msgstr "Agrupar por autor"
-
-#~ msgctxt "Switch to the listing page showing items grouped by series"
-#~ msgid "Group by Series"
-#~ msgstr "Agrupar por serie"
-
-#~ msgctxt "Switch to the listing page showing items grouped by publisher"
-#~ msgid "Group by Publisher"
-#~ msgstr "Agrupar por editor"
-
-#~ msgctxt ""
-#~ "Switch to the listing page showing items grouped by keywords, characters "
-#~ "or genres"
-#~ msgid "Group by Keywords"
-#~ msgstr "Agrupar por palabras claves"
-
-#~ msgctxt ""
-#~ "Switch to the listing page showing items grouped by their filesystem "
-#~ "folder"
-#~ msgid "Filter by Folder"
-#~ msgstr "Filtrar por carpeta"
-
-#~ msgctxt "Switch to the book store page"
-#~ msgid "Get Hot New Books"
-#~ msgstr "Conseguir libros nuevos"
-
-#~ msgctxt "application subtitle"
-#~ msgid "Comic Book Reader"
-#~ msgstr "Lector de cómics"
-
-#~ msgctxt "Enter full screen mode on any device type"
-#~ msgid "Go Full Screen"
-#~ msgstr "Ir a pantalla completa"
-
-#~ msgctxt "Exit full screen mode on any device type"
-#~ msgid "Exit Full Screen"
-#~ msgstr "Salir de pantalla completa"
