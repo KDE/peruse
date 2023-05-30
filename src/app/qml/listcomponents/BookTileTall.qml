@@ -109,7 +109,7 @@ FocusScope {
                         color: Kirigami.Theme.activeBackgroundColor
                     }
                     QtControls.Label {
-                        text: i18nc("A percentage of progress", "%1\%", Math.floor(100 * root.progress))
+                        text: i18nc("A percentage of progress", "%1%", Math.floor(100 * root.progress))
                         anchors.fill: parent
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
