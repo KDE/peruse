@@ -846,13 +846,13 @@ msgstr "No afig cap pàgina"
 #, kde-format
 msgctxt "swap the position of this page with the previous one"
 msgid "Move Up"
-msgstr "Mou amunt"
+msgstr "Mou cap amunt"
 
 #: creator/qml/Book.qml:102 creator/qml/BookReferences.qml:108
 #, kde-format
 msgctxt "swap the position of this page with the next one"
 msgid "Move Down"
-msgstr "Mou avall"
+msgstr "Mou cap avall"
 
 #: creator/qml/Book.qml:109
 #, kde-format
@@ -2213,13 +2213,13 @@ msgstr "Seleccioneu el color de fons d'este marc"
 #, kde-format
 msgctxt "swap the position of this frame with the previous one"
 msgid "Move Up"
-msgstr "Mou amunt"
+msgstr "Mou cap amunt"
 
 #: creator/qml/PageMetaInfo.qml:167
 #, kde-format
 msgctxt "swap the position of this frame with the next one"
 msgid "Move Down"
-msgstr "Mou avall"
+msgstr "Mou cap avall"
 
 #: creator/qml/PageMetaInfo.qml:176
 #, kde-format
@@ -2250,13 +2250,13 @@ msgstr ""
 #, kde-format
 msgctxt "swap the position of this text area with the previous one"
 msgid "Move Up"
-msgstr "Mou amunt"
+msgstr "Mou cap amunt"
 
 #: creator/qml/PageMetaInfo.qml:231
 #, kde-format
 msgctxt "swap the position of this text area with the next one"
 msgid "Move Down"
-msgstr "Mou avall"
+msgstr "Mou cap avall"
 
 #: creator/qml/PageMetaInfo.qml:238
 #, kde-format
@@ -2280,13 +2280,13 @@ msgstr "Salts"
 #, kde-format
 msgctxt "swap the position of this jump with the previous one"
 msgid "Move Up"
-msgstr "Mou amunt"
+msgstr "Mou cap amunt"
 
 #: creator/qml/PageMetaInfo.qml:282
 #, kde-format
 msgctxt "swap the position of this jump with the next one"
 msgid "Move Down"
-msgstr "Mou avall"
+msgstr "Mou cap avall"
 
 #: creator/qml/PageMetaInfo.qml:289
 #, kde-format
