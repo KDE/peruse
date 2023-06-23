@@ -34,7 +34,7 @@
   <summary>Comic Book Creation Tool</summary>
   <summary xml:lang="ca">Eina de creació de llibres de còmic</summary>
   <summary xml:lang="ca-valencia">Eina de creació de llibres de còmic</summary>
-  <summary xml:lang="cs">Nástroj pro vytváření komixů</summary>
+  <summary xml:lang="cs">Nástroj pro vytváření komiksů</summary>
   <summary xml:lang="de">Werkzeug zum Erstellen von Comics</summary>
   <summary xml:lang="en-GB">Comic Book Creation Tool</summary>
   <summary xml:lang="es">Herramienta de creación de cómics</summary>
@@ -110,7 +110,7 @@
       <li>Comic Book Archive (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="ca">Arxiu de llibres de còmic (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="ca-valencia">Arxiu de llibres de còmic (cbz, cbr, cb7, cbt, cba)</li>
-      <li xml:lang="cs">Archiv Comic Book (cbz, cbr, cb7, cbt, cba)</li>
+      <li xml:lang="cs">Archiv knihy komiksů (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="de">Comic-Buch-Archive (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="en-GB">Comic Book Archive (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="es">Archivos de cómic (cbz, cbr, cb7, cbt, cba)</li>
