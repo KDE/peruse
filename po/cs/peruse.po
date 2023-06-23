@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: peruse\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-20 00:44+0000\n"
-"PO-Revision-Date: 2023-05-31 11:36+0200\n"
+"PO-Revision-Date: 2023-06-15 13:53+0200\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 23.04.1\n"
+"X-Generator: Lokalize 23.04.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -390,7 +390,7 @@ msgstr "Zpět"
 #, kde-format
 msgctxt "@title:window the generic descriptive title of the application"
 msgid "Comic Book Reader"
-msgstr "Čtečka komixů"
+msgstr "Čtečka komiksů"
 
 #: app/qml/PeruseMain.qml:153
 #, kde-format
@@ -700,7 +700,7 @@ msgstr "Nedávno přidané"
 #: creator/main.cpp:44
 #, kde-format
 msgid "Peruse Creator"
-msgstr "Tvůrce Perus"
+msgstr "Tvůrce Peruse"
 
 #: creator/main.cpp:44
 #, kde-format
@@ -1334,7 +1334,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title color choosing dialog"
 msgid "Choose the general background color for this comic"
-msgstr "Vyberte obecnou barvu pozadí pro tento komix"
+msgstr "Vyberte obecnou barvu pozadí pro tento komiks"
 
 #: creator/qml/BookPage.qml:32
 #, kde-format
@@ -2098,7 +2098,7 @@ msgstr "Barva pozadí"
 #, kde-format
 msgctxt "@title color choosing dialog"
 msgid "Choose the background color for page"
-msgstr "Vyberte barvu pozadí por stránku"
+msgstr "Vyberte barvu pozadí pro stránku"
 
 #: creator/qml/PageMetaInfo.qml:111
 #, kde-format
@@ -2244,7 +2244,7 @@ msgstr "Tvůrce Peruse"
 #, kde-format
 msgctxt "application subtitle"
 msgid "Comic Book Creation Tool"
-msgstr "Nástroj pro vytváření komixů"
+msgstr "Nástroj pro vytváření komiksů"
 
 #: creator/qml/WelcomePage.qml:86
 #, kde-format
