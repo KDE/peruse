@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This file is copyright:
 # This file is distributed under the same license as the peruse package.
-# Tommi Nieminen <translator@legisign.org>, 2019, 2020, 2021, 2022.
+# Tommi Nieminen <translator@legisign.org>, 2019, 2020, 2021, 2022, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: peruse\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-20 00:44+0000\n"
-"PO-Revision-Date: 2022-07-21 18:57+0300\n"
+"PO-Revision-Date: 2023-05-28 16:49+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 20.12.0\n"
+"X-Generator: Lokalize 23.04.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -395,9 +395,7 @@ msgid "Comic Book Reader"
 msgstr "Sarjakuvalukuohjelma"
 
 #: app/qml/PeruseMain.qml:153
-#, fuzzy, kde-format
-#| msgctxt "application title for the sidebar"
-#| msgid "Peruse"
+#, kde-format
 msgid "Peruse"
 msgstr "Peruse"
 
@@ -410,7 +408,7 @@ msgstr "Näytä johdantosivu"
 #, kde-format
 msgctxt "Switch to the listing page showing the most recently read books"
 msgid "Home"
-msgstr ""
+msgstr "Koti"
 
 #: app/qml/PeruseMain.qml:213
 #, kde-format
@@ -427,51 +425,39 @@ msgid "Open Other..."
 msgstr "Avaa toinen…"
 
 #: app/qml/PeruseMain.qml:226
-#, fuzzy, kde-format
-#| msgctxt "Switch to the listing page showing items grouped by title"
-#| msgid "Group by Title"
+#, kde-format
 msgctxt ""
 "Heading for switching to listing page showing items grouped by some "
 "properties"
 msgid "Group By"
-msgstr "Ryhmittele otsikoittain"
+msgstr "Ryhmittelytapa"
 
 #: app/qml/PeruseMain.qml:229
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the book title"
-#| msgid "Title"
+#, kde-format
 msgctxt "Switch to the listing page showing items grouped by title"
 msgid "Title"
 msgstr "Otsikko"
 
 #: app/qml/PeruseMain.qml:235
-#, fuzzy, kde-format
-#| msgctxt "Label for the author field"
-#| msgid "Author:"
+#, kde-format
 msgctxt "Switch to the listing page showing items grouped by author"
 msgid "Author"
-msgstr "Tekijä:"
+msgstr "Tekijä"
 
 #: app/qml/PeruseMain.qml:241
-#, fuzzy, kde-format
-#| msgctxt "Label for the series field"
-#| msgid "Series:"
+#, kde-format
 msgctxt "Switch to the listing page showing items grouped by series"
 msgid "Series"
-msgstr "Sarja:"
+msgstr "Sarja"
 
 #: app/qml/PeruseMain.qml:247
-#, fuzzy, kde-format
-#| msgctxt "Label for publisher"
-#| msgid "Publisher"
+#, kde-format
 msgctxt "Switch to the listing page showing items grouped by publisher"
 msgid "Publisher"
 msgstr "Julkaisija"
 
 #: app/qml/PeruseMain.qml:253
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the keyword list"
-#| msgid "Keywords"
+#, kde-format
 msgctxt ""
 "Switch to the listing page showing items grouped by keywords, characters or "
 "genres"
@@ -479,10 +465,7 @@ msgid "Keywords"
 msgstr "Hakusanat"
 
 #: app/qml/PeruseMain.qml:259
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "label text for the edit field for the file system location for the book"
-#| msgid "Folder"
+#, kde-format
 msgctxt ""
 "Switch to the listing page showing items grouped by their filesystem folder"
 msgid "Folder"
