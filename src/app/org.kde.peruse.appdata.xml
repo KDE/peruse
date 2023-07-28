@@ -10,6 +10,7 @@
   <name xml:lang="cs">Peruse</name>
   <name xml:lang="de">Peruse</name>
   <name xml:lang="en-GB">Peruse</name>
+  <name xml:lang="eo">Peruse</name>
   <name xml:lang="es">Peruse</name>
   <name xml:lang="et">Peruse</name>
   <name xml:lang="fi">Peruse</name>
@@ -37,6 +38,7 @@
   <summary xml:lang="cs">Čtečka komiksů</summary>
   <summary xml:lang="de">Anzeigeprogramm für Comic-Book</summary>
   <summary xml:lang="en-GB">Comic Book Reader</summary>
+  <summary xml:lang="eo">Legilo por komiksoj</summary>
   <summary xml:lang="es">Lector de cómics</summary>
   <summary xml:lang="et">Koomiksite lugemine</summary>
   <summary xml:lang="fi">Sarjakuvakatselin</summary>
@@ -69,6 +71,7 @@
     <p xml:lang="ca">Hi ha moltes maneres de llegir còmics, i una de les que ha esdevingut més normal en anys recents és en un ordinador. El Peruse es va crear com una manera de fer-ho exactament tan fàcil i agradable com fos possible, i per a senzillament oblidar-se de la manera i permetre llegir els llibres de còmic. Es podria dir que permet llegir atentament els llibres de còmic en el temps de lleure, però això seria una manera forassenyada de dir-ho, així que llegiu atentament els llibres de còmic en el vostre temps de lleure!</p>
     <p xml:lang="ca-valencia">Hi ha moltes maneres de llegir còmics, i una de les que ha esdevingut més normal en anys recents és en un ordinador. Peruse es va crear com una manera de fer-ho exactament tan fàcil i agradable com fora possible, i per a senzillament oblidar-se de la manera i permetre llegir els llibres de còmic. Es podria dir que permet llegir atentament els llibres de còmic en el temps de lleure, però açò seria una manera forassenyada de dir-ho, així que llegiu atentament els llibres de còmic en el vostre temps de lleure!</p>
     <p xml:lang="en-GB">There are many ways to read comic books, and one of those that has become more common in recent years is on a computer. Peruse was created as a way to make exactly that as easy and pleasant as possible, and to simply get out of the way and let you read your comic books. One could say that it allows you to peruse your comic books at your leisure, but that would be a silly way of putting it - so, peruse your comic books at your leisure!</p>
+    <p xml:lang="eo">Estas multaj manieroj legi komiksojn, kaj unu el tiuj, kiuj fariĝis pli oftaj en la lastaj jaroj, estas per komputilo. Peruse estis kreita kiel maniero fari ĝuste tion kiel eble plej facila kaj agrabla, kaj simple foriri kaj lasi vin legi viajn komiksojn. Oni povus diri, ke ĝi permesas tralegi viajn komiksojn laŭplaĉe, sed tio estus stulta maniero diri - do, tralegi viajn komiksojn laŭplaĉe!</p>
     <p xml:lang="es">Hay muchas maneras de leer cómics, y una de las que se ha convertido en más común en los últimos años, es la computadora. Peruse fue creado para hacer esto de la manera más fácil y placentera posible, simplemente para no interponerse en su camino y dejarle leer cómics. Alguien podría decir que le permite leer detenidamente sus cómics a su ritmo, pero esto sería una manera un tanto tonta de ponerlo, así que, ¡Lea sus cómics a su ritmo!</p>
     <p xml:lang="et">Koomikseid saab mitut moodi lugeda, viimastel aastatel on aga aina levinud komme lugeda neid arvutis. Peruse on loodud just nimelt sihiga muuta see võimalikult lihtsaks ja mugavaks, nii et lugeja saaks keskenduda just koomiksile, mitte rakendusele. Igal juhul - head koomiksite nautimist!</p>
     <p xml:lang="fi">Sarjakuvakirjoja voi lukea eri tavoin, ja yksi viime aikoina yleisimmistä tavoista on tietokone. Peruse luotiin tekemään siitä mahdollisimman helppoa ja miellyttävää. Se yrittää pysyä poissa tieltä ja antaa sinun vain lukea. Voisi sanoa, että se tekee sarjakuvakirjojen lukemisesta viihdyttävää, mutta se olisi hassusti sanottu – kaikkihan sarjakuvakirjoja lukevat viihtyäkseen!</p>
@@ -96,6 +99,7 @@
     <p xml:lang="ca">Una de les maneres en què el Peruse us assegura que l'experiència de lectura serà agradable i sense esforç és senzillament retornar a on ho vàreu deixar. La pàgina de benvinguda de l'aplicació (la primera captura de pantalla de sota) us mostra els còmics llegits més recents, i mostra el seu progrés. Per a tornar a on ho vàreu deixar, només toqueu l'element superior de l'esquerra i anireu directe a la pàgina que estàveu llegint abans d'aturar-vos.</p>
     <p xml:lang="ca-valencia">Una de les maneres en què Peruse vos assegura que l'experiència de lectura serà agradable i sense esforç és senzillament retornar a on ho vàreu deixar. La pàgina de benvinguda de l'aplicació (la primera captura de pantalla de davall) vos mostra els còmics llegits més recents, i mostra el seu progrés. Per a tornar a on ho vàreu deixar, només toqueu l'element superior de l'esquerra i anireu directe a la pàgina que estàveu llegint abans de parar-vos.</p>
     <p xml:lang="en-GB">One of the ways in which Peruse ensures your reading experience is as pleasant and effortless as possible is to allow you to simply pick up where you last left off. The welcome page in the application (first screenshot below) shows you your most recently read comics, and shows your progress through them. To pick up where you left off, simply tap the top left item and you will be taken right to the page you were reading before you had to stop.</p>
+    <p xml:lang="eo">Unu el la manieroj, per kiuj Peruse certigas, ke via legado estas kiel eble plej agrabla kaj senpene, estas permesi al vi simple repreni kie vi laste ĉesis. La bonvena paĝo en la aplikaĵo (unua ekrankopio malsupre) montras al vi viajn plej lastatempe legitajn bildstriojn, kaj montras vian progreson tra ili. Por repreni tie, kie vi ĉesis, simple frapeti la supran maldekstran eron kaj vi estos kondukata rekte al la paĝo, kiun vi legis antaŭ ol vi devis halti.</p>
     <p xml:lang="es">Una de las maneras en las que Peruse se asegura de que su experiencia de lectura es tan placentera y sencilla como sea posible es que le permite continuar leyendo donde lo dejó la última vez. La página de bienvenida (la primera captura de pantalla, más abajo) muestra sus cómics más recientemente leídos y muestra su progreso en ellos. Para continuar leyendo donde lo dejó, simplemente pulse el elemento arriba a la izquierda y será llevado directamente a la página donde estaba leyendo cuando tuvo que parar.</p>
     <p xml:lang="et">Üks viise, kuidasa Peruse üritab sinu lugemiselamust võimalikult nauditavaks ja pingutusevabaks muuta, on võimalus jätkata lugemist sealt, kus see viimati pooleli jäi. Rakenduse avalehekülg (esimene ekraanipilt) näitab nii viimati loetud koomikseid kui ka neis edenemist. Jätkamiseks sealt, kus lugemine pooleli jäi, klõpsa lihtsalt kirje ülemisse vasakusse nurka ning satud kohe leheküljele, mille juures viimati lugemine katki jäi.</p>
     <p xml:lang="fi">Peruse varmistaa mahdollisimman miellyttävän ja vaivattoman lukemiskokemuksen sallimalla sinun jatkaa siitä, mihin viimeksi jäit. Sovelluksen tervetulonäkymä (ensimmäinen ruutukaappauskuva alla) näyttää viimeksi luetut sarjakuvat sekä kuinka pitkällä niissä olet. Voit jatkaa siitä mihin jäit yksinkertaisesti napauttamalla ylävasenta kohtaa, jolloin siirryt suoraan sivulle, jota viimeksi keskeyttäessäsi luit.</p>
@@ -118,6 +122,7 @@
     <p xml:lang="cs">Vlastnosti:</p>
     <p xml:lang="de">Leistungsmerkmale:</p>
     <p xml:lang="en-GB">Features:</p>
+    <p xml:lang="eo">Trajtoj:</p>
     <p xml:lang="es">Características:</p>
     <p xml:lang="et">Omadused:</p>
     <p xml:lang="fi">Ominaisuuksia:</p>
@@ -147,6 +152,7 @@
       <li xml:lang="cs">Archiv knihy komiksů (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="de">Comic-Book-Archive (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="en-GB">Comic Book Archive (cbz, cbr, cb7, cbt, cba)</li>
+      <li xml:lang="eo">Comic Book Archive (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="es">Archivos de cómic (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="et">Koomiksiarhiiv (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="fi">Sarjakuvakirja-arkisto (*.cbz, *.cbr, *.cb7, *.cbt, *.cba)</li>
@@ -173,6 +179,7 @@
       <li xml:lang="cs">Portable Document Format (pdf)</li>
       <li xml:lang="de">Portables Dokumentformat (PDF)</li>
       <li xml:lang="en-GB">Portable Document Format (pdf)</li>
+      <li xml:lang="eo">Portebla Dokumenta Formato (pdf)</li>
       <li xml:lang="es">Portable Document Format (pdf)</li>
       <li xml:lang="et">Porditav dokumendivorming (pdf)</li>
       <li xml:lang="fi">PDF (Portable Document Format, *.pdf)</li>
@@ -199,6 +206,7 @@
       <li xml:lang="cs">Knihy ePub (epub)</li>
       <li xml:lang="de">ePub-Bücher (epub)</li>
       <li xml:lang="en-GB">ePub Books (epub)</li>
+      <li xml:lang="eo">ePub-Libroj (epub)</li>
       <li xml:lang="es">Libros ePub (epub)</li>
       <li xml:lang="et">ePubi raamatud (epub)</li>
       <li xml:lang="fi">ePub-kirjat (*.epub)</li>
@@ -225,6 +233,7 @@
       <li xml:lang="cs">Soubory nezávislé na zařízení (DeVice Independent files - dvi)</li>
       <li xml:lang="de">Geräteunabhängiges Dateiformat (DVI)</li>
       <li xml:lang="en-GB">DeVice Independent files (dvi)</li>
+      <li xml:lang="eo">Sendependaj dosieroj de Aparato (dvi)</li>
       <li xml:lang="es">Archivos DeVice Independent (dvi)</li>
       <li xml:lang="et">Seadmest sõltumatud failid (dvi)</li>
       <li xml:lang="fi">Laiteriippumattomat tiedostot (DVI, *.dvi)</li>
@@ -250,6 +259,7 @@
       <li xml:lang="cs">DeJaVu (djvu)</li>
       <li xml:lang="de">DeJaVu (djvu)</li>
       <li xml:lang="en-GB">DeJaVu (djvu)</li>
+      <li xml:lang="eo">DeJaVu (djvu)</li>
       <li xml:lang="es">DeJaVu (djvu)</li>
       <li xml:lang="et">DeJaVu (djvu)</li>
       <li xml:lang="fi">DeJaVu-tiedostot (*.djvu)</li>
@@ -275,6 +285,7 @@
       <li xml:lang="cs">Kompilovaná nápověda (chm)</li>
       <li xml:lang="de">Kompilierte Hilfe (chm)</li>
       <li xml:lang="en-GB">Compiled Help (chm)</li>
+      <li xml:lang="eo">Kompilita Helpo (chm)</li>
       <li xml:lang="es">Compiled Help (chm)</li>
       <li xml:lang="et">Kompileeritud abi (chm)</li>
       <li xml:lang="fi">Käännetty ohje (*.chm)</li>
