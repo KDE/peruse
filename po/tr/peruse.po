@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: peruse\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-20 00:44+0000\n"
-"PO-Revision-Date: 2023-06-08 19:00+0300\n"
+"PO-Revision-Date: 2023-08-02 00:38+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 23.07.70\n"
+"X-Generator: Lokalize 23.11.70\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -802,7 +802,7 @@ msgstr "Eklenecek Görsel Seçin"
 msgctxt ""
 "@action:button add a page by creating a new image using an image editor"
 msgid "Create a New Image Using an Image Editor"
-msgstr "Görsel Düzenleyici Kullanarak Bir Görsel Oluştur"
+msgstr "Görsel Düzenleyicisini Kullanarak Bir Görsel Oluştur"
 
 #: creator/qml/AddPageSheet.qml:83
 #, kde-format
