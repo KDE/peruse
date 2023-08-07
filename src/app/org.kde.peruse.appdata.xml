@@ -328,6 +328,7 @@
   <url type="homepage">https://peruse.kde.org/</url>
   <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=peruse</url>
   <project_group>KDE</project_group>
+  <content_rating type="oars-1.1"/>
   <provides>
     <binary>peruse</binary>
   </provides>
