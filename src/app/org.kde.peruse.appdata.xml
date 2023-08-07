@@ -319,6 +319,12 @@
       <image width="1839" height="1124">https://peruse.kde.org/screenshots/peruse-book-details.jpg</image>
     </screenshot>
   </screenshots>
+  <releases>
+    <release version="1.80" date="2021-04-20" type="stable"/>
+    <release version="1.2" date="2016-12-22" type="stable"/>
+    <release version="1.1" date="2016-07-04" type="stable"/>
+    <release version="1.0" date="2016-06-21" type="stable"/>
+  </releases>
   <url type="homepage">https://peruse.kde.org/</url>
   <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=peruse</url>
   <project_group>KDE</project_group>
