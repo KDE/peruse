@@ -82,6 +82,12 @@ set_package_properties(KF5Kirigami2 PROPERTIES
     TYPE RUNTIME
 )
 
+find_package(KF${QT_MAJOR_VERSION}KirigamiAddons 0.11)
+set_package_properties(KF${QT_MAJOR_VERSION}KirigamiAddons PROPERTIES
+    TYPE REQUIRED
+    PURPOSE "Provides additional visual components"
+)
+
 find_package(ZLIB)
 set_package_properties(ZLIB PROPERTIES
     PURPOSE "Required for the unarr based rar support used for reading books in the CBR format"

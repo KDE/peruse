@@ -17,6 +17,7 @@ Dependencies:
     'frameworks/kio': '@stable'
     'frameworks/knewstuff': '@stable'
     'frameworks/kirigami': '@stable'
+    'libraries/kirigami-addons': '@latest'
 
 - 'on': ['Linux', 'FreeBSD']
   'require':
