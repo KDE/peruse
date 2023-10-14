@@ -683,7 +683,7 @@ msgid ""
 "check the details of the link below, to make sure that you really do want to "
 "open it, or just close this sheet."
 msgstr ""
-"L'enllaç que acabeu de fer-hi clic apunta a alguna cosa fora del llibre. "
+"L'enllaç que acabeu de fer-hi clic apunta cap a alguna cosa fora del llibre. "
 "Comproveu els detalls de l'enllaç de davall, per a assegurar-se que realment "
 "vulgueu obrir-lo, o tanqueu este full."
 
