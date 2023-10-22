@@ -27,6 +27,7 @@
 #include <QCommandLineParser>
 #include <QCommandLineOption>
 #include <QIcon>
+#include <QQuickStyle>
 
 #include <iostream>
 
@@ -41,6 +42,10 @@ int main(int argc, char** argv)
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
     QApplication app(argc, argv);
+    if (qEnvironmentVariableIsEmpty("QT_QUICK_CONTROLS_STYLE")) {
+        QQuickStyle::setStyle(QStringLiteral("org.kde.desktop"));
+    }
+
     app.setWindowIcon(QIcon::fromTheme(QStringLiteral("peruse")));
     app.setApplicationDisplayName("Peruse");
     app.setOrganizationDomain("kde.org");
