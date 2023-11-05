@@ -30,7 +30,6 @@
   <name xml:lang="sv">Peruse</name>
   <name xml:lang="tr">Peruse</name>
   <name xml:lang="uk">Peruse</name>
-  <name xml:lang="x-test">xxPerusexx</name>
   <name xml:lang="zh-TW">Peruse</name>
   <summary>Comic Book Reader</summary>
   <summary xml:lang="ca">Lector de llibres de còmic</summary>
@@ -57,7 +56,6 @@
   <summary xml:lang="sv">Serietidningsläsare</summary>
   <summary xml:lang="tr">Çizgi Roman Okuyucusu</summary>
   <summary xml:lang="uk">Програма для читання коміксів</summary>
-  <summary xml:lang="x-test">xxComic Book Readerxx</summary>
   <summary xml:lang="zh-TW">漫畫書閱讀器</summary>
   <description>
     <p>
@@ -87,7 +85,6 @@
     <p xml:lang="sv">Det finns många sätt att läsa serietidningar, och ett av dem som har blivit allt vanligare den senaste tiden är med en dator. Peruse skapades som ett sätt att göra precis det, så enkelt och behagligt som möjligt, och att helt enkelt hålla sig undan och låta dig läsa dina serietidningar. Man skulle kunna säga att det tillåter dig att noga läsa (peruse på engelska) dina serietidningar i lugn och ro, men det skulle vara ett fånigt sätt att säga det - så läs dina serietidningar i lugn och ro!</p>
     <p xml:lang="tr">Çizgi roman okumanın birçok yolu var ve son yıllarda daha yaygın hale gelenlerden biri de bilgisayardadır. Peruse, bunu olabildiğince kolay ve keyifli hale getirmenin ve yalnızca aradan çekilip çizgi romanlarınızı okumanıza izin vermenin bir yolu olarak yaratıldı. Çizgi romanlarınızı boş zamanlarınızda incelemenize izin verdiği söylenebilir; ancak bu onu ifade etmenin aptalca bir yolu olurdu - bu yüzden çizgi romanlarınızı boş zamanlarınızda inceleyin!</p>
     <p xml:lang="uk">Читати комікси можна у декілька способів. Останнім часом усе більшої популярності набуває читання коміксів за допомогою комп'ютера. Peruse було створено для полегшення читання коміксів на комп'ютері. Програма має усунути усі можливі завади так, щоб ви могли повністю зануритися у споглядання книги і отримати максимум задоволення від неї!</p>
-    <p xml:lang="x-test">xxThere are many ways to read comic books, and one of those that has become more common in recent years is on a computer. Peruse was created as a way to make exactly that as easy and pleasant as possible, and to simply get out of the way and let you read your comic books. One could say that it allows you to peruse your comic books at your leisure, but that would be a silly way of putting it - so, peruse your comic books at your leisure!xx</p>
     <p>
       One of the ways in which Peruse ensures your reading experience is as pleasant
       and effortless as possible is to allow you to simply pick up where you last left
@@ -115,7 +112,6 @@
     <p xml:lang="sv">Ett av sätten som Peruse garanterar att läsupplevelsen är så behaglig och enkel som möjligt är att låta dig enkelt fortsätta där du senast slutade. Programmets välkomstsida (första skärmbilden nedan) visar dina senast lästa serietidningar, och visar hur långt du kommit i dem. För att fortsätta där du slutade, tryck helt enkelt på objektet längst upp till vänster så kommer du direkt till sidan som du höll på att läsa innan du behövde sluta.</p>
     <p xml:lang="tr">Peruse'un okuma deneyiminizi olabildiğince keyifli ve zahmetsiz hale getirmenin yollarından biri, en son kaldığınız yerden sürdürmenize izin vermektir. Uygulamadaki karşılama sayfası (aşağıdaki ilk ekran görüntüsü) size en son okuduğunuz çizgi romanları açar ve bunlar arasındaki ilerlemenizi gösterir. Kaldığınız yerden sürdürmek için sol üstteki ögeye dokunmanız yeterlidir; durmak zorunda kalmadan önce okumakta olduğunuz sayfaya yönlendirilirsiniz.</p>
     <p xml:lang="uk">Однією з можливостей, яку пропонує вам Peruse для спрощення читання, є можливість продовжувати читання з місця, на якому ви востаннє зупинилися. На сторінці вітання програми (перший з наведених нижче знімків) буде показано список коміксів, які ви читали останніми, та дані щодо поступу читання. Щоб перейти до місця, де ви зупинилися, просто натисніть пункт вгорі ліворуч, і програма відкриє вам сторінку, яку ви читали останньою.</p>
-    <p xml:lang="x-test">xxOne of the ways in which Peruse ensures your reading experience is as pleasant and effortless as possible is to allow you to simply pick up where you last left off. The welcome page in the application (first screenshot below) shows you your most recently read comics, and shows your progress through them. To pick up where you left off, simply tap the top left item and you will be taken right to the page you were reading before you had to stop.xx</p>
     <p>Features:</p>
     <p xml:lang="ca">Característiques:</p>
     <p xml:lang="ca-valencia">Característiques:</p>
@@ -142,7 +138,6 @@
     <p xml:lang="sv">Funktioner:</p>
     <p xml:lang="tr">Özellikler:</p>
     <p xml:lang="uk">Можливості:</p>
-    <p xml:lang="x-test">xxFeatures:xx</p>
     <p xml:lang="zh-CN">功能：</p>
     <p xml:lang="zh-TW">功能：</p>
     <ul>
@@ -171,7 +166,6 @@
       <li xml:lang="sv">Serietidningsarkiv (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="tr">Çizgi Roman Arşivi (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="uk">Робота з архівами коміксів (cbz, cbr, cb7, cbt, cba)</li>
-      <li xml:lang="x-test">xxComic Book Archive (cbz, cbr, cb7, cbt, cba)xx</li>
       <li xml:lang="zh-TW">漫畫書封存檔 (cbz, cbr, cb7, cbt, cba)</li>
       <li>Portable Document Format (pdf)</li>
       <li xml:lang="ca">Format de document portable (pdf)</li>
@@ -198,7 +192,6 @@
       <li xml:lang="sv">Portable Dokumentformat (pdf)</li>
       <li xml:lang="tr">Taşınabilir Belge Biçimi (pdf)</li>
       <li xml:lang="uk">Робота із портативним форматом документів (pdf)</li>
-      <li xml:lang="x-test">xxPortable Document Format (pdf)xx</li>
       <li xml:lang="zh-TW">可攜式文件格式 (pdf)</li>
       <li>ePub Books (epub)</li>
       <li xml:lang="ca">Llibres ePub (epub)</li>
@@ -225,7 +218,6 @@
       <li xml:lang="sv">ePub-böcker (epub)</li>
       <li xml:lang="tr">ePub Kitapları (epub)</li>
       <li xml:lang="uk">Робота з книгами ePub (epub)</li>
-      <li xml:lang="x-test">xxePub Books (epub)xx</li>
       <li xml:lang="zh-TW">ePub 書本 (epub)</li>
       <li>DeVice Independent files (dvi)</li>
       <li xml:lang="ca">Fitxers independents del dispositiu (dvi)</li>
@@ -251,7 +243,6 @@
       <li xml:lang="sv">DeVice oberoende filer (dvi)</li>
       <li xml:lang="tr">Aygıttan Bağımsız dosyalar (dvi)</li>
       <li xml:lang="uk">Робота із файлами DeVice Independent (dvi)</li>
-      <li xml:lang="x-test">xxDeVice Independent files (dvi)xx</li>
       <li xml:lang="zh-TW">DeVice 獨立檔案 (dvi)</li>
       <li>DeJaVu (djvu)</li>
       <li xml:lang="ca">DeJaVu (djvu)</li>
@@ -277,7 +268,6 @@
       <li xml:lang="sv">DeJaVu (djvu)</li>
       <li xml:lang="tr">DeJaVu (djvu)</li>
       <li xml:lang="uk">Робота з файлами DeJaVu (djvu)</li>
-      <li xml:lang="x-test">xxDeJaVu (djvu)xx</li>
       <li xml:lang="zh-TW">DeJaVu (djvu)</li>
       <li>Compiled Help (chm)</li>
       <li xml:lang="ca">Ajuda compilada (chm)</li>
@@ -304,7 +294,6 @@
       <li xml:lang="sv">Kompilerad hjälp (chm)</li>
       <li xml:lang="tr">Derlenmiş Yardım (chm)</li>
       <li xml:lang="uk">Робота з файлами компільованої довідки (chm)</li>
-      <li xml:lang="x-test">xxCompiled Help (chm)xx</li>
       <li xml:lang="zh-TW">編譯過的說明文件 (chm)</li>
     </ul>
   </description>
