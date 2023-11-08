@@ -124,7 +124,7 @@ Kirigami.ScrollablePage {
                 }
 
             ]
-            RowLayout {
+            contentItem: RowLayout {
                 Layout.fillWidth: true;
                 Layout.fillHeight: true;
                 Item {

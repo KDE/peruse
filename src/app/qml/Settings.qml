@@ -78,7 +78,7 @@ KCM.ScrollViewKCM {
             
             Kirigami.SwipeListItem {
                 id: delegateItem
-                QQC2.Label {
+                contentItem: QQC2.Label {
                     text: modelData
                 }
                 actions: [

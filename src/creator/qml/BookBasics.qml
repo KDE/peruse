@@ -121,7 +121,7 @@ Kirigami.ScrollablePage {
                     visible: !listItem.isDirectory;
                 }
             ]
-            RowLayout {
+            contentItem: RowLayout {
                 Layout.fillWidth: true;
                 Layout.fillHeight: true;
                 Repeater {

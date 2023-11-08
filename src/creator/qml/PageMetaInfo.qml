@@ -240,7 +240,7 @@ Kirigami.ScrollablePage {
                         onTriggered: page.textLayer("").removeTextarea(index);
                     }
                 ]
-                Item {
+                contentItem: Item {
                     Layout.fillWidth: true;
                     Layout.fillHeight: true;
                     QtControls.Label {
@@ -291,7 +291,7 @@ Kirigami.ScrollablePage {
                         onTriggered: page.removeJump(index);
                     }
                 ]
-                Item {
+                contentItem: Item {
                     Layout.fillWidth: true;
                     Layout.fillHeight: true;
                     QtControls.Label {
