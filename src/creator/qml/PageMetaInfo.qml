@@ -120,7 +120,6 @@ Kirigami.ScrollablePage {
                 ColumnLayout {
                     QtControls.Switch {
                         text: i18nc("A switch which lets the user change the background colour of the page when this frame is focused", "Change page background color");
-                        
                     }
                     RowLayout {
                         QtControls.Label {
@@ -253,6 +252,7 @@ Kirigami.ScrollablePage {
                             topMargin: Kirigami.Units.smallSpacing;
                         }
                         width:parent.width-Kirigami.Units.iconSizes.huge;
+                        wrapMode: TextEdit.Wrap
                         text: page.textLayer("").textarea(index).paragraphs.join("\n\n");
                         onEditingFinished: page.textLayer("").textarea(index).paragraphs = text.split("\n\n");
                     }

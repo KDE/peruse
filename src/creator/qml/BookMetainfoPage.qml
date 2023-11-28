@@ -28,9 +28,9 @@ import org.kde.kirigami 2.1 as Kirigami
 import "metainfoeditors"
 /**
  * @brief Page with form to edit the comic metadata.
- * 
+ *
  * Most metadata entries are quite simple.
- * 
+ *
  * Others, like Author, need a dedicated entry editor (AuthorEntryEditor).
  */
 Kirigami.ScrollablePage {
@@ -89,7 +89,8 @@ Kirigami.ScrollablePage {
             id: defaultAnnotation;
             width: parent.width;
             placeholderText: i18nc("placeholder text for default annotation text-area", "Write to add default annotation");
-            text:root.model.acbfData ? root.model.acbfData.metaData.bookInfo.annotation("").join("\n\n") : "";
+            wrapMode: TextEdit.Wrap
+            text: root.model.acbfData ? root.model.acbfData.metaData.bookInfo.annotation("").join("\n\n") : "";
             onTextChanged: {
                 root.model.acbfData.metaData.bookInfo.setAnnotation(defaultAnnotation.text.split("\n\n"), "");
                 root.model.setDirty();
