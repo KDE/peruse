@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: peruse\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:27+0000\n"
+"POT-Creation-Date: 2023-11-29 00:40+0000\n"
 "PO-Revision-Date: 2023-10-23 12:47+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -1159,223 +1159,223 @@ msgctxt "placeholder text for default annotation text-area"
 msgid "Write to add default annotation"
 msgstr "Öntanımlı ek açıklama eklemek için yazın"
 
-#: creator/qml/BookMetainfoPage.qml:101
+#: creator/qml/BookMetainfoPage.qml:102
 #, kde-format
 msgctxt "label text for the edit field for the keyword list"
 msgid "Keywords"
 msgstr "Anahtar Sözcükler"
 
-#: creator/qml/BookMetainfoPage.qml:107
+#: creator/qml/BookMetainfoPage.qml:108
 #, kde-format
 msgctxt "placeholder text for the add new keyword text entry"
 msgid "Write a comma separated list of keywords."
 msgstr "Anahtar sözcüklerin virgülle ayrılmış listesini yazın"
 
-#: creator/qml/BookMetainfoPage.qml:122
+#: creator/qml/BookMetainfoPage.qml:123
 #, kde-format
 msgctxt "label text for the edit field for the author list"
 msgid "Authors (%1)"
 msgstr "Yazarlar (%1)"
 
-#: creator/qml/BookMetainfoPage.qml:129 creator/qml/BookMetainfoPage.qml:799
+#: creator/qml/BookMetainfoPage.qml:130 creator/qml/BookMetainfoPage.qml:800
 #, kde-format
 msgctxt "The text used in place of an author's name if one has not been set"
 msgid "(unnamed)"
 msgstr "(adsız)"
 
-#: creator/qml/BookMetainfoPage.qml:168 creator/qml/BookMetainfoPage.qml:838
+#: creator/qml/BookMetainfoPage.qml:169 creator/qml/BookMetainfoPage.qml:839
 #, kde-format
 msgctxt "placeholder text for the add new author text entry"
 msgid "Write to add new author (nickname)"
 msgstr "Yeni yazar eklemek için yazın (takma ad)"
 
-#: creator/qml/BookMetainfoPage.qml:197
+#: creator/qml/BookMetainfoPage.qml:198
 #, kde-format
 msgctxt "label text for the edit field for the genre list"
 msgid "Genres"
 msgstr "Tarzlar"
 
-#: creator/qml/BookMetainfoPage.qml:276
+#: creator/qml/BookMetainfoPage.qml:277
 #, kde-format
 msgctxt "label text for the edit field for the character list"
 msgid "Characters"
 msgstr "Karakterler"
 
-#: creator/qml/BookMetainfoPage.qml:305
+#: creator/qml/BookMetainfoPage.qml:306
 #, kde-format
 msgctxt "placeholder text for the add new character text entry"
 msgid "Write to add new character"
 msgstr "Yeni karakter eklemek için yazın"
 
-#: creator/qml/BookMetainfoPage.qml:333
+#: creator/qml/BookMetainfoPage.qml:334
 #, kde-format
 msgctxt "label text for the edit field for the sequence list"
 msgid "Sequence"
 msgstr "Sıralama"
 
-#: creator/qml/BookMetainfoPage.qml:361
+#: creator/qml/BookMetainfoPage.qml:362
 #, kde-format
 msgctxt "Label for sequence number"
 msgid "Number:"
 msgstr "Numara:"
 
-#: creator/qml/BookMetainfoPage.qml:385
+#: creator/qml/BookMetainfoPage.qml:386
 #, kde-format
 msgctxt "Label for sequence volume"
 msgid "Volume:"
 msgstr "Cilt:"
 
-#: creator/qml/BookMetainfoPage.qml:432
+#: creator/qml/BookMetainfoPage.qml:433
 #, kde-format
 msgctxt "placeholder text for the add new series text entry"
 msgid "Write to add new series"
 msgstr "Yeni dizi eklemek için yazın"
 
-#: creator/qml/BookMetainfoPage.qml:460
+#: creator/qml/BookMetainfoPage.qml:461
 #, kde-format
 msgctxt "label text for the edit field for the database reference list"
 msgid "Database References"
 msgstr "Veritabanı Başvuruları"
 
-#: creator/qml/BookMetainfoPage.qml:501
+#: creator/qml/BookMetainfoPage.qml:502
 #, kde-format
 msgctxt "placeholder text for the add reference type text entry"
 msgid "Write to add reference type"
 msgstr "Yeni başvuru türü eklemek için yazın"
 
-#: creator/qml/BookMetainfoPage.qml:538
+#: creator/qml/BookMetainfoPage.qml:539
 #, kde-format
 msgctxt "placeholder text for the add new reference text entry"
 msgid "Write to add new reference"
 msgstr "Yeni başvuru eklemek için yazın"
 
-#: creator/qml/BookMetainfoPage.qml:548
+#: creator/qml/BookMetainfoPage.qml:549
 #, kde-format
 msgctxt "placeholder text for the add databasename text entry"
 msgid "Write to add database name for new reference."
 msgstr "Yeni başvuru için veritabanı adı eklemek için yazın."
 
-#: creator/qml/BookMetainfoPage.qml:569
+#: creator/qml/BookMetainfoPage.qml:570
 #, kde-format
 msgctxt "label text for the edit field for the content rating list"
 msgid "Content Ratings"
 msgstr "İçerik Derecelendirmeleri"
 
-#: creator/qml/BookMetainfoPage.qml:587 creator/qml/BookMetainfoPage.qml:633
+#: creator/qml/BookMetainfoPage.qml:588 creator/qml/BookMetainfoPage.qml:634
 #, kde-format
 msgctxt "placeholder text for the add content rating text entry"
 msgid "Write to add rating label."
 msgstr "Derecelendirme etiketi eklemek için yazın."
 
-#: creator/qml/BookMetainfoPage.qml:598 creator/qml/BookMetainfoPage.qml:643
+#: creator/qml/BookMetainfoPage.qml:599 creator/qml/BookMetainfoPage.qml:644
 #, kde-format
 msgctxt "placeholder text for the add content rating system text entry"
 msgid "Write to add rating system."
 msgstr "Derecelendirme sistemi eklemek için yazn."
 
-#: creator/qml/BookMetainfoPage.qml:663
+#: creator/qml/BookMetainfoPage.qml:664
 #, kde-format
 msgctxt "label text for the form for reading direction."
 msgid "Reading Direction"
 msgstr "Okuma Yönü"
 
-#: creator/qml/BookMetainfoPage.qml:667
+#: creator/qml/BookMetainfoPage.qml:668
 #, kde-format
 msgctxt "label text for right to left checkbox."
 msgid "Right to left."
 msgstr "Sağdan sola."
 
-#: creator/qml/BookMetainfoPage.qml:675
+#: creator/qml/BookMetainfoPage.qml:676
 #, kde-format
 msgctxt "label text for the form for the publishing info list"
 msgid "Publisher Info"
 msgstr "Yayımcı Bilgisi"
 
-#: creator/qml/BookMetainfoPage.qml:678
+#: creator/qml/BookMetainfoPage.qml:679
 #, kde-format
 msgctxt "Label for publisher"
 msgid "Publisher:"
 msgstr "Yayımcı:"
 
-#: creator/qml/BookMetainfoPage.qml:683
+#: creator/qml/BookMetainfoPage.qml:684
 #, kde-format
 msgctxt "placeholder text for the publisher entry"
 msgid "Write to add publisher"
 msgstr "Yayımcı eklemek için yazın"
 
-#: creator/qml/BookMetainfoPage.qml:693
+#: creator/qml/BookMetainfoPage.qml:694
 #, kde-format
 msgctxt "Label for publishing date"
 msgid "Publishing Date:"
 msgstr "Yayım Tarihi:"
 
-#: creator/qml/BookMetainfoPage.qml:743
+#: creator/qml/BookMetainfoPage.qml:744
 #, kde-format
 msgctxt "Label for city"
 msgid "City:"
 msgstr "Kent:"
 
-#: creator/qml/BookMetainfoPage.qml:748
+#: creator/qml/BookMetainfoPage.qml:749
 #, kde-format
 msgctxt "placeholder text for the publishing city entry"
 msgid "Write to add city"
 msgstr "Kent eklemek için yazın"
 
-#: creator/qml/BookMetainfoPage.qml:758
+#: creator/qml/BookMetainfoPage.qml:759
 #, kde-format
 msgctxt "Label for ISBN"
 msgid "ISBN:"
 msgstr "ISBN:"
 
-#: creator/qml/BookMetainfoPage.qml:764
+#: creator/qml/BookMetainfoPage.qml:765
 #, kde-format
 msgctxt "placeholder text for the publishing ISBN entry"
 msgid "Write to add ISBN"
 msgstr "ISBN eklemek için yazın"
 
-#: creator/qml/BookMetainfoPage.qml:774
+#: creator/qml/BookMetainfoPage.qml:775
 #, kde-format
 msgctxt "Label for license"
 msgid "License:"
 msgstr "Lisans:"
 
-#: creator/qml/BookMetainfoPage.qml:779
+#: creator/qml/BookMetainfoPage.qml:780
 #, kde-format
 msgctxt "placeholder text for the publishing license entry"
 msgid "Write to add license"
 msgstr "Lisans eklemek için yazın"
 
-#: creator/qml/BookMetainfoPage.qml:791
+#: creator/qml/BookMetainfoPage.qml:792
 #, kde-format
 msgctxt "label text for the form for the document info list"
 msgid "Document Authors"
 msgstr "Belge Yazarları"
 
-#: creator/qml/BookMetainfoPage.qml:867
+#: creator/qml/BookMetainfoPage.qml:868
 #, kde-format
 msgctxt "label text for the form for the sources list"
 msgid "Document Sources"
 msgstr "Belge Kaynakları"
 
-#: creator/qml/BookMetainfoPage.qml:929
+#: creator/qml/BookMetainfoPage.qml:930
 #, kde-format
 msgctxt "label text for the form for the history list"
 msgid "Document History"
 msgstr "Belge Geçmişi"
 
-#: creator/qml/BookMetainfoPage.qml:994
+#: creator/qml/BookMetainfoPage.qml:995
 #, kde-format
 msgctxt "Label for the document version spinbox"
 msgid "Document Version:"
 msgstr "Belge Sürümü:"
 
-#: creator/qml/BookMetainfoPage.qml:1036
+#: creator/qml/BookMetainfoPage.qml:1037
 #, kde-format
 msgctxt "label text for the form for the body background color."
 msgid "General Page Background Color"
 msgstr "Genel Sayfa Arka Plan Rengi"
 
-#: creator/qml/BookMetainfoPage.qml:1073
+#: creator/qml/BookMetainfoPage.qml:1074
 #, kde-format
 msgctxt "@title color choosing dialog"
 msgid "Choose the general background color for this comic"
@@ -2183,73 +2183,73 @@ msgctxt ""
 msgid "Change page background color"
 msgstr "Sayfa arka plan rengini değiştir"
 
-#: creator/qml/PageMetaInfo.qml:128
+#: creator/qml/PageMetaInfo.qml:127
 #, kde-format
 msgctxt "Label from frame background color."
 msgid "Background Color:"
 msgstr "Arka Plan Rengi:"
 
-#: creator/qml/PageMetaInfo.qml:148
+#: creator/qml/PageMetaInfo.qml:147
 #, kde-format
 msgctxt "@title color choosing dialog"
 msgid "Choose background color for this frame"
 msgstr "Bu kare için arka plan rengi seçin"
 
-#: creator/qml/PageMetaInfo.qml:158
+#: creator/qml/PageMetaInfo.qml:157
 #, kde-format
 msgctxt "swap the position of this frame with the previous one"
 msgid "Move Up"
 msgstr "Yukarı Taşı"
 
-#: creator/qml/PageMetaInfo.qml:167
+#: creator/qml/PageMetaInfo.qml:166
 #, kde-format
 msgctxt "swap the position of this frame with the next one"
 msgid "Move Down"
 msgstr "Aşağı Taşı"
 
-#: creator/qml/PageMetaInfo.qml:176
+#: creator/qml/PageMetaInfo.qml:175
 #, kde-format
 msgctxt "remove the frame from the page"
 msgid "Delete Frame"
 msgstr "Kareyi Sil"
 
-#: creator/qml/PageMetaInfo.qml:184
+#: creator/qml/PageMetaInfo.qml:183
 #, kde-format
 msgctxt "label text for the edit field for the page textareas"
 msgid "Text Areas"
 msgstr "Metin Alanları"
 
-#: creator/qml/PageMetaInfo.qml:189
+#: creator/qml/PageMetaInfo.qml:188
 #, kde-format
 msgctxt "Label from textlayer background color."
 msgid "Background Color:"
 msgstr "Arka Plan Rengi:"
 
-#: creator/qml/PageMetaInfo.qml:210
+#: creator/qml/PageMetaInfo.qml:209
 #, kde-format
 msgctxt "@title color choosing dialog"
 msgid "Choose the background color for all text areas on this page"
 msgstr "Bu sayfadaki tüm metin alanları için arka plan rengi seçin"
 
-#: creator/qml/PageMetaInfo.qml:224
+#: creator/qml/PageMetaInfo.qml:223
 #, kde-format
 msgctxt "swap the position of this text area with the previous one"
 msgid "Move Up"
 msgstr "Yukarı Taşı"
 
-#: creator/qml/PageMetaInfo.qml:231
+#: creator/qml/PageMetaInfo.qml:230
 #, kde-format
 msgctxt "swap the position of this text area with the next one"
 msgid "Move Down"
 msgstr "Aşağı Taşı"
 
-#: creator/qml/PageMetaInfo.qml:238
+#: creator/qml/PageMetaInfo.qml:237
 #, kde-format
 msgctxt "remove the text area from the page"
 msgid "Delete Text Area"
 msgstr "Metin Alanını Sil"
 
-#: creator/qml/PageMetaInfo.qml:248
+#: creator/qml/PageMetaInfo.qml:247
 #, kde-format
 msgctxt "Comic book panel textarea name."
 msgid "Text Area %1"
