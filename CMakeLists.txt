@@ -93,34 +93,6 @@ set_package_properties(ZLIB PROPERTIES
     TYPE REQUIRED
 )
 
-# The following checks for the QQuickTextNode private header
-# The original checking code can be found in QtWebKit
-# include(CheckCXXSourceCompiles)
-#macro(CHECK_QT6_PRIVATE_INCLUDE_DIRS _qt_component _header)
-#    set(INCLUDE_TEST_SOURCE
-#    "
-#        #include <${_header}>
-#        int main() { return 0; }
-#    "
-#    )
-#    set(CMAKE_REQUIRED_INCLUDES ${Qt${_qt_component}_PRIVATE_INCLUDE_DIRS})
-#    set(CMAKE_REQUIRED_LIBRARIES Qt::${_qt_component})
-#
-#    # Avoid check_include_file_cxx() because it performs linking but doesn't support CMAKE_REQUIRED_LIBRARIES (doh!)
-#    check_cxx_source_compiles("${INCLUDE_TEST_SOURCE}" Qt${_qt_component}_PRIVATE_HEADER_FOUND)
-#
-#    unset(INCLUDE_TEST_SOURCE)
-#    unset(CMAKE_REQUIRED_INCLUDES)
-#    unset(CMAKE_REQUIRED_LIBRARIES)
-#
-#    if (NOT Qt${_qt_component}_PRIVATE_HEADER_FOUND)
-#        message(FATAL_ERROR "Header ${_header} is not found. Please make sure that:
-#    1. Private headers of Qt6${_qt_component} are installed
-#    2. Qt6${_qt_component}_PRIVATE_INCLUDE_DIRS is correctly defined in Qt6${_qt_component}Config.cmake")
-#    endif ()
-#endmacro()
-#CHECK_QT6_PRIVATE_INCLUDE_DIRS(Quick private/qquicktextnode_p.h)
-
 include(KDEInstallDirs)
 include(KDECMakeSettings)
 include(KDECompilerSettings)
