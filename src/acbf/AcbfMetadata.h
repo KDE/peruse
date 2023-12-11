@@ -22,9 +22,14 @@
 #ifndef ACBFMETADATA_H
 #define ACBFMETADATA_H
 
-#include <memory>
+#include "acbf_export.h"
+#include "AcbfBookinfo.h"
+#include "AcbfDocumentinfo.h"
+#include "AcbfPublishinfo.h"
 
-#include "AcbfDocument.h"
+#include <QObject>
+
+#include <memory>
 
 /**
  * \brief Class to handle the metadata section of ACBF.
@@ -41,9 +46,8 @@ class QXmlStreamWriter;
 class QXmlStreamReader;
 namespace AdvancedComicBookFormat
 {
-class BookInfo;
-class PublishInfo;
-class DocumentInfo;
+class Document;
+
 class ACBF_EXPORT Metadata : public QObject {
     Q_OBJECT
     Q_PROPERTY(AdvancedComicBookFormat::BookInfo* bookInfo READ bookInfo NOTIFY bookInfoChanged)

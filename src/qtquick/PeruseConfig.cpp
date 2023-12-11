@@ -24,13 +24,15 @@
 #include <KFileMetaData/UserMetaData>
 #include <KConfig>
 #include <KConfigGroup>
-#include <KNSCore/Engine>
+#include <KNSCore/EngineBase>
 
 #include <QTimer>
 #include <QFile>
 #include <QFileInfo>
 #include <QImageReader>
 #include <QMimeDatabase>
+
+using namespace Qt::Literals::StringLiterals;
 
 class PeruseConfig::Private
 {
@@ -45,14 +47,14 @@ PeruseConfig::PeruseConfig(QObject* parent)
     : QObject(parent)
     , d(new Private)
 {
-    QStringList locations = d->config.group("general").readEntry("book locations", QStringList());
+    QStringList locations = d->config.group(u"general"_s).readEntry("book locations", QStringList());
     if(locations.count() < 1)
     {
         locations = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation);
         locations << QStandardPaths::standardLocations(QStandardPaths::DownloadLocation);
         locations << QString("%1/comics").arg(QStandardPaths::standardLocations(QStandardPaths::GenericDataLocation).first());
-        d->config.group("general").writeEntry("book locations", locations);
-        d->config.group("general").writeEntry("animate jump areas", true);
+        d->config.group(u"general"_s).writeEntry(u"book locations"_s, locations);
+        d->config.group(u"general"_s).writeEntry(u"animate jump areas"_s, true);
         d->config.sync();
     }
 }
@@ -77,14 +79,14 @@ void PeruseConfig::bookOpened(QString path)
         recent.removeAll(path);
         recent.prepend(path);
     }
-    d->config.group("general").writeEntry("recently opened", recent);
+    d->config.group(u"general"_s).writeEntry(u"recently opened"_s, recent);
     d->config.sync();
     emit recentlyOpenedChanged();
 }
 
 QStringList PeruseConfig::recentlyOpened() const
 {
-    QStringList recent = d->config.group("general").readEntry("recently opened", QStringList());
+    QStringList recent = d->config.group(u"general"_s).readEntry(u"recently opened"_s, QStringList());
     QStringList actualRecent;
     while(recent.count() > 0) {
         QString current = recent.takeFirst();
@@ -125,7 +127,7 @@ void PeruseConfig::addBookLocation(const QString& location)
             return;
         }
         newLocations.append(newLocation);
-        d->config.group("general").writeEntry("book locations", newLocations);
+        d->config.group(u"general"_s).writeEntry(u"book locations"_s, newLocations);
         d->config.sync();
         emit bookLocationsChanged();
     }
@@ -135,38 +137,41 @@ void PeruseConfig::removeBookLocation(const QString& location)
 {
     QStringList locations = bookLocations();
     locations.removeAll(location);
-    d->config.group("general").writeEntry("book locations", locations);
+    d->config.group(u"general"_s).writeEntry(u"book locations"_s, locations);
     d->config.sync();
     QTimer::singleShot(100, this, SIGNAL(bookLocationsChanged()));
 }
 
 QStringList PeruseConfig::bookLocations() const
 {
-    QStringList locations = d->config.group("general").readEntry("book locations", QStringList());
+    QStringList locations = d->config.group(u"general"_s).readEntry(u"book locations"_s, QStringList());
     return locations;
 }
 
 QString PeruseConfig::newstuffLocation() const
 {
-    const QStringList locations = KNSCore::Engine::configSearchLocations();
-    QString knsrc;
-    for (const QString& location : locations) {
-        knsrc = QString::fromLocal8Bit("%1/peruse.knsrc").arg(location);
-        if (QFile(knsrc).exists()) {
-            break;
-        }
+    const QStringList configFiles = KNSCore::EngineBase::availableConfigFiles()
+        .filter(QRegularExpression(u"pereuse.knsrc$"_s));
+    if (configFiles.isEmpty()) {
+        return {};
     }
-    if(qEnvironmentVariableIsSet("APPDIR"))
-    {
+
+    if(!qEnvironmentVariableIsSet("APPDIR")) {
+        return configFiles[0];
+    }
+
+    for (const auto &configFile : configFiles) {
         // Because appimage install happens into /app/usr...
+        auto knsrc = configFiles[0];
         knsrc = knsrc.prepend("/usr").prepend(qgetenv("APPDIR"));
+        return knsrc;
     }
-    return knsrc;
+    return {};
 }
 
 bool PeruseConfig::animateJumpAreas() const
 {
-    return d->config.group("general").readEntry("animate jump areas", true);
+    return d->config.group(u"general"_s).readEntry(u"animate jump areas"_s, true);
 }
 
 void PeruseConfig::setAnimateJumpAreas(bool animate)
@@ -174,7 +179,7 @@ void PeruseConfig::setAnimateJumpAreas(bool animate)
     bool animateJumpAreasCurrentVal = animateJumpAreas();
 
     if(animateJumpAreasCurrentVal != animate) {
-        d->config.group("general").writeEntry("animate jump areas", animate);
+        d->config.group(u"general"_s).writeEntry(u"animate jump areas"_s, animate);
         d->config.sync();
         emit animateJumpAreasChanged();
     }

@@ -22,13 +22,15 @@
 #ifndef ACBFDATA_H
 #define ACBFDATA_H
 
+#include "acbf_export.h"
+
 #include <memory>
 
 #include <QObject>
-#include <QXmlStreamReader>
 
-#include "AcbfDocument.h"
 #include "AcbfBinary.h"
+
+class QXmlStreamReader;
 /**
  * \brief Class to handle the list of embedded data in an ACBF document.
  * 
@@ -41,6 +43,9 @@
  */
 namespace AdvancedComicBookFormat
 {
+
+class Document;
+
 class ACBF_EXPORT Data : public QObject
 {
     Q_OBJECT

@@ -54,19 +54,20 @@ target_include_directories(peruseqmlplugin
 target_link_libraries (peruseqmlplugin
     PUBLIC
     acbf
-    Qt5::Core
-    Qt5::Qml
-    Qt5::Quick
-    Qt5::Sql
-    KF5::Archive
-    KF5::IconThemes
-    KF5::I18n
-    KF5::ConfigCore
-    KF5::GuiAddons
-    KF5::KIOCore
-    KF5::KIOWidgets
-    KF5::FileMetaData
-    KF5::NewStuffCore
+    Qt::Core
+    Qt::Qml
+    Qt::Quick
+    Qt::QuickPrivate
+    Qt::Sql
+    KF${QT_MAJOR_VERSION}::Archive
+    KF${QT_MAJOR_VERSION}::IconThemes
+    KF${QT_MAJOR_VERSION}::I18n
+    KF${QT_MAJOR_VERSION}::ConfigCore
+    KF${QT_MAJOR_VERSION}::GuiAddons
+    KF${QT_MAJOR_VERSION}::KIOCore
+    KF${QT_MAJOR_VERSION}::KIOWidgets
+    KF${QT_MAJOR_VERSION}::FileMetaData
+    KF${QT_MAJOR_VERSION}::NewStuffCore
 )
 
 if (ZLIB_FOUND)

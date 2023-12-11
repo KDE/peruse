@@ -22,11 +22,13 @@
 #ifndef ACBFDOCUMENTINFO_H
 #define ACBFDOCUMENTINFO_H
 
+#include "acbf_export.h"
+
 #include <memory>
 
-#include "AcbfMetadata.h"
-
 #include <QDate>
+#include <QObject>
+
 /**
  * \brief Class to handle the DocumentInfo section.
  * 
@@ -37,9 +39,14 @@
  * Sources is a stringlist, which is useful when the ACBF encompasses several
  * pages of a webcomic, for example.
  */
+
+class QXmlStreamWriter;
+class QXmlStreamReader;
+
 namespace AdvancedComicBookFormat
 {
 class Author;
+class Metadata;
 class ACBF_EXPORT DocumentInfo : public QObject
 {
     Q_OBJECT

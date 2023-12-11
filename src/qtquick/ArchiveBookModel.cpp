@@ -47,6 +47,7 @@
 #include <kzip.h>
 #include "KRar.h" // "" because it's a custom thing for now
 
+#include <qregularexpression.h>
 #include <qtquick_debug.h>
 #include <AcbfData.h>
 
@@ -182,14 +183,14 @@ QStringList recursiveEntries(const KArchiveDirectory* dir)
 {
     QStringList entries = dir->entries();
     QStringList allEntries = entries;
-    for(const QString& entryName : qAsConst(entries))
+    for(const QString& entryName : std::as_const(entries))
     {
         const KArchiveEntry* entry = dir->entry(entryName);
         if(entry->isDirectory())
         {
             const KArchiveDirectory* subDir = static_cast<const KArchiveDirectory*>(entry);
             QStringList subEntries = recursiveEntries(subDir);
-            for(const QString& subEntry : qAsConst(subEntries))
+            for(const QString& subEntry : std::as_const(subEntries))
             {
                 entries.append(entryName + "/" + subEntry);
             }
@@ -240,7 +241,7 @@ void ArchiveBookModel::setFilename(QString newFilename)
             QLatin1String ComicInfoXML("comicinfo.xml");
             QLatin1String xmlSuffix(".xml");
             QStringList images;
-            for(const QString& entry : qAsConst(d->fileEntries))
+            for(const QString& entry : std::as_const(d->fileEntries))
             {
                 if(entry.toLower().endsWith(acbfSuffix))
                 {
@@ -304,7 +305,7 @@ void ArchiveBookModel::setFilename(QString newFilename)
             {
                 // fall back to just handling the files directly if there's no ACBF document...
                 QString undesired = QString("%1").arg("/").append("Thumbs.db");
-                for(const QString& entry : qAsConst(d->fileEntries))
+                for(const QString& entry : std::as_const(d->fileEntries))
                 {
                     const KArchiveEntry* archEntry = d->archive->directory()->entry(entry);
                     if(archEntry->isFile() && !entry.endsWith(undesired))
@@ -779,8 +780,8 @@ QString ArchiveBookModel::createBook(QString folder, QString title, QString cove
 {
     bool success = true;
 
-    QString fileTitle = title.replace( QRegExp("\\W"),QString("")).simplified();
-    QString filename = QString("%1/%2.cbz").arg(folder).arg(fileTitle);
+    QString fileTitle = title.replace(QRegularExpression("\\W"), {}).simplified();
+    QString filename = QStringLiteral("%1/%2.cbz").arg(folder).arg(fileTitle);
     int i = 1;
     while(QFile(filename).exists())
     {
@@ -1189,7 +1190,7 @@ bool ArchiveBookModel::loadCoMet(QStringList xmlDocuments, QObject *acbfData, QS
 {
     KFileMetaData::UserMetaData filedata(filename);
     AdvancedComicBookFormat::Document* acbfDocument = qobject_cast<AdvancedComicBookFormat::Document*>(acbfData);
-    for(const QString& xmlDocument : qAsConst(xmlDocuments)) {
+    for(const QString& xmlDocument : std::as_const(xmlDocuments)) {
         QMutexLocker locker(&archiveMutex);
         const KArchiveFile* archFile = d->archive->directory()->file(xmlDocument);
         QXmlStreamReader xmlReader(archFile->data());
@@ -1375,7 +1376,7 @@ bool ArchiveBookModel::loadCoMet(QStringList xmlDocuments, QObject *acbfData, QS
                         cover->setImageHref(url);
                         acbfDocument->metaData()->bookInfo()->setCoverpage(cover);
                         entries.removeAll(url);
-                        for(const QString& entry : qAsConst(entries)) {
+                        for(const QString& entry : std::as_const(entries)) {
                             AdvancedComicBookFormat::Page* page = new AdvancedComicBookFormat::Page(acbfDocument);
                             page->setImageHref(entry);
                             acbfDocument->body()->addPage(page);
@@ -1431,8 +1432,8 @@ QString ArchiveBookModel::previewForId(const QString& id) const
     static const QString period{"."};
     static const QString acbfSuffix{"acbf"};
     if (d->archive) {
-        if (id.splitRef(directorySplit).last().contains(period)) {
-            const QString suffix = id.splitRef(period).last().toString().toLower();
+        if (id.split(directorySplit).last().contains(period)) {
+            const QString suffix = id.split(period).last().toLower();
             if (d->imageProvider && QImageReader::supportedImageFormats().contains(suffix.toLatin1())) {
                 return QString("image://%1/%2").arg(d->imageProvider->prefix()).arg(id);
             } else if (suffix == acbfSuffix) {

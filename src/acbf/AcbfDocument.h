@@ -26,6 +26,11 @@
 
 #include <QObject>
 #include "acbf_export.h"
+#include "AcbfMetadata.h"
+#include "AcbfBody.h"
+#include "AcbfReferences.h"
+#include "AcbfData.h"
+#include "AcbfStyleSheet.h"
 /**
  * \brief Class that handles all of the ACBF document.
  * 
@@ -44,19 +49,14 @@
  */
 namespace AdvancedComicBookFormat
 {
-class Metadata;
-class Body;
-class References;
-class Data;
-class StyleSheet;
 class ACBF_EXPORT Document : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(Metadata* metaData READ metaData NOTIFY metaDataChanged)
-    Q_PROPERTY(Body* body READ body NOTIFY bodyChanged)
-    Q_PROPERTY(References* references READ references NOTIFY referencesChanged)
-    Q_PROPERTY(Data* data READ data NOTIFY dataChanged)
-    Q_PROPERTY(StyleSheet* styleSheet READ styleSheet NOTIFY stylesheetChanged)
+    Q_PROPERTY(AdvancedComicBookFormat::Metadata *metaData READ metaData NOTIFY metaDataChanged)
+    Q_PROPERTY(AdvancedComicBookFormat::Body *body READ body NOTIFY bodyChanged)
+    Q_PROPERTY(AdvancedComicBookFormat::References *references READ references NOTIFY referencesChanged)
+    Q_PROPERTY(AdvancedComicBookFormat::Data *data READ data NOTIFY dataChanged)
+    Q_PROPERTY(AdvancedComicBookFormat::StyleSheet *styleSheet READ styleSheet NOTIFY stylesheetChanged)
 public:
     explicit Document(QObject* parent = nullptr);
     ~Document() override;

@@ -20,6 +20,7 @@
  */
 
 #include "AcbfReferences.h"
+#include "AcbfDocument.h"
 #include <QTimer>
 #include <QXmlStreamReader>
 
@@ -42,10 +43,9 @@ public:
         QObject::connect(reference, &Reference::languageChanged, q, &References::referencesChanged);
         QObject::connect(reference, &Reference::paragraphsChanged, q, &References::referencesChanged);
         QObject::connect(reference, &Reference::idChanged, q, [this, reference](){
-            QMutableHashIterator<QString, Reference*> iterator(referencesById);
-            while(iterator.findNext(reference)) {
-                iterator.remove();
-            }
+            referencesById.removeIf([&reference](QMultiHash<QString, Reference *>::iterator it) {
+                return it.value() == reference;
+            });
             referencesById.insert(reference->id(), reference);
             Q_EMIT q->referencesChanged();
         });

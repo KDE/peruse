@@ -20,12 +20,14 @@
  */
 
 #include "AcbfStyleSheet.h"
+
+#include "AcbfDocument.h"
+#include "AcbfStyle.h"
+#include "acbf_debug.h"
+
 #include <QString>
 #include <QXmlStreamWriter>
 #include <QXmlStreamReader>
-
-#include "AcbfStyle.h"
-#include "acbf_debug.h"
 
 using namespace AdvancedComicBookFormat;
 
@@ -165,8 +167,8 @@ QObject * AdvancedComicBookFormat::StyleSheet::style(const QString& element, con
 
 void StyleSheet::setContents(const QString& css)
 {
-    QVector<QStringRef> classes = css.splitRef('}', Qt::SkipEmptyParts);
-    for(QStringRef cssClass : classes)
+    QVector<QStringView> classes = QStringView{css}.split('}', Qt::SkipEmptyParts);
+    for(QStringView cssClass : classes)
     {
         Style* newStyle = new Style(this);
         if (newStyle->fromString(cssClass.trimmed())) {

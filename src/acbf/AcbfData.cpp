@@ -20,6 +20,7 @@
  */
 
 #include "AcbfData.h"
+#include "AcbfDocument.h"
 
 #include <QString>
 
@@ -42,10 +43,9 @@ public:
         QObject::connect(binary, &Binary::contentTypeChanged, q, &Data::binariesChanged);
         QObject::connect(binary, &Binary::dataChanged, q, &Data::binariesChanged);
         QObject::connect(binary, &Binary::idChanged, q, [this, binary](){
-            QMutableHashIterator<QString, Binary*> iterator(binariesById);
-            while(iterator.findNext(binary)) {
-                iterator.remove();
-            }
+            binariesById.removeIf([&binary](QMultiHash<QString, Binary *>::iterator it) {
+                return it.value() == binary;
+            });
             binariesById.insert(binary->id(), binary);
             Q_EMIT q->binariesChanged();
         });

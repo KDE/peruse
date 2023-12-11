@@ -24,6 +24,7 @@ import QtQuick.Layouts 1.4
 import QtQuick.Controls 2.12 as QtControls
 
 import org.kde.kirigami 2.13 as Kirigami
+import org.kde.kirigamiaddons.delegates as Delegates
 
 import org.kde.peruse 0.1 as Peruse
 /**
@@ -94,56 +95,48 @@ Kirigami.ScrollablePage {
             }
             Item { height: Kirigami.Units.largeSpacing; Layout.fillWidth: true; }
         }
-        delegate: Kirigami.AbstractListItem {
+        delegate: Delegates.RoundedItemDelegate {
             id: listItem;
-            height: Kirigami.Units.iconSizes.huge + Kirigami.Units.smallSpacing * 2;
-            supportsMouseEvents: true;
-            onClicked: {
-                editBinarySheet.editBinary(model.object);
-            }
-            RowLayout {
-                Layout.fillWidth: true;
-                Layout.fillHeight: true;
+
+            text: model.id === "" ? i18nc("Title used in the list of binary data when there is no id defined for that entry", "Unnamed piece of data") : model.id
+
+            onClicked: editBinarySheet.editBinary(model.object)
+
+            contentItem: RowLayout {
                 Item {
-                    Layout.fillHeight: true;
-                    Layout.minimumWidth: height;
-                    Layout.maximumWidth: height;
+                    Layout.fillHeight: true
+                    Layout.minimumWidth: height
+                    Layout.maximumWidth: height
+
                     Image {
-                        id: thumbnail;
+                        id: thumbnail
                         anchors {
-                            fill: parent;
-                            margins: Kirigami.Units.smallSpacing;
+                            fill: parent
+                            margins: Kirigami.Units.smallSpacing
                         }
-                        asynchronous: true;
-                        fillMode: Image.PreserveAspectFit;
-                        source: model.object.size > 0 ? root.model.previewForId("#" + model.id) : "";
+                        asynchronous: true
+                        fillMode: Image.PreserveAspectFit
+                        source: model.object.size > 0 ? root.model.previewForId("#" + model.id) : ""
                     }
+
                     Kirigami.Icon {
                         anchors {
-                            fill: parent;
-                            margins: Kirigami.Units.smallSpacing;
+                            fill: parent
+                            margins: Kirigami.Units.smallSpacing
                         }
-                        source: "fileview-preview";
+                        source: "fileview-preview"
                         opacity: thumbnail.status == Image.Ready && thumbnail.source !== "" ? 0 : 1
                         Behavior on opacity { NumberAnimation { duration: Kirigami.Units.shortDuration; } }
                     }
                 }
-                ColumnLayout {
-                    Layout.fillWidth: true;
-                    Layout.fillHeight: true;
-                    QtControls.Label {
-                        text: model.id === "" ? i18nc("Title used in the list of binary data when there is no id defined for that entry", "Unnamed piece of data") : model.id;
-                        Layout.fillWidth: true;
-                        Layout.fillHeight: true;
-                    }
-                    QtControls.Label {
-                        text: i18nc("Label which describes which content type this entry is supposed to be", "Content type: %1", model.object.contentType);
-                        Layout.fillWidth: true;
-                        Layout.fillHeight: true;
-                    }
+
+                Delegates.SubtitleContentItem {
+                    itemDelegate: listItem
+                    subtitle: i18nc("Label which describes which content type this entry is supposed to be", "Content type: %1", model.object.contentType);
                 }
             }
         }
+
         Rectangle {
             id: processingBackground;
             anchors.fill: parent;

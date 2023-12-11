@@ -73,10 +73,10 @@ ecm_generate_export_header(acbf
 
 target_link_libraries(acbf
     PUBLIC
-    Qt5::Core
+    Qt6::Core
 )
 target_include_directories(acbf
-    INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF5}/AdvancedComicBookFormat>"
+    INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF6}/AdvancedComicBookFormat>"
 )
 
 set_target_properties(acbf PROPERTIES
@@ -114,7 +114,7 @@ if (BUILD_QCH)
         MD_MAINPAGE "${CMAKE_CURRENT_SOURCE_DIR}/README.md"
         IMAGE_DIRS "${CMAKE_SOURCE_DIR}/docs/pics"
         LINK_QCHS
-            Qt5Core_QCH
+            Qt6Core_QCH
         INCLUDE_DIRS
             ${CMAKE_CURRENT_BINARY_DIR}
         BLANK_MACROS
@@ -142,7 +142,7 @@ install(FILES
 install(FILES
     ${acbf_HEADERS}
     ${CMAKE_CURRENT_BINARY_DIR}/acbf_version.h
-    DESTINATION "${KDE_INSTALL_INCLUDEDIR_KF5}/AdvancedComicBookFormat" COMPONENT Devel
+    DESTINATION "${KDE_INSTALL_INCLUDEDIR}/AdvancedComicBookFormat" COMPONENT Devel
 )
 
 install(TARGETS acbf EXPORT AdvancedComicBookFormatTargets ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})

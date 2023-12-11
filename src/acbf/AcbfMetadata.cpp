@@ -21,6 +21,7 @@
 
 #include "AcbfMetadata.h"
 #include "AcbfBookinfo.h"
+#include "AcbfDocument.h"
 #include "AcbfPublishinfo.h"
 #include "AcbfDocumentinfo.h"
 

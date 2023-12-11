@@ -24,9 +24,14 @@
 
 #include <memory>
 
-#include "AcbfMetadata.h"
+#include "acbf_export.h"
 
 #include <QDate>
+#include <QObject>
+
+class QXmlStreamWriter;
+class QXmlStreamReader;
+
 /**
  * \brief Class to handle the publishing info.
  * 
@@ -36,6 +41,7 @@
  */
 namespace AdvancedComicBookFormat
 {
+class Metadata;
 class ACBF_EXPORT PublishInfo : public QObject
 {
     Q_OBJECT

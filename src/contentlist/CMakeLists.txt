@@ -16,9 +16,9 @@ endif()
 add_library (contentlistqmlplugin SHARED ${qmlplugin_SRCS} ${qmlplugin_baloo_SRCS})
 
 target_link_libraries (contentlistqmlplugin
-    Qt5::Gui
-    Qt5::Qml
-    KF5::FileMetaData
+    Qt::Gui
+    Qt::Qml
+    KF${QT_MAJOR_VERSION}::FileMetaData
 )
 
 if(KF5Baloo_FOUND)

@@ -21,6 +21,7 @@
 
 #include "AcbfBody.h"
 #include "AcbfPage.h"
+#include "AcbfDocument.h"
 
 #include <QXmlStreamReader>
 

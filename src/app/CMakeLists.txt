@@ -14,15 +14,14 @@ ecm_qt_declare_logging_category(APP_SRCS
 
 add_executable(peruse ${APP_SRCS})
 target_link_libraries(peruse
-    Qt5::Core
-    Qt5::Quick
-    Qt5::Gui
-    ${Qt5Gui_OPENGL_LIBRARIES}
-    Qt5::Qml
-    Qt5::Widgets
-    Qt5::OpenGL
-    KF5::I18n
-    KF5::Declarative
+    Qt::Core
+    Qt::Quick
+    Qt::Gui
+    ${QtGui_OPENGL_LIBRARIES}
+    Qt::Qml
+    Qt::Widgets
+    Qt::OpenGL
+    KF${QT_MAJOR_VERSION}::I18n
     peruse_helpers
 )
 target_include_directories(peruse

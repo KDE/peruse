@@ -20,6 +20,7 @@
  */
 
 #include "AcbfBookinfo.h"
+#include "AcbfMetadata.h"
 #include "AcbfAuthor.h"
 #include "AcbfContentrating.h"
 #include "AcbfDatabaseref.h"

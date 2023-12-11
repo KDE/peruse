@@ -73,9 +73,9 @@ bool Frame::fromXml(QXmlStreamReader *xmlReader)
     setId(xmlReader->attributes().value(QStringLiteral("id")).toString());
     setBgcolor(xmlReader->attributes().value(QStringLiteral("bgcolor")).toString());
 
-    QVector<QStringRef> points = xmlReader->attributes().value(QStringLiteral("points")).split(' ');
-    for(QStringRef point : points) {
-        QVector<QStringRef> elements = point.split(',');
+    QVector<QStringView> points = xmlReader->attributes().value(QStringLiteral("points")).split(' ');
+    for(QStringView point : points) {
+        QVector<QStringView> elements = point.split(',');
         if(elements.length() == 2)
         {
             addPoint(QPoint(elements.at(0).toInt(), elements.at(1).toInt()));

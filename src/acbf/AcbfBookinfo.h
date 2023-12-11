@@ -24,9 +24,11 @@
 
 #include <memory>
 
-#include "AcbfMetadata.h"
+#include "acbf_export.h"
 
 #include <QHash>
+#include <QObject>
+#include <QXmlStreamWriter>
 
 /**
  * \brief Class for handling the book metadata.
@@ -73,6 +75,7 @@
 
 namespace AdvancedComicBookFormat
 {
+class Metadata;
 class Author;
 class Page;
 class Language;
