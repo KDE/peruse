@@ -24,7 +24,6 @@
 
 #include <memory>
 
-#include "AcbfDocument.h"
 #include "AcbfReference.h"
 #include <QObject>
 #include <QXmlStreamReader>
@@ -32,19 +31,21 @@
 namespace AdvancedComicBookFormat
 {
 
-    /**
-     * @brief Class to handle the ACBF references section.
-     * 
-     * The References object holds Reference objects, which
-     * in turn have an id, language and a list of paragraphs.
-     * 
-     * A reference is a bit of text that can be referred to
-     * with an anchor in any of the other paragraphs. This
-     * can be used for footnotes, like translation notes
-     * or author's notes.
-     * 
-     * Reference objects can be retrieved by using their ID.
-     */
+class Document;
+
+/**
+ * @brief Class to handle the ACBF references section.
+ * 
+ * The References object holds Reference objects, which
+ * in turn have an id, language and a list of paragraphs.
+ * 
+ * A reference is a bit of text that can be referred to
+ * with an anchor in any of the other paragraphs. This
+ * can be used for footnotes, like translation notes
+ * or author's notes.
+ * 
+ * Reference objects can be retrieved by using their ID.
+ */
 class ACBF_EXPORT References : public QObject
 {
     Q_OBJECT

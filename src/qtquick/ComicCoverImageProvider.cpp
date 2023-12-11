@@ -114,7 +114,7 @@ public:
     {
         /// Sort case-insensitive, then remove non-image entries.
         QMap<QString, QString> entryMap;
-        for(const QString& entry : qAsConst(entries)) {
+        for(const QString& entry : std::as_const(entries)) {
             if (entry.endsWith(QLatin1String(".gif"), Qt::CaseInsensitive) ||
                     entry.endsWith(QLatin1String(".jpg"), Qt::CaseInsensitive) ||
                     entry.endsWith(QLatin1String(".jpeg"), Qt::CaseInsensitive) ||

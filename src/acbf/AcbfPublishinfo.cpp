@@ -21,6 +21,8 @@
 
 #include "AcbfPublishinfo.h"
 
+#include "AcbfMetadata.h"
+
 #include <QDate>
 #include <QXmlStreamReader>
 

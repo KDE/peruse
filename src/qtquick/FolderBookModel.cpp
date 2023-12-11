@@ -53,7 +53,7 @@ void FolderBookModel::setFilename(QString newFilename)
         QFileInfoList entries = dir.entryInfoList(QDir::Files, QDir::Name);
         QLatin1String undesired("thumbs.db");
         int i = 0;
-        for(const QFileInfo& entry : qAsConst(entries))
+        for(const QFileInfo& entry : std::as_const(entries))
         {
             if(entry.fileName().toLower() == undesired) {
                 continue;

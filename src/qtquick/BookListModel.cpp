@@ -28,6 +28,7 @@
 #include "AcbfAuthor.h"
 #include "AcbfSequence.h"
 #include "AcbfBookinfo.h"
+#include "AcbfDocument.h"
 
 #include <kio/deletejob.h>
 #include <KFileMetaData/UserMetaData>
@@ -284,7 +285,7 @@ void BookListModel::contentModelItemsInserted(QModelIndex index, int first, int 
             { entry->totalPages = it.value().toInt(); }
             else if(it.key() == QLatin1String("comments"))
             { entry->comment = it.value().toString();}
-            else if(it.key() == QLatin1Literal("tags"))
+            else if(it.key() == QLatin1String("tags"))
             { entry->tags = it.value().toStringList();}
             else if(it.key() == QLatin1String("rating"))
             { entry->rating = it.value().toInt();}

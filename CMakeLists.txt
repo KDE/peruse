@@ -2,8 +2,8 @@ cmake_policy(SET CMP0048 NEW)
 project(peruse VERSION "1.80.0")
 cmake_minimum_required(VERSION 3.16.0)
 
-set(KF5_DEP_VERSION "5.98.0") # handled by release scripts
-set(QT5_DEP_VERSION "5.15")
+set(KF_DEP_VERSION "5.98.0") # handled by release scripts
+set(QT_DEP_VERSION "5.15")
 
 if(POLICY CMP0063)
     cmake_policy (SET CMP0063 NEW)
@@ -20,22 +20,22 @@ endif()
 option(BUILD_QCH "Build API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)" OFF)
 add_feature_info(QCH ${BUILD_QCH} "API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)")
 
-find_package(ECM ${KF5_DEP_VERSION} REQUIRED NO_MODULE)
+find_package(ECM ${KF_DEP_VERSION} REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" ${ECM_MODULE_PATH})
 
 # Android has no DBus, so we can't use that. Sniff things and tell the code
 if(CMAKE_SYSTEM_NAME STREQUAL Android)
     message("Building for Android - this means no dbus, and other small details. Work with that")
     add_definitions(-DANDROID)
-    SET(QT_QMAKE_EXECUTABLE "$ENV{Qt5_android}/bin/qmake")
+    SET(QT_QMAKE_EXECUTABLE "$ENV{Qt6_android}/bin/qmake")
 elseif(WIN32)
     message("Building for Windows - this means no dbus, and other small details. Work with that")
     add_definitions(-DWINDOWS)
 endif()
 
-find_package(Qt5 ${QT5_DEP_VERSION} REQUIRED NO_MODULE COMPONENTS Qml Quick Gui Widgets OpenGL Sql)
+find_package(Qt6 ${QT_DEP_VERSION} REQUIRED NO_MODULE COMPONENTS Qml Quick Gui Widgets OpenGL Sql)
 
-find_package(KF5 ${KF5_DEP_VERSION} REQUIRED
+find_package(KF6 ${KF_DEP_VERSION} REQUIRED
     COMPONENTS
     Archive
     Config
@@ -46,7 +46,6 @@ find_package(KF5 ${KF5_DEP_VERSION} REQUIRED
     I18n
     IconThemes
     KIO
-    NewStuffQuick
     # For some reason, these show up in the OPTIONAL section if they're not explicitly listed, and that's just confusing, so...
     Attica
     Codecs
@@ -65,25 +64,25 @@ find_package(KF5 ${KF5_DEP_VERSION} REQUIRED
 )
 
 if (NOT WIN32)
-    find_package(KF5 ${KF5_DEP_VERSION} REQUIRED COMPONENTS Auth)
+    find_package(KF6 ${KF_DEP_VERSION} REQUIRED COMPONENTS Auth)
 endif()
 
-find_package(KF5Baloo ${KF5_DEP_VERSION}) # optional - we'll just let it pass if it's missing
+find_package(KF6Baloo ${KF_DEP_VERSION}) # optional - we'll just let it pass if it's missing
 set_package_properties(KF5Baloo PROPERTIES
     DESCRIPTION "KDE's Framework which implements file indexing"
     PURPOSE "Used by the ContentLister library to find books on the system if available (if unavailable, we will fall back to a classic file system scraper)"
     TYPE OPTIONAL
 )
-find_package(KF5Kirigami2 ${KF5_DEP_VERSION})
-set_package_properties(KF5Kirigami2 PROPERTIES
+find_package(KF6Kirigami ${KF_DEP_VERSION})
+set_package_properties(KF6Kirigami PROPERTIES
     DESCRIPTION "KDE's lightweight user interface framework for mobile and convergent applications"
     URL "https://techbase.kde.org/Kirigami"
     PURPOSE "Required at runtime to display the GUI"
     TYPE RUNTIME
 )
 
-find_package(KF${QT_MAJOR_VERSION}KirigamiAddons 0.11)
-set_package_properties(KF${QT_MAJOR_VERSION}KirigamiAddons PROPERTIES
+find_package(KF6KirigamiAddons 0.11)
+set_package_properties(KF6KirigamiAddons PROPERTIES
     TYPE REQUIRED
     PURPOSE "Provides additional visual components"
 )
@@ -96,31 +95,31 @@ set_package_properties(ZLIB PROPERTIES
 
 # The following checks for the QQuickTextNode private header
 # The original checking code can be found in QtWebKit
-include(CheckCXXSourceCompiles)
-macro(CHECK_QT5_PRIVATE_INCLUDE_DIRS _qt_component _header)
-    set(INCLUDE_TEST_SOURCE
-    "
-        #include <${_header}>
-        int main() { return 0; }
-    "
-    )
-    set(CMAKE_REQUIRED_INCLUDES ${Qt5${_qt_component}_PRIVATE_INCLUDE_DIRS})
-    set(CMAKE_REQUIRED_LIBRARIES Qt5::${_qt_component})
-
-    # Avoid check_include_file_cxx() because it performs linking but doesn't support CMAKE_REQUIRED_LIBRARIES (doh!)
-    check_cxx_source_compiles("${INCLUDE_TEST_SOURCE}" Qt5${_qt_component}_PRIVATE_HEADER_FOUND)
-
-    unset(INCLUDE_TEST_SOURCE)
-    unset(CMAKE_REQUIRED_INCLUDES)
-    unset(CMAKE_REQUIRED_LIBRARIES)
-
-    if (NOT Qt5${_qt_component}_PRIVATE_HEADER_FOUND)
-        message(FATAL_ERROR "Header ${_header} is not found. Please make sure that:
-    1. Private headers of Qt5${_qt_component} are installed
-    2. Qt5${_qt_component}_PRIVATE_INCLUDE_DIRS is correctly defined in Qt5${_qt_component}Config.cmake")
-    endif ()
-endmacro()
-CHECK_QT5_PRIVATE_INCLUDE_DIRS(Quick private/qquicktextnode_p.h)
+# include(CheckCXXSourceCompiles)
+#macro(CHECK_QT6_PRIVATE_INCLUDE_DIRS _qt_component _header)
+#    set(INCLUDE_TEST_SOURCE
+#    "
+#        #include <${_header}>
+#        int main() { return 0; }
+#    "
+#    )
+#    set(CMAKE_REQUIRED_INCLUDES ${Qt${_qt_component}_PRIVATE_INCLUDE_DIRS})
+#    set(CMAKE_REQUIRED_LIBRARIES Qt::${_qt_component})
+#
+#    # Avoid check_include_file_cxx() because it performs linking but doesn't support CMAKE_REQUIRED_LIBRARIES (doh!)
+#    check_cxx_source_compiles("${INCLUDE_TEST_SOURCE}" Qt${_qt_component}_PRIVATE_HEADER_FOUND)
+#
+#    unset(INCLUDE_TEST_SOURCE)
+#    unset(CMAKE_REQUIRED_INCLUDES)
+#    unset(CMAKE_REQUIRED_LIBRARIES)
+#
+#    if (NOT Qt${_qt_component}_PRIVATE_HEADER_FOUND)
+#        message(FATAL_ERROR "Header ${_header} is not found. Please make sure that:
+#    1. Private headers of Qt6${_qt_component} are installed
+#    2. Qt6${_qt_component}_PRIVATE_INCLUDE_DIRS is correctly defined in Qt6${_qt_component}Config.cmake")
+#    endif ()
+#endmacro()
+#CHECK_QT6_PRIVATE_INCLUDE_DIRS(Quick private/qquicktextnode_p.h)
 
 include(KDEInstallDirs)
 include(KDECMakeSettings)

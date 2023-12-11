@@ -58,6 +58,9 @@
 
 namespace AdvancedComicBookFormat
 {
+
+class Metadata;
+
 class ACBF_EXPORT Author : public QObject
 {
     Q_OBJECT

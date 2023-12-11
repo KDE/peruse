@@ -1,9 +1,13 @@
 add_library(peruse_helpers STATIC peruse_helpers.cpp )
 target_link_libraries(peruse_helpers
-    KF5::CoreAddons
-    KF5::Crash
-    KF5::IconThemes
-    KF5::I18n
-    Qt5::OpenGL
-    Qt5::Quick
+    KF6::CoreAddons
+    KF6::Crash
+    KF6::IconThemes
+    KF6::I18n
+    Qt6::OpenGL
+    Qt6::Quick
 )
+
+if (NOT ANDROID)
+    target_link_libraries(peruse_helpers Qt6::Widgets)
+endif()
