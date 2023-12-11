@@ -17,11 +17,12 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-import QtQuick 2.12
-import QtQuick.Layouts 1.2
-import QtQuick.Controls 2.12 as QtControls
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls as QtControls
+import org.kde.kirigamiaddons.delegates as Delegates
 
-import org.kde.kirigami 2.7
+import org.kde.kirigami
 
 // Modified version of the ContextDrawer component found in the Plasma Components
 // In addition to the original drawer, this will allow you to optionally insert an item
@@ -130,16 +131,13 @@ OverlayDrawer {
                                 text: model && model.text ? model.text : (modelData.text ? modelData.text : "")
                             }
                         }
-                        BasicListItem {
+                        Delegates.RoundedItemDelegate {
                             id: listItem;
                             checked: modelData.checked
-                            icon: modelData.iconName
-                            supportsMouseEvents: true
-                            separatorVisible: false
-                            label: model ? (model.tooltip ? model.tooltip : model.text) : (modelData.tooltip ? modelData.tooltip : modelData.text)
+                            icon.name: modelData.icon.name
+                            text: model ? (model.tooltip ? model.tooltip : model.text) : (modelData.tooltip ? modelData.tooltip : modelData.text)
                             enabled: model && model.enabled !== undefined ? model.enabled : (modelData.enabled !== undefined ? modelData.enabled : true)
                             visible: model && model.visible !== undefined ? model.visible : (modelData.visible !== undefined ? modelData.visible : true)
-                            opacity: enabled ? 1.0 : 0.6
                             onClicked: {
                                 if (modelData.children!==undefined && modelData.children.length > 0) {
                                     sidebarStack.push(sidebarPage, { actions: modelData.children, "level": level + 1, topContent: null });
@@ -152,23 +150,31 @@ OverlayDrawer {
                                     console.warning("Don't know how to trigger the action")
                                 }
                             }
-                            Icon {
-                                Layout.alignment: Qt.AlignVCenter
-                                Layout.rightMargin: Settings.isMobile ? 0 : Units.gridUnit
-                                height: Units.iconSizes.smallMedium
-                                selected: listItem.checked || listItem.pressed
-                                width: height
-                                source: "go-next"
-                                visible: modelData.children!==undefined && modelData.children.length > 0
+
+                            contentItem: RowLayout {
+                                spacing: 0
+
+                                Delegates.DefaultContentItem {
+                                    itemDelegate: listItem
+                                }
+
+                                Icon {
+                                    Layout.alignment: Qt.AlignVCenter
+                                    Layout.rightMargin: Settings.isMobile ? 0 : Units.gridUnit
+                                    height: Units.iconSizes.smallMedium
+                                    selected: listItem.checked || listItem.pressed
+                                    width: height
+                                    source: "go-next"
+                                    visible: modelData.children!==undefined && modelData.children.length > 0
+                                }
                             }
                         }
                     }
                 }
-                BasicListItem {
+                Delegates.RoundedItemDelegate {
                     visible: level > 0
-                    supportsMouseEvents: true
-                    icon: "go-previous"
-                    label: typeof i18n !== "undefined" ? i18n("Back") : "Back"
+                    icon.name: "go-previous"
+                    text: typeof i18n !== "undefined" ? i18n("Back") : "Back"
                     onClicked: sidebarStack.pop()
                 }
             }

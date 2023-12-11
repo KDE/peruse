@@ -376,7 +376,7 @@ Item {
                 right: parent.right;
                 margins: Kirigami.Units.smallSpacing;
             }
-//             iconName: "edit-delete";
+//             icon.name: "edit-delete";
             onClicked: deleteBase.state = "confirmDelete";
             Behavior on opacity { NumberAnimation { duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; } }
         }
@@ -409,7 +409,7 @@ Item {
                     rightMargin: (Kirigami.Units.smallSpacing) / 2;
                 }
                 text: i18nc("Confirmation button for book delete dialog", "Yes, Really Delete");
-//                 iconName: "dialog-ok";
+//                 icon.name: "dialog-ok";
                 onClicked: {root.bookDeleteRequested(root.filename); deleteBase.state = "";}
             }
             QtControls.Button {
@@ -420,7 +420,7 @@ Item {
                     leftMargin: (Kirigami.Units.smallSpacing) / 2;
                 }
                 text: i18nc("Cancellation button or book delete dialog", "No, Cancel Delete");
-//                 iconName: "dialog-cancel";
+//                 icon.name: "dialog-cancel";
                 onClicked: deleteBase.state = "";
             }
         }

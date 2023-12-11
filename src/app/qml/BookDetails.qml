@@ -150,7 +150,7 @@ Item {
                     topMargin: Kirigami.Units.largeSpacing;
                     horizontalCenter: parent.horizontalCenter;
                 }
-                iconName: "edit-delete";
+                icon.name: "edit-delete";
                 onClicked: deleteBase.state = "confirmDelete";
                 Behavior on opacity { NumberAnimation { duration: applicationWindow().animationDuration; } }
             }
@@ -182,7 +182,7 @@ Item {
                         rightMargin: (parent.width - width) / 4;
                     }
                     text: i18nc("Confirmation button for book delete dialog", "Yes, Really Delete");
-                    iconName: "dialog-ok";
+                    icon.name: "dialog-ok";
                     onClicked: {
                         contentList.removeBook(root.file, true);
                         applicationWindow().pageStack.pop();
@@ -196,7 +196,7 @@ Item {
                         leftMargin: (parent.width - width) / 4;
                     }
                     text: i18nc("Cancellation button or book delete dialog", "No, Cancel Delete");
-                    iconName: "dialog-cancel";
+                    icon.name: "dialog-cancel";
                     onClicked: deleteBase.state = "";
                 }
             }

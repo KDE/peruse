@@ -19,11 +19,12 @@
  *
  */
 
-import QtQuick 2.2
-import QtQuick.Controls 2.12 as QtControls
+import QtQuick
+import QtQuick.Controls as QtControls
 import Qt.labs.folderlistmodel 2.1
 
-import org.kde.kirigami 2.7 as Kirigami
+import org.kde.kirigami as Kirigami
+import org.kde.kirigamiaddons.delegates as Delegates
 
 import "listcomponents" as ListComponents
 
@@ -82,21 +83,16 @@ Item {
         clip: true;
         model: folderModel;
         Component.onCompleted: folderView.currentIndex = -1;
-        header: Kirigami.BasicListItem {
-            enabled: true;
-            supportsMouseEvents: enabled;
+        header: Delegates.RoundedItemDelegate {
             clip: true;
             width: folderView.width;
             onClicked: folderModel.folder = folderModel.parentFolder;
-            label: i18nc("A fake folder item which if activated will cause the folder list to navigate up through the folder structure by one step", "(go up one level)");
-            icon: "go-up";
+            text: i18nc("A fake folder item which if activated will cause the folder list to navigate up through the folder structure by one step", "(go up one level)");
+            icon.name: "go-up";
         }
-        delegate: Kirigami.BasicListItem {
-            enabled: true;
-            supportsMouseEvents: enabled;
-            width: folderView.width;
-            label: fileName;
-            icon: fileIsDir ? "folder" : "";
+        delegate: Delegates.RoundedItemDelegate {
+            text: fileName;
+            icon.name: fileIsDir ? "folder" : "";
             onClicked: {
                 if(fileIsDir) {
                     folderView.currentIndex = -1;

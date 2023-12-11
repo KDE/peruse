@@ -81,31 +81,42 @@ Kirigami.ScrollablePage {
         applicationWindow().pageStack.pop();
     }
     property bool isCurrentContext: isCurrentPage && !applicationWindow().bookOpen
-    property list<QtObject> mobileActions;
-    property list<QtObject> desktopActions: [
-        Kirigami.Action {
-            text: i18nc("Navigate one page back", "Back");
-            shortcut: bookDetails.sheetOpen ? "" : "Esc";
-            iconName: "dialog-close";
-            onTriggered: closeShelf();
-            enabled: root.isCurrentContext && !Kirigami.Settings.isMobile && applicationWindow().pageStack.currentIndex > 0;
-        },
-        Kirigami.Action {
-            text: i18nc("Open the book which is currently selected in the list", "Open Selected Book");
-            shortcut: bookDetails.sheetOpen? "" : "Return";
-            iconName: "document-open";
-            onTriggered: openBook(shelfList.currentIndex);
-            enabled: root.isCurrentContext && !Kirigami.Settings.isMobile;
+
+    actions: {
+        var ret = [];
+        if (bookDetails.visible) {
+            ret.append(bookDetailsAction);
+        } else {
+            ret.append(mainShelfAction);
         }
-    ]
-    actions {
-        contextualActions: Kirigami.Settings.isMobile ? mobileActions : desktopActions;
-        main: bookDetails.sheetOpen ? bookDetailsAction : mainShelfAction;
+        if (!Kirigami.Settings.isMobile) {
+            ret.append(backAction, openAction);
+        }
+
+        return ret;
     }
+    Kirigami.Action {
+        id: backAction
+        text: i18nc("Navigate one page back", "Back");
+        shortcut: bookDetails.visible ? "" : "Esc";
+        icon.name: "dialog-close";
+        onTriggered: closeShelf();
+        enabled: root.isCurrentContext && !Kirigami.Settings.isMobile && applicationWindow().pageStack.currentIndex > 0;
+    }
+
+    Kirigami.Action {
+        id: openAction
+        text: i18nc("Open the book which is currently selected in the list", "Open Selected Book");
+        shortcut: bookDetails.visible? "" : "Return";
+        icon.name: "document-open";
+        onTriggered: openBook(shelfList.currentIndex);
+        enabled: root.isCurrentContext && !Kirigami.Settings.isMobile;
+    }
+
     Kirigami.Action {
         id: mainShelfAction;
         text: i18nc("search in the list of books (not inside the books)", "Search Books");
-        iconName: "system-search";
+        icon.name: "system-search";
         onTriggered: searchBox.activate();
         enabled: root.isCurrentContext;
         displayComponent: Kirigami.SearchField {
@@ -133,8 +144,8 @@ Kirigami.ScrollablePage {
     Kirigami.Action {
         id: bookDetailsAction;
         text: i18nc("Closes the book details drawer", "Close");
-        shortcut: bookDetails.sheetOpen ? "Esc" : "";
-        iconName: "dialog-cancel";
+        shortcut: bookDetails.visible ? "Esc" : "";
+        icon.name: "dialog-cancel";
         onTriggered: bookDetails.close();
         enabled: root.isCurrentContext;
     }

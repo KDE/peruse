@@ -19,10 +19,11 @@
  *
  */
 
-import QtQuick 2.12
-import QtQuick.Window 2.12
-import QtQuick.Dialogs 1.3
-import org.kde.kirigami 2.7 as Kirigami
+import QtCore
+import QtQuick
+import QtQuick.Window
+import QtQuick.Dialogs
+import org.kde.kirigami as Kirigami
 
 PeruseMain {
     id: root;
@@ -36,11 +37,11 @@ PeruseMain {
     FileDialog {
         id: openDlg;
         title: i18nc("@title:window standard file open dialog used to open a book not in the collection", "Please Choose a Comic to Open");
-        folder: root.homeDir();
+        currentFolder: StandardPaths.standardLocations(StandardPaths.HomeLocation)[0]
         property int splitPos: osIsWindows ? 8 : 7;
         onAccepted: {
-            if(openDlg.fileUrl.toString().substring(0, 7) === "file://") {
-                root.showBook(openDlg.fileUrl.toString().substring(splitPos), 0);
+            if(openDlg.selectedFile.toString().substring(0, 7) === "file://") {
+                root.showBook(openDlg.selectedFile.toString().substring(splitPos), 0);
             }
         }
         onRejected: {
