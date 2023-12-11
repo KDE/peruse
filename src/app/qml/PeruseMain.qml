@@ -19,12 +19,12 @@
  *
  */
 
-import QtQuick 2.15
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls as QQC2
 
-import org.kde.kirigami 2.14 as Kirigami
-import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.14 as QQC2
-
+import org.kde.kirigami as Kirigami
+import org.kde.kirigamiaddons.delegates as Delegates
 import org.kde.peruse 0.1 as Peruse
 import org.kde.contentlist 0.1
 
@@ -65,7 +65,7 @@ Kirigami.ApplicationWindow {
         }
     }
 
-    function showBook(filename, currentPage) {
+    function showBook(filename: url, currentPage: int): void {
         if(bookOpen) {
             mainWindow.pageStack.layers.pop();
         }
@@ -180,8 +180,9 @@ Kirigami.ApplicationWindow {
                 Layout.fillWidth: true
 
                 contentWidth: availableWidth
+                topPadding: Kirigami.Units.smallSpacing / 2
 
-                component PlaceItem : Kirigami.BasicListItem {
+                component PlaceItem : Delegates.RoundedItemDelegate {
                     id: item
                     signal triggered;
                     checkable: true
@@ -189,7 +190,7 @@ Kirigami.ApplicationWindow {
                     Keys.onDownPressed: nextItemInFocusChain().forceActiveFocus(Qt.TabFocusReason)
                     Keys.onUpPressed: nextItemInFocusChain(false).forceActiveFocus(Qt.TabFocusReason)
                     Accessible.role: Accessible.MenuItem
-                    highlighted: checked
+                    highlighted: checked || activeFocus
                     onToggled: if (checked) {
                         item.triggered();
                     }
@@ -200,7 +201,7 @@ Kirigami.ApplicationWindow {
                     width: scrollView.width
                     PlaceItem {
                         text: i18nc("Switch to the listing page showing the most recently read books", "Home");
-                        icon: "go-home";
+                        icon.name: "go-home";
                         checked: true
                         QQC2.ButtonGroup.group: placeGroup
                         onTriggered: {
@@ -211,13 +212,13 @@ Kirigami.ApplicationWindow {
                     }
                     PlaceItem {
                         text: i18nc("Switch to the listing page showing the most recently discovered books", "Recently Added Books");
-                        icon: "appointment-new";
+                        icon.name: "appointment-new";
                         QQC2.ButtonGroup.group: placeGroup
                         onTriggered: changeCategory(bookshelfAdded);
                     }
                     PlaceItem {
                         text: i18nc("Open a book from somewhere on disk (uses the open dialog, or a drilldown on touch devices)", "Open Other...");
-                        icon: "document-open";
+                        icon.name: "document-open";
                         onClicked: openOther();
                         QQC2.ButtonGroup.group: undefined
                         checkable: false
@@ -227,37 +228,37 @@ Kirigami.ApplicationWindow {
                     }
                     PlaceItem {
                         text: i18nc("Switch to the listing page showing items grouped by title", "Title");
-                        icon: "view-media-title";
+                        icon.name: "view-media-title";
                         onTriggered: changeCategory(bookshelfTitle);
                         QQC2.ButtonGroup.group: placeGroup
                     }
                     PlaceItem {
                         text: i18nc("Switch to the listing page showing items grouped by author", "Author");
-                        icon: "actor";
+                        icon.name: "actor";
                         onTriggered: changeCategory(bookshelfAuthor);
                         QQC2.ButtonGroup.group: placeGroup
                     }
                     PlaceItem {
                         text: i18nc("Switch to the listing page showing items grouped by series", "Series");
-                        icon: "edit-group";
+                        icon.name: "edit-group";
                         onTriggered: changeCategory(bookshelfSeries);
                         QQC2.ButtonGroup.group: placeGroup
                     }
                     PlaceItem {
                         text: i18nc("Switch to the listing page showing items grouped by publisher", "Publisher");
-                        icon: "view-media-publisher";
+                        icon.name: "view-media-publisher";
                         onTriggered: changeCategory(bookshelfPublisher);
                         QQC2.ButtonGroup.group: placeGroup
                     }
                     PlaceItem {
                         text: i18nc("Switch to the listing page showing items grouped by keywords, characters or genres", "Keywords");
-                        icon: "tag";
+                        icon.name: "tag";
                         onTriggered: changeCategory(bookshelfKeywords);
                         QQC2.ButtonGroup.group: placeGroup
                     }
                     PlaceItem {
                         text: i18nc("Switch to the listing page showing items grouped by their filesystem folder", "Folder");
-                        icon: "tag-folder";
+                        icon.name: "tag-folder";
                         onTriggered: changeCategory(bookshelfFolder);
                         QQC2.ButtonGroup.group: placeGroup
                     }
@@ -283,14 +284,14 @@ Kirigami.ApplicationWindow {
 
             PlaceItem {
                 text: i18nc("Open the settings page", "Settings");
-                icon: "configure"
+                icon.name: "configure"
                 onTriggered: changeCategory(settingsPage);
                 QQC2.ButtonGroup.group: placeGroup
             }
 
             PlaceItem {
                 text: i18nc("Open the about page", "About");
-                icon: "help-about"
+                icon.name: "help-about"
                 onTriggered: changeCategory(aboutPage);
                 QQC2.ButtonGroup.group: placeGroup
             }
@@ -393,12 +394,6 @@ Kirigami.ApplicationWindow {
         id: bookshelf;
         Bookshelf {
             onBookSelected: mainWindow.showBook(filename, currentPage);
-        }
-    }
-
-    Component {
-        id: storePage;
-        Store {
         }
     }
 

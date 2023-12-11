@@ -19,14 +19,15 @@
  *
  */
 
-import QtQuick 2.12
-import QtQuick.Controls 2.12 as QQC2
-import QtQuick.Dialogs 1.3
-import QtQuick.Layouts 1.3
-import QtQml.Models 2.3
+import QtCore
+import QtQuick
+import QtQuick.Controls as QQC2
+import QtQuick.Dialogs
+import QtQuick.Layouts
+import QtQml.Models
 
-import org.kde.kirigami 2.12 as Kirigami
-import org.kde.kcm 1.2 as KCM
+import org.kde.kirigami as Kirigami
+import org.kde.kcmutils as KCM
 
 import org.kde.peruse 0.1 as Peruse
 
@@ -42,7 +43,7 @@ KCM.ScrollViewKCM {
     property string categoryName: "settingsPage";
     title: i18nc("title of the settings page", "Configure the indexed folders");
 
-    actions.main: Kirigami.Action {
+    actions: Kirigami.Action {
         id: addPathAction
         icon.name: "list-add"
         text: i18n("Add folder")
@@ -84,7 +85,7 @@ KCM.ScrollViewKCM {
                 actions: [
                     Kirigami.Action {
                         text: i18nc("remove the search folder from the list", "Delete");
-                        iconName: "list-remove"
+                        icon.name: "list-remove"
                         onTriggered: peruseConfig.removeBookLocation(peruseConfig.bookLocations[index]);
                     }
                 ]
@@ -120,13 +121,12 @@ KCM.ScrollViewKCM {
         }
     }
 
-    FileDialog {
+    FolderDialog {
         id: desktopFolderDlg;
         title: i18nc("@title:window dialogue used to add a new search folder", "Select a Folder");
-        selectFolder: true;
-        folder: shortcuts.home;
+        currentFolder: StandardPaths.standardLocations(StandardPaths.HomeLocation)[0]
         onAccepted: {
-            peruseConfig.addBookLocation(desktopFolderDlg.fileUrl);
+            peruseConfig.addBookLocation(desktopFolderDlg.selectedFolder);
             root.doSearch();
         }
     }
