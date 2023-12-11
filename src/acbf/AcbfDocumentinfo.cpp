@@ -22,6 +22,7 @@
 #include "AcbfDocumentinfo.h"
 #include "AcbfAuthor.h"
 
+#include "AcbfMetadata.h"
 #include <QXmlStreamReader>
 #include <QUuid>
 

@@ -1,31 +1,13 @@
-/*
- * Copyright (C) 2015 Dan Leinir Turthra Jensen <admin@leinir.dk>
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) version 3, or any
- * later version accepted by the membership of KDE e.V. (or its
- * successor approved by the membership of KDE e.V.), which shall
- * act as a proxy defined in Section 6 of version 3 of the license.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+// SPDX-FileCopyrightText: 2015 Dan Leinir Turthra Jensen <admin@leinir.dk>
+// SPDX-License-Identifier: LGPL-2.1-only or LGPL-3.0-only or LicenseRef-KDE-Accepted-LGPL
 
 #include "ContentList.h"
+#ifdef HAVE_BALOO
+#include "BalooContentLister.h"
+#endif
 #include "FilesystemContentLister.h"
 
-#ifdef BALOO_FOUND
-    #include "BalooContentLister.h"
-#endif
-
+#include <QDebug>
 #include <QMimeDatabase>
 #include <QSet>
 #include <QTimer>
@@ -37,17 +19,19 @@ struct ContentEntry {
     QVariantMap metadata;
 };
 
-class ContentList::Private {
+class ContentList::Private
+{
 public:
     typedef QQmlListProperty<ContentQuery> QueryListProperty;
 
     Private()
         : actualContentList(nullptr)
-    {}
-    QList<ContentEntry*> entries;
-    ContentListerBase* actualContentList;
+    {
+    }
+    QList<ContentEntry *> entries;
+    ContentListerBase *actualContentList;
 
-    QList<ContentQuery*> queries;
+    QList<ContentQuery *> queries;
     QueryListProperty listProperty;
 
     QSet<QString> knownFiles;
@@ -56,49 +40,50 @@ public:
     bool cacheResults = false;
     bool completed = false;
 
-    static void appendToList(QueryListProperty* property, ContentQuery* value);
-    static ContentQuery* listValueAt(QueryListProperty* property, int index);
-    static void clearList(QueryListProperty* property);
-    static int countList(QueryListProperty* property);
+    static void appendToList(QueryListProperty *property, ContentQuery *value);
+    static ContentQuery *listValueAt(QueryListProperty *property, qsizetype index);
+    static void clearList(QueryListProperty *property);
+    static qsizetype countList(QueryListProperty *property);
+    static void removeLast(QueryListProperty *property);
+    static void replace(QueryListProperty *property, qsizetype index, ContentQuery *value);
 
     static QStringList cachedFiles;
 };
 
 QStringList ContentList::Private::cachedFiles;
 
-ContentList::ContentList(QObject* parent)
+ContentList::ContentList(QObject *parent)
     : QAbstractListModel(parent)
     , d(new Private)
 {
-#ifdef BALOO_FOUND
-    BalooContentLister* baloo = new BalooContentLister(this);
-    if(baloo->balooEnabled())
-    {
+#ifdef HAVE_BALOO
+    auto baloo = new BalooContentLister(this);
+    if (baloo->balooEnabled()) {
         d->actualContentList = baloo;
-    }
-    else
-    {
+    } else {
         baloo->deleteLater();
         d->actualContentList = new FilesystemContentLister(this);
     }
 #else
     d->actualContentList = new FilesystemContentLister(this);
 #endif
+
     connect(d->actualContentList, &ContentListerBase::fileFound, this, &ContentList::fileFound);
     connect(d->actualContentList, &ContentListerBase::searchCompleted, this, &ContentList::searchCompleted);
 
-    d->listProperty = QQmlListProperty<ContentQuery>{this, &d->queries,
+    d->listProperty = QQmlListProperty<ContentQuery>{
+        this,
+        &d->queries,
         &ContentList::Private::appendToList,
         &ContentList::Private::countList,
         &ContentList::Private::listValueAt,
-        &ContentList::Private::clearList
+        &ContentList::Private::clearList,
+        &ContentList::Private::replace,
+        &ContentList::Private::removeLast,
     };
 }
 
-ContentList::~ContentList()
-{
-    delete d;
-}
+ContentList::~ContentList() = default;
 
 QQmlListProperty<ContentQuery> ContentList::queries()
 {
@@ -115,74 +100,75 @@ bool ContentList::cacheResults() const
     return d->cacheResults;
 }
 
-QString ContentList::getMimetype(QString filePath)
+QString ContentList::getMimetype(const QString &filePath)
 {
     QMimeDatabase db;
-    QMimeType mime = db.mimeTypeForFile(filePath);
+    const QMimeType mime = db.mimeTypeForFile(filePath);
     return mime.name();
 }
 
 void ContentList::startSearch()
 {
-    QTimer::singleShot(1, [this]() {
+    QTimer::singleShot(1, this, [this]() {
         Q_EMIT searchStarted();
+        qWarning() << "search started";
         d->actualContentList->knownFiles = d->knownFiles;
         d->actualContentList->startSearch(d->queries);
     });
 }
 
-void ContentList::fileFound(const QString& filePath, const QVariantMap& metaData)
+void ContentList::fileFound(const QString &filePath, const QVariantMap &metaData)
 {
-    if(d->knownFiles.contains(filePath))
+    if (d->knownFiles.contains(filePath))
         return;
 
     auto fileUrl = QUrl::fromLocalFile(filePath);
 
-    ContentEntry* entry = new ContentEntry();
+    ContentEntry *entry = new ContentEntry();
     entry->filename = fileUrl.fileName();
     entry->filePath = fileUrl;
     entry->metadata = metaData;
 
     int newRow = d->entries.count();
-    beginInsertRows(QModelIndex(), newRow, newRow);
+    beginInsertRows({}, newRow, newRow);
     d->entries.append(entry);
+    d->knownFiles.insert(filePath);
     endInsertRows();
 
-    if(d->cacheResults)
+    if (d->cacheResults) {
         Private::cachedFiles.append(filePath);
+    }
 }
 
 void ContentList::setAutoSearch(bool autoSearch)
 {
-    if(autoSearch == d->autoSearch)
+    if (autoSearch == d->autoSearch)
         return;
 
     d->autoSearch = autoSearch;
-    emit autoSearchChanged();
+    Q_EMIT autoSearchChanged();
 }
 
 void ContentList::setCacheResults(bool cacheResults)
 {
-    if(cacheResults == d->cacheResults)
+    if (cacheResults == d->cacheResults)
         return;
 
     d->cacheResults = cacheResults;
 
-    if(d->cacheResults && d->completed && !Private::cachedFiles.isEmpty())
-    {
+    if (d->cacheResults && d->completed && !Private::cachedFiles.isEmpty()) {
         setKnownFiles(Private::cachedFiles);
     }
 
-    emit cacheResultsChanged();
+    Q_EMIT cacheResultsChanged();
 }
 
-void ContentList::setKnownFiles(const QStringList& results)
+void ContentList::setKnownFiles(const QStringList &results)
 {
     beginResetModel();
     d->entries.clear();
     d->knownFiles.clear();
-    for(const auto& result : results)
-    {
+    for (const auto &result : results) {
         auto entry = new ContentEntry{};
         auto url = QUrl::fromLocalFile(result);
 
@@ -199,39 +185,33 @@ void ContentList::setKnownFiles(const QStringList& results)
 QHash<int, QByteArray> ContentList::roleNames() const
 {
     return {
-        { FilenameRole, "filename"},
-        { FilePathRole, "filePath"},
-        { MetadataRole, "metadata"}
+        {FilenameRole, "filename"},
+        {FilePathRole, "filePath"},
+        {MetadataRole, "metadata"},
     };
 }
 
-QVariant ContentList::data(const QModelIndex& index, int role) const
+QVariant ContentList::data(const QModelIndex &index, int role) const
 {
-    QVariant result;
-    if(index.isValid() && index.row() > -1 && index.row() < d->entries.count())
-    {
-        const ContentEntry* entry = d->entries[index.row()];
-        switch(role)
-        {
-            case FilenameRole:
-                result.setValue(entry->filename);
-                break;
-            case FilePathRole:
-                result.setValue(entry->filePath);
-                break;
-            case MetadataRole:
-                result.setValue(entry->metadata);
-                break;
-            default:
-                break;
-        }
+    if (!index.isValid() || index.row() <= -1 || index.row() >= d->entries.count()) {
+        return {};
     }
-    return result;
+
+    const ContentEntry *entry = d->entries[index.row()];
+    switch (role) {
+    case FilenameRole:
+        return entry->filename;
+    case FilePathRole:
+        return entry->filePath;
+    case MetadataRole:
+        return entry->metadata;
+    }
+    return {};
 }
 
-int ContentList::rowCount(const QModelIndex& parent) const
+int ContentList::rowCount(const QModelIndex &parent) const
 {
-    if(parent.isValid())
+    if (parent.isValid())
         return 0;
     return d->entries.count();
 }
@@ -244,10 +224,10 @@ void ContentList::componentComplete()
 {
     d->completed = true;
 
-    if(d->cacheResults && !Private::cachedFiles.isEmpty())
+    if (d->cacheResults && !Private::cachedFiles.isEmpty())
         setKnownFiles(Private::cachedFiles);
 
-    if(d->autoSearch)
+    if (d->autoSearch)
         d->actualContentList->startSearch(d->queries);
 }
 
@@ -256,30 +236,52 @@ bool ContentList::isComplete() const
     return d->completed;
 }
 
-void ContentList::Private::appendToList(Private::QueryListProperty* property, ContentQuery* value)
+void ContentList::Private::appendToList(Private::QueryListProperty *property, ContentQuery *value)
 {
-    auto list = static_cast<QList<ContentQuery*>*>(property->data);
-    auto model = static_cast<ContentList*>(property->object);
+    auto list = static_cast<QList<ContentQuery *> *>(property->data);
+    auto model = static_cast<ContentList *>(property->object);
     list->append(value);
-    if(model->autoSearch() && model->isComplete())
+    if (model->autoSearch() && model->isComplete())
         model->startSearch();
 }
 
-ContentQuery* ContentList::Private::listValueAt(Private::QueryListProperty* property, int index)
+ContentQuery *ContentList::Private::listValueAt(Private::QueryListProperty *property, qsizetype index)
 {
-    return static_cast<QList<ContentQuery*>*>(property->data)->at(index);
+    return static_cast<QList<ContentQuery *> *>(property->data)->at(index);
 }
 
-int ContentList::Private::countList(Private::QueryListProperty* property)
+qsizetype ContentList::Private::countList(Private::QueryListProperty *property)
 {
-    return static_cast<QList<ContentQuery*>*>(property->data)->size();
+    return static_cast<QList<ContentQuery *> *>(property->data)->size();
 }
 
-void ContentList::Private::clearList(Private::QueryListProperty* property)
+void ContentList::Private::clearList(Private::QueryListProperty *property)
 {
-    auto list = static_cast<QList<ContentQuery*>*>(property->data);
-    auto model = static_cast<ContentList*>(property->object);
+    auto list = static_cast<QList<ContentQuery *> *>(property->data);
+    auto model = static_cast<ContentList *>(property->object);
     model->beginResetModel();
     list->clear();
     model->endResetModel();
 }
+
+void ContentList::Private::removeLast(QueryListProperty *property)
+{
+    auto list = static_cast<QList<ContentQuery *> *>(property->data);
+    auto model = static_cast<ContentList *>(property->object);
+    list->removeLast();
+    if (model->autoSearch() && model->isComplete()) {
+        model->startSearch();
+    }
+}
+
+void ContentList::Private::replace(QueryListProperty *property, qsizetype index, ContentQuery *value)
+{
+    auto list = static_cast<QList<ContentQuery *> *>(property->data);
+    auto model = static_cast<ContentList *>(property->object);
+    list->replace(index, value);
+    if (model->autoSearch() && model->isComplete()) {
+        model->startSearch();
+    }
+}
+
+#include "moc_ContentList.cpp"

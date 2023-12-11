@@ -22,8 +22,11 @@
 #ifndef ACBFSTYLESHEET_H
 #define ACBFSTYLESHEET_H
 
-#include "AcbfDocument.h"
+#include "acbf_export.h"
+
 #include "AcbfStyle.h"
+
+#include <QObject>
 
 #include <memory>
 
@@ -31,6 +34,7 @@ class QXmlStreamWriter;
 class QXmlStreamReader;
 namespace AdvancedComicBookFormat
 {
+class Document;
 /**
  * @brief Class to handle the CSS stylesheet.
  * 

@@ -97,12 +97,7 @@ QString Style::toString() const {
     return contents;
 }
 
-bool Style::fromString(const QString &style)
-{
-    return fromString(QStringRef(&style));
-}
-
-bool Style::fromString(QStringRef style)
+bool Style::fromString(const QStringView &style)
 {
     bool success{true};
     // Just some parsing helper strings... if we're using qstringrefs, let's not just
@@ -126,25 +121,25 @@ bool Style::fromString(QStringRef style)
     static const QString newlineString{"\n"};
 
     // First, split the name, type, and possible inversion bits out from the parameters
-    QVector<QStringRef>  split = style.split(curlyOpenBracketString, Qt::SkipEmptyParts);
+    QVector<QStringView>  split = style.split(curlyOpenBracketString, Qt::SkipEmptyParts);
     if (split.count() == 2) {
 
         // Then get the name, type and inversion bits sorted out
-        QVector<QStringRef>  splitElement = split.value(0).split(squareOpenBracketString, Qt::SkipEmptyParts);
+        QVector<QStringView>  splitElement = split.value(0).split(squareOpenBracketString, Qt::SkipEmptyParts);
         if (splitElement.count() > 0) {
             d->element = splitElement.value(0).toString().simplified().trimmed();
             if (splitElement.count() == 2) {
                 // There's an end brace in here somewhere, and possibly some spaces, so let's get rid of those
-                QStringRef parameters = splitElement.value(1).trimmed();
+                QStringView parameters = splitElement.value(1).trimmed();
                 while (parameters.endsWith(squareEndBracketString)) {
                     parameters = parameters.left(parameters.length() - 1).trimmed();
                 }
-                QVector<QStringRef>  splitParameters = parameters.split(commaString, Qt::SkipEmptyParts);
-                for (QStringRef ref : splitParameters) {
-                    QVector<QStringRef>  splitData = ref.split(equalsString, Qt::SkipEmptyParts);
+                QVector<QStringView>  splitParameters = parameters.split(commaString, Qt::SkipEmptyParts);
+                for (QStringView ref : splitParameters) {
+                    QVector<QStringView>  splitData = ref.split(equalsString, Qt::SkipEmptyParts);
                     if (splitData.count() == 2) {
-                        QStringRef name = splitData.value(0).trimmed();
-                        QStringRef value = splitData.value(1);
+                        QStringView name = splitData.value(0).trimmed();
+                        QStringView value = splitData.value(1);
                         if (value.indexOf(quoteString) > -1) {
                             value = value.chopped(value.lastIndexOf(quoteString)).trimmed();
                             while (value.startsWith(quoteString)) {
@@ -169,13 +164,13 @@ bool Style::fromString(QStringRef style)
             }
 
             // Now let's figure out the parameters
-            QVector<QStringRef>  splitParameters = split.value(1).split(semiColonString, Qt::SkipEmptyParts);
+            QVector<QStringView>  splitParameters = split.value(1).split(semiColonString, Qt::SkipEmptyParts);
             // Some more parser helpers
-            for (QStringRef parameter : splitParameters) {
+            for (QStringView parameter : splitParameters) {
                 auto splitParameter = parameter.split(colonString, Qt::SkipEmptyParts);
                 if (splitParameter.count() == 2) {
-                    QStringRef name = splitParameter.value(0).trimmed();
-                    QStringRef value = splitParameter.value(1).trimmed();
+                    QStringView name = splitParameter.value(0).trimmed();
+                    QStringView value = splitParameter.value(1).trimmed();
                     if (name.compare(colorString, Qt::CaseInsensitive) == 0) {
                         d->color = value.toString();
                     } else if (name.compare(fontFamilyString, Qt::CaseInsensitive) == 0) {

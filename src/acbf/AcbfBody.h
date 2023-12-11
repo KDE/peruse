@@ -24,9 +24,11 @@
 
 #include <memory>
 
-#include "AcbfDocument.h"
+#include "acbf_export.h"
 
 #include <QDate>
+#include <QObject>
+
 class QXmlStreamWriter;
 class QXmlStreamReader;
 /**
@@ -43,6 +45,7 @@ class QXmlStreamReader;
 namespace AdvancedComicBookFormat
 {
 class Page;
+class Document;
 class ACBF_EXPORT Body : public QObject
 {
     Q_OBJECT

@@ -62,7 +62,7 @@ void FilterProxy::setFilterString(const QString &string)
 
 QString FilterProxy::filterString() const
 {
-    return filterRegExp().pattern();
+    return filterRegularExpression().pattern();
 }
 
 void FilterProxy::setFilterBoolean(const bool& value)
@@ -84,7 +84,7 @@ bool FilterProxy::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParen
     } else if (d->filterIntEnabled) {
         return (sourceModel()->data(index, filterRole()).toInt() == d->filterInt);
     } else {
-        return sourceModel()->data(index, filterRole()).toString().contains(filterRegExp());
+        return sourceModel()->data(index, filterRole()).toString().contains(filterRegularExpression());
     }
 }
 

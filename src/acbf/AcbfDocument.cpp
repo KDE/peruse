@@ -26,6 +26,7 @@
 #include "AcbfData.h"
 #include "AcbfReferences.h"
 #include "AcbfStyleSheet.h"
+#include "AcbfDocument.h"
 
 #include <QXmlStreamReader>
 

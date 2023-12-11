@@ -125,7 +125,7 @@ bool KRar::openArchive(QIODevice::OpenMode mode)
         int splitPos = pathname.lastIndexOf("/");
         QString path = pathname.left(splitPos);
         QString name = pathname.mid(splitPos + 1);
-        QDateTime mtime = QDateTime::fromTime_t(ar_entry_get_filetime(d->archive));
+        QDateTime mtime = QDateTime::fromSecsSinceEpoch(ar_entry_get_filetime(d->archive));
         quint64 start = ar_entry_get_offset(d->archive);
         quint64 size = ar_entry_get_size(d->archive);
         // So, funny thing - unarr ignores directory entries in rar files entirely (see unarr/rar/rar.c:65)

@@ -146,7 +146,7 @@ QString InternalReferenceObject::objectType() const
     QString objType{metaObject()->className()};
     static const QLatin1String namespaceBit{"AdvancedComicBookFormat::"};
     if (objType.startsWith(namespaceBit)) {
-        objType = objType.splitRef(QLatin1String("::")).last().toString();
+        objType = objType.split(QLatin1String("::")).last();
     }
     return objType;
 }
