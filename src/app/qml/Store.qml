@@ -19,12 +19,12 @@
  *
  */
 
-import QtQuick 2.12
-import QtQuick.Controls 2.12 as QtControls
-import QtQuick.Dialogs 1.3
+import QtQuick
+import QtQuick.Controls as QtControls
+import QtQuick.Dialogs
 
-import org.kde.kirigami 2.7 as Kirigami
-import org.kde.newstuff 1.0 as NewStuff
+import org.kde.kirigami as Kirigami
+import org.kde.newstuff as NewStuff
 
 import org.kde.peruse 0.1 as Peruse
 
