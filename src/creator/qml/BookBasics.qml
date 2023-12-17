@@ -35,13 +35,10 @@ Kirigami.ScrollablePage {
     property QtObject model;
     signal requestCategoryChange(string categoryName);
     title: i18nc("title of the basic book information page", "Your Book At A Glance");
-    actions {
-        main: saveBookAction;
-    }
-    Kirigami.Action {
+    actions: Kirigami.Action {
         id: saveBookAction;
         text: i18nc("Saves the book to a file on disk", "Save Book");
-        iconName: "document-save";
+        icon.name: "document-save";
         onTriggered: root.model.saveBook();
         enabled: root.model ? root.model.hasUnsavedChanges : false;
     }
@@ -114,7 +111,7 @@ Kirigami.ScrollablePage {
                     text: listItem.markedForDeletion
                         ? i18nc("action which marks the file to be included next time the book is saved", "Include File")
                         : i18nc("action which marks the file to NOT be included next time the book is saved", "Mark File For Deletion");
-                    iconName: listItem.markedForDeletion ? "list-add" : "list-remove"
+                    icon.name: listItem.markedForDeletion ? "list-add" : "list-remove"
                     onTriggered: {
                         root.model.markArchiveFileForDeletion(modelData, !listItem.markedForDeletion);
                     }
