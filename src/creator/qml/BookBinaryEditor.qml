@@ -19,12 +19,12 @@
  *
  */
 
-import QtQuick 2.12
-import QtQuick.Layouts 1.4
-import QtQuick.Controls 2.12 as QtControls
-import QtQuick.Dialogs 1.3
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls as QtControls
+import QtQuick.Dialogs
 
-import org.kde.kirigami 2.13 as Kirigami
+import org.kde.kirigami as Kirigami
 
 import org.kde.peruse 0.1 as Peruse
 
@@ -104,15 +104,15 @@ Kirigami.OverlaySheet {
                 FileDialog {
                     id: openDlg;
                     title: i18nc("@title:window standard file open dialog used to add file data into the book", "Pick A File To Add");
-                    folder: mainWindow.homeDir();
+                    currentFolder: mainWindow.homeDir();
                     nameFilters: [
                         i18nc("The file type filter for showing all files", "All files %1", "(*)")
                     ]
                     property int splitPos: osIsWindows ? 8 : 7;
                     onAccepted: {
-                        if (openDlg.fileUrl.toString().substring(0, 7) === "file://") {
+                        if (openDlg.selectedFile.toString().substring(0, 7) === "file://") {
                             var aOk = false;
-                            binaryDataImport.fileName = openDlg.fileUrl.toString().substring(splitPos);
+                            binaryDataImport.fileName = openDlg.selectedFile.toString().substring(splitPos);
                             // Make sure we're not just loading ginormous files, warn after 10MiB of size
                             var byteSize = peruseConfig.getFilesystemProperty(binaryDataImport.fileName, "bytes");
                             if (byteSize > 0) {
