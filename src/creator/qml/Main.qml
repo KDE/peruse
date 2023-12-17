@@ -19,13 +19,15 @@
  *
  */
 
-import QtQuick 2.12
-import QtQuick.Layouts 1.12
-import QtQuick.Controls 2.12 as QQC2
-import QtQuick.Window 2.12
-import QtQuick.Dialogs 1.3
+import QtCore
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls as QQC2
+import QtQuick.Window
+import QtQuick.Dialogs
 
-import org.kde.kirigami 2.7 as Kirigami
+import org.kde.kirigami as Kirigami
+import org.kde.kirigamiaddons.delegates as Delegates
 
 import org.kde.peruse 0.1 as Peruse
 /**
@@ -45,8 +47,11 @@ Kirigami.ApplicationWindow {
     property int animationDuration: 200;
     width: Math.min(Screen.desktopAvailableWidth * 0.6, Kirigami.Units.gridUnit * 80);
     height: Math.min(Screen.desktopAvailableHeight * 0.7, Kirigami.Units.gridUnit * 60);
-    pageStack.initialPage: welcomePage;
-    pageStack.defaultColumnWidth: pageStack.width
+
+    pageStack {
+        initialPage: welcomePage;
+        defaultColumnWidth: pageStack.width
+    }
 
     Peruse.Config {
         id: peruseConfig;
@@ -69,120 +74,189 @@ Kirigami.ApplicationWindow {
     }
 
     contextDrawer: Kirigami.ContextDrawer {}
-    globalDrawer: Kirigami.GlobalDrawer {
-        /// FIXME This causes the text to get cut off on the phone, however if the text is shorter
-        /// it fails to expand the sidebar sufficiently to see all the action labels fully. Revisit
-        /// this when switching to Kirigami
-        title: i18nc("application title for the sidebar", "Peruse Creator");
-        titleIcon: "peruse-creator";
-        drawerOpen: true;
-        modal: false;
-        header: Kirigami.AbstractApplicationHeader {
-            topPadding: Kirigami.Units.smallSpacing / 2;
-            bottomPadding: Kirigami.Units.smallSpacing / 2;
-            leftPadding: Kirigami.Units.smallSpacing
-            rightPadding: Kirigami.Units.smallSpacing
-            RowLayout {
-                anchors.fill: parent
-
-                Kirigami.Heading {
-                    level: 1
-                    text: i18n("Navigation")
-                    Layout.fillWidth: true
-                }
-
-                QQC2.ToolButton {
-                    icon.name: "go-home"
-
-                    enabled: mainWindow.currentCategory !== "welcomePage";
-                    onClicked: {
-                        if (changeCategory(welcomePage)) {
-                            pageStack.currentItem.updateRecent();
-                        }
-                    }
-
-                    QQC2.ToolTip {
-                        text: i18n("Switch to the welcome page")
-                    }
-                }
+    globalDrawer: Kirigami.ContextDrawer {
+        edge: Qt.application.layoutDirection === Qt.RightToLeft ? Qt.RightEdge : Qt.LeftEdge
+        modal: Kirigami.Settings.isMobile || (applicationWindow().width < Kirigami.Units.gridUnit * 50 && !collapsed) // Only modal when not collapsed, otherwise collapsed won't show.
+        z: modal ? Math.round(position * 10000000) : 100
+        drawerOpen: !Kirigami.Settings.isMobile && enabled
+        width: Kirigami.Units.gridUnit * 16
+        enabled: true
+        Behavior on width {
+            NumberAnimation {
+                duration: Kirigami.Units.longDuration
+                easing.type: Easing.InOutQuad
             }
         }
-        actions: [
-            Kirigami.Action {
-                text: i18nc("Create a book", "Create a New Book...");
-                iconName: "document-new";
-                onTriggered: changeCategory(createNewBookPage);
-            },
-            Kirigami.Action {
-                text: i18nc("Open a book from somewhere on disk (uses the open dialog, or a drilldown on touch devices)", "Open Other...");
-                iconName: "document-open";
-                onTriggered: openOther();
-            },
+        Kirigami.Theme.colorSet: Kirigami.Theme.Window
 
-            Kirigami.Action {
-                id: bookActions;
-                visible: bookModel.filename !== "";
-                separator: true;
-            },
-            Kirigami.Action {
-                visible: bookActions.visible;
-                checked: mainWindow.currentCategory === "bookBasics";
-                text: bookModel.hasUnsavedChanges ? i18nc("The book's title when there are unsaved changes", "%1 (unsaved)", bookModel.title) : bookModel.title;
-                icon.source: bookModel.filename === "" ? "" : "image://comiccover/" + bookModel.filename;
-                onTriggered: changeCategory(bookBasicsPage, {model: bookModel});
-            },
-            Kirigami.Action {
-                visible: bookActions.visible;
-                checked: mainWindow.currentCategory === "book";
-                text: i18nc("Switch to the page which displays the pages in the current book", "Pages");
-                iconName: "view-pages-overview"
-                onTriggered: changeCategory(bookPage, {model: bookModel});
-            },
-            Kirigami.Action {
-                visible: bookActions.visible;
-                checked: mainWindow.currentCategory === "bookMetaInfo";
-                text: i18nc("Switch to the page where the user can edit the meta information for the entire book", "Metainfo");
-                iconName: "document-edit";
-                onTriggered: changeCategory(editMetaInfo, {model: bookModel});
-            },
-            Kirigami.Action {
-                visible: bookActions.visible;
-                checked: mainWindow.currentCategory === "bookReferences";
-                text: i18nc("Switch to the page where the user can edit the references (that is, snippets of information) found in the book", "References");
-                iconName: "documentation";
-                onTriggered: changeCategory(editReferences, {model: bookModel});
-            },
-            Kirigami.Action {
-                visible: bookActions.visible;
-                checked: mainWindow.currentCategory === "bookBinaries";
-                text: i18nc("Switch to the page where the user can work with the bits of binary data found in the book", "Embedded Data");
-                iconName: "document-multiple";
-                onTriggered: changeCategory(editBinaries, {model: bookModel});
-            },
-            Kirigami.Action {
-                visible: bookActions.visible;
-                checked: mainWindow.currentCategory === "bookStylesheet";
-                text: i18nc("Switch to the page where the user can work with the book's stylesheet", "Stylesheet");
-                iconName: "edit-paste-style";
-                onTriggered: changeCategory(editStylesheet, {model: bookModel});
-            },
+        handleClosedIcon.source: modal ? null : "sidebar-expand-left"
+        handleOpenIcon.source: modal ? null : "sidebar-collapse-left"
+        handleVisible: modal
+        onModalChanged: if (!modal) {
+            drawerOpen = true;
+        }
 
-            Kirigami.Action {
-                separator: true;
-            },
-            Kirigami.Action {
-                text: i18nc("Open the settings page", "Settings");
-                iconName: "configure"
-                checked: mainWindow.currentCategory === "settingsPage";
-                onTriggered: changeCategory(settingsPage);
-            },
-            Kirigami.Action {
-                text: i18nc("Open the about page", "About");
-                iconName: "help-about"
-                checked: mainWindow.currentCategory === "aboutPage";
-                onTriggered: changeCategory(aboutPage);
+        leftPadding: 0
+        rightPadding: 0
+        topPadding: 0
+        bottomPadding: 0
+
+        contentItem: ColumnLayout {
+            spacing: 0
+
+            QQC2.ToolBar {
+                Layout.fillWidth: true
+                Layout.preferredHeight: mainWindow.pageStack.globalToolBar.preferredHeight
+
+                leftPadding: Kirigami.Units.smallSpacing
+                rightPadding: Kirigami.Units.smallSpacing
+                topPadding: Kirigami.Units.smallSpacing
+                bottomPadding: Kirigami.Units.smallSpacing
+
+                contentItem: RowLayout {
+                    Kirigami.Heading {
+                        text: i18n("Peruse Creator")
+                        Layout.fillWidth: true
+                    }
+
+                    QQC2.ToolButton {
+                        icon.name: "go-home"
+
+                        enabled: mainWindow.currentCategory !== "welcomePage";
+                        onClicked: if (changeCategory(welcomePage)) {
+                            pageStack.currentItem.updateRecent();
+                        }
+
+                        QQC2.ToolTip.text: i18n("Show intro page")
+                        QQC2.ToolTip.visible: hovered
+                        QQC2.ToolTip.delay: Kirigami.Units.toolTipDelay
+                    }
+                }
             }
-        ]
+
+            QQC2.ButtonGroup {
+                id: placeGroup
+            }
+
+            QQC2.ScrollView {
+                id: scrollView
+
+                Layout.fillHeight: true
+                Layout.fillWidth: true
+
+                contentWidth: availableWidth
+                topPadding: Kirigami.Units.smallSpacing / 2
+
+                component PlaceItem : Delegates.RoundedItemDelegate {
+                    id: item
+                    signal triggered;
+                    checkable: true
+                    Layout.fillWidth: true
+                    Keys.onDownPressed: nextItemInFocusChain().forceActiveFocus(Qt.TabFocusReason)
+                    Keys.onUpPressed: nextItemInFocusChain(false).forceActiveFocus(Qt.TabFocusReason)
+                    Accessible.role: Accessible.MenuItem
+                    highlighted: checked || activeFocus
+                    onToggled: if (checked) {
+                        item.triggered();
+                    }
+                }
+
+                ColumnLayout {
+                    spacing: 0
+
+                    width: scrollView.width
+
+                    PlaceItem {
+                        text: i18nc("Create a book", "Create a New Book...");
+                        icon.name: "document-new";
+                        onClicked: changeCategory(createNewBookPage);
+                    }
+
+                    PlaceItem {
+                        text: i18nc("Open a book from somewhere on disk (uses the open dialog, or a drilldown on touch devices)", "Open Other...");
+                        icon.name: "document-open";
+                        onClicked: openOther();
+                    }
+
+                    Kirigami.Separator {
+                        id: bookActions;
+                        visible: bookModel.filename !== "";
+                        Layout.fillWidth: true
+                        Layout.topMargin: 2
+                        Layout.bottomMargin: 2
+                    }
+
+                    PlaceItem {
+                        visible: bookActions.visible;
+                        checked: mainWindow.currentCategory === "bookBasics";
+                        text: bookModel.hasUnsavedChanges ? i18nc("The book's title when there are unsaved changes", "%1 (unsaved)", bookModel.title) : bookModel.title;
+                        icon.source: bookModel.filename === "" ? "" : "image://comiccover/" + bookModel.filename;
+                        onClicked: changeCategory(bookBasicsPage, {model: bookModel});
+                    }
+
+                    PlaceItem {
+                        visible: bookActions.visible;
+                        checked: mainWindow.currentCategory === "book";
+                        text: i18nc("Switch to the page which displays the pages in the current book", "Pages");
+                        icon.name: "view-pages-overview"
+                        onClicked: changeCategory(bookPage, {model: bookModel});
+                    }
+
+                    PlaceItem {
+                        visible: bookActions.visible;
+                        checked: mainWindow.currentCategory === "bookMetaInfo";
+                        text: i18nc("Switch to the page where the user can edit the meta information for the entire book", "Metainfo");
+                        icon.name: "document-edit";
+                        onClicked: changeCategory(editMetaInfo, {model: bookModel});
+                    }
+
+                    PlaceItem {
+                        visible: bookActions.visible;
+                        checked: mainWindow.currentCategory === "bookReferences";
+                        text: i18nc("Switch to the page where the user can edit the references (that is, snippets of information) found in the book", "References");
+                        icon.name: "documentation";
+                        onClicked: changeCategory(editReferences, {model: bookModel});
+                    }
+
+                    PlaceItem {
+                        visible: bookActions.visible;
+                        checked: mainWindow.currentCategory === "bookBinaries";
+                        text: i18nc("Switch to the page where the user can work with the bits of binary data found in the book", "Embedded Data");
+                        icon.name: "document-multiple";
+                        onClicked: changeCategory(editBinaries, {model: bookModel});
+                    }
+
+                    PlaceItem {
+                        visible: bookActions.visible;
+                        checked: mainWindow.currentCategory === "bookStylesheet";
+                        text: i18nc("Switch to the page where the user can work with the book's stylesheet", "Stylesheet");
+                        icon.name: "edit-paste-style";
+                        onClicked: changeCategory(editStylesheet, {model: bookModel});
+                    }
+                }
+            }
+
+            Kirigami.Separator {
+                Layout.fillWidth: true
+                Layout.topMargin: 2
+                Layout.bottomMargin: 2
+            }
+
+            PlaceItem {
+                text: i18nc("Open the settings page", "Settings");
+                icon.name: "configure"
+                checked: mainWindow.currentCategory === "settingsPage";
+                onClicked: changeCategory(settingsPage);
+            }
+
+            PlaceItem {
+                text: i18nc("Open the about page", "About");
+                icon.name: "help-about"
+                checked: mainWindow.currentCategory === "aboutPage";
+                onClicked: changeCategory(aboutPage);
+                Layout.bottomMargin: 2
+            }
+        }
     }
 
     Component {
@@ -258,15 +332,15 @@ Kirigami.ApplicationWindow {
     FileDialog {
         id: openDlg;
         title: i18nc("@title:window standard file open dialog used to open a book not in the collection", "Please Choose a Book to Open");
-        folder: mainWindow.homeDir();
+        currentFolder: StandardPaths.standardLocations(StandardPaths.HomeLocation)[0]
         nameFilters: [
             i18nc("The file type filter for comic book archives", "Comic Book Archive zip format %1", "(*.cbz)"),
             i18nc("The file type filter for showing all files", "All files %1", "(*)")
         ]
         property int splitPos: osIsWindows ? 8 : 7;
         onAccepted: {
-            if(openDlg.fileUrl.toString().substring(0, 7) === "file://") {
-                mainWindow.openBook(openDlg.fileUrl.toString().substring(splitPos), 0);
+            if(openDlg.selectFile.toString().substring(0, 7) === "file://") {
+                mainWindow.openBook(openDlg.selectFile.toString().substring(splitPos), 0);
             }
         }
         onRejected: {
