@@ -738,6 +738,7 @@ void ArchiveBookModel::addPageFromFile(QString fileUrl, int insertAfter)
         d->fileEntries.sort();
         Q_EMIT fileEntriesChanged();
         saveBook();
+        qWarning() << "Page added";
     }
 }
 
@@ -776,17 +777,12 @@ void ArchiveBookModel::swapPages(int swapThisIndex, int withThisIndex)
     BookModel::swapPages(swapThisIndex, withThisIndex);
 }
 
-QString ArchiveBookModel::createBook(QString folder, QString title, QString coverUrl)
+bool ArchiveBookModel::createBook(const QUrl &fileName, const QString &title, const QUrl &coverUrl)
 {
     bool success = true;
 
-    QString fileTitle = title.replace(QRegularExpression("\\W"), {}).simplified();
-    QString filename = QStringLiteral("%1/%2.cbz").arg(folder).arg(fileTitle);
-    int i = 1;
-    while(QFile(filename).exists())
-    {
-        filename = QString("%1/%2 (%3).cbz").arg(folder).arg(fileTitle).arg(QString::number(i++));
-    }
+    QString fileTitle = title;
+    fileTitle = fileTitle.replace(QRegularExpression("\\W"), {}).simplified();
 
     ArchiveBookModel* model = new ArchiveBookModel(nullptr);
     model->setQmlEngine(qmlEngine());
@@ -795,17 +791,17 @@ QString ArchiveBookModel::createBook(QString folder, QString title, QString cove
     model->d->imageProvider = new ArchiveImageProvider();
     model->d->imageProvider->setArchiveBookModel(model);
     model->d->imageProvider->setPrefix(prefix);
-    model->d->archive = new KZip(filename);
-    model->BookModel::setFilename(filename);
+    model->d->archive = new KZip(fileName.toLocalFile());
+    model->BookModel::setFilename(fileName.toLocalFile());
     model->setTitle(title);
     AdvancedComicBookFormat::Document* acbfDocument = qobject_cast<AdvancedComicBookFormat::Document*>(model->acbfData());
-    QString coverArchiveName = QString("cover.%1").arg(QFileInfo(coverUrl).completeSuffix());
+    QString coverArchiveName = QString("cover.%1").arg(QFileInfo(coverUrl.toLocalFile()).completeSuffix());
     acbfDocument->metaData()->bookInfo()->coverpage()->setImageHref(coverArchiveName);
     success = model->saveBook();
 
     model->d->archive->close();
     model->d->archive->open(QIODevice::ReadWrite);
-    model->d->archive->addLocalFile(coverUrl, coverArchiveName);
+    model->d->archive->addLocalFile(coverUrl.toLocalFile(), coverArchiveName);
     model->d->fileEntries << coverArchiveName;
     model->d->fileEntries.sort();
     Q_EMIT model->fileEntriesChanged();
@@ -813,9 +809,7 @@ QString ArchiveBookModel::createBook(QString folder, QString title, QString cove
 
     model->deleteLater();
 
-    if(!success)
-        return QLatin1String("");
-    return filename;
+    return success;
 }
 
 const KArchiveFile * ArchiveBookModel::archiveFile(const QString& filePath) const
