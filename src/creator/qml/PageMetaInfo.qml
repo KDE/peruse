@@ -19,10 +19,10 @@
  *
  */
 
-import QtQuick 2.12
-import QtQuick.Layouts 1.4
-import QtQuick.Controls 2.12 as QtControls
-import QtQuick.Dialogs 1.3
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls as QtControls
+import QtQuick.Dialogs
 
 import org.kde.kirigami 2.13 as Kirigami
 /**
@@ -37,13 +37,10 @@ Kirigami.ScrollablePage {
     property string colorname: "#ffffff";
     signal save();
 
-    actions {
-        main: saveAndCloseAction;
-    }
-    Kirigami.Action {
+    actions: Kirigami.Action {
         id: saveAndCloseAction;
         text: i18nc("Saves the remaining unsaved edited fields and closes the metainfo editor", "Close Editor");
-        iconName: "dialog-ok";
+        icon.name: "dialog-ok";
         shortcut: "Esc";
         onTriggered: {
             root.page.setTitle(defaultTitle.text, "")
@@ -101,7 +98,7 @@ Kirigami.ScrollablePage {
                 ColorDialog {
                     id: backgroundColorDialog
                     title: i18nc("@title color choosing dialog","Choose the background color for page");
-                    color: root.page.bgcolor !== ""? root.page.bgcolor: root.colorname;
+                    selectedColor: root.page.bgcolor !== ""? root.page.bgcolor: root.colorname;
                     onAccepted: root.page.bgcolor = color;
                 }
             }
@@ -145,7 +142,7 @@ Kirigami.ScrollablePage {
                             ColorDialog {
                                 id: frameBackgroundColorDialog
                                 title: i18nc("@title color choosing dialog","Choose background color for this frame");
-                                color: page.frame(index).bgcolor !== ""? page.frame(index).bgcolor: pageBackgroundColor.color;
+                                selectedColor: page.frame(index).bgcolor !== ""? page.frame(index).bgcolor: pageBackgroundColor.color;
                                 onAccepted: page.frame(index).bgcolor = color;
                             }
                         }
@@ -207,7 +204,7 @@ Kirigami.ScrollablePage {
                 ColorDialog {
                     id: textLayerBackgroundColorDialog
                     title: i18nc("@title color choosing dialog","Choose the background color for all text areas on this page");
-                    color: page.textLayer("").bgcolor !== ""? page.textLayer("").bgcolor: pageBackgroundColor.color;
+                    selectedColor: page.textLayer("").bgcolor !== ""? page.textLayer("").bgcolor: pageBackgroundColor.color;
                     onAccepted: page.textLayer("").bgcolor = color;
                 }
             }
@@ -221,21 +218,21 @@ Kirigami.ScrollablePage {
                 actions: [
                     Kirigami.Action {
                         text: i18nc("swap the position of this text area with the previous one", "Move Up");
-                        iconName: "go-up"
+                        icon.name: "go-up"
                         onTriggered: { page.textLayer("").swapTextareas(index, index - 1); }
                         enabled: index > 0;
                         visible: enabled;
                     },
                     Kirigami.Action {
                         text: i18nc("swap the position of this text area with the next one", "Move Down");
-                        iconName: "go-down"
+                        icon.name: "go-down"
                         onTriggered: { page.textLayer("").swapTextareas(index, index + 1); }
                         enabled: index < page.textLayer("").textareaPointStrings.length - 1;
                         visible: enabled;
                     },
                     Kirigami.Action {
                         text: i18nc("remove the text area from the page", "Delete Text Area");
-                        iconName: "list-remove"
+                        icon.name: "list-remove"
                         onTriggered: page.textLayer("").removeTextarea(index);
                     }
                 ]
@@ -273,21 +270,21 @@ Kirigami.ScrollablePage {
                 actions: [
                     Kirigami.Action {
                         text: i18nc("swap the position of this jump with the previous one", "Move Up");
-                        iconName: "go-up"
+                        icon.name: "go-up"
                         onTriggered: { page.swapJumps(index, index - 1); }
                         enabled: index > 0;
                         visible: enabled;
                     },
                     Kirigami.Action {
                         text: i18nc("swap the position of this jump with the next one", "Move Down");
-                        iconName: "go-down"
+                        icon.name: "go-down"
                         onTriggered: { page.swapJumps(index, index + 1); }
                         enabled: index < jumpsRepeater.count - 1;
                         visible: enabled;
                     },
                     Kirigami.Action {
                         text: i18nc("remove the jump from the page", "Delete Jump");
-                        iconName: "list-remove"
+                        icon.name: "list-remove"
                         onTriggered: page.removeJump(index);
                     }
                 ]
