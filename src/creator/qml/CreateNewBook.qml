@@ -19,119 +19,174 @@
  *
  */
 
-import QtQuick 2.12
-import QtQuick.Controls 2.12 as QtControls
-import QtQuick.Dialogs 1.3
+import QtCore
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls as QQC2
+import QtQuick.Dialogs
 
-import org.kde.kirigami 2.7 as Kirigami
+import org.kde.kirigami as Kirigami
+import org.kde.kirigamiaddons.formcard as FormCard
 
 import org.kde.peruse 0.1 as Peruse
+
 /**
  * @brief page with a form for creating a new comic.
  * 
  * It asks for the default title, folder and cover image,
  * and when done it open the new book in Book.
  */
-Kirigami.Page {
-    id: root;
+FormCard.FormCardPage {
+    id: root
+
     property string categoryName: "createNewBook";
+
     title: i18nc("title of the new book creation page", "Create New Book");
 
-    actions {
-        main: Kirigami.Action {
-            text: i18nc("Accept button which will create a new book", "Create Book");
-            iconName: "dialog-ok";
-            property int splitPos: osIsWindows ? 8 : 7;
-            onTriggered: {
-                var filename = newBookModel.createBook(getFolderDlg.folder.toString().substring(splitPos), titleEdit.text, getCoverDlg.fileUrl.toString().substring(splitPos));
-                if(filename.length > 0)
-                {
-                    mainWindow.openBook(filename);
-                }
-            }
-        }
+    actions: Kirigami.Action {
+        text: i18nc("Accept button which will create a new book", "Create Book");
+        icon.name: "dialog-ok";
+        enabled: folderField.text.length > 0
+        onTriggered: mainWindow.openBook(folderField.text);
     }
-    Peruse.ArchiveBookModel {
+
+    readonly property Peruse.ArchiveBookModel newBookModel: Peruse.ArchiveBookModel {
         id: newBookModel;
         qmlEngine: globalQmlEngine;
     }
 
-    Column {
-        id: contentColumn;
-        width: root.width - (root.leftPadding + root.rightPadding);
-        height: childrenRect.height;
-        spacing: Kirigami.Units.smallSpacing;
-        Kirigami.Heading {
-            width: parent.width;
-            height: paintedHeight + Kirigami.Units.smallSpacing * 2;
-            text: i18nc("label text for the edit field for the book title", "Title");
-        }
-        QtControls.TextField {
-            id: titleEdit;
-            width: parent.width;
-            text: i18nc("Default name for new books", "Untitled");
+    FormCard.FormCard {
+        Layout.topMargin: Kirigami.Units.gridUnit
+
+        FormCard.FormTextFieldDelegate {
+            id: titleEdit
+            label: i18nc("label text for the edit field for the book title", "Title")
+            text: i18nc("Default name for new books", "Untitled")
         }
 
-        Kirigami.Heading {
-            width: parent.width;
-            height: paintedHeight + Kirigami.Units.smallSpacing * 2;
-            text: i18nc("label text for the edit field for the file system location for the book", "Folder");
-        }
-        QtControls.Label {
-            width: parent.width - getFolderButton.width;
-            text: getFolderDlg.folder;
-            QtControls.ToolButton {
-                id: getFolderButton;
-                anchors.left: parent.right;
-                height: parent.height;
-                width: height;
-                contentItem: Kirigami.Icon {
-                    source: "folder-open-symbolic"
+        FormCard.FormDelegateSeparator {}
+
+        FormCard.AbstractFormDelegate {
+            id: folderDelegate
+
+            text: i18nc("label text for the edit field for the file system location for the book", "Folder")
+
+            background: null
+            contentItem: ColumnLayout {
+                spacing: Kirigami.Units.smallSpacing
+
+                QQC2.Label {
+                    text: folderDelegate.text
                 }
-                onClicked: getFolderDlg.open();
-            }
-            FileDialog {
-                id: getFolderDlg;
-                title: i18nc("@title:window folder dialog used to select the location of a new book", "Please Choose the Location for the Book");
-                folder: mainWindow.homeDir();
-                selectFolder: true;
+
+                RowLayout {
+                    spacing: Kirigami.Units.smallSpacing
+
+                    // TODO we need a QML file completion model...
+                    QQC2.Label {
+                        id: folderField
+                        Layout.fillWidth: true
+                        readonly property int splitPos: osIsWindows ? 8 : 7
+                        text: StandardPaths.standardLocations(StandardPaths.DocumentLocation)[0].toString().substring(splitPos) + '/' + titleEdit.text + '.acbf'
+                    }
+
+                    QQC2.ToolButton {
+                        id: getFolderButton;
+                        icon.name: "folder-open-symbolic"
+                        text: i18nc("@action:button", "Select Folder")
+                        onClicked: getFolderDlg.open();
+                        display: QQC2.Button.IconOnly
+
+                        QQC2.ToolTip.text: text
+                        QQC2.ToolTip.visible: hovered
+                        QQC2.ToolTip.delay: Kirigami.Units.toolTipDelay
+
+                        FileDialog {
+                            id: getFolderDlg
+
+                            readonly property int splitPos: osIsWindows ? 8 : 7
+                            fileMode: FileDialog.SaveFile
+
+                            title: i18nc("@title:window folder dialog used to select the location of a new book", "Please Choose the Location for the Book")
+                            selectedFile: folderField.text
+                            currentFolder: StandardPaths.standardLocations(StandardPaths.DocumentLocation)[0]
+                            onAccepted: {
+                                folderField.text = selectedFile.toString().substring(splitPos)
+                            }
+                        }
+                    }
+                }
             }
         }
 
-        Kirigami.Heading {
-            width: parent.width - getCoverButton.width;
-            height: paintedHeight + Kirigami.Units.smallSpacing * 2;
+        FormCard.FormDelegateSeparator {}
+
+        FormCard.AbstractFormDelegate {
+            id: coverDelegate
+
             text: i18nc("label text for the edit field for the cover image for the book", "Cover Image");
-            QtControls.ToolButton {
-                id: getCoverButton;
-                anchors.left: parent.right;
-                height: getFolderButton.height;
-                width: height;
-                contentItem: Kirigami.Icon {
-                    source: "folder-open-symbolic"
+            background: null
+
+            contentItem: ColumnLayout {
+                spacing: Kirigami.Units.smallSpacing
+
+                QQC2.Label {
+                    text: coverDelegate.text
+                    Layout.fillWidth: true
                 }
-                onClicked: getCoverDlg.open();
-            }
-            FileDialog {
-                id: getCoverDlg;
-                title: i18nc("@title:window file dialog used to select the cover image for a new book", "Please Choose Your Cover Image");
-                folder: mainWindow.homeDir();
-                nameFilters: [
-                    i18nc("File filter option for displaying only jpeg files", "JPEG images %1", "(*.jpg, *.jpeg)"),
-                    i18nc("File filter option for displaying all files", "All files %1", "(*)")
-                ];
-            }
-        }
-        Item {
-            width: parent.width;
-            height: Kirigami.Units.iconSizes.enormous + Kirigami.Units.smallSpacing;
-            Image {
-                anchors.centerIn: parent;
-                height: Kirigami.Units.iconSizes.enormous;
-                width: Kirigami.Units.iconSizes.enormous;
-                asynchronous: true;
-                fillMode: Image.PreserveAspectFit;
-                source: getCoverDlg.fileUrl;
+
+                Item {
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: missingCoverPlaceholder.visible ? missingCoverPlaceholder.implicitHeight : Kirigami.Units.iconSizes.enormous + Kirigami.Units.smallSpacing;
+                    Image {
+                        anchors.centerIn: parent;
+                        height: Kirigami.Units.iconSizes.enormous;
+                        width: Kirigami.Units.iconSizes.enormous;
+                        asynchronous: true;
+                        fillMode: Image.PreserveAspectFit;
+                        source: getCoverDlg.selectedFile;
+                    }
+
+                    Kirigami.PlaceholderMessage {
+                        id: missingCoverPlaceholder
+
+                        icon.name: "fileview-preview-symbolic"
+                        text: i18nc("placeholder message for missing cover image", "Missing cover image")
+                        helpfulAction: Kirigami.Action {
+                            id: selectImageAction
+                            text: i18nc("@action:button", "Select image")
+                            icon.name: "folder-open-symbolic"
+                            onTriggered: getCoverDlg.open();
+                        }
+                        visible: getCoverDlg.selectedFile.toString().length === 0
+
+                        anchors.centerIn: parent
+                        width: parent.width - Kirigami.Units.gridUnit * 2
+                    }
+
+                    QQC2.RoundButton {
+                        id: getCoverButton;
+
+                        anchors {
+                            top: parent.top
+                            right: parent.right
+                            margins: Kirigami.Units.largeSpacing
+                        }
+                        visible: getCoverDlg.selectedFile.toString().length > 0
+                        icon.name: "folder-open-symbolic"
+                        action: selectImageAction
+
+                        FileDialog {
+                            id: getCoverDlg
+                            title: i18nc("@title:window file dialog used to select the cover image for a new book", "Please Choose Your Cover Image")
+                            currentFolder: mainWindow.homeDir()
+                            nameFilters: [
+                                i18nc("File filter option for displaying only jpeg files", "JPEG images %1", "(*.jpg, *.jpeg)"),
+                                i18nc("File filter option for displaying all files", "All files %1", "(*)")
+                            ]
+                        }
+                    }
+                }
             }
         }
     }
