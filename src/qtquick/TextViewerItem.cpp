@@ -295,7 +295,7 @@ public:
                     // on the polygon.
 
                     // First, we've no idea of where the polygon actually starts, so let's make sure it's the top-left corner
-                    int firstPointPosition{intersection.indexOf(cornerPoints[0])};
+                    qsizetype firstPointPosition{intersection.indexOf(cornerPoints[0])};
                     if (firstPointPosition > 0) {
                         QPolygonF snippet{intersection.mid(0, firstPointPosition)};
                         intersection.remove(0, firstPointPosition);
@@ -470,7 +470,7 @@ public:
         if (paragraphs.count() > 0 && q->height() > (margin * 2) + pixelSize) {
             // Now attempt to do the text layouting, squeezing it upwards until it no longer fits
             // Cap it at the size of the polygon, divided by the number of paragraphs, minus our margin
-            int maximumSize{(qFloor(shapePolygon.boundingRect().height()) / paragraphs.count()) - margin * 2};
+            qsizetype maximumSize{(qFloor(shapePolygon.boundingRect().height()) / paragraphs.count()) - margin * 2};
             int bestSize = findMaxSize(pixelSize, maximumSize);
             setFontSize(bestSize);
             bool layoutSuccessful = attemptLayout(debugLayout);
