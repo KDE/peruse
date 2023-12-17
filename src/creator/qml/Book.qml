@@ -19,11 +19,11 @@
  *
  */
 
-import QtQuick 2.12
-import QtQuick.Layouts 1.4
-import QtQuick.Controls 2.12 as QtControls
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls as QtControls
 
-import org.kde.kirigami 2.13 as Kirigami
+import org.kde.kirigami as Kirigami
 
 import org.kde.peruse 0.1 as Peruse
 /**
@@ -41,33 +41,34 @@ Kirigami.ScrollablePage {
     property alias model: bookList.model;
     title: i18nc("title of the main book editor page", "Pages in %1", root.model && root.model.title !== "" ? root.model.title : "");
 
-    actions {
-        main: addPageSheet.opened ? closeAddPageSheetAction : saveBookAction;
-        right: addPageSheet.opened ? null : addPageAction;
-    }
+    actions: [
+        addPageAction,
+        saveBookAction
+    ]
+
     Kirigami.Action {
         id: saveBookAction;
         text: i18nc("Saves the book to a file on disk", "Save Book");
-        iconName: "document-save";
+        icon.name: "document-save";
         onTriggered: root.model.saveBook();
         enabled: root.model ? root.model.hasUnsavedChanges : false;
     }
     Kirigami.Action {
         id: addPageAction;
         text: i18nc("adds a new page at the end of the book", "Add Page");
-        iconName: "list-add";
-        onTriggered: addPage(root.model.pageCount);
-    }
-    Kirigami.Action {
-        id: closeAddPageSheetAction;
-        text: i18nc("closes the add page sheet", "Do not Add a Page");
-        iconName: "dialog-cancel";
-        onTriggered: addPageSheet.close();
+        icon.name: "list-add";
+        onTriggered: {
+            const dialog = addPageDialogComponent.createObject(applicationWindow());
+            dialog.open()
+        }
     }
 
-    function addPage(afterWhatIndex) {
-        addPageSheet.addPageAfter = afterWhatIndex;
-        addPageSheet.open();
+    Component {
+        id: addPageDialogComponent
+        AddPageSheet {
+            model: root.model ? root.model : null;
+            addPageAfter: root.model.pageCount
+        }
     }
 
     ListView {
@@ -93,31 +94,31 @@ Kirigami.ScrollablePage {
             actions: [
                 Kirigami.Action {
                     text: i18nc("swap the position of this page with the previous one", "Move Up");
-                    iconName: "go-up"
+                    icon.name: "go-up"
                     onTriggered: { root.model.swapPages(model.index, model.index - 1); }
                     enabled: model.index > 0;
                     visible: enabled;
                 },
                 Kirigami.Action {
                     text: i18nc("swap the position of this page with the next one", "Move Down");
-                    iconName: "go-down"
+                    icon.name: "go-down"
                     onTriggered: { root.model.swapPages(model.index, model.index + 1); }
                     enabled: model.index < root.model.pageCount - 1;
                     visible: enabled;
                 },
                 Kirigami.Action {
                     text: i18nc("remove the page from the book", "Delete Page");
-                    iconName: "list-remove"
+                    icon.name: "list-remove"
                     onTriggered: root.model.removePage(model.index);
                 },
                 Kirigami.Action {
                     text: i18nc("add a page to the book after this one", "Add Page After This");
-                    iconName: "list-add"
+                    icon.name: "list-add"
                     onTriggered: root.addPage(model.index);
                 },
                 Kirigami.Action {
                     text: i18nc("Edit page data such as title, frames, etc.", "Edit Page");
-                    iconName: "document-edit";
+                    icon.name: "document-edit";
                     onTriggered: {
                         pageStack.push(editBookPage, { index: model.index, pageUrl: model.url })
                     }
@@ -175,10 +176,14 @@ Kirigami.ScrollablePage {
             running: processingBackground.opacity > 0;
             visible: running;
         }
-    }
 
-    AddPageSheet {
-        id: addPageSheet;
-        model: root.model ? root.model : null;
+        Kirigami.PlaceholderMessage {
+            text: i18nc("Empty page list placeholder message", "Your book is empty")
+            explanation: i18n("Start adding pages to your book")
+            helpfulAction: addPageAction
+            width: parent.width - Kirigami.Units.gridUnit * 4
+            anchors.centerIn: parent
+            visible: bookList.count === 0
+        }
     }
 }
