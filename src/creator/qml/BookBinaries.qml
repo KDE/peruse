@@ -36,26 +36,24 @@ Kirigami.ScrollablePage {
     property QtObject model;
     signal requestCategoryChange(string categoryName);
     title: i18nc("title of the page which lets the user manage chunks of binary data embedded in the book", "Embedded Data");
-    actions {
-        main: saveBookAction;
-        right: addFileAction;
-    }
-    Kirigami.Action {
-        id: saveBookAction;
-        text: i18nc("Saves the book to a file on disk", "Save Book");
-        iconName: "document-save";
-        onTriggered: root.model.saveBook();
-        enabled: root.model ? root.model.hasUnsavedChanges : false;
-    }
-    Kirigami.Action {
-        id: addFileAction;
-        text: i18nc("Lets the user pick a file to append as a binary item", "Add File...");
-        iconName: "document-new";
-        onTriggered: {
-            var newBinary = root.model.acbfData.data.addBinary(i18nc("The initial identifier used for a newly created binary data element", "Unnamed Binary"));
-            editBinarySheet.editBinary(newBinary);
+    actions: [
+        Kirigami.Action {
+            id: saveBookAction;
+            text: i18nc("Saves the book to a file on disk", "Save Book");
+            icon.name: "document-save";
+            onTriggered: root.model.saveBook();
+            enabled: root.model ? root.model.hasUnsavedChanges : false;
+        },
+        Kirigami.Action {
+            id: addFileAction;
+            text: i18nc("Lets the user pick a file to append as a binary item", "Add File...");
+            icon.name: "document-new";
+            onTriggered: {
+                var newBinary = root.model.acbfData.data.addBinary(i18nc("The initial identifier used for a newly created binary data element", "Unnamed Binary"));
+                editBinarySheet.editBinary(newBinary);
+            }
         }
-    }
+    ]
 
     BookBinaryEditor {
         id: editBinarySheet;
