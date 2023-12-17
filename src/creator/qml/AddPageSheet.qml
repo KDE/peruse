@@ -19,68 +19,86 @@
  *
  */
 
-import QtQuick 2.12
-import QtQuick.Controls 2.12 as QtControls
-import QtQuick.Dialogs 1.3
+import QtCore
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls as QtControls
+import QtQuick.Dialogs
 
-import org.kde.kirigami 2.7 as Kirigami
+import org.kde.kirigami as Kirigami
+import org.kde.kirigamiaddons.formcard as FormCard
+import org.kde.kirigamiaddons.components as Components
+
 /**
  * @brief overlay with options for adding a page.
  * 
  * It is accessed from Book
  */
-Kirigami.OverlaySheet {
+Components.MessageDialog {
     id: root;
+
     property int addPageAfter: 0;
     property QtObject model;
-    Column {
-        height: childrenRect.height;
-        spacing: Kirigami.Units.smallSpacing;
-        Kirigami.Heading {
-            width: parent.width;
-            height: paintedHeight;
-            text: i18nc("title text for the add page sheet", "Add a Page?");
-        }
+
+    title: i18nc("@title", "Add Page")
+
+    iconName: "edit-image-face-add"
+
+    leftPadding: 0
+    rightPadding: 0
+
+    width: Math.min(parent.width - Kirigami.Units.gridUnit * 2, Kirigami.Units.gridUnit * 20)
+    height: Math.min(parent.height - Kirigami.Units.gridUnit * 2, Kirigami.Units.gridUnit * 20)
+
+    contentItem: ColumnLayout {
+        spacing: 0
+
         QtControls.Label {
-            width: parent.width;
-            height: paintedHeight;
-            text: i18nc("help text for the add page sheet", "Please select the method you want to add the new page. No changes will be made outside of the project by performing these actions.");
-            wrapMode: Text.WrapAtWordBoundaryOrAnywhere;
+            text: i18nc("help text for the add page sheet", "Please select the method you want to add the new page. No changes will be made outside of the project by performing these actions.")
+            wrapMode: Text.WordWrap
+
+            Layout.fillWidth: true
+            Layout.margins: Kirigami.Units.gridUnit
         }
+
         Item {
-            width: parent.width;
-            height: Kirigami.Units.largeSpacing;
+            Layout.fillHeight: true
         }
-        QtControls.Button {
-            anchors.horizontalCenter: parent.horizontalCenter;
-//             iconName: "document-open";
+
+        FormCard.FormButtonDelegate {
+            icon.name: "document-open";
             text: i18nc("@action:button add a page by finding an image on the filesystem and copying it into the book", "Copy Image from Device");
             onClicked: openDlg.open();
+
             FileDialog {
-                id: openDlg;
+                id: openDlg
+
                 title: i18nc("@title:window standard file open dialog used to find a page to add to the book", "Please Choose an Image to Add");
-                folder: mainWindow.homeDir();
                 property int splitPos: osIsWindows ? 8 : 7;
                 onAccepted: {
-                    if(openDlg.fileUrl.toString().substring(0, 7) === "file://") {
-                        root.model.addPageFromFile(openDlg.fileUrl.toString().substring(splitPos));
-                        root.close();
-                    }
+                    root.model.addPageFromFile(openDlg.selectedFile.toString().substring(splitPos), addPageAfter);
+                    root.close();
                 }
-                onRejected: {
-                    // Just do nothing, we don't really care...
-                }
+                currentFolder: StandardPaths.standardLocations(StandardPaths.PicturesLocation)[0]
             }
         }
-        QtControls.Button {
-            anchors.horizontalCenter: parent.horizontalCenter;
-//             iconName: "document-new";
-            text: i18nc("@action:button add a page by creating a new image using an image editor", "Create a New Image Using an Image Editor");
+
+        FormCard.FormDelegateSeparator {}
+
+        FormCard.FormButtonDelegate {
+            icon.name: "document-new"
+            text: i18nc("@action:button add a page by creating a new image using an image editor", "Create a New Image Using an Image Editor")
+            enabled: false
         }
-        QtControls.Button {
-            anchors.horizontalCenter: parent.horizontalCenter;
-//             iconName: "camera";
-            text: i18nc("@action:button add a page by taking a photo with a camera", "Take a Photo and Add That");
+
+        FormCard.FormDelegateSeparator {}
+
+        FormCard.FormButtonDelegate {
+            icon.name: "camera"
+            text: i18nc("@action:button add a page by taking a photo with a camera", "Take a Photo and Add That")
+            enabled: false
         }
     }
+
+    footer: null
 }
