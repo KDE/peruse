@@ -232,15 +232,13 @@ public:
     Q_INVOKABLE void swapPages(int swapThisIndex, int withThisIndex) override;
 
     /**
-     * Creates a new book in the folder, with the given title and cover.
-     * A filename will be constructed to fit the title, and which does not already exist in the
-     * directory.
+     * Creates a new book with the given fileName, with the given title and cover.
      * 
-     * @param folder the path to the folder to create this book in.
+     * @param fileName the path to the folder to create this book in.
      * @param title The title of the book.
      * @param coverUrl A resource location pointing at the image that will be the coverpage.
      */
-    Q_INVOKABLE QString createBook(QString folder, QString title, QString coverUrl);
+    Q_INVOKABLE bool createBook(const QUrl &fileName, const QString &title, const QUrl &coverUrl);
 
     /**
      * Get the preview URL for an acbf item with the given ID.

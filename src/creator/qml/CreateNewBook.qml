@@ -47,7 +47,10 @@ FormCard.FormCardPage {
         text: i18nc("Accept button which will create a new book", "Create Book");
         icon.name: "dialog-ok";
         enabled: folderField.text.length > 0
-        onTriggered: mainWindow.openBook(folderField.text);
+        onTriggered: {
+            newBookModel.createBook(folderField.bookUrl, titleEdit.text, getCoverDlg.selectedFile)
+            mainWindow.openBook(folderField.text);
+        }
     }
 
     readonly property Peruse.ArchiveBookModel newBookModel: Peruse.ArchiveBookModel {
@@ -87,7 +90,8 @@ FormCard.FormCardPage {
                         id: folderField
                         Layout.fillWidth: true
                         readonly property int splitPos: osIsWindows ? 8 : 7
-                        text: StandardPaths.standardLocations(StandardPaths.DocumentLocation)[0].toString().substring(splitPos) + '/' + titleEdit.text + '.acbf'
+                        property url bookUrl: StandardPaths.standardLocations(StandardPaths.DocumentLocation)[0] + '/' + titleEdit.text + '.cbz'
+                        text: bookUrl.toString().substring(splitPos)
                     }
 
                     QQC2.ToolButton {
@@ -104,14 +108,14 @@ FormCard.FormCardPage {
                         FileDialog {
                             id: getFolderDlg
 
-                            readonly property int splitPos: osIsWindows ? 8 : 7
                             fileMode: FileDialog.SaveFile
+                            nameFilters: [i18nc("File filter cbz file", "*.cbz")]
 
                             title: i18nc("@title:window folder dialog used to select the location of a new book", "Please Choose the Location for the Book")
-                            selectedFile: folderField.text
+                            selectedFile: folderField.bookUrl
                             currentFolder: StandardPaths.standardLocations(StandardPaths.DocumentLocation)[0]
                             onAccepted: {
-                                folderField.text = selectedFile.toString().substring(splitPos)
+                                folderField.bookUrl = selectedFile;
                             }
                         }
                     }
@@ -179,7 +183,7 @@ FormCard.FormCardPage {
                         FileDialog {
                             id: getCoverDlg
                             title: i18nc("@title:window file dialog used to select the cover image for a new book", "Please Choose Your Cover Image")
-                            currentFolder: mainWindow.homeDir()
+                            currentFolder: StandardPaths.standardLocations(StandardPaths.PicturesLocation)[0]
                             nameFilters: [
                                 i18nc("File filter option for displaying only jpeg files", "JPEG images %1", "(*.jpg, *.jpeg)"),
                                 i18nc("File filter option for displaying all files", "All files %1", "(*)")
