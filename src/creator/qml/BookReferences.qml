@@ -35,10 +35,7 @@ Kirigami.ScrollablePage {
     title: i18nc("title text for the references page", "References");
     property QtObject model;
 
-    actions {
-        main: newReferenceAction;
-    }
-    Kirigami.Action {
+    actions: Kirigami.Action {
         id: newReferenceAction;
         text: i18nc("Action which when triggered adds a new reference to the book and opens the reference editor", "New Reference");
         icon.name: "list-add";

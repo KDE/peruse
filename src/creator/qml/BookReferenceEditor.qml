@@ -48,13 +48,32 @@ Kirigami.ScrollablePage {
         reference.paragraphs = textDocumentEditor.paragraphs();
     }
 
-    actions {
-        contextualActions: textActions;
-        main: okCloseAction;
-        right: saveReferenceAction;
-        left: abortChangesAction;
-    }
-    property list<QtObject> textActions: [
+    actions: [
+        Kirigami.Action {
+            id: okCloseAction;
+            text: i18nc("Save the reference and close the editor", "Save and Close Editor");
+            icon.name: "dialog-ok";
+            onTriggered: {
+                root.saveReference();
+                pageStack.pop();
+            }
+        },
+        Kirigami.Action {
+            id: saveReferenceAction;
+            text: i18nc("Save the reference and keep editing", "Save");
+            icon.name: "document-save";
+            onTriggered: {
+                root.saveReference();
+            }
+        },
+        Kirigami.Action {
+            id: abortChangesAction;
+            text: i18nc("Abort the changes made in the editor, and close the editor", "Abort Changes");
+            icon.name: "dialog-cancel";
+            onTriggered: {
+                pageStack.pop();
+            }
+        },
         Kirigami.Action {
             text: i18nc("Opens a sheet which lets the user change the name and language of the reference", "Edit Details...");
             icon.name: "documentinfo";
@@ -86,31 +105,6 @@ Kirigami.ScrollablePage {
             onTriggered: linkDetails.edit();
         }
     ]
-    Kirigami.Action {
-        id: okCloseAction;
-        text: i18nc("Save the reference and close the editor", "Save and Close Editor");
-        icon.name: "dialog-ok";
-        onTriggered: {
-            root.saveReference();
-            pageStack.pop();
-        }
-    }
-    Kirigami.Action {
-        id: saveReferenceAction;
-        text: i18nc("Save the reference and keep editing", "Save");
-        icon.name: "document-save";
-        onTriggered: {
-            root.saveReference();
-        }
-    }
-    Kirigami.Action {
-        id: abortChangesAction;
-        text: i18nc("Abort the changes made in the editor, and close the editor", "Abort Changes");
-        icon.name: "dialog-cancel";
-        onTriggered: {
-            pageStack.pop();
-        }
-    }
 
     Kirigami.OverlaySheet {
         id: referenceDetails;
