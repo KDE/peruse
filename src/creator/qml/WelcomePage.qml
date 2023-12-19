@@ -90,20 +90,35 @@ FormCard.FormCardPage {
             icon.name: "document-new"
             onClicked: mainWindow.changeCategory(createNewBookPage)
         }
+    }
 
+    FormCard.FormHeader {
+        title: i18nc("@title:group", "Recent books")
+    }
+
+    FormCard.FormCard {
         Repeater {
             model: peruseConfig.recentlyOpened.filter((book) => book.slice(-4) === ".cbz")
 
             ColumnLayout {
+                id: recentBookDelegate
+
+                required property int index
+                required property var modelData
+
                 Layout.fillWidth: true
 
-                FormCard.FormDelegateSeparator {}
+                FormCard.FormDelegateSeparator { visible: recentBookDelegate.index > 0 }
 
                 FormCard.FormButtonDelegate {
-                    text: i18nc("@action:button continue working on the most recently opened comic book archive", "Continue working on %1", recentBook.split('/').pop())
-                    description: recentBook
-                    icon.name: "image://comiccover/" + recentBook
-                    onClicked: mainWindow.openBook(recentBook)
+                    text: i18nc("@action:button continue working on the most recently opened comic book archive", "Continue working on %1", recentBookDelegate.modelData.split('/').pop())
+                    description: recentBookDelegate.modelData
+                    icon {
+                        name: "image://comiccover/" + recentBookDelegate.modelData
+                        width: Kirigami.Units.iconSizes.large
+                        height: Kirigami.Units.iconSizes.large
+                    }
+                    onClicked: mainWindow.openBook(recentBookDelegate.modelData)
                 }
             }
         }
