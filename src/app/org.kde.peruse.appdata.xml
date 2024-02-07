@@ -4,6 +4,7 @@
   <id>org.kde.peruse.desktop</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0+</project_license>
+  <developer_name translate="no">KDE</developer_name>
   <name>Peruse</name>
   <name xml:lang="ca">Peruse</name>
   <name xml:lang="ca-valencia">Peruse</name>
