@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: peruse\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-29 00:40+0000\n"
-"PO-Revision-Date: 2024-02-26 21:30+0100\n"
+"PO-Revision-Date: 2024-03-24 10:34+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-eo.org>\n"
 "Language: eo\n"
@@ -31,17 +31,17 @@ msgstr ""
 #: app/main.cpp:49
 #, kde-format
 msgid "Peruse Reader"
-msgstr ""
+msgstr "Trarigardi Legilon"
 
 #: app/main.cpp:49
 #, kde-format
 msgid "Comic Book Reader by KDE"
-msgstr ""
+msgstr "Comic Book Reader de KDE"
 
 #: app/main.cpp:50 creator/main.cpp:45
 #, kde-format
 msgid "© 2016-2021 KDE"
-msgstr ""
+msgstr "© 2016-2021 KDE"
 
 #: app/main.cpp:51 creator/main.cpp:46
 #, kde-format
@@ -51,18 +51,18 @@ msgstr "Dan Leinir Turthra Jensen"
 #: app/main.cpp:57
 #, kde-format
 msgid "Clear the metainfo cache and perform a full rescan."
-msgstr ""
+msgstr "Forigi la metainformkaŝmemoron kaj fari plenan reskanadon."
 
 #: app/main.cpp:58 creator/main.cpp:52
 #, kde-format
 msgid "Open file in peruse."
-msgstr ""
+msgstr "Malfermi dosieron trarigardante."
 
 #: app/qml/Book.qml:186
 #, kde-format
 msgctxt "Enter full screen mode on a touch-based device"
 msgid "Go Full Screen"
-msgstr ""
+msgstr "Iĝi Plenekrana"
 
 #: app/qml/Book.qml:186
 #, kde-format
@@ -91,7 +91,7 @@ msgctxt ""
 "Header title for the section in which the direction the book will be "
 "navigated can be picked"
 msgid "Reading Direction"
-msgstr ""
+msgstr "Legodirekto"
 
 #: app/qml/Book.qml:207
 #, kde-format
@@ -135,7 +135,7 @@ msgstr "Sekva Paĝo"
 #, kde-format
 msgctxt "Enter full screen mode on a non-touch-based device"
 msgid "Go Full Screen"
-msgstr ""
+msgstr "Iĝi Plenekrana"
 
 #: app/qml/Book.qml:272
 #, kde-format
@@ -205,25 +205,25 @@ msgstr "Dosiernomo:"
 #, kde-format
 msgctxt "Spawn inline dialog box to confirm permanent removal of this book"
 msgid "Delete from Device"
-msgstr ""
+msgstr "Forigi de Aparato"
 
 #: app/qml/BookDetails.qml:174 app/qml/listcomponents/BookTile.qml:401
 #, kde-format
 msgctxt "Dialog text for delete book dialog"
 msgid "Are you sure you want to delete this from your device?"
-msgstr ""
+msgstr "Ĉu vi certas, ke vi volas forigi ĉi tion de via aparato?"
 
 #: app/qml/BookDetails.qml:184 app/qml/listcomponents/BookTile.qml:411
 #, kde-format
 msgctxt "Confirmation button for book delete dialog"
 msgid "Yes, Really Delete"
-msgstr ""
+msgstr "Jes, Vere Forigi"
 
 #: app/qml/BookDetails.qml:198 app/qml/listcomponents/BookTile.qml:422
 #, kde-format
 msgctxt "Cancellation button or book delete dialog"
 msgid "No, Cancel Delete"
-msgstr ""
+msgstr "Ne, Nuligi Forigon"
 
 #: app/qml/Bookshelf.qml:87
 #, kde-format
@@ -235,19 +235,19 @@ msgstr "Malantaŭen/Reen"
 #, kde-format
 msgctxt "Open the book which is currently selected in the list"
 msgid "Open Selected Book"
-msgstr ""
+msgstr "Malfermu Elektitan Libron"
 
 #: app/qml/Bookshelf.qml:107
 #, kde-format
 msgctxt "search in the list of books (not inside the books)"
 msgid "Search Books"
-msgstr ""
+msgstr "Serĉu Librojn"
 
 #: app/qml/Bookshelf.qml:114
 #, kde-format
 msgctxt "placeholder text for the search field"
 msgid "Tap and type to search"
-msgstr ""
+msgstr "Frapi kaj tajpi por serĉi"
 
 #: app/qml/Bookshelf.qml:135
 #, kde-format
@@ -281,7 +281,7 @@ msgstr ""
 #, kde-format
 msgctxt "Label for authors"
 msgid "Author(s)"
-msgstr ""
+msgstr "Aŭtoro(j)"
 
 #: app/qml/listcomponents/BookTile.qml:173
 #, kde-format
@@ -305,7 +305,7 @@ msgstr "Etikedoj"
 #, kde-format
 msgctxt "Placeholder tag field"
 msgid "(No tags)"
-msgstr ""
+msgstr "(Neniu etikedoj)"
 
 #: app/qml/listcomponents/BookTile.qml:312
 #, kde-format
@@ -317,7 +317,7 @@ msgstr "Komento"
 #, kde-format
 msgctxt "Placeholder comment field"
 msgid "(No comment)"
-msgstr ""
+msgstr "(Sen komento)"
 
 #: app/qml/listcomponents/BookTile.qml:348
 #, kde-format
@@ -336,13 +336,13 @@ msgstr "%1%"
 #, kde-format
 msgctxt "The last item in a list of author names when there is more than one"
 msgid ", and %1"
-msgstr ""
+msgstr ", kaj %1"
 
 #: app/qml/listcomponents/BookTileTall.qml:138
 #, kde-format
 msgctxt "An item in a list of authors (but not the last)"
 msgid ", %1"
-msgstr ""
+msgstr ", %1"
 
 #: app/qml/listcomponents/BookTileTall.qml:141
 #, kde-format
@@ -354,12 +354,12 @@ msgstr "de %1"
 #, kde-format
 msgctxt "Author name used when there are no known authors for a book"
 msgid "by an unknown author"
-msgstr ""
+msgstr "de nekonata aŭtoro"
 
 #: app/qml/listcomponents/CategoryTile.qml:40
 #, kde-format
 msgid "Comics in folder: %1"
-msgstr ""
+msgstr "Bildstrioj en dosierujo: %1"
 
 #: app/qml/Main.qml:38
 #, kde-format
@@ -474,7 +474,7 @@ msgstr "Dosierujo"
 #, kde-format
 msgctxt "shown with a throbber when searching for books on the device"
 msgid "Please wait while we find your books..."
-msgstr ""
+msgstr "Bonvolu atendi dum ni trovos viajn librojn..."
 
 #: app/qml/PeruseMain.qml:285 creator/qml/Main.qml:174
 #, kde-format
@@ -492,7 +492,7 @@ msgstr "Pri"
 #, kde-format
 msgctxt "Title of the page with books grouped by the title start letters"
 msgid "Group by Title"
-msgstr ""
+msgstr "Grupo laŭ Titolo"
 
 #: app/qml/PeruseMain.qml:334
 #, kde-format
@@ -517,30 +517,30 @@ msgstr "Grupi laŭ aŭtoro"
 #, kde-format
 msgctxt "Title of the page with books grouped by who published them"
 msgid "Group by Publisher"
-msgstr ""
+msgstr "Grupo de Eldonisto"
 
 #: app/qml/PeruseMain.qml:376
 #, kde-format
 msgctxt "Title of the page with books grouped by keywords, character or genres"
 msgid "Group by Keywords, Characters and Genres"
-msgstr ""
+msgstr "Grupo laŭ Ŝlosilvortoj, Karakteroj kaj Ĝenroj"
 
 #: app/qml/PeruseMain.qml:386
 #, kde-format
 msgctxt "Title of the page with books grouped by what folder they are in"
 msgid "Filter by Folder"
-msgstr ""
+msgstr "Filtri per Dosierujo"
 
 #: app/qml/Settings.qml:43
 #, kde-format
 msgctxt "title of the settings page"
 msgid "Configure the indexed folders"
-msgstr ""
+msgstr "Agordi la indeksitajn dosierujojn"
 
 #: app/qml/Settings.qml:48
 #, kde-format
 msgid "Add folder"
-msgstr ""
+msgstr "Aldoni dosierujon"
 
 #: app/qml/Settings.qml:86
 #, kde-format
@@ -551,13 +551,13 @@ msgstr "Forigi"
 #: app/qml/Settings.qml:98
 #, kde-format
 msgid "There are no folder currently indexed."
-msgstr ""
+msgstr "Nuntempe ne estas dosierujo indeksita."
 
 #: app/qml/Settings.qml:108
 #, kde-format
 msgctxt "@title:window Dialogue used to add a new search folder"
 msgid "Select a folder"
-msgstr ""
+msgstr "Elekti dosierujon"
 
 #: app/qml/Settings.qml:125
 #, kde-format
@@ -569,7 +569,7 @@ msgstr "Elekti Dosierujon"
 #, kde-format
 msgctxt "title of the book store page"
 msgid "Book Store"
-msgstr ""
+msgstr "Librovendejo"
 
 #: app/qml/Store.qml:97
 #, kde-format
@@ -593,7 +593,7 @@ msgstr "Tradukoj"
 #, kde-format
 msgctxt "The option used to show no translation should be used"
 msgid "No Translation"
-msgstr ""
+msgstr "Neniu Traduko"
 
 #: app/qml/viewers/ImageBrowser.qml:89
 #, kde-format
@@ -673,12 +673,12 @@ msgstr ""
 #: app/qml/viewers/ViewerBase.qml:145
 #, kde-format
 msgid "Compose an email for %1 with the subject \"%2\""
-msgstr ""
+msgstr "Verki retmesaĝon por %1 kun la temo \"%2\""
 
 #: app/qml/viewers/ViewerBase.qml:147
 #, kde-format
 msgid "Compose email for: %1"
-msgstr ""
+msgstr "Verki retmesaĝon por: %1"
 
 #: app/qml/WelcomePage.qml:42 creator/qml/WelcomePage.qml:38
 #, kde-format
@@ -696,7 +696,7 @@ msgstr "Daŭre Legado"
 #, kde-format
 msgctxt "title of list of recently discovered books"
 msgid "Recently Added"
-msgstr ""
+msgstr "Lastatempe Aldonita"
 
 #: creator/main.cpp:44
 #, kde-format
@@ -706,37 +706,37 @@ msgstr "Peruse Creator"
 #: creator/main.cpp:44
 #, kde-format
 msgid "Comic Book Creator by KDE"
-msgstr ""
+msgstr "Kreinto de komiksoj de KDE"
 
 #: creator/qml/AddPageArea.qml:61
 #, kde-format
 msgctxt "title text for the add page area sheet"
 msgid "Add Page Area"
-msgstr ""
+msgstr "Aldoni Paĝan Areon"
 
 #: creator/qml/AddPageArea.qml:84
 #, kde-format
 msgctxt "Button which creates a new frame, and closes the dialog"
 msgid "Create Frame"
-msgstr ""
+msgstr "Krei Kadron"
 
 #: creator/qml/AddPageArea.qml:98
 #, kde-format
 msgctxt "Button which creates new textarea, and closes the dialog"
 msgid "Create Textarea"
-msgstr ""
+msgstr "Krei Tekstareon"
 
 #: creator/qml/AddPageArea.qml:112
 #, kde-format
 msgctxt "Button which creates a new jump, and closes the dialog"
 msgid "Create Jump"
-msgstr ""
+msgstr "Krei Salton"
 
 #: creator/qml/AddPageSheet.qml:42
 #, kde-format
 msgctxt "title text for the add page sheet"
 msgid "Add a Page?"
-msgstr ""
+msgstr "Ĉu aldoni paĝon?"
 
 #: creator/qml/AddPageSheet.qml:47
 #, kde-format
@@ -773,13 +773,13 @@ msgstr ""
 #, kde-format
 msgctxt "@action:button add a page by taking a photo with a camera"
 msgid "Take a Photo and Add That"
-msgstr ""
+msgstr "Preni Foton kaj Aldoni Tion"
 
 #: creator/qml/Book.qml:42
 #, kde-format
 msgctxt "title of the main book editor page"
 msgid "Pages in %1"
-msgstr ""
+msgstr "Paĝoj en %1"
 
 #: creator/qml/Book.qml:50 creator/qml/BookBasics.qml:43
 #: creator/qml/BookBinaries.qml:44 creator/qml/BookMetainfoPage.qml:47
@@ -787,7 +787,7 @@ msgstr ""
 #, kde-format
 msgctxt "Saves the book to a file on disk"
 msgid "Save Book"
-msgstr ""
+msgstr "Konservi Libron"
 
 #: creator/qml/Book.qml:57
 #, kde-format
@@ -799,7 +799,7 @@ msgstr "Aldoni Paĝon"
 #, kde-format
 msgctxt "closes the add page sheet"
 msgid "Do not Add a Page"
-msgstr ""
+msgstr "Ne Aldoni Paĝon"
 
 #: creator/qml/Book.qml:95 creator/qml/BookReferences.qml:101
 #, kde-format
@@ -823,7 +823,7 @@ msgstr "Forigi Paĝon"
 #, kde-format
 msgctxt "add a page to the book after this one"
 msgid "Add Page After This"
-msgstr ""
+msgstr "Aldoni Paĝon Post Ĉi tio"
 
 #: creator/qml/Book.qml:119
 #, kde-format
@@ -835,7 +835,7 @@ msgstr "Redakti Paĝon"
 #, kde-format
 msgctxt "title of the basic book information page"
 msgid "Your Book At A Glance"
-msgstr ""
+msgstr "Via Libro Je Rigardo"
 
 #: creator/qml/BookBasics.qml:86
 #, kde-format
@@ -855,7 +855,7 @@ msgstr "Paĝoj:"
 #, kde-format
 msgctxt "A link which when clicked shows the book pages editor"
 msgid "%1 total pages"
-msgstr ""
+msgstr "%1 entutaj paĝoj"
 
 #: creator/qml/BookBasics.qml:98
 #, kde-format
@@ -883,25 +883,25 @@ msgstr ""
 #, kde-format
 msgctxt "If a file is not referenced at all"
 msgid "Unreferenced file"
-msgstr ""
+msgstr "Nereferenca dosiero"
 
 #: creator/qml/BookBasics.qml:197
 #, kde-format
 msgctxt "If a file is referenced by its full path"
 msgid "Referenced by full path"
-msgstr ""
+msgstr "Referencita per plena vojo"
 
 #: creator/qml/BookBasics.qml:199
 #, kde-format
 msgctxt "If a file is referenced partially, describe that"
 msgid "Referenced by filename only"
-msgstr ""
+msgstr "Referencita nur per dosiernomo"
 
 #: creator/qml/BookBasics.qml:201
 #, kde-format
 msgctxt "What happens if we have an unexpected reference amount"
 msgid "%1 might be referenced, but in some way we've not accounted for"
-msgstr ""
+msgstr "%1 eble estas referencita, sed iel ni ne klarigis"
 
 #: creator/qml/BookBinaries.qml:37
 #, kde-format
@@ -915,13 +915,13 @@ msgstr ""
 #, kde-format
 msgctxt "Lets the user pick a file to append as a binary item"
 msgid "Add File..."
-msgstr ""
+msgstr "Aldoni dosieron..."
 
 #: creator/qml/BookBinaries.qml:54 creator/qml/BookBinaryEditor.qml:97
 #, kde-format
 msgctxt "The initial identifier used for a newly created binary data element"
 msgid "Unnamed Binary"
-msgstr ""
+msgstr "Nenomita Binara"
 
 #: creator/qml/BookBinaries.qml:81
 #, kde-format
@@ -935,7 +935,7 @@ msgstr ""
 #, kde-format
 msgctxt "title text for a card which informs the user what binary data is"
 msgid "Embedded Binary Data"
-msgstr ""
+msgstr "Enkonstruitaj Binaraj Datumoj"
 
 #: creator/qml/BookBinaries.qml:90
 #, kde-format
@@ -972,13 +972,13 @@ msgstr ""
 #, kde-format
 msgctxt "Label which describes which content type this entry is supposed to be"
 msgid "Content type: %1"
-msgstr ""
+msgstr "Enhavotipo: %1"
 
 #: creator/qml/BookBinaryEditor.qml:46
 #, kde-format
 msgctxt "title text for a sheet which lets the user edit a binary entry"
 msgid "Edit Binary"
-msgstr ""
+msgstr "Redakti Binaron"
 
 #: creator/qml/BookBinaryEditor.qml:52
 #, kde-format
@@ -996,7 +996,7 @@ msgstr "ID"
 #, kde-format
 msgctxt "Placeholder text for the binary ID input field"
 msgid "Enter the name of your binary here (often a filename)"
-msgstr ""
+msgstr "Enigu la nomon de via binaro ĉi tie (ofte dosiernomo)"
 
 #: creator/qml/BookBinaryEditor.qml:69
 #, kde-format
@@ -1008,7 +1008,7 @@ msgstr "Enhavo Tipo"
 #, kde-format
 msgctxt "Placeholder text for the binary content type input field"
 msgid "Enter the content type of your binary here (aka mimetype)"
-msgstr ""
+msgstr "Enigu la enhavspecon de via binaro ĉi tie (alinome mimetipo)"
 
 #: creator/qml/BookBinaryEditor.qml:75
 #, kde-format
@@ -1053,7 +1053,7 @@ msgstr ""
 #, kde-format
 msgctxt "The file type filter for showing all files"
 msgid "All files %1"
-msgstr ""
+msgstr "Ĉiuj dosieroj %1"
 
 #: creator/qml/BookBinaryEditor.qml:137
 #, kde-format
@@ -1077,19 +1077,19 @@ msgstr ""
 #, kde-format
 msgctxt "The option used to let the user agree to the proposed action"
 msgid "Yes, Add Large File"
-msgstr ""
+msgstr "Jes, Aldoni Grandan Dosieron"
 
 #: creator/qml/BookBinaryEditor.qml:145
 #, kde-format
 msgctxt "The option used to let the user abort the proposed action"
 msgid "Don't Add"
-msgstr ""
+msgstr "Ne Aldoni"
 
 #: creator/qml/BookMetainfoPage.qml:39
 #, kde-format
 msgctxt "title text for the book meta information editor sheet"
 msgid "Edit Meta Information"
-msgstr ""
+msgstr "Redakti Meta-Informojn"
 
 #: creator/qml/BookMetainfoPage.qml:67 creator/qml/CreateNewBook.qml:67
 #, kde-format
@@ -1101,7 +1101,7 @@ msgstr "Titolo"
 #, kde-format
 msgctxt "placeholder text for default title text-input"
 msgid "Write to add default title"
-msgstr ""
+msgstr "Skribi por aldoni defaŭltan titolon"
 
 #: creator/qml/BookMetainfoPage.qml:85
 #, kde-format
@@ -1113,7 +1113,7 @@ msgstr "Komentario"
 #, kde-format
 msgctxt "placeholder text for default annotation text-area"
 msgid "Write to add default annotation"
-msgstr ""
+msgstr "Skribi por aldoni defaŭltan komentarion"
 
 #: creator/qml/BookMetainfoPage.qml:102
 #, kde-format
@@ -1125,13 +1125,13 @@ msgstr "Ŝlosilvortoj"
 #, kde-format
 msgctxt "placeholder text for the add new keyword text entry"
 msgid "Write a comma separated list of keywords."
-msgstr ""
+msgstr "Skribi komon apartigitan liston de ŝlosilvortoj."
 
 #: creator/qml/BookMetainfoPage.qml:123
 #, kde-format
 msgctxt "label text for the edit field for the author list"
 msgid "Authors (%1)"
-msgstr ""
+msgstr "Aŭtoroj (%1)"
 
 #: creator/qml/BookMetainfoPage.qml:130 creator/qml/BookMetainfoPage.qml:800
 #, kde-format
@@ -1143,7 +1143,7 @@ msgstr "(nenomita)"
 #, kde-format
 msgctxt "placeholder text for the add new author text entry"
 msgid "Write to add new author (nickname)"
-msgstr ""
+msgstr "Skribi por aldoni novan aŭtoron (moknomo)"
 
 #: creator/qml/BookMetainfoPage.qml:198
 #, kde-format
@@ -1161,7 +1161,7 @@ msgstr "Signoj"
 #, kde-format
 msgctxt "placeholder text for the add new character text entry"
 msgid "Write to add new character"
-msgstr ""
+msgstr "Skribi por aldoni novan signon"
 
 #: creator/qml/BookMetainfoPage.qml:334
 #, kde-format
@@ -1185,67 +1185,67 @@ msgstr "Volumo:"
 #, kde-format
 msgctxt "placeholder text for the add new series text entry"
 msgid "Write to add new series"
-msgstr ""
+msgstr "Skribi por aldoni novajn seriojn"
 
 #: creator/qml/BookMetainfoPage.qml:461
 #, kde-format
 msgctxt "label text for the edit field for the database reference list"
 msgid "Database References"
-msgstr ""
+msgstr "Datumbazaj Referencoj"
 
 #: creator/qml/BookMetainfoPage.qml:502
 #, kde-format
 msgctxt "placeholder text for the add reference type text entry"
 msgid "Write to add reference type"
-msgstr ""
+msgstr "Skribi por aldoni referencan tipon"
 
 #: creator/qml/BookMetainfoPage.qml:539
 #, kde-format
 msgctxt "placeholder text for the add new reference text entry"
 msgid "Write to add new reference"
-msgstr ""
+msgstr "Skribi por aldoni novan referencon"
 
 #: creator/qml/BookMetainfoPage.qml:549
 #, kde-format
 msgctxt "placeholder text for the add databasename text entry"
 msgid "Write to add database name for new reference."
-msgstr ""
+msgstr "Skribi por aldoni datumbazan nomon por nova referenco."
 
 #: creator/qml/BookMetainfoPage.qml:570
 #, kde-format
 msgctxt "label text for the edit field for the content rating list"
 msgid "Content Ratings"
-msgstr ""
+msgstr "Enhavaj Taksoj"
 
 #: creator/qml/BookMetainfoPage.qml:588 creator/qml/BookMetainfoPage.qml:634
 #, kde-format
 msgctxt "placeholder text for the add content rating text entry"
 msgid "Write to add rating label."
-msgstr ""
+msgstr "Skribi por aldoni taksan etikedon."
 
 #: creator/qml/BookMetainfoPage.qml:599 creator/qml/BookMetainfoPage.qml:644
 #, kde-format
 msgctxt "placeholder text for the add content rating system text entry"
 msgid "Write to add rating system."
-msgstr ""
+msgstr "Skribi por aldoni taksan sistemon."
 
 #: creator/qml/BookMetainfoPage.qml:664
 #, kde-format
 msgctxt "label text for the form for reading direction."
 msgid "Reading Direction"
-msgstr ""
+msgstr "Legodirekto"
 
 #: creator/qml/BookMetainfoPage.qml:668
 #, kde-format
 msgctxt "label text for right to left checkbox."
 msgid "Right to left."
-msgstr ""
+msgstr "Dekstre al maldekstre."
 
 #: creator/qml/BookMetainfoPage.qml:676
 #, kde-format
 msgctxt "label text for the form for the publishing info list"
 msgid "Publisher Info"
-msgstr ""
+msgstr "Informoj pri Eldonejo"
 
 #: creator/qml/BookMetainfoPage.qml:679
 #, kde-format
@@ -1257,13 +1257,13 @@ msgstr "Eldonisto:"
 #, kde-format
 msgctxt "placeholder text for the publisher entry"
 msgid "Write to add publisher"
-msgstr ""
+msgstr "Skribi por aldoni eldoniston"
 
 #: creator/qml/BookMetainfoPage.qml:694
 #, kde-format
 msgctxt "Label for publishing date"
 msgid "Publishing Date:"
-msgstr ""
+msgstr "Eldondato:"
 
 #: creator/qml/BookMetainfoPage.qml:744
 #, kde-format
@@ -1275,7 +1275,7 @@ msgstr "Urbo:"
 #, kde-format
 msgctxt "placeholder text for the publishing city entry"
 msgid "Write to add city"
-msgstr ""
+msgstr "Skribi por aldoni urbon"
 
 #: creator/qml/BookMetainfoPage.qml:759
 #, kde-format
@@ -1287,7 +1287,7 @@ msgstr "ISBN:"
 #, kde-format
 msgctxt "placeholder text for the publishing ISBN entry"
 msgid "Write to add ISBN"
-msgstr ""
+msgstr "Skribi por aldoni ISBN"
 
 #: creator/qml/BookMetainfoPage.qml:775
 #, kde-format
@@ -1299,43 +1299,43 @@ msgstr "Permesilo:"
 #, kde-format
 msgctxt "placeholder text for the publishing license entry"
 msgid "Write to add license"
-msgstr ""
+msgstr "Skribi por aldoni permesilon"
 
 #: creator/qml/BookMetainfoPage.qml:792
 #, kde-format
 msgctxt "label text for the form for the document info list"
 msgid "Document Authors"
-msgstr ""
+msgstr "Dokumentaj Aŭtoroj"
 
 #: creator/qml/BookMetainfoPage.qml:868
 #, kde-format
 msgctxt "label text for the form for the sources list"
 msgid "Document Sources"
-msgstr ""
+msgstr "Dokumentaj Fontoj"
 
 #: creator/qml/BookMetainfoPage.qml:930
 #, kde-format
 msgctxt "label text for the form for the history list"
 msgid "Document History"
-msgstr ""
+msgstr "Dokumenta Historio"
 
 #: creator/qml/BookMetainfoPage.qml:995
 #, kde-format
 msgctxt "Label for the document version spinbox"
 msgid "Document Version:"
-msgstr ""
+msgstr "Dokumenta Versio:"
 
 #: creator/qml/BookMetainfoPage.qml:1037
 #, kde-format
 msgctxt "label text for the form for the body background color."
 msgid "General Page Background Color"
-msgstr ""
+msgstr "Ĝenerala Paĝa Fona Koloro"
 
 #: creator/qml/BookMetainfoPage.qml:1074
 #, kde-format
 msgctxt "@title color choosing dialog"
 msgid "Choose the general background color for this comic"
-msgstr ""
+msgstr "Elekti la ĝeneralan fonkoloron por ĉi tiu komikso"
 
 #: creator/qml/BookPage.qml:32
 #, kde-format
@@ -1352,13 +1352,13 @@ msgstr "Paĝo %1"
 #, kde-format
 msgctxt "Saves the remaining unsaved edited fields and closes the page editor"
 msgid "Save and Close Page"
-msgstr ""
+msgstr "Konservi kaj Fermi Paĝon"
 
 #: creator/qml/BookPage.qml:110
 #, kde-format
 msgctxt "Edit the page data in detail"
 msgid "Edit Page Data"
-msgstr ""
+msgstr "Redakti Paĝajn Datumojn"
 
 #: creator/qml/BookReferenceEditor.qml:36
 #, kde-format
@@ -1372,7 +1372,7 @@ msgstr ""
 #, kde-format
 msgctxt "title text for the reference editor page"
 msgid "Editing %1 (language: %2)"
-msgstr ""
+msgstr "Redaktante %1 (lingvo: %2)"
 
 #: creator/qml/BookReferenceEditor.qml:59
 #, kde-format
@@ -1412,7 +1412,7 @@ msgstr "Redakti ligon"
 #, kde-format
 msgctxt "Save the reference and close the editor"
 msgid "Save and Close Editor"
-msgstr ""
+msgstr "Konservi kaj Fermi Redaktilon"
 
 #: creator/qml/BookReferenceEditor.qml:100
 #, kde-format
@@ -1424,7 +1424,7 @@ msgstr "Konservi"
 #, kde-format
 msgctxt "Abort the changes made in the editor, and close the editor"
 msgid "Abort Changes"
-msgstr ""
+msgstr "Ĉesigi Ŝanĝojn"
 
 #: creator/qml/BookReferenceEditor.qml:121
 #, kde-format
@@ -1443,7 +1443,7 @@ msgstr "Unika Identigilo"
 #, kde-format
 msgctxt "Placeholder text for the reference identifier input field"
 msgid "Enter your reference ID here (should be unique)"
-msgstr ""
+msgstr "Enigu vian referencan ID ĉi tie (devus esti unika)"
 
 #: creator/qml/BookReferenceEditor.qml:136
 #, kde-format
@@ -1476,7 +1476,7 @@ msgstr ""
 #, kde-format
 msgctxt "The default ID for new references"
 msgid "Unnamed Reference"
-msgstr ""
+msgstr "Nenomita Referenco"
 
 #: creator/qml/BookReferences.qml:48
 #, kde-format
@@ -1528,19 +1528,19 @@ msgstr ""
 #, kde-format
 msgctxt "title of the page which lets the user manage the book's stylesheet"
 msgid "Stylesheet"
-msgstr ""
+msgstr "Stilfolio"
 
 #: creator/qml/BookStylesheet.qml:51
 #, kde-format
 msgctxt "Creates a new, empty stylesheet entry and lets the user edit it"
 msgid "Add Style..."
-msgstr ""
+msgstr "Aldoni stilon..."
 
 #: creator/qml/BookStylesheet.qml:70
 #, kde-format
 msgctxt "title text for a sheet which lets the user edit a binary entry"
 msgid "Edit Style"
-msgstr ""
+msgstr "Redakti Stilon"
 
 #: creator/qml/BookStylesheet.qml:76
 #, kde-format
@@ -1558,7 +1558,7 @@ msgstr "Elemento"
 #, kde-format
 msgctxt "Placeholder text for the style element input field"
 msgid "Enter the name of the element you want to style"
-msgstr ""
+msgstr "Enigu la nomon de la elemento, kiun vi volas stiligi"
 
 #: creator/qml/BookStylesheet.qml:106
 #, kde-format
@@ -1572,7 +1572,7 @@ msgstr ""
 #, kde-format
 msgctxt "title text for a card which informs the user what styles are"
 msgid "Styling Information"
-msgstr ""
+msgstr "Stilaj Informoj"
 
 #: creator/qml/BookStylesheet.qml:115
 #, kde-format
@@ -1622,19 +1622,19 @@ msgstr "%1"
 #, kde-format
 msgctxt "The title of a style entry which does not have type"
 msgid "%1 (sub type: %2)"
-msgstr ""
+msgstr "%1 (subtipo: %2)"
 
 #: creator/qml/CreateNewBook.qml:38
 #, kde-format
 msgctxt "title of the new book creation page"
 msgid "Create New Book"
-msgstr ""
+msgstr "Krei Novan Libron"
 
 #: creator/qml/CreateNewBook.qml:42
 #, kde-format
 msgctxt "Accept button which will create a new book"
 msgid "Create Book"
-msgstr ""
+msgstr "Krei Libron"
 
 #: creator/qml/CreateNewBook.qml:72
 #, kde-format
@@ -1653,7 +1653,7 @@ msgstr "Dosierujo"
 #, kde-format
 msgctxt "@title:window folder dialog used to select the location of a new book"
 msgid "Please Choose the Location for the Book"
-msgstr ""
+msgstr "Bonvolu Elekti la Lokon por la Libro"
 
 #: creator/qml/CreateNewBook.qml:104
 #, kde-format
@@ -1672,24 +1672,24 @@ msgstr ""
 #, kde-format
 msgctxt "File filter option for displaying only jpeg files"
 msgid "JPEG images %1"
-msgstr ""
+msgstr "JPEG-bildoj %1"
 
 #: creator/qml/CreateNewBook.qml:121
 #, kde-format
 msgctxt "File filter option for displaying all files"
 msgid "All files %1"
-msgstr ""
+msgstr "Ĉiuj dosieroj %1"
 
 #: creator/qml/EditPageArea.qml:115
 #, kde-format
 msgctxt "title text for the edit page area sheet"
 msgid "Edit Page Area"
-msgstr ""
+msgstr "Redakti Paĝan Areon"
 
 #: creator/qml/EditPageArea.qml:136
 #, kde-format
 msgid "Text Rotation Guide"
-msgstr ""
+msgstr "Gvidilo pri Teksta Rotacio"
 
 #: creator/qml/EditPageArea.qml:148
 #, kde-format
@@ -1701,7 +1701,7 @@ msgstr "ID:"
 #, kde-format
 msgctxt "Placeholder text for the page area ID text-field"
 msgid "Write to add an ID"
-msgstr ""
+msgstr "Skribi por aldoni ID"
 
 #: creator/qml/EditPageArea.qml:153 creator/qml/EditPageArea.qml:184
 #, kde-format
@@ -1713,7 +1713,7 @@ msgstr "Fona koloro:"
 #, kde-format
 msgctxt "@title color choosing dialog"
 msgid "Choose the background color for this frame"
-msgstr ""
+msgstr "Elekti la fonkoloron por ĉi tiu kadro"
 
 #: creator/qml/EditPageArea.qml:218
 #, kde-format
@@ -1733,7 +1733,7 @@ msgstr "Inversa"
 #, kde-format
 msgctxt "Label for text rotation slider"
 msgid "Text rotation:"
-msgstr ""
+msgstr "Rotacio de teksto:"
 
 #: creator/qml/EditPageArea.qml:235
 #, kde-format
@@ -1745,13 +1745,13 @@ msgstr "Tipo:"
 #, kde-format
 msgctxt "Label for the text area body field"
 msgid "Textarea Body:"
-msgstr ""
+msgstr "Teksta areo Korpo:"
 
 #: creator/qml/EditPageArea.qml:299
 #, kde-format
 msgctxt "Label for a text input box in which to input a hyperlink destination"
 msgid "Jump Destination:"
-msgstr ""
+msgstr "Salta Celo:"
 
 #: creator/qml/EditPageArea.qml:301
 #, kde-format
@@ -1767,7 +1767,7 @@ msgctxt ""
 "Label for the dropdown which will let you pick a page a jump will send the "
 "reader to when activated"
 msgid "Page Index:"
-msgstr ""
+msgstr "Paĝa Indekso:"
 
 #: creator/qml/EditPageArea.qml:315
 #, kde-format
@@ -1800,7 +1800,7 @@ msgstr "Teksto"
 #, kde-format
 msgctxt "Placeholder text for the link text input field"
 msgid "Enter the text of your link here"
-msgstr ""
+msgstr "Enigu la tekston de via ligilo ĉi tie"
 
 #: creator/qml/LinkEditorSheet.qml:97
 #, kde-format
@@ -1812,7 +1812,7 @@ msgstr "Celo"
 #, kde-format
 msgctxt "Placeholder text for the link destination input field"
 msgid "Enter the destination for your link here"
-msgstr ""
+msgstr "Enigu la celon por via ligilo ĉi tie"
 
 #: creator/qml/LinkEditorSheet.qml:128
 #, kde-format
@@ -1850,7 +1850,7 @@ msgstr ""
 #, kde-format
 msgctxt "Entry in a dropdown list which gives the title and ID of a page"
 msgid "Page \"%1\" (ID: %2)"
-msgstr ""
+msgstr "Paĝo \"%1\" (ID: %2)"
 
 #: creator/qml/LinkEditorSheet.qml:144
 #, kde-format
@@ -1864,7 +1864,7 @@ msgstr ""
 #, kde-format
 msgctxt "Label for the link demonstration display field"
 msgid "Demonstration"
-msgstr ""
+msgstr "Manifestacio"
 
 #: creator/qml/Main.qml:76
 #, kde-format
@@ -1880,19 +1880,19 @@ msgstr "Navigado"
 #: creator/qml/Main.qml:105
 #, kde-format
 msgid "Switch to the welcome page"
-msgstr ""
+msgstr "Ŝanĝu al la bonvena paĝo"
 
 #: creator/qml/Main.qml:112
 #, kde-format
 msgctxt "Create a book"
 msgid "Create a New Book..."
-msgstr ""
+msgstr "Krei Novan Libron..."
 
 #: creator/qml/Main.qml:130
 #, kde-format
 msgctxt "The book's title when there are unsaved changes"
 msgid "%1 (unsaved)"
-msgstr ""
+msgstr "%1 (nekonservite)"
 
 #: creator/qml/Main.qml:137
 #, kde-format
@@ -1928,7 +1928,7 @@ msgstr ""
 #, kde-format
 msgctxt "Switch to the page where the user can work with the book's stylesheet"
 msgid "Stylesheet"
-msgstr ""
+msgstr "Stilfolio"
 
 #: creator/qml/Main.qml:260
 #, kde-format
@@ -1942,25 +1942,25 @@ msgstr ""
 #, kde-format
 msgctxt "The file type filter for comic book archives"
 msgid "Comic Book Archive zip format %1"
-msgstr ""
+msgstr "Comic Book Archive zip-formato %1"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:73
 #, kde-format
 msgctxt "title text for the edit author sheet"
 msgid "Edit Author"
-msgstr ""
+msgstr "Redakti Aŭtoron"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:98
 #, kde-format
 msgctxt "help text for the edit author sheet"
 msgid "Please complete the information for this author."
-msgstr ""
+msgstr "Bonvolu kompletigi la informojn por ĉi tiu aŭtoro."
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:109
 #, kde-format
 msgctxt "label for the activity field"
 msgid "Activity:"
-msgstr ""
+msgstr "Aktiveco:"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:122
 #, kde-format
@@ -1978,7 +1978,7 @@ msgstr "Lingvo"
 #, kde-format
 msgctxt "label for the first name field"
 msgid "First name:"
-msgstr ""
+msgstr "Antaŭnomo:"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:141
 #, kde-format
@@ -1990,7 +1990,7 @@ msgstr "Antaŭnomo"
 #, kde-format
 msgctxt "label for the middle name field"
 msgid "Middle name:"
-msgstr ""
+msgstr "Meza nomo:"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:154
 #, kde-format
@@ -2002,7 +2002,7 @@ msgstr "Meza Nomo"
 #, kde-format
 msgctxt "label for the last name field"
 msgid "Last name:"
-msgstr ""
+msgstr "Familia nomo:"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:167
 #, kde-format
@@ -2026,13 +2026,13 @@ msgstr "Kromnomo"
 #, kde-format
 msgctxt "label for the homepage field"
 msgid "Homepage addresses:"
-msgstr ""
+msgstr "Hejmpaĝaj adresoj:"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:216
 #, kde-format
 msgctxt "placeholder text for the homepage field"
 msgid "Add Homepage"
-msgstr ""
+msgstr "Aldoni Hejmpaĝon"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:243
 #, kde-format
@@ -2044,13 +2044,13 @@ msgstr "Retpoŝtaj adresoj:"
 #, kde-format
 msgctxt "placeholder text for the email field"
 msgid "Add Email address"
-msgstr ""
+msgstr "Aldoni Retpoŝtadreson"
 
 #: creator/qml/PageMetaInfo.qml:35
 #, kde-format
 msgctxt "title text for the page meta information editor sheet"
 msgid "Edit Page Information"
-msgstr ""
+msgstr "Redakti Paĝajn Informojn"
 
 #: creator/qml/PageMetaInfo.qml:45
 #, kde-format
@@ -2069,7 +2069,7 @@ msgstr "Titolo"
 #, kde-format
 msgctxt "placeholder text for the page title text-input"
 msgid "Write to add default title"
-msgstr ""
+msgstr "Skribi por aldoni defaŭltan titolon"
 
 #: creator/qml/PageMetaInfo.qml:66
 #, kde-format
@@ -2081,7 +2081,7 @@ msgstr "ID"
 #, kde-format
 msgctxt "placeholder text for page ID text-input"
 msgid "Write to add an ID"
-msgstr ""
+msgstr "Skribi por aldoni ID"
 
 #: creator/qml/PageMetaInfo.qml:73
 #, kde-format
@@ -2099,7 +2099,7 @@ msgstr "Fona Koloro"
 #, kde-format
 msgctxt "@title color choosing dialog"
 msgid "Choose the background color for page"
-msgstr ""
+msgstr "Elekti la fonkoloron por paĝo"
 
 #: creator/qml/PageMetaInfo.qml:111
 #, kde-format
@@ -2111,7 +2111,7 @@ msgstr "Kadroj"
 #, kde-format
 msgctxt "Comic book panel frame name."
 msgid "Frame %1"
-msgstr ""
+msgstr "Kadro %1"
 
 #: creator/qml/PageMetaInfo.qml:122
 #, kde-format
@@ -2131,7 +2131,7 @@ msgstr "Fona Koloro:"
 #, kde-format
 msgctxt "@title color choosing dialog"
 msgid "Choose background color for this frame"
-msgstr ""
+msgstr "Elekti fonkoloron por ĉi tiu kadro"
 
 #: creator/qml/PageMetaInfo.qml:157
 #, kde-format
@@ -2149,13 +2149,13 @@ msgstr "Movi Malsupren"
 #, kde-format
 msgctxt "remove the frame from the page"
 msgid "Delete Frame"
-msgstr ""
+msgstr "Forigi Kadron"
 
 #: creator/qml/PageMetaInfo.qml:183
 #, kde-format
 msgctxt "label text for the edit field for the page textareas"
 msgid "Text Areas"
-msgstr ""
+msgstr "Tekstaj Areoj"
 
 #: creator/qml/PageMetaInfo.qml:188
 #, kde-format
@@ -2167,7 +2167,7 @@ msgstr "Fona Koloro:"
 #, kde-format
 msgctxt "@title color choosing dialog"
 msgid "Choose the background color for all text areas on this page"
-msgstr ""
+msgstr "Elekti la fonkoloron por ĉiuj tekstaj areoj sur ĉi tiu paĝo"
 
 #: creator/qml/PageMetaInfo.qml:223
 #, kde-format
@@ -2185,13 +2185,13 @@ msgstr "Movi Malsupren"
 #, kde-format
 msgctxt "remove the text area from the page"
 msgid "Delete Text Area"
-msgstr ""
+msgstr "Forigi Tekstan Areon"
 
 #: creator/qml/PageMetaInfo.qml:247
 #, kde-format
 msgctxt "Comic book panel textarea name."
 msgid "Text Area %1"
-msgstr ""
+msgstr "Teksta Areo %1"
 
 #: creator/qml/PageMetaInfo.qml:263
 #, kde-format
@@ -2215,19 +2215,19 @@ msgstr "Movi Malsupren"
 #, kde-format
 msgctxt "remove the jump from the page"
 msgid "Delete Jump"
-msgstr ""
+msgstr "Forigi Jump"
 
 #: creator/qml/PageMetaInfo.qml:299
 #, kde-format
 msgctxt "Comic book panel jump name."
 msgid "Jump %1"
-msgstr ""
+msgstr "Salti %1"
 
 #: creator/qml/PageMetaInfo.qml:308
 #, kde-format
 msgctxt "Label from jump page index."
 msgid "Page Index:"
-msgstr ""
+msgstr "Paĝa Indekso:"
 
 #: creator/qml/Settings.qml:31
 #, kde-format
@@ -2264,13 +2264,13 @@ msgstr ""
 #, kde-format
 msgctxt "@action:button open existing comic book archive"
 msgid "Open Existing..."
-msgstr ""
+msgstr "Malfermi Ekzistantan..."
 
 #: creator/qml/WelcomePage.qml:99
 #, kde-format
 msgctxt "@action:button create a new, empty comic book archive"
 msgid "Create Blank"
-msgstr ""
+msgstr "Krei Malplenan"
 
 #: creator/qml/WelcomePage.qml:105
 #, kde-format
