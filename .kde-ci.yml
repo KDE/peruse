@@ -22,3 +22,6 @@ Dependencies:
 - 'on': ['Linux', 'FreeBSD']
   'require':
     'frameworks/baloo': '@stable'
+
+Options:
+  require-passing-tests-on: ['Linux', 'FreeBSD', 'Windows']
