@@ -299,7 +299,7 @@
             "name": "okular",
             "buildsystem": "cmake-ninja",
             "builddir": true,
-            "sources": [ { "type": "git", "url": "https://invent.kde.org/graphics/okular.git", "branch": "master" } ]
+            "sources": [ { "type": "git", "url": "https://invent.kde.org/graphics/okular.git", "branch": "release/23.08" } ]
         },
         {
             "name": "peruse",
