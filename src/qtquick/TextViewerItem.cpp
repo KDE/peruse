@@ -25,7 +25,11 @@
 #include <QFontMetrics>
 #include <qmath.h>
 #include <QTimer>
+#if QT_VERSION >= QT_VERSION_CHECK(6, 7, 0)
+#include <QSGTextNode>
+#else
 #include <private/qquicktextnode_p.h>
+#endif
 
 class TextViewerItem::Private {
 public:
@@ -654,9 +658,15 @@ void TextViewerItem::updatePolish()
 QSGNode * TextViewerItem::updatePaintNode(QSGNode* node, QQuickItem::UpdatePaintNodeData* data)
 {
     Q_UNUSED(data)
-    QQuickTextNode *n = static_cast<QQuickTextNode *>(node);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 7, 0)
+    auto n = static_cast<QSGTextNode *>(node);
+    if (!n)
+        n = window()->createTextNode();
+#else
+    auto n = static_cast<QQuickTextNode *>(node);
     if (!n)
         n = new QQuickTextNode(this);
+#endif
     n->removeAllChildNodes();
     for (QTextLayout* layout : d->layouts) {
         n->addTextLayout(QPoint(0, 0), layout);
