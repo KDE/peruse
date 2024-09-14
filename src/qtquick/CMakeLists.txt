@@ -49,7 +49,6 @@ target_include_directories(peruseqmlplugin
     karchive-rar
     karchive-rar/unarr
     acbf
-    ${Qt5Quick_PRIVATE_INCLUDE_DIRS}
 )
 target_link_libraries (peruseqmlplugin
     PUBLIC
@@ -57,7 +56,6 @@ target_link_libraries (peruseqmlplugin
     Qt::Core
     Qt::Qml
     Qt::Quick
-    Qt::QuickPrivate
     Qt::Sql
     KF${QT_MAJOR_VERSION}::Archive
     KF${QT_MAJOR_VERSION}::IconThemes
@@ -69,6 +67,10 @@ target_link_libraries (peruseqmlplugin
     KF${QT_MAJOR_VERSION}::FileMetaData
     KF${QT_MAJOR_VERSION}::NewStuffCore
 )
+
+if (Qt_VERSION VERSION_GREATER_EQUAL 6.7.0)
+    target_link_libraries(peruseqmlplugin PUBLIC Qt::QuickPrivate)
+endif()
 
 if (ZLIB_FOUND)
     target_include_directories(peruseqmlplugin PRIVATE ${ZLIB_INCLUDE_DIRS})
