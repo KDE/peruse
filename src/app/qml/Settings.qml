@@ -27,6 +27,7 @@ import QtQuick.Layouts
 import QtQml.Models
 
 import org.kde.kirigami as Kirigami
+import org.kde.kirigamiaddons.delegates as Delegates
 import org.kde.kcmutils as KCM
 
 import org.kde.peruse 0.1 as Peruse
@@ -59,36 +60,32 @@ KCM.ScrollViewKCM {
     view: ListView {
         id:pathList
 
-        Layout.fillWidth: true
-        Layout.fillHeight: true
-        boundsBehavior: Flickable.StopAtBounds
-
         clip: true
 
         model: DelegateModel {
             model: peruseConfig.bookLocations
-            delegate: pathDelegate
-        }
+            delegate: Delegates.RoundedItemDelegate {
+                id: delegate
 
-        QQC2.ScrollBar.vertical: QQC2.ScrollBar {
-            id: scrollBar
-        }
+                background: null
+                text: modelData
 
-        Component {
-            id: pathDelegate
-            
-            Kirigami.SwipeListItem {
-                id: delegateItem
-                contentItem: QQC2.Label {
-                    text: modelData
-                }
-                actions: [
-                    Kirigami.Action {
-                        text: i18nc("remove the search folder from the list", "Delete");
-                        icon.name: "list-remove"
-                        onTriggered: peruseConfig.removeBookLocation(peruseConfig.bookLocations[index]);
+                contentItem: RowLayout {
+                    spacing: Kirigami.Units.smallSpacing
+
+                    QQC2.Label {
+                        text: delegate.text
+                        Accessible.ignored: true
+                        Layout.fillWidth: true
                     }
-                ]
+
+                    QQC2.ToolButton {
+                        text: i18nc("@action:button", "Delete");
+                        icon.name: "list-remove-symbolic"
+                        display: QQC2.ToolButton.IconOnly
+                        onClicked: peruseConfig.removeBookLocation(peruseConfig.bookLocations[index]);
+                    }
+                }
             }
         }
 
@@ -131,9 +128,9 @@ KCM.ScrollViewKCM {
         }
     }
 
-    function doSearch() {
+    function doSearch(): void {
         // Now search for new items in that locations...
-        var locations = peruseConfig.bookLocations;
+        const locations = peruseConfig.bookLocations;
         contentList.contentModel.startSearch();
     }
 }
