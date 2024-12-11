@@ -24,10 +24,8 @@ target_link_libraries(peruse
     KF${QT_MAJOR_VERSION}::I18n
     peruse_helpers
 )
-target_include_directories(peruse
-    PRIVATE
-    "${CMAKE_BINARY_DIR}"
-)
+
+target_include_directories(peruse PRIVATE "${CMAKE_BINARY_DIR}")
 
 install(TARGETS peruse ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 install(FILES org.kde.peruse.desktop DESTINATION ${KDE_INSTALL_APPDIR})

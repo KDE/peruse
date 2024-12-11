@@ -21,25 +21,12 @@
 
 #include "qmlplugin.h"
 
-#include "ArchiveBookModel.h"
-#include "BookListModel.h"
-#include "BookModel.h"
 #include "ComicCoverImageProvider.h"
-#include "FolderBookModel.h"
-#include "PeruseConfig.h"
 #include "PreviewImageProvider.h"
 #ifdef USE_PERUSE_PDFTHUMBNAILER
 #include "PDFCoverImageProvider.h"
 #endif
-#include "FilterProxy.h"
-#include "PropertyContainer.h"
-#include "TextDocumentEditor.h"
-#include "TextViewerItem.h"
 
-#include "AcbfBinary.h"
-#include "AcbfReference.h"
-#include "AcbfStyle.h"
-#include "AcbfIdentifiedObjectModel.h"
 
 #include <QQmlEngine>
 #include <QtQml/qqml.h>
@@ -55,20 +42,4 @@ void QmlPlugins::initializeEngine(QQmlEngine *engine, const char *)
 
 void QmlPlugins::registerTypes(const char *uri)
 {
-    qmlRegisterType<CategoryEntriesModel>(uri, 0, 1, "CategoryEntriesModel");
-    qmlRegisterType<BookListModel>(uri, 0, 1, "BookListModel");
-    qmlRegisterType<BookModel>(uri, 0, 1, "BookModel");
-    qmlRegisterType<ArchiveBookModel>(uri, 0, 1, "ArchiveBookModel");
-    qmlRegisterType<FolderBookModel>(uri, 0, 1, "FolderBookModel");
-    qmlRegisterType<PeruseConfig>(uri, 0, 1, "Config");
-    qmlRegisterType<PropertyContainer>(uri, 0, 1, "PropertyContainer");
-    qmlRegisterType<FilterProxy>(uri, 0, 1, "FilterProxy");
-
-    qmlRegisterType<TextDocumentEditor>(uri, 0, 1, "TextDocumentEditor");
-    qmlRegisterType<TextViewerItem>(uri, 0, 1, "TextViewerItem");
-
-    qmlRegisterUncreatableType<AdvancedComicBookFormat::Reference>(uri, 0, 1, "Reference", "Don't attempt to create ACBF types directly, use the convenience functions on their container types for creating them");
-    qmlRegisterUncreatableType<AdvancedComicBookFormat::Binary>(uri, 0, 1, "Binary", "Don't attempt to create ACBF types directly, use the convenience functions on their container types for creating them");
-    qmlRegisterUncreatableType<AdvancedComicBookFormat::Style>(uri, 0, 1, "Style", "Don't attempt to create ACBF types directly, use the convenience functions on their container types for creating them");
-    qmlRegisterType<AdvancedComicBookFormat::IdentifiedObjectModel>(uri, 0, 1, "IdentifiedObjectModel");
 }

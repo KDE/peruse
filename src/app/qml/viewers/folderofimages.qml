@@ -21,7 +21,7 @@
 
 import QtQuick 2.12
 
-import org.kde.peruse 0.1 as Peruse
+import org.kde.peruse as Peruse
 /**
  * @brief a ViewerBase for books that are folders with images.
  * 

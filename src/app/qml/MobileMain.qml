@@ -23,7 +23,7 @@ import QtQuick 2.12
 
 import org.kde.kirigami 2.7 as Kirigami
 
-import org.kde.peruse 0.1 as Peruse
+import org.kde.peruse as Peruse
 
 PeruseMain {
     id: root;

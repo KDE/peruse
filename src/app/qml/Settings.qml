@@ -30,7 +30,7 @@ import org.kde.kirigami as Kirigami
 import org.kde.kirigamiaddons.delegates as Delegates
 import org.kde.kcmutils as KCM
 
-import org.kde.peruse 0.1 as Peruse
+import org.kde.peruse as Peruse
 
 import "listcomponents" as ListComponents
 

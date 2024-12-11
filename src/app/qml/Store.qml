@@ -26,7 +26,7 @@ import QtQuick.Dialogs
 import org.kde.kirigami as Kirigami
 import org.kde.newstuff as NewStuff
 
-import org.kde.peruse 0.1 as Peruse
+import org.kde.peruse as Peruse
 
 /**
  * @brief This holds the NewStuff list, for getting new books from the KDE store.

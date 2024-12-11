@@ -22,6 +22,7 @@
 
 #include <QObject>
 #include <QPoint>
+#include <qqmlregistration.h>
 
 #include <memory>
 
@@ -30,6 +31,8 @@
  */
 class TextDocumentEditor : public QObject {
     Q_OBJECT
+    QML_ELEMENT
+
     Q_PROPERTY(QObject* textDocument READ textDocument WRITE setTextDocument NOTIFY textDocumentChanged)
 public:
     explicit TextDocumentEditor(QObject *parent = nullptr);

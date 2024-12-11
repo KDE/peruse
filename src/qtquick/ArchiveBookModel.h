@@ -24,6 +24,9 @@
 
 #include "BookModel.h"
 #include <QMutex>
+#include <QUrl>
+#include <qqmlregistration.h>
+
 /**
  * \brief Class to hold pages and metadata for archive based books.
  * 
@@ -37,6 +40,8 @@ class KArchiveFile;
 class ArchiveBookModel : public BookModel
 {
     Q_OBJECT
+    QML_ELEMENT
+
     Q_PROPERTY(QObject* qmlEngine READ qmlEngine WRITE setQmlEngine NOTIFY qmlEngineChanged)
     Q_PROPERTY(bool readWrite READ readWrite WRITE setReadWrite NOTIFY readWriteChanged)
     Q_PROPERTY(bool hasUnsavedChanges READ hasUnsavedChanges NOTIFY hasUnsavedChangesChanged)
