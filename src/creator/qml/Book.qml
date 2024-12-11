@@ -25,7 +25,7 @@ import QtQuick.Controls as QtControls
 
 import org.kde.kirigami as Kirigami
 
-import org.kde.peruse 0.1 as Peruse
+import org.kde.peruse as Peruse
 /**
  * @brief the page that deals with editing the book.
  * 

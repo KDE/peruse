@@ -26,7 +26,7 @@ import QtQuick.Dialogs 1.3
 
 import org.kde.kirigami 2.12 as Kirigami
 
-import org.kde.peruse 0.1 as Peruse
+import org.kde.peruse as Peruse
 
 /**
  * @brief a special overlay sheet for editing frames/textareas/jumps

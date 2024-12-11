@@ -25,7 +25,7 @@ import QtQuick.Controls 2.12 as QtControls
 
 import org.kde.kirigami 2.13 as Kirigami
 
-import org.kde.peruse 0.1 as Peruse
+import org.kde.peruse as Peruse
 /**
  * @brief the page shows basic information about the book
  */

@@ -26,7 +26,7 @@ import QtQuick.Dialogs
 
 import org.kde.kirigami as Kirigami
 
-import org.kde.peruse 0.1 as Peruse
+import org.kde.peruse as Peruse
 
 /**
  * @brief A sheet which lets you edit the details of a single embedded data binary
