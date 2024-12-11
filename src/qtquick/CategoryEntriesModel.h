@@ -24,6 +24,7 @@
 
 #include <QAbstractListModel>
 #include <QDateTime>
+#include <qqmlregistration.h>
 
 class CategoryEntriesModel;
 /**
@@ -74,6 +75,8 @@ struct BookEntry {
 class CategoryEntriesModel : public QAbstractListModel
 {
     Q_OBJECT
+    QML_ELEMENT
+
     /**
      * \brief count holds how many entries there are in the model - equivalent to rowCount, except as a property
      */
@@ -100,7 +103,8 @@ public:
         TotalPagesRole, /// For getting the total amount of pages in this book.
         CurrentPageRole, /// For getting the current page as an int.
         CategoryEntriesModelRole, /// For getting the model of this category.
-        CategoryEntryCountRole, /// For getting the an int with the number of books within this category.
+        CategoryEntriesCountRole, /// For getting the an int with the number of books within this category.
+        TypeRole,
         ThumbnailRole, /// For getting a thumbnail url for this book.
         DescriptionRole, /// For getting a stringlist with a book description.
         CommentRole, /// For getting a string with user assigned comment.

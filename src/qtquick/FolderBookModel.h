@@ -23,6 +23,7 @@
 #define FOLDERBOOKMODEL_H
 
 #include "BookModel.h"
+#include <qqmlintegration.h>
 /**
  * \brief Class to handle a folder of images as a book.
  * 
@@ -32,6 +33,7 @@
 class FolderBookModel : public BookModel
 {
     Q_OBJECT
+    QML_ELEMENT
 public:
     explicit FolderBookModel(QObject* parent = nullptr);
     ~FolderBookModel() override;

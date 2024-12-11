@@ -23,6 +23,7 @@
 #define FILTERPROXY_H
 
 #include <QSortFilterProxyModel>
+#include <qqmlregistration.h>
 
 #include <memory>
 /**
@@ -33,6 +34,8 @@
 class FilterProxy : public QSortFilterProxyModel
 {
     Q_OBJECT
+    QML_ELEMENT
+
     Q_PROPERTY(QString filterString READ filterString WRITE setFilterString NOTIFY filterStringChanged)
     Q_PROPERTY(bool filterBoolean READ filterBoolean WRITE setFilterBoolean NOTIFY filterBooleanChanged)
     Q_PROPERTY(int filterInt READ filterInt WRITE setFilterInt NOTIFY filterIntChanged)

@@ -11,7 +11,7 @@ import QtQuick.Layouts
 
 import org.kde.kirigami as Kirigami
 
-import org.kde.peruse 0.1 as Peruse
+import org.kde.peruse as Peruse
 import "listcomponents" as ListComponents
 
 /**

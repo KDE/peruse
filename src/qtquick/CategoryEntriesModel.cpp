@@ -121,119 +121,92 @@ QHash<int, QByteArray> CategoryEntriesModel::roleNames() const
     roles[TotalPagesRole] = "totalPages";
     roles[CurrentPageRole] = "currentPage";
     roles[CategoryEntriesModelRole] = "categoryEntriesModel";
-    roles[CategoryEntryCountRole] = "categoryEntriesCount";
+    roles[CategoryEntriesCountRole] = "categoryEntriesCount";
     roles[ThumbnailRole] = "thumbnail";
     roles[DescriptionRole] = "description";
     roles[CommentRole] = "comment";
     roles[TagsRole] = "tags";
     roles[RatingRole] = "rating";
+    roles[TypeRole] = "type";
     return roles;
 }
 
 QVariant CategoryEntriesModel::data(const QModelIndex& index, int role) const
 {
-    QVariant result;
-    if(index.isValid() && index.row() > -1)
-    {
-        if(index.row() < d->categoryModels.count())
-        {
-            CategoryEntriesModel* model = d->categoryModels[index.row()];
-            switch(role)
-            {
-                case Qt::DisplayRole:
-                case TitleRole:
-                    result.setValue(model->name());
-                    break;
-                case CategoryEntryCountRole:
-                    result.setValue(model->bookCount());
-                    break;
-                case CategoryEntriesModelRole:
-                    result.setValue(model);
-                    break;
-                default:
-                    result.setValue(QString("Unknown role"));
-                    break;
-            }
-        }
-        else
-        {
-            const BookEntry* entry = d->entries[index.row() - d->categoryModels.count()];
-            switch(role)
-            {
-                case Qt::DisplayRole:
-                case FilenameRole:
-                    result.setValue(entry->filename);
-                    break;
-                case FiletitleRole:
-                    result.setValue(entry->filetitle);
-                    break;
-                case TitleRole:
-                    result.setValue(entry->title);
-                    break;
-                case GenreRole:
-                    result.setValue(entry->genres);
-                    break;
-                case KeywordRole:
-                    result.setValue(entry->keywords);
-                    break;
-                case CharacterRole:
-                    result.setValue(entry->characters);
-                    break;
-                case SeriesRole:
-                    result.setValue(entry->series);
-                    break;
-                case SeriesNumbersRole:
-                    result.setValue(entry->seriesNumbers);
-                    break;
-                case SeriesVolumesRole:
-                    result.setValue(entry->seriesVolumes);
-                    break;
-                case AuthorRole:
-                    result.setValue(entry->author);
-                    break;
-                case PublisherRole:
-                    result.setValue(entry->publisher);
-                    break;
-                case CreatedRole:
-                    result.setValue(entry->created);
-                    break;
-                case LastOpenedTimeRole:
-                    result.setValue(entry->lastOpenedTime);
-                    break;
-                case TotalPagesRole:
-                    result.setValue(entry->totalPages);
-                    break;
-                case CurrentPageRole:
-                    result.setValue(entry->currentPage);
-                    break;
-                case CategoryEntriesModelRole:
-                    // Nothing, if we're not equipped with one such...
-                    break;
-                case CategoryEntryCountRole:
-                    result.setValue<int>(0);
-                    break;
-                case ThumbnailRole:
-                    result.setValue(entry->thumbnail);
-                    break;
-                case DescriptionRole:
-                    result.setValue(entry->description);
-                    break;
-                case CommentRole:
-                    result.setValue(entry->comment);
-                    break;
-                case TagsRole:
-                    result.setValue(entry->tags);
-                    break;
-                case RatingRole:
-                    result.setValue(entry->rating);
-                    break;
-                default:
-                    result.setValue(QString("Unknown role"));
-                    break;
-            }
+    if (!index.isValid() || index.row() <= -1) {
+        return {};
+    }
+
+    if (index.row() < d->categoryModels.count()) {
+        CategoryEntriesModel* model = d->categoryModels[index.row()];
+        switch(role) {
+        case Qt::DisplayRole:
+        case TitleRole:
+            return model->name();
+        case TypeRole:
+            return "category";
+        case CategoryEntriesCountRole:
+            return model->bookCount();
+        case CategoryEntriesModelRole:
+            return QVariant::fromValue(model);
+        default:
+            return "Unknown role category";
         }
     }
-    return result;
+
+    const BookEntry* entry = d->entries[index.row() - d->categoryModels.count()];
+    switch(role) {
+    case Qt::DisplayRole:
+    case TypeRole:
+        return "book";
+    case FilenameRole:
+        return entry->filename;
+    case FiletitleRole:
+        return entry->filetitle;
+    case TitleRole:
+        return entry->title;
+    case GenreRole:
+        return entry->genres;
+    case KeywordRole:
+        return entry->keywords;
+    case CharacterRole:
+        return entry->characters;
+    case SeriesRole:
+        return entry->series;
+    case SeriesNumbersRole:
+        return entry->seriesNumbers;
+    case SeriesVolumesRole:
+        return entry->seriesVolumes;
+    case AuthorRole:
+        return entry->author;
+    case PublisherRole:
+        return entry->publisher;
+    case CreatedRole:
+        return entry->created;
+    case LastOpenedTimeRole:
+        return entry->lastOpenedTime;
+    case TotalPagesRole:
+        return entry->totalPages;
+    case CurrentPageRole:
+        return entry->currentPage;
+    case CategoryEntriesModelRole:
+        // Nothing, if we're not equipped with one such...
+        return {};
+    case CategoryEntriesCountRole:
+        return 0;
+    case ThumbnailRole:
+        return entry->thumbnail;
+    case DescriptionRole:
+        return entry->description;
+    case CommentRole:
+        return entry->comment;
+    case TagsRole:
+        return entry->tags;
+    case RatingRole:
+        return entry->rating;
+    default:
+        return QString("Unknown role");
+    }
 }
 
 int CategoryEntriesModel::rowCount(const QModelIndex& parent) const

@@ -19,13 +19,14 @@
  *
  */
 
-import QtQuick 2.12
-import QtQuick.Controls 2.15 as QtControls
-import QtQuick.Layouts 1.2
+import QtQuick
+import QtQuick.Controls as QtControls
+import QtQuick.Layouts
+import Qt.labs.qmlmodels
 
-import org.kde.kirigami 2.14 as Kirigami
+import org.kde.kirigami as Kirigami
 
-import org.kde.peruse 0.1 as Peruse
+import org.kde.peruse as Peruse
 import "listcomponents" as ListComponents
 
 /**
@@ -42,10 +43,12 @@ import "listcomponents" as ListComponents
  */
 Kirigami.ScrollablePage {
     id: root;
+
+    signal bookSelected(string filename, int currentPage);
+
+    property bool isCurrentContext: isCurrentPage && !applicationWindow().bookOpen
     property alias pageHeader: shelfList.header;
-    title: headerText;
     property string categoryName: "bookshelf";
-    objectName: "bookshelf";
     property QtObject model;
     /**
      * Allows you to override the default behaviour of searching inside the shelf (such as
@@ -54,43 +57,45 @@ Kirigami.ScrollablePage {
     property alias searchModel: searchFilterProxy.sourceModel;
     property string sectionRole: "title";
     property int sectionCriteria: ViewSection.FirstCharacter;
-    signal bookSelected(string filename, int currentPage);
     property string headerText;
     property string searchText: ""
     property bool searching: searchText.length > 0
     property bool isSearching: searchFilterProxy.filterString.length > 0;
 
-    function openBook(index) {
+    function openBook(index: int): void {
         applicationWindow().contextDrawer.close();
-        var whatModel = isSearching ? searchFilterProxy.sourceModel : shelfList.model;
-        var whatIndex = isSearching ? searchFilterProxy.sourceIndex(index) : index;
-        if (whatModel) {
-            if(whatModel.indexIsBook(whatIndex)) {
-                var book = whatModel.get(whatIndex);
-                root.bookSelected(book.readProperty("filename"), book.readProperty("currentPage"));
-            }
-            else {
-                var catEntry = whatModel.getEntry(whatIndex);
-                applicationWindow().pageStack.push(bookshelf, { focus: true, headerText: catEntry.readProperty("title"), model: catEntry.readProperty("entriesModel") });
-            }
+        const whatModel = isSearching ? searchFilterProxy.sourceModel : shelfList.model;
+        const whatIndex = isSearching ? searchFilterProxy.sourceIndex(index) : index;
+        if (!whatModel) {
+            return;
+        }
+        if (whatModel.indexIsBook(whatIndex)) {
+            const book = whatModel.get(whatIndex);
+            root.bookSelected(book.readProperty("filename"), book.readProperty("currentPage"));
+        } else {
+            const catEntry = whatModel.getEntry(whatIndex);
+            applicationWindow().pageStack.push(bookshelf, { focus: true, headerText: catEntry.readProperty("title"), model: catEntry.readProperty("entriesModel") });
         }
     }
 
-    function closeShelf() {
+    function closeShelf(): void {
         applicationWindow().contextDrawer.close();
         applicationWindow().pageStack.pop();
     }
-    property bool isCurrentContext: isCurrentPage && !applicationWindow().bookOpen
+
+    title: headerText;
+    objectName: "bookshelf";
 
     actions: {
         var ret = [];
         if (bookDetails.visible) {
-            ret.append(bookDetailsAction);
+            ret.push(bookDetailsAction);
         } else {
-            ret.append(mainShelfAction);
+            ret.push(mainShelfAction);
         }
         if (!Kirigami.Settings.isMobile) {
-            ret.append(backAction, openAction);
+            ret.push(backAction);
+            ret.push(openAction);
         }
 
         return ret;
@@ -176,35 +181,28 @@ Kirigami.ScrollablePage {
 
         currentIndex: -1;
 
-        delegate: Item {
-            height: shelfList.cellHeight;
-            width: shelfList.cellWidth;
-            ListComponents.CategoryTileTall {
-                id: categoryTile;
-                visible: height > 0;
-                height: model.categoryEntriesCount > 0 ? shelfList.cellHeight : 0;
-                width: parent.width;
-                count: model.categoryEntriesCount;
-                title: model.title;
-                entriesModel: model.categoryEntriesModel ? model.categoryEntriesModel : null;
-                selected: shelfList.currentIndex === index;
+        delegate: DelegateChooser {
+            role: "type"
+            DelegateChoice {
+                roleValue: "category"
+                ListComponents.CategoryTileTall {
+                    height: shelfList.cellHeight
+                    width: shelfList.cellWidth
+
+                    selected: shelfList.currentIndex === index
+                }
             }
-            ListComponents.BookTileTall {
-                id: bookTile;
-                visible: height > 0;
-                height: model.categoryEntriesCount < 1 ? shelfList.cellHeight : 0;
-                width: parent.width;
-                author: model.author ? model.author : i18nc("used for the author data in book lists if author is empty", "(unknown)");
-                title: model.title;
-                filename: model.filename;
-                thumbnail: model.categoryEntriesCount < 1 ? model.thumbnail : "";
-                categoryEntriesCount: model.categoryEntriesCount;
-                currentPage: model.currentPage;
-                totalPages: model.totalPages;
-                onBookSelected: root.bookSelected(filename, currentPage);
-                selected: shelfList.currentIndex === index;
-                onPressAndHold: bookDetails.showBookInfo(model.index);
-                pressIndicator: true;
+
+            DelegateChoice {
+                roleValue: "book"
+                ListComponents.BookTileTall {
+                    height: shelfList.cellHeight
+                    width: shelfList.cellWidth
+                    //author: model.author ? model.author : i18nc("used for the author data in book lists if author is empty", "(unknown)");
+                    selected: shelfList.currentIndex === index
+                    onBookSelected: root.bookSelected(filename, currentPage);
+                    onPressAndHold: bookDetails.showBookInfo(model.index);
+                }
             }
         }
 

@@ -23,6 +23,8 @@
 #define BOOKMODEL_H
 
 #include <QAbstractListModel>
+#include <qqmlregistration.h>
+
 /**
  * \brief Base Class to handle books, their pages and their metadata
  * 
@@ -46,6 +48,7 @@
 class BookModel : public QAbstractListModel
 {
     Q_OBJECT
+    QML_ELEMENT
     /**
      * \brief The filename of the archive that describes this book.
      */

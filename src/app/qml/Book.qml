@@ -25,7 +25,7 @@ import QtQuick.Window 2.12
 
 import org.kde.kirigami 2.16 as Kirigami
 
-import org.kde.peruse 0.1 as Peruse
+import org.kde.peruse as Peruse
 import "listcomponents" as ListComponents
 /**
  * @brief Page that handles reading the book.

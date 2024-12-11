@@ -21,6 +21,7 @@
 #define TEXTVIEWERITEM_H
 
 #include <QQuickItem>
+#include <qqmlregistration.h>
 
 /**
  * A QQuickItem which fits a set of paragraphs of text with a given style into an arbitrary polygon
@@ -29,6 +30,8 @@
 class TextViewerItem : public QQuickItem
 {
     Q_OBJECT
+    QML_ELEMENT
+
     /**
      * A list of paragraphs which should be displayed inside the polygon
      * These are expected to be in the format returned by AdvancedComicBookFormat::Textarea::paragraphs()

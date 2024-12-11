@@ -24,6 +24,7 @@
 
 #include <QObject>
 #include <QVariant>
+#include <qqmlregistration.h>
 
 /**
  * The only purpose of this class is to expose the dynamic property
@@ -34,6 +35,8 @@
 class PropertyContainer : public QObject
 {
     Q_OBJECT
+    QML_ELEMENT
+
 public:
     explicit PropertyContainer(QObject* parent = nullptr);
     explicit PropertyContainer(QString name, QObject* parent = nullptr);

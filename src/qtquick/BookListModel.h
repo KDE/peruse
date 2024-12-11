@@ -24,6 +24,8 @@
 
 #include "CategoryEntriesModel.h"
 #include <QQmlParserStatus>
+#include <qqmlregistration.h>
+
 /**
  * \brief Main catalogue model class.
  * 
@@ -44,6 +46,8 @@
 class BookListModel : public CategoryEntriesModel, public QQmlParserStatus
 {
     Q_OBJECT
+    QML_ELEMENT
+
     /**
      * \brief count holds how many entries there are in the catalogue.
      */

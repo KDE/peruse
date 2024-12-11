@@ -23,6 +23,7 @@
 #define PERUSECONFIG_H
 
 #include <QObject>
+#include <qqmlintegration.h>
 /**
  * \brief Class to handle reading and writing the configuration.
  * 
@@ -32,6 +33,7 @@
 class PeruseConfig : public QObject
 {
     Q_OBJECT
+    QML_NAMED_ELEMENT(Config)
     Q_ENUMS(ZoomMode)
     /**
      * \brief recently opened represents the recently opened books.
