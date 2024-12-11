@@ -28,7 +28,7 @@ import QtQuick.Dialogs
 import org.kde.kirigami as Kirigami
 import org.kde.kirigamiaddons.formcard as FormCard
 
-import org.kde.peruse 0.1 as Peruse
+import org.kde.peruse as Peruse
 
 /**
  * @brief page with a form for creating a new comic.
