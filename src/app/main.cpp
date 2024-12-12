@@ -17,18 +17,19 @@
  *
  */
 
-#include <QStandardPaths>
-#include <QDir>
 
 #include <KAboutData>
 #include <KLocalizedString>
+#include <KQuickIconProvider>
 
+#include <QStandardPaths>
+#include <QDir>
+#include <QQmlContext>
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QCommandLineOption>
 #include <QIcon>
-
-#include <iostream>
+#include <QQmlApplicationEngine>
 
 #include "peruse_helpers.h"
 #include "config-peruse.h"
@@ -38,8 +39,6 @@
 Q_DECL_EXPORT
 int main(int argc, char** argv)
 {
-    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
     QApplication app(argc, argv);
     app.setWindowIcon(QIcon::fromTheme(QStringLiteral("peruse")));
     app.setApplicationDisplayName("Peruse");
@@ -78,8 +77,17 @@ int main(int argc, char** argv)
     }
     QString platformEnv(qgetenv("PLASMA_PLATFORM"));
     QString path = platformEnv.startsWith("phone")
-        ? QStringLiteral("qrc:///qml/MobileMain.qml")
-        : QStringLiteral("qrc:///qml/Main.qml");
+        ? QStringLiteral("MobileMain")
+        : QStringLiteral("Main");
 
-    return PeruseHelpers::init(path, app, filename);
+    QQmlApplicationEngine engine;
+    engine.addImageProvider(QStringLiteral("icon"), new KQuickIconProvider);
+    engine.rootContext()->setContextObject(new KLocalizedContext(&app));
+    engine.rootContext()->setContextProperty("fileToOpen", filename);
+    engine.rootContext()->setContextProperty("globalQmlEngine", &engine);
+    engine.rootContext()->setContextProperty("maxTextureSize", PeruseHelpers::getMaxTextureSize());
+
+    engine.loadFromModule("org.kde.peruse.app", path);
+
+    return app.exec();
 }

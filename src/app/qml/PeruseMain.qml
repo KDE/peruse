@@ -292,7 +292,7 @@ Kirigami.ApplicationWindow {
             PlaceItem {
                 text: i18nc("Open the about page", "About");
                 icon.name: "help-about"
-                onTriggered: changeCategory(aboutPage);
+                onTriggered: root.pageStack.pushDialogLayer(Qt.createComponent('org.kde.kirigamiaddons.formcard', "AboutPage"))
                 QQC2.ButtonGroup.group: placeGroup
             }
         }
@@ -403,12 +403,6 @@ Kirigami.ApplicationWindow {
         }
     }
 
-    Component {
-        id: aboutPage
-        About {
-        }
-    }
-
     property string currentCategory: "welcomePage";
     property Component currentCategoryItem: welcomePage;
     function changeCategory(categoryItem) {
@@ -420,7 +414,7 @@ Kirigami.ApplicationWindow {
         mainWindow.pageStack.push(categoryItem);
         currentCategory = mainWindow.pageStack.currentItem.categoryName;
         currentCategoryItem = categoryItem;
-        if (PLASMA_PLATFORM.substring(0, 5) === "phone") {
+        if (Kirigami.Settings.isMobile) {
             globalDrawer.close();
         }
         return true;
