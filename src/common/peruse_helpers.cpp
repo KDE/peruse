@@ -76,6 +76,7 @@ int init(QString &path, QApplication& app, const QString &filename) {
     // things like the archive book model to create imageproviders for the archives
     engine.rootContext()->setContextProperty("globalQmlEngine", &engine);
     engine.rootContext()->setContextProperty("maxTextureSize", getMaxTextureSize());
+    engine.rootContext()->setContextProperty(QStringLiteral("peruseAboutData"), QVariant::fromValue(KAboutData::applicationData()));
 
     QQmlComponent component(&engine, path);
     if (component.isError()) {

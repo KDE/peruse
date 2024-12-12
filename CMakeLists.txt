@@ -35,6 +35,8 @@ endif()
 
 find_package(Qt6 ${QT_DEP_VERSION} REQUIRED NO_MODULE COMPONENTS Qml Quick Gui Widgets OpenGL Sql)
 
+qt_policy(SET QTP0001 NEW)
+
 find_package(KF6 ${KF_DEP_VERSION} REQUIRED
     COMPONENTS
     Archive
@@ -102,6 +104,7 @@ include(ECMAddQch)
 include(ECMInstallIcons)
 include(ECMSetupVersion)
 include(ECMQtDeclareLoggingCategory)
+include(ECMQmlModule)
 
 set(CMAKE_AUTORCC ON)
 
