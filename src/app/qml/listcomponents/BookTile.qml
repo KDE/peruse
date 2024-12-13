@@ -217,7 +217,7 @@ Item {
             }
             property int potentialRating: root.rating;
             Repeater{
-                model: 5;
+                model: [ 1, 3, 5, 7, 9 ]
                 Item {
 
                     height: Kirigami.Units.iconSizes.medium;
