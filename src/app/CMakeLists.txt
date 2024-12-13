@@ -14,6 +14,7 @@ ecm_add_qml_module(peruse
     QML_FILES
         qml/Book.qml
         qml/BookDetails.qml
+        qml/BookInfoPage.qml
         qml/Bookshelf.qml
         qml/FileFinder.qml
         qml/Main.qml

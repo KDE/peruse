@@ -88,11 +88,7 @@ Kirigami.ScrollablePage {
 
     actions: {
         var ret = [];
-        if (bookDetails.visible) {
-            ret.push(bookDetailsAction);
-        } else {
-            ret.push(mainShelfAction);
-        }
+        ret.push(mainShelfAction);
         if (!Kirigami.Settings.isMobile) {
             ret.push(backAction);
             ret.push(openAction);
@@ -103,7 +99,7 @@ Kirigami.ScrollablePage {
     Kirigami.Action {
         id: backAction
         text: i18nc("Navigate one page back", "Back");
-        shortcut: bookDetails.visible ? "" : "Esc";
+        shortcut: "Esc";
         icon.name: "dialog-close";
         onTriggered: closeShelf();
         enabled: root.isCurrentContext && !Kirigami.Settings.isMobile && applicationWindow().pageStack.currentIndex > 0;
@@ -112,7 +108,7 @@ Kirigami.ScrollablePage {
     Kirigami.Action {
         id: openAction
         text: i18nc("Open the book which is currently selected in the list", "Open Selected Book");
-        shortcut: bookDetails.visible? "" : "Return";
+        shortcut: "Return";
         icon.name: "document-open";
         onTriggered: openBook(shelfList.currentIndex);
         enabled: root.isCurrentContext && !Kirigami.Settings.isMobile;
@@ -146,14 +142,6 @@ Kirigami.ScrollablePage {
             }
         }
     }
-    Kirigami.Action {
-        id: bookDetailsAction;
-        text: i18nc("Closes the book details drawer", "Close");
-        shortcut: bookDetails.visible ? "Esc" : "";
-        icon.name: "dialog-cancel";
-        onTriggered: bookDetails.close();
-        enabled: root.isCurrentContext;
-    }
 
     GridView {
         id: shelfList;
@@ -179,7 +167,37 @@ Kirigami.ScrollablePage {
         cellWidth: Math.floor(availableWidth / Math.max(Math.floor(availableWidth / (implicitCellWidth + Kirigami.Units.gridUnit)), 2))
         cellHeight: Kirigami.Units.gridUnit * 13;
 
-        currentIndex: -1;
+        currentIndex: -1
+
+        QtControls.Menu {
+            id: contextMenu
+
+            property var currentBook
+
+            QtControls.MenuItem {
+                text: i18nc("@action:inmenu", "Open")
+                onTriggered: root.bookSelected(
+                    contextMenu.currentBook.readProperty("filename"),
+                    contextMenu.bookDetails.currentBook.readProperty("currentPage")
+                );
+            }
+
+            QtControls.MenuItem {
+                text: i18nc("@action:inmenu", "Details")
+                onTriggered: {
+                    const page = applicationWindow().pageStack.pushDialogLayer(Qt.createComponent("org.kde.peruse.app", "BookInfoPage"), {
+                        title: contextMenu.currentBook.readProperty("title"),
+                        author: contextMenu.currentBook.readProperty("author"),
+                        filename: contextMenu.currentBook.readProperty("filename"),
+                        publisher: contextMenu.currentBook.readProperty("publisher"),
+                        thumbnail: contextMenu.currentBook.readProperty("thumbnail"),
+                        currentPage: contextMenu.currentBook.readProperty("currentPage"),
+                        totalPages: contextMenu.currentBook.readProperty("totalPages"),
+                        description: contextMenu.currentBook.readProperty("description"),
+                    });
+                }
+            }
+        }
 
         delegate: DelegateChooser {
             role: "type"
@@ -201,50 +219,18 @@ Kirigami.ScrollablePage {
                     //author: model.author ? model.author : i18nc("used for the author data in book lists if author is empty", "(unknown)");
                     selected: shelfList.currentIndex === index
                     onBookSelected: root.bookSelected(filename, currentPage);
-                    onPressAndHold: bookDetails.showBookInfo(model.index);
-                }
-            }
-        }
+                    onPressAndHold: {
+                        const whatModel = isSearching ? searchFilterProxy.sourceModel : shelfList.model;
+                        const whatIndex = isSearching ? searchFilterProxy.sourceIndex(index) : index;
+                        contextMenu.currentBook = whatModel.getEntry(whatIndex);
+                        contextMenu.popup();
 
-        Kirigami.OverlaySheet {
-            id: bookDetails;
-            function showBookInfo(index) {
-                var whatModel = isSearching ? searchFilterProxy.sourceModel : shelfList.model;
-                var whatIndex = isSearching ? searchFilterProxy.sourceIndex(index) : index;
-                currentBook = whatModel.getEntry(whatIndex);
-                open();
-            }
-            property QtObject currentBook: fakeBook;
-            property QtObject fakeBook: Peruse.PropertyContainer {
-                property string author: "";
-                property string title: "";
-                property string filename: "";
-                property string publisher: "";
-                property string thumbnail: "";
-                property string currentPage: "0";
-                property string totalPages: "0";
-                property string comment: "";
-            }
-            ListComponents.BookTile {
-                id: detailsTile;
-                height: neededHeight;
-                width: shelfList.width - Kirigami.Units.largeSpacing * 2;
-                author: bookDetails.currentBook.readProperty("author");
-                publisher: bookDetails.currentBook.readProperty("publisher");
-                title: bookDetails.currentBook.readProperty("title");
-                filename: bookDetails.currentBook.readProperty("filename");
-                thumbnail: bookDetails.currentBook.readProperty("thumbnail");
-                categoryEntriesCount: 0;
-                currentPage: bookDetails.currentBook.readProperty("currentPage");
-                totalPages: bookDetails.currentBook.readProperty("totalPages");
-                description: bookDetails.currentBook.readProperty("description");
-                onBookSelected: {
-                    bookDetails.close();
-                    applicationWindow().showBook(fileSelected, currentPage);
-                }
-                onBookDeleteRequested: {
-                    contentList.removeBook(fileSelected, true);
-                    close();
+                        // todo
+                        //page.connect.onBookDeleteRequested: {
+                        //    contentList.removeBook(fileSelected, true);
+                        //    close();
+                        //}
+                    }
                 }
             }
         }

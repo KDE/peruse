@@ -29,12 +29,14 @@ Delegates.RoundedItemDelegate {
     property bool selected: false;
     signal bookSelected(string filename, int currentPage);
 
-    /// FIXME This signal will also forward the MouseEvent, but the type is not recognised, so we can't
-    /// add it to the signature. Certainly would be nice if that were possible, though, right?
-    /// @see https://bugreports.qt.io/browse/QTBUG-41441
-    //signal pressAndHold();
+    TapHandler {
+        acceptedButtons: Qt.RightButton
+        onTapped: root.pressAndHold();
+    }
 
-    onClicked: root.bookSelected(root.filename, root.currentPage);
+    TapHandler {
+        onTapped: root.bookSelected(root.filename, root.currentPage);
+    }
 
     TextMetrics {
         id: bookTitleSize
