@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: peruse\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-29 00:40+0000\n"
-"PO-Revision-Date: 2024-12-14 11:19+0100\n"
+"PO-Revision-Date: 2024-12-17 22:52+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.08.3\n"
+"X-Generator: Lokalize 24.12.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -165,6 +165,7 @@ msgctxt ""
 msgid "Failed to load the reader component"
 msgstr "Non foi posíbel cargar o compoñente do lector"
 
+# skip-rule: trasno-provide_reverse
 #: app/qml/Book.qml:419
 #, kde-format
 msgctxt ""
