@@ -1,13 +1,13 @@
 # Copyright (C) 2023 This file is copyright:
 # This file is distributed under the same license as the peruse package.
-# SPDX-FileCopyrightText: 2023, 2024 Adrián Chaves (Gallaecio)
+# SPDX-FileCopyrightText: 2023, 2024, 2025 Adrián Chaves (Gallaecio)
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: peruse\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-29 00:40+0000\n"
-"PO-Revision-Date: 2024-12-17 22:52+0100\n"
+"PO-Revision-Date: 2025-01-12 16:38+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -2144,7 +2144,7 @@ msgstr "Identificador"
 #, kde-format
 msgctxt "placeholder text for page ID text-input"
 msgid "Write to add an ID"
-msgstr "Escriba para engadir unha identificación"
+msgstr "Escriba para engadir un identificador"
 
 #: creator/qml/PageMetaInfo.qml:73
 #, kde-format
