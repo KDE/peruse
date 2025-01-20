@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: peruse\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-29 00:40+0000\n"
-"PO-Revision-Date: 2025-01-12 16:38+0100\n"
+"PO-Revision-Date: 2025-01-19 13:55+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -623,7 +623,7 @@ msgid ""
 msgstr ""
 "A ligazón que activou non parece apuntar a ningures. Intentouse atopar algo "
 "co identificador %1 pero non se atopou nada. O máis probábel é que se trate "
-"dun erro no libro, e quen fixo o libro probablemente teña interese en sabelo."
+"dun erro no libro, e quen fixo o libro probabelmente teña interese en sabelo."
 
 #: app/qml/viewers/ImageBrowser.qml:501
 #, kde-format
@@ -647,7 +647,7 @@ msgstr ""
 "Non foi posíbel cargar a imaxe desta páxina.\n"
 "Isto adoita deberse a que falta un descodificador de imaxes (concretamente, "
 "o paquete de formatos de imaxe de Qt, que Peruse usa para cargar imaxes), "
-"probablemente por un erro de empaquetado. Contacte con quen lle forneceu o "
+"probabelmente por un erro de empaquetado. Contacte con quen lle forneceu o "
 "paquete e infórmelle do erro.\n"
 "\n"
 "Concretamente, a imaxe que se intentou cargar chámase %1, e os formatos de "
@@ -1466,7 +1466,7 @@ msgstr "Gardar"
 #, kde-format
 msgctxt "Abort the changes made in the editor, and close the editor"
 msgid "Abort Changes"
-msgstr "Cancelar os cambios"
+msgstr "Interromper os cambios"
 
 #: creator/qml/BookReferenceEditor.qml:121
 #, kde-format
