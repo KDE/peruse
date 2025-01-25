@@ -329,6 +329,9 @@
     <release version="1.1" date="2016-07-04" type="stable"/>
     <release version="1.0" date="2016-06-21" type="stable"/>
   </releases>
+  <requires>
+    <display_length compare="ge">360</display_length>
+  </requires>
   <url type="homepage">https://peruse.kde.org/</url>
   <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=peruse</url>
   <project_group>KDE</project_group>
