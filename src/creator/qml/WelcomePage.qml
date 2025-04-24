@@ -98,6 +98,8 @@ FormCard.FormCardPage {
 
     FormCard.FormCard {
         Repeater {
+            id: recentRepeater
+
             model: peruseConfig.recentlyOpened.filter((book) => book.slice(-4) === ".cbz")
 
             ColumnLayout {
@@ -121,6 +123,11 @@ FormCard.FormCardPage {
                     onClicked: mainWindow.openBook(recentBookDelegate.modelData)
                 }
             }
+        }
+
+        FormCard.FormPlaceholderMessageDelegate {
+            text: i18nc("@info:placeholder", "There are no recent books")
+            visible: recentRepeater.count === 0
         }
     }
 }
