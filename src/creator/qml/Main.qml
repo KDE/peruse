@@ -63,7 +63,6 @@ Kirigami.ApplicationWindow {
 
     Peruse.ArchiveBookModel {
         id: bookModel;
-        qmlEngine: globalQmlEngine;
         readWrite: true;
     }
 

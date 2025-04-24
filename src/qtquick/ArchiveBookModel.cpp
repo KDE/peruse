@@ -34,10 +34,10 @@
 
 #include <QCoreApplication>
 #include <QDir>
+#include <QQmlEngine>
 #include <QFontDatabase>
 #include <QImageReader>
 #include <QMimeDatabase>
-#include <QQmlEngine>
 #include <QTemporaryFile>
 #include <QXmlStreamReader>
 
@@ -56,7 +56,6 @@ class ArchiveBookModel::Private
 public:
     Private(ArchiveBookModel* qq)
         : q(qq)
-        , engine(nullptr)
         , archive(nullptr)
         , readWrite(false)
         , imageProvider(nullptr)
@@ -70,7 +69,6 @@ public:
         delete archive;
     }
     ArchiveBookModel* q;
-    QQmlEngine* engine;
     KArchive* archive;
     QStringList fileEntries;
     QStringList fileEntriesToDelete;
@@ -94,7 +92,8 @@ public:
             delete archive;
             archive = nullptr;
         }
-        if(imageProvider && engine) {
+        if (imageProvider) {
+            auto engine = qmlEngine(q);
             engine->removeImageProvider(imageProvider->prefix());
         }
         imageProvider = nullptr;
@@ -226,9 +225,8 @@ void ArchiveBookModel::setFilename(QString newFilename)
             d->imageProvider = new ArchiveImageProvider();
             d->imageProvider->setArchiveBookModel(this);
             d->imageProvider->setPrefix(prefix);
-            if(d->engine) {
-                d->engine->addImageProvider(prefix, d->imageProvider);
-            }
+            auto engine = qmlEngine(this);
+            engine->addImageProvider(prefix, d->imageProvider);
 
             d->fileEntries = recursiveEntries(d->archive->directory());
             d->fileEntries.sort();
@@ -438,17 +436,6 @@ void ArchiveBookModel::setTitle(QString newTitle)
     BookModel::setTitle(newTitle);
 }
 
-QObject * ArchiveBookModel::qmlEngine() const
-{
-    return d->engine;
-}
-
-void ArchiveBookModel::setQmlEngine(QObject* newEngine)
-{
-    d->engine = qobject_cast<QQmlEngine*>(newEngine);
-    emit qmlEngineChanged();
-}
-
 bool ArchiveBookModel::readWrite() const
 {
     return d->readWrite;
@@ -609,8 +596,7 @@ bool ArchiveBookModel::saveBook()
         // This seems roundabout... but it retains ctime and xattrs, which would be gone
         // if we just did a delete+rename
         QFile destinationFile(actualFile);
-        if(destinationFile.open(QIODevice::WriteOnly))
-        {
+        if(destinationFile.open(QIODevice::WriteOnly)) {
             QFile originFile(archiveFileName);
             if(originFile.open(QIODevice::ReadOnly)) {
                 setProcessingDescription(i18n("Copying all content from %1 to %2", archiveFileName, actualFile));
@@ -621,30 +607,24 @@ bool ArchiveBookModel::saveBook()
                 }
                 destinationFile.close();
                 originFile.close();
-                if(originFile.remove())
-                {
+                if(originFile.remove()) {
                     setProcessingDescription(i18n("Successfully replaced old archive with the new archive - now loading the new archive..."));
                     // now load the new thing...
                     locker.unlock();
                     setFilename(actualFile);
                     locker.relock();
-                }
-                else
-                {
+                } else {
                     qCWarning(QTQUICK_LOG) << "Failed to delete" << originFile.fileName();
                 }
-            }
-            else
-            {
+            } else {
                 qCWarning(QTQUICK_LOG) << "Failed to open" << originFile.fileName() << "for reading";
             }
         }
-        else
-        {
+        else {
             qCWarning(QTQUICK_LOG) << "Failed to open" << destinationFile.fileName() << "for writing";
         }
+        endResetModel();
     }
-    endResetModel();
     setProcessing(false);
     setDirty(false);
     return success;
@@ -785,7 +765,6 @@ bool ArchiveBookModel::createBook(const QUrl &fileName, const QString &title, co
     fileTitle = fileTitle.replace(QRegularExpression("\\W"), {}).simplified();
 
     ArchiveBookModel* model = new ArchiveBookModel(nullptr);
-    model->setQmlEngine(qmlEngine());
     model->setReadWrite(true);
     QString prefix = QString("archivebookpage%1").arg(QString::number(Private::counter()));
     model->d->imageProvider = new ArchiveImageProvider();

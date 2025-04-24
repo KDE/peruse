@@ -55,7 +55,6 @@ FormCard.FormCardPage {
 
     readonly property Peruse.ArchiveBookModel newBookModel: Peruse.ArchiveBookModel {
         id: newBookModel;
-        qmlEngine: globalQmlEngine;
     }
 
     FormCard.FormCard {

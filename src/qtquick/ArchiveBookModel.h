@@ -42,7 +42,6 @@ class ArchiveBookModel : public BookModel
     Q_OBJECT
     QML_ELEMENT
 
-    Q_PROPERTY(QObject* qmlEngine READ qmlEngine WRITE setQmlEngine NOTIFY qmlEngineChanged)
     Q_PROPERTY(bool readWrite READ readWrite WRITE setReadWrite NOTIFY readWriteChanged)
     Q_PROPERTY(bool hasUnsavedChanges READ hasUnsavedChanges NOTIFY hasUnsavedChangesChanged)
     Q_PROPERTY(QStringList fileEntries READ fileEntries NOTIFY fileEntriesChanged)
@@ -94,22 +93,6 @@ public:
      * @param newTitle The default title of this book as a QString.
      */
     void setTitle(QString newTitle) override;
-
-    /**
-     * @return a QQmlEngine associated with this book.
-     * TODO: What is the QML engine and what is its purpose?
-     * Used in the cbr.qml
-     */
-    QObject* qmlEngine() const;
-    /**
-     * \brief Set the QML engine on this book.
-     * @param newEngine A QQmlEngine object.
-     */
-    void setQmlEngine(QObject* newEngine);
-    /**
-     * \brief Fires when a new QQmlEngine is set on this book.
-     */
-    Q_SIGNAL void qmlEngineChanged();
 
     /**
      * Whether or not this model should function in read/write mode. As this is potentially very expensive,

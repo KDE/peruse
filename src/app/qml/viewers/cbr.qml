@@ -127,7 +127,6 @@ ViewerBase {
         property QtObject currentLanguage: null; // this should probably be read out of the system somehow, or we let the user pick a default preferred?
         model: Peruse.ArchiveBookModel {
             filename: root.file;
-            qmlEngine: globalQmlEngine;
             onLoadingCompleted: {
                 root.loadingCompleted(success);
                 if (success) {
