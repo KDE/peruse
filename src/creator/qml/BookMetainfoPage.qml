@@ -19,11 +19,11 @@
  *
  */
 
-import QtQuick 2.12
-import QtQuick.Controls 2.12 as QtControls
-import QtQuick.Dialogs 1.3
+import QtQuick
+import QtQuick.Controls as QtControls
+import QtQuick.Dialogs
 
-import org.kde.kirigami 2.1 as Kirigami
+import org.kde.kirigami as Kirigami
 
 import "metainfoeditors"
 /**
@@ -39,13 +39,12 @@ Kirigami.ScrollablePage {
     title: i18nc("title text for the book meta information editor sheet", "Edit Meta Information");
     property QtObject model;
 
-    actions {
-        main: saveAction;
-    }
+    actions: saveAction
+
     Kirigami.Action {
         id: saveAction;
         text: i18nc("Saves the book to a file on disk", "Save Book");
-        iconName: "document-save";
+        icon.name: "document-save";
         onTriggered: {
             // Ensure there's a default language entry.
             if (root.model.acbfData.metaData.bookInfo.languageEntryList.indexOf("") === -1) {
@@ -1072,9 +1071,9 @@ Kirigami.ScrollablePage {
         ColorDialog {
             id: bodyBackgroundColorDialog
             title: i18nc("@title color choosing dialog","Choose the general background color for this comic");
-            color: root.model.acbfData.body.bgcolor !==""? root.model.acbfData.body.bgcolor: "#ffffff";
+            selectedColor: root.model.acbfData.body.bgcolor !==""? root.model.acbfData.body.bgcolor: "#ffffff";
             onAccepted: {
-                root.model.acbfData.body.bgcolor = color;
+                root.model.acbfData.body.bgcolor = selectedColor;
             }
         }
     }

@@ -50,7 +50,7 @@ Components.MessageDialog {
     width: Math.min(parent.width - Kirigami.Units.gridUnit * 2, Kirigami.Units.gridUnit * 20)
     height: Math.min(parent.height - Kirigami.Units.gridUnit * 2, Kirigami.Units.gridUnit * 20)
 
-    contentItem: ColumnLayout {
+    ColumnLayout {
         spacing: 0
 
         QtControls.Label {

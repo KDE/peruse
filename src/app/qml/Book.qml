@@ -87,7 +87,7 @@ Kirigami.Page {
             nextPage();
         }
     }
-    function previousFrame() {
+    function previousFrame(): void {
         // If there is a next frame to go to, or whether it is supported at all
         if(viewLoader.item.hasFrames === true) {
             viewLoader.item.previousFrame();
@@ -96,18 +96,14 @@ Kirigami.Page {
             previousPage();
         }
     }
-    function nextPage() {
+    function nextPage(): void {
         if(viewLoader.item.currentPage < viewLoader.item.pageCount - 1) {
             viewLoader.item.currentPage++;
-        } else {
-            bookInfo.showBookInfo(file);
         }
     }
-    function previousPage() {
+    function previousPage(): void {
         if(viewLoader.item.currentPage > 0) {
             viewLoader.item.currentPage--;
-        } else {
-            bookInfo.showBookInfo(file);
         }
     }
     function setCurrentPage(pageNumber) {
@@ -169,7 +165,7 @@ Kirigami.Page {
         }
     }
 
-    function toggleFullscreen() {
+    function toggleFullscreen(): void {
         applicationWindow().contextDrawer.close();
         if(applicationWindow().visibility !== Window.FullScreen) {
             applicationWindow().visibility = Window.FullScreen;
@@ -190,7 +186,7 @@ Kirigami.Page {
         },
         Kirigami.Action {
             text: i18nc("Action used on touch devices to close the currently open book and return to whatever page was most recently shown", "Close Book");
-            shortcut: bookInfo.visible ? "" : "Esc";
+            shortcut: "Esc"
             icon.name: "dialog-close";
             onTriggered: closeBook();
             enabled: root.isCurrentContext && Kirigami.Settings.isMobile
@@ -242,71 +238,48 @@ Kirigami.Page {
         },
         Kirigami.Action {
             text: i18nc("Go to the previous frame on the current page", "Previous Frame");
-            shortcut: root.isCurrentContext && bookInfo.visible ? "" : StandardKey.MoveToPreviousChar;
+            shortcut: root.isCurrentContext && StandardKey.MoveToPreviousChar;
             icon.name: "go-previous";
             onTriggered: previousFrame();
             enabled: root.isCurrentContext && !Kirigami.Settings.isMobile
         },
         Kirigami.Action {
             text: i18nc("Go to the next frame on the current page", "Next Frame");
-            shortcut: root.isCurrentContext && bookInfo.visible ? "" : StandardKey.MoveToNextChar;
+            shortcut: root.isCurrentContext && StandardKey.MoveToNextChar;
             icon.name: "go-next";
             onTriggered: nextFrame();
             enabled: root.isCurrentContext && !Kirigami.Settings.isMobile
         },
         Kirigami.Action {
             text: i18nc("Go to the previous page in the book", "Previous Page");
-            shortcut: root.isCurrentContext && bookInfo.visible ? "" : StandardKey.MoveToNextPage;
+            shortcut: root.isCurrentContext && StandardKey.MoveToNextPage;
             icon.name: "go-previous";
             onTriggered: previousPage();
             enabled: root.isCurrentContext && !Kirigami.Settings.isMobile;
         },
         Kirigami.Action {
             text: i18nc("Go to the next page in the book", "Next Page");
-            shortcut: bookInfo.visible ? "" : StandardKey.MoveToNextPage;
+            shortcut: StandardKey.MoveToNextPage;
             icon.name: "go-next";
             onTriggered: nextPage();
             enabled: root.isCurrentContext && !Kirigami.Settings.isMobile;
         },
         Kirigami.Action {
             text: applicationWindow().visibility !== Window.FullScreen ? i18nc("Enter full screen mode on a non-touch-based device", "Go Full Screen") : i18nc("Exit full sceen mode on a non-touch based device", "Exit Full Screen");
-            shortcut: (applicationWindow().visibility === Window.FullScreen) ? (bookInfo.visible ? "" : "Esc") : "f";
+            shortcut: (applicationWindow().visibility === Window.FullScreen) ? "Esc" : "f";
             icon.name: "view-fullscreen";
             onTriggered: toggleFullscreen();
             enabled: root.isCurrentContext && !Kirigami.Settings.isMobile;
         },
         Kirigami.Action {
             text: i18nc("Action used on non-touch devices to close the currently open book and return to whatever page was most recently shown", "Close Book");
-            shortcut: (applicationWindow().visibility === Window.FullScreen) ? "" : (bookInfo.visible ? "" : "Esc");
+            shortcut: (applicationWindow().visibility === Window.FullScreen) ? "" : "Esc";
             icon.name: "dialog-close";
             onTriggered: closeBook();
             enabled: root.isCurrentContext && !Kirigami.Settings.isMobile;
-        },
-
-        // Invisible actions, for use in bookInfo
-        Kirigami.Action {
-            visible: false;
-            shortcut: bookInfo.visible ? StandardKey.MoveToPreviousChar : "";
-            onTriggered: bookInfo.previousBook();
-            enabled: root.isCurrentContext && !Kirigami.Settings.isMobile;
-        },
-        Kirigami.Action {
-            visible: false;
-            shortcut: bookInfo.visible ? StandardKey.MoveToNextChar : "";
-            onTriggered: bookInfo.nextBook();
-            enabled: root.isCurrentContext && !Kirigami.Settings.isMobile;
-        },
-        Kirigami.Action {
-            visible: false;
-            shortcut: bookInfo.visible ? "Return" : "";
-            onTriggered: bookInfo.openSelected();
-            enabled: root.isCurrentContext && !Kirigami.Settings.isMobile;
         }
     ]
-    actions: [
-        bookInfo.visible ? bookInfoAction : mainBookAction,
-        Kirigami.Settings.isMobile ? mobileActions : desktopActions,
-    ]
+    actions: Kirigami.Settings.isMobile ? mobileActions : desktopActions
 
     function updateContextualActions() {
         actions.contextualActions.length = 0;
@@ -316,15 +289,6 @@ Kirigami.Page {
             newList.push(action);
         }
         actions.contextualActions = newList;
-    }
-
-    Kirigami.Action {
-        id: bookInfoAction;
-        text: i18nc("Closes the book information drawer", "Close");
-        shortcut: bookInfo.visible ? "Esc" : "";
-        icon.name: "dialog-cancel";
-        onTriggered: bookInfo.close();
-        enabled: root.isCurrentContext;
     }
 
     /**
@@ -417,139 +381,6 @@ Kirigami.Page {
             icon.name: "emblem-error"
             text: i18nc("Message shown on the book reader view when there is an issue loading any reader at all (usually when Okular's qml components are not installed for some reason)", "Failed to load the reader component")
             explanation: i18nc("Message shown on the book reader view when there is an issue loading any reader at all (usually when Okular's qml components are not installed for some reason)", "This is generally caused by broken packaging. Contact whomever you got this package from and inform them of this error.");
-        }
-    }
-    /**
-     * Overlay with book information and a series selection.
-     */
-    Kirigami.OverlaySheet {
-        id: bookInfo;
-        function setNewCurrentIndex(newIndex) {
-            seriesListAnimation.running = false;
-            var currentPos = seriesListView.contentX;
-            var newPos;
-            seriesListView.positionViewAtIndex(newIndex, ListView.Center);
-            newPos = seriesListView.contentX;
-            seriesListAnimation.from = currentPos;
-            seriesListAnimation.to = newPos;
-            seriesListAnimation.running = true;
-            seriesListView.currentIndex = newIndex;
-        }
-        function nextBook() {
-            if(seriesListView.model && seriesListView.currentIndex < seriesListView.model.rowCount() - 1) {
-                setNewCurrentIndex(seriesListView.currentIndex + 1);
-            }
-        }
-        function previousBook() {
-            if(seriesListView.currentIndex > 0) {
-                setNewCurrentIndex(seriesListView.currentIndex - 1);
-            }
-        }
-        function openSelected() {
-            if (detailsTile.filename!==root.file) {
-                closeBook();
-                applicationWindow().showBook(detailsTile.filename, detailsTile.currentPage);
-            }
-        }
-        function showBookInfo(filename) {
-            if(visible) {
-                return;
-            }
-            seriesListView.model = contentList.seriesModelForEntry(filename);
-            if (seriesListView.model) {
-                setNewCurrentIndex(seriesListView.model.indexOfFile(filename));
-            }
-            open();
-        }
-        onVisibleChanged: {
-            if(visible === false) {
-                applicationWindow().controlsVisible = controlsShown;
-            }
-            else {
-                controlsShown = applicationWindow().controlsVisible;
-                applicationWindow().controlsVisible = true;
-            }
-        }
-        property bool controlsShown;
-        property QtObject currentBook: fakeBook;
-        property QtObject fakeBook: Peruse.PropertyContainer {
-            property var author: [""];
-            property string title: "";
-            property string filename: "";
-            property string publisher: "";
-            property string thumbnail: "";
-            property string currentPage: "0";
-            property string totalPages: "0";
-            property string comment: "";
-            property var tags: [""];
-            property var description: [""];
-            property string rating: "0";
-        }
-        Column {
-            clip: true;
-            width: root.width - Kirigami.Units.largeSpacing * 2;
-            height: childrenRect.height + Kirigami.Units.largeSpacing * 2;
-            spacing: Kirigami.Units.largeSpacing;
-            ListComponents.BookTile {
-                id: detailsTile;
-                height: neededHeight;
-                width: parent.width;
-                author: bookInfo.currentBook.readProperty("author");
-                publisher: bookInfo.currentBook.readProperty("publisher");
-                title: bookInfo.currentBook.readProperty("title");
-                filename: bookInfo.currentBook.readProperty("filename");
-                thumbnail: bookInfo.currentBook.readProperty("thumbnail");
-                categoryEntriesCount: 0;
-                currentPage: bookInfo.currentBook.readProperty("currentPage");
-                totalPages: bookInfo.currentBook.readProperty("totalPages");
-                description: bookInfo.currentBook.readProperty("description");
-                onBookSelected: {
-                    if(root.file !== fileSelected) {
-                        bookInfo.openSelected();
-                    }
-                }
-                onBookDeleteRequested: {
-                    // Not strictly needed for the listview itself, but it's kind of
-                    // nice for making sure the details tile is right
-                    var oldIndex = seriesListView.currentIndex;
-                    seriesListView.currentIndex = -1;
-                    contentList.removeBook(fileSelected, true);
-                    seriesListView.currentIndex = oldIndex;
-                }
-            }
-            // tags and ratings, comment by self
-            // store hook for known series with more content
-            ListView {
-                id: seriesListView;
-                width: parent.width;
-                height: Kirigami.Units.gridUnit * 12;
-                orientation: ListView.Horizontal;
-                NumberAnimation { id: seriesListAnimation; target: seriesListView; property: "contentX"; duration: applicationWindow().animationDuration; easing.type: Easing.InOutQuad; }
-                delegate: ListComponents.BookTileTall {
-                    height: model.filename !== "" ? seriesListView.height : 1;
-                    width: seriesListView.width / 3;
-                    author: model.author;
-                    title: model.title;
-                    filename: model.filename;
-                    thumbnail: model.thumbnail;
-                    categoryEntriesCount: 0;
-                    currentPage: model.currentPage;
-                    totalPages: model.totalPages;
-                    onBookSelected:{
-                        if (seriesListView.currentIndex !== model.index) {
-                            bookInfo.setNewCurrentIndex(model.index);
-                        } else {
-                            bookInfo.openSelected();
-                        }
-                    }
-                    selected: seriesListView.currentIndex === model.index;
-                }
-                onCurrentIndexChanged: {
-                    if (model) {
-                        bookInfo.currentBook = model.get(currentIndex);
-                    }
-                }
-            }
         }
     }
 

@@ -19,12 +19,12 @@
  *
  */
 
-import QtQuick 2.12
-import QtQuick.Layouts 1.4
-import QtQuick.Controls 2.12 as QtControls
-import QtQuick.Dialogs 1.3
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls as QtControls
+import QtQuick.Dialogs
 
-import org.kde.kirigami 2.12 as Kirigami
+import org.kde.kirigami as Kirigami
 
 import org.kde.peruse as Peruse
 
@@ -98,8 +98,8 @@ Kirigami.OverlaySheet {
         }
     }
 
-    onSheetOpenChanged: {
-        if(sheetOpen) {
+    onVisibleChanged: {
+        if(visible) {
             if(!objectToBeEdited || objectToBeEditedType === -1) {
                 console.log("EditPageArea should be only opened via its editObject function");
                 close();
@@ -173,7 +173,7 @@ Kirigami.OverlaySheet {
                     ColorDialog {
                         id: backgroundColorDialog
                         title: i18nc("@title color choosing dialog","Choose the background color for this frame");
-                        color: frameBackgroundColor.color;
+                        selectedColor: frameBackgroundColor.color;
                         onAccepted: frameBackgroundColor.color = color;
                     }
                 }
@@ -206,7 +206,7 @@ Kirigami.OverlaySheet {
                     ColorDialog {
                         id: textAreaBackgroundColorDialog
                         title: i18nc("@title color choosing dialog","Choose the background color for this frame");
-                        color: textAreaBackgroundColor.color;
+                        selectedColor: textAreaBackgroundColor.color;
                         onAccepted: textAreaBackgroundColor.color = color;
                     }
                 }
@@ -353,7 +353,6 @@ Kirigami.OverlaySheet {
             textField: textAreaInput;
             editorHelper: textDocumentEditor;
             model: root.model;
-            rootItem.z: 200
         }
     }
 }

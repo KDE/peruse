@@ -75,28 +75,29 @@ Kirigami.Page {
         root.updateTranslationActions();
     }
 
-    actions {
-        main: saveAndCloseAction;
-        right: editPageDataAction;
-        contextualActions: [
-            Kirigami.Action {
-                id: translationsAction
-                text: i18nc("A submenu which allows the user to chose between translations of the book", "Translations")
-                visible: root.model.acbfData.metaData.bookInfo.languages.length > 0
-                Kirigami.Action {
-                    text: i18nc("The option used to show no translation should be used", "No Translation")
-                    onTriggered: root.currentLanguage = null
-                    checked: root.currentLanguage === null
-                    checkable: true
-                    QQC2.ActionGroup.group: translationSelectionGroup
-                }
-            }
-        ]
+    Kirigami.Action {
+        id: translationsAction
+        text: i18nc("A submenu which allows the user to chose between translations of the book", "Translations")
+        visible: root.model.acbfData.metaData.bookInfo.languages.length > 0
+        Kirigami.Action {
+            text: i18nc("The option used to show no translation should be used", "No Translation")
+            onTriggered: root.currentLanguage = null
+            checked: root.currentLanguage === null
+            checkable: true
+            QQC2.ActionGroup.group: translationSelectionGroup
+        }
     }
+
+    actions: [
+        saveAndCloseAction,
+        editPageDataAction,
+        translationsAction,
+    ]
+
     Kirigami.Action {
         id: saveAndCloseAction;
         text: i18nc("Saves the remaining unsaved edited fields and closes the page editor", "Save and Close Page");
-        iconName: "dialog-ok";
+        icon.name: "dialog-ok";
         shortcut: "Esc";
         enabled: !addPageArea.sheetOpen
         onTriggered: {
@@ -108,7 +109,7 @@ Kirigami.Page {
     Kirigami.Action {
         id: editPageDataAction;
         text: i18nc("Edit the page data in detail", "Edit Page Data");
-        iconName: "document-edit"
+        icon.name: "document-edit"
         onTriggered: pageStack.push(pageInfo)
     }
 

@@ -19,12 +19,13 @@
  *
  */
 
-import QtQuick 2.12
-import QtQuick.Layouts 1.4
-import QtQuick.Controls 2.12 as QtControls
-import QtQuick.Dialogs 1.3
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls as QtControls
+import QtQuick.Dialogs
 
-import org.kde.kirigami 2.12 as Kirigami
+import org.kde.kirigami as Kirigami
+
 /**
  * @brief a special overlay sheet for adding frames/textareas/jumps
  */

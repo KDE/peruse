@@ -19,13 +19,15 @@
  *
  */
 
-import QtQuick 2.12
-import QtQuick.Layouts 1.4
-import QtQuick.Controls 2.12 as QtControls
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls as QtControls
 
-import org.kde.kirigami 2.13 as Kirigami
+import org.kde.kirigami as Kirigami
+import org.kde.kirigamiaddons.delegates as Delegates
 
 import org.kde.peruse as Peruse
+
 /**
  * @brief the page shows basic information about the book
  */
@@ -35,21 +37,21 @@ Kirigami.ScrollablePage {
     property QtObject model;
     signal requestCategoryChange(string categoryName);
     title: i18nc("title of the page which lets the user manage the book's stylesheet", "Stylesheet");
-    actions {
-        main: saveBookAction;
-        right: addStyleAction;
-    }
+    actions: [
+        saveBookAction,
+        addStyleAction,
+    ]
     Kirigami.Action {
         id: saveBookAction;
         text: i18nc("Saves the book to a file on disk", "Save Book");
-        iconName: "document-save";
+        icon.name: "document-save-symbolic"
         onTriggered: root.model.saveBook();
         enabled: root.model ? root.model.hasUnsavedChanges : false;
     }
     Kirigami.Action {
         id: addStyleAction;
         text: i18nc("Creates a new, empty stylesheet entry and lets the user edit it", "Add Style...");
-        iconName: "list-add-font";
+        icon.name: "list-add-font-symbolic";
         onTriggered: {
             var newStyle = root.model.acbfData.styleSheet.addStyle();
             editStyleSheet.editStyle(newStyle);
@@ -119,15 +121,19 @@ Kirigami.ScrollablePage {
             }
             Item { height: Kirigami.Units.largeSpacing; Layout.fillWidth: true; }
         }
-        delegate: Kirigami.BasicListItem {
-            id: listItem;
-            height: Kirigami.Units.iconSizes.huge + Kirigami.Units.smallSpacing * 2;
-            supportsMouseEvents: true;
+        delegate: Delegates.RoundedItemDelegate {
+            id: listItem
             onClicked: {
                 editStyleSheet.editStyle(modelData);
             }
-            icon: "font-select-symbolic";
-            label: {
+            icon.name: "font-select-symbolic"
+
+            contentItem: Delegates.SubtitleContentItem {
+                itemDelegate: listItem
+                subtitle: modelData.string
+            }
+
+            text: {
                 if (modelData.inverted === true) {
                     if (modelData.type === "") {
                         return i18nc("The title of a style entry which has a type, and which represents the inverted version of that style", "%1 (inverted)", modelData.element);
@@ -142,7 +148,6 @@ Kirigami.ScrollablePage {
                     }
                 }
             }
-            subtitle: modelData.string;
         }
         Rectangle {
             id: processingBackground;
