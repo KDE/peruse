@@ -38,7 +38,7 @@ PeruseMain {
         id: openDlg;
         title: i18nc("@title:window standard file open dialog used to open a book not in the collection", "Please Choose a Comic to Open");
         currentFolder: StandardPaths.standardLocations(StandardPaths.HomeLocation)[0]
-        property int splitPos: osIsWindows ? 8 : 7;
+        property int splitPos: Qt.platform.os === "windows" ? 8 : 7;
         onAccepted: {
             if(openDlg.selectedFile.toString().substring(0, 7) === "file://") {
                 root.showBook(openDlg.selectedFile.toString().substring(splitPos), 0);

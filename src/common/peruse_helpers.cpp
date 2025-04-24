@@ -53,7 +53,6 @@ int init(QString &path, QApplication& app, const QString &filename) {
     engine.addImageProvider(QStringLiteral("icon"), new KQuickIconProvider);
     engine.rootContext()->setContextObject(new KLocalizedContext(&app));
 
-    bool osIsWindows = false;
 #ifdef Q_OS_WIN
     // Because windows is a bit funny with paths and whatnot, just so the thing with the lib paths...
     QDir appdir(qApp->applicationDirPath());
@@ -61,10 +60,7 @@ int init(QString &path, QApplication& app, const QString &filename) {
     qApp->addLibraryPath(appdir.canonicalPath() + "/lib");
     engine.addImportPath(appdir.canonicalPath() + "/lib/qml");
     engine.addImportPath(appdir.canonicalPath() + "/qml");
-    osIsWindows = true;
 #endif
-
-    engine.rootContext()->setContextProperty("osIsWindows", osIsWindows);
 
     engine.rootContext()->setContextProperty("fileToOpen", filename);
 

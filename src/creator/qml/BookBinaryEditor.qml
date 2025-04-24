@@ -108,7 +108,7 @@ Kirigami.OverlaySheet {
                     nameFilters: [
                         i18nc("The file type filter for showing all files", "All files %1", "(*)")
                     ]
-                    property int splitPos: osIsWindows ? 8 : 7;
+                    property int splitPos: Qt.platform.os === "windows" ? 8 : 7;
                     onAccepted: {
                         if (openDlg.selectedFile.toString().substring(0, 7) === "file://") {
                             var aOk = false;

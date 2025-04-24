@@ -337,7 +337,7 @@ Kirigami.ApplicationWindow {
             i18nc("The file type filter for comic book archives", "Comic Book Archive zip format %1", "(*.cbz)"),
             i18nc("The file type filter for showing all files", "All files %1", "(*)")
         ]
-        property int splitPos: osIsWindows ? 8 : 7;
+        property int splitPos: Qt.platform.os === "windows" ? 8 : 7;
         onAccepted: {
             if(openDlg.selectFile.toString().substring(0, 7) === "file://") {
                 mainWindow.openBook(openDlg.selectFile.toString().substring(splitPos), 0);

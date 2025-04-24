@@ -89,7 +89,7 @@ FormCard.FormCardPage {
                     QQC2.Label {
                         id: folderField
                         Layout.fillWidth: true
-                        readonly property int splitPos: osIsWindows ? 8 : 7
+                        readonly property int splitPos: Qt.platform.os === "windows" ? 8 : 7
                         property url bookUrl: StandardPaths.standardLocations(StandardPaths.DocumentLocation)[0] + '/' + titleEdit.text + '.cbz'
                         text: bookUrl.toString().substring(splitPos)
                     }

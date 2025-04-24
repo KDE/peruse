@@ -74,7 +74,7 @@ Components.MessageDialog {
                 id: openDlg
 
                 title: i18nc("@title:window standard file open dialog used to find a page to add to the book", "Please Choose an Image to Add");
-                property int splitPos: osIsWindows ? 8 : 7;
+                property int splitPos: Qt.platform.os === "windows" ? 8 : 7;
                 onAccepted: {
                     root.model.addPageFromFile(openDlg.selectedFile.toString().substring(splitPos), addPageAfter);
                     root.close();
