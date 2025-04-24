@@ -27,6 +27,7 @@ import QtQuick.Window
 import QtQuick.Dialogs
 
 import org.kde.kirigami as Kirigami
+import org.kde.kirigamiaddons.formcard as FormCard
 import org.kde.kirigamiaddons.delegates as Delegates
 
 import org.kde.peruse as Peruse
@@ -309,8 +310,7 @@ Kirigami.ApplicationWindow {
 
     Component {
         id: aboutPage;
-        About {
-        }
+        FormCard.AboutPage {}
     }
 
     property string currentCategory: "welcomePage";

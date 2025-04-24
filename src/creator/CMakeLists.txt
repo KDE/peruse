@@ -1,12 +1,37 @@
-set(CREATOR_SRCS
-    main.cpp
-    resources.qrc
-)
+# SPDX-FileCopyrightText: 2025 Carl Schwan <carl@carlschwan.eu>
+# SPDX-License-Identifier: BSD-2-Clauses
 
 ecm_add_app_icon(CREATOR_SRCS ICONS "icon/128-apps-peruse-creator.png")
+add_executable(perusecreator main.cpp ${CREATOR_SRCS})
 
-add_executable(perusecreator ${CREATOR_SRCS})
-target_link_libraries(perusecreator
+ecm_add_qml_module(perusecreator
+    GENERATE_PLUGIN_SOURCE
+    URI org.kde.peruse.creator
+    QML_FILES
+        qml/AddPageArea.qml
+        qml/AddPageSheet.qml
+        qml/Book.qml
+        qml/BookBasics.qml
+        qml/BookBinaries.qml
+        qml/BookBinaryEditor.qml
+        qml/BookReferenceEditor.qml
+        qml/BookReferences.qml
+        qml/BookStylesheet.qml
+        qml/BookMetainfoPage.qml
+        qml/BookPage.qml
+        qml/CreateNewBook.qml
+        qml/EditPageArea.qml
+        qml/LinkEditorSheet.qml
+        qml/Main.qml
+        qml/MessageBoxSheet.qml
+        qml/PageMetaInfo.qml
+        qml/Settings.qml
+        qml/WelcomePage.qml
+        qml/metainfoeditors/AuthorEntryEditor.qml
+        qml/metainfoeditors/LanguageTextEntryEditor.qml
+)
+
+target_link_libraries(perusecreator PRIVATE
     Qt::Core
     Qt::Quick
     Qt::Gui
@@ -14,12 +39,9 @@ target_link_libraries(perusecreator
     Qt::Qml
     Qt::Widgets
     Qt::OpenGL
-    KF${QT_MAJOR_VERSION}::I18n
+    KF6::I18n
+    KF6::I18nQml
     peruse_helpers
-)
-target_include_directories(perusecreator
-    PRIVATE
-    "${CMAKE_BINARY_DIR}"
 )
 
 install(TARGETS perusecreator ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})

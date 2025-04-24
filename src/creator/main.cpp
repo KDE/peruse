@@ -21,20 +21,19 @@
 
 #include <KAboutData>
 #include <KLocalizedString>
+#include <KLocalizedQmlContext>
 
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QCommandLineOption>
+#include <QQmlApplicationEngine>
 #include <QIcon>
 
-#include <iostream>
 #include "peruse_helpers.h"
-#include "config-peruse.h"
+#include "../../config-peruse.h"
 
 int main(int argc, char** argv)
 {
-    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
     QApplication app(argc, argv);
     app.setWindowIcon(QIcon::fromTheme(QStringLiteral("peruse-creator")));
     app.setApplicationDisplayName("Peruse Creator");
@@ -62,6 +61,8 @@ int main(int argc, char** argv)
         parser.showHelp(1);
     }
 
-    QString path = QStringLiteral("qrc:///qml/Main.qml");
-    return PeruseHelpers::init(path, app, filename);
+    QQmlApplicationEngine engine;
+    KLocalization::setupLocalizedContext(&engine);
+    engine.loadFromModule("org.kde.peruse.creator", "Main");
+    return app.exec();
 }
