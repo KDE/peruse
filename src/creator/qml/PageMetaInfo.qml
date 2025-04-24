@@ -24,96 +24,101 @@ import QtQuick.Layouts
 import QtQuick.Controls as QtControls
 import QtQuick.Dialogs
 
-import org.kde.kirigami 2.13 as Kirigami
+import org.kde.kirigami as Kirigami
+import org.kde.kirigamiaddons.formcard as FormCard
+
 /**
  * Page that holds an image to edit the frames on.
  */
-import QtQuick 2.0
+FormCard.FormCardPage {
+    id: root
 
-Kirigami.ScrollablePage {
-    id: root;
-    title: i18nc("title text for the page meta information editor sheet", "Edit Page Information");
     property QtObject page;
     property string colorname: "#ffffff";
+    property color pageBackgroundColor: root.page.bgcolor !== "" ? root.page.bgcolor: root.colorname
+
     signal save();
 
-    actions: Kirigami.Action {
-        id: saveAndCloseAction;
-        text: i18nc("Saves the remaining unsaved edited fields and closes the metainfo editor", "Close Editor");
-        icon.name: "dialog-ok";
-        shortcut: "Esc";
+    title: i18nc("title text for the page meta information editor sheet", "Edit Page Information")
+
+    actions: QtControls.Action {
+        id: saveAndCloseAction
+        text: i18nc("Saves the remaining unsaved edited fields and closes the metainfo editor", "Close Editor")
+        icon.name: "dialog-ok-symbolic"
+        shortcut: "Esc"
         onTriggered: {
-            root.page.setTitle(defaultTitle.text, "")
+            root.page.setTitle(defaultTitle.text, "");
             root.save();
             pageStack.pop();
         }
     }
 
-    Kirigami.FormLayout {
-        Layout.fillWidth: true
-        QtControls.TextField {
+    FormCard.FormHeader {
+        title: i18nc("@title:group", "General")
+    }
+
+    FormCard.FormCard {
+        FormCard.FormTextFieldDelegate {
             id: defaultTitle;
-            Kirigami.FormData.label: i18nc("label text for the edit field for the page title", "Title");
-            placeholderText: i18nc("placeholder text for the page title text-input", "Write to add default title");
+            label: i18nc("@label:textfield", "Title:")
             text: root.page.title("");
             onEditingFinished: root.page.setTitle(text, "");
         }
-        QtControls.TextField {
+
+        FormCard.FormDelegateSeparator {}
+
+        FormCard.FormTextFieldDelegate {
             id: pageId;
-            Kirigami.FormData.label: i18nc("label text for the edit field for the page id", "ID");
-            placeholderText: i18nc("placeholder text for page ID text-input", "Write to add an ID");
+            label: i18nc("@label:textfield", "ID:")
             text: root.page.id
             onEditingFinished: root.page.id = text
         }
-        QtControls.ComboBox {
-            id: transition;
-            Kirigami.FormData.label: i18nc("label text for the edit field for the page transition type", "Transition");
-            model: root.page.availableTransitions();
-            currentIndex: root.page.transition!==""?
+
+        FormCard.FormDelegateSeparator {}
+
+        FormCard.FormComboBoxDelegate {
+            id: transition
+
+            text: i18nc("@label:listbox", "Transition:")
+            model: root.page.availableTransitions()
+            currentIndex: root.page.transition !== "" ?
                               root.page.availableTransitions().indexOf(root.page.transition):
                               root.page.availableTransitions().indexOf("none");
             onActivated: root.page.transition = currentText;
         }
-        Row {
-            Kirigami.FormData.label: i18nc("label text for the edit field for the page background color", "Background Color");
-            height: Kirigami.Units.iconSizes.medium;
-            Rectangle {
-                id: pageBackgroundColor;
-                height: Kirigami.Units.iconSizes.medium;
-                width: Kirigami.Units.iconSizes.huge;
-                radius: 3;
-                border.color: Kirigami.Theme.disabledTextColor;
-                border.width: 1;
-                color: root.page.bgcolor !== ""? root.page.bgcolor: root.colorname;
-                MouseArea {
-                    anchors.fill: parent;
-                    onClicked: {
-                        backgroundColorDialog.open();
 
-                    }
-                    hoverEnabled: true;
-                    onEntered: parent.border.color = Kirigami.Theme.buttonHoverColor;
-                    onExited: parent.border.color = Kirigami.Theme.disabledTextColor;
-                }
-                ColorDialog {
-                    id: backgroundColorDialog
-                    title: i18nc("@title color choosing dialog","Choose the background color for page");
-                    selectedColor: root.page.bgcolor !== ""? root.page.bgcolor: root.colorname;
-                    onAccepted: root.page.bgcolor = color;
-                }
-            }
+        FormCard.FormDelegateSeparator {}
+
+        FormCard.FormColorDelegate {
+            id: backgroundColorDelegate
+
+            text: i18nc("@label:chooser", "Background Color:")
+            color: root.page.bgcolor !== "" ? root.page.bgcolor: root.colorname;
+            onColorChanged: root.page.bgcolor = color;
         }
+    }
 
-        Kirigami.Separator {
-            Kirigami.FormData.label: i18nc("label text for the edit field for the page frames", "Frames");
-            Kirigami.FormData.isSection: true
+    FormCard.FormHeader {
+        title: i18nc("@title:group", "Frames");
+    }
+
+    FormCard.FormCard {
+        FormCard.FormPlaceholderMessageDelegate {
+            visible: frameRepeater.count === 0
+            text: i18nc("@info:placeholder", "No frames present")
         }
 
         Repeater {
+            id: frameRepeater
+
             model: page.framePointStrings
             delegate: RowLayout {
-                Kirigami.FormData.label: i18nc("Comic book panel frame name.", "Frame %1", index+1);
                 Layout.fillWidth: true;
+
+                QtControls.Label {
+                    text: i18nc("Comic book panel frame name.", "Frame %1", index+1);
+                }
+
                 ColumnLayout {
                     QtControls.Switch {
                         text: i18nc("A switch which lets the user change the background colour of the page when this frame is focused", "Change page background color");
@@ -129,7 +134,7 @@ Kirigami.ScrollablePage {
                             radius: 3;
                             border.color: Kirigami.Theme.disabledTextColor;
                             border.width: 1;
-                            color: page.frame(index).bgcolor !== ""? page.frame(index).bgcolor: pageBackgroundColor.color;
+                            color: page.frame(index).bgcolor !== ""? page.frame(index).bgcolor : root.pageBackgroundColor;
                             MouseArea {
                                 anchors.fill: parent;
                                 onClicked: {
@@ -142,8 +147,8 @@ Kirigami.ScrollablePage {
                             ColorDialog {
                                 id: frameBackgroundColorDialog
                                 title: i18nc("@title color choosing dialog","Choose background color for this frame");
-                                selectedColor: page.frame(index).bgcolor !== ""? page.frame(index).bgcolor: pageBackgroundColor.color;
-                                onAccepted: page.frame(index).bgcolor = color;
+                                selectedColor: page.frame(index).bgcolor !== ""? page.frame(index).bgcolor : root.pageBackgroundColor;
+                                onAccepted: page.frame(index).bgcolor = selectedColor;
                             }
                         }
                     }
@@ -176,40 +181,28 @@ Kirigami.ScrollablePage {
                 }
             }
         }
-        Kirigami.Separator {
-            Kirigami.FormData.label: i18nc("label text for the edit field for the page textareas", "Text Areas");
-            Kirigami.FormData.isSection: true;
-        }
-        Row {
-            spacing: Kirigami.Units.smallSpacing;
-            Kirigami.FormData.label: i18nc("Label from textlayer background color.", "Background Color:");
-            Rectangle {
-                height: Kirigami.Units.iconSizes.medium;
-                width: Kirigami.Units.iconSizes.huge;
-                id: textLayerBgColor;
-                radius: 3;
-                border.color: Kirigami.Theme.disabledTextColor;
-                border.width: 1;
-                color: page.textLayer("").bgcolor !== ""? page.textLayer("").bgcolor: pageBackgroundColor.color;
-                MouseArea {
-                    anchors.fill: parent;
-                    onClicked: {
-                        textLayerBackgroundColorDialog.open();
+    }
 
-                    }
-                    hoverEnabled: true;
-                    onEntered: parent.border.color = Kirigami.Theme.buttonHoverColor;
-                    onExited: parent.border.color = Kirigami.Theme.disabledTextColor;
-                }
-                ColorDialog {
-                    id: textLayerBackgroundColorDialog
-                    title: i18nc("@title color choosing dialog","Choose the background color for all text areas on this page");
-                    selectedColor: page.textLayer("").bgcolor !== ""? page.textLayer("").bgcolor: pageBackgroundColor.color;
-                    onAccepted: page.textLayer("").bgcolor = color;
-                }
-            }
+    FormCard.FormHeader {
+        title: i18nc("@title:group", "Text Areas");
+    }
+
+    FormCard.FormCard {
+        FormCard.FormColorDelegate {
+            color: page.textLayer("").bgcolor !== ""? page.textLayer("").bgcolor : pageBackgroundColor
+            onColorChanged: page.textLayer("").bgcolor = color
         }
+
+        FormCard.FormDelegateSeparator {}
+
+        FormCard.FormPlaceholderMessageDelegate {
+            visible: textAreasRepeater.count === 0
+            text: i18nc("@info:placeholder", "No text areas present")
+        }
+
         Repeater {
+            id: textAreasRepeater
+
             model: page.textLayer("").textareaPointStrings;
             delegate: Kirigami.SwipeListItem {
                 Layout.fillWidth: true
@@ -256,12 +249,20 @@ Kirigami.ScrollablePage {
                 }
             }
         }
-        Kirigami.Separator {
-            Kirigami.FormData.label: i18nc("label text for the edit field for the page jumps", "Jumps");
-            Kirigami.FormData.isSection: true;
+    }
+
+    FormCard.FormHeader {
+        title: i18nc("@title:group", "Jumps");
+    }
+
+    FormCard.FormCard {
+        FormCard.FormPlaceholderMessageDelegate {
+            visible: jumpsRepeater.count === 0
+            text: i18nc("@info:placeholder", "No jumps present")
         }
+
         Repeater {
-            id: jumpsRepeater;
+            id: jumpsRepeater
             model: page.jumps
             delegate: Kirigami.SwipeListItem {
                 Layout.fillWidth: true
