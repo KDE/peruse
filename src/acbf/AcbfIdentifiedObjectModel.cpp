@@ -100,7 +100,7 @@ IdentifiedObjectModel::~IdentifiedObjectModel() = default;
 QHash<int, QByteArray> IdentifiedObjectModel::roleNames() const
 {
     static const QHash<int, QByteArray> roleNames{
-        {IdRole, "id"},
+        {IdRole, "objectId"},
         {OriginalIndexRole, "originalIndex"},
         {TypeRole, "type"},
         {ObjectRole, "object"}
@@ -110,43 +110,40 @@ QHash<int, QByteArray> IdentifiedObjectModel::roleNames() const
 
 QVariant IdentifiedObjectModel::data(const QModelIndex& index, int role) const
 {
-    QVariant data;
-    if (checkIndex(index) && d->document) {
-        InternalReferenceObject* object = d->identifiedObjects.value(index.row());
-        if (object) {
-            switch(role) {
-                case IdRole:
-                    data.setValue(object->property("id"));
-                    break;
-                case TypeRole:
-                    if (qobject_cast<Reference*>(object)) {
-                        data.setValue<int>(ReferenceType);
-                    } else if (qobject_cast<Binary*>(object)) {
-                        data.setValue<int>(BinaryType);
-                    } else if (qobject_cast<Textarea*>(object)) {
-                        data.setValue<int>(TextareaType);
-                    } else if (qobject_cast<Frame*>(object)) {
-                        data.setValue<int>(FrameType);
-                    } else if (qobject_cast<Page*>(object)) {
-                        data.setValue<int>(PageType);
-                    } else if (qobject_cast<Jump*>(object)) {
-                        data.setValue<int>(JumpType);
-                    } else {
-                        data.setValue<int>(UnknownType);
-                    }
-                    break;
-                case OriginalIndexRole:
-                    data.setValue<int>(object->localIndex());
-                    break;
-                case ObjectRole:
-                    data.setValue<QObject*>(object);
-                    break;
-                default:
-                    break;
-            };
-        }
+    if (!checkIndex(index) || !d->document) {
+        return {};
     }
-    return data;
+
+    InternalReferenceObject* object = d->identifiedObjects.value(index.row());
+    if (!object) {
+        return {};
+    }
+
+    switch(role) {
+    case IdRole:
+        return object->property("id");
+    case TypeRole:
+        if (qobject_cast<Reference*>(object)) {
+            return ReferenceType;
+        } else if (qobject_cast<Binary*>(object)) {
+            return BinaryType;
+        } else if (qobject_cast<Textarea*>(object)) {
+            return TextareaType;
+        } else if (qobject_cast<Frame*>(object)) {
+            return FrameType;
+        } else if (qobject_cast<Page*>(object)) {
+            return PageType;
+        } else if (qobject_cast<Jump*>(object)) {
+            return JumpType;
+        }
+        return UnknownType;
+    case OriginalIndexRole:
+        return object->localIndex();
+    case ObjectRole:
+        return QVariant::fromValue(object);
+    default:
+        return {};
+    }
 }
 
 int IdentifiedObjectModel::rowCount(const QModelIndex& parent) const

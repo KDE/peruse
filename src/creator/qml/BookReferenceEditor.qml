@@ -1,51 +1,39 @@
-/*
- * Copyright (C) 2020 Dan Leinir Turthra Jensen <admin@leinir.dk>
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) version 3, or any
- * later version accepted by the membership of KDE e.V. (or its
- * successor approved by the membership of KDE e.V.), which shall
- * act as a proxy defined in Section 6 of version 3 of the license.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+// SPDX-FileCopyrightText: 2020 Dan Leinir Turthra Jensen <admin@leinir.dk>
+// SPDX-FileCopyrightText: 2025 Carl Schwan <carl@carlschwan.eu>
+// SPDX-License-Identifier: LGPL-2.1-only OR LGPL-3.0-only OR LicenseRef-KDE-Accepted-LGPL
 
-import QtQuick 2.12
-import QtQuick.Layouts 1.4
-import QtQuick.Controls 2.12 as QtControls
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls as Controls
 
-import org.kde.kirigami 2.13 as Kirigami
+import org.kde.kirigami as Kirigami
+import org.kde.kirigamiaddons.formcard as FormCard
 
 import org.kde.peruse as Peruse
+
 /**
  * @brief the page which shows the references contained within the book
  */
 Kirigami.ScrollablePage {
     id: root;
     property string categoryName: "bookReferences";
+    property QtObject reference;
+    property QtObject model;
+
+    function saveReference(): void {
+        reference.id = referenceIdentifier.text;
+        reference.language = referenceLanguage.text;
+        reference.paragraphs = textDocumentEditor.paragraphs();
+    }
+
     title: referenceLanguage.text === ""
         ? i18nc("title text for the reference editor page, when the reference has no language set", "Editing %1 (default language)", referenceIdentifier.text)
         : i18nc("title text for the reference editor page", "Editing %1 (language: %2)", referenceIdentifier.text, referenceLanguage.text);
-    property QtObject reference;
-    property QtObject model;
+
     onReferenceChanged: {
         textArea.text = reference.paragraphs.join("\n");
         referenceIdentifier.text = root.reference.id;
         referenceLanguage.text = root.reference.language;
-    }
-    function saveReference() {
-        reference.id = referenceIdentifier.text;
-        reference.language = referenceLanguage.text;
-        reference.paragraphs = textDocumentEditor.paragraphs();
     }
 
     actions: [
@@ -106,30 +94,22 @@ Kirigami.ScrollablePage {
         }
     ]
 
-    Kirigami.OverlaySheet {
-        id: referenceDetails;
-        showCloseButton: true
+    FormCard.FormCardDialog {
+        id: referenceDetails
 
-        header: RowLayout {
-            Kirigami.Heading {
-                text: i18nc("title text for a sheet which lets the user edit the details of a reference", "Edit Reference Details");
-                Layout.fillWidth: true;
-                elide: Text.ElideRight;
-            }
+        title: i18nc("@title:dialog", "Edit Reference Details")
+
+        standardButtons: Controls.Dialog.Save | Controls.Dialog.Close
+
+        FormCard.FormTextFieldDelegate {
+            id: referenceIdentifier
+
+            label: i18nc("@label:textfield", "Unique identifier");
         }
-        Kirigami.FormLayout {
-            QtControls.TextField {
-                id: referenceIdentifier;
-                Layout.fillWidth: true;
-                Kirigami.FormData.label: i18nc("Label for the reference identifier input field", "Unique Identifier");
-                placeholderText: i18nc("Placeholder text for the reference identifier input field", "Enter your reference ID here (should be unique)");
-            }
-            QtControls.TextField {
-                id: referenceLanguage;
-                Layout.fillWidth: true;
-                Kirigami.FormData.label: i18nc("Label for the reference language input field", "Language");
-                placeholderText: i18nc("Placeholder text for the reference language input field", "Enter the language ID here (leave empty for the document default language)");
-            }
+
+        FormCard.FormTextFieldDelegate {
+            id: referenceLanguage
+            label: i18nc("@label:textfield", "Language");
         }
     }
 
@@ -160,8 +140,7 @@ Kirigami.ScrollablePage {
             }
         }
 
-        function ensureVisible(rectToMakeVisible)
-        {
+        function ensureVisible(rectToMakeVisible: var): void {
             if (root.flickable.contentX >= rectToMakeVisible.x) {
                 root.flickable.contentX = rectToMakeVisible.x;
             } else if (root.flickable.contentX + root.flickable.width <= rectToMakeVisible.x + rectToMakeVisible.width) {

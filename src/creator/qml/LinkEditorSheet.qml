@@ -94,11 +94,12 @@ FormCard.FormCardDialog {
         id: linkDestination;
         label: i18nc("@label:textfield", "Destination")
         onTextChanged: {
-            if (linkDestination.text.startsWith("#")) {
-                linkDestinationOptionsFilter.setFilterFixedString(linkDestination.text.slice(1));
-            } else {
-                linkDestinationOptionsFilter.setFilterFixedString(linkDestination.text);
-            }
+            // TODO reimplemt auto completion
+            //if (linkDestination.text.startsWith("#")) {
+            //    linkDestinationOptionsFilter.setFilterFixedString(linkDestination.text.slice(1));
+            //} else {
+            //    linkDestinationOptionsFilter.setFilterFixedString(linkDestination.text);
+            //}
         }
     }
 
@@ -150,21 +151,20 @@ FormCard.FormCardDialog {
                 }
             }
         }
-        Controls.Label {
-            id: linkDemonstration;
-            Layout.fillWidth: true;
-            Kirigami.FormData.label: i18nc("Label for the link demonstration display field", "Demonstration");
-            textFormat: Text.StyledText
-            text: {
-                if (linkDestination.text.length > 0 && linkText.text.length > 0) {
-                    return "<a href=\"" + linkDestination.text + "\">" + linkText.text + "</a>";
-                } else if (linkDestination.text.length > 0) {
-                    return "<a href=\"" + linkDestination.text + "\">" + linkDestination.text + "</a>";
-                } else if (linkText.text.length > 0) {
-                    return linkText.text;
-                }
-                return "";
-            }
-        }
     }*/
+
+    FormCard.FormTextDelegate {
+        text: i18n("Preview")
+        description: {
+            if (linkDestination.text.length > 0 && linkText.text.length > 0) {
+                return "<a href=\"" + linkDestination.text + "\">" + linkText.text + "</a>";
+            } else if (linkDestination.text.length > 0) {
+                return "<a href=\"" + linkDestination.text + "\">" + linkDestination.text + "</a>";
+            } else if (linkText.text.length > 0) {
+                return linkText.text;
+            }
+            return "";
+        }
+        descriptionItem.textFormat: Text.StyledText
+    }
 }
