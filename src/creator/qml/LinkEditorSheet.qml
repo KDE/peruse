@@ -19,11 +19,12 @@
  *
  */
 
-import QtQuick 2.12
-import QtQuick.Layouts 1.4
-import QtQuick.Controls 2.12 as QtControls
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls as Controls
 
-import org.kde.kirigami 2.13 as Kirigami
+import org.kde.kirigami as Kirigami
+import org.kde.kirigamiaddons.formcard as FormCard
 
 import org.kde.peruse as Peruse
 
@@ -32,13 +33,18 @@ import org.kde.peruse as Peruse
  * 
  * The sheet makes use of a TextDocumentEditor helper, which should be attached to the TextArea's textdocument instance
  */
-Kirigami.OverlaySheet {
-    id: component;
-    showCloseButton: true
-    property Item textField;
-    property QtObject editorHelper;
-    property QtObject model;
-    function edit() {
+FormCard.FormCardDialog {
+    id: root
+
+    property Item textField
+    property QtObject editorHelper
+    property QtObject model
+    // The start of the entire link, including anchor markup
+    property int linkStart
+    // The end of the entire link, including anchor markup
+    property int linkEnd
+
+    function edit(): void {
         var linkHref = editorHelper.linkHref(textField.cursorPosition);
         if (linkHref.length > 0) {
             linkDestination.text = linkHref;
@@ -53,60 +59,55 @@ Kirigami.OverlaySheet {
             linkText.text = textField.selectedText;
         }
         // set the start and end of the link to the current selection
-        component.linkStart = textField.selectionStart;
-        component.linkEnd = textField.selectionEnd;
-        component.open();
+        root.linkStart = textField.selectionStart;
+        root.linkEnd = textField.selectionEnd;
+        root.open();
     }
-    // The start of the entire link, including anchor markup
-    property int linkStart;
-    // The end of the entire link, including anchor markup
-    property int linkEnd;
 
-    header: RowLayout {
-        Kirigami.Heading {
-            text: i18nc("title text for a sheet which lets the user edit the parameters of a link", "Edit Link");
-            Layout.fillWidth: true;
-            elide: Text.ElideRight;
+
+    standardButtons: Controls.Dialog.Save | Controls.Dialog.Cancel
+
+    title: i18nc("@title:dialog", "Edit Link");
+
+    onAccepted: {
+        var theLink = "";
+        if (linkDestination.text.length > 0 && linkText.text.length > 0) {
+            theLink = "<a href=\"" + linkDestination.text + "\">" + linkText.text + "</a>";
+        } else if (linkDestination.text.length > 0) {
+            theLink = "<a href=\"" + linkDestination.text + "\">" + linkDestination.text + "</a>";
+        } else if (linkText.text.length > 0) {
+            theLink = linkText.text;
         }
-        QtControls.ToolButton {
-            icon.name: "document-save";
-            text: i18nc("label for a button which updates the link in the text with the new information from the link editor", "OK");
-            onClicked: {
-                var theLink = "";
-                if (linkDestination.text.length > 0 && linkText.text.length > 0) {
-                    theLink = "<a href=\"" + linkDestination.text + "\">" + linkText.text + "</a>";
-                } else if (linkDestination.text.length > 0) {
-                    theLink = "<a href=\"" + linkDestination.text + "\">" + linkDestination.text + "</a>";
-                } else if (linkText.text.length > 0) {
-                    theLink = linkText.text;
-                }
-                textField.remove(component.linkStart, component.linkEnd);
-                textField.insert(component.linkStart, theLink);
-                component.close();
+        textField.remove(root.linkStart, root.linkEnd);
+        textField.insert(root.linkStart, theLink);
+        root.close();
+    }
+
+    onRejected: root.close()
+
+    FormCard.FormTextFieldDelegate {
+        id: linkText;
+        label: i18nc("@label:textfield", "Text")
+    }
+
+    FormCard.FormTextFieldDelegate {
+        id: linkDestination;
+        label: i18nc("@label:textfield", "Destination")
+        onTextChanged: {
+            if (linkDestination.text.startsWith("#")) {
+                linkDestinationOptionsFilter.setFilterFixedString(linkDestination.text.slice(1));
+            } else {
+                linkDestinationOptionsFilter.setFilterFixedString(linkDestination.text);
             }
         }
     }
-    Kirigami.FormLayout {
-        QtControls.TextField {
-            id: linkText;
-            Layout.fillWidth: true;
-            Kirigami.FormData.label: i18nc("Label for the link text input field", "Text");
-            placeholderText: i18nc("Placeholder text for the link text input field", "Enter the text of your link here");
-        }
+
+    /*
         ColumnLayout {
-            Kirigami.FormData.label: i18nc("Label for the link destination input field", "Destination");
             Layout.fillWidth: true;
-            QtControls.TextField {
-                id: linkDestination;
+            Controls.TextField {
                 Layout.fillWidth: true;
                 placeholderText: i18nc("Placeholder text for the link destination input field", "Enter the destination for your link here");
-                onTextChanged: {
-                    if (linkDestination.text.startsWith("#")) {
-                        linkDestinationOptionsFilter.setFilterFixedString(linkDestination.text.slice(1));
-                    } else {
-                        linkDestinationOptionsFilter.setFilterFixedString(linkDestination.text);
-                    }
-                }
             }
             ListView {
                 Layout.fillWidth: true;
@@ -117,10 +118,10 @@ Kirigami.OverlaySheet {
                     id: linkDestinationOptionsFilter;
                     filterRole: 257 // the ID role in IdentifiedObjectModel
                     sourceModel: Peruse.IdentifiedObjectModel {
-                        document: component.model.acbfData;
+                        document: root.model.acbfData;
                     }
                 }
-                delegate: QtControls.Label {
+                delegate: Controls.Label {
                     width: ListView.view.width;
                     text: {
                         switch(model.type) {
@@ -149,7 +150,7 @@ Kirigami.OverlaySheet {
                 }
             }
         }
-        QtControls.Label {
+        Controls.Label {
             id: linkDemonstration;
             Layout.fillWidth: true;
             Kirigami.FormData.label: i18nc("Label for the link demonstration display field", "Demonstration");
@@ -165,5 +166,5 @@ Kirigami.OverlaySheet {
                 return "";
             }
         }
-    }
+    }*/
 }

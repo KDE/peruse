@@ -34,71 +34,53 @@ import org.kde.kirigamiaddons.components as Components
  * 
  * It is accessed from Book
  */
-Components.MessageDialog {
-    id: root;
+FormCard.FormCardDialog {
+    id: root
 
-    property int addPageAfter: 0;
-    property QtObject model;
+    property int addPageAfter: 0
+    property QtObject model
 
     title: i18nc("@title", "Add Page")
 
-    iconName: "edit-image-face-add"
-
-    leftPadding: 0
-    rightPadding: 0
-
-    width: Math.min(parent.width - Kirigami.Units.gridUnit * 2, Kirigami.Units.gridUnit * 20)
-    height: Math.min(parent.height - Kirigami.Units.gridUnit * 2, Kirigami.Units.gridUnit * 20)
-
-    ColumnLayout {
-        spacing: 0
-
-        QtControls.Label {
-            text: i18nc("help text for the add page sheet", "Please select the method you want to add the new page. No changes will be made outside of the project by performing these actions.")
-            wrapMode: Text.WordWrap
-
-            Layout.fillWidth: true
-            Layout.margins: Kirigami.Units.gridUnit
-        }
-
-        Item {
-            Layout.fillHeight: true
-        }
-
-        FormCard.FormButtonDelegate {
-            icon.name: "document-open";
-            text: i18nc("@action:button add a page by finding an image on the filesystem and copying it into the book", "Copy Image from Device");
-            onClicked: openDlg.open();
-
-            FileDialog {
-                id: openDlg
-
-                title: i18nc("@title:window standard file open dialog used to find a page to add to the book", "Please Choose an Image to Add");
-                property int splitPos: Qt.platform.os === "windows" ? 8 : 7;
-                onAccepted: {
-                    root.model.addPageFromFile(openDlg.selectedFile.toString().substring(splitPos), addPageAfter);
-                    root.close();
-                }
-                currentFolder: StandardPaths.standardLocations(StandardPaths.PicturesLocation)[0]
-            }
-        }
-
-        FormCard.FormDelegateSeparator {}
-
-        FormCard.FormButtonDelegate {
-            icon.name: "document-new"
-            text: i18nc("@action:button add a page by creating a new image using an image editor", "Create a New Image Using an Image Editor")
-            enabled: false
-        }
-
-        FormCard.FormDelegateSeparator {}
-
-        FormCard.FormButtonDelegate {
-            icon.name: "camera"
-            text: i18nc("@action:button add a page by taking a photo with a camera", "Take a Photo and Add That")
-            enabled: false
+    FormCard.FormTextDelegate {
+        text: i18nc("help text for the add page sheet", "Please select the method you want to add the new page. No changes will be made outside of the project by performing these actions.")
+        textItem {
+            wrapMode: Text.Wrap
+            elide: Text.ElideNone
         }
     }
 
-    footer: null
+    FormCard.FormButtonDelegate {
+        icon.name: "document-open";
+        text: i18nc("@action:button add a page by finding an image on the filesystem and copying it into the book", "Copy Image from Device");
+        onClicked: openDlg.open();
+
+        FileDialog {
+            id: openDlg
+
+            title: i18nc("@title:window standard file open dialog used to find a page to add to the book", "Please Choose an Image to Add");
+            property int splitPos: Qt.platform.os === "windows" ? 8 : 7;
+            onAccepted: {
+                root.model.addPageFromFile(openDlg.selectedFile.toString().substring(splitPos), addPageAfter);
+                root.close();
+            }
+            currentFolder: StandardPaths.standardLocations(StandardPaths.PicturesLocation)[0]
+        }
+    }
+
+    FormCard.FormDelegateSeparator {}
+
+    FormCard.FormButtonDelegate {
+        icon.name: "document-new"
+        text: i18nc("@action:button add a page by creating a new image using an image editor", "Create a New Image Using an Image Editor")
+        enabled: false
+    }
+
+    FormCard.FormDelegateSeparator {}
+
+    FormCard.FormButtonDelegate {
+        icon.name: "camera"
+        text: i18nc("@action:button add a page by taking a photo with a camera", "Take a Photo and Add That")
+        enabled: false
+    }
 }

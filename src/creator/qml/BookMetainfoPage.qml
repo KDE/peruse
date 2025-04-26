@@ -1,29 +1,13 @@
-/*
- * Copyright (C) 2015 Dan Leinir Turthra Jensen <admin@leinir.dk>
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) version 3, or any
- * later version accepted by the membership of KDE e.V. (or its
- * successor approved by the membership of KDE e.V.), which shall
- * act as a proxy defined in Section 6 of version 3 of the license.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+// SPDX-FileCopyrightText: 2015 Dan Leinir Turthra Jensen <admin@leinir.dk>
+// SPDX-FileCopyrightText: 2025 Carl Schwan <carl@carlschwan.eu>
+// SPDX-License-Identifier: LGPL-2.1-only OR LGPL-3.0-only OR LicenseRef-KDE-Accepted-LGPL
 
 import QtQuick
-import QtQuick.Controls as QtControls
-import QtQuick.Dialogs
+import QtQuick.Layouts
+import QtQuick.Controls as Controls
 
 import org.kde.kirigami as Kirigami
+import org.kde.kirigamiaddons.formcard as FormCard
 
 import "metainfoeditors"
 /**
@@ -33,11 +17,13 @@ import "metainfoeditors"
  *
  * Others, like Author, need a dedicated entry editor (AuthorEntryEditor).
  */
-Kirigami.ScrollablePage {
-    id: root;
-    property string categoryName: "bookMetaInfo";
-    title: i18nc("title text for the book meta information editor sheet", "Edit Meta Information");
-    property QtObject model;
+FormCard.FormCardPage {
+    id: root
+
+    property string categoryName: "bookMetaInfo"
+    property QtObject model
+
+    title: i18nc("title text for the book meta information editor sheet", "Edit Meta Information")
 
     actions: saveAction
 
@@ -54,121 +40,143 @@ Kirigami.ScrollablePage {
         }
     }
 
-    Column {
-        id: contentColumn;
-        width: root.width - (root.leftPadding + root.rightPadding);
-        height: childrenRect.height;
-        spacing: Kirigami.Units.smallSpacing;
+    FormCard.FormCard {
+        Layout.topMargin: Kirigami.Units.gridUnit
 
-        Kirigami.Heading {
-            width: parent.width;
-            height: paintedHeight + Kirigami.Units.smallSpacing * 2;
-            text: i18nc("label text for the edit field for the book title", "Title");
-        }
+        FormCard.FormTextFieldDelegate {
+            id: defaultTitle
 
-        Item { width: parent.width; height: Kirigami.Units.smallSpacing; }
-        QtControls.TextField {
-            id: defaultTitle;
-            width: parent.width;
-            placeholderText: i18nc("placeholder text for default title text-input", "Write to add default title");
-            text:root.model.acbfData ? root.model.acbfData.metaData.bookInfo.title("") : "";
+            label: i18nc("@label:textfield", "Title")
+            text: root.model.acbfData ? root.model.acbfData.metaData.bookInfo.title("") : "";
             onTextChanged: {
                 root.model.acbfData.metaData.bookInfo.setTitle(defaultTitle.text, "");
                 root.model.setDirty();
             }
         }
 
-        Kirigami.Heading {
-            width: parent.width;
-            height: paintedHeight + Kirigami.Units.smallSpacing * 2;
-            text: i18nc("label text for the edit field for the default annotation", "Annotation");
-        }
-        Item { width: parent.width; height: Kirigami.Units.smallSpacing; }
-        QtControls.TextArea {
-            id: defaultAnnotation;
-            width: parent.width;
-            placeholderText: i18nc("placeholder text for default annotation text-area", "Write to add default annotation");
-            wrapMode: TextEdit.Wrap
+        FormCard.FormDelegateSeparator {}
+
+        FormCard.FormTextFieldDelegate {
+            id: defaultAnnotation
+
+            label: i18nc("@label:textfield", "Annotation")
             text: root.model.acbfData ? root.model.acbfData.metaData.bookInfo.annotation("").join("\n\n") : "";
             onTextChanged: {
                 root.model.acbfData.metaData.bookInfo.setAnnotation(defaultAnnotation.text.split("\n\n"), "");
                 root.model.setDirty();
             }
         }
-        Kirigami.Heading {
-            width: parent.width;
-            height: paintedHeight + Kirigami.Units.smallSpacing * 2;
-            text: i18nc("label text for the edit field for the keyword list", "Keywords");
-        }
-        Item { width: parent.width; height: Kirigami.Units.smallSpacing; }
-        QtControls.TextField {
-            id: defaultKeywords;
-            width: parent.width;
-            placeholderText: i18nc("placeholder text for the add new keyword text entry", "Write a comma separated list of keywords.");
-            text:root.model.acbfData ? root.model.acbfData.metaData.bookInfo.keywords("").join(", ") : "";
+
+        FormCard.FormDelegateSeparator {}
+
+        FormCard.FormTextFieldDelegate {
+            id: keywords
+
+            label: i18nc("@label:textfield", "Keywords")
+            placeholderText: i18nc("@info:placeholder", "Write a comma separated list of keywords.");
+
+            text: root.model.acbfData ? root.model.acbfData.metaData.bookInfo.keywords("").join(", ") : "";
             onTextChanged: {
-                var keywords = defaultKeywords.text.split(",")
-                for (var i in keywords) {
-                    keywords[i] = keywords[i].trim();
-                }
+                const keywords = defaultKeywords.text.split(",").map(word => word.trim())
                 root.model.acbfData.metaData.bookInfo.setKeywords(keywords, "");
                 root.model.setDirty();
             }
         }
 
-        Kirigami.Heading {
-            width: parent.width;
-            height: paintedHeight + Kirigami.Units.smallSpacing * 2;
-            text: i18nc("label text for the edit field for the author list", "Authors (%1)", authorRepeater.count);
+        FormCard.FormSpinBoxDelegate {
+            id: versionSpinBox
+
+            readonly property int decimals: 2;
+            readonly property real realValue: value / 100;
+
+            label: i18nc("Label for the document version spinbox", "Document Version:")
+            from:0;
+            to: 100 * 100;
+            stepSize: 100;
+
+            validator: DoubleValidator {
+                bottom: Math.min(versionSpinBox.from, versionSpinBox.to)
+                top: Math.max(versionSpinBox.from, versionSpinBox.to)
+            }
+
+            textFromValue: function(value, locale) {
+                return Number(value / 100).toLocaleString(locale, 'f', decimals)
+            }
+
+            valueFromText: function(text, locale) {
+                return Number.fromLocaleString(locale, text) * 100
+            }
+            value: root.model.acbfData.metaData.documentInfo.version * 100;
+
+            onFocusChanged: {
+                if (root.model.acbfData.metaData.documentInfo.version * 100 !== value) {
+                    root.model.acbfData.metaData.documentInfo.version = value/100;
+                }
+            }
         }
+    }
+
+    FormCard.FormHeader {
+        title: i18nc("@title:group", "Authors")
+    }
+
+    FormCard.FormCard {
         Repeater {
             id: authorRepeater;
             model: root.model.acbfData ? root.model.acbfData.metaData.bookInfo.authorNames : 0;
-            delegate: QtControls.Label {
-                width: parent.width - removeAuthorButton.width - Kirigami.Units.smallSpacing;
-                text: modelData.length > 0 ? modelData : i18nc("The text used in place of an author's name if one has not been set", "(unnamed)");
-                QtControls.Button {
-                    id: editAuthorButton;
-                    anchors {
-                        right: removeAuthorButton.left;
-                        leftMargin: Kirigami.Units.smallSpacing;
+            delegate: FormCard.AbstractFormDelegate {
+                contentItem: RowLayout {
+                    spacing: Kirigami.Units.smallSpacing
+
+                    Controls.Label {
+                        text: modelData.length > 0 ? modelData : i18nc("The text used in place of an author's name if one has not been set", "(unnamed)")
+                        Layout.fillWidth: true
                     }
-                    contentItem: Kirigami.Icon {
-                        source: "document-edit";
+
+                    Controls.Button {
+                        id: editAuthorButton
+                        icon.name: "document-edit-symbolic"
+                        text: i18nc("@action:button", "Edit author")
+                        display: Controls.Button.IconOnly
+                        onClicked: {
+                            const window = root.Controls.ApplicationWindow.window.pageStack.pushDialogLayer(authorEditor, {
+                                index: model.index,
+                            });
+                        }
                     }
-                    height: parent.height;
-                    width: height;
-                    onClicked: {
-                        authorEditor.index = model.index;
-                        authorEditor.open();
+
+                    Controls.Button {
+                        id: removeAuthorButton
+                        icon.name: "list-remove-symbolic"
+                        text: i18nc("@action:button", "Remove author")
+                        display: Controls.Button.IconOnly
+                        onClicked: {
+                            // When removing, set the model dirty first, and then remove the entry to avoid reference errors.
+                            root.model.setDirty();
+                            root.model.acbfData.metaData.bookInfo.removeAuthor(index);
+                        }
                     }
                 }
-                QtControls.Button {
-                    id: removeAuthorButton;
-                    anchors {
-                        left: parent.right;
-                        leftMargin: Kirigami.Units.smallSpacing;
-                    }
-                    contentItem: Kirigami.Icon {
-                        source: "list-remove";
-                    }
-                    height: parent.height;
-                    width: height;
-                    onClicked: {
-                        // When removing, set the model dirty first, and then remove the entry to avoid reference errors.
-                        root.model.setDirty();
-                        root.model.acbfData.metaData.bookInfo.removeAuthor(index);
+
+                background: Item {
+                    FormCard.FormDelegateSeparator {
+                        anchors {
+                            left: parent.left
+                            right: parent.right
+                            bottom: parent.bottom
+                        }
                     }
                 }
             }
         }
-        Item { width: parent.width; height: Kirigami.Units.smallSpacing; }
-        QtControls.TextField {
-            width: parent.width - addAuthorButton.width - Kirigami.Units.smallSpacing;
-            placeholderText: i18nc("placeholder text for the add new author text entry", "Write to add new author (nickname)");
-            Keys.onReturnPressed: addAuthor();
-            function addAuthor() {
-                if(text !== "") {
+
+        FormCard.FormTextFieldDelegate {
+            id: newAuthorField
+
+            label: i18nc("@label:textfield", "New author (nickname)")
+            onAccepted: addAuthor()
+            function addAuthor(): void {
+                if (text.trim().length > 0) {
                     // Just add an author where only the nickname is defined
                     root.model.acbfData.metaData.bookInfo.addAuthor("", "", "", "", "", text, [""], [""]);
                     root.model.setDirty();
@@ -176,170 +184,193 @@ Kirigami.ScrollablePage {
                 }
             }
 
-            QtControls.Button {
-                id: addAuthorButton;
-                anchors {
-                    left: parent.right;
-                    leftMargin: Kirigami.Units.smallSpacing;
-                }
-                contentItem: Kirigami.Icon {
-                    source: "list-add";
-                }
-                height: parent.height;
-                width: height;
-                onClicked: parent.addAuthor();
+            trailing: Controls.Button {
+                icon.name: "list-add-symbolic"
+                text: i18nc("@action:button", "Add new author")
+                display: Controls.Button.IconOnly
+                onClicked: newAuthorField.addAuthor();
             }
         }
+    }
 
-        Kirigami.Heading {
-            width: parent.width;
-            height: paintedHeight + Kirigami.Units.smallSpacing * 2;
-            text: i18nc("label text for the edit field for the genre list", "Genres");
-        }
+    FormCard.FormHeader {
+        title: i18nc("@title:group", "Genres")
+    }
+
+    FormCard.FormCard {
         Repeater {
             model: root.model.acbfData ? root.model.acbfData.metaData.bookInfo.genres : 0;
-            delegate: Item {
-                width: parent.width;
-                height: childrenRect.height;
-                QtControls.Label {
-                    id: genreText;
-                    width: parent.width - removeGenreButton.width - Kirigami.Units.smallSpacing;
-                    text: modelData;
-                    QtControls.Button {
-                        id: removeGenreButton;
+            delegate: FormCard.AbstractFormDelegate {
+                id: genreDelegate
+
+                required property var modelData
+
+                contentItem: ColumnLayout {
+                    spacing: Kirigami.Units.smallSpacing
+
+                    RowLayout {
+                        spacing: Kirigami.Units.smallSpacing
+
+                        Layout.fillWidth: true
+
+                        Controls.Label {
+                            text: genreDelegate.modelData;
+                            Layout.fillWidth: true
+                        }
+
+                        Controls.Button {
+                            icon.name: "list-remove-symbolic"
+                            text: i18nc("@action:button", "Remove genre")
+                            display: Controls.Button.IconOnly
+                            onClicked: {
+                                root.model.setDirty();
+                                root.model.acbfData.metaData.bookInfo.removeGenre(genreDelegate.modelData);
+                            }
+                        }
+                    }
+
+                    Controls.Slider {
+                        from: 0;
+                        to: 100;
+                        stepSize: 1.0;
+                        width: genreText.width;
+                        value: root.model.acbfData.metaData.bookInfo.genrePercentage(genreDelegate.modelData);
+                        onValueChanged: {
+                            if(value > 0 && value !== root.model.acbfData.metaData.bookInfo.genrePercentage(genreDelegate.modelData)) {
+                                root.model.acbfData.metaData.bookInfo.setGenre(genreDelegate.modelData, value);
+                                root.model.setDirty();
+                            }
+                        }
+
+                        Layout.fillWidth: true
+                    }
+                }
+
+                background: Item {
+                    FormCard.FormDelegateSeparator {
                         anchors {
-                            left: parent.right;
-                            leftMargin: Kirigami.Units.smallSpacing;
-                        }
-                        contentItem: Kirigami.Icon {
-                            source: "list-remove";
-                        }
-                        height: parent.height;
-                        width: height;
-                        onClicked: {
-                            root.model.setDirty();
-                            root.model.acbfData.metaData.bookInfo.removeGenre(modelData);
+                            left: parent.left
+                            right: parent.right
+                            bottom: parent.bottom
                         }
                     }
                 }
-                QtControls.Slider {
-                    anchors {
-                        top: genreText.bottom;
-                        topMargin: Kirigami.Units.smallSpacing;
-                    }
-                    from: 0;
-                    to: 100;
-                    stepSize: 1.0;
-                    width: genreText.width;
-                    value: root.model.acbfData.metaData.bookInfo.genrePercentage(modelData);
-                    onValueChanged: {
-                        if(value > 0 && value !== root.model.acbfData.metaData.bookInfo.genrePercentage(modelData)) {
-                            root.model.acbfData.metaData.bookInfo.setGenre(modelData, value);
-                            root.model.setDirty();
-                        }
-                    }
-                }
-            }
-        }
-        Item { width: parent.width; height: Kirigami.Units.smallSpacing; }
-        QtControls.ComboBox {
-            width: parent.width - addGenreButton.width - Kirigami.Units.smallSpacing;
-            model: root.model.acbfData ? root.model.acbfData.metaData.bookInfo.availableGenres().filter(checkGenreInUse) : 0;
-            Keys.onReturnPressed: addGenre();
-            function addGenre() {
-                root.model.acbfData.metaData.bookInfo.setGenre(currentText);
-                root.model.setDirty();
-                currentIndex=0;
-            }
-            function checkGenreInUse (genre) {
-                return root.model.acbfData.metaData.bookInfo.genres.indexOf(genre) === -1;
-            }
-
-            QtControls.Button {
-                id: addGenreButton;
-                anchors {
-                    left: parent.right;
-                    leftMargin: Kirigami.Units.smallSpacing;
-                }
-                contentItem: Kirigami.Icon {
-                    source: "list-add";
-                }
-                height: parent.height;
-                width: height;
-                onClicked: parent.addGenre();
             }
         }
 
-        Kirigami.Heading {
-            width: parent.width;
-            height: paintedHeight + Kirigami.Units.smallSpacing * 2;
-            text: i18nc("label text for the edit field for the character list", "Characters");
+        FormCard.AbstractFormDelegate {
+            contentItem: RowLayout {
+                spacing: Kirigami.Units.smallSpacing
+
+                Controls.ComboBox {
+                    id: addGenreCombo
+
+                    model: root.model.acbfData ? root.model.acbfData.metaData.bookInfo.availableGenres().filter(checkGenreInUse) : 0;
+                    onAccepted: addGenre();
+                    Layout.fillWidth: true
+
+                    function addGenre(): void {
+                        root.model.acbfData.metaData.bookInfo.setGenre(currentText);
+                        root.model.setDirty();
+                        currentIndex = 0;
+                    }
+
+                    function checkGenreInUse(genre: string): bool {
+                        return root.model.acbfData.metaData.bookInfo.genres.indexOf(genre) === -1;
+                    }
+                }
+
+                Controls.Button {
+                    id: addGenreButton
+                    icon.name: "list-add-symbolic"
+                    onClicked: addGenreCombo.addGenre();
+                }
+            }
+            background: null
         }
+    }
+
+    FormCard.FormHeader {
+        title: i18nc("@title:group", "Characters")
+    }
+
+    FormCard.FormCard {
         Repeater {
             model: root.model.acbfData ? root.model.acbfData.metaData.bookInfo.characters : 0;
-            delegate: QtControls.TextField {
-                width: parent.width - removeCharacterButton.width - Kirigami.Units.smallSpacing;
-                text: modelData;
-                onEditingFinished: root.model.acbfData.metaData.bookInfo.characters[index] = text;
-                QtControls.Button {
-                    id: removeCharacterButton;
-                    anchors {
-                        left: parent.right;
-                        leftMargin: Kirigami.Units.smallSpacing;
-                    }
-                    contentItem: Kirigami.Icon {
-                        source: "list-remove";
-                    }
-                    height: parent.height;
-                    width: height;
-                    onClicked: {
-                        root.model.setDirty();
-                        root.model.acbfData.metaData.bookInfo.removeCharacter(modelData);
-                    }
-                }
-            }
-        }
-        Item { width: parent.width; height: Kirigami.Units.smallSpacing; }
-        QtControls.TextField {
-            width: parent.width - addCharacterButton.width - Kirigami.Units.smallSpacing;
-            placeholderText: i18nc("placeholder text for the add new character text entry", "Write to add new character");
-            Keys.onReturnPressed: addCharacter();
-            function addCharacter() {
-                if(text !== "") {
-                    root.model.acbfData.metaData.bookInfo.addCharacter(text);
-                    root.model.setDirty();
-                    text = "";
-                }
-            }
+            delegate: FormCard.AbstractFormDelegate {
+                contentItem: RowLayout {
+                    spacing: Kirigami.Units.smallSpacing
 
-            QtControls.Button {
-                id: addCharacterButton;
-                anchors {
-                    left: parent.right;
-                    leftMargin: Kirigami.Units.smallSpacing;
+                    Controls.TextField {
+                        text: modelData
+                        onEditingFinished: root.model.acbfData.metaData.bookInfo.characters[index] = text;
+                        Layout.fillWidth: true
+                    }
+
+                    Controls.Button {
+                        id: removeCharacterButton
+                        icon.name: "list-remove-symbolic"
+                        onClicked: {
+                            root.model.setDirty();
+                            root.model.acbfData.metaData.bookInfo.removeCharacter(modelData);
+                        }
+                    }
                 }
-                contentItem: Kirigami.Icon {
-                    source: "list-add";
+                background: Item {
+                    FormCard.FormDelegateSeparator {
+                        anchors {
+                            left: parent.left
+                            right: parent.right
+                            bottom: parent.bottom
+                        }
+                    }
                 }
-                height: parent.height;
-                width: height;
-                onClicked: parent.addCharacter();
             }
         }
 
-        Kirigami.Heading {
-            width: parent.width;
-            height: paintedHeight + Kirigami.Units.smallSpacing * 2;
-            text: i18nc("label text for the edit field for the sequence list", "Sequence");
+        FormCard.AbstractFormDelegate {
+            contentItem: RowLayout {
+                spacing: Kirigami.Units.smallSpacing
+
+                Layout.fillWidth: true
+
+                Controls.TextField {
+                    id: newCharacterField
+                    placeholderText: i18nc("placeholder text for the add new character text entry", "Write to add new character");
+                    onAccepted: addCharacter();
+                    Layout.fillWidth: true
+
+                    function addCharacter(): void {
+                        if (text !== "") {
+                            root.model.acbfData.metaData.bookInfo.addCharacter(text);
+                            root.model.setDirty();
+                            text = "";
+                        }
+                    }
+                }
+
+                Controls.Button {
+                    id: addCharacterButton;
+                    icon.name: "list-add-symbolic"
+                    onClicked: newCharacterField.addCharacter();
+                }
+            }
+            background: null
         }
+    }
+
+    FormCard.FormHeader {
+        title: i18nc("@title:group", "Sequence")
+    }
+
+    FormCard.FormCard {
         Repeater {
             id: sequenceListRepeater;
             model: root.model.acbfData ? root.model.acbfData.metaData.bookInfo.sequenceCount : 0;
-            delegate: Item {
-                width: parent.width;
-                height: childrenRect.height;
+            delegate: FormCard.AbstractFormDelegate {
+                id: serieDelegate
 
-                function updateSeries() {
+                function updateSeries(): void {
                     root.model.acbfData.metaData.bookInfo.sequence(modelData).title = seriesTextField.text;
                     if (numberField.value !== root.model.acbfData.metaData.bookInfo.sequence(modelData).number) {
                         root.model.acbfData.metaData.bookInfo.sequence(modelData).number = numberField.value;
@@ -350,88 +381,88 @@ Kirigami.ScrollablePage {
                     root.model.setDirty();
                 }
 
-                QtControls.TextField {
-                    id: seriesTextField;
-                    width: parent.width - removeSequenceButton.width - Kirigami.Units.smallSpacing;
-                    text: root.model.acbfData.metaData.bookInfo.sequence(modelData).title;
-                    onEditingFinished: parent.updateSeries();
-                }
+                contentItem: ColumnLayout {
+                    spacing: Kirigami.Units.smallSpacing
 
-                QtControls.Label {
-                    text: i18nc("Label for sequence number","Number:");
-                    id: sequenceNumberLabel;
-                    height:numberField.height;
-                    anchors {
-                        top: seriesTextField.bottom;
-                        topMargin: Kirigami.Units.smallSpacing;
-                    }
-                }
-                QtControls.SpinBox {
-                    anchors {
-                        top: seriesTextField.bottom;
-                        topMargin: Kirigami.Units.smallSpacing;
-                        left: sequenceNumberLabel.right;
-                        leftMargin: Kirigami.Units.smallSpacing;
-                    }
-                    value : root.model.acbfData.metaData.bookInfo.sequence(modelData).number;
-                    width : ((seriesTextField.width+Kirigami.Units.smallSpacing)/2)-(sequenceNumberLabel.width+Kirigami.Units.smallSpacing);
-                    id: numberField;
-                    onValueChanged: parent.updateSeries();
-                    from: 0;
-                    to: 99999;
-                    editable: true;
-                }
-                QtControls.Label {
-                    text: i18nc("Label for sequence volume","Volume:");
-                    id: sequenceVolumeLabel;
-                    height:volumeField.height;
-                    anchors {
-                        left: numberField.right;
-                        leftMargin: Kirigami.Units.smallSpacing;
-                        top: seriesTextField.bottom;
-                        topMargin: Kirigami.Units.smallSpacing;
+                    RowLayout {
+                        spacing: Kirigami.Units.smallSpacing
+
+                        Layout.fillWidth: true
+
+                        Controls.TextField {
+                            id: seriesTextField;
+                            text: root.model.acbfData.metaData.bookInfo.sequence(modelData).title;
+                            onEditingFinished: serieDelegate.updateSeries();
+                        }
+
+                        Controls.Button {
+                            icon.name: "list-remove-symbolic"
+                            onClicked: {
+                                root.model.setDirty();
+                                root.model.acbfData.metaData.bookInfo.removeSequence(index);
+                            }
+                        }
                     }
 
+                    RowLayout {
+                        spacing: Kirigami.Units.smallSpacing
+
+                        Layout.fillWidth: true
+
+                        Controls.Label {
+                            id: sequenceNumberLabel;
+                            text: i18nc("Label for sequence number","Number:");
+                        }
+                        Controls.SpinBox {
+                            id: numberField;
+                            value : root.model.acbfData.metaData.bookInfo.sequence(modelData).number;
+                            onValueChanged: serieDelegate.updateSeries();
+                            from: 0;
+                            to: 99999;
+                            editable: true;
+                            Layout.fillWidth: true
+                        }
+                    }
+
+                    RowLayout {
+                        spacing: Kirigami.Units.smallSpacing
+
+                        Layout.fillWidth: true
+
+                        Controls.Label {
+                            id: sequenceVolumeLabel
+                            text: i18nc("Label for sequence volume","Volume:");
+                        }
+
+                        Controls.SpinBox {
+                            id: volumeField
+                            value : root.model.acbfData.metaData.bookInfo.sequence(modelData).volume;
+                            onValueChanged: serieDelegate.updateSeries();
+                            from: 0;
+                            to: 99999;
+                            editable: true;
+                        }
+                    }
                 }
-                QtControls.SpinBox {
-                    anchors {
-                        left: sequenceVolumeLabel.right;
-                        leftMargin: Kirigami.Units.smallSpacing;
-                        top: seriesTextField.bottom;
-                        topMargin: Kirigami.Units.smallSpacing;
-                    }
-                    value : root.model.acbfData.metaData.bookInfo.sequence(modelData).volume;
-                    width : (seriesTextField.width/2)-(Kirigami.Units.smallSpacing*1.5)-(sequenceVolumeLabel.width+Kirigami.Units.smallSpacing);
-                    id: volumeField;
-                    onValueChanged: parent.updateSeries();
-                    from: 0;
-                    to: 99999;
-                    editable: true;
-                }
-                QtControls.Button {
-                    id: removeSequenceButton;
-                    anchors {
-                        left: seriesTextField.right;
-                        leftMargin: Kirigami.Units.smallSpacing;
-                    }
-                    contentItem: Kirigami.Icon {
-                        source: "list-remove";
-                    }
-                    height: seriesTextField.height;
-                    width: height;
-                    onClicked: {
-                        root.model.setDirty();
-                        root.model.acbfData.metaData.bookInfo.removeSequence(index);
+                background: Item {
+                    FormCard.FormDelegateSeparator {
+                        anchors {
+                            left: parent.left
+                            right: parent.right
+                            bottom: parent.bottom
+                        }
                     }
                 }
             }
         }
-        Item { width: parent.width; height: Kirigami.Units.smallSpacing; }
-        QtControls.TextField {
-            width: parent.width - addSequenceButton.width - Kirigami.Units.smallSpacing;
-            placeholderText: i18nc("placeholder text for the add new series text entry", "Write to add new series");
-            Keys.onReturnPressed:addSequence();
-            function addSequence() {
+
+        FormCard.FormTextFieldDelegate {
+            id: addNewSerieDelegate
+
+            label: i18nc("@label:textfield", "New serie");
+            onAccepted: addSequence();
+
+            function addSequence(): void {
                 if(text !== "") {
                     root.model.acbfData.metaData.bookInfo.addSequence(0, text);
                     root.model.setDirty();
@@ -439,248 +470,295 @@ Kirigami.ScrollablePage {
                 }
             }
 
-            QtControls.Button {
-                id: addSequenceButton;
-                anchors {
-                    left: parent.right;
-                    leftMargin: Kirigami.Units.smallSpacing;
-                }
-                contentItem: Kirigami.Icon {
-                    source: "list-add";
-                }
-                height: parent.height;
-                width: height;
-                onClicked: parent.addSequence();
+            trailing: Controls.Button {
+                icon.name: "list-add-symbolic"
+                onClicked: addNewSerieDelegate.addSequence();
             }
         }
+    }
 
-        Kirigami.Heading {
-            width: parent.width;
-            height: paintedHeight + Kirigami.Units.smallSpacing * 2;
-            text: i18nc("label text for the edit field for the database reference list", "Database References");
-        }
+    FormCard.FormHeader {
+        title: i18nc("@title:group", "Database References")
+    }
+
+    FormCard.FormCard {
         Repeater {
             model: root.model.acbfData ? root.model.acbfData.metaData.bookInfo.databaseRefCount : 0;
-            delegate: Item {
-                width: parent.width;
-                height: childrenRect.height;
+            delegate: FormCard.AbstractFormDelegate {
+                id: referenceDelegate
 
-                function updateDatabaseRef() {
+                Layout.fillWidth: true
+
+                function updateDatabaseRef(): void {
                     root.model.acbfData.metaData.bookInfo.databaseRef(modelData).reference = referenceTextField.text
                     root.model.acbfData.metaData.bookInfo.databaseRef(modelData).dbname = databaseNameField.text
                     root.model.acbfData.metaData.bookInfo.databaseRef(modelData).type = referenceTypeField.text
                     root.model.setDirty();
                 }
 
-                QtControls.TextField {
-                    id: referenceTextField;
-                    width: parent.width - removeReferenceButton.width - Kirigami.Units.smallSpacing;
-                    text: root.model.acbfData.metaData.bookInfo.databaseRef(modelData).reference;
-                    onEditingFinished: parent.updateDatabaseRef();
-                }
-                QtControls.TextField {
-                    anchors {
-                        top: referenceTextField.bottom;
-                        topMargin: Kirigami.Units.smallSpacing;
-                    }
-                    width : (referenceTextField.width+Kirigami.Units.smallSpacing)/2;
-                    id: databaseNameField;
-                    text: root.model.acbfData.metaData.bookInfo.databaseRef(modelData).dbname;
-                    onEditingFinished: parent.updateDatabaseRef();
-                }
-                QtControls.TextField {
-                    anchors {
-                        left: databaseNameField.right;
-                        leftMargin: Kirigami.Units.smallSpacing;
-                        top: referenceTextField.bottom;
-                        topMargin: Kirigami.Units.smallSpacing;
-                    }
-                    width : (referenceTextField.width/2)-(Kirigami.Units.smallSpacing*1.5);
-                    id: referenceTypeField;
-                    text: root.model.acbfData.metaData.bookInfo.databaseRef(modelData).type;
-                    placeholderText: i18nc("placeholder text for the add reference type text entry", "Write to add reference type");
-                    onEditingFinished: parent.updateDatabaseRef();
-                }
-                QtControls.Button {
-                    id: removeReferenceButton;
-                    anchors {
-                        left: referenceTextField.right;
-                        leftMargin: Kirigami.Units.smallSpacing;
-                    }
-                    contentItem: Kirigami.Icon {
-                        source: "list-remove";
-                    }
-                    height: referenceTextField.height;
-                    width: height;
-                    onClicked: {
-                        root.model.setDirty();
-                        root.model.acbfData.metaData.bookInfo.removeDatabaseRef(index);
-                    }
-                }
-            }
-        }
-        Item { width: parent.width; height: Kirigami.Units.smallSpacing; }
-        Item {
-             width: parent.width;
-             height: childrenRect.height;
-            function addReference() {
-                if(addReferenceField.text !== "" && addDatabaseNameField.text !== "") {
-                    root.model.acbfData.metaData.bookInfo.addDatabaseRef(addReferenceField.text, addDatabaseNameField.text);
-                    root.model.setDirty();
-                    addReferenceField.text = "";
-                    addDatabaseNameField.text = "";
-                }
-            }
+                contentItem: ColumnLayout {
+                    spacing: Kirigami.Units.smallSpacing
+                    RowLayout {
+                        spacing: Kirigami.Units.smallSpacing
 
-            QtControls.TextField {
-                id: addReferenceField
-                width: parent.width - addReferenceButton.width - Kirigami.Units.smallSpacing;
-                placeholderText: i18nc("placeholder text for the add new reference text entry", "Write to add new reference");
-                Keys.onReturnPressed: parent.addReference();
-            }
-            QtControls.TextField {
-                id: addDatabaseNameField
-                anchors {
-                    top: addReferenceField.bottom;
-                    topMargin: Kirigami.Units.smallSpacing;
+                        Layout.fillWidth: true
+
+                        Controls.Label {
+                            text: i18nc("@label:textfield", "Reference:")
+                        }
+
+                        Controls.TextField {
+                            id: referenceTextField
+                            text: root.model.acbfData.metaData.bookInfo.databaseRef(modelData).reference;
+                            onEditingFinished: referenceDelegate.updateDatabaseRef();
+                            Layout.fillWidth: true
+                        }
+
+                        Controls.Button {
+                            id: removeReferenceButton
+                            icon.name: "list-remove-symbolic"
+                            onClicked: {
+                                root.model.setDirty();
+                                root.model.acbfData.metaData.bookInfo.removeDatabaseRef(index);
+                            }
+                        }
+                    }
+
+                    RowLayout {
+                        spacing: Kirigami.Units.smallSpacing
+
+                        Layout.fillWidth: true
+
+                        Controls.Label {
+                            text: i18nc("@label:textfield", "Database name:")
+                        }
+
+                        Controls.TextField {
+                            id: databaseNameField;
+                            text: root.model.acbfData.metaData.bookInfo.databaseRef(modelData).dbname;
+                            onEditingFinished: referenceDelegate.updateDatabaseRef();
+                            Layout.fillWidth: true
+                        }
+                    }
+
+                    RowLayout {
+                        spacing: Kirigami.Units.smallSpacing
+
+                        Layout.fillWidth: true
+
+                        Controls.Label {
+                            text: i18nc("@label:textfield", "Reference type:")
+                        }
+
+                        Controls.TextField {
+                            id: referenceTypeField
+                            text: root.model.acbfData.metaData.bookInfo.databaseRef(modelData).type;
+                            onEditingFinished: referenceDelegate.updateDatabaseRef();
+                        }
+                    }
                 }
-                width: parent.width - addReferenceButton.width - Kirigami.Units.smallSpacing;
-                placeholderText: i18nc("placeholder text for the add databasename text entry", "Write to add database name for new reference.");
-                Keys.onReturnPressed: parent.addReference();
-            }
-            QtControls.Button {
-                id: addReferenceButton;
-                anchors {
-                    left: addReferenceField.right;
-                    leftMargin: Kirigami.Units.smallSpacing;
+
+                background: Item {
+                    FormCard.FormDelegateSeparator {
+                        anchors {
+                            left: parent.left
+                            right: parent.right
+                            bottom: parent.bottom
+                        }
+                    }
                 }
-                contentItem: Kirigami.Icon {
-                    source: "list-add";
-                }
-                height: addReferenceField.height;
-                width: height;
-                onClicked: parent.addReference();
             }
         }
 
-        Kirigami.Heading {
-            width: parent.width;
-            height: paintedHeight + Kirigami.Units.smallSpacing * 2;
-            text: i18nc("label text for the edit field for the content rating list", "Content Ratings");
+
+        FormCard.AbstractFormDelegate {
+            id: addReferenceDelegate
+
+            function addReference(): void {
+                if (addReferenceField.text === "" || addDatabaseNameField.text === "") {
+                    return;
+                }
+                root.model.acbfData.metaData.bookInfo.addDatabaseRef(addReferenceField.text, addDatabaseNameField.text);
+                root.model.setDirty();
+                addReferenceField.text = "";
+                addDatabaseNameField.text = "";
+            }
+
+            background: null
+            contentItem: ColumnLayout {
+                spacing: Kirigami.Units.smallSpacing
+
+                RowLayout {
+                    spacing: Kirigami.Units.smallSpacing
+
+                    Controls.Label {
+                        text: i18nc("@label:textfield", "Reference:")
+                    }
+
+                    Controls.TextField {
+                        id: addReferenceField
+                        onAccepted: addDatabaseNameField.forceActiveFocus();
+                        Layout.fillWidth: true
+                    }
+                }
+
+                RowLayout {
+                    spacing: Kirigami.Units.smallSpacing
+
+                    Controls.Label {
+                        text: i18nc("@label:textfield", "Database name:")
+                    }
+
+                    Controls.TextField {
+                        id: addDatabaseNameField
+                        onAccepted: addReferenceDelegate.addReference();
+                        Layout.fillWidth: true
+                    }
+
+                    Controls.Button {
+                        icon.name: "list-add-symbolic"
+                        onClicked: addReferenceDelegate.addReference();
+                    }
+                }
+            }
         }
+    }
+
+    FormCard.FormHeader {
+        title: i18nc("@title:group", "Content Ratings")
+    }
+
+    FormCard.FormCard {
         Repeater {
             model: root.model.acbfData ? root.model.acbfData.metaData.bookInfo.contentRatingCount : 0;
-            delegate: Item {
-                width: parent.width;
-                height: childrenRect.height;
+            delegate: FormCard.AbstractFormDelegate {
+                id: ratingDelegate
 
-                function updateRating() {
+                function updateRating(): void {
                     root.model.acbfData.metaData.bookInfo.contentRating(modelData).rating = ratingNameField.text
                     root.model.acbfData.metaData.bookInfo.contentRating(modelData).type = systemNameField.text
                     root.model.setDirty();
                 }
 
-                QtControls.TextField {
-                    width : (parent.width-removeRatingButton.width+Kirigami.Units.smallSpacing)/2;
-                    id: ratingNameField;
-                    text: root.model.acbfData.metaData.bookInfo.contentRating(modelData).rating;
-                    placeholderText: i18nc("placeholder text for the add content rating text entry", "Write to add rating label.");
-                    onEditingFinished: parent.updateRating();
-                }
-                QtControls.TextField {
-                    anchors {
-                        left: ratingNameField.right;
-                        leftMargin: Kirigami.Units.smallSpacing;
+                contentItem: ColumnLayout {
+                    spacing: Kirigami.Units.smallSpacing
+
+                    Layout.fillWidth: true
+
+
+                    Controls.TextField {
+                        id: ratingNameField;
+                        text: root.model.acbfData.metaData.bookInfo.contentRating(modelData).rating;
+                        placeholderText: i18nc("placeholder text for the add content rating text entry", "Write to add rating label.");
+                        onEditingFinished: ratingDelegate.updateRating();
+                        Layout.fillWidth: true
                     }
-                    width : ((parent.width-removeRatingButton.width)/2)-(Kirigami.Units.smallSpacing*1.5);
-                    id: systemNameField;
-                    text: root.model.acbfData.metaData.bookInfo.contentRating(modelData).type;
-                    placeholderText: i18nc("placeholder text for the add content rating system text entry", "Write to add rating system.");
-                    onEditingFinished: parent.updateRating();
-                }
-                QtControls.Button {
-                    id: removeRatingButton;
-                    anchors {
-                        left: systemNameField.right;
-                        leftMargin: Kirigami.Units.smallSpacing;
+
+                    RowLayout {
+                        spacing: Kirigami.Units.smallSpacing
+
+                        Layout.fillWidth: true
+
+                        Controls.TextField {
+                            id: systemNameField
+                            text: root.model.acbfData.metaData.bookInfo.contentRating(modelData).type
+                            placeholderText: i18nc("placeholder text for the add content rating system text entry", "Write to add rating system.");
+                            onEditingFinished: ratingDelegate.updateRating();
+                            Layout.fillWidth: true
+                        }
+
+                        Controls.Button {
+                            id: removeRatingButton
+                            icon.name: "list-remove-symbolic"
+                            onClicked: {
+                                root.model.setDirty();
+                                root.model.acbfData.metaData.bookInfo.removeContentRating(index);
+                            }
+                        }
                     }
-                    contentItem: Kirigami.Icon {
-                        source: "list-remove";
+                }
+
+                background: Item {
+                    FormCard.FormDelegateSeparator {
+                        anchors {
+                            left: parent.left
+                            right: parent.right
+                            bottom: parent.bottom
+                        }
                     }
-                    height: systemNameField.height;
-                    width: height;
-                    onClicked: {
-                        root.model.setDirty();
-                        root.model.acbfData.metaData.bookInfo.removeContentRating(index);
-                    }
                 }
             }
-        }
-        Item {
-            width: parent.width;
-            height: childrenRect.height;
-            function addRating() {
-                if(addRatingField.text !== "" && addSystemField.text !== "") {
-                    root.model.acbfData.metaData.bookInfo.addContentRating(addRatingField.text, addSystemField.text);
-                    root.model.setDirty();
-                    addRatingField.text = "";
-                    addSystemField.text = "";
-                }
-            }
-            QtControls.TextField {
-                width : (parent.width-addRatingButton.width+Kirigami.Units.smallSpacing)/2;
-                id: addRatingField;
-                placeholderText: i18nc("placeholder text for the add content rating text entry", "Write to add rating label.");
-                onEditingFinished: parent.addRating();
-            }
-            QtControls.TextField {
-                anchors {
-                    left: addRatingField.right;
-                    leftMargin: Kirigami.Units.smallSpacing;
-                }
-                width : ((parent.width-addRatingButton.width)/2)-(Kirigami.Units.smallSpacing*1.5);
-                id: addSystemField;
-                placeholderText: i18nc("placeholder text for the add content rating system text entry", "Write to add rating system.");
-                onEditingFinished: parent.addRating();
-            }
-            QtControls.Button {
-                id: addRatingButton;
-                anchors {
-                    left: addSystemField.right;
-                    leftMargin: Kirigami.Units.smallSpacing;
-                }
-                contentItem: Kirigami.Icon {
-                    source: "list-add";
-                }
-                height: addSystemField.height;
-                width: height;
-                onClicked: parent.addRating();
-            }
-        }
-        Kirigami.Heading {
-            width: parent.width;
-            height: paintedHeight + Kirigami.Units.smallSpacing * 2;
-            text: i18nc("label text for the form for reading direction.", "Reading Direction");
-        }
-        QtControls.CheckBox {
-            width: parent.width;
-            text: i18nc("label text for right to left checkbox.", "Right to left.");
-            checked: root.model.acbfData.metaData.bookInfo.rightToLeft;
-            onCheckStateChanged: root.model.acbfData.metaData.bookInfo.rightToLeft = checked;
         }
 
-        Kirigami.Heading {
-            width: parent.width;
-            height: paintedHeight + Kirigami.Units.smallSpacing * 2;
-            text: i18nc("label text for the form for the publishing info list", "Publisher Info");
+        FormCard.AbstractFormDelegate {
+            id: addRatingDelegate
+
+            function addRating(): void {
+                if (addRatingField.text === "" || addSystemField.text === "") {
+                    return;
+                }
+                root.model.acbfData.metaData.bookInfo.addContentRating(addRatingField.text, addSystemField.text);
+                root.model.setDirty();
+                addRatingField.text = "";
+                addSystemField.text = "";
+            }
+
+            contentItem: ColumnLayout {
+                spacing: Kirigami.Units.smallSpacing
+
+                Layout.fillWidth: true
+
+                RowLayout {
+                    spacing: Kirigami.Units.smallSpacing
+
+                    Layout.fillWidth: true
+
+                    Controls.Label {
+                        text: i18nc("@label:textfield", "Review title");
+                    }
+
+                    Controls.TextField {
+                        id: addRatingField
+                        onEditingFinished: addSystemField.forceActiveFocus();
+                        Layout.fillWidth: true
+                    }
+                }
+
+                RowLayout {
+                    spacing: Kirigami.Units.smallSpacing
+
+                    Layout.fillWidth: true
+
+                    Controls.Label {
+                        text: i18nc("@label:textfield", "Description");
+                    }
+
+                    Controls.TextField {
+                        id: addSystemField;
+                        Layout.fillWidth: true
+                        onEditingFinished: addRatingDelegate.addRating();
+                    }
+
+                    Controls.Button {
+                        id: addRatingButton;
+                        icon.name: "list-add-symbolic"
+                        onClicked: addRatingDelegate.addRating();
+                    }
+                }
+            }
+            background: null
         }
-        QtControls.Label {
-            text: i18nc("Label for publisher", "Publisher:");
-        }
-        QtControls.TextField {
-            width : parent.width;
-            id: publisher;
-            placeholderText: i18nc("placeholder text for the publisher entry", "Write to add publisher");
+    }
+
+    FormCard.FormHeader {
+        title: i18nc("@title:group", "Publisher Info")
+    }
+
+    FormCard.FormCard {
+        FormCard.FormTextFieldDelegate {
+            id: publisher
+            label: i18nc("Label for publisher", "Publisher:")
+            placeholderText: i18nc("placeholder text for the publisher entry", "Write to add publisher")
             text: root.model.acbfData? root.model.acbfData.metaData.publishInfo.publisher: "";
             onEditingFinished: {
                 if (root.model.acbfData && text !=="") {
@@ -689,63 +767,25 @@ Kirigami.ScrollablePage {
                 }
             }
         }
-        QtControls.Label {
-            text: i18nc("Label for publishing date", "Publishing Date:");
-        }
-        Item {
-            width : parent.width;
-            id: publishingDate;
-            height: childrenRect.height;
-            property date publishingDate: root.model.acbfData.metaData.publishInfo.publishDate;
-            function changePublishDate() {
-                root.model.acbfData.metaData.publishInfo.setPublishDateFromInts(pdYear.text, (pdMonth.currentIndex+1), pdDate.value);
+
+        FormCard.FormDelegateSeparator {}
+
+        FormCard.FormDateTimeDelegate {
+            text: i18nc("Label for publishing date", "Publishing Date:")
+            dateTimeDisplay: FormCard.FormDateTimeDelegate.DateTimeDisplay.Date
+            initialValue: root.model.acbfData.metaData.publishInfo.publishDate
+            onValueChanged: {
+                root.model.acbfData.metaData.publishInfo.publishDate = value;
                 root.model.setDirty();
             }
-            QtControls.TextField {
-                id: pdYear
-                width: (parent.width-(Kirigami.Units.smallSpacing*2))/3;
-                text: parent.publishingDate.getFullYear();
-                onEditingFinished: parent.changePublishDate();
-                inputMask: "9999"
-                inputMethodHints: Qt.ImhFormattedNumbersOnly;
-            }
-            QtControls.ComboBox {
-                id: pdMonth
-                anchors {
-                    left: pdYear.right;
-                    margins: Kirigami.Units.smallSpacing;
-                }
-                model: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-                width: (parent.width-(Kirigami.Units.smallSpacing*2))/3;
-                currentIndex: parent.publishingDate.getMonth();
-                displayText: Qt.locale().monthName(currentText, Locale.LongFormat);
-                onActivated: parent.changePublishDate();
-                delegate: QtControls.ItemDelegate {
-                    text:Qt.locale().monthName(modelData, Locale.LongFormat);
-                }
-            }
-            QtControls.SpinBox {
-                id: pdDate
-                anchors {
-                    left: pdMonth.right;
-                    margins: Kirigami.Units.smallSpacing;
-                }
-                width: (parent.width-(Kirigami.Units.smallSpacing*2))/3;
-                height: pdMonth.height;
-                from: 1;
-                to: 31;
-                editable: true;
-                value: parent.publishingDate.getDate();
-                onValueChanged: parent.changePublishDate();
-            }
         }
-        QtControls.Label {
-            text: i18nc("Label for city", "City:");
-        }
-        QtControls.TextField {
-            width : parent.width;
-            id: city;
-            placeholderText: i18nc("placeholder text for the publishing city entry", "Write to add city");
+
+        FormCard.FormDelegateSeparator {}
+
+        FormCard.FormTextFieldDelegate {
+            id: city
+
+            label: i18nc("Label for city", "City:")
             text: root.model.acbfData? root.model.acbfData.metaData.publishInfo.city: "";
             onEditingFinished: {
                 if (root.model.acbfData && text !=="") {
@@ -754,14 +794,13 @@ Kirigami.ScrollablePage {
                 }
             }
         }
-        QtControls.Label {
-            text: i18nc("Label for ISBN", "ISBN:");
-        }
 
-        QtControls.TextField {
-            width : parent.width;
-            id: isbn;
-            placeholderText: i18nc("placeholder text for the publishing ISBN entry", "Write to add ISBN");
+        FormCard.FormDelegateSeparator {}
+
+        FormCard.FormTextFieldDelegate {
+            id: isbn
+
+            label: i18nc("Label for ISBN", "ISBN:");
             text: root.model.acbfData? root.model.acbfData.metaData.publishInfo.isbn: "";
             onEditingFinished: {
                 if (root.model.acbfData && text !=="") {
@@ -770,13 +809,13 @@ Kirigami.ScrollablePage {
                 }
             }
         }
-        QtControls.Label {
-            text: i18nc("Label for license", "License:");
-        }
-        QtControls.TextField {
-            width : parent.width;
-            id: license;
-            placeholderText: i18nc("placeholder text for the publishing license entry", "Write to add license");
+
+        FormCard.FormDelegateSeparator {}
+
+        FormCard.FormTextFieldDelegate {
+            id: license
+
+            label: i18nc("Label for license", "License:");
             text: root.model.acbfData? root.model.acbfData.metaData.publishInfo.license: "";
             onEditingFinished: {
                 if (root.model.acbfData && text !=="") {
@@ -785,59 +824,63 @@ Kirigami.ScrollablePage {
                 }
             }
         }
-        Kirigami.Heading {
-            width: parent.width;
-            height: paintedHeight + Kirigami.Units.smallSpacing * 2;
-            text: i18nc("label text for the form for the document info list", "Document Authors");
-        }
+    }
 
+    FormCard.FormHeader {
+        title: i18nc("@title:group", "Document Authors");
+    }
+
+    FormCard.FormCard {
         Repeater {
             id: docAuthorRepeater;
             model: root.model.acbfData ? root.model.acbfData.metaData.documentInfo.authorNames : 0;
-            delegate: QtControls.Label {
-                width: parent.width - removeDocAuthorButton.width - Kirigami.Units.smallSpacing;
-                text: modelData.length > 0 ? modelData : i18nc("The text used in place of an author's name if one has not been set", "(unnamed)");
-                QtControls.Button {
-                    id: editDocAuthorButton;
-                    anchors {
-                        right: removeDocAuthorButton.left;
-                        leftMargin: Kirigami.Units.smallSpacing;
+            delegate: FormCard.AbstractFormDelegate {
+                contentItem: RowLayout {
+                    spacing: Kirigami.Units.smallSpacing
+
+                    Controls.Label {
+                        text: modelData.length > 0 ? modelData : i18nc("The text used in place of an author's name if one has not been set", "(unnamed)");
+                        Layout.fillWidth: true
                     }
-                    contentItem: Kirigami.Icon {
-                        source: "document-edit";
+
+                    Controls.Button {
+                        icon.name: "document-edit-symbolic"
+                        onClicked: {
+                            const window = root.Controls.ApplicationWindow.window.pageStack.pushDialogLayer(docAuthorEditor, {
+                                index: model.index,
+                            });
+                        }
                     }
-                    height: parent.height;
-                    width: height;
-                    onClicked: {
-                        docAuthorEditor.index = model.index;
-                        docAuthorEditor.open();
+
+                    Controls.Button {
+                        id: removeDocAuthorButton;
+                        icon.name: "list-remove-symbolic"
+                        onClicked: {
+                            // When removing, set the model dirty first, and then remove the entry to avoid reference errors.
+                            root.model.setDirty();
+                            root.model.acbfData.metaData.documentInfo.removeAuthor(index);
+                        }
                     }
                 }
-                QtControls.Button {
-                    id: removeDocAuthorButton;
-                    anchors {
-                        left: parent.right;
-                        leftMargin: Kirigami.Units.smallSpacing;
-                    }
-                    contentItem: Kirigami.Icon {
-                        source: "list-remove";
-                    }
-                    height: parent.height;
-                    width: height;
-                    onClicked: {
-                        // When removing, set the model dirty first, and then remove the entry to avoid reference errors.
-                        root.model.setDirty();
-                        root.model.acbfData.metaData.documentInfo.removeAuthor(index);
+                background: Item {
+                    FormCard.FormDelegateSeparator {
+                        anchors {
+                            left: parent.left
+                            right: parent.right
+                            bottom: parent.bottom
+                        }
                     }
                 }
             }
         }
-        Item { width: parent.width; height: Kirigami.Units.smallSpacing; }
-        QtControls.TextField {
-            width: parent.width - addDocAuthorButton.width - Kirigami.Units.smallSpacing;
-            placeholderText: i18nc("placeholder text for the add new author text entry", "Write to add new author (nickname)");
-            Keys.onReturnPressed: addAuthor();
-            function addAuthor() {
+
+        FormCard.FormTextFieldDelegate {
+            id: addAuthorDelegate
+
+            label: i18nc("@label:textfield", "New author (nickname)")
+            onAccepted: addAuthor()
+
+            function addAuthor(): void {
                 if(text !== "") {
                     // Just add an author where only the nickname is defined
                     root.model.acbfData.metaData.documentInfo.addAuthor("", "", "", "", "", text, [""], [""]);
@@ -846,61 +889,59 @@ Kirigami.ScrollablePage {
                 }
             }
 
-            QtControls.Button {
-                id: addDocAuthorButton;
-                anchors {
-                    left: parent.right;
-                    leftMargin: Kirigami.Units.smallSpacing;
-                }
-                contentItem: Kirigami.Icon {
-                    source: "list-add";
-                }
-                height: parent.height;
-                width: height;
-                onClicked: parent.addAuthor();
+            trailing: Controls.Button {
+                icon.name: "list-add-symbolic"
+                onClicked: addAuthorDelegate.addAuthor();
             }
         }
+    }
 
-        Kirigami.Heading {
-            width: parent.width;
-            height: paintedHeight + Kirigami.Units.smallSpacing * 2;
-            text: i18nc("label text for the form for the sources list", "Document Sources");
-        }
+    FormCard.FormHeader {
+        title: i18nc("@title:group", "Document Sources");
+    }
 
+    FormCard.FormCard {
         Repeater {
             model: root.model.acbfData ? root.model.acbfData.metaData.documentInfo.source : 0;
-            delegate: Item {
-                width: parent.width;
-                height: childrenRect.height;
-                QtControls.TextField {
-                    id: sourceText;
-                    width: parent.width - removeSourceButton.width - Kirigami.Units.smallSpacing;
-                    text: modelData;
-                    onEditingFinished: root.model.acbfData.metaData.documentInfo.sources[index] = text;
-                    QtControls.Button {
-                        id: removeSourceButton;
-                        anchors {
-                            left: parent.right;
-                            leftMargin: Kirigami.Units.smallSpacing;
-                        }
-                        contentItem: Kirigami.Icon {
-                            source: "list-remove";
-                        }
-                        height: parent.height;
-                        width: height;
+            FormCard.AbstractFormDelegate {
+                contentItem: RowLayout {
+                    spacing: Kirigami.Units.smallSpacing
+
+                    Controls.TextField {
+                        id: sourceText;
+                        text: modelData
+                        onEditingFinished: root.model.acbfData.metaData.documentInfo.sources[index] = text;
+                        Layout.fillWidth: true
+                    }
+
+                    Controls.Button {
+                        id: removeSourceButton
+                        icon.name: "list-remove-symbolic"
                         onClicked: {
                             root.model.setDirty();
                             root.model.acbfData.metaData.documentInfo.removeSource(index);
                         }
                     }
                 }
+                background: Item {
+                    FormCard.FormDelegateSeparator {
+                        anchors {
+                            left: parent.left
+                            right: parent.right
+                            bottom: parent.bottom
+                        }
+                    }
+                }
             }
         }
-        Item { width: parent.width; height: Kirigami.Units.smallSpacing; }
-        QtControls.TextField {
-            width: parent.width - addSourceButton.width - Kirigami.Units.smallSpacing;
-            Keys.onReturnPressed: addEntry();
-            function addEntry() {
+
+        FormCard.FormTextFieldDelegate {
+            id: addDocumentSourceDelegate
+
+            label: i18nc("@label:textfield", "New document source")
+            onAccepted: addEntry();
+
+            function addEntry(): void {
                 if (text !== "") {
                     root.model.acbfData.metaData.documentInfo.source.push(text);
                     root.model.setDirty();
@@ -908,61 +949,59 @@ Kirigami.ScrollablePage {
                 }
             }
 
-            QtControls.Button {
-                id: addSourceButton;
-                anchors {
-                    left: parent.right;
-                    leftMargin: Kirigami.Units.smallSpacing;
-                }
-                contentItem: Kirigami.Icon {
-                    source: "list-add";
-                }
-                height: parent.height;
-                width: height;
-                onClicked: parent.addEntry();
+            trailing: Controls.Button {
+                icon.name: "list-add-symbolic"
+                onClicked: addDocumentSourceDelegate.addEntry();
             }
         }
+    }
 
-        Kirigami.Heading {
-            width: parent.width;
-            height: paintedHeight + Kirigami.Units.smallSpacing * 2;
-            text: i18nc("label text for the form for the history list", "Document History");
-        }
+    FormCard.FormHeader {
+        title: i18nc("@title:group", "Document History")
+    }
 
+    FormCard.FormCard {
         Repeater {
             model: root.model.acbfData ? root.model.acbfData.metaData.documentInfo.history : 0;
-            delegate: Item {
-                width: parent.width;
-                height: childrenRect.height;
-                QtControls.TextField {
-                    id: historyText;
-                    width: parent.width - removeHistoryButton.width - Kirigami.Units.smallSpacing;
-                    text: modelData;
-                    onEditingFinished: root.model.acbfData.metaData.documentInfo.history[index] = text;
-                    QtControls.Button {
+            delegate: FormCard.AbstractFormDelegate {
+                contentItem: RowLayout {
+                    spacing: Kirigami.Units.smallSpacing
+
+                    Controls.TextField {
+                        id: historyText;
+                        text: modelData;
+                        onEditingFinished: root.model.acbfData.metaData.documentInfo.history[index] = text;
+                    }
+
+                    Controls.Button {
                         id: removeHistoryButton;
-                        anchors {
-                            left: parent.right;
-                            leftMargin: Kirigami.Units.smallSpacing;
-                        }
-                        contentItem: Kirigami.Icon {
-                            source: "list-remove";
-                        }
-                        height: parent.height;
-                        width: height;
+                        icon.name: "list-remove";
                         onClicked: {
                             root.model.setDirty();
                             root.model.acbfData.metaData.documentInfo.removeHistoryLine(index);
                         }
                     }
                 }
+
+                background: Item {
+                    FormCard.FormDelegateSeparator {
+                        anchors {
+                            left: parent.left
+                            right: parent.right
+                            bottom: parent.bottom
+                        }
+                    }
+                }
             }
         }
-        Item { width: parent.width; height: Kirigami.Units.smallSpacing; }
-        QtControls.TextField {
-            width: parent.width - addHistoryButton.width - Kirigami.Units.smallSpacing;
-            Keys.onReturnPressed: addEntry();
-            function addEntry() {
+
+        FormCard.FormTextFieldDelegate {
+            id: addDocumentInfoDelegate
+
+            label: i18nc("@label:textfield", "New document info")
+            onAccepted: addEntry();
+
+            function addEntry(): void {
                 if (text !== "") {
                     root.model.acbfData.metaData.documentInfo.history.push(text);
                     root.model.setDirty();
@@ -970,110 +1009,44 @@ Kirigami.ScrollablePage {
                 }
             }
 
-            QtControls.Button {
-                id: addHistoryButton;
-                anchors {
-                    left: parent.right;
-                    leftMargin: Kirigami.Units.smallSpacing;
-                }
-                contentItem: Kirigami.Icon {
-                    source: "list-add";
-                }
-                height: parent.height;
-                width: height;
-                onClicked: parent.addEntry();
+            trailing: Controls.Button {
+                icon.name: "list-add-symbolic"
+                onClicked: addDocumentInfoDelegate.addEntry();
             }
         }
-        Item { width: parent.width; height: Kirigami.Units.smallSpacing; }
-        Item {
-            width: parent.width;
-            height: childrenRect.height;
-            QtControls.Label {
-                id: versionLabel;
-                height: versionSpinBox.height;
-                text: i18nc("Label for the document version spinbox","Document Version:");
-            }
-            QtControls.SpinBox {
-                id: versionSpinBox;
-                anchors {
-                    top: versionLabel.top;
-                    left: versionLabel.right;
-                    leftMargin: Kirigami.Units.smallSpacing;
-                }
-                width: parent.width - (Kirigami.Units.smallSpacing*2) - versionLabel.width - addHistoryButton.width;
-                from:0;
-                to: 100 * 100;
-                stepSize: 100;
-                editable: true;
+    }
 
-                property int decimals: 2;
-                property real realValue: value / 100;
+    FormCard.FormHeader {
+        title: i18nc("@title:group", "General Page Background Color")
+    }
 
-                validator: DoubleValidator {
-                        bottom: Math.min(versionSpinBox.from, versionSpinBox.to)
-                        top:  Math.max(versionSpinBox.from, versionSpinBox.to)
-                }
-
-                textFromValue: function(value, locale) {
-                        return Number(value / 100).toLocaleString(locale, 'f', decimals)
-                }
-
-                valueFromText: function(text, locale) {
-                        return Number.fromLocaleString(locale, text) * 100
-                }
-                value: root.model.acbfData.metaData.documentInfo.version * 100;
-
-                onFocusChanged: {
-                    if (root.model.acbfData.metaData.documentInfo.version*100!==value) {
-                        root.model.acbfData.metaData.documentInfo.version = value/100;
-                    }
-                }
-            }
-        }
-        Kirigami.Heading {
-            width: parent.width;
-            height: paintedHeight + Kirigami.Units.smallSpacing * 2;
-            text: i18nc("label text for the form for the body background color.", "General Page Background Color");
-        }
-        Rectangle {
-            height: addHistoryButton.height;
-            width: parent.width - height;
-            radius: 3;
-            border.color: Kirigami.Theme.disabledTextColor;
-            border.width: 1;
+    FormCard.FormCard {
+        FormCard.FormColorDelegate {
             color: root.model.acbfData.body.bgcolor !== ""? root.model.acbfData.body.bgcolor: "#ffffff";
-            MouseArea {
-                anchors.fill: parent;
-                onClicked: bodyBackgroundColorDialog.open();
-                hoverEnabled: true;
-                onEntered: parent.border.color = Kirigami.Theme.buttonHoverColor;
-                onExited: parent.border.color = Kirigami.Theme.disabledTextColor;
+            onColorChanged: {
+                root.model.acbfData.body.bgcolor = color;
             }
         }
+    }
 
-
+    Component {
+        id: authorEditor
         AuthorEntryEditor {
-            id: authorEditor;
-            bookinfo: root.model.acbfData.metaData.bookInfo;
+            bookinfo: root.model.acbfData.metaData.bookInfo
             onSave: {
                 root.model.acbfData.metaData.bookInfo.setAuthor(index, activity, language, firstName, middleName, lastName, nickName, homePage, email);
                 root.model.setDirty();
             }
         }
+    }
+
+    Component {
+        id: docAuthorEditor
         AuthorEntryEditor {
-            id: docAuthorEditor;
-            bookinfo: root.model.acbfData.metaData.documentInfo;
+            bookinfo: root.model.acbfData.metaData.documentInfo
             onSave: {
                 root.model.acbfData.metaData.documentInfo.setAuthor(index, activity, language, firstName, middleName, lastName, nickName, homePage, email);
                 root.model.setDirty();
-            }
-        }
-        ColorDialog {
-            id: bodyBackgroundColorDialog
-            title: i18nc("@title color choosing dialog","Choose the general background color for this comic");
-            selectedColor: root.model.acbfData.body.bgcolor !==""? root.model.acbfData.body.bgcolor: "#ffffff";
-            onAccepted: {
-                root.model.acbfData.body.bgcolor = selectedColor;
             }
         }
     }

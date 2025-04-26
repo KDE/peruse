@@ -37,8 +37,16 @@ import org.kde.peruse as Peruse
  */
 Kirigami.ScrollablePage {
     id: root;
-    property string categoryName: "book";
-    property alias model: bookList.model;
+
+    property string categoryName: "book"
+    property alias model: bookList.model
+
+    function addPage(afterWhatIndex) {
+        const dialog = addPageDialogComponent.createObject();
+        dialog.addPageAfter = afterWhatIndex;
+        dialog.open()
+    }
+
     title: i18nc("title of the main book editor page", "Pages in %1", root.model && root.model.title !== "" ? root.model.title : "");
 
     actions: [
@@ -58,7 +66,7 @@ Kirigami.ScrollablePage {
         text: i18nc("adds a new page at the end of the book", "Add Page");
         icon.name: "list-add";
         onTriggered: {
-            const dialog = addPageDialogComponent.createObject(applicationWindow());
+            const dialog = addPageDialogComponent.createObject();
             dialog.open()
         }
     }
