@@ -23,9 +23,11 @@
 
 #include <QTimer>
 
-class FilterProxy::Private {
+class FilterProxy::Private
+{
 public:
-    Private() {
+    Private()
+    {
         updateTimer.setInterval(1);
         updateTimer.setSingleShot(true);
     }
@@ -35,19 +37,29 @@ public:
     QTimer updateTimer;
 };
 
-FilterProxy::FilterProxy(QObject* parent)
+FilterProxy::FilterProxy(QObject *parent)
     : QSortFilterProxyModel(parent)
     , d(new Private)
 {
-    connect(&d->updateTimer, &QTimer::timeout, this, [this](){
+    connect(&d->updateTimer, &QTimer::timeout, this, [this]() {
         Q_EMIT countChanged();
         sort(0);
-    } );
-    connect(this, &QAbstractItemModel::rowsInserted, this, [this](){ d->updateTimer.start(); });
-    connect(this, &QAbstractItemModel::rowsRemoved, this, [this](){ d->updateTimer.start(); });
-    connect(this, &QAbstractItemModel::dataChanged, this, [this](){ d->updateTimer.start(); });
-    connect(this, &QAbstractItemModel::layoutChanged, this, [this](){ d->updateTimer.start(); });
-    connect(this, &QAbstractItemModel::modelReset, this, [this](){ d->updateTimer.start(); });
+    });
+    connect(this, &QAbstractItemModel::rowsInserted, this, [this]() {
+        d->updateTimer.start();
+    });
+    connect(this, &QAbstractItemModel::rowsRemoved, this, [this]() {
+        d->updateTimer.start();
+    });
+    connect(this, &QAbstractItemModel::dataChanged, this, [this]() {
+        d->updateTimer.start();
+    });
+    connect(this, &QAbstractItemModel::layoutChanged, this, [this]() {
+        d->updateTimer.start();
+    });
+    connect(this, &QAbstractItemModel::modelReset, this, [this]() {
+        d->updateTimer.start();
+    });
     setDynamicSortFilter(true);
 }
 
@@ -65,7 +77,7 @@ QString FilterProxy::filterString() const
     return filterRegularExpression().pattern();
 }
 
-void FilterProxy::setFilterBoolean(const bool& value)
+void FilterProxy::setFilterBoolean(const bool &value)
 {
     d->filterBoolean = value;
     emit filterBooleanChanged();
@@ -98,7 +110,7 @@ int FilterProxy::filterInt() const
     return d->filterInt;
 }
 
-void FilterProxy::setFilterInt(const int& value)
+void FilterProxy::setFilterInt(const int &value)
 {
     if (d->filterInt != value) {
         d->filterInt = value;
@@ -112,7 +124,7 @@ bool FilterProxy::filterIntEnabled() const
     return d->filterIntEnabled;
 }
 
-void FilterProxy::setFilterIntEnabled(const bool& value)
+void FilterProxy::setFilterIntEnabled(const bool &value)
 {
     if (d->filterIntEnabled != value) {
         d->filterIntEnabled = value;
@@ -120,7 +132,7 @@ void FilterProxy::setFilterIntEnabled(const bool& value)
     }
 }
 
-int FilterProxy::sourceIndex ( const int& filterIndex )
+int FilterProxy::sourceIndex(const int &filterIndex)
 {
     int mappedIndex{-1};
     QModelIndex ourIndex = index(filterIndex, 0);

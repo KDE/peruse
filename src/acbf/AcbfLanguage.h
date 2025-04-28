@@ -27,10 +27,10 @@
 #include "AcbfBookinfo.h"
 /**
  * \brief Class to handle the list of translations in an ACBF document.
- * 
+ *
  * Due to an oddity in the naming of certain elements in the ACBF standard, this class
  * actually represents a text-layer sub-element in the languages subelement of book-info.
- * 
+ *
  * Show determines whether the language in question can be overlaid(true) or is actually the
  * language the comic is written in(false).
  */
@@ -43,13 +43,13 @@ class ACBF_EXPORT Language : public QObject
     Q_PROPERTY(QString language READ language NOTIFY languageChanged)
     Q_PROPERTY(bool show READ show NOTIFY showChanged)
 public:
-    explicit Language(BookInfo* parent = nullptr);
+    explicit Language(BookInfo *parent = nullptr);
     ~Language() override;
 
     /**
      * \brief write the language into the XML writer.
      */
-    void toXml(QXmlStreamWriter* writer);
+    void toXml(QXmlStreamWriter *writer);
     /**
      * \brief load a language element into this object.
      * @return True if the xmlReader encountered no errors.
@@ -65,7 +65,7 @@ public:
      * @param language - the language of the entry in language code, country
      * code format joined by a dash (not an underscore).
      */
-    void setLanguage(const QString& language);
+    void setLanguage(const QString &language);
     Q_SIGNAL void languageChanged();
 
     /**
@@ -80,10 +80,11 @@ public:
      */
     void setShow(bool show);
     Q_SIGNAL void showChanged();
+
 private:
     class Private;
     std::unique_ptr<Private> d;
 };
 }
 
-#endif//ACBFLANGUAGEINFO_H
+#endif // ACBFLANGUAGEINFO_H

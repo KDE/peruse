@@ -20,19 +20,19 @@
 #include <QStandardPaths>
 
 #include <KAboutData>
-#include <KLocalizedString>
 #include <KLocalizedQmlContext>
+#include <KLocalizedString>
 
 #include <QApplication>
-#include <QCommandLineParser>
 #include <QCommandLineOption>
-#include <QQmlApplicationEngine>
+#include <QCommandLineParser>
 #include <QIcon>
+#include <QQmlApplicationEngine>
 
-#include "peruse_helpers.h"
 #include "../../config-peruse.h"
+#include "peruse_helpers.h"
 
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
     app.setWindowIcon(QIcon::fromTheme(QStringLiteral("peruse-creator")));
@@ -40,9 +40,17 @@ int main(int argc, char** argv)
     app.setOrganizationDomain("kde.org");
 
     KLocalizedString::setApplicationDomain("peruse");
-    KAboutData about(QStringLiteral("perusecreator"), i18n("Peruse Creator"), PERUSE_VERSION_STRING, i18n("Comic Book Creator by KDE"),
-                     KAboutLicense::GPL, i18n("© 2016-2021 KDE"));
-    about.addAuthor(i18n("Dan Leinir Turthra Jensen"), QString("Maintainer and Lead Developer"), QStringLiteral("admin@leinir.dk"), QStringLiteral("https://leinir.dk/"), QStringLiteral("leinir"));
+    KAboutData about(QStringLiteral("perusecreator"),
+                     i18n("Peruse Creator"),
+                     PERUSE_VERSION_STRING,
+                     i18n("Comic Book Creator by KDE"),
+                     KAboutLicense::GPL,
+                     i18n("© 2016-2021 KDE"));
+    about.addAuthor(i18n("Dan Leinir Turthra Jensen"),
+                    QString("Maintainer and Lead Developer"),
+                    QStringLiteral("admin@leinir.dk"),
+                    QStringLiteral("https://leinir.dk/"),
+                    QStringLiteral("leinir"));
     about.setProductName("peruse/perusecreator");
     about.setProgramLogo(app.windowIcon());
     KAboutData::setApplicationData(about);

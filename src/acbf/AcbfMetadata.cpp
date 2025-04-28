@@ -22,8 +22,8 @@
 #include "AcbfMetadata.h"
 #include "AcbfBookinfo.h"
 #include "AcbfDocument.h"
-#include "AcbfPublishinfo.h"
 #include "AcbfDocumentinfo.h"
+#include "AcbfPublishinfo.h"
 
 #include <QXmlStreamReader>
 
@@ -38,17 +38,18 @@ public:
         : bookInfo(nullptr)
         , publishInfo(nullptr)
         , documentInfo(nullptr)
-    {}
-    BookInfo* bookInfo;
-    PublishInfo* publishInfo;
-    DocumentInfo* documentInfo;
+    {
+    }
+    BookInfo *bookInfo;
+    PublishInfo *publishInfo;
+    DocumentInfo *documentInfo;
 };
 
-Metadata::Metadata(Document* parent)
+Metadata::Metadata(Document *parent)
     : QObject(parent)
     , d(new Private)
 {
-    static const int typeId = qRegisterMetaType<Metadata*>("Metadata*");
+    static const int typeId = qRegisterMetaType<Metadata *>("Metadata*");
     Q_UNUSED(typeId);
     d->bookInfo = new BookInfo(this);
     d->publishInfo = new PublishInfo(this);
@@ -57,9 +58,9 @@ Metadata::Metadata(Document* parent)
 
 Metadata::~Metadata() = default;
 
-Document * Metadata::document() const
+Document *Metadata::document() const
 {
-    return qobject_cast<Document*>(parent());
+    return qobject_cast<Document *>(parent());
 }
 
 void Metadata::toXml(QXmlStreamWriter *writer)
@@ -71,52 +72,45 @@ void Metadata::toXml(QXmlStreamWriter *writer)
     writer->writeEndElement();
 }
 
-bool Metadata::fromXml(QXmlStreamReader *xmlReader, const QString& xmlData)
+bool Metadata::fromXml(QXmlStreamReader *xmlReader, const QString &xmlData)
 {
-    while(xmlReader->readNextStartElement())
-    {
-        if(xmlReader->name() == QStringLiteral("book-info"))
-        {
-            if(!d->bookInfo->fromXml(xmlReader, xmlData)) {
+    while (xmlReader->readNextStartElement()) {
+        if (xmlReader->name() == QStringLiteral("book-info")) {
+            if (!d->bookInfo->fromXml(xmlReader, xmlData)) {
                 return false;
             }
-        }
-        else if(xmlReader->name() == QStringLiteral("publish-info"))
-        {
-            if(!d->publishInfo->fromXml(xmlReader)) {
+        } else if (xmlReader->name() == QStringLiteral("publish-info")) {
+            if (!d->publishInfo->fromXml(xmlReader)) {
                 return false;
             }
-        }
-        else if(xmlReader->name() == QStringLiteral("document-info"))
-        {
-            if(!d->documentInfo->fromXml(xmlReader, xmlData)) {
+        } else if (xmlReader->name() == QStringLiteral("document-info")) {
+            if (!d->documentInfo->fromXml(xmlReader, xmlData)) {
                 return false;
             }
-        }
-        else
-        {
+        } else {
             qCWarning(ACBF_LOG) << Q_FUNC_INFO << "currently unsupported subsection:" << xmlReader->name();
             xmlReader->skipCurrentElement();
         }
     }
     if (xmlReader->hasError()) {
-        qCWarning(ACBF_LOG) << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader->name() << "(" << xmlReader->lineNumber() << ":" << xmlReader->columnNumber() << ") The reported error was:" << xmlReader->errorString();
+        qCWarning(ACBF_LOG) << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader->name() << "(" << xmlReader->lineNumber() << ":"
+                            << xmlReader->columnNumber() << ") The reported error was:" << xmlReader->errorString();
     }
     qCDebug(ACBF_LOG) << Q_FUNC_INFO << "Created meta information section";
     return !xmlReader->hasError();
 }
 
-DocumentInfo * Metadata::documentInfo() const
+DocumentInfo *Metadata::documentInfo() const
 {
     return d->documentInfo;
 }
 
-BookInfo * Metadata::bookInfo() const
+BookInfo *Metadata::bookInfo() const
 {
     return d->bookInfo;
 }
 
-PublishInfo * Metadata::publishInfo() const
+PublishInfo *Metadata::publishInfo() const
 {
     return d->publishInfo;
 }

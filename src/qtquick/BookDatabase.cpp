@@ -23,23 +23,25 @@
 
 #include "CategoryEntriesModel.h"
 
-#include <QStandardPaths>
 #include <QSqlDatabase>
 #include <QSqlError>
 #include <QSqlQuery>
 #include <QSqlRecord>
+#include <QStandardPaths>
 
 #include <QDir>
 
 #include <qtquick_debug.h>
 
-class BookDatabase::Private {
+class BookDatabase::Private
+{
 public:
-    Private() {
+    Private()
+    {
         db = QSqlDatabase::addDatabase("QSQLITE");
 
         QDir location{QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)};
-        if(!location.exists())
+        if (!location.exists())
             location.mkpath(".");
 
         dbfile = location.absoluteFilePath("library.sqlite");
@@ -50,7 +52,8 @@ public:
     QString dbfile;
     QStringList fieldNames;
 
-    bool prepareDb() {
+    bool prepareDb()
+    {
         if (!db.open()) {
             qCDebug(QTQUICK_LOG) << "Failed to open the book database file" << dbfile << db.lastError();
             return false;
@@ -60,7 +63,7 @@ public:
         if (tables.contains("books", Qt::CaseInsensitive)) {
             if (fieldNames.isEmpty()) {
                 QSqlQuery qu("SELECT * FROM books");
-                for (int i=0; i< qu.record().count(); i++) {
+                for (int i = 0; i < qu.record().count(); i++) {
                     fieldNames.append(qu.record().fieldName(i));
                 }
                 qCDebug(QTQUICK_LOG) << Q_FUNC_INFO << ": opening database with following fieldNames:" << fieldNames;
@@ -75,11 +78,11 @@ public:
                    << "seriesNumbers varchar" << "seriesVolumes varchar" << "author varchar" << "publisher varchar"
                    << "created datetime" << "lastOpenedTime datetime" << "totalPages integer" << "currentPage integer"
                    << "thumbnail varchar" << "comment varchar" << "tags varchar" << "rating varchar";
-        if (!q.exec(QString("create table books("+entryNames.join(", ")+")"))) {
+        if (!q.exec(QString("create table books(" + entryNames.join(", ") + ")"))) {
             qCDebug(QTQUICK_LOG) << "Database could not create the table books";
             return false;
         }
-        for (int i=0; i< entryNames.size(); i++) {
+        for (int i = 0; i < entryNames.size(); i++) {
             QString fieldName = entryNames.at(i).split(" ").first();
             fieldNames.append(fieldName);
         }
@@ -88,12 +91,13 @@ public:
         return true;
     }
 
-    void closeDb() {
+    void closeDb()
+    {
         db.close();
     }
 };
 
-BookDatabase::BookDatabase(QObject* parent)
+BookDatabase::BookDatabase(QObject *parent)
     : QObject(parent)
     , d(new Private)
 {
@@ -106,40 +110,39 @@ BookDatabase::~BookDatabase()
 
 QList<BookEntry> BookDatabase::loadEntries()
 {
-    if(!d->prepareDb()) {
+    if (!d->prepareDb()) {
         return {};
     }
 
     QList<BookEntry> entries;
     QStringList entryNames = d->fieldNames;
     QSqlQuery allEntries("SELECT " + d->fieldNames.join(", ") + " FROM books");
-    while(allEntries.next())
-    {
+    while (allEntries.next()) {
         BookEntry entry;
-        entry.filename       = allEntries.value(d->fieldNames.indexOf("fileName")).toString();
-        entry.filetitle      = allEntries.value(d->fieldNames.indexOf("fileTitle")).toString();
-        entry.title          = allEntries.value(d->fieldNames.indexOf("title")).toString();
-        entry.series         = allEntries.value(d->fieldNames.indexOf("series")).toString().split(",", Qt::SkipEmptyParts);
-        entry.author         = allEntries.value(d->fieldNames.indexOf("author")).toString().split(",", Qt::SkipEmptyParts);
-        entry.publisher      = allEntries.value(d->fieldNames.indexOf("publisher")).toString();
-        entry.created        = allEntries.value(d->fieldNames.indexOf("created")).toDateTime();
+        entry.filename = allEntries.value(d->fieldNames.indexOf("fileName")).toString();
+        entry.filetitle = allEntries.value(d->fieldNames.indexOf("fileTitle")).toString();
+        entry.title = allEntries.value(d->fieldNames.indexOf("title")).toString();
+        entry.series = allEntries.value(d->fieldNames.indexOf("series")).toString().split(",", Qt::SkipEmptyParts);
+        entry.author = allEntries.value(d->fieldNames.indexOf("author")).toString().split(",", Qt::SkipEmptyParts);
+        entry.publisher = allEntries.value(d->fieldNames.indexOf("publisher")).toString();
+        entry.created = allEntries.value(d->fieldNames.indexOf("created")).toDateTime();
         entry.lastOpenedTime = allEntries.value(d->fieldNames.indexOf("lastOpenedTime")).toDateTime();
-        entry.totalPages     = allEntries.value(d->fieldNames.indexOf("totalPages")).toInt();
-        entry.currentPage    = allEntries.value(d->fieldNames.indexOf("currentPage")).toInt();
-        entry.thumbnail      = allEntries.value(d->fieldNames.indexOf("thumbnail")).toString();
-        entry.description    = allEntries.value(d->fieldNames.indexOf("description")).toString().split("\n", Qt::SkipEmptyParts);
-        entry.comment        = allEntries.value(d->fieldNames.indexOf("comment")).toString();
-        entry.tags           = allEntries.value(d->fieldNames.indexOf("tags")).toString().split(",", Qt::SkipEmptyParts);
-        entry.rating         = allEntries.value(d->fieldNames.indexOf("rating")).toInt();
-        entry.seriesNumbers  = allEntries.value(d->fieldNames.indexOf("seriesNumbers")).toString().split(",", Qt::SkipEmptyParts);
-        entry.seriesVolumes  = allEntries.value(d->fieldNames.indexOf("seriesVolumes")).toString().split(",", Qt::SkipEmptyParts);
-        entry.genres         = allEntries.value(d->fieldNames.indexOf("genres")).toString().split(",", Qt::SkipEmptyParts);
-        entry.keywords       = allEntries.value(d->fieldNames.indexOf("keywords")).toString().split(",", Qt::SkipEmptyParts);
-        entry.characters     = allEntries.value(d->fieldNames.indexOf("characters")).toString().split(",", Qt::SkipEmptyParts);
+        entry.totalPages = allEntries.value(d->fieldNames.indexOf("totalPages")).toInt();
+        entry.currentPage = allEntries.value(d->fieldNames.indexOf("currentPage")).toInt();
+        entry.thumbnail = allEntries.value(d->fieldNames.indexOf("thumbnail")).toString();
+        entry.description = allEntries.value(d->fieldNames.indexOf("description")).toString().split("\n", Qt::SkipEmptyParts);
+        entry.comment = allEntries.value(d->fieldNames.indexOf("comment")).toString();
+        entry.tags = allEntries.value(d->fieldNames.indexOf("tags")).toString().split(",", Qt::SkipEmptyParts);
+        entry.rating = allEntries.value(d->fieldNames.indexOf("rating")).toInt();
+        entry.seriesNumbers = allEntries.value(d->fieldNames.indexOf("seriesNumbers")).toString().split(",", Qt::SkipEmptyParts);
+        entry.seriesVolumes = allEntries.value(d->fieldNames.indexOf("seriesVolumes")).toString().split(",", Qt::SkipEmptyParts);
+        entry.genres = allEntries.value(d->fieldNames.indexOf("genres")).toString().split(",", Qt::SkipEmptyParts);
+        entry.keywords = allEntries.value(d->fieldNames.indexOf("keywords")).toString().split(",", Qt::SkipEmptyParts);
+        entry.characters = allEntries.value(d->fieldNames.indexOf("characters")).toString().split(",", Qt::SkipEmptyParts);
 
         // Since we may change the thumbnailer between updates, but retain the
         // database, this may break so we need to sanitise in case of pdf...
-        if(entry.filename.toLower().endsWith("pdf")) {
+        if (entry.filename.toLower().endsWith("pdf")) {
 #ifdef USE_PERUSE_PDFTHUMBNAILER
             entry.thumbnail = QString("image://pdfcover/").append(entry.filename);
 #else
@@ -156,13 +159,13 @@ QList<BookEntry> BookDatabase::loadEntries()
 
 void BookDatabase::addEntry(const BookEntry &entry)
 {
-    if(!d->prepareDb()) {
+    if (!d->prepareDb()) {
         return;
     }
     qCDebug(QTQUICK_LOG) << "Adding newly discovered book to the database" << entry.filename;
 
     QStringList valueNames;
-    for (int i=0; i< d->fieldNames.size(); i++) {
+    for (int i = 0; i < d->fieldNames.size(); i++) {
         valueNames.append(QString(":").append(d->fieldNames.at(i)));
     }
     QSqlQuery newEntry;
@@ -196,13 +199,13 @@ void BookDatabase::addEntry(const BookEntry &entry)
 
 void BookDatabase::removeEntry(const BookEntry &entry)
 {
-    if(!d->prepareDb()) {
+    if (!d->prepareDb()) {
         return;
     }
     qCDebug(QTQUICK_LOG) << "Removing book from the database" << entry.filename;
 
     QSqlQuery removeEntry;
-    removeEntry.prepare("DELETE FROM books WHERE fileName='"+entry.filename+"';");
+    removeEntry.prepare("DELETE FROM books WHERE fileName='" + entry.filename + "';");
     removeEntry.exec();
 
     d->closeDb();
@@ -210,10 +213,10 @@ void BookDatabase::removeEntry(const BookEntry &entry)
 
 void BookDatabase::updateEntry(QString fileName, QString property, QVariant value)
 {
-    if(!d->prepareDb()) {
+    if (!d->prepareDb()) {
         return;
     }
-    //qCDebug(QTQUICK_LOG) << "Updating book in the database" << fileName << property << value;
+    // qCDebug(QTQUICK_LOG) << "Updating book in the database" << fileName << property << value;
 
     if (!d->fieldNames.contains(property)) {
         return;

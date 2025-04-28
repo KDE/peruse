@@ -22,8 +22,8 @@
 #ifndef ACBFINTERNALREFERENCEOBJECT_H
 #define ACBFINTERNALREFERENCEOBJECT_H
 
-#include <memory>
 #include <QObject>
+#include <memory>
 
 #include "acbf_export.h"
 
@@ -69,7 +69,7 @@ public:
         ReferenceOriginAndTarget = ReferenceOrigin + ReferenceTarget
     };
     Q_ENUM(SupportedReferenceType)
-    explicit InternalReferenceObject(SupportedReferenceType supportedReferenceType, QObject* parent = nullptr);
+    explicit InternalReferenceObject(SupportedReferenceType supportedReferenceType, QObject *parent = nullptr);
     virtual ~InternalReferenceObject();
 
     SupportedReferenceType supportedReferenceType() const;
@@ -83,7 +83,7 @@ public:
     /**
      * Function called by other classes which contain links to this reference
      */
-    void registerBackReference(InternalReference* ref);
+    void registerBackReference(InternalReference *ref);
 
     /**
      * This is the index of this object in the local list the object is a part of. Specifically,
@@ -99,10 +99,11 @@ public:
      * This should be fired whenever any of the properties change (so the container model can be updated)
      */
     Q_SIGNAL void propertyDataChanged();
+
 private:
     class Private;
     std::unique_ptr<Private> d;
 };
 };
 
-#endif//ACBFINTERNALREFERENCEOBJECT_H
+#endif // ACBFINTERNALREFERENCEOBJECT_H

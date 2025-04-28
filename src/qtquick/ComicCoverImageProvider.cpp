@@ -34,16 +34,19 @@
 
 #include <qtquick_debug.h>
 
-class ComicCoverImageProvider::Private {
+class ComicCoverImageProvider::Private
+{
 public:
-    Private() {
+    Private()
+    {
         // We'll just stick with a 100MiB cache for now - something to expose later maybe?
         imageCache = new KImageCache("peruse-comiccover", 104857600);
     }
-    ~Private() {
+    ~Private()
+    {
         delete imageCache;
     }
-    KImageCache* imageCache;
+    KImageCache *imageCache;
 };
 
 ComicCoverImageProvider::ComicCoverImageProvider()
@@ -59,79 +62,80 @@ ComicCoverImageProvider::~ComicCoverImageProvider()
 
 class ComicCoverResponse : public QQuickImageResponse
 {
-    public:
-        ComicCoverResponse(const QString &id, const QSize &requestedSize, KImageCache* imageCache)
-        {
-            m_runnable = new ComicCoverRunnable(id, requestedSize, imageCache);
-            m_runnable->setAutoDelete(false);
-            connect(m_runnable, &ComicCoverRunnable::done, this, &ComicCoverResponse::handleDone, Qt::QueuedConnection);
-            connect(this, &QQuickImageResponse::finished, m_runnable, &QObject::deleteLater,  Qt::QueuedConnection);
-            QThreadPool::globalInstance()->start(m_runnable);
-        }
+public:
+    ComicCoverResponse(const QString &id, const QSize &requestedSize, KImageCache *imageCache)
+    {
+        m_runnable = new ComicCoverRunnable(id, requestedSize, imageCache);
+        m_runnable->setAutoDelete(false);
+        connect(m_runnable, &ComicCoverRunnable::done, this, &ComicCoverResponse::handleDone, Qt::QueuedConnection);
+        connect(this, &QQuickImageResponse::finished, m_runnable, &QObject::deleteLater, Qt::QueuedConnection);
+        QThreadPool::globalInstance()->start(m_runnable);
+    }
 
-        void handleDone(QImage image) {
-            m_image = image;
-            Q_EMIT finished();
-        }
+    void handleDone(QImage image)
+    {
+        m_image = image;
+        Q_EMIT finished();
+    }
 
-        QQuickTextureFactory *textureFactory() const override
-        {
-            return QQuickTextureFactory::textureFactoryForImage(m_image);
-        }
+    QQuickTextureFactory *textureFactory() const override
+    {
+        return QQuickTextureFactory::textureFactoryForImage(m_image);
+    }
 
-        void cancel() override
-        {
-            m_runnable->abort();
-        }
+    void cancel() override
+    {
+        m_runnable->abort();
+    }
 
-        ComicCoverRunnable* m_runnable{nullptr};
-        QImage m_image;
+    ComicCoverRunnable *m_runnable{nullptr};
+    QImage m_image;
 };
 
-QQuickImageResponse * ComicCoverImageProvider::requestImageResponse(const QString& id, const QSize& requestedSize)
+QQuickImageResponse *ComicCoverImageProvider::requestImageResponse(const QString &id, const QSize &requestedSize)
 {
-    ComicCoverResponse* response = new ComicCoverResponse(id, requestedSize, d->imageCache);
+    ComicCoverResponse *response = new ComicCoverResponse(id, requestedSize, d->imageCache);
     return response;
 }
 
-
-class ComicCoverRunnable::Private {
+class ComicCoverRunnable::Private
+{
 public:
-    Private() {}
+    Private()
+    {
+    }
     QString id;
     QSize requestedSize;
-    KImageCache* imageCache;
+    KImageCache *imageCache;
 
     bool abort{false};
     QMutex abortMutex;
-    bool isAborted() {
+    bool isAborted()
+    {
         QMutexLocker locker(&abortMutex);
         return abort;
     }
 
     QStringList entries;
-    void filterImages(QStringList& entries)
+    void filterImages(QStringList &entries)
     {
         /// Sort case-insensitive, then remove non-image entries.
         QMap<QString, QString> entryMap;
-        for(const QString& entry : std::as_const(entries)) {
-            if (entry.endsWith(QLatin1String(".gif"), Qt::CaseInsensitive) ||
-                    entry.endsWith(QLatin1String(".jpg"), Qt::CaseInsensitive) ||
-                    entry.endsWith(QLatin1String(".jpeg"), Qt::CaseInsensitive) ||
-                    entry.endsWith(QLatin1String(".png"), Qt::CaseInsensitive)) {
+        for (const QString &entry : std::as_const(entries)) {
+            if (entry.endsWith(QLatin1String(".gif"), Qt::CaseInsensitive) || entry.endsWith(QLatin1String(".jpg"), Qt::CaseInsensitive)
+                || entry.endsWith(QLatin1String(".jpeg"), Qt::CaseInsensitive) || entry.endsWith(QLatin1String(".png"), Qt::CaseInsensitive)) {
                 entryMap.insert(entry.toLower(), entry);
             }
         }
         entries = entryMap.values();
     }
-    void getArchiveFileList(QStringList& entries, const QString& prefix, const KArchiveDirectory *dir)
+    void getArchiveFileList(QStringList &entries, const QString &prefix, const KArchiveDirectory *dir)
     {
         /// Recursively list all files in the ZIP archive into 'entries'.
-        for (const QString& entry : dir->entries()) {
+        for (const QString &entry : dir->entries()) {
             const KArchiveEntry *e = dir->entry(entry);
             if (e->isDirectory()) {
-            getArchiveFileList(entries, prefix + entry + '/',
-                static_cast<const KArchiveDirectory*>(e));
+                getArchiveFileList(entries, prefix + entry + '/', static_cast<const KArchiveDirectory *>(e));
             } else if (e->isFile()) {
                 entries.append(prefix + entry);
             }
@@ -139,7 +143,7 @@ public:
     }
 };
 
-ComicCoverRunnable::ComicCoverRunnable(const QString& id, const QSize& requestedSize, KImageCache* imageCache)
+ComicCoverRunnable::ComicCoverRunnable(const QString &id, const QSize &requestedSize, KImageCache *imageCache)
     : d(new Private)
 {
     d->id = id;
@@ -161,29 +165,28 @@ void ComicCoverRunnable::abort()
 void ComicCoverRunnable::run()
 {
     QSize ourSize(KIconLoader::SizeEnormous, KIconLoader::SizeEnormous);
-    if(d->requestedSize.width() > 0 && d->requestedSize.height() > 0)
-    {
+    if (d->requestedSize.width() > 0 && d->requestedSize.height() > 0) {
         ourSize = d->requestedSize;
     }
 
     QImage img;
     if (!d->imageCache->findImage(d->id, &img)) {
-        KArchive* archive = nullptr;
+        KArchive *archive = nullptr;
         QMimeDatabase db;
         db.mimeTypeForFile(d->id, QMimeDatabase::MatchContent);
         const QMimeType mime = db.mimeTypeForFile(d->id, QMimeDatabase::MatchContent);
-        if(!d->isAborted() && (mime.inherits("application/x-cbr") || mime.inherits("application/x-rar"))) {
+        if (!d->isAborted() && (mime.inherits("application/x-cbr") || mime.inherits("application/x-rar"))) {
             archive = new KRar(d->id);
-        } else if(!d->isAborted() && (mime.inherits("application/x-cbz") || mime.inherits("application/zip"))) {
+        } else if (!d->isAborted() && (mime.inherits("application/x-cbz") || mime.inherits("application/zip"))) {
             archive = new KZip(d->id);
         }
         // FIXME: This goes elsewhere - see below
         // If this code seems familiar, it is adapted from kio-extras/thumbnail/comiccreator.cpp
         // The reason being that this code should be removed once our karchive-rar functionality is merged into
         // karchive proper.
-        if(!d->isAborted() && archive && archive->open(QIODevice::ReadOnly)) {
+        if (!d->isAborted() && archive && archive->open(QIODevice::ReadOnly)) {
             // Get the archive's directory.
-            const KArchiveDirectory* cArchiveDir = archive->directory();
+            const KArchiveDirectory *cArchiveDir = archive->directory();
             if (!d->isAborted() && cArchiveDir) {
                 QStringList entries;
                 // Get and filter the entries from the archive.
@@ -191,10 +194,10 @@ void ComicCoverRunnable::run()
                 d->filterImages(entries);
                 if (!d->isAborted() && !entries.isEmpty()) {
                     // Extract the cover file.
-                    const KArchiveFile *coverFile = static_cast<const KArchiveFile*>(cArchiveDir->entry(entries[0]));
+                    const KArchiveFile *coverFile = static_cast<const KArchiveFile *>(cArchiveDir->entry(entries[0]));
                     if (!d->isAborted() && coverFile) {
                         bool success = img.loadFromData(coverFile->data());
-                        if(!d->isAborted() && !success) {
+                        if (!d->isAborted() && !success) {
                             QIcon oops = QIcon::fromTheme("unknown");
                             img = oops.pixmap(oops.availableSizes().last()).toImage();
                             qCDebug(QTQUICK_LOG) << "Failed to load image with id:" << d->id;

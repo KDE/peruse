@@ -55,13 +55,13 @@ class ACBF_EXPORT Jump : public InternalReferenceObject
     Q_PROPERTY(QString href READ href WRITE setHref NOTIFY hrefChanged)
 
 public:
-    explicit Jump(Page* parent = nullptr);
+    explicit Jump(Page *parent = nullptr);
     ~Jump() override;
 
     /**
      * \brief Write the jump into the xml writer.
      */
-    void toXml(QXmlStreamWriter* writer);
+    void toXml(QXmlStreamWriter *writer);
     /**
      * \brief load a jump element into this object.
      * @return True if the xmlReader encountered no errors.
@@ -81,7 +81,7 @@ public:
      * @param point - a point from the points list.
      * @return the index of the given point.
      */
-    Q_INVOKABLE int pointIndex(const QPoint& point) const;
+    Q_INVOKABLE int pointIndex(const QPoint &point) const;
 
     /**
      * \brief add a point to the points list.
@@ -89,24 +89,24 @@ public:
      * @param index - the index to add it at. If afterIndex is larger than zero,
      * the insertion will happen at that index
      */
-    Q_INVOKABLE void addPoint(const QPoint& point, int index = -1);
+    Q_INVOKABLE void addPoint(const QPoint &point, int index = -1);
     /**
      * \brief remove a point from the list.
      * @param point - point to remove from the list.
      */
-    Q_INVOKABLE void removePoint(const QPoint& point);
+    Q_INVOKABLE void removePoint(const QPoint &point);
     /**
      * \brief Swap two points in the list.
      * @param swapThis - the first points to swap.
      * @param withThis - the second points to swap.
      */
-    bool swapPoints(const QPoint& swapThis, const QPoint& withThis);
+    bool swapPoints(const QPoint &swapThis, const QPoint &withThis);
     /**
      * @brief set the points based on a top left and bottom right.
      * @param topLeft the topleft corner of the rect.
      * @param bottomRight the bottomright corner of the rect.
      */
-    Q_INVOKABLE void setPointsFromRect(const QPoint& topLeft, const QPoint& bottomRight);
+    Q_INVOKABLE void setPointsFromRect(const QPoint &topLeft, const QPoint &bottomRight);
 
     int pointCount() const;
     /**
@@ -124,7 +124,7 @@ public:
     Q_SIGNAL void boundsChanged();
     /**
      * @brief The page to jump to.
-     * 
+     *
      * @return int that points at the index of the page to jump to.
      */
     int pageIndex() const;
@@ -135,7 +135,7 @@ public:
      * @param pageNumber An integer for the index of the page in the
      * page list.
      */
-    void setPageIndex(const int& pageNumber = 0);
+    void setPageIndex(const int &pageNumber = 0);
     /**
      * @brief pageIndexChanged
      */
@@ -151,7 +151,7 @@ public:
      * Set the new destination for this jump (see link() for details)
      * @param newHref The new destination
      */
-    void setHref(const QString& newHref);
+    void setHref(const QString &newHref);
     /**
      * Fired whenever the link destination for this jump changes
      */
@@ -163,6 +163,7 @@ public:
      * @return The instance's position
      */
     int localIndex() override;
+
 private:
     class Private;
     std::unique_ptr<Private> d;

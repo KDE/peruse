@@ -24,18 +24,18 @@
 
 #include <memory>
 
-#include <QObject>
-#include "acbf_export.h"
-#include "AcbfMetadata.h"
 #include "AcbfBody.h"
-#include "AcbfReferences.h"
 #include "AcbfData.h"
+#include "AcbfMetadata.h"
+#include "AcbfReferences.h"
 #include "AcbfStyleSheet.h"
+#include "acbf_export.h"
+#include <QObject>
 /**
  * \brief Class that handles all of the ACBF document.
- * 
+ *
  * ACBF documents are made up of several subsections:
- * 
+ *
  * - Metadata, which in turn holds book, publishing and document info.
  * - Body, which holds the pages and their frame and text definitions.
  * - Data, which holds embedded data like images and fonts.
@@ -43,9 +43,9 @@
  * at from the text. Not supported currently.
  * - Stylesheet, which is a css stylesheet to inform how overlaid translations
  * should be rendered. Not supported currently.
- * 
+ *
  * Of these, only Body and Metadata are necessary for a proper ACBF file.
- * 
+ *
  */
 namespace AdvancedComicBookFormat
 {
@@ -58,7 +58,7 @@ class ACBF_EXPORT Document : public QObject
     Q_PROPERTY(AdvancedComicBookFormat::Data *data READ data CONSTANT)
     Q_PROPERTY(AdvancedComicBookFormat::StyleSheet *styleSheet READ styleSheet CONSTANT)
 public:
-    explicit Document(QObject* parent = nullptr);
+    explicit Document(QObject *parent = nullptr);
     ~Document() override;
 
     /**
@@ -74,42 +74,43 @@ public:
     /**
      * @returns The metadata object.
      */
-    Metadata* metaData() const;
+    Metadata *metaData() const;
 
     /**
      * @returns the Body object.
      */
-    Body* body() const;
-    
+    Body *body() const;
+
     /**
      * @brief The reference section.
-     * 
+     *
      * @return a References object with the references.
      */
-    References* references() const;
+    References *references() const;
 
     /**
      * @returns the Data object.
      */
-    Data* data() const;
+    Data *data() const;
 
     /**
      * @brief The style section, which contains a css stylesheet.
-     * 
+     *
      * @return A StyleSheet object with the css.
      */
-    StyleSheet* styleSheet() const;
+    StyleSheet *styleSheet() const;
 
     /**
      * Find some child object by their string ID
      * @see AdvancedComicBookFormat::Reference
      * @see AdvancedComicBookFormat::Binary
      */
-    QObject* objectByID(const QString& id) const;
+    QObject *objectByID(const QString &id) const;
+
 private:
     class Private;
     std::unique_ptr<Private> d;
 };
 }
 
-#endif//ACBFDOCUMENT_H
+#endif // ACBFDOCUMENT_H

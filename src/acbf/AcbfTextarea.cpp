@@ -21,8 +21,8 @@
 
 #include "AcbfTextarea.h"
 
-#include <QXmlStreamReader>
 #include <QVariant>
+#include <QXmlStreamReader>
 
 #include <acbf_debug.h>
 
@@ -33,11 +33,12 @@ class Textarea::Private
 public:
     Private()
         : textRotation(0)
-        , type ("speech")
+        , type("speech")
         , inverted(false)
         , transparent(false)
-    {}
-    Textlayer* parent;
+    {
+    }
+    Textlayer *parent;
     QString id;
     QString bgcolor;
     QList<QPoint> points;
@@ -48,11 +49,11 @@ public:
     QStringList paragraphs;
 };
 
-Textarea::Textarea(Textlayer* parent)
+Textarea::Textarea(Textlayer *parent)
     : InternalReferenceObject(InternalReferenceObject::ReferenceOriginAndTarget, parent)
     , d(new Private)
 {
-    static const int typeId = qRegisterMetaType<Textarea*>("Textarea*");
+    static const int typeId = qRegisterMetaType<Textarea *>("Textarea*");
     Q_UNUSED(typeId);
     d->parent = parent;
     connect(this, &Textarea::pointCountChanged, this, &Textarea::boundsChanged);
@@ -70,40 +71,40 @@ Textarea::Textarea(Textlayer* parent)
 
 Textarea::~Textarea() = default;
 
-void Textarea::toXml(QXmlStreamWriter* writer)
+void Textarea::toXml(QXmlStreamWriter *writer)
 {
     writer->writeStartElement(QStringLiteral("text-area"));
-    if(!d->id.isEmpty()) {
+    if (!d->id.isEmpty()) {
         writer->writeAttribute(QStringLiteral("id"), id());
     }
 
     QStringList points;
-    for(const QPoint& point : d->points) {
+    for (const QPoint &point : d->points) {
         points << QStringLiteral("%1,%2").arg(QString::number(point.x())).arg(QString::number(point.y()));
     }
     writer->writeAttribute(QStringLiteral("points"), points.join(' '));
 
-    if(!d->bgcolor.isEmpty()) {
+    if (!d->bgcolor.isEmpty()) {
         writer->writeAttribute(QStringLiteral("bgcolor"), d->bgcolor);
     }
-    if(d->textRotation != 0) {
+    if (d->textRotation != 0) {
         writer->writeAttribute(QStringLiteral("text-rotation"), QString::number(d->textRotation));
     }
-    if(!d->type.isEmpty()) {
+    if (!d->type.isEmpty()) {
         writer->writeAttribute(QStringLiteral("type"), d->type);
     }
-    if(d->inverted) {
+    if (d->inverted) {
         // because the default is false, no need to write it otherwise...
         writer->writeAttribute(QStringLiteral("inverted"), QStringLiteral("true"));
     }
-    if(d->transparent) {
+    if (d->transparent) {
         // because the default is false, no need to write it otherwise...
         writer->writeAttribute(QStringLiteral("transparent"), QStringLiteral("true"));
     }
 
-    for(const QString& paragraph : d->paragraphs) {
+    for (const QString &paragraph : d->paragraphs) {
         writer->writeStartElement(QStringLiteral("p"));
-        writer->writeCharacters("");  // to ensure we close the tag correctly and don't end up with a <p />
+        writer->writeCharacters(""); // to ensure we close the tag correctly and don't end up with a <p />
         writer->device()->write(paragraph.toUtf8().constData(), paragraph.toUtf8().length());
         writer->writeEndElement();
     }
@@ -111,7 +112,7 @@ void Textarea::toXml(QXmlStreamWriter* writer)
     writer->writeEndElement();
 }
 
-bool Textarea::fromXml(QXmlStreamReader *xmlReader, const QString& xmlData)
+bool Textarea::fromXml(QXmlStreamReader *xmlReader, const QString &xmlData)
 {
     setId(xmlReader->attributes().value(QStringLiteral("id")).toString());
     setBgcolor(xmlReader->attributes().value(QStringLiteral("bgcolor")).toString());
@@ -121,41 +122,35 @@ bool Textarea::fromXml(QXmlStreamReader *xmlReader, const QString& xmlData)
     setTransparent(xmlReader->attributes().value(QStringLiteral("transparent")).toString().toLower() == QStringLiteral("true"));
 
     QVector<QStringView> points = xmlReader->attributes().value(QStringLiteral("points")).split(' ');
-    for(QStringView point : points) {
+    for (QStringView point : points) {
         QVector<QStringView> elements = point.split(',');
-        if(elements.length() == 2)
-        {
+        if (elements.length() == 2) {
             addPoint(QPoint(elements.at(0).toInt(), elements.at(1).toInt()));
-        }
-        else
-        {
+        } else {
             qCWarning(ACBF_LOG) << "Failed to construct one of the points for a text-area. Attempted to handle the point" << point << "in the data" << points;
             return false;
         }
     }
 
-    while(xmlReader->readNextStartElement())
-    {
-        if(xmlReader->name() == QStringLiteral("p"))
-        {
+    while (xmlReader->readNextStartElement()) {
+        if (xmlReader->name() == QStringLiteral("p")) {
             int startPoint = xmlReader->characterOffset();
             int endPoint{startPoint};
-            while(xmlReader->readNext()) {
+            while (xmlReader->readNext()) {
                 if (xmlReader->isEndElement() && xmlReader->name() == QStringLiteral("p")) {
                     endPoint = xmlReader->characterOffset();
                     break;
                 }
             }
             d->paragraphs.append(xmlData.mid(startPoint, endPoint - startPoint - 4));
-        }
-        else
-        {
+        } else {
             qCWarning(ACBF_LOG) << Q_FUNC_INFO << "currently unsupported subsection in text-area:" << xmlReader->name();
             xmlReader->skipCurrentElement();
         }
     }
     if (xmlReader->hasError()) {
-        qCWarning(ACBF_LOG) << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader->name() << "(" << xmlReader->lineNumber() << ":" << xmlReader->columnNumber() << ") The reported error was:" << xmlReader->errorString();
+        qCWarning(ACBF_LOG) << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader->name() << "(" << xmlReader->lineNumber() << ":"
+                            << xmlReader->columnNumber() << ") The reported error was:" << xmlReader->errorString();
     }
     qCDebug(ACBF_LOG) << Q_FUNC_INFO << "Created a text area of type" << type() << "with the paragraphs" << d->paragraphs;
     return !xmlReader->hasError();
@@ -166,7 +161,7 @@ QString Textarea::id() const
     return d->id;
 }
 
-void Textarea::setId(const QString& newId)
+void Textarea::setId(const QString &newId)
 {
     if (d->id != newId) {
         d->id = newId;
@@ -177,7 +172,7 @@ void Textarea::setId(const QString& newId)
 QVariantList Textarea::points() const
 {
     QVariantList list;
-    for (const QPoint& point : d->points) {
+    for (const QPoint &point : d->points) {
         list << QVariant::fromValue(point);
     }
     return list;
@@ -191,33 +186,32 @@ QPoint Textarea::point(int index) const
     return d->points.at(index);
 }
 
-int Textarea::pointIndex(const QPoint& point) const
+int Textarea::pointIndex(const QPoint &point) const
 {
     return d->points.indexOf(point);
 }
 
-void Textarea::addPoint(const QPoint& point, int index)
+void Textarea::addPoint(const QPoint &point, int index)
 {
-    if(index > -1 && d->points.count() < index) {
+    if (index > -1 && d->points.count() < index) {
         d->points.insert(index, point);
-    }
-    else {
+    } else {
         d->points.append(point);
     }
     emit pointCountChanged();
 }
 
-void Textarea::removePoint(const QPoint& point)
+void Textarea::removePoint(const QPoint &point)
 {
     d->points.removeAll(point);
     emit pointCountChanged();
 }
 
-bool Textarea::swapPoints(const QPoint& swapThis, const QPoint& withThis)
+bool Textarea::swapPoints(const QPoint &swapThis, const QPoint &withThis)
 {
     int index1 = d->points.indexOf(swapThis);
     int index2 = d->points.indexOf(withThis);
-    if(index1 > -1 && index2 > -1) {
+    if (index1 > -1 && index2 > -1) {
         d->points.swapItemsAt(index1, index2);
         emit pointCountChanged();
         return true;
@@ -243,7 +237,7 @@ int Textarea::pointCount() const
 QRect Textarea::bounds() const
 {
     // Would use QPolygon here, but that requires including QTGUI.
-    if (d->points.size()==0) {
+    if (d->points.size() == 0) {
         return QRect();
     }
     QRect rect(d->points.at(0), d->points.at(1));
@@ -268,7 +262,7 @@ QRect Textarea::bounds() const
 QString Textarea::bgcolor() const
 {
     if (d->bgcolor.isEmpty()) {
-        Textlayer* layer = qobject_cast<Textlayer*>(parent());
+        Textlayer *layer = qobject_cast<Textlayer *>(parent());
         if (layer) {
             return layer->bgcolor();
         }
@@ -276,7 +270,7 @@ QString Textarea::bgcolor() const
     return d->bgcolor;
 }
 
-void Textarea::setBgcolor(const QString& newColor)
+void Textarea::setBgcolor(const QString &newColor)
 {
     d->bgcolor = newColor;
     emit bgcolorChanged();
@@ -298,7 +292,7 @@ QString Textarea::type() const
     return d->type.isEmpty() ? "speech" : d->type;
 }
 
-void Textarea::setType(const QString& type)
+void Textarea::setType(const QString &type)
 {
     d->type = type;
     emit typeChanged();
@@ -347,7 +341,7 @@ QStringList Textarea::paragraphs() const
     return d->paragraphs;
 }
 
-void Textarea::setParagraphs(const QStringList& paragraphs)
+void Textarea::setParagraphs(const QStringList &paragraphs)
 {
     d->paragraphs = paragraphs;
     emit paragraphsChanged();

@@ -27,7 +27,7 @@
 
 /**
  * \brief Class to return images for archives.
- * 
+ *
  * ArchiveImageProvider is for getting images out of
  * archives(zip, rar, cbz, cbr), as well as getting image data out of ACBF files.
  */
@@ -40,10 +40,10 @@ public:
 
     /**
      * \brief Request a given image.
-     * 
+     *
      * @param id The url of the image to provide.
      * @param requestedSize The required size of the final image, unused.
-     * 
+     *
      * @return an asynchronous image response
      */
     QQuickImageResponse *requestImageResponse(const QString &id, const QSize &requestedSize) override;
@@ -52,7 +52,7 @@ public:
      * \brief Set the ArchiveBookModel to get images for.
      * @param model ArchiveBookModel to get images for.
      */
-    void setArchiveBookModel(ArchiveBookModel* model);
+    void setArchiveBookModel(ArchiveBookModel *model);
 
     /**
      * \brief Set the prefix.
@@ -64,18 +64,21 @@ public:
      * @returns the prefix as a QString.
      */
     QString prefix() const;
+
 private:
     class Private;
-    Private* d;
+    Private *d;
 };
 
 /**
  * \brief A worker class which does the bulk of the work for PreviewImageProvider
  */
-class ArchiveImageRunnable : public QObject, public QRunnable {
+class ArchiveImageRunnable : public QObject, public QRunnable
+{
     Q_OBJECT;
+
 public:
-    explicit ArchiveImageRunnable(const QString &id, const QSize &requestedSize, ArchiveBookModel* bookModel, const QString& prefix);
+    explicit ArchiveImageRunnable(const QString &id, const QSize &requestedSize, ArchiveBookModel *bookModel, const QString &prefix);
     ~ArchiveImageRunnable() override;
 
     void run() override;
@@ -90,9 +93,10 @@ public:
      * @param image The preview image in the requested size (possibly a placeholder)
      */
     Q_SIGNAL void done(QImage image);
+
 private:
     class Private;
-    Private* d;
+    Private *d;
 };
 
-#endif//ARCHIVEIMAGEPROVIDER_H
+#endif // ARCHIVEIMAGEPROVIDER_H

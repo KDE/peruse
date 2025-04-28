@@ -20,8 +20,8 @@
  */
 
 #include "AcbfInternalReferenceObject.h"
-#include "AcbfInternalReference.h"
 #include "AcbfDocument.h"
+#include "AcbfInternalReference.h"
 
 #include <QVariant>
 #include <QXmlStreamReader>
@@ -31,27 +31,31 @@ using namespace AdvancedComicBookFormat;
 class InternalReferenceObject::Private
 {
 public:
-    Private(InternalReferenceObject* qq) : q(qq) {}
-    InternalReferenceObject* q;
+    Private(InternalReferenceObject *qq)
+        : q(qq)
+    {
+    }
+    InternalReferenceObject *q;
     SupportedReferenceType supportedReferenceType{ReferenceUnknownType};
     QObjectList backReferences;
     QObjectList forwardReferences;
 
-    Document* document() {
-        QObject* parent = q;
-        Document* doc{nullptr};
+    Document *document()
+    {
+        QObject *parent = q;
+        Document *doc{nullptr};
         while (!doc) {
             if (!parent) {
                 break;
             }
-            doc = qobject_cast<Document*>(parent);
+            doc = qobject_cast<Document *>(parent);
             parent = parent->parent();
         }
         return doc;
     }
 };
 
-InternalReferenceObject::InternalReferenceObject(InternalReferenceObject::SupportedReferenceType supportedReferenceType, QObject* parent)
+InternalReferenceObject::InternalReferenceObject(InternalReferenceObject::SupportedReferenceType supportedReferenceType, QObject *parent)
     : QObject(parent)
     , d(new Private(this))
 {
@@ -68,7 +72,6 @@ InternalReferenceObject::SupportedReferenceType InternalReferenceObject::support
     return d->supportedReferenceType;
 }
 
-
 QObjectList InternalReferenceObject::forwardReferences() const
 {
     return d->forwardReferences;
@@ -76,13 +79,13 @@ QObjectList InternalReferenceObject::forwardReferences() const
 
 void InternalReferenceObject::updateForwardReferences()
 {
-    Document* document = d->document();
+    Document *document = d->document();
     if (document) {
-        auto ensureReferenceExists = [this, document](QObject* destination, int paragraphIndex, int characterOffset){
-            InternalReference* internalReference{nullptr};
+        auto ensureReferenceExists = [this, document](QObject *destination, int paragraphIndex, int characterOffset) {
+            InternalReference *internalReference{nullptr};
             // Check whether we already have an internal reference registered for this link
-            for (QObject* obj : d->forwardReferences) {
-                InternalReference* ref = qobject_cast<InternalReference*>(obj);
+            for (QObject *obj : d->forwardReferences) {
+                InternalReference *ref = qobject_cast<InternalReference *>(obj);
                 if (ref->paragraph() == paragraphIndex && ref->character() == characterOffset && ref->to() == destination) {
                     internalReference = ref;
                     break;
@@ -90,10 +93,10 @@ void InternalReferenceObject::updateForwardReferences()
             }
             // If we don't, let's make one, and tell the object we're linking to that we're doing that
             if (!internalReference) {
-                InternalReferenceObject* destinationObject = qobject_cast<InternalReferenceObject*>(destination);
+                InternalReferenceObject *destinationObject = qobject_cast<InternalReferenceObject *>(destination);
                 internalReference = new InternalReference(this, paragraphIndex, characterOffset, destinationObject, document);
                 d->forwardReferences << internalReference;
-                connect(internalReference, &QObject::destroyed, this, [this, internalReference](){
+                connect(internalReference, &QObject::destroyed, this, [this, internalReference]() {
                     d->forwardReferences.removeOne(internalReference);
                     Q_EMIT forwardReferencesChanged();
                 });
@@ -107,20 +110,16 @@ void InternalReferenceObject::updateForwardReferences()
         QStringList paragraphs = property("paragraphs").toStringList();
         QXmlStreamReader reader;
         int paragraphIndex = 0;
-        for (const QString& paragraph : paragraphs) {
+        for (const QString &paragraph : paragraphs) {
             reader.clear();
             reader.addData(paragraph);
-            while(reader.readNextStartElement())
-            {
-                if(reader.name() == QStringLiteral("a"))
-                {
+            while (reader.readNextStartElement()) {
+                if (reader.name() == QStringLiteral("a")) {
                     int characterOffset = reader.characterOffset();
                     QString destinationID = reader.attributes().value("href").toString();
-                    QObject* destination = document->objectByID(destinationID);
+                    QObject *destination = document->objectByID(destinationID);
                     ensureReferenceExists(destination, paragraphIndex, characterOffset);
-                }
-                else
-                {
+                } else {
                     reader.skipCurrentElement();
                 }
             }
@@ -130,7 +129,7 @@ void InternalReferenceObject::updateForwardReferences()
         // Now let's handle situations where it's just outright an object that's a reference (Jumps)
         QString directHref = property("href").toString();
         if (!directHref.isEmpty()) {
-            QObject* destination = document->objectByID(directHref);
+            QObject *destination = document->objectByID(directHref);
             ensureReferenceExists(destination, -1, -1);
         }
     }
@@ -151,11 +150,11 @@ QString InternalReferenceObject::objectType() const
     return objType;
 }
 
-void InternalReferenceObject::registerBackReference(InternalReference* ref)
+void InternalReferenceObject::registerBackReference(InternalReference *ref)
 {
     if (!d->backReferences.contains(ref)) {
         d->backReferences << ref;
-        connect(ref, &QObject::destroyed, this, [this, ref](){
+        connect(ref, &QObject::destroyed, this, [this, ref]() {
             d->backReferences.removeOne(ref);
             Q_EMIT backReferencesChanged();
         });

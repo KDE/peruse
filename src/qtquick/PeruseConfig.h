@@ -26,7 +26,7 @@
 #include <qqmlintegration.h>
 /**
  * \brief Class to handle reading and writing the configuration.
- * 
+ *
  * Peruse will store the data in 'peruserc' at the QStandardPath
  * for configuration.
  */
@@ -61,7 +61,7 @@ public:
         ZoomFitHeight = 2
     };
 
-    explicit PeruseConfig(QObject* parent = nullptr);
+    explicit PeruseConfig(QObject *parent = nullptr);
     ~PeruseConfig() override;
 
     /**
@@ -82,12 +82,12 @@ public:
      * \brief Add a folder to the book locations.
      * @param location path to the folder to add.
      */
-    Q_INVOKABLE void addBookLocation(const QString& location);
+    Q_INVOKABLE void addBookLocation(const QString &location);
     /**
      * \brief Remove a folder from the book locations.
      * @param location path of the folder to remove.
      */
-    Q_INVOKABLE void removeBookLocation(const QString& location);
+    Q_INVOKABLE void removeBookLocation(const QString &location);
     /**
      * @return a QStringList with paths to all the folders to check for books.
      */
@@ -149,9 +149,10 @@ public:
      * @return A list of image formats by short name - see the documentation for QImageReader::supportedImageFormats() for further details
      */
     Q_INVOKABLE QStringList supportedImageFormats() const;
+
 private:
     class Private;
-    Private* d;
+    Private *d;
 };
 
-#endif//PERUSECONFIG_H
+#endif // PERUSECONFIG_H

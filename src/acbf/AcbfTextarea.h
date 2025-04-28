@@ -32,7 +32,7 @@
 
 /**
  * \brief Class to handle the text areas in ACBF
- * 
+ *
  * ACBF text areas are a collection of points, some text
  * and some extra information on how to render that text if necessary.
  */
@@ -54,7 +54,7 @@ class ACBF_EXPORT Textarea : public InternalReferenceObject
     Q_PROPERTY(QVariantList points READ points NOTIFY pointCountChanged)
 
 public:
-    explicit Textarea(Textlayer* parent = nullptr);
+    explicit Textarea(Textlayer *parent = nullptr);
     ~Textarea() override;
 
     /**
@@ -65,12 +65,12 @@ public:
     /**
      * \brief Write the textarea into the xml writer.
      */
-    void toXml(QXmlStreamWriter* writer);
+    void toXml(QXmlStreamWriter *writer);
     /**
      * \brief load a textarea element into this object.
      * @return True if the xmlReader encountered no errors.
      */
-    bool fromXml(QXmlStreamReader *xmlReader, const QString& xmlData);
+    bool fromXml(QXmlStreamReader *xmlReader, const QString &xmlData);
 
     /**
      * @return The ID of this text area as a QString.
@@ -85,7 +85,7 @@ public:
      * other parts of the ACBF document.
      * @param newId - The new ID as a string.
      */
-    void setId(const QString& newId);
+    void setId(const QString &newId);
     Q_SIGNAL void idChanged();
 
     /**
@@ -101,7 +101,7 @@ public:
      * @param point - a point from the points list.
      * @return the index of the given point.
      */
-    Q_INVOKABLE int pointIndex(const QPoint& point) const;
+    Q_INVOKABLE int pointIndex(const QPoint &point) const;
 
     /**
      * \brief add a point to the points list.
@@ -109,24 +109,24 @@ public:
      * @param index - the index to add it at. If afterIndex is larger than zero,
      * the insertion will happen at that index
      */
-    Q_INVOKABLE void addPoint(const QPoint& point, int index = -1);
+    Q_INVOKABLE void addPoint(const QPoint &point, int index = -1);
     /**
      * \brief remove a point from the list.
      * @param point - point to remove from the list.
      */
-    Q_INVOKABLE void removePoint(const QPoint& point);
+    Q_INVOKABLE void removePoint(const QPoint &point);
     /**
      * \brief Swap two points in the list.
      * @param swapThis - the first points to swap.
      * @param withThis - the second points to swap.
      */
-    bool swapPoints(const QPoint& swapThis, const QPoint& withThis);
+    bool swapPoints(const QPoint &swapThis, const QPoint &withThis);
     /**
      * @brief set the points based on a top left and bottom right.
      * @param topLeft the topleft corner of the rect.
      * @param bottomRight the bottomright corner of the rect.
      */
-    Q_INVOKABLE void setPointsFromRect(const QPoint& topLeft, const QPoint& bottomRight);
+    Q_INVOKABLE void setPointsFromRect(const QPoint &topLeft, const QPoint &bottomRight);
 
     int pointCount() const;
     /**
@@ -144,16 +144,16 @@ public:
     Q_SIGNAL void boundsChanged();
     /**
      * @return the background color as a QString.
-     * 
+     *
      * It should be an 8bit per channel rgb hexcode.
      */
     QString bgcolor() const;
     /**
      * \brief set the background color.
-     * 
+     *
      * @param newColor - a String with an 8bit per channel rgb hexcode (#ff00ff, or the like)
      */
-    void setBgcolor(const QString& newColor = QString());
+    void setBgcolor(const QString &newColor = QString());
     /**
      * @brief fires when the background color changes.
      */
@@ -187,7 +187,7 @@ public:
      * @param type - this should be an entry from the availableTypes(),
      * it will change the way how the text is styled. The default is "speech".
      */
-    void setType(const QString& type = QStringLiteral("speech"));
+    void setType(const QString &type = QStringLiteral("speech"));
     /**
      * @brief fires when the type is set.
      */
@@ -223,7 +223,7 @@ public:
 
     /**
      * @returns a list of paragraphs.
-     * 
+     *
      * Contains allowed sub-elements: strong, emphasis, strikethrough
      * sub, sup, a (with mandatory href attribute only)
      * Can also contain deprecated sub-elements (superceeded by...): code (type option code),
@@ -235,7 +235,7 @@ public:
      * @param paragraphs - a list of paragraphs. Can contain sub-elements:
      * strong, emphasis, strikethrough, sub, sup, a (with mandatory href attribute only)
      */
-    void setParagraphs(const QStringList& paragraphs);
+    void setParagraphs(const QStringList &paragraphs);
     /**
      * @brief fires when the paragraphs are set.
      */
@@ -247,10 +247,11 @@ public:
      * @return The instance's position
      */
     int localIndex() override;
+
 private:
     class Private;
     std::unique_ptr<Private> d;
 };
 }
 
-#endif//ACBFTEXTAREA_H
+#endif // ACBFTEXTAREA_H

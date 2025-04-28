@@ -32,12 +32,13 @@ class Language::Private
 public:
     Private()
         : show(false)
-    {}
+    {
+    }
     QString language;
     bool show;
 };
 
-Language::Language(BookInfo* parent)
+Language::Language(BookInfo *parent)
     : QObject(parent)
     , d(new Private)
 {
@@ -45,7 +46,7 @@ Language::Language(BookInfo* parent)
 
 Language::~Language() = default;
 
-void Language::toXml(QXmlStreamWriter* writer)
+void Language::toXml(QXmlStreamWriter *writer)
 {
     writer->writeStartElement(QStringLiteral("text-layer"));
     writer->writeAttribute(QStringLiteral("lang"), d->language);
@@ -62,7 +63,7 @@ bool Language::fromXml(QXmlStreamReader *xmlReader)
     return true;
 }
 
-void Language::setLanguage(const QString& language)
+void Language::setLanguage(const QString &language)
 {
     if (d->language != language) {
         d->language = language;

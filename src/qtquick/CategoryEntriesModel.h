@@ -60,7 +60,8 @@ public:
         : totalPages(0)
         , currentPage(0)
         , rating(0)
-    {}
+    {
+    }
     QString filename;
     QString filetitle;
     QString title;
@@ -87,13 +88,13 @@ bool operator==(const BookEntry &a1, const BookEntry &a2) noexcept;
 
 /**
  * \brief Model to handle the filter categories.
- * 
+ *
  * This model in specific handles which categories there are
  * and which books are assigned to a category, if so, which.
- * 
+ *
  * Used to handle sorting by author, title and so forth.
  * Is extended by BookListModel.
- * 
+ *
  * categories and book entries are both in the same model
  * because there can be books that are not assigned categories.
  * Similarly, categories can contain categories, like in the case
@@ -109,7 +110,7 @@ class CategoryEntriesModel : public QAbstractListModel
      */
     Q_PROPERTY(int count READ count NOTIFY countChanged)
 public:
-    explicit CategoryEntriesModel(QObject* parent = nullptr);
+    explicit CategoryEntriesModel(QObject *parent = nullptr);
     ~CategoryEntriesModel() override;
 
     /**
@@ -152,17 +153,17 @@ public:
      * @param index The QModelIndex at which you wish to access the data.
      * @param role An enumerator of the type of data you want to access.
      * Is extended by the Roles enum.
-     * 
+     *
      * @return a QVariant with the book entry's data.
      */
-    QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     /**
      * @param parent The QModel index of the parent. This only counts for
      * tree like page structures, and thus defaults to a freshly constructed
      * QModelIndex. A wellformed QModelIndex will cause this function to return 0
      * @returns the number of total rows(bookentries and categories) there are.
      */
-    int rowCount(const QModelIndex& parent = QModelIndex()) const override;
+    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 
     /**
      * @returns how many entries there are in the catalogue.
@@ -197,10 +198,10 @@ public:
 
     /**
      * \brief Add a book entry to a category.
-     * 
+     *
      * This also adds it to the model's list of entries.
      */
-    void addCategoryEntry(const QString& categoryName, const BookEntry &entry, Roles compareRole = TitleRole);
+    void addCategoryEntry(const QString &categoryName, const BookEntry &entry, Roles compareRole = TitleRole);
 
     /**
      * @param index an integer index pointing at the desired book.
@@ -233,7 +234,7 @@ public:
     /**
      * \brief Fires when a book entry is updated.
      * @param entry The updated entry
-     * 
+     *
      * Used in the BookListModel::setBookData()
      */
     Q_SIGNAL void entryDataUpdated(const BookEntry &entry);
@@ -245,7 +246,7 @@ public:
     /**
      * \brief Fires when a book entry is removed.
      * @param entry The removed entry
-     */ 
+     */
     Q_SIGNAL void entryRemoved(const BookEntry &entry);
     /**
      * \brief Remove a book entry.
@@ -255,6 +256,7 @@ public:
 
     // This will iterate over all sub-models and find the model which contains the entry, or null if not found
     CategoryEntriesModel *leafModelForEntry(const BookEntry &entry);
+
 protected:
     /**
      * @return the name of the model.
@@ -264,10 +266,11 @@ protected:
      * \brief set the name of the model.
      * @param newName QString with the name.
      */
-    void setName(const QString& newName);
+    void setName(const QString &newName);
+
 private:
     class Private;
-    Private* d;
+    Private *d;
 };
 
-#endif//CATEGORYENTRIESMODEL_H
+#endif // CATEGORYENTRIESMODEL_H

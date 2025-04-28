@@ -30,22 +30,24 @@ using namespace AdvancedComicBookFormat;
 class ContentRating::Private
 {
 public:
-    Private() {}
+    Private()
+    {
+    }
     QString type;
     QString rating;
 };
 
-ContentRating::ContentRating(BookInfo* parent)
+ContentRating::ContentRating(BookInfo *parent)
     : QObject(parent)
     , d(new Private)
 {
-    static const int typeId = qRegisterMetaType<ContentRating*>("ContentRating*");
+    static const int typeId = qRegisterMetaType<ContentRating *>("ContentRating*");
     Q_UNUSED(typeId);
 }
 
 ContentRating::~ContentRating() = default;
 
-void ContentRating::toXml(QXmlStreamWriter* writer)
+void ContentRating::toXml(QXmlStreamWriter *writer)
 {
     writer->writeStartElement(QStringLiteral("content-rating"));
     writer->writeAttribute(QStringLiteral("type"), d->type);
@@ -66,7 +68,7 @@ QString ContentRating::type() const
     return d->type;
 }
 
-void ContentRating::setType(const QString& type)
+void ContentRating::setType(const QString &type)
 {
     d->type = type;
     emit typeChanged();
@@ -77,7 +79,7 @@ QString ContentRating::rating() const
     return d->rating;
 }
 
-void ContentRating::setRating(const QString& rating)
+void ContentRating::setRating(const QString &rating)
 {
     d->rating = rating;
     emit ratingChanged();

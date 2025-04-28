@@ -34,8 +34,9 @@ public:
     QStringList mimeTypes;
 };
 
-ContentQuery::ContentQuery(QObject* parent)
-    : QObject(parent), d(new Private)
+ContentQuery::ContentQuery(QObject *parent)
+    : QObject(parent)
+    , d(new Private)
 {
 }
 
@@ -60,7 +61,7 @@ QStringList ContentQuery::locations() const
 
 QStringList ContentQuery::mimeTypes() const
 {
-    if(!d->mimeTypes.isEmpty())
+    if (!d->mimeTypes.isEmpty())
         return d->mimeTypes;
 
     return d->mimeTypesForType(d->type);
@@ -68,59 +69,61 @@ QStringList ContentQuery::mimeTypes() const
 
 void ContentQuery::setType(ContentQuery::Type type)
 {
-    if(type == d->type)
+    if (type == d->type)
         return;
 
     d->type = type;
     emit typeChanged();
 }
 
-void ContentQuery::setSearchString(const QString& searchString)
+void ContentQuery::setSearchString(const QString &searchString)
 {
-    if(searchString == d->searchString)
+    if (searchString == d->searchString)
         return;
 
     d->searchString = searchString;
     emit searchStringChanged();
 }
 
-void ContentQuery::setLocations(const QStringList& locations)
+void ContentQuery::setLocations(const QStringList &locations)
 {
-    if(locations == d->locations)
+    if (locations == d->locations)
         return;
 
     d->locations = locations;
     emit locationsChanged();
 }
 
-void ContentQuery::setMimeTypes(const QStringList& mimeTypes)
+void ContentQuery::setMimeTypes(const QStringList &mimeTypes)
 {
-    if(mimeTypes == d->mimeTypes)
+    if (mimeTypes == d->mimeTypes)
         return;
 
     d->mimeTypes = mimeTypes;
     emit mimeTypesChanged();
 }
 
-namespace {
-    QStringList contentQueryVideo () {
-        return {
-            QStringLiteral("video/x-matroska"),
-            QStringLiteral("video/mp4"),
-            QStringLiteral("video/mpeg"),
-            QStringLiteral("video/ogg"),
-            QStringLiteral("video/quicktime"),
-            QStringLiteral("video/webm"),
-            QStringLiteral("video/x-ms-wmv"),
-            QStringLiteral("video/x-msvideo"),
-            QStringLiteral("video/x-ogm+ogg"),
-            QStringLiteral("video/x-theora+ogg"),
-        };
-    }
+namespace
+{
+QStringList contentQueryVideo()
+{
+    return {
+        QStringLiteral("video/x-matroska"),
+        QStringLiteral("video/mp4"),
+        QStringLiteral("video/mpeg"),
+        QStringLiteral("video/ogg"),
+        QStringLiteral("video/quicktime"),
+        QStringLiteral("video/webm"),
+        QStringLiteral("video/x-ms-wmv"),
+        QStringLiteral("video/x-msvideo"),
+        QStringLiteral("video/x-ogm+ogg"),
+        QStringLiteral("video/x-theora+ogg"),
+    };
+}
 
-    QStringList contentQueryAudio() {
-        return {
-            QStringLiteral("audio/aac"),
+QStringList contentQueryAudio()
+{
+    return {QStringLiteral("audio/aac"),
             QStringLiteral("audio/flac"),
             QStringLiteral("audio/mp2"),
             QStringLiteral("audio/mp4"),
@@ -130,13 +133,12 @@ namespace {
             QStringLiteral("audio/x-opus+ogg"),
             QStringLiteral("audio/x-ms-wma"),
             QStringLiteral("audio/x-vorbis+ogg"),
-            QStringLiteral("audio/x-wav")
-        };
-    }
+            QStringLiteral("audio/x-wav")};
+}
 
-    QStringList contentQueryDocuments () {
-        return {
-            QStringLiteral("application/vnd.oasis.opendocument.text"),
+QStringList contentQueryDocuments()
+{
+    return {QStringLiteral("application/vnd.oasis.opendocument.text"),
             QStringLiteral("application/vnd.oasis.opendocument.spreadsheet"),
             QStringLiteral("application/vnd.oasis.opendocument.presentation"),
             QStringLiteral("application/vnd.ms-word"),
@@ -146,25 +148,24 @@ namespace {
             QStringLiteral("application/vnd.openxmlformats-officedocument.wordprocessingml.document.xml"),
             QStringLiteral("application/vnd.openxmlformats-officedocument.presentationml.presentation.xml"),
             QStringLiteral("text/plain"),
-            QStringLiteral("application/pdf")
-        };
-    }
+            QStringLiteral("application/pdf")};
+}
 
-    QStringList contentQueryImages() {
-        // only popylate once.
-        static QStringList result;
-        if (result.isEmpty()) {
-            for(const auto& item : QImageReader::supportedMimeTypes())
-            {
-                result << QString::fromUtf8(item);
-            }
+QStringList contentQueryImages()
+{
+    // only popylate once.
+    static QStringList result;
+    if (result.isEmpty()) {
+        for (const auto &item : QImageReader::supportedMimeTypes()) {
+            result << QString::fromUtf8(item);
         }
-        return result;
     }
+    return result;
+}
 
-    QStringList contentQueryComics() {
-        return {
-            QStringLiteral("application/x-cbz"),
+QStringList contentQueryComics()
+{
+    return {QStringLiteral("application/x-cbz"),
             QStringLiteral("application/x-cbr"),
             QStringLiteral("application/x-cb7"),
             QStringLiteral("application/x-cbt"),
@@ -175,20 +176,30 @@ namespace {
             QStringLiteral("image/vnd.djvu"),
             QStringLiteral("image/x-djvu"),
             QStringLiteral("application/epub+zip"),
-            QStringLiteral("application/pdf")
-        };
-    }
+            QStringLiteral("application/pdf")};
+}
 }
 QStringList ContentQuery::Private::mimeTypesForType(ContentQuery::Type type)
 {
     QStringList ret{};
-    switch(type) {
-        case ContentQuery::Type::Video:     ret = contentQueryVideo(); break;
-        case ContentQuery::Type::Audio:     ret = contentQueryAudio(); break;
-        case ContentQuery::Type::Documents: ret = contentQueryDocuments(); break;
-        case ContentQuery::Type::Images:    ret = contentQueryImages(); break;
-        case ContentQuery::Type::Comics:    ret = contentQueryComics(); break;
-        case ContentQuery::Type::Any:       /* do nothing */ break;
+    switch (type) {
+    case ContentQuery::Type::Video:
+        ret = contentQueryVideo();
+        break;
+    case ContentQuery::Type::Audio:
+        ret = contentQueryAudio();
+        break;
+    case ContentQuery::Type::Documents:
+        ret = contentQueryDocuments();
+        break;
+    case ContentQuery::Type::Images:
+        ret = contentQueryImages();
+        break;
+    case ContentQuery::Type::Comics:
+        ret = contentQueryComics();
+        break;
+    case ContentQuery::Type::Any: /* do nothing */
+        break;
     }
     return ret;
 }

@@ -20,11 +20,11 @@
  */
 
 #include "AcbfBookinfo.h"
-#include "AcbfMetadata.h"
 #include "AcbfAuthor.h"
 #include "AcbfContentrating.h"
 #include "AcbfDatabaseref.h"
 #include "AcbfLanguage.h"
+#include "AcbfMetadata.h"
 #include "AcbfPage.h"
 #include "AcbfSequence.h"
 
@@ -40,26 +40,27 @@ class BookInfo::Private
 public:
     Private()
         : coverPage(nullptr)
-    {}
-    QList<Author*> author;
+    {
+    }
+    QList<Author *> author;
     QHash<QString, QString> title;
     QHash<QString, int> genre;
     QList<QString> characters;
     QHash<QString, QStringList> annotation;
     QHash<QString, QStringList> keywords;
-    Page* coverPage;
-    QList<Language*> languages;
-    QList<Sequence*> sequence;
-    QList<DatabaseRef*> databaseRef;
-    QList<ContentRating*> contentRating;
+    Page *coverPage;
+    QList<Language *> languages;
+    QList<Sequence *> sequence;
+    QList<DatabaseRef *> databaseRef;
+    QList<ContentRating *> contentRating;
     bool rightToLeft = false;
 };
 
-BookInfo::BookInfo(Metadata* parent)
+BookInfo::BookInfo(Metadata *parent)
     : QObject(parent)
     , d(new Private)
 {
-    static const int typeId = qRegisterMetaType<BookInfo*>("BookInfo*");
+    static const int typeId = qRegisterMetaType<BookInfo *>("BookInfo*");
     Q_UNUSED(typeId);
     d->coverPage = new Page(metadata()->document());
     d->coverPage->setIsCoverPage(true);
@@ -67,21 +68,21 @@ BookInfo::BookInfo(Metadata* parent)
 
 BookInfo::~BookInfo() = default;
 
-Metadata * BookInfo::metadata()
+Metadata *BookInfo::metadata()
 {
-    return qobject_cast<Metadata*>(parent());
+    return qobject_cast<Metadata *>(parent());
 }
 
-void BookInfo::toXml(QXmlStreamWriter* writer)
+void BookInfo::toXml(QXmlStreamWriter *writer)
 {
     writer->writeStartElement(QStringLiteral("book-info"));
 
-    for(Author* author : d->author) {
+    for (Author *author : d->author) {
         author->toXml(writer);
     }
 
     QHashIterator<QString, QString> titles(d->title);
-    while(titles.hasNext()) {
+    while (titles.hasNext()) {
         titles.next();
         writer->writeStartElement(QStringLiteral("book-title"));
         writer->writeAttribute(QStringLiteral("lang"), titles.key());
@@ -90,7 +91,7 @@ void BookInfo::toXml(QXmlStreamWriter* writer)
     }
 
     QHashIterator<QString, int> genres(d->genre);
-    while(genres.hasNext()) {
+    while (genres.hasNext()) {
         genres.next();
         writer->writeStartElement(QStringLiteral("genre"));
         writer->writeAttribute(QStringLiteral("match"), QString::number(genres.value()));
@@ -100,7 +101,7 @@ void BookInfo::toXml(QXmlStreamWriter* writer)
 
     writer->writeStartElement("characters");
     writer->writeCharacters("");
-    for(const QString& character : d->characters) {
+    for (const QString &character : d->characters) {
         writer->writeStartElement("name");
         writer->writeCharacters(character);
         writer->writeEndElement();
@@ -108,13 +109,13 @@ void BookInfo::toXml(QXmlStreamWriter* writer)
     writer->writeEndElement();
 
     QHashIterator<QString, QStringList> annotations(d->annotation);
-    while(annotations.hasNext()) {
+    while (annotations.hasNext()) {
         annotations.next();
         writer->writeStartElement(QStringLiteral("annotation"));
         writer->writeAttribute(QStringLiteral("lang"), annotations.key());
-        for(const QString& paragraph : annotations.value()) {
+        for (const QString &paragraph : annotations.value()) {
             writer->writeStartElement(QStringLiteral("p"));
-            writer->writeCharacters("");  // to ensure we close the tag correctly and don't end up with a <p />
+            writer->writeCharacters(""); // to ensure we close the tag correctly and don't end up with a <p />
             writer->device()->write(paragraph.toUtf8().constData(), paragraph.toUtf8().length());
             writer->writeEndElement();
         }
@@ -122,7 +123,7 @@ void BookInfo::toXml(QXmlStreamWriter* writer)
     }
 
     QHashIterator<QString, QStringList> keywords(d->keywords);
-    while(keywords.hasNext()) {
+    while (keywords.hasNext()) {
         keywords.next();
         writer->writeStartElement(QStringLiteral("keywords"));
         writer->writeAttribute(QStringLiteral("lang"), keywords.key());
@@ -133,23 +134,23 @@ void BookInfo::toXml(QXmlStreamWriter* writer)
     d->coverPage->toXml(writer);
 
     writer->writeStartElement(QStringLiteral("languages"));
-    for(Language* language : d->languages) {
+    for (Language *language : d->languages) {
         language->toXml(writer);
     }
     writer->writeEndElement();
 
-    for(Sequence* sequence : d->sequence) {
+    for (Sequence *sequence : d->sequence) {
         sequence->toXml(writer);
     }
-    for(DatabaseRef* ref : d->databaseRef) {
+    for (DatabaseRef *ref : d->databaseRef) {
         ref->toXml(writer);
     }
-    for(ContentRating* rating : d->contentRating) {
+    for (ContentRating *rating : d->contentRating) {
         rating->toXml(writer);
     }
-    
-    //ACBF 1.2
-    // Therefore only write this one when it is useful.
+
+    // ACBF 1.2
+    //  Therefore only write this one when it is useful.
     if (d->rightToLeft) {
         writer->writeStartElement("reading-direction");
         writer->writeCharacters("RTL");
@@ -159,127 +160,99 @@ void BookInfo::toXml(QXmlStreamWriter* writer)
     writer->writeEndElement();
 }
 
-bool BookInfo::fromXml(QXmlStreamReader *xmlReader, const QString& xmlData)
+bool BookInfo::fromXml(QXmlStreamReader *xmlReader, const QString &xmlData)
 {
-    while(xmlReader->readNextStartElement())
-    {
-        if(xmlReader->name() == QStringLiteral("author"))
-        {
-            Author* newAuthor = new Author(metadata());
-            if(!newAuthor->fromXml(xmlReader)) {
+    while (xmlReader->readNextStartElement()) {
+        if (xmlReader->name() == QStringLiteral("author")) {
+            Author *newAuthor = new Author(metadata());
+            if (!newAuthor->fromXml(xmlReader)) {
                 return false;
             }
             d->author.append(newAuthor);
-        }
-        else if(xmlReader->name() == QStringLiteral("book-title"))
-        {
+        } else if (xmlReader->name() == QStringLiteral("book-title")) {
             QString language = xmlReader->attributes().value(QStringLiteral("lang")).toString();
             d->title[language] = xmlReader->readElementText(QXmlStreamReader::IncludeChildElements);
-        }
-        else if(xmlReader->name() == QStringLiteral("genre"))
-        {
+        } else if (xmlReader->name() == QStringLiteral("genre")) {
             int match = xmlReader->attributes().value(QStringLiteral("match")).toInt();
             d->genre[xmlReader->readElementText(QXmlStreamReader::IncludeChildElements)] = match;
-        }
-        else if(xmlReader->name() == QStringLiteral("characters"))
-        {
-            while(xmlReader->readNextStartElement()) {
-                if(xmlReader->name() == QStringLiteral("name")) {
+        } else if (xmlReader->name() == QStringLiteral("characters")) {
+            while (xmlReader->readNextStartElement()) {
+                if (xmlReader->name() == QStringLiteral("name")) {
                     d->characters.append(xmlReader->readElementText(QXmlStreamReader::IncludeChildElements));
-                }
-                else {
+                } else {
                     xmlReader->skipCurrentElement();
                 }
             }
             qCDebug(ACBF_LOG) << "Created character entries, we now have" << d->characters.count() << "characters";
-        }
-        else if(xmlReader->name() == QStringLiteral("annotation"))
-        {
+        } else if (xmlReader->name() == QStringLiteral("annotation")) {
             QString language = xmlReader->attributes().value(QStringLiteral("lang")).toString();
             QStringList paragraphs;
-            while(xmlReader->readNextStartElement()) {
-                if(xmlReader->name() == QStringLiteral("p")) {
+            while (xmlReader->readNextStartElement()) {
+                if (xmlReader->name() == QStringLiteral("p")) {
                     int startPoint = xmlReader->characterOffset();
                     int endPoint{startPoint};
-                    while(xmlReader->readNext()) {
+                    while (xmlReader->readNext()) {
                         if (xmlReader->isEndElement() && xmlReader->name() == QStringLiteral("p")) {
                             endPoint = xmlReader->characterOffset();
                             break;
                         }
                     }
                     paragraphs.append(xmlData.mid(startPoint, endPoint - startPoint - 4));
-                }
-                else {
+                } else {
                     xmlReader->skipCurrentElement();
                 }
             }
             d->annotation[language] = paragraphs;
-        }
-        else if(xmlReader->name() == QStringLiteral("keywords"))
-        {
+        } else if (xmlReader->name() == QStringLiteral("keywords")) {
             QString language = xmlReader->attributes().value(QStringLiteral("lang")).toString();
             d->keywords[language] = xmlReader->readElementText(QXmlStreamReader::IncludeChildElements).split(',');
-        }
-        else if(xmlReader->name() == QStringLiteral("coverpage"))
-        {
-            if(!d->coverPage->fromXml(xmlReader, xmlData)) {
+        } else if (xmlReader->name() == QStringLiteral("coverpage")) {
+            if (!d->coverPage->fromXml(xmlReader, xmlData)) {
                 return false;
             }
-        }
-        else if(xmlReader->name() == QStringLiteral("languages"))
-        {
-            while(xmlReader->readNextStartElement()) {
-                if(xmlReader->name() == QStringLiteral("text-layer")) {
-                    Language* newLanguage = new Language(this);
+        } else if (xmlReader->name() == QStringLiteral("languages")) {
+            while (xmlReader->readNextStartElement()) {
+                if (xmlReader->name() == QStringLiteral("text-layer")) {
+                    Language *newLanguage = new Language(this);
                     newLanguage->fromXml(xmlReader);
                     d->languages.append(newLanguage);
-                }
-                else {
+                } else {
                     xmlReader->skipCurrentElement();
                 }
             }
-        }
-        else if(xmlReader->name() == QStringLiteral("sequence"))
-        {
-            Sequence* newSequence = new Sequence(this);
+        } else if (xmlReader->name() == QStringLiteral("sequence")) {
+            Sequence *newSequence = new Sequence(this);
             newSequence->fromXml(xmlReader);
             d->sequence.append(newSequence);
-        }
-        else if(xmlReader->name() == QStringLiteral("databaseref"))
-        {
-            DatabaseRef* newDatabaseRef = new DatabaseRef(this);
+        } else if (xmlReader->name() == QStringLiteral("databaseref")) {
+            DatabaseRef *newDatabaseRef = new DatabaseRef(this);
             newDatabaseRef->fromXml(xmlReader);
             d->databaseRef.append(newDatabaseRef);
-        }
-        else if(xmlReader->name() == QStringLiteral("content-rating"))
-        {
-            ContentRating* newContentRating = new ContentRating(this);
+        } else if (xmlReader->name() == QStringLiteral("content-rating")) {
+            ContentRating *newContentRating = new ContentRating(this);
             newContentRating->fromXml(xmlReader);
             d->contentRating.append(newContentRating);
-        }
-        else if(xmlReader->name() == QStringLiteral("reading-direction"))
-        {
+        } else if (xmlReader->name() == QStringLiteral("reading-direction")) {
             QString direction = xmlReader->readElementText(QXmlStreamReader::IncludeChildElements).toLower();
-            if (direction=="rtl") {
+            if (direction == "rtl") {
                 setRightToLeft(true);
             } else {
                 setRightToLeft(false);
             }
-        }
-        else
-        {
+        } else {
             qCWarning(ACBF_LOG) << Q_FUNC_INFO << "currently unsupported subsection:" << xmlReader->name();
             xmlReader->skipCurrentElement();
         }
     }
     if (xmlReader->hasError()) {
-        qCWarning(ACBF_LOG) << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader->name() << "(" << xmlReader->lineNumber() << ":" << xmlReader->columnNumber() << ") The reported error was:" << xmlReader->errorString();
+        qCWarning(ACBF_LOG) << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader->name() << "(" << xmlReader->lineNumber() << ":"
+                            << xmlReader->columnNumber() << ") The reported error was:" << xmlReader->errorString();
     }
     qCDebug(ACBF_LOG) << Q_FUNC_INFO << "Created book information for the book with the titles" << d->title.values();
     return !xmlReader->hasError();
 }
 
-QList<Author*> BookInfo::author()
+QList<Author *> BookInfo::author()
 {
     return d->author;
 }
@@ -287,20 +260,27 @@ QList<Author*> BookInfo::author()
 QStringList BookInfo::authorNames() const
 {
     QStringList names;
-    for(Author* author : d->author) {
+    for (Author *author : d->author) {
         names.append(author->displayName());
     }
     return names;
 }
 
-Author * BookInfo::getAuthor(int index) const
+Author *BookInfo::getAuthor(int index) const
 {
     return d->author.at(index);
 }
 
-void BookInfo::addAuthor(QString activity, QString language, QString firstName, QString middleName, QString lastName, QString nickName, QStringList homePages, QStringList emails)
+void BookInfo::addAuthor(QString activity,
+                         QString language,
+                         QString firstName,
+                         QString middleName,
+                         QString lastName,
+                         QString nickName,
+                         QStringList homePages,
+                         QStringList emails)
 {
-    Author* author = new Author(metadata());
+    Author *author = new Author(metadata());
     author->setActivity(activity);
     author->setLanguage(language);
     author->setFirstName(firstName);
@@ -313,9 +293,17 @@ void BookInfo::addAuthor(QString activity, QString language, QString firstName, 
     emit authorsChanged();
 }
 
-void BookInfo::setAuthor(int index, QString activity, QString language, QString firstName, QString middleName, QString lastName, QString nickName, QStringList homePages, QStringList emails)
+void BookInfo::setAuthor(int index,
+                         QString activity,
+                         QString language,
+                         QString firstName,
+                         QString middleName,
+                         QString lastName,
+                         QString nickName,
+                         QStringList homePages,
+                         QStringList emails)
 {
-    Author* author = d->author.at(index);
+    Author *author = d->author.at(index);
     author->setActivity(activity);
     author->setLanguage(language);
     author->setFirstName(firstName);
@@ -333,13 +321,13 @@ void BookInfo::removeAuthor(int index)
     emit authorsChanged();
 }
 
-void BookInfo::addAuthor(Author* author)
+void BookInfo::addAuthor(Author *author)
 {
     d->author.append(author);
     emit authorsChanged();
 }
 
-void BookInfo::removeAuthor(Author* author)
+void BookInfo::removeAuthor(Author *author)
 {
     d->author.removeAll(author);
     emit authorsChanged();
@@ -357,14 +345,14 @@ QStringList BookInfo::titleLanguages()
 
 QString BookInfo::title(QString language)
 {
-    if (d->title.count()==0) {
+    if (d->title.count() == 0) {
         return "";
     }
     if (!d->title.keys().contains(language)) {
         language = "";
     }
 
-    if(language.isEmpty() && d->title[language].isEmpty() && d->languages.count()>0) {
+    if (language.isEmpty() && d->title[language].isEmpty() && d->languages.count() > 0) {
         language = d->languages.at(0)->language();
     }
 
@@ -380,12 +368,9 @@ QString BookInfo::title(QString language)
 void BookInfo::setTitle(QString title, QString language)
 {
     // Don't allow removal of the default title, just everything else
-    if(title.isEmpty() && !language.isEmpty())
-    {
+    if (title.isEmpty() && !language.isEmpty()) {
         d->title.remove(language);
-    }
-    else
-    {
+    } else {
         d->title[language] = title;
     }
     emit titleChanged();
@@ -410,8 +395,7 @@ void BookInfo::setGenre(QString genre, int matchPercentage)
 {
     bool emitNewGenre = !d->genre.contains(genre);
     d->genre[genre] = matchPercentage;
-    if(emitNewGenre)
-    {
+    if (emitNewGenre) {
         emit genresChanged();
     }
 }
@@ -424,37 +408,23 @@ void BookInfo::removeGenre(QString genre)
 
 QStringList BookInfo::availableGenres()
 {
-    return {
-        QStringLiteral("adult"),
-        QStringLiteral("adventure"),
-        QStringLiteral("alternative"), // (abstract, underground ...)
-        QStringLiteral("artbook"), // 1.2
-        QStringLiteral("biography"), // (biographical comics)
-        QStringLiteral("caricature"),
-        QStringLiteral("children"),
-        QStringLiteral("computer"), // (computers related)
-        QStringLiteral("crime"),
-        QStringLiteral("education"), // (education and science)
-        QStringLiteral("fantasy"),
-        QStringLiteral("history"), // (historical comics)
-        QStringLiteral("horror"),
-        QStringLiteral("humor"),
-        QStringLiteral("manga"),
-        QStringLiteral("military"), // (war ...)
-        QStringLiteral("mystery"),
-        QStringLiteral("non-fiction"),
-        QStringLiteral("politics"),
-        QStringLiteral("real_life"),
-        QStringLiteral("religion"),
-        QStringLiteral("romance"),
-        QStringLiteral("science_fiction"),
-        QStringLiteral("sports"),
-        QStringLiteral("superhero"), // (e.g. Superman, Spiderman … or Super Villains)
-        QStringLiteral("western"),
-        QStringLiteral("other")
-    };
+    return {QStringLiteral("adult"),       QStringLiteral("adventure"),
+            QStringLiteral("alternative"), // (abstract, underground ...)
+            QStringLiteral("artbook"), // 1.2
+            QStringLiteral("biography"), // (biographical comics)
+            QStringLiteral("caricature"),  QStringLiteral("children"),
+            QStringLiteral("computer"), // (computers related)
+            QStringLiteral("crime"),
+            QStringLiteral("education"), // (education and science)
+            QStringLiteral("fantasy"),
+            QStringLiteral("history"), // (historical comics)
+            QStringLiteral("horror"),      QStringLiteral("humor"),       QStringLiteral("manga"),
+            QStringLiteral("military"), // (war ...)
+            QStringLiteral("mystery"),     QStringLiteral("non-fiction"), QStringLiteral("politics"),        QStringLiteral("real_life"),
+            QStringLiteral("religion"),    QStringLiteral("romance"),     QStringLiteral("science_fiction"), QStringLiteral("sports"),
+            QStringLiteral("superhero"), // (e.g. Superman, Spiderman … or Super Villains)
+            QStringLiteral("western"),     QStringLiteral("other")};
 }
-
 
 QStringList BookInfo::characters()
 {
@@ -498,13 +468,13 @@ QStringList BookInfo::annotation(QString language)
         language = "";
     }
 
-    if(language.isEmpty() && d->annotation.value(language).count()==0) {
+    if (language.isEmpty() && d->annotation.value(language).count() == 0) {
         language = d->languages.at(0)->language();
     }
 
     QStringList annotation = d->annotation.value(language);
 
-    if (annotation.count()==0) {
+    if (annotation.count() == 0) {
         annotation = d->annotation.values().at(0);
     }
 
@@ -531,13 +501,13 @@ QStringList BookInfo::keywords(QString language)
         language = "";
     }
 
-    if(language.isEmpty() && d->keywords.value(language).count()==0) {
+    if (language.isEmpty() && d->keywords.value(language).count() == 0) {
         language = d->languages.at(0)->language();
     }
 
     QStringList keywords = d->keywords.value(language);
 
-    if (keywords.count()==0) {
+    if (keywords.count() == 0) {
         keywords = d->keywords.values().at(0);
     }
 
@@ -549,12 +519,12 @@ void BookInfo::setKeywords(QStringList keywords, QString language)
     d->keywords[language] = keywords;
 }
 
-Page * BookInfo::coverpage()
+Page *BookInfo::coverpage()
 {
     return d->coverPage;
 }
 
-void BookInfo::setCoverpage(Page* newCover)
+void BookInfo::setCoverpage(Page *newCover)
 {
     d->coverPage = newCover;
 }
@@ -562,13 +532,13 @@ void BookInfo::setCoverpage(Page* newCover)
 QObjectList BookInfo::languages()
 {
     QObjectList list;
-    for (Language* language : d->languages) {
+    for (Language *language : d->languages) {
         list << language;
     }
     return list;
 }
 
-void BookInfo::addLanguage(Language* language)
+void BookInfo::addLanguage(Language *language)
 {
     d->languages.append(language);
     Q_EMIT languagesChanged();
@@ -577,7 +547,7 @@ void BookInfo::addLanguage(Language* language)
 QStringList BookInfo::languageEntryList()
 {
     QStringList lang;
-    for (int i=0; i<d->languages.size(); i++) {
+    for (int i = 0; i < d->languages.size(); i++) {
         lang.append(d->languages.at(i)->language());
     }
     return lang;
@@ -585,13 +555,13 @@ QStringList BookInfo::languageEntryList()
 
 void BookInfo::addLanguage(QString language, bool show)
 {
-    Language* lang = new Language(this);
+    Language *lang = new Language(this);
     lang->setLanguage(language);
     lang->setShow(show);
     addLanguage(lang);
 }
 
-void BookInfo::removeLanguage(Language* language)
+void BookInfo::removeLanguage(Language *language)
 {
     d->languages.removeAll(language);
     Q_EMIT languagesChanged();
@@ -607,7 +577,7 @@ QList<Sequence *> BookInfo::sequence()
     return d->sequence;
 }
 
-void BookInfo::addSequence(Sequence* sequence)
+void BookInfo::addSequence(Sequence *sequence)
 {
     d->sequence.append(sequence);
     emit sequenceCountChanged();
@@ -615,14 +585,14 @@ void BookInfo::addSequence(Sequence* sequence)
 
 void BookInfo::addSequence(int number, QString title, int volume)
 {
-    Sequence* sequence = new Sequence(this);
+    Sequence *sequence = new Sequence(this);
     sequence->setNumber(number);
     sequence->setTitle(title);
     sequence->setVolume(volume);
     addSequence(sequence);
 }
 
-void BookInfo::removeSequence(Sequence* sequence)
+void BookInfo::removeSequence(Sequence *sequence)
 {
     d->sequence.removeAll(sequence);
     emit sequenceCountChanged();
@@ -640,7 +610,6 @@ Sequence *BookInfo::sequence(int index) const
 
 int BookInfo::sequenceCount() const
 {
-
     return d->sequence.size();
 }
 
@@ -649,8 +618,7 @@ QList<DatabaseRef *> BookInfo::databaseRef()
     return d->databaseRef;
 }
 
-
-void BookInfo::addDatabaseRef(DatabaseRef* databaseRef)
+void BookInfo::addDatabaseRef(DatabaseRef *databaseRef)
 {
     d->databaseRef.append(databaseRef);
     emit databaseRefCountChanged();
@@ -658,14 +626,14 @@ void BookInfo::addDatabaseRef(DatabaseRef* databaseRef)
 
 void BookInfo::addDatabaseRef(QString reference, QString dbname, QString type)
 {
-    DatabaseRef* dRef = new DatabaseRef(this);
+    DatabaseRef *dRef = new DatabaseRef(this);
     dRef->setReference(reference);
     dRef->setDbname(dbname);
     dRef->setType(type);
     addDatabaseRef(dRef);
 }
 
-void BookInfo::removeDatabaseRef(DatabaseRef* databaseRef)
+void BookInfo::removeDatabaseRef(DatabaseRef *databaseRef)
 {
     d->databaseRef.removeAll(databaseRef);
     emit databaseRefCountChanged();
@@ -691,7 +659,7 @@ QList<ContentRating *> BookInfo::contentRating()
     return d->contentRating;
 }
 
-void BookInfo::addContentRating(ContentRating* contentRating)
+void BookInfo::addContentRating(ContentRating *contentRating)
 {
     d->contentRating.append(contentRating);
     emit contentRatingCountChanged();
@@ -699,13 +667,13 @@ void BookInfo::addContentRating(ContentRating* contentRating)
 
 void BookInfo::addContentRating(QString rating, QString type)
 {
-    ContentRating* CR = new ContentRating(this);
+    ContentRating *CR = new ContentRating(this);
     CR->setRating(rating);
     CR->setType(type);
     addContentRating(CR);
 }
 
-void BookInfo::removeContentRating(ContentRating* contentRating)
+void BookInfo::removeContentRating(ContentRating *contentRating)
 {
     d->contentRating.removeAll(contentRating);
     emit contentRatingCountChanged();
@@ -730,7 +698,8 @@ bool BookInfo::rightToLeft() const
     return d->rightToLeft;
 }
 
-void BookInfo::setRightToLeft(const bool& rtl) {
+void BookInfo::setRightToLeft(const bool &rtl)
+{
     d->rightToLeft = rtl;
     emit rightToLeftChanged();
 }

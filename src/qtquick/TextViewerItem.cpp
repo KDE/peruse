@@ -23,17 +23,18 @@
 
 #include <QCursor>
 #include <QFontMetrics>
-#include <qmath.h>
 #include <QTimer>
+#include <qmath.h>
 #if QT_VERSION >= QT_VERSION_CHECK(6, 7, 0)
 #include <QSGTextNode>
 #else
 #include <private/qquicktextnode_p.h>
 #endif
 
-class TextViewerItem::Private {
+class TextViewerItem::Private
+{
 public:
-    Private(TextViewerItem* qq)
+    Private(TextViewerItem *qq)
         : q(qq)
     {
         throttle = new QTimer(qq);
@@ -41,33 +42,35 @@ public:
         throttle->setSingleShot(true);
         QObject::connect(throttle, &QTimer::timeout, qq, &QQuickItem::polish);
     }
-    ~Private() {
+    ~Private()
+    {
         qDeleteAll(layouts);
     }
-    TextViewerItem* q;
-    QTimer* throttle{nullptr};
+    TextViewerItem *q;
+    QTimer *throttle{nullptr};
     QStringList paragraphs;
     QList<QPoint> shape;
     QPoint shapeOffset{0, 0};
     double shapeMultiplier{1};
-    AdvancedComicBookFormat::Style* style{nullptr};
+    AdvancedComicBookFormat::Style *style{nullptr};
     QString fontFamily;
     int margin{2};
 
     QPolygonF shapePolygon;
     QFont font;
     QStringList internalParagraphs;
-    QList<QVector<QTextLayout::FormatRange> > formats;
+    QList<QVector<QTextLayout::FormatRange>> formats;
     // First is the index in formats, and second is the index is the list at that index
-    QHash<QPair<int,int>, QList<QRectF>> anchorRects;
-    QList<QTextLayout*> layouts;
+    QHash<QPair<int, int>, QList<QRectF>> anchorRects;
+    QList<QTextLayout *> layouts;
 
     // State tracker for making sure that if the user moves outside of the anchor they originally
     // clicked on, we don't actually suggest it was clicked
     QPair<int, int> clickedAnchor{-1, -1};
     QString hoveredLink;
 
-    QString fromHtmlEscaped(QString html) {
+    QString fromHtmlEscaped(QString html)
+    {
         html.replace("&quot;", "\"", Qt::CaseInsensitive);
         html.replace("&gt;", ">", Qt::CaseInsensitive);
         html.replace("&lt;", "<", Qt::CaseInsensitive);
@@ -75,7 +78,8 @@ public:
         return html;
     }
 
-    void adjustFormats() {
+    void adjustFormats()
+    {
         internalParagraphs.clear();
         formats.clear();
 
@@ -135,8 +139,7 @@ public:
         }
         baseFormat.setFont(font);
 
-        for (const QString& para : paragraphs) {
-
+        for (const QString &para : paragraphs) {
             int i = 0;
             QString text;
             QVector<QTextLayout::FormatRange> lineFormats;
@@ -178,7 +181,7 @@ public:
                     // Start of some kind of formatting tag
                     int tagEnd = para.indexOf('>', i + 1);
                     // Skip past end tags, because we kind of already handle those...
-                    if (i + 1 < para.size() && para[i+1] != '/') {
+                    if (i + 1 < para.size() && para[i + 1] != '/') {
                         QTextCharFormat format = currentFormat.format;
                         // We're starting a new tag, let's see which that is...
                         const QString thisIsStarting = QStringView{para}.mid(i + 1, tagEnd - i - 1).left(para.indexOf(" ")).trimmed().toString();
@@ -204,7 +207,8 @@ public:
                         } else if (thisIsStarting == codeTag) {
                         } else if (thisIsStarting == invertedTag) {
                         }
-                        currentFormat.length = para.indexOf(QLatin1String("</%1>").arg(thisIsStarting), text.size()) - text.size() - thisIsStarting.length() - 2;
+                        currentFormat.length =
+                            para.indexOf(QLatin1String("</%1>").arg(thisIsStarting), text.size()) - text.size() - thisIsStarting.length() - 2;
                         currentFormat.format = format;
                         currentFormat.start = text.size();
                         lineFormats.append(currentFormat);
@@ -236,7 +240,8 @@ public:
         }
     }
 
-    bool attemptLayout(bool debug = false) {
+    bool attemptLayout(bool debug = false)
+    {
         bool managedToFitEverything{true};
         QFontMetricsF fm(font);
         qreal lineHeight = fm.height();
@@ -268,11 +273,12 @@ public:
                     // and pick the innermost of those as the left/right bits of our current line
                     QVector<qreal> topAndBottom{y, y + lineHeight};
                     QVector<QPointF> cornerPoints{QPolygonF(intersection.boundingRect())};
-                    if (debug) qDebug() << "intersection:" << intersection;
+                    if (debug)
+                        qDebug() << "intersection:" << intersection;
                     int step{0};
-                    for (const qreal& position : topAndBottom) {
+                    for (const qreal &position : topAndBottom) {
                         QVector<qreal> coords;
-                        for (const QPointF& point : intersection) {
+                        for (const QPointF &point : intersection) {
                             if (point.y() == position) {
                                 coords.append(point.x());
                             }
@@ -313,14 +319,16 @@ public:
                             // find the leftmost x in that list of points
                             if (xRight > i->x()) {
                                 xRight = i->x();
-                                if (debug) qDebug() << "Discovered new right hand innermost";
+                                if (debug)
+                                    qDebug() << "Discovered new right hand innermost";
                             }
                         } else if (step == 4) {
                             // From bottom-leftmost to end
                             // find the leftmost x in that list of points
                             if (xLeft < i->x()) {
                                 xLeft = i->x();
-                                if (debug) qDebug() << "Discovered new left hand innermost";
+                                if (debug)
+                                    qDebug() << "Discovered new left hand innermost";
                             }
                         }
                         if (*i == cornerPoints[step]) {
@@ -340,7 +348,8 @@ public:
                     if (line.width() < averageCharWidth * (line.textLength() + 1)) {
                         // We can't actually fit the first word here, so... let's push the line one pixel and try again
                         y += 1;
-                        if (debug) qDebug() << "Could not fit the line, move down a pixel and try again";
+                        if (debug)
+                            qDebug() << "Could not fit the line, move down a pixel and try again";
                     } else {
                         y += line.height();
 
@@ -382,10 +391,11 @@ public:
     }
 
     // This sets the font size for everything (including our "many" stored character formats)
-    void setFontSize(int size) {
+    void setFontSize(int size)
+    {
         font.setPixelSize(size);
-        for (QVector<QTextLayout::FormatRange>& formatRange : formats) {
-            for (QTextLayout::FormatRange& format : formatRange) {
+        for (QVector<QTextLayout::FormatRange> &formatRange : formats) {
+            for (QTextLayout::FormatRange &format : formatRange) {
                 QFont tempFont = format.format.font();
                 tempFont.setPixelSize(size);
                 format.format.setFont(tempFont);
@@ -393,12 +403,14 @@ public:
         }
     }
 
-    bool sizeAccepted(int size) {
+    bool sizeAccepted(int size)
+    {
         setFontSize(size);
         return attemptLayout();
     }
 
-    int findMaxSize(int searchMin, int searchMax) {
+    int findMaxSize(int searchMin, int searchMax)
+    {
         int largestAccepted{searchMin};
         int searchSpace = searchMax - searchMin;
         if (searchSpace > 1) {
@@ -412,12 +424,13 @@ public:
         return largestAccepted;
     }
 
-    void updateAnchorRects() {
+    void updateAnchorRects()
+    {
         int layoutIndex{0};
         anchorRects.clear();
-        for (const QTextLayout* layout : layouts) {
+        for (const QTextLayout *layout : layouts) {
             int formatIndex{0};
-            for (const QTextLayout::FormatRange& format : layout->formats()) {
+            for (const QTextLayout::FormatRange &format : layout->formats()) {
                 if (!format.format.anchorHref().isEmpty()) {
                     QList<QRectF> rects;
                     // get all the lines, so we can store all the bounding rects for this anchor...
@@ -450,11 +463,12 @@ public:
      * @param localPos The position to identify a pair for
      * @return An identifying pair, or an invalid pair if none was found
      */
-    QPair<int, int> getAnchor(const QPointF& localPos) {
+    QPair<int, int> getAnchor(const QPointF &localPos)
+    {
         QPair<int, int> anchor{-1, -1};
         QHash<QPair<int, int>, QList<QRectF>>::const_iterator i;
         for (i = anchorRects.constBegin(); i != anchorRects.constEnd(); ++i) {
-            for (const QRectF& rect : i.value()) {
+            for (const QRectF &rect : i.value()) {
                 if (rect.contains(localPos)) {
                     anchor = i.key();
                     break;
@@ -467,7 +481,8 @@ public:
         return anchor;
     }
 
-    void performLayout() {
+    void performLayout()
+    {
         bool debugLayout{false};
         int pixelSize{2};
         margin = shapeMultiplier;
@@ -480,8 +495,9 @@ public:
             bool layoutSuccessful = attemptLayout(debugLayout);
             if (debugLayout) {
                 qDebug() << "Layout was successful?" << layoutSuccessful << "for the paragraphs" << internalParagraphs;
-                for (QTextLayout* layout : layouts) {
-                    qDebug() << layout->lineCount() << "layouts at size" << pixelSize - 1 << "to fit into" << shapePolygon.boundingRect() << "the following text:" << layout->text();
+                for (QTextLayout *layout : layouts) {
+                    qDebug() << layout->lineCount() << "layouts at size" << pixelSize - 1 << "to fit into" << shapePolygon.boundingRect()
+                             << "the following text:" << layout->text();
                     qDebug() << shapePolygon;
                     for (int i = 0; i < layout->lineCount(); ++i) {
                         QTextLine line = layout->lineAt(i);
@@ -495,11 +511,12 @@ public:
         updateAnchorRects();
     }
 
-    void buildPolygon() {
+    void buildPolygon()
+    {
         // Convert the polygon into something both scaled correctly, and at the right place
         shapePolygon.clear();
         QVector<QPointF> points;
-        for (const QPoint& point : shape) {
+        for (const QPoint &point : shape) {
             int x = (point.x() * shapeMultiplier) - shapeOffset.x();
             int y = (point.y() * shapeMultiplier) - shapeOffset.y();
             points << QPointF(x, y);
@@ -512,7 +529,7 @@ public:
     }
 };
 
-TextViewerItem::TextViewerItem(QQuickItem* parent)
+TextViewerItem::TextViewerItem(QQuickItem *parent)
     : QQuickItem(parent)
     , d(new Private(this))
 {
@@ -548,7 +565,7 @@ QStringList TextViewerItem::paragraphs() const
     return d->paragraphs;
 }
 
-void TextViewerItem::setParagraphs(const QStringList& newParagraphs)
+void TextViewerItem::setParagraphs(const QStringList &newParagraphs)
 {
     d->paragraphs = newParagraphs;
     Q_EMIT paragraphsChanged();
@@ -557,16 +574,16 @@ void TextViewerItem::setParagraphs(const QStringList& newParagraphs)
 QVariantList TextViewerItem::shape() const
 {
     QVariantList list;
-    for (const QPoint& point : d->shape) {
+    for (const QPoint &point : d->shape) {
         list << point;
     }
     return list;
 }
 
-void TextViewerItem::setShape(const QVariantList& newShape)
+void TextViewerItem::setShape(const QVariantList &newShape)
 {
     d->shape.clear();
-    for (const QVariant& point : newShape) {
+    for (const QVariant &point : newShape) {
         d->shape << point.toPoint();
     }
     Q_EMIT shapeChanged();
@@ -577,7 +594,7 @@ QPoint TextViewerItem::shapeOffset() const
     return d->shapeOffset;
 }
 
-void TextViewerItem::setShapeOffset(const QPoint& newShapeOffset)
+void TextViewerItem::setShapeOffset(const QPoint &newShapeOffset)
 {
     if (d->shapeOffset != newShapeOffset) {
         d->shapeOffset = newShapeOffset;
@@ -602,15 +619,15 @@ void TextViewerItem::setShapeMultiplier(double newShapeMultiplier)
     }
 }
 
-QObject * TextViewerItem::style() const
+QObject *TextViewerItem::style() const
 {
     return d->style;
 }
 
-void TextViewerItem::setStyle(QObject* newStyle)
+void TextViewerItem::setStyle(QObject *newStyle)
 {
     if (d->style != newStyle) {
-        d->style = qobject_cast<AdvancedComicBookFormat::Style*>(newStyle);
+        d->style = qobject_cast<AdvancedComicBookFormat::Style *>(newStyle);
         Q_EMIT styleChanged();
     }
 }
@@ -620,7 +637,7 @@ QString TextViewerItem::fontFamily() const
     return d->fontFamily;
 }
 
-void TextViewerItem::setFontFamily(const QString& newFontFamily)
+void TextViewerItem::setFontFamily(const QString &newFontFamily)
 {
     if (d->fontFamily != newFontFamily) {
         d->fontFamily = newFontFamily;
@@ -633,7 +650,7 @@ QVariantList TextViewerItem::linkRects() const
     QVariantList rects;
     QHash<QPair<int, int>, QList<QRectF>>::const_iterator i;
     for (i = d->anchorRects.constBegin(); i != d->anchorRects.constEnd(); ++i) {
-        for (const QRectF& rect : i.value()) {
+        for (const QRectF &rect : i.value()) {
             rects << rect;
         }
     }
@@ -655,7 +672,7 @@ void TextViewerItem::updatePolish()
     }
 }
 
-QSGNode * TextViewerItem::updatePaintNode(QSGNode* node, QQuickItem::UpdatePaintNodeData* data)
+QSGNode *TextViewerItem::updatePaintNode(QSGNode *node, QQuickItem::UpdatePaintNodeData *data)
 {
     Q_UNUSED(data)
 #if QT_VERSION >= QT_VERSION_CHECK(6, 7, 0)
@@ -668,20 +685,20 @@ QSGNode * TextViewerItem::updatePaintNode(QSGNode* node, QQuickItem::UpdatePaint
         n = new QQuickTextNode(this);
 #endif
     n->removeAllChildNodes();
-    for (QTextLayout* layout : d->layouts) {
+    for (QTextLayout *layout : d->layouts) {
         n->addTextLayout(QPoint(0, 0), layout);
     }
     return n;
 }
 
-void TextViewerItem::geometryChange(const QRectF& newGeometry, const QRectF& oldGeometry)
+void TextViewerItem::geometryChange(const QRectF &newGeometry, const QRectF &oldGeometry)
 {
     Q_UNUSED(newGeometry)
     Q_UNUSED(oldGeometry)
     d->throttle->start();
 }
 
-void TextViewerItem::hoverMoveEvent(QHoverEvent* event)
+void TextViewerItem::hoverMoveEvent(QHoverEvent *event)
 {
     QPair<int, int> anchor = d->getAnchor(event->position());
     // Only really need one of the point's items to be greater than -1 to know there's an anchor, no need to check more
@@ -702,7 +719,7 @@ void TextViewerItem::hoverMoveEvent(QHoverEvent* event)
     }
 }
 
-void TextViewerItem::hoverLeaveEvent(QHoverEvent* event)
+void TextViewerItem::hoverLeaveEvent(QHoverEvent *event)
 {
     if (!d->hoveredLink.isEmpty()) {
         d->hoveredLink.clear();
@@ -712,13 +729,13 @@ void TextViewerItem::hoverLeaveEvent(QHoverEvent* event)
     }
 }
 
-void TextViewerItem::mousePressEvent(QMouseEvent* event)
+void TextViewerItem::mousePressEvent(QMouseEvent *event)
 {
     d->clickedAnchor = d->getAnchor(event->localPos());
     event->accept();
 }
 
-void TextViewerItem::mouseReleaseEvent(QMouseEvent* event)
+void TextViewerItem::mouseReleaseEvent(QMouseEvent *event)
 {
     QPair<int, int> eventAnchor = d->getAnchor(event->localPos());
     if (eventAnchor.first > -1 && eventAnchor == d->clickedAnchor) {

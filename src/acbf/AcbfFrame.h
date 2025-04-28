@@ -31,13 +31,13 @@
 #include <QRect>
 /**
  * \brief a Class to handle comic panels.
- * 
+ *
  * Frames are a polygon of points, which describe
  * a panel on a comic book page image in pixels.
- * 
+ *
  * This can be used to give improved navigation on
  * smaller screens.
- * 
+ *
  * Frames also have a background color which can be used
  * to enhance the reading experience by setting the background
  * color to the frame color.
@@ -52,13 +52,13 @@ class ACBF_EXPORT Frame : public InternalReferenceObject
     Q_PROPERTY(int pointCount READ pointCount NOTIFY pointCountChanged)
     Q_PROPERTY(QRect bounds READ bounds NOTIFY boundsChanged)
 public:
-    explicit Frame(Page* parent = nullptr);
+    explicit Frame(Page *parent = nullptr);
     ~Frame() override;
 
     /**
      * \brief Write the frame into the xml writer.
      */
-    void toXml(QXmlStreamWriter* writer);
+    void toXml(QXmlStreamWriter *writer);
     /**
      * \brief load a frame element into this object.
      * @return True if the xmlReader encountered no errors.
@@ -78,7 +78,7 @@ public:
      * other parts of the ACBF document.
      * @param newId - The new ID as a string.
      */
-    void setId(const QString& newId);
+    void setId(const QString &newId);
     Q_SIGNAL void idChanged();
 
     /**
@@ -94,7 +94,7 @@ public:
      * @param point - a point from the points list.
      * @return the index of the given point.
      */
-    Q_INVOKABLE int pointIndex(const QPoint& point) const;
+    Q_INVOKABLE int pointIndex(const QPoint &point) const;
 
     /**
      * \brief add a point to the points list.
@@ -102,24 +102,24 @@ public:
      * @param index - the index to add it at. If afterIndex is larger than zero,
      * the insertion will happen at that index
      */
-    Q_INVOKABLE void addPoint(const QPoint& point, int index = -1);
+    Q_INVOKABLE void addPoint(const QPoint &point, int index = -1);
     /**
      * \brief remove a point from the list.
      * @param point - point to remove from the list.
      */
-    Q_INVOKABLE void removePoint(const QPoint& point);
+    Q_INVOKABLE void removePoint(const QPoint &point);
     /**
      * \brief Swap two points in the list.
      * @param swapThis - the first points to swap.
      * @param withThis - the second points to swap.
      */
-    bool swapPoints(const QPoint& swapThis, const QPoint& withThis);
+    bool swapPoints(const QPoint &swapThis, const QPoint &withThis);
     /**
      * @brief set the points based on a top left and bottom right.
      * @param topLeft the topleft corner of the rect.
      * @param bottomRight the bottomright corner of the rect.
      */
-    Q_INVOKABLE void setPointsFromRect(const QPoint& topLeft, const QPoint& bottomRight);
+    Q_INVOKABLE void setPointsFromRect(const QPoint &topLeft, const QPoint &bottomRight);
 
     int pointCount() const;
     /**
@@ -137,16 +137,16 @@ public:
     Q_SIGNAL void boundsChanged();
     /**
      * @return the background color as a QString.
-     * 
+     *
      * It should be an 8bit per channel rgb hexcode.
      */
     QString bgcolor() const;
     /**
      * \brief set the background color.
-     * 
+     *
      * @param newColor - a String with an 8bit per channel rgb hexcode (#ff00ff, or the like)
      */
-    void setBgcolor(const QString& newColor = QString());
+    void setBgcolor(const QString &newColor = QString());
     /**
      * @brief fires when the background color changes.
      */

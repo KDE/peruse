@@ -27,11 +27,11 @@
 
 /**
  * \brief Base Class to handle books, their pages and their metadata
- * 
+ *
  * BookModel is an QAbstractListModel, holding the pages as a list of objects.
- * 
+ *
  * It also holds metadata for the following entries as Q Properties:
- * 
+ *
  * - filename.
  * - author
  * - publisher
@@ -40,7 +40,7 @@
  * - current page.
  * - acbf data
  * - processing
- * 
+ *
  * The book model in turn is extended by ArchiveBookModel and FolderBookModel
  * to provide specialised functionality for archives(zip, rar, cbz, cbr) with
  * a book and Folders with a book and a description file.
@@ -77,7 +77,7 @@ class BookModel : public QAbstractListModel
      * The Advanced Comic Book Format data management instance associated with this book
      * This may be null
      */
-    Q_PROPERTY(QObject* acbfData READ acbfData NOTIFY acbfDataChanged)
+    Q_PROPERTY(QObject *acbfData READ acbfData NOTIFY acbfDataChanged)
     /**
      * \brief Whether or not the book is still being processed.
      */
@@ -87,7 +87,7 @@ class BookModel : public QAbstractListModel
      */
     Q_PROPERTY(QString processingDescription READ processingDescription WRITE setProcessingDescription NOTIFY processingDescriptionChanged)
 public:
-    explicit BookModel(QObject* parent = nullptr);
+    explicit BookModel(QObject *parent = nullptr);
     ~BookModel() override;
 
     /**
@@ -107,15 +107,15 @@ public:
      * @param index The QModelIndex at which you wish to access the data.
      * @param role An enumerator of the type of data you want to access.
      * Is extended by the Roles enum.
-     * 
+     *
      * @return a QVariant with the page data.
      */
-    QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     /**
      * @param parent The QModel index of the parent, not used here.
      * @returns the number of total pages there are in the Book.
      */
-    int rowCount(const QModelIndex& parent = QModelIndex()) const override;
+    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 
     /**
      * \brief add a page to this book.
@@ -205,7 +205,8 @@ public:
     /**
      * \brief Set the current page.
      * @param newCurrentPage Int with the index of the page to switch to.
-     * @param updateFilesystem If this is set to false, the attributes do not get written back to the filesystem. Useful for when the information is first filled out
+     * @param updateFilesystem If this is set to false, the attributes do not get written back to the filesystem. Useful for when the information is first
+     * filled out
      */
     virtual void setCurrentPage(int newCurrentPage, bool updateFilesystem = true);
     /**
@@ -216,14 +217,14 @@ public:
     /**
      * @return an object with the acbf data, might be null.
      */
-    QObject* acbfData() const;
+    QObject *acbfData() const;
     /**
      * This is used by subclasses who want to create one such. Until this is called
      * with a valid object, acbfData is null. This function causes BookModel to take
      * ownership of the object. It will further delete any previous objects set as
      * acbfData.
      */
-    virtual void setAcbfData(QObject* obj);
+    virtual void setAcbfData(QObject *obj);
     /**
      * \brief Fires when the ACBF data has changed.
      */
@@ -259,7 +260,7 @@ public:
      * \brief Set the human readable description of what is currently happening
      * \param description The description of what's going on
      */
-    void setProcessingDescription(const QString& description);
+    void setProcessingDescription(const QString &description);
     /**
      * \brief Fires when the description of what's going on changes
      */
@@ -267,14 +268,15 @@ public:
 
     /**
      * @brief Swap the two pages at the specified indices
-     * 
+     *
      * @param swapThisIndex The index of the first page to be swapped
      * @param withThisIndex The index of the page you want the first to be swapped with
      */
     Q_INVOKABLE virtual void swapPages(int swapThisIndex, int withThisIndex);
+
 private:
     class Private;
-    Private* d;
+    Private *d;
 };
 
-#endif//BOOKMODEL_H
+#endif // BOOKMODEL_H

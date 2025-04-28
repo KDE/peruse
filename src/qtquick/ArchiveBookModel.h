@@ -29,10 +29,10 @@
 
 /**
  * \brief Class to hold pages and metadata for archive based books.
- * 
+ *
  * In particular, ArchiveBookModel handles CBZ and CBR files, reads
  * potential metadata and holds that into the acbfdata object.
- * 
+ *
  * ArchiveBookModel extends BookModel, which handles the functions for
  * setting the current page, and returning basic metadata.
  */
@@ -47,7 +47,7 @@ class ArchiveBookModel : public BookModel
     Q_PROPERTY(QStringList fileEntries READ fileEntries NOTIFY fileEntriesChanged)
     Q_PROPERTY(QStringList fileEntriesToDelete READ fileEntriesToDelete NOTIFY fileEntriesToDeleteChanged)
 public:
-    explicit ArchiveBookModel(QObject* parent = nullptr);
+    explicit ArchiveBookModel(QObject *parent = nullptr);
     ~ArchiveBookModel() override;
 
     /**
@@ -58,20 +58,20 @@ public:
     /**
      * The author name will be either the default bookmodel author name, or
      * if ACBF data is available, the first authorname in the list of ACBF authors.
-     * 
+     *
      * @return the author name as a QString.
      */
     QString author() const override;
     /**
      * \brief Set the main author's nickname.
-     * 
+     *
      * If there is no ACBF data, this will set the author to BookModel's author.
      * If there is ACBF data, this will set the nickname entry on the name of the
      * first possible author.
-     * 
+     *
      * Preferably authors should be added by editing the author list in the bookinfo
      * of the ACBF metadata this book holds.
-     * 
+     *
      * @param newAuthor The main author's nickname.
      */
     void setAuthor(QString newAuthor) override;
@@ -113,7 +113,7 @@ public:
 
     /**
      * @return whether the book has been modified and has unsaved changes.
-     * 
+     *
      * Used in PeruseCreator to determine whether to enable the save dialog.
      */
     bool hasUnsavedChanges() const;
@@ -144,7 +144,7 @@ public:
      * @see fileEntries()
      * @see markArchiveFileForDeletion(QString,bool)
      */
-    Q_INVOKABLE int fileEntryReferenced(const QString& fileEntry) const;
+    Q_INVOKABLE int fileEntryReferenced(const QString &fileEntry) const;
 
     /**
      * \brief Whether or not an entry is a directory in the archive (as opposed to a file)
@@ -154,7 +154,7 @@ public:
      * @param fileEntry The entry you wish to check
      * @return True if the entry passed in is a directory
      */
-    Q_INVOKABLE bool fileEntryIsDirectory(const QString& fileEntry) const;
+    Q_INVOKABLE bool fileEntryIsDirectory(const QString &fileEntry) const;
 
     /**
      * @brief The list of files currently marked for deletion
@@ -172,7 +172,7 @@ public:
      * @param archiveFile The filename of the file to be removed
      * @param markForDeletion Whether the archive file should be deleted or not
      */
-    Q_INVOKABLE void markArchiveFileForDeletion(const QString& archiveFile, bool markForDeletion = true);
+    Q_INVOKABLE void markArchiveFileForDeletion(const QString &archiveFile, bool markForDeletion = true);
 
     /**
      * \brief Saves the archive back to disk
@@ -182,9 +182,9 @@ public:
 
     /**
      * \brief add a page to this book.
-     * 
+     *
      * This adds it to the ACBF metadata too.
-     * 
+     *
      * @param url The resource location of the page as an url.
      * @param title The title of the page. This is shown in a table of contents.
      */
@@ -221,7 +221,7 @@ public:
 
     /**
      * Creates a new book with the given fileName, with the given title and cover.
-     * 
+     *
      * @param fileName the path to the folder to create this book in.
      * @param title The title of the book.
      * @param coverUrl A resource location pointing at the image that will be the coverpage.
@@ -234,7 +234,7 @@ public:
      * @param id The ID of the item to get a preview URL for
      * @return The preview URL for the item with the given ID (this is NOT checked for validity, only constructed)
      */
-    Q_INVOKABLE QString previewForId(const QString& id) const;
+    Q_INVOKABLE QString previewForId(const QString &id) const;
 
     /**
      * Get the family name for a font by its filename as stored in the ACBF data, or in the archive.
@@ -243,7 +243,7 @@ public:
      * @param fontFileName The filename, in the acbf document or archive, of the font you wish to load
      * @return The first family name in the font, or an empty string if none was found
      */
-    Q_INVOKABLE QString fontFamilyName(const QString& fontFileName);
+    Q_INVOKABLE QString fontFamilyName(const QString &fontFileName);
 
     /**
      * Goes through a list of font families (such as that in a stylesheet) and returns the first one
@@ -252,16 +252,15 @@ public:
      * @param fontList The ordered list of fonts to attempt to locate, in a fail-through fashion
      * @param The first font in the list that's available on the system. If none is found, an empty string is returned.
      */
-    Q_INVOKABLE QString firstAvailableFont(const QStringList& fontList);
+    Q_INVOKABLE QString firstAvailableFont(const QStringList &fontList);
 
     friend class ArchiveImageRunnable;
 
-    void setAcbfData(QObject* obj) override;
+    void setAcbfData(QObject *obj) override;
 
 protected:
-    const KArchiveFile* archiveFile(const QString& filePath) const;
+    const KArchiveFile *archiveFile(const QString &filePath) const;
     QMutex archiveMutex;
-
 
 private:
     class Private;
@@ -275,7 +274,7 @@ private:
      * @param filename the file name of the document, necessary for writing data to kfilemetadata.
      * @return whether the reading was successful.
      */
-    bool loadComicInfoXML(QString xmlDocument, QObject* acbfData, QStringList entries, QString filename);
+    bool loadComicInfoXML(QString xmlDocument, QObject *acbfData, QStringList entries, QString filename);
     /**
      * @brief loads CoMet xmls, https://www.denvog.com/comet/comet-specification/
      * @param xmlDocument string with the archive value.
@@ -284,8 +283,8 @@ private:
      * @param filename the file name of the document, necessary for writing data to kfilemetadata.
      * @return whether the reading was successful.
      */
-    bool loadCoMet(QStringList xmlDocuments, QObject* acbfData, QStringList entries, QString filename);
-    Private* d;
+    bool loadCoMet(QStringList xmlDocuments, QObject *acbfData, QStringList entries, QString filename);
+    Private *d;
 };
 
-#endif//ARCHIVEBOOKMODEL_H
+#endif // ARCHIVEBOOKMODEL_H

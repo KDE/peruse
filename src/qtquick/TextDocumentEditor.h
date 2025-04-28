@@ -29,16 +29,17 @@
 /**
  * \brief A helper object for editing text documents using e.g. a QML TextEdit or a TextArea
  */
-class TextDocumentEditor : public QObject {
+class TextDocumentEditor : public QObject
+{
     Q_OBJECT
     QML_ELEMENT
 
-    Q_PROPERTY(QObject* textDocument READ textDocument WRITE setTextDocument NOTIFY textDocumentChanged)
+    Q_PROPERTY(QObject *textDocument READ textDocument WRITE setTextDocument NOTIFY textDocumentChanged)
 public:
     explicit TextDocumentEditor(QObject *parent = nullptr);
     virtual ~TextDocumentEditor();
 
-    QObject* textDocument() const;
+    QObject *textDocument() const;
     void setTextDocument(QObject *textDocument);
     Q_SIGNAL void textDocumentChanged();
 
@@ -51,9 +52,10 @@ public:
      * @return A list of paragraphs of text
      */
     Q_INVOKABLE QStringList paragraphs() const;
+
 private:
     class Private;
     std::unique_ptr<Private> d;
 };
 
-#endif//TEXTDOCUMENTEDITOR_H
+#endif // TEXTDOCUMENTEDITOR_H

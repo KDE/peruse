@@ -21,16 +21,16 @@
 
 #include "PeruseConfig.h"
 
-#include <KFileMetaData/UserMetaData>
 #include <KConfig>
 #include <KConfigGroup>
+#include <KFileMetaData/UserMetaData>
 #include <KNSCore/EngineBase>
 
-#include <QTimer>
 #include <QFile>
 #include <QFileInfo>
 #include <QImageReader>
 #include <QMimeDatabase>
+#include <QTimer>
 
 using namespace Qt::Literals::StringLiterals;
 
@@ -38,18 +38,16 @@ class PeruseConfig::Private
 {
 public:
     Private()
-        : config("peruserc")
-    {};
+        : config("peruserc") { };
     KConfig config;
 };
 
-PeruseConfig::PeruseConfig(QObject* parent)
+PeruseConfig::PeruseConfig(QObject *parent)
     : QObject(parent)
     , d(new Private)
 {
     QStringList locations = d->config.group(u"general"_s).readEntry("book locations", QStringList());
-    if(locations.count() < 1)
-    {
+    if (locations.count() < 1) {
         locations = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation);
         locations << QStandardPaths::standardLocations(QStandardPaths::DownloadLocation);
         locations << QString("%1/comics").arg(QStandardPaths::standardLocations(QStandardPaths::GenericDataLocation).first());
@@ -69,13 +67,10 @@ void PeruseConfig::bookOpened(QString path)
     QStringList recent = recentlyOpened();
 
     int i = recent.indexOf(path);
-    if(i == 0)
-    {
+    if (i == 0) {
         // This is already first, don't do work we don't need to, because that's just silly
         return;
-    }
-    else
-    {
+    } else {
         recent.removeAll(path);
         recent.prepend(path);
     }
@@ -88,19 +83,18 @@ QStringList PeruseConfig::recentlyOpened() const
 {
     QStringList recent = d->config.group(u"general"_s).readEntry(u"recently opened"_s, QStringList());
     QStringList actualRecent;
-    while(recent.count() > 0) {
+    while (recent.count() > 0) {
         QString current = recent.takeFirst();
-        if(QFile::exists(current)) {
+        if (QFile::exists(current)) {
             actualRecent.append(current);
         }
     }
     return actualRecent;
 }
 
-void PeruseConfig::addBookLocation(const QString& location)
+void PeruseConfig::addBookLocation(const QString &location)
 {
-    if(location.startsWith("file://"))
-    {
+    if (location.startsWith("file://")) {
 #ifdef Q_OS_WIN
         QString newLocation = location.mid(8);
 #else
@@ -110,18 +104,15 @@ void PeruseConfig::addBookLocation(const QString& location)
         // First, get rid of all the entries which start with the newly added location, because that's silly
         QStringList newLocations;
         bool alreadyInThere = false;
-        for(const QString& entry : locations) {
-            if(!entry.startsWith(newLocation))
-            {
+        for (const QString &entry : locations) {
+            if (!entry.startsWith(newLocation)) {
                 newLocations.append(entry);
             }
-            if(newLocation.startsWith(entry))
-            {
+            if (newLocation.startsWith(entry)) {
                 alreadyInThere = true;
             }
         }
-        if(alreadyInThere)
-        {
+        if (alreadyInThere) {
             // Don't be silly, don't add a new location if it's already covered by something more high level...
             emit showMessage("Attempted to add a new location to the list of search folders which is a sub-folder to something already in the list.");
             return;
@@ -133,7 +124,7 @@ void PeruseConfig::addBookLocation(const QString& location)
     }
 }
 
-void PeruseConfig::removeBookLocation(const QString& location)
+void PeruseConfig::removeBookLocation(const QString &location)
 {
     QStringList locations = bookLocations();
     locations.removeAll(location);
@@ -150,13 +141,12 @@ QStringList PeruseConfig::bookLocations() const
 
 QString PeruseConfig::newstuffLocation() const
 {
-    const QStringList configFiles = KNSCore::EngineBase::availableConfigFiles()
-        .filter(QRegularExpression(u"pereuse.knsrc$"_s));
+    const QStringList configFiles = KNSCore::EngineBase::availableConfigFiles().filter(QRegularExpression(u"pereuse.knsrc$"_s));
     if (configFiles.isEmpty()) {
         return {};
     }
 
-    if(!qEnvironmentVariableIsSet("APPDIR")) {
+    if (!qEnvironmentVariableIsSet("APPDIR")) {
         return configFiles[0];
     }
 
@@ -178,7 +168,7 @@ void PeruseConfig::setAnimateJumpAreas(bool animate)
 {
     bool animateJumpAreasCurrentVal = animateJumpAreas();
 
-    if(animateJumpAreasCurrentVal != animate) {
+    if (animateJumpAreasCurrentVal != animate) {
         d->config.group(u"general"_s).writeEntry(u"animate jump areas"_s, animate);
         d->config.sync();
         emit animateJumpAreasChanged();
@@ -229,7 +219,7 @@ QString PeruseConfig::getFilesystemProperty(QString fileName, QString propertyNa
 QStringList PeruseConfig::supportedImageFormats() const
 {
     QStringList formats;
-    for (const QByteArray& format : QImageReader::supportedImageFormats()) {
+    for (const QByteArray &format : QImageReader::supportedImageFormats()) {
         formats << format;
     }
     return formats;

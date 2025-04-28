@@ -23,28 +23,31 @@
 #include "AcbfReferences.h"
 
 #include <QString>
-#include <QXmlStreamWriter>
 #include <QXmlStreamReader>
+#include <QXmlStreamWriter>
 
 #include <acbf_debug.h>
 
 using namespace AdvancedComicBookFormat;
 
-class Reference::Private {
+class Reference::Private
+{
 public:
-    Private() {}
-    References* parent;
+    Private()
+    {
+    }
+    References *parent;
 
     QString id;
     QString language;
     QStringList paragraphs;
 };
 
-Reference::Reference(References* parent)
+Reference::Reference(References *parent)
     : InternalReferenceObject(InternalReferenceObject::ReferenceOriginAndTarget, parent)
     , d(new Private)
 {
-    static const int typeId = qRegisterMetaType<Reference*>("Reference*");
+    static const int typeId = qRegisterMetaType<Reference *>("Reference*");
     Q_UNUSED(typeId);
     d->parent = parent;
     // Hook up properties to the parent's global data change signal
@@ -55,48 +58,45 @@ Reference::Reference(References* parent)
 
 Reference::~Reference() = default;
 
-void Reference::toXml(QXmlStreamWriter* writer)
+void Reference::toXml(QXmlStreamWriter *writer)
 {
     writer->writeStartElement(QStringLiteral("reference"));
     writer->writeAttribute(QStringLiteral("id"), id());
     /* ACBF 1.2
     writer->writeAttribute(QStringLiteral("lang"), language());
     */
-    for(const QString& paragraph : d->paragraphs) {
+    for (const QString &paragraph : d->paragraphs) {
         writer->writeStartElement(QStringLiteral("p"));
-        writer->writeCharacters("");  // to ensure we close the tag correctly and don't end up with a <p />
+        writer->writeCharacters(""); // to ensure we close the tag correctly and don't end up with a <p />
         writer->device()->write(paragraph.toUtf8().constData(), paragraph.toUtf8().length());
         writer->writeEndElement();
     }
     writer->writeEndElement();
 }
 
-bool Reference::fromXml(QXmlStreamReader *xmlReader, const QString& xmlData)
+bool Reference::fromXml(QXmlStreamReader *xmlReader, const QString &xmlData)
 {
     setId(xmlReader->attributes().value(QStringLiteral("id")).toString());
     setLanguage(xmlReader->attributes().value(QStringLiteral("lang")).toString());
-    while(xmlReader->readNextStartElement())
-    {
-        if(xmlReader->name() == QStringLiteral("p"))
-        {
+    while (xmlReader->readNextStartElement()) {
+        if (xmlReader->name() == QStringLiteral("p")) {
             int startPoint = xmlReader->characterOffset();
             int endPoint{startPoint};
-            while(xmlReader->readNext()) {
+            while (xmlReader->readNext()) {
                 if (xmlReader->isEndElement() && xmlReader->name() == QStringLiteral("p")) {
                     endPoint = xmlReader->characterOffset();
                     break;
                 }
             }
             d->paragraphs.append(xmlData.mid(startPoint, endPoint - startPoint - 4));
-        }
-        else
-        {
+        } else {
             qCWarning(ACBF_LOG) << Q_FUNC_INFO << "currently unsupported subsection in text-area:" << xmlReader->name();
             xmlReader->skipCurrentElement();
         }
     }
     if (xmlReader->hasError()) {
-        qCWarning(ACBF_LOG) << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader->name() << "(" << xmlReader->lineNumber() << ":" << xmlReader->columnNumber() << ") The reported error was:" << xmlReader->errorString();
+        qCWarning(ACBF_LOG) << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader->name() << "(" << xmlReader->lineNumber() << ":"
+                            << xmlReader->columnNumber() << ") The reported error was:" << xmlReader->errorString();
     }
     qCDebug(ACBF_LOG) << Q_FUNC_INFO << "Created a reference of with id" << id();
     return !xmlReader->hasError();
@@ -107,7 +107,7 @@ QString Reference::id() const
     return d->id;
 }
 
-void Reference::setId(const QString& newId)
+void Reference::setId(const QString &newId)
 {
     if (d->id != newId) {
         d->id = newId;
@@ -120,7 +120,7 @@ QString Reference::language() const
     return d->language;
 }
 
-void Reference::setLanguage(const QString& language)
+void Reference::setLanguage(const QString &language)
 {
     if (d->language != language) {
         d->language = language;
@@ -133,7 +133,7 @@ QStringList Reference::paragraphs() const
     return d->paragraphs;
 }
 
-void Reference::setParagraphs(const QStringList& paragraphs)
+void Reference::setParagraphs(const QStringList &paragraphs)
 {
     if (d->paragraphs != paragraphs) {
         d->paragraphs = paragraphs;

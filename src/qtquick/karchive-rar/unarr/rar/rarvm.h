@@ -6,8 +6,8 @@
 #ifndef rar_vm_h
 #define rar_vm_h
 
-#include <stdint.h>
 #include <stdbool.h>
+#include <stdint.h>
 
 #define RARProgramMemorySize 0x40000
 #define RARProgramMemoryMask (RARProgramMemorySize - 1)

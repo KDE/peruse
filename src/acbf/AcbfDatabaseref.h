@@ -22,16 +22,16 @@
 #ifndef ACBFDATABASEREF_H
 #define ACBFDATABASEREF_H
 
-#include <memory>
 #include "AcbfBookinfo.h"
+#include <memory>
 /**
  * \brief Class to handle references to this book in catalogues and databases.
- * 
+ *
  * Books can have entries in databases and library catalogues. If such an entry
  * exists, the DatabaseRef object can hold it. Such entries are useful to figure
  * out if two stories are related, or to retrieve extra information about the book
  * such as collections it may be part of.
- * 
+ *
  * dbname is the name of the database.
  * type is the type of reference it is, such as IssueID, SeriesID, or just plain URL.
  * reference is the actual reference.
@@ -45,13 +45,13 @@ class ACBF_EXPORT DatabaseRef : public QObject
     Q_PROPERTY(QString type READ type WRITE setType NOTIFY typeChanged)
     Q_PROPERTY(QString reference READ reference WRITE setReference NOTIFY referenceChanged)
 public:
-    explicit DatabaseRef(BookInfo* parent = nullptr);
+    explicit DatabaseRef(BookInfo *parent = nullptr);
     ~DatabaseRef() override;
 
     /**
      * \brief write the contents of this object into the xmlwriter.
      */
-    void toXml(QXmlStreamWriter* writer);
+    void toXml(QXmlStreamWriter *writer);
     /**
      * \brief load a DatabaseRef section from the xml into this object.
      * @return True if the xmlReader encountered no errors.
@@ -66,7 +66,7 @@ public:
      * \brief set the name of the database for this reference.
      * @param dbname - the name of the database.
      */
-    Q_INVOKABLE void setDbname(const QString& dbname);
+    Q_INVOKABLE void setDbname(const QString &dbname);
     /**
      * @brief fires when the dbname changes;
      */
@@ -79,7 +79,7 @@ public:
      * \brief set which type of reference the reference is.
      * @param type - the type of reference.
      */
-    Q_INVOKABLE void setType(const QString& type);
+    Q_INVOKABLE void setType(const QString &type);
     /**
      * @brief fires when the type of the reference changes.
      */
@@ -92,16 +92,17 @@ public:
      * \brief set the reference as a string.
      * @param reference - the reference a QString.
      */
-    Q_INVOKABLE void setReference(const QString& reference);
+    Q_INVOKABLE void setReference(const QString &reference);
     /**
      * @brief fires when the reference that this object has of the book
      * is changed.
      */
     Q_SIGNAL void referenceChanged();
+
 private:
     class Private;
     std::unique_ptr<Private> d;
 };
 }
 
-#endif//ACBFDATABASEREF_H
+#endif // ACBFDATABASEREF_H

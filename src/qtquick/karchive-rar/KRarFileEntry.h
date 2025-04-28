@@ -32,9 +32,17 @@ public:
     /**
      * Creates a new rar file entry. Do not call this, KRar takes care of it.
      */
-    KRarFileEntry(KRar *rar, const QString &name, int access, const QDateTime &date,
-                  const QString &user, const QString &group, const QString &symlink,
-                  const QString &path, qint64 start, qint64 uncompressedSize, struct ar_archive_s* archive);
+    KRarFileEntry(KRar *rar,
+                  const QString &name,
+                  int access,
+                  const QDateTime &date,
+                  const QString &user,
+                  const QString &group,
+                  const QString &symlink,
+                  const QString &path,
+                  qint64 start,
+                  qint64 uncompressedSize,
+                  struct ar_archive_s *archive);
 
     /**
      * Destructor. Do not call this.
@@ -72,5 +80,4 @@ private:
     Private *const d;
 };
 
-#endif//KRARFILEENTRY_H
-
+#endif // KRARFILEENTRY_H

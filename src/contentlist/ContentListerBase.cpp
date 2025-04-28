@@ -21,13 +21,13 @@
 
 #include "ContentListerBase.h"
 
-#include <QVariantMap>
-#include <QFileInfo>
 #include <QDateTime>
+#include <QFileInfo>
+#include <QVariantMap>
 
 #include <KFileMetaData/UserMetaData>
 
-ContentListerBase::ContentListerBase(QObject* parent)
+ContentListerBase::ContentListerBase(QObject *parent)
     : QObject(parent)
 {
 }
@@ -36,19 +36,18 @@ ContentListerBase::~ContentListerBase()
 {
 }
 
-
-void ContentListerBase::startSearch(const QList<ContentQuery*>& queries)
+void ContentListerBase::startSearch(const QList<ContentQuery *> &queries)
 {
     Q_UNUSED(queries);
 }
 
-QVariantMap ContentListerBase::metaDataForFile(const QString& file)
+QVariantMap ContentListerBase::metaDataForFile(const QString &file)
 {
     QVariantMap metadata;
 
-    //TODO: This should include the same information for both the Baloo and
-    //File searchers. Unfortunately, currently KFileMetaData does not seem able
-    //to provide this. So this needs changes at a lower level.
+    // TODO: This should include the same information for both the Baloo and
+    // File searchers. Unfortunately, currently KFileMetaData does not seem able
+    // to provide this. So this needs changes at a lower level.
 
     QFileInfo info(file);
     metadata["lastModified"] = info.lastModified();

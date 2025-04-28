@@ -22,34 +22,35 @@
 #include "KRar.h"
 #include "KRarFileEntry.h"
 
+#include <QDebug>
 #include <QtCore/QDir>
 #include <QtCore/QFile>
 #include <QtCore/QIODevice>
-#include <QDebug>
 
-extern "C"
-{
-    #include <unarr.h>
+extern "C" {
+#include <unarr.h>
 }
 
-class KRar::Private {
+class KRar::Private
+{
 public:
     Private()
         : archive(nullptr)
         , stream(nullptr)
-    {}
-    ar_archive* archive;
-    ar_stream* stream;
-    QList<KRarFileEntry*> files;
+    {
+    }
+    ar_archive *archive;
+    ar_stream *stream;
+    QList<KRarFileEntry *> files;
 };
 
-KRar::KRar(const QString& filename)
+KRar::KRar(const QString &filename)
     : KArchive(filename)
     , d(new Private)
 {
 }
 
-KRar::KRar(QIODevice* dev)
+KRar::KRar(QIODevice *dev)
     : KArchive(dev)
     , d(new Private)
 {
@@ -63,7 +64,14 @@ KRar::~KRar()
     delete d;
 }
 
-bool KRar::doPrepareWriting(const QString& /*name*/, const QString& /*user*/, const QString& /*group*/, qint64 /*size*/, mode_t /*perm*/, const QDateTime& /*atime*/, const QDateTime& /*mtime*/, const QDateTime& /*ctime*/)
+bool KRar::doPrepareWriting(const QString & /*name*/,
+                            const QString & /*user*/,
+                            const QString & /*group*/,
+                            qint64 /*size*/,
+                            mode_t /*perm*/,
+                            const QDateTime & /*atime*/,
+                            const QDateTime & /*mtime*/,
+                            const QDateTime & /*ctime*/)
 {
     return false;
 }
@@ -73,12 +81,25 @@ bool KRar::doFinishWriting(qint64 /*size*/)
     return false;
 }
 
-bool KRar::doWriteDir(const QString& /*name*/, const QString& /*user*/, const QString& /*group*/, mode_t /*perm*/, const QDateTime& /*atime*/, const QDateTime& /*mtime*/, const QDateTime& /*ctime*/)
+bool KRar::doWriteDir(const QString & /*name*/,
+                      const QString & /*user*/,
+                      const QString & /*group*/,
+                      mode_t /*perm*/,
+                      const QDateTime & /*atime*/,
+                      const QDateTime & /*mtime*/,
+                      const QDateTime & /*ctime*/)
 {
     return false;
 }
 
-bool KRar::doWriteSymLink(const QString& /*name*/, const QString& /*target*/, const QString& /*user*/, const QString& /*group*/, mode_t /*perm*/, const QDateTime& /*atime*/, const QDateTime& /*mtime*/, const QDateTime& /*ctime*/)
+bool KRar::doWriteSymLink(const QString & /*name*/,
+                          const QString & /*target*/,
+                          const QString & /*user*/,
+                          const QString & /*group*/,
+                          mode_t /*perm*/,
+                          const QDateTime & /*atime*/,
+                          const QDateTime & /*mtime*/,
+                          const QDateTime & /*ctime*/)
 {
     return false;
 }
@@ -86,8 +107,7 @@ bool KRar::doWriteSymLink(const QString& /*name*/, const QString& /*target*/, co
 bool KRar::openArchive(QIODevice::OpenMode mode)
 {
     // First clear the file list, because we don't like leftovers
-    if(d->archive)
-    {
+    if (d->archive) {
         closeArchive();
     }
     // Open archive
@@ -96,7 +116,7 @@ bool KRar::openArchive(QIODevice::OpenMode mode)
         return true;
     }
     if (mode != QIODevice::ReadOnly && mode != QIODevice::ReadWrite) {
-        //qWarning() << "Unsupported mode " << mode;
+        // qWarning() << "Unsupported mode " << mode;
         return false;
     }
 
@@ -106,15 +126,13 @@ bool KRar::openArchive(QIODevice::OpenMode mode)
     }
 
     d->stream = ar_open_file(fileName().toLocal8Bit());
-    if (!d->stream)
-    {
+    if (!d->stream) {
         qDebug() << "Failed to open" << fileName() << "into a stream for unarr";
         return false;
     }
 
     d->archive = ar_open_rar_archive(d->stream);
-    if (!d->archive)
-    {
+    if (!d->archive) {
         qDebug() << "Failed to open" << fileName() << "as a rar archive. Are we sure this is a rar archive?";
         return false;
     }
@@ -130,38 +148,34 @@ bool KRar::openArchive(QIODevice::OpenMode mode)
         quint64 size = ar_entry_get_size(d->archive);
         // So, funny thing - unarr ignores directory entries in rar files entirely (see unarr/rar/rar.c:65)
         // Leaving the code in, in case we feel like reintroducing this at a later point in time
-//         bool isDir = size < 1;//archive_entry_filetype(entry) == AE_IFDIR;
+        //         bool isDir = size < 1;//archive_entry_filetype(entry) == AE_IFDIR;
 
-        KArchiveEntry* kaentry = nullptr;
-//         if(isDir)
-//         {
-//             QString path = QDir::cleanPath(pathname);
-//             const KArchiveEntry *ent = rootDir()->entry(path);
-//             if (ent && ent->isDirectory()) {
-//                 qDebug() << "Directory already exists, NOT going to add it again";
-//                 kaentry = 0;
-//             } else {
-//                 kaentry = new KArchiveDirectory(this, name, 0755, mtime, rootDir()->user(), rootDir()->group(), QString());
-//                 qDebug() << "KArchiveDirectory created, name=" << name;
-//             }
-//         }
-//         else
-//         {
-            KRarFileEntry* fileEntry = new KRarFileEntry(this, name, 0100644, mtime, rootDir()->user(), rootDir()->group(), "", path, start, size, d->archive);
-            kaentry = fileEntry;
-            d->files.append(fileEntry);
-//         }
+        KArchiveEntry *kaentry = nullptr;
+        //         if(isDir)
+        //         {
+        //             QString path = QDir::cleanPath(pathname);
+        //             const KArchiveEntry *ent = rootDir()->entry(path);
+        //             if (ent && ent->isDirectory()) {
+        //                 qDebug() << "Directory already exists, NOT going to add it again";
+        //                 kaentry = 0;
+        //             } else {
+        //                 kaentry = new KArchiveDirectory(this, name, 0755, mtime, rootDir()->user(), rootDir()->group(), QString());
+        //                 qDebug() << "KArchiveDirectory created, name=" << name;
+        //             }
+        //         }
+        //         else
+        //         {
+        KRarFileEntry *fileEntry = new KRarFileEntry(this, name, 0100644, mtime, rootDir()->user(), rootDir()->group(), "", path, start, size, d->archive);
+        kaentry = fileEntry;
+        d->files.append(fileEntry);
+        //         }
 
-        if(kaentry)
-        {
-            if(splitPos > 0)
-            {
+        if (kaentry) {
+            if (splitPos > 0) {
                 // Ensure container directory exists, create otherwise
                 KArchiveDirectory *tdir = findOrCreate(path);
                 tdir->addEntry(kaentry);
-            }
-            else
-            {
+            } else {
                 rootDir()->addEntry(kaentry);
             }
         }
@@ -181,7 +195,7 @@ bool KRar::closeArchive()
     return true;
 }
 
-void KRar::virtual_hook(int id, void* data)
+void KRar::virtual_hook(int id, void *data)
 {
     KArchive::virtual_hook(id, data);
 }

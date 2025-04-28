@@ -30,7 +30,9 @@ using namespace AdvancedComicBookFormat;
 class Author::Private
 {
 public:
-    Private() {}
+    Private()
+    {
+    }
     QString activity;
     QString language;
     QString firstName;
@@ -41,11 +43,11 @@ public:
     QStringList email;
 };
 
-Author::Author(Metadata* parent)
+Author::Author(Metadata *parent)
     : QObject(parent)
     , d(new Private())
 {
-    static const int typeId = qRegisterMetaType<Author*>("Author*");
+    static const int typeId = qRegisterMetaType<Author *>("Author*");
     Q_UNUSED(typeId);
 }
 
@@ -53,28 +55,25 @@ Author::~Author() = default;
 
 QString Author::displayName() const
 {
-    if(!d->nickName.isEmpty()) {
+    if (!d->nickName.isEmpty()) {
         return d->nickName;
-    }
-    else if(!d->firstName.isEmpty() || !d->middleName.isEmpty() || !d->lastName.isEmpty()) {
+    } else if (!d->firstName.isEmpty() || !d->middleName.isEmpty() || !d->lastName.isEmpty()) {
         return QStringLiteral("%1 %2 %3").arg(d->firstName).arg(d->middleName).arg(d->lastName).simplified();
-    }
-    else if(!d->email.isEmpty()) {
+    } else if (!d->email.isEmpty()) {
         return d->email.at(0);
-    }
-    else if(!d->homePage.isEmpty()) {
+    } else if (!d->homePage.isEmpty()) {
         return d->homePage.at(0);
     }
     return QLatin1String("");
 }
 
-void Author::toXml(QXmlStreamWriter* writer)
+void Author::toXml(QXmlStreamWriter *writer)
 {
     writer->writeStartElement(QStringLiteral("author"));
-    if(!d->activity.isEmpty()) {
+    if (!d->activity.isEmpty()) {
         writer->writeAttribute(QStringLiteral("activity"), d->activity);
     }
-    if(!d->language.isEmpty()) {
+    if (!d->language.isEmpty()) {
         writer->writeAttribute(QStringLiteral("lang"), d->language);
     }
 
@@ -82,56 +81,44 @@ void Author::toXml(QXmlStreamWriter* writer)
     writer->writeTextElement(QStringLiteral("middle-name"), d->middleName);
     writer->writeTextElement(QStringLiteral("last-name"), d->lastName);
     writer->writeTextElement(QStringLiteral("nickname"), d->nickName);
-    for(const QString& url : d->homePage) {
+    for (const QString &url : d->homePage) {
         writer->writeTextElement(QStringLiteral("home-page"), url);
     }
-    for(const QString& address : d->email) {
+    for (const QString &address : d->email) {
         writer->writeTextElement(QStringLiteral("email"), address);
     }
 
-    writer->writeEndElement();  
+    writer->writeEndElement();
 }
 
 bool Author::fromXml(QXmlStreamReader *xmlReader)
 {
     setActivity(xmlReader->attributes().value(QStringLiteral("activity")).toString());
     setLanguage(xmlReader->attributes().value(QStringLiteral("lang")).toString());
-    while(xmlReader->readNextStartElement())
-    {
-        if(xmlReader->name() == QStringLiteral("first-name"))
-        {
+    while (xmlReader->readNextStartElement()) {
+        if (xmlReader->name() == QStringLiteral("first-name")) {
             setFirstName(xmlReader->readElementText());
-        }
-        else if(xmlReader->name() == QStringLiteral("middle-name"))
-        {
+        } else if (xmlReader->name() == QStringLiteral("middle-name")) {
             setMiddleName(xmlReader->readElementText());
-        }
-        else if(xmlReader->name() == QStringLiteral("last-name"))
-        {
+        } else if (xmlReader->name() == QStringLiteral("last-name")) {
             setLastName(xmlReader->readElementText());
-        }
-        else if(xmlReader->name() == QStringLiteral("nickname"))
-        {
+        } else if (xmlReader->name() == QStringLiteral("nickname")) {
             setNickName(xmlReader->readElementText());
-        }
-        else if(xmlReader->name() == QStringLiteral("home-page"))
-        {
+        } else if (xmlReader->name() == QStringLiteral("home-page")) {
             addHomePage(xmlReader->readElementText());
-        }
-        else if(xmlReader->name() == QStringLiteral("email"))
-        {
+        } else if (xmlReader->name() == QStringLiteral("email")) {
             addEmail(xmlReader->readElementText());
-        }
-        else
-        {
+        } else {
             qCWarning(ACBF_LOG) << Q_FUNC_INFO << "currently unsupported subsection:" << xmlReader->name();
             xmlReader->skipCurrentElement();
         }
     }
     if (xmlReader->hasError()) {
-        qCWarning(ACBF_LOG) << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader->name() << "(" << xmlReader->lineNumber() << ":" << xmlReader->columnNumber() << ") The reported error was:" << xmlReader->errorString();
+        qCWarning(ACBF_LOG) << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader->name() << "(" << xmlReader->lineNumber() << ":"
+                            << xmlReader->columnNumber() << ") The reported error was:" << xmlReader->errorString();
     }
-    qCDebug(ACBF_LOG) << Q_FUNC_INFO << "Created author" << firstName() << lastName() << nickName() << "responsible for" << activity() << "for language" << language();
+    qCDebug(ACBF_LOG) << Q_FUNC_INFO << "Created author" << firstName() << lastName() << nickName() << "responsible for" << activity() << "for language"
+                      << language();
     return !xmlReader->hasError();
 }
 
@@ -140,7 +127,7 @@ QString Author::activity() const
     return d->activity;
 }
 
-void Author::setActivity(const QString& activity)
+void Author::setActivity(const QString &activity)
 {
     d->activity = activity;
 }
@@ -151,7 +138,8 @@ QStringList Author::availableActivities()
         QStringLiteral("Writer"), // (story was written by)
         QStringLiteral("Adapter"), // (in case the comic book story is adaptation of story written by someone else)
         QStringLiteral("Artist"), // (art was drawn by)
-        QStringLiteral("Penciller"), // (penciller, inker, colorist and leterrer attribute value may be used in case art was created in collaboration by a group of different artists)
+        QStringLiteral("Penciller"), // (penciller, inker, colorist and leterrer attribute value may be used in case art was created in collaboration by a group
+                                     // of different artists)
         QStringLiteral("Inker"),
         QStringLiteral("Colorist"),
         QStringLiteral("Letterer"), // (in case texts are handwritten)
@@ -160,7 +148,7 @@ QStringList Author::availableActivities()
         QStringLiteral("Editor"),
         QStringLiteral("Assistant Editor"), // /new in 1.1/
         QStringLiteral("Translator"),
-        QStringLiteral("Designer"), // /new in 1.2/        
+        QStringLiteral("Designer"), // /new in 1.2/
         QStringLiteral("Other") // /new in 1.1/
     };
 }
@@ -170,7 +158,7 @@ QString Author::language() const
     return d->language;
 }
 
-void Author::setLanguage(const QString& language)
+void Author::setLanguage(const QString &language)
 {
     d->language = language;
 }
@@ -180,7 +168,7 @@ QString Author::firstName() const
     return d->firstName;
 }
 
-void Author::setFirstName(const QString& name)
+void Author::setFirstName(const QString &name)
 {
     d->firstName = name;
 }
@@ -190,7 +178,7 @@ QString Author::middleName() const
     return d->middleName;
 }
 
-void Author::setMiddleName(const QString& name)
+void Author::setMiddleName(const QString &name)
 {
     d->middleName = name;
 }
@@ -200,7 +188,7 @@ QString Author::lastName() const
     return d->lastName;
 }
 
-void Author::setLastName(const QString& name)
+void Author::setLastName(const QString &name)
 {
     d->lastName = name;
 }
@@ -210,7 +198,7 @@ QString Author::nickName() const
     return d->nickName;
 }
 
-void Author::setNickName(const QString& name)
+void Author::setNickName(const QString &name)
 {
     d->nickName = name;
 }
@@ -220,7 +208,7 @@ QStringList Author::homePages() const
     return d->homePage;
 }
 
-void Author::addHomePage(const QString& homepage)
+void Author::addHomePage(const QString &homepage)
 {
     d->homePage.append(homepage);
     emit homePagesChanged();
@@ -232,7 +220,7 @@ void Author::removeHomePage(const int &index)
     emit homePagesChanged();
 }
 
-void Author::setHomePages(const QStringList& homepages)
+void Author::setHomePages(const QStringList &homepages)
 {
     d->homePage = homepages;
     emit homePagesChanged();
@@ -243,7 +231,7 @@ QStringList Author::emails() const
     return d->email;
 }
 
-void Author::addEmail(const QString& email)
+void Author::addEmail(const QString &email)
 {
     d->email.append(email);
     emit emailsChanged();
@@ -255,7 +243,7 @@ void Author::removeEmail(const int &index)
     emit emailsChanged();
 }
 
-void Author::setEmails(const QStringList& emails)
+void Author::setEmails(const QStringList &emails)
 {
     d->email = emails;
     emit emailsChanged();

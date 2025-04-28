@@ -6,9 +6,10 @@
 class QQmlEngine;
 class QApplication;
 
-namespace PeruseHelpers {
-    int getMaxTextureSize();
-    int init(QString& path, QApplication& app, const QString &filename = QString());
+namespace PeruseHelpers
+{
+int getMaxTextureSize();
+int init(QString &path, QApplication &app, const QString &filename = QString());
 }
 
 #endif

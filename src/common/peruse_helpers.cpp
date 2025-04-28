@@ -1,15 +1,15 @@
 #include "peruse_helpers.h"
-#include <QQmlEngine>
-#include <QString>
-#include <QQmlComponent>
-#include <QQmlContext>
-#include <QStandardPaths>
 #include <QApplication>
-#include <QOpenGLContext>
-#include <QOffscreenSurface>
-#include <QOpenGLFunctions>
 #include <QDebug>
 #include <QDir>
+#include <QOffscreenSurface>
+#include <QOpenGLContext>
+#include <QOpenGLFunctions>
+#include <QQmlComponent>
+#include <QQmlContext>
+#include <QQmlEngine>
+#include <QStandardPaths>
+#include <QString>
 #include <QtQuick/QQuickView>
 
 #include <KAboutData>
@@ -19,15 +19,15 @@
 
 #include "peruse_helpers.h"
 
-namespace PeruseHelpers {
+namespace PeruseHelpers
+{
 int getMaxTextureSize()
 {
     int maxSize = 0;
 
     // Create a temp context - required if this is called from another thread
     QOpenGLContext ctx;
-    if ( !ctx.create() )
-    {
+    if (!ctx.create()) {
         // TODO handle the error
         qDebug() << "No OpenGL context could be created, this is clearly bad...";
         exit(-1);
@@ -35,7 +35,7 @@ int getMaxTextureSize()
 
     // rather than using a QWindow - which actually doesn't seem to work in this case either!
     QOffscreenSurface surface;
-    surface.setFormat( ctx.format() );
+    surface.setFormat(ctx.format());
     surface.create();
 
     ctx.makeCurrent(&surface);
@@ -48,7 +48,8 @@ int getMaxTextureSize()
     return maxSize;
 }
 
-int init(QString &path, QApplication& app, const QString &filename) {
+int init(QString &path, QApplication &app, const QString &filename)
+{
     QQmlEngine engine;
     engine.addImageProvider(QStringLiteral("icon"), new KQuickIconProvider);
     engine.rootContext()->setContextObject(new KLocalizedContext(&app));
@@ -64,7 +65,7 @@ int init(QString &path, QApplication& app, const QString &filename) {
 
     engine.rootContext()->setContextProperty("fileToOpen", filename);
 
-    QQmlContext* objectContext = engine.rootContext();
+    QQmlContext *objectContext = engine.rootContext();
     QString platformEnv(qgetenv("PLASMA_PLATFORM"));
     engine.rootContext()->setContextProperty("PLASMA_PLATFORM", platformEnv);
 
@@ -84,13 +85,13 @@ int init(QString &path, QApplication& app, const QString &filename) {
         return -3;
     }
 
-    QObject* obj = component.create(objectContext);
+    QObject *obj = component.create(objectContext);
     if (!obj) {
         qCritical() << "Failed to create an object from our component";
         return -2;
     }
-    QQuickWindow* window = qobject_cast<QQuickWindow*>(obj);
-    QObject::connect(window, &QQuickView::sceneGraphError, &app, [] (QQuickWindow::SceneGraphError /*error*/, const QString &message) {
+    QQuickWindow *window = qobject_cast<QQuickWindow *>(obj);
+    QObject::connect(window, &QQuickView::sceneGraphError, &app, [](QQuickWindow::SceneGraphError /*error*/, const QString &message) {
         KCrash::setErrorMessage(message);
         qFatal("%s", qPrintable(message));
     });

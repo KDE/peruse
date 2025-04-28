@@ -37,14 +37,14 @@ namespace AdvancedComicBookFormat
 class Document;
 /**
  * @brief Class to handle the CSS stylesheet.
- * 
+ *
  * ACBF files have a CSS stylesheet that can be used
  * to style the different types of textarea, such as
  * speech, inverted, commentary, and so forth.
- * 
+ *
  * This in turn allows generated text overlays to be
  * closer stylistically to a given acbf file.
- * 
+ *
  * This class does some minimal parsing on the css to
  * separate the definitions and the selectors.
  */
@@ -53,18 +53,18 @@ class ACBF_EXPORT StyleSheet : public QObject
     Q_OBJECT
     Q_PROPERTY(QObjectList styles READ styles NOTIFY stylesChanged)
 public:
-    explicit StyleSheet(Document* parent = nullptr);
+    explicit StyleSheet(Document *parent = nullptr);
     ~StyleSheet() override;
 
     /**
      * \brief Write the stylesheet into the xml writer.
      */
-    void toXml(QXmlStreamWriter* writer);
+    void toXml(QXmlStreamWriter *writer);
     /**
      * \brief load a stylesheet element into this object.
      * @return True if the xmlReader encountered no errors.
      */
-    bool fromXml(QXmlStreamReader *xmlReader, const QString& xmlData);
+    bool fromXml(QXmlStreamReader *xmlReader, const QString &xmlData);
 
     /**
      * The styles contained within this stylesheet
@@ -72,19 +72,19 @@ public:
      */
     QObjectList styles() const;
     Q_SIGNAL void stylesChanged();
-    Q_INVOKABLE AdvancedComicBookFormat::Style* addStyle();
+    Q_INVOKABLE AdvancedComicBookFormat::Style *addStyle();
 
     /**
      * Fetch a specific style based on the identifying markers
      */
-    Q_INVOKABLE QObject* style(const QString& element, const QString& type, bool inverted);
+    Q_INVOKABLE QObject *style(const QString &element, const QString &type, bool inverted);
 
     /**
      * @brief set the contents of the style section
-     * 
+     *
      * @param css a QString containing a css stylesheet.
      */
-    void setContents(const QString& css = QString());
+    void setContents(const QString &css = QString());
 
 private:
     class Private;

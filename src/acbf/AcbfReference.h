@@ -35,12 +35,12 @@ namespace AdvancedComicBookFormat
 class References;
 /**
  * \brief a Class to handle a single ACBF reference.
- * 
+ *
  * A reference is a bit of text that can be referred to
  * with an anchor in any of the other paragraphs. This
  * can be used for footnotes, like translation notes
  * or author's notes.
- * 
+ *
  * You refer to a reference by using the ID.
  */
 class ACBF_EXPORT Reference : public InternalReferenceObject
@@ -51,18 +51,18 @@ class ACBF_EXPORT Reference : public InternalReferenceObject
     Q_PROPERTY(QStringList paragraphs READ paragraphs WRITE setParagraphs NOTIFY paragraphsChanged)
 
 public:
-    explicit Reference(References* parent = nullptr);
+    explicit Reference(References *parent = nullptr);
     ~Reference() override;
 
     /**
      * \brief Write the reference into the xml writer.
      */
-    void toXml(QXmlStreamWriter* writer);
+    void toXml(QXmlStreamWriter *writer);
     /**
      * \brief load a reference element into this object.
      * @return True if the xmlReader encountered no errors.
      */
-    bool fromXml(QXmlStreamReader *xmlReader, const QString& xmlData);
+    bool fromXml(QXmlStreamReader *xmlReader, const QString &xmlData);
 
     /**
      * @return The ID of this reference data element as a QString.
@@ -76,7 +76,7 @@ public:
      * other parts of the ACBF document.
      * @param newId - The new ID as a string.
      */
-    void setId(const QString& newId);
+    void setId(const QString &newId);
     Q_SIGNAL void idChanged();
 
     /**
@@ -88,12 +88,12 @@ public:
      * @param language - the language of the entry in language code, country
      * code format joined by a dash (not an underscore).
      */
-    void setLanguage(const QString& language);
+    void setLanguage(const QString &language);
     Q_SIGNAL void languageChanged();
 
     /**
      * @returns a list of paragraphs.
-     * 
+     *
      * Contains allowed sub-elements: strong, emphasis, strikethrough
      * sub, sup, a (with mandatory href attribute only)
      * Can also contain deprecated sub-elements (superceeded by...): code (type option code),
@@ -105,7 +105,7 @@ public:
      * @param paragraphs - a list of paragraphs. Can contain sub-elements:
      * strong, emphasis, strikethrough, sub, sup, a (with mandatory href attribute only)
      */
-    void setParagraphs(const QStringList& paragraphs);
+    void setParagraphs(const QStringList &paragraphs);
     Q_SIGNAL void paragraphsChanged();
 
     /**
@@ -114,11 +114,12 @@ public:
      * @return The instance's position
      */
     int localIndex() override;
+
 private:
     class Private;
     std::unique_ptr<Private> d;
 };
 }
-Q_DECLARE_METATYPE(AdvancedComicBookFormat::Reference*)
+Q_DECLARE_METATYPE(AdvancedComicBookFormat::Reference *)
 
 #endif // ACBFREFERENCE_H

@@ -61,8 +61,14 @@ protected:
      * Writing is not supported by this class, will always fail.
      * @return always false
      */
-    bool doPrepareWriting(const QString &name, const QString &user, const QString &group, qint64 size,
-                          mode_t perm, const QDateTime &atime, const QDateTime &mtime, const QDateTime &ctime) override;
+    bool doPrepareWriting(const QString &name,
+                          const QString &user,
+                          const QString &group,
+                          qint64 size,
+                          mode_t perm,
+                          const QDateTime &atime,
+                          const QDateTime &mtime,
+                          const QDateTime &ctime) override;
 
     /*
      * Writing is not supported by this class, will always fail.
@@ -74,12 +80,22 @@ protected:
      * Writing is not supported by this class, will always fail.
      * @return always false
      */
-    bool doWriteDir(const QString &name, const QString &user, const QString &group,
-                    mode_t perm, const QDateTime &atime, const QDateTime &mtime, const QDateTime &ctime) override;
+    bool doWriteDir(const QString &name,
+                    const QString &user,
+                    const QString &group,
+                    mode_t perm,
+                    const QDateTime &atime,
+                    const QDateTime &mtime,
+                    const QDateTime &ctime) override;
 
-    bool doWriteSymLink(const QString &name, const QString &target,
-                        const QString &user, const QString &group, mode_t perm,
-                        const QDateTime &atime, const QDateTime &mtime, const QDateTime &ctime) override;
+    bool doWriteSymLink(const QString &name,
+                        const QString &target,
+                        const QString &user,
+                        const QString &group,
+                        mode_t perm,
+                        const QDateTime &atime,
+                        const QDateTime &mtime,
+                        const QDateTime &ctime) override;
 
     /**
      * Opens the archive for reading.
@@ -95,7 +111,7 @@ protected:
 
 private:
     class Private;
-    Private* d;
+    Private *d;
 };
 
-#endif//KRAR_H
+#endif // KRAR_H

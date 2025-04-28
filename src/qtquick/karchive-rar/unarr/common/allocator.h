@@ -8,8 +8,8 @@
 
 #include <stddef.h>
 
-typedef void *(* custom_malloc_fn)(void *opaque, size_t size);
-typedef void (* custom_free_fn)(void *opaque, void *ptr);
+typedef void *(*custom_malloc_fn)(void *opaque, size_t size);
+typedef void (*custom_free_fn)(void *opaque, void *ptr);
 
 void ar_set_custom_allocator(custom_malloc_fn custom_malloc, custom_free_fn custom_free, void *opaque);
 

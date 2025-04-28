@@ -171,11 +171,7 @@ void ContentList::setKnownFiles(const QStringList &results)
     for (const auto &result : results) {
         const auto url = QUrl::fromLocalFile(result);
 
-        const ContentEntry entry {
-            url.fileName(),
-            url,
-            ContentListerBase::metaDataForFile(result)
-        };
+        const ContentEntry entry{url.fileName(), url, ContentListerBase::metaDataForFile(result)};
 
         d->entries.append(entry);
         d->knownFiles.insert(result);

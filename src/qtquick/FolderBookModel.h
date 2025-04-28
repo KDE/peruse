@@ -26,7 +26,7 @@
 #include <qqmlintegration.h>
 /**
  * \brief Class to handle a folder of images as a book.
- * 
+ *
  * This class will treat a folder of images as a book, with the alphabetical
  * order of the files determining the page order.
  */
@@ -35,7 +35,7 @@ class FolderBookModel : public BookModel
     Q_OBJECT
     QML_ELEMENT
 public:
-    explicit FolderBookModel(QObject* parent = nullptr);
+    explicit FolderBookModel(QObject *parent = nullptr);
     ~FolderBookModel() override;
 
     /**
@@ -45,4 +45,4 @@ public:
     void setFilename(QString newFilename) override;
 };
 
-#endif//FOLDERBOOKMODEL_H
+#endif // FOLDERBOOKMODEL_H

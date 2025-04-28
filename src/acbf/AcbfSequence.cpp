@@ -33,23 +33,24 @@ public:
     Private()
         : volume(0)
         , number(0)
-    {}
+    {
+    }
     QString title;
     int volume;
     int number;
 };
 
-Sequence::Sequence(BookInfo* parent)
+Sequence::Sequence(BookInfo *parent)
     : QObject(parent)
     , d(new Private)
 {
-    static const int typeId = qRegisterMetaType<Sequence*>("Sequence*");
+    static const int typeId = qRegisterMetaType<Sequence *>("Sequence*");
     Q_UNUSED(typeId);
 }
 
 Sequence::~Sequence() = default;
 
-void Sequence::toXml(QXmlStreamWriter* writer)
+void Sequence::toXml(QXmlStreamWriter *writer)
 {
     writer->writeStartElement(QStringLiteral("sequence"));
     writer->writeAttribute(QStringLiteral("title"), d->title);
@@ -72,7 +73,7 @@ QString Sequence::title() const
     return d->title;
 }
 
-void Sequence::setTitle(const QString& title)
+void Sequence::setTitle(const QString &title)
 {
     d->title = title;
     emit titleChanged();

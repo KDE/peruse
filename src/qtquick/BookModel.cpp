@@ -27,30 +27,34 @@
 #include <KFileMetaData/UserMetaData>
 
 struct BookPage {
-    BookPage() {}
+    BookPage()
+    {
+    }
     QString url;
     QString title;
 };
 
-class BookModel::Private {
+class BookModel::Private
+{
 public:
     Private()
         : currentPage(0)
         , acbfData(nullptr)
         , processing(false)
-    {}
+    {
+    }
     QString filename;
     QString author;
     QString publisher;
     QString title;
-    QList<BookPage*> entries;
+    QList<BookPage *> entries;
     int currentPage;
-    AdvancedComicBookFormat::Document* acbfData = nullptr;
+    AdvancedComicBookFormat::Document *acbfData = nullptr;
     bool processing;
     QString processingDescription;
 };
 
-BookModel::BookModel(QObject* parent)
+BookModel::BookModel(QObject *parent)
     : QAbstractListModel(parent)
     , d(new Private)
 {
@@ -69,38 +73,36 @@ QHash<int, QByteArray> BookModel::roleNames() const
     return roles;
 }
 
-QVariant BookModel::data(const QModelIndex& index, int role) const
+QVariant BookModel::data(const QModelIndex &index, int role) const
 {
     QVariant result;
-    if(index.isValid() && index.row() > -1 && index.row() < d->entries.count())
-    {
-        const BookPage* entry = d->entries[index.row()];
-        switch(role)
-        {
-            case UrlRole:
-                result.setValue(entry->url);
-                break;
-            case TitleRole:
-                result.setValue(entry->title);
-                break;
-            default:
-                result.setValue(QString("Unknown role"));
-                break;
+    if (index.isValid() && index.row() > -1 && index.row() < d->entries.count()) {
+        const BookPage *entry = d->entries[index.row()];
+        switch (role) {
+        case UrlRole:
+            result.setValue(entry->url);
+            break;
+        case TitleRole:
+            result.setValue(entry->title);
+            break;
+        default:
+            result.setValue(QString("Unknown role"));
+            break;
         }
     }
     return result;
 }
 
-int BookModel::rowCount(const QModelIndex& parent) const
+int BookModel::rowCount(const QModelIndex &parent) const
 {
-    if(parent.isValid())
+    if (parent.isValid())
         return 0;
     return d->entries.count();
 }
 
 void BookModel::addPage(QString url, QString title)
 {
-    BookPage* page = new BookPage();
+    BookPage *page = new BookPage();
     page->url = url;
     page->title = title;
 
@@ -112,7 +114,7 @@ void BookModel::addPage(QString url, QString title)
 
 void BookModel::removePage(int pageNumber)
 {
-    QModelIndex index  = createIndex(pageNumber, 0);
+    QModelIndex index = createIndex(pageNumber, 0);
     beginRemoveRows(QModelIndex(), index.row(), index.row());
     d->entries.removeAt(pageNumber);
     emit pageCountChanged();
@@ -186,9 +188,8 @@ int BookModel::currentPage() const
 
 void BookModel::setCurrentPage(int newCurrentPage, bool updateFilesystem)
 {
-//     qCDebug(QTQUICK_LOG) << Q_FUNC_INFO << d->filename << newCurrentPage << updateFilesystem;
-    if(updateFilesystem)
-    {
+    //     qCDebug(QTQUICK_LOG) << Q_FUNC_INFO << d->filename << newCurrentPage << updateFilesystem;
+    if (updateFilesystem) {
         KFileMetaData::UserMetaData data(d->filename);
         data.setAttribute("peruse.currentPage", QString::number(newCurrentPage));
     }
@@ -196,14 +197,14 @@ void BookModel::setCurrentPage(int newCurrentPage, bool updateFilesystem)
     emit currentPageChanged();
 }
 
-QObject * BookModel::acbfData() const
+QObject *BookModel::acbfData() const
 {
     return d->acbfData;
 }
 
-void BookModel::setAcbfData(QObject* obj)
+void BookModel::setAcbfData(QObject *obj)
 {
-    d->acbfData = qobject_cast<AdvancedComicBookFormat::Document*>(obj);
+    d->acbfData = qobject_cast<AdvancedComicBookFormat::Document *>(obj);
     emit acbfDataChanged();
 }
 
@@ -223,7 +224,7 @@ QString BookModel::processingDescription() const
     return d->processingDescription;
 }
 
-void BookModel::setProcessingDescription ( const QString& description )
+void BookModel::setProcessingDescription(const QString &description)
 {
     d->processingDescription = description;
     qCDebug(QTQUICK_LOG) << description;
@@ -232,7 +233,7 @@ void BookModel::setProcessingDescription ( const QString& description )
 
 void BookModel::swapPages(int swapThisIndex, int withThisIndex)
 {
-    if(swapThisIndex > -1 && withThisIndex > -1 && swapThisIndex < d->entries.count() && withThisIndex < d->entries.count()) {
+    if (swapThisIndex > -1 && withThisIndex > -1 && swapThisIndex < d->entries.count() && withThisIndex < d->entries.count()) {
         QModelIndex firstIndex = createIndex(swapThisIndex, 0);
         QModelIndex secondIndex = createIndex(withThisIndex, 0);
         d->entries.swapItemsAt(swapThisIndex, withThisIndex);

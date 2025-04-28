@@ -23,12 +23,12 @@
 
 #include <QDebug>
 
-extern "C"
-{
-    #include <unarr.h>
+extern "C" {
+#include <unarr.h>
 }
 
-class KRarFileEntry::Private {
+class KRarFileEntry::Private
+{
 public:
     Private()
         : crc(0)
@@ -38,13 +38,23 @@ public:
     {
     }
     unsigned long crc;
-    qint64        headerStart;
-    QString       path;
-    ar_archive* archive;
-    KRar* rar;
+    qint64 headerStart;
+    QString path;
+    ar_archive *archive;
+    KRar *rar;
 };
 
-KRarFileEntry::KRarFileEntry(KRar* rar, const QString& name, int access, const QDateTime& date, const QString& user, const QString& group, const QString& symlink, const QString& path, qint64 start, qint64 uncompressedSize, struct ar_archive_s* archive)
+KRarFileEntry::KRarFileEntry(KRar *rar,
+                             const QString &name,
+                             int access,
+                             const QDateTime &date,
+                             const QString &user,
+                             const QString &group,
+                             const QString &symlink,
+                             const QString &path,
+                             qint64 start,
+                             qint64 uncompressedSize,
+                             struct ar_archive_s *archive)
     : KArchiveFile(rar, name, access, date, user, group, symlink, start, uncompressedSize)
     , d(new Private)
 {
@@ -52,7 +62,7 @@ KRarFileEntry::KRarFileEntry(KRar* rar, const QString& name, int access, const Q
     d->path = path;
     d->rar = rar;
     d->archive = archive;
-//     qDebug() << "New entry for file" << name << "in path" << path;
+    //     qDebug() << "New entry for file" << name << "in path" << path;
 }
 
 KRarFileEntry::~KRarFileEntry()
@@ -79,30 +89,29 @@ void KRarFileEntry::setCRC32(unsigned long crc32)
     d->crc = crc32;
 }
 
-const QString & KRarFileEntry::path() const
+const QString &KRarFileEntry::path() const
 {
     return d->path;
 }
 
 QByteArray KRarFileEntry::data() const
 {
-//     qDebug() << "Attempting to grab data from" << name() << "in" << path();
+    //     qDebug() << "Attempting to grab data from" << name() << "in" << path();
     QByteArray data;
 
-    ar_archive* archive = d->archive;
+    ar_archive *archive = d->archive;
     QString pathname = QString("%1/%2").arg(path()).arg(name());
-    if(ar_parse_entry_at(archive, d->headerStart))
-    {
+    if (ar_parse_entry_at(archive, d->headerStart)) {
         data.resize(size());
-        if(!ar_entry_uncompress(archive, data.data(), size()))
-        {
-            qDebug() << "We got an error reading the data attempting to read" << pathname << " - error will be reported by unarr, see above";// << r << archive_error_string(archive);
+        if (!ar_entry_uncompress(archive, data.data(), size())) {
+            qDebug() << "We got an error reading the data attempting to read" << pathname
+                     << " - error will be reported by unarr, see above"; // << r << archive_error_string(archive);
         }
     }
     return data;
 }
 
-QIODevice * KRarFileEntry::createDevice() const
+QIODevice *KRarFileEntry::createDevice() const
 {
     return nullptr;
 }

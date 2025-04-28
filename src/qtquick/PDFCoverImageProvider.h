@@ -27,7 +27,7 @@
 
 /**
  * \brief Get file previews of PDF files, where the thumbnailer isn't available...
- * 
+ *
  * NOTE: As this task is potentially heavy, make sure to mark any Image using this provider asynchronous
  */
 class PDFCoverImageProvider : public QQuickAsyncImageProvider
@@ -38,26 +38,29 @@ public:
 
     /**
      * \brief Get an image.
-     * 
+     *
      * @param id The source of the image.
      * @param requestedSize The required size of the final image, unused.
-     * 
+     *
      * @return an asynchronous image response
      */
     QQuickImageResponse *requestImageResponse(const QString &id, const QSize &requestedSize) override;
+
 private:
     class Private;
-    Private* d;
+    Private *d;
 };
 
 class QDir;
 /**
  * \brief A worker class which does the bulk of the work for PreviewImageProvider
  */
-class PDFCoverRunnable : public QObject, public QRunnable {
+class PDFCoverRunnable : public QObject, public QRunnable
+{
     Q_OBJECT;
+
 public:
-    PDFCoverRunnable(const QString &id, const QSize &requestedSize, const QDir& thumbDir);
+    PDFCoverRunnable(const QString &id, const QSize &requestedSize, const QDir &thumbDir);
 
     void run() override;
 
@@ -71,9 +74,10 @@ public:
      * @param image The preview image in the requested size (possibly a placeholder)
      */
     Q_SIGNAL void done(QImage image);
+
 private:
     class Private;
-    Private* d;
+    Private *d;
 };
 
-#endif//PDFCOVERIMAGEPROVIDER_H
+#endif // PDFCOVERIMAGEPROVIDER_H

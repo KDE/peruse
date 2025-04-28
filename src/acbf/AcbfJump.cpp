@@ -30,17 +30,18 @@ class Jump::Private
 {
 public:
     Private()
-    {}
+    {
+    }
     QList<QPoint> points;
     int pageIndex{-1};
     QString href;
 };
 
-Jump::Jump(Page* parent)
+Jump::Jump(Page *parent)
     : InternalReferenceObject(InternalReferenceObject::ReferenceOrigin, parent)
     , d(new Private)
 {
-    static const int typeId = qRegisterMetaType<Jump*>("Jump*");
+    static const int typeId = qRegisterMetaType<Jump *>("Jump*");
     Q_UNUSED(typeId);
     connect(this, &Jump::pointCountChanged, this, &Jump::boundsChanged);
 
@@ -51,11 +52,12 @@ Jump::Jump(Page* parent)
 
 Jump::~Jump() = default;
 
-void Jump::toXml(QXmlStreamWriter* writer) {
+void Jump::toXml(QXmlStreamWriter *writer)
+{
     writer->writeStartElement(QStringLiteral("jump"));
 
     QStringList points;
-    for(const QPoint& point : d->points) {
+    for (const QPoint &point : d->points) {
         points << QStringLiteral("%1,%2").arg(QString::number(point.x())).arg(QString::number(point.y()));
     }
     writer->writeAttribute(QStringLiteral("points"), points.join(' '));
@@ -75,21 +77,19 @@ bool Jump::fromXml(QXmlStreamReader *xmlReader)
     setHref(xmlReader->attributes().value(QStringLiteral("href")).toString());
 
     QVector<QStringView> points = xmlReader->attributes().value(QStringLiteral("points")).split(' ');
-    for(QStringView point : points) {
+    for (QStringView point : points) {
         QVector<QStringView> elements = point.split(',');
-        if(elements.length() == 2)
-        {
+        if (elements.length() == 2) {
             addPoint(QPoint(elements.at(0).toInt(), elements.at(1).toInt()));
-        }
-        else
-        {
+        } else {
             qCWarning(ACBF_LOG) << "Failed to construct one of the points for a jump. Attempted to handle the point" << point << "in the data" << points;
             return false;
         }
     }
 
     if (xmlReader->hasError()) {
-        qCWarning(ACBF_LOG) << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader->name() << "(" << xmlReader->lineNumber() << ":" << xmlReader->columnNumber() << ") The reported error was:" << xmlReader->errorString();
+        qCWarning(ACBF_LOG) << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader->name() << "(" << xmlReader->lineNumber() << ":"
+                            << xmlReader->columnNumber() << ") The reported error was:" << xmlReader->errorString();
     }
     qCDebug(ACBF_LOG) << Q_FUNC_INFO << "Created a jump with " << points.count() << "points, to page " << d->pageIndex;
 
@@ -106,33 +106,32 @@ QPoint Jump::point(int index) const
     return d->points.at(index);
 }
 
-int Jump::pointIndex(const QPoint& point) const
+int Jump::pointIndex(const QPoint &point) const
 {
     return d->points.indexOf(point);
 }
 
-void Jump::addPoint(const QPoint& point, int index)
+void Jump::addPoint(const QPoint &point, int index)
 {
-    if(index > -1 && d->points.count() < index) {
+    if (index > -1 && d->points.count() < index) {
         d->points.insert(index, point);
-    }
-    else {
+    } else {
         d->points.append(point);
     }
     emit pointCountChanged();
 }
 
-void Jump::removePoint(const QPoint& point)
+void Jump::removePoint(const QPoint &point)
 {
     d->points.removeAll(point);
     emit pointCountChanged();
 }
 
-bool Jump::swapPoints(const QPoint& swapThis, const QPoint& withThis)
+bool Jump::swapPoints(const QPoint &swapThis, const QPoint &withThis)
 {
     int index1 = d->points.indexOf(swapThis);
     int index2 = d->points.indexOf(withThis);
-    if(index1 > -1 && index2 > -1) {
+    if (index1 > -1 && index2 > -1) {
         d->points.swapItemsAt(index1, index2);
         emit pointCountChanged();
         return true;
@@ -159,7 +158,7 @@ int Jump::pointCount() const
 QRect Jump::bounds() const
 {
     // Would use QPolygon here, but that requires including QTGUI.
-    if (d->points.size()==0) {
+    if (d->points.size() == 0) {
         return QRect();
     }
     QRect rect(d->points.at(0), d->points.at(1));
@@ -186,7 +185,7 @@ int Jump::pageIndex() const
     return d->pageIndex;
 }
 
-void Jump::setPageIndex(const int& pageNumber)
+void Jump::setPageIndex(const int &pageNumber)
 {
     d->pageIndex = pageNumber;
     emit pageIndexChanged();
@@ -197,7 +196,7 @@ QString Jump::href() const
     return d->href;
 }
 
-void Jump::setHref(const QString& newHref)
+void Jump::setHref(const QString &newHref)
 {
     if (d->href != newHref) {
         d->href = newHref;
@@ -207,7 +206,7 @@ void Jump::setHref(const QString& newHref)
 
 int Jump::localIndex()
 {
-    Page* page = qobject_cast<Page*>(parent());
+    Page *page = qobject_cast<Page *>(parent());
     if (page) {
         return page->jumpIndex(this);
     }

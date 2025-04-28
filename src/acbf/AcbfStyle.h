@@ -28,7 +28,8 @@
 
 #include "acbf_export.h"
 
-namespace AdvancedComicBookFormat {
+namespace AdvancedComicBookFormat
+{
 /**
  * \brief A single entry in a stylesheet
  * @see AdvancedComicBookFormat::StyleSheet
@@ -38,10 +39,12 @@ namespace AdvancedComicBookFormat {
  * 1) Apply the style for the element, if one exists (e.g. \<text-area\>)
  * 2) If there is a type specified, apply the style for the specified type, if one exists (e.g. \<text-area type=\"commentary\">)
  * 3) If the element is marked as inverted, apply that element's inverted style, if one exists (e.g. \<text-area inverted=true\>)
- * 4) If the element is both a specified type and marked as inverted, apply the style for that type's inverted style, if one exists (e.g. \<text-area type=\"thought\" inverted=true\>)
- * Note that style application will go through the entire stack. It will not stop just because one of the above items is not available for application.
+ * 4) If the element is both a specified type and marked as inverted, apply the style for that type's inverted style, if one exists (e.g. \<text-area
+ * type=\"thought\" inverted=true\>) Note that style application will go through the entire stack. It will not stop just because one of the above items is not
+ * available for application.
  */
-class ACBF_EXPORT Style : public QObject {
+class ACBF_EXPORT Style : public QObject
+{
     Q_OBJECT
     /**
      * The specific element this style will change the look of. Can be one of the following:
@@ -118,7 +121,7 @@ class ACBF_EXPORT Style : public QObject {
      */
     Q_PROPERTY(QString string READ toString NOTIFY styleDataChanged)
 public:
-    explicit Style(QObject* parent = nullptr);
+    explicit Style(QObject *parent = nullptr);
     virtual ~Style();
 
     /**
@@ -132,7 +135,7 @@ public:
     bool fromString(const QStringView &style);
 
     QString element() const;
-    void setElement(const QString& element);
+    void setElement(const QString &element);
     Q_SIGNAL void elementChanged();
 
     bool inverted() const;
@@ -140,35 +143,36 @@ public:
     Q_SIGNAL void invertedChanged();
 
     QString type() const;
-    void setType(const QString& type);
+    void setType(const QString &type);
     Q_SIGNAL void typeChanged();
 
     QString color() const;
-    void setColor(const QString& color);
+    void setColor(const QString &color);
     Q_SIGNAL void colorChanged();
 
     QStringList fontFamily() const;
-    void setFontFamily(const QStringList& fontFamily);
+    void setFontFamily(const QStringList &fontFamily);
     Q_SIGNAL void fontFamilyChanged();
 
     QString fontStyle() const;
-    void setFontStyle(const QString& fontStyle);
+    void setFontStyle(const QString &fontStyle);
     Q_SIGNAL void fontStyleChanged();
 
     QString fontWeight() const;
-    void setFontWeight(const QString& fontWeight);
+    void setFontWeight(const QString &fontWeight);
     Q_SIGNAL void fontWeightChanged();
 
     QString fontStretch() const;
-    void setFontStretch(const QString& fontStretch);
+    void setFontStretch(const QString &fontStretch);
     Q_SIGNAL void fontStretchChanged();
 
     Q_SIGNAL void styleDataChanged();
+
 private:
     class Private;
     std::unique_ptr<Private> d;
 };
 };
-Q_DECLARE_METATYPE(AdvancedComicBookFormat::Style*);
+Q_DECLARE_METATYPE(AdvancedComicBookFormat::Style *);
 
-#endif//ACBFSTYLE_H
+#endif // ACBFSTYLE_H

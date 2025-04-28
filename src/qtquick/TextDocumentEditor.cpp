@@ -22,13 +22,16 @@
 #include <QQuickTextDocument>
 #include <QTextBlock>
 
-class TextDocumentEditor::Private {
+class TextDocumentEditor::Private
+{
 public:
-    Private() {}
-    QQuickTextDocument* textDocument{nullptr};
+    Private()
+    {
+    }
+    QQuickTextDocument *textDocument{nullptr};
 };
 
-TextDocumentEditor::TextDocumentEditor(QObject* parent)
+TextDocumentEditor::TextDocumentEditor(QObject *parent)
     : QObject(parent)
     , d(new Private)
 {
@@ -36,15 +39,15 @@ TextDocumentEditor::TextDocumentEditor(QObject* parent)
 
 TextDocumentEditor::~TextDocumentEditor() = default;
 
-QObject * TextDocumentEditor::textDocument() const
+QObject *TextDocumentEditor::textDocument() const
 {
     return d->textDocument;
 }
 
-void TextDocumentEditor::setTextDocument(QObject* textDocument)
+void TextDocumentEditor::setTextDocument(QObject *textDocument)
 {
     if (d->textDocument != textDocument) {
-        d->textDocument = qobject_cast<QQuickTextDocument*>(textDocument);
+        d->textDocument = qobject_cast<QQuickTextDocument *>(textDocument);
         Q_EMIT textDocumentChanged();
     }
 }

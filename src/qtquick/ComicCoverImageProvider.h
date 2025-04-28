@@ -29,8 +29,8 @@
 #include <memory.h>
 
 /**
- * \brief Get file previews of Comic Book Archives 
- * 
+ * \brief Get file previews of Comic Book Archives
+ *
  * TODO This should go into a thumbnailer later, once karchive-rar is merged into KArchive
  *
  * NOTE: As this task is potentially heavy, make sure to mark any Image using this provider asynchronous
@@ -43,25 +43,28 @@ public:
 
     /**
      * \brief Get an image.
-     * 
+     *
      * @param id The source of the image.
      * @param requestedSize The required size of the final image, unused.
-     * 
+     *
      * @return an asynchronous image response
      */
     QQuickImageResponse *requestImageResponse(const QString &id, const QSize &requestedSize) override;
+
 private:
     class Private;
-    Private* d;
+    Private *d;
 };
 
 /**
  * \brief A worker class which does the bulk of the work for PreviewImageProvider
  */
-class ComicCoverRunnable : public QObject, public QRunnable {
+class ComicCoverRunnable : public QObject, public QRunnable
+{
     Q_OBJECT;
+
 public:
-    explicit ComicCoverRunnable(const QString &id, const QSize &requestedSize, KImageCache* imageCache);
+    explicit ComicCoverRunnable(const QString &id, const QSize &requestedSize, KImageCache *imageCache);
     virtual ~ComicCoverRunnable();
 
     void run() override;
@@ -76,9 +79,10 @@ public:
      * @param image The preview image in the requested size (possibly a placeholder)
      */
     Q_SIGNAL void done(QImage image);
+
 private:
     class Private;
     std::unique_ptr<Private> d;
 };
 
-#endif//COMICCOVERIMAGEPROVIDER_H
+#endif // COMICCOVERIMAGEPROVIDER_H

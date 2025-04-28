@@ -9,11 +9,11 @@
 #include "../unarr.h"
 #include "allocator.h"
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdarg.h>
-#include <string.h>
 #include <inttypes.h>
+#include <stdarg.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 /***** conv ****/
 
@@ -27,10 +27,10 @@ uint32_t ar_crc32(uint32_t crc32, const unsigned char *data, size_t data_len);
 
 /***** stream *****/
 
-typedef void (* ar_stream_close_fn)(void *data);
-typedef size_t (* ar_stream_read_fn)(void *data, void *buffer, size_t count);
-typedef bool (* ar_stream_seek_fn)(void *data, off64_t offset, int origin);
-typedef off64_t (* ar_stream_tell_fn)(void *data);
+typedef void (*ar_stream_close_fn)(void *data);
+typedef size_t (*ar_stream_read_fn)(void *data, void *buffer, size_t count);
+typedef bool (*ar_stream_seek_fn)(void *data, off64_t offset, int origin);
+typedef off64_t (*ar_stream_tell_fn)(void *data);
 
 struct ar_stream_s {
     ar_stream_close_fn close;
@@ -52,11 +52,11 @@ ar_stream *ar_open_stream(void *data, ar_stream_close_fn close, ar_stream_read_f
 #endif
 void ar_log(const char *prefix, const char *file, int line, const char *msg, ...);
 
-typedef void (* ar_archive_close_fn)(ar_archive *ar);
-typedef bool (* ar_parse_entry_fn)(ar_archive *ar, off64_t offset);
-typedef const char *(* ar_entry_get_name_fn)(ar_archive *ar);
-typedef bool (* ar_entry_uncompress_fn)(ar_archive *ar, void *buffer, size_t count);
-typedef size_t (* ar_get_global_comment_fn)(ar_archive *ar, void *buffer, size_t count);
+typedef void (*ar_archive_close_fn)(ar_archive *ar);
+typedef bool (*ar_parse_entry_fn)(ar_archive *ar, off64_t offset);
+typedef const char *(*ar_entry_get_name_fn)(ar_archive *ar);
+typedef bool (*ar_entry_uncompress_fn)(ar_archive *ar, void *buffer, size_t count);
+typedef size_t (*ar_get_global_comment_fn)(ar_archive *ar, void *buffer, size_t count);
 
 struct ar_archive_s {
     ar_archive_close_fn close;
@@ -74,8 +74,13 @@ struct ar_archive_s {
     time64_t entry_filetime;
 };
 
-ar_archive *ar_open_archive(ar_stream *stream, size_t struct_size, ar_archive_close_fn close, ar_parse_entry_fn parse_entry,
-                            ar_entry_get_name_fn get_name, ar_entry_uncompress_fn uncompress, ar_get_global_comment_fn get_comment,
+ar_archive *ar_open_archive(ar_stream *stream,
+                            size_t struct_size,
+                            ar_archive_close_fn close,
+                            ar_parse_entry_fn parse_entry,
+                            ar_entry_get_name_fn get_name,
+                            ar_entry_uncompress_fn uncompress,
+                            ar_get_global_comment_fn get_comment,
                             off64_t first_entry_offset);
 
 #endif

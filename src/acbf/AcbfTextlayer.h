@@ -27,10 +27,10 @@
 #include "AcbfPage.h"
 /**
  * \brief Class to handle the textlayer element.
- * 
+ *
  * ACBF textlayers are groupings of textareas
  * according to a specific language.
- * 
+ *
  * They also have a default textarea background color.
  */
 namespace AdvancedComicBookFormat
@@ -44,18 +44,18 @@ class ACBF_EXPORT Textlayer : public QObject
     Q_PROPERTY(QStringList textareaPointStrings READ textareaPointStrings NOTIFY textareaPointStringsChanged)
     Q_PROPERTY(QObjectList textareas READ textareas NOTIFY textareasChanged)
 public:
-    explicit Textlayer(Page* parent = nullptr);
+    explicit Textlayer(Page *parent = nullptr);
     ~Textlayer() override;
 
     /**
      * \brief Write the textlayer into the xml writer.
      */
-    void toXml(QXmlStreamWriter* writer);
+    void toXml(QXmlStreamWriter *writer);
     /**
      * \brief load a textlayer element into this object.
      * @return True if the xmlReader encountered no errors.
      */
-    bool fromXml(QXmlStreamReader *xmlReader, const QString& xmlData);
+    bool fromXml(QXmlStreamReader *xmlReader, const QString &xmlData);
 
     /**
      * @returns the language for this text-layer.
@@ -66,7 +66,7 @@ public:
      * @param language - the language of the entry in language code, country
      * code format joined by a dash (not an underscore).
      */
-    void setLanguage(const QString& language);
+    void setLanguage(const QString &language);
     /**
      * @brief fires when the language changes.
      */
@@ -74,16 +74,16 @@ public:
 
     /**
      * @return the background color as a QString.
-     * 
+     *
      * It should be an 8bit per channel rgb hexcode.
      */
     QString bgcolor() const;
     /**
      * \brief set the background color.
-     * 
+     *
      * @param newColor - a String with an 8bit per channel rgb hexcode (#ff00ff, or the like)
      */
-    void setBgcolor(const QString& newColor = QString());
+    void setBgcolor(const QString &newColor = QString());
     /**
      * @brief fires when the background color changes.
      */
@@ -93,22 +93,22 @@ public:
      * @returns a list of textareas in this page.
      */
     QObjectList textareas() const;
-    Q_SIGNAL void textareaAdded(Textarea* newArea);
+    Q_SIGNAL void textareaAdded(Textarea *newArea);
     /**
      * Fires when textareas changes
      */
     Q_SIGNAL void textareasChanged();
-    int textAreaIndex(Textarea* textarea);
+    int textAreaIndex(Textarea *textarea);
     /**
      * @param index - index of the textarea.
      * @return the textarea of that index.
      */
-    Q_INVOKABLE Textarea* textarea(int index) const;
+    Q_INVOKABLE Textarea *textarea(int index) const;
     /**
      * @param textarea - the textarea you want to index of.
      * @returns the index of the given textarea.
      */
-    Q_INVOKABLE int textareaIndex(Textarea* textarea) const;
+    Q_INVOKABLE int textareaIndex(Textarea *textarea) const;
 
     /**
      * \brief add a textarea to the list of frames.
@@ -116,7 +116,7 @@ public:
      * @param index - the index to add it at. If afterIndex is larger than
      * zero, the insertion will happen at that index
      */
-    void addTextarea(Textarea* textarea, int index = -1);
+    void addTextarea(Textarea *textarea, int index = -1);
     /**
      * @brief add a text area at index.
      * @param index - the index to add it at. If afterIndex is larger than
@@ -127,7 +127,7 @@ public:
      * \brief remove the given textarea from the framelist.
      * @param textarea - the textarea to remove.
      */
-    void removeTextarea(Textarea* textarea);
+    void removeTextarea(Textarea *textarea);
     /**
      * @brief addTextarea
      * @param index to remove the textarea at.
@@ -150,10 +150,11 @@ public:
      * @brief textareaCountChanged
      */
     Q_SIGNAL void textareaPointStringsChanged();
+
 private:
     class Private;
     std::unique_ptr<Private> d;
 };
 }
 
-#endif//ACBFTEXTLAYER_H
+#endif // ACBFTEXTLAYER_H

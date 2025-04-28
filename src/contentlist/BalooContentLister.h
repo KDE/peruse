@@ -32,7 +32,7 @@ class BalooContentLister : public ContentListerBase
 {
     Q_OBJECT
 public:
-    explicit BalooContentLister(QObject* parent = nullptr);
+    explicit BalooContentLister(QObject *parent = nullptr);
     ~BalooContentLister() override;
 
     /**
@@ -44,14 +44,14 @@ public:
      * \brief Start a search.
      * @param queries  List of ContentQueries that the search should be limited to.
      */
-    void startSearch(const QList<ContentQuery*>& queries) override;
+    void startSearch(const QList<ContentQuery *> &queries) override;
 
 private:
     class Private;
-    Private* d;
+    Private *d;
 
-    Q_SLOT void queryCompleted(Baloo::QueryRunnable* query);
-    void queryResult(const ContentQuery* query, const QString& location, const QString& file);
+    Q_SLOT void queryCompleted(Baloo::QueryRunnable *query);
+    void queryResult(const ContentQuery *query, const QString &location, const QString &file);
 };
 
-#endif//BALOOCONTENTLISTER_H
+#endif // BALOOCONTENTLISTER_H

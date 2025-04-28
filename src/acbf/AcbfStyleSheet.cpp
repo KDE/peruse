@@ -26,61 +26,68 @@
 #include "acbf_debug.h"
 
 #include <QString>
-#include <QXmlStreamWriter>
 #include <QXmlStreamReader>
+#include <QXmlStreamWriter>
 
 using namespace AdvancedComicBookFormat;
 
 class StyleSheet::Private
 {
 public:
-    Private(StyleSheet* qq)
+    Private(StyleSheet *qq)
         : q(qq)
-    {}
-    StyleSheet* q;
+    {
+    }
+    StyleSheet *q;
     QObjectList styles;
 
-    void addStyle(Style* style) {
+    void addStyle(Style *style)
+    {
         styles << style;
         QObject::connect(style, &Style::styleDataChanged, q, &StyleSheet::stylesChanged);
-        QObject::connect(style, &QObject::destroyed, q, [this, style](){ styles.removeAll(style); Q_EMIT q->stylesChanged(); });
+        QObject::connect(style, &QObject::destroyed, q, [this, style]() {
+            styles.removeAll(style);
+            Q_EMIT q->stylesChanged();
+        });
         q->stylesChanged();
     }
 };
 
-StyleSheet::StyleSheet(Document* parent)
+StyleSheet::StyleSheet(Document *parent)
     : QObject(parent)
     , d(new Private(this))
 {
-    static const int typeId = qRegisterMetaType<StyleSheet*>("StyleSheet*");
+    static const int typeId = qRegisterMetaType<StyleSheet *>("StyleSheet*");
     Q_UNUSED(typeId);
 }
 
 StyleSheet::~StyleSheet() = default;
 
-void StyleSheet::toXml(QXmlStreamWriter* writer) {
+void StyleSheet::toXml(QXmlStreamWriter *writer)
+{
     writer->writeStartElement(QStringLiteral("style"));
     QStringList contents;
-    for(QObject* object : d->styles)
-    {
-        Style* style = qobject_cast<Style*>(object);
+    for (QObject *object : d->styles) {
+        Style *style = qobject_cast<Style *>(object);
         if (style) {
             contents.append(style->toString());
         } else {
-            qCWarning(ACBF_LOG) << "We somehow have an entry in our list of styles that is not a Style object, this really should not be possible. The object in question is:" << object;
+            qCWarning(ACBF_LOG)
+                << "We somehow have an entry in our list of styles that is not a Style object, this really should not be possible. The object in question is:"
+                << object;
         }
     }
-    writer->writeCharacters("");  // to ensure we close the tag correctly and don't end up with a <p />
+    writer->writeCharacters(""); // to ensure we close the tag correctly and don't end up with a <p />
     const QString styleText = contents.join("\n");
     writer->device()->write(styleText.toUtf8().constData(), styleText.toUtf8().length());
     writer->writeEndElement();
 }
 
-bool StyleSheet::fromXml(QXmlStreamReader *xmlReader, const QString& xmlData)
+bool StyleSheet::fromXml(QXmlStreamReader *xmlReader, const QString &xmlData)
 {
     int startPoint = xmlReader->characterOffset();
     int endPoint{startPoint};
-    while(xmlReader->readNext()) {
+    while (xmlReader->readNext()) {
         if (xmlReader->isEndElement() && xmlReader->name() == QStringLiteral("style")) {
             endPoint = xmlReader->characterOffset();
             break;
@@ -88,9 +95,10 @@ bool StyleSheet::fromXml(QXmlStreamReader *xmlReader, const QString& xmlData)
     }
     setContents(xmlData.mid(startPoint, endPoint - startPoint - 8));
     if (xmlReader->hasError()) {
-        qCWarning(ACBF_LOG) << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader->name() << "(" << xmlReader->lineNumber() << ":" << xmlReader->columnNumber() << ") The reported error was:" << xmlReader->errorString();
+        qCWarning(ACBF_LOG) << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader->name() << "(" << xmlReader->lineNumber() << ":"
+                            << xmlReader->columnNumber() << ") The reported error was:" << xmlReader->errorString();
     }
-    qCDebug(ACBF_LOG) << Q_FUNC_INFO << "Created a stylesheet section with"<<d->styles.count()<<"classes";
+    qCDebug(ACBF_LOG) << Q_FUNC_INFO << "Created a stylesheet section with" << d->styles.count() << "classes";
     return !xmlReader->hasError();
 }
 
@@ -99,14 +107,15 @@ QObjectList StyleSheet::styles() const
     return d->styles;
 }
 
-Style * StyleSheet::addStyle()
+Style *StyleSheet::addStyle()
 {
-    Style* newStyle = new Style(this);
+    Style *newStyle = new Style(this);
     d->addStyle(newStyle);
     return newStyle;
 }
 
-static void imposeStyle(Style* imposeThis, Style* onThis) {
+static void imposeStyle(Style *imposeThis, Style *onThis)
+{
     if (imposeThis && onThis) {
         if (!imposeThis->color().isEmpty()) {
             onThis->setColor(imposeThis->color());
@@ -126,21 +135,22 @@ static void imposeStyle(Style* imposeThis, Style* onThis) {
     }
 }
 
-QObject * AdvancedComicBookFormat::StyleSheet::style(const QString& element, const QString& type, bool inverted)
+QObject *AdvancedComicBookFormat::StyleSheet::style(const QString &element, const QString &type, bool inverted)
 {
-// 0) Apply the * style
-    Style* everyStyle{nullptr};
-// 1) Apply the style for the element, if one exists (e.g. \<text-area\>)
-    Style* elementStyle{nullptr};
-// 2) If there is a type specified, apply the style for the specified type, if one exists (e.g. \<text-area type=\"commentary\">)
-    Style* typeStyle{nullptr};
-// 3) If the element is marked as inverted, apply that element's inverted style, if one exists (e.g. \<text-area inverted=true\>)
-    Style* invertedStyle{nullptr};
-// 4) If the element is both a specified type and marked as inverted, apply the style for that type's inverted style, if one exists (e.g. \<text-area type=\"thought\" inverted=true\>)
-    Style* invertedTypeStyle{nullptr};
+    // 0) Apply the * style
+    Style *everyStyle{nullptr};
+    // 1) Apply the style for the element, if one exists (e.g. \<text-area\>)
+    Style *elementStyle{nullptr};
+    // 2) If there is a type specified, apply the style for the specified type, if one exists (e.g. \<text-area type=\"commentary\">)
+    Style *typeStyle{nullptr};
+    // 3) If the element is marked as inverted, apply that element's inverted style, if one exists (e.g. \<text-area inverted=true\>)
+    Style *invertedStyle{nullptr};
+    // 4) If the element is both a specified type and marked as inverted, apply the style for that type's inverted style, if one exists (e.g. \<text-area
+    // type=\"thought\" inverted=true\>)
+    Style *invertedTypeStyle{nullptr};
 
-    for( QObject* obj: d->styles) {
-        Style* aStyle = qobject_cast<Style*>(obj);
+    for (QObject *obj : d->styles) {
+        Style *aStyle = qobject_cast<Style *>(obj);
         if (aStyle->element() == element && aStyle->type() == type && aStyle->inverted() == true) {
             invertedTypeStyle = aStyle;
         } else if (aStyle->element() == element && aStyle->type() == type && aStyle->inverted() == false) {
@@ -153,7 +163,7 @@ QObject * AdvancedComicBookFormat::StyleSheet::style(const QString& element, con
             everyStyle = aStyle;
         }
     }
-    Style* aStyle = new Style(this);
+    Style *aStyle = new Style(this);
     imposeStyle(everyStyle, aStyle);
     imposeStyle(elementStyle, aStyle);
     imposeStyle(typeStyle, aStyle);
@@ -165,12 +175,11 @@ QObject * AdvancedComicBookFormat::StyleSheet::style(const QString& element, con
     return elementStyle;
 }
 
-void StyleSheet::setContents(const QString& css)
+void StyleSheet::setContents(const QString &css)
 {
     QVector<QStringView> classes = QStringView{css}.split('}', Qt::SkipEmptyParts);
-    for(QStringView cssClass : classes)
-    {
-        Style* newStyle = new Style(this);
+    for (QStringView cssClass : classes) {
+        Style *newStyle = new Style(this);
         if (newStyle->fromString(cssClass.trimmed())) {
             d->addStyle(newStyle);
         }

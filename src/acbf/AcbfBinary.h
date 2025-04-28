@@ -32,17 +32,17 @@ class QXmlStreamWriter;
 
 /**
  * \brief Class for handling the embedded data in ACBF
- * 
+ *
  * ACBF allows for embedding images and fonts as Base64 bytearrays.
- * 
+ *
  * The images are used to allow ACBF to be standalone.
- * 
+ *
  * The fonts are used to indicate the appropriate style
  * for text areas.
- * 
+ *
  * This class holds the bytearray and mimetype,
  * handling reading and loading from the xml.
- * 
+ *
  * It does not convert the bytearrays
  * to the appropriate object.
  */
@@ -57,7 +57,7 @@ class ACBF_EXPORT Binary : public InternalReferenceObject
     Q_PROPERTY(QString contentType READ contentType WRITE setContentType NOTIFY contentTypeChanged)
     Q_PROPERTY(int size READ size NOTIFY dataChanged)
 public:
-    explicit Binary(Data* parent = nullptr);
+    explicit Binary(Data *parent = nullptr);
     ~Binary() override;
 
     /**
@@ -84,7 +84,7 @@ public:
      * other parts of the ACBF document.
      * @param newId - The new ID as a string.
      */
-    void setId(const QString& newId);
+    void setId(const QString &newId);
     Q_SIGNAL void idChanged();
 
     /**
@@ -96,7 +96,7 @@ public:
      * \brief Indicate the mimetype of the binary data.
      * @param newContentType - the mimetype in string format.
      */
-    void setContentType(const QString& newContentType);
+    void setContentType(const QString &newContentType);
     Q_SIGNAL void contentTypeChanged();
 
     /**
@@ -110,16 +110,16 @@ public:
 
     /**
      * \brief Set the binary data to store in this element.
-     * 
+     *
      * @param newData - This should be a QByteArray.
      */
-    void setData(const QByteArray& newData);
+    void setData(const QByteArray &newData);
     /**
      * \brief Set the binary data to store in this element from a file.
      * Note: This will be read immediately and added with no further checks.
      * @param fileName The filename of a file on disk. If the file does not exist, the data will be set to empty.
      */
-    Q_INVOKABLE void setDataFromFile(const QString& fileName);
+    Q_INVOKABLE void setDataFromFile(const QString &fileName);
     /**
      * Fired whenever the data contents of the binary changes
      */
@@ -131,11 +131,12 @@ public:
      * @return The instance's position
      */
     int localIndex() override;
+
 private:
     class Private;
     std::unique_ptr<Private> d;
 };
 }
-Q_DECLARE_METATYPE(AdvancedComicBookFormat::Binary*)
+Q_DECLARE_METATYPE(AdvancedComicBookFormat::Binary *)
 
 #endif // ACBFBINARY_H

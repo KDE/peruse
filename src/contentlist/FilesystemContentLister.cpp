@@ -27,10 +27,10 @@
 #include <QDateTime>
 #include <QDirIterator>
 #include <QMimeDatabase>
+#include <QRunnable>
+#include <QThreadPool>
 #include <QTimer>
 #include <QVariantHash>
-#include <QThreadPool>
-#include <QRunnable>
 
 #include "ContentQuery.h"
 
@@ -38,29 +38,31 @@ class FileSystemSearcher : public QObject, public QRunnable
 {
     Q_OBJECT
 public:
-    FileSystemSearcher(ContentQuery* query) : QObject() { m_query = query; }
+    FileSystemSearcher(ContentQuery *query)
+        : QObject()
+    {
+        m_query = query;
+    }
 
     void run() override
     {
         QMimeDatabase mimeDb;
 
         auto locations = m_query->locations();
-        if(locations.isEmpty())
+        if (locations.isEmpty())
             locations.append(QDir::homePath());
 
-        for(const auto& location : locations)
-        {
+        for (const auto &location : locations) {
             QDirIterator it(location, QDirIterator::Subdirectories);
-            while (it.hasNext())
-            {
+            while (it.hasNext()) {
                 auto filePath = it.next();
 
-                if(it.fileInfo().isDir())
+                if (it.fileInfo().isDir())
                     continue;
 
-                if(!m_query->mimeTypes().isEmpty()) {
+                if (!m_query->mimeTypes().isEmpty()) {
                     QString mimeType = mimeDb.mimeTypeForFile(filePath).name();
-                    if(!m_query->mimeTypes().contains(mimeType))
+                    if (!m_query->mimeTypes().contains(mimeType))
                         continue;
                 }
 
@@ -74,26 +76,27 @@ public:
     }
 
 Q_SIGNALS:
-    void fileFound(const QString& path, const QVariantMap& metaData);
-    void finished(FileSystemSearcher* searcher);
+    void fileFound(const QString &path, const QVariantMap &metaData);
+    void finished(FileSystemSearcher *searcher);
 
 private:
-    ContentQuery* m_query;
+    ContentQuery *m_query;
 };
 
 class FilesystemContentLister::Private
 {
 public:
-    Private() { }
+    Private()
+    {
+    }
 
-    QList<FileSystemSearcher*> runnables;
+    QList<FileSystemSearcher *> runnables;
 };
 
-FilesystemContentLister::FilesystemContentLister(QObject* parent)
+FilesystemContentLister::FilesystemContentLister(QObject *parent)
     : ContentListerBase(parent)
     , d(new Private)
 {
-
 }
 
 FilesystemContentLister::~FilesystemContentLister()
@@ -102,10 +105,9 @@ FilesystemContentLister::~FilesystemContentLister()
     delete d;
 }
 
-void FilesystemContentLister::startSearch(const QList<ContentQuery*>& queries)
+void FilesystemContentLister::startSearch(const QList<ContentQuery *> &queries)
 {
-    for(const auto& query : queries)
-    {
+    for (const auto &query : queries) {
         auto runnable = new FileSystemSearcher{query};
         connect(runnable, &FileSystemSearcher::fileFound, this, &FilesystemContentLister::fileFound);
         connect(runnable, &FileSystemSearcher::finished, this, &FilesystemContentLister::queryFinished);
@@ -113,20 +115,17 @@ void FilesystemContentLister::startSearch(const QList<ContentQuery*>& queries)
         d->runnables.append(runnable);
     }
 
-    if(!d->runnables.isEmpty())
+    if (!d->runnables.isEmpty())
         QThreadPool::globalInstance()->start(d->runnables.first());
 }
 
-void FilesystemContentLister::queryFinished(QRunnable* runnable)
+void FilesystemContentLister::queryFinished(QRunnable *runnable)
 {
-    d->runnables.removeAll(static_cast<FileSystemSearcher*>(runnable));
+    d->runnables.removeAll(static_cast<FileSystemSearcher *>(runnable));
 
-    if(!d->runnables.isEmpty())
-    {
+    if (!d->runnables.isEmpty()) {
         QThreadPool::globalInstance()->start(d->runnables.first());
-    }
-    else
-    {
+    } else {
         emit searchCompleted();
     }
 }

@@ -21,21 +21,21 @@
 
 #include "BookListModel.h"
 
+#include "ArchiveBookModel.h"
 #include "BookDatabase.h"
 #include "CategoryEntriesModel.h"
-#include "ArchiveBookModel.h"
 
 #include "AcbfAuthor.h"
-#include "AcbfSequence.h"
 #include "AcbfBookinfo.h"
 #include "AcbfDocument.h"
+#include "AcbfSequence.h"
 
-#include <kio/deletejob.h>
-#include <KFileMetaData/UserMetaData>
-#include <KFileMetaData/ExtractorCollection>
 #include <KFileMetaData/ExtractionResult>
+#include <KFileMetaData/ExtractorCollection>
 #include <KFileMetaData/Properties>
 #include <KFileMetaData/PropertyInfo>
+#include <KFileMetaData/UserMetaData>
+#include <kio/deletejob.h>
 
 #include <QCoreApplication>
 #include <QDir>
@@ -50,12 +50,12 @@ using namespace Qt::StringLiterals;
 class PeruseExtractionResult : public KFileMetaData::ExtractionResult
 {
 public:
-    PeruseExtractionResult(const QString& url, const QString& mimetype)
+    PeruseExtractionResult(const QString &url, const QString &mimetype)
         : KFileMetaData::ExtractionResult(url, mimetype, KFileMetaData::ExtractionResult::ExtractMetaData)
     {
     }
 
-    void add(KFileMetaData::Property::Property property, const QVariant& value) override
+    void add(KFileMetaData::Property::Property property, const QVariant &value) override
     {
         if (property == KFileMetaData::Property::Author) {
             authors.append(value.toString());
@@ -79,10 +79,12 @@ public:
     }
 
     void addType(KFileMetaData::Type::Type type) override
-    {}
+    {
+    }
 
-    void append(const QString& text) override
-    {}
+    void append(const QString &text) override
+    {
+    }
 
     QStringList authors;
     QStringList publishers;
@@ -91,7 +93,8 @@ public:
     QDateTime creation;
 };
 
-class BookListModel::Private {
+class BookListModel::Private
+{
 public:
     Private()
         : contentModel(nullptr)
@@ -112,63 +115,57 @@ public:
     }
     QList<BookEntry> entries;
 
-    QAbstractListModel* contentModel;
-    CategoryEntriesModel* titleCategoryModel;
-    CategoryEntriesModel* newlyAddedCategoryModel;
-    CategoryEntriesModel* authorCategoryModel;
-    CategoryEntriesModel* seriesCategoryModel;
-    CategoryEntriesModel* publisherCategoryModel;
-    CategoryEntriesModel* keywordCategoryModel;
-    CategoryEntriesModel* folderCategoryModel;
+    QAbstractListModel *contentModel;
+    CategoryEntriesModel *titleCategoryModel;
+    CategoryEntriesModel *newlyAddedCategoryModel;
+    CategoryEntriesModel *authorCategoryModel;
+    CategoryEntriesModel *seriesCategoryModel;
+    CategoryEntriesModel *publisherCategoryModel;
+    CategoryEntriesModel *keywordCategoryModel;
+    CategoryEntriesModel *folderCategoryModel;
 
-    BookDatabase* db;
+    BookDatabase *db;
     bool cacheLoaded;
 
-    void initializeSubModels(BookListModel* q) {
-        if(!titleCategoryModel)
-        {
+    void initializeSubModels(BookListModel *q)
+    {
+        if (!titleCategoryModel) {
             titleCategoryModel = new CategoryEntriesModel(q);
             connect(q, &CategoryEntriesModel::entryDataUpdated, titleCategoryModel, &CategoryEntriesModel::entryDataUpdated);
             connect(q, &CategoryEntriesModel::entryRemoved, titleCategoryModel, &CategoryEntriesModel::entryRemoved);
             emit q->titleCategoryModelChanged();
         }
-        if(!newlyAddedCategoryModel)
-        {
+        if (!newlyAddedCategoryModel) {
             newlyAddedCategoryModel = new CategoryEntriesModel(q);
             connect(q, &CategoryEntriesModel::entryDataUpdated, newlyAddedCategoryModel, &CategoryEntriesModel::entryDataUpdated);
             connect(q, &CategoryEntriesModel::entryRemoved, newlyAddedCategoryModel, &CategoryEntriesModel::entryRemoved);
             emit q->newlyAddedCategoryModelChanged();
         }
-        if(!authorCategoryModel)
-        {
+        if (!authorCategoryModel) {
             authorCategoryModel = new CategoryEntriesModel(q);
             connect(q, &CategoryEntriesModel::entryDataUpdated, authorCategoryModel, &CategoryEntriesModel::entryDataUpdated);
             connect(q, &CategoryEntriesModel::entryRemoved, authorCategoryModel, &CategoryEntriesModel::entryRemoved);
             emit q->authorCategoryModelChanged();
         }
-        if(!seriesCategoryModel)
-        {
+        if (!seriesCategoryModel) {
             seriesCategoryModel = new CategoryEntriesModel(q);
             connect(q, &CategoryEntriesModel::entryDataUpdated, seriesCategoryModel, &CategoryEntriesModel::entryDataUpdated);
             connect(q, &CategoryEntriesModel::entryRemoved, seriesCategoryModel, &CategoryEntriesModel::entryRemoved);
             emit q->seriesCategoryModelChanged();
         }
-        if(!publisherCategoryModel)
-        {
+        if (!publisherCategoryModel) {
             publisherCategoryModel = new CategoryEntriesModel(q);
             connect(q, &CategoryEntriesModel::entryDataUpdated, publisherCategoryModel, &CategoryEntriesModel::entryDataUpdated);
             connect(q, &CategoryEntriesModel::entryRemoved, publisherCategoryModel, &CategoryEntriesModel::entryRemoved);
             emit q->publisherCategoryModelChanged();
         }
-        if(!keywordCategoryModel)
-        {
+        if (!keywordCategoryModel) {
             keywordCategoryModel = new CategoryEntriesModel(q);
             connect(q, &CategoryEntriesModel::entryDataUpdated, keywordCategoryModel, &CategoryEntriesModel::entryDataUpdated);
             connect(q, &CategoryEntriesModel::entryRemoved, keywordCategoryModel, &CategoryEntriesModel::entryRemoved);
             emit q->keywordCategoryModelChanged();
         }
-        if(!folderCategoryModel)
-        {
+        if (!folderCategoryModel) {
             folderCategoryModel = new CategoryEntriesModel(q);
             connect(q, &CategoryEntriesModel::entryDataUpdated, folderCategoryModel, &CategoryEntriesModel::entryDataUpdated);
             connect(q, &CategoryEntriesModel::entryRemoved, folderCategoryModel, &CategoryEntriesModel::entryRemoved);
@@ -176,14 +173,15 @@ public:
         }
     }
 
-    void addEntry(BookListModel* q, const BookEntry &entry) {
+    void addEntry(BookListModel *q, const BookEntry &entry)
+    {
         entries.append(entry);
         q->append(entry);
         titleCategoryModel->addCategoryEntry(entry.title.left(1).toUpper(), entry);
-        for (int i=0; i<entry.author.size(); i++) {
+        for (int i = 0; i < entry.author.size(); i++) {
             authorCategoryModel->addCategoryEntry(entry.author.at(i), entry);
         }
-        for (int i=0; i<entry.series.size(); i++) {
+        for (int i = 0; i < entry.series.size(); i++) {
             seriesCategoryModel->addCategoryEntry(entry.series.at(i), entry, SeriesRole);
         }
         if (newlyAddedCategoryModel->indexOfFile(entry.filename) == -1) {
@@ -195,27 +193,25 @@ public:
         if (folderCategoryModel->indexOfFile(entry.filename) == -1) {
             folderCategoryModel->append(entry);
         }
-        for (int i=0; i<entry.genres.size(); i++) {
+        for (int i = 0; i < entry.genres.size(); i++) {
             keywordCategoryModel->addCategoryEntry(QString("Genre/").append(entry.genres.at(i)), entry, GenreRole);
         }
-        for (int i=0; i<entry.characters.size(); i++) {
+        for (int i = 0; i < entry.characters.size(); i++) {
             keywordCategoryModel->addCategoryEntry(QString("Characters/").append(entry.characters.at(i)), entry, GenreRole);
         }
-        for (int i=0; i<entry.keywords.size(); i++) {
+        for (int i = 0; i < entry.keywords.size(); i++) {
             keywordCategoryModel->addCategoryEntry(QString("Keywords/").append(entry.keywords.at(i)), entry, GenreRole);
         }
-
     }
 
-    void loadCache(BookListModel* q) {
+    void loadCache(BookListModel *q)
+    {
         const QList<BookEntry> entries = db->loadEntries();
-        if(entries.count() > 0)
-        {
+        if (entries.count() > 0) {
             initializeSubModels(q);
         }
         int i = 0;
-        for ( const BookEntry &entry : entries)
-        {
+        for (const BookEntry &entry : entries) {
             /*
              * This might turn out a little slow, but we should avoid having entries
              * that do not exist. If we end up with slowdown issues when loading the
@@ -223,7 +219,7 @@ public:
              */
             if (QFileInfo::exists(entry.filename)) {
                 addEntry(q, entry);
-                if(++i % 100 == 0) {
+                if (++i % 100 == 0) {
                     emit q->countChanged();
                     qApp->processEvents();
                 }
@@ -236,7 +232,7 @@ public:
     }
 };
 
-BookListModel::BookListModel(QObject* parent)
+BookListModel::BookListModel(QObject *parent)
     : CategoryEntriesModel(parent)
     , d(new Private)
 {
@@ -249,7 +245,9 @@ BookListModel::~BookListModel()
 
 void BookListModel::componentComplete()
 {
-    QTimer::singleShot(0, this, [this](){ d->loadCache(this); });
+    QTimer::singleShot(0, this, [this]() {
+        d->loadCache(this);
+    });
 }
 
 bool BookListModel::cacheLoaded() const
@@ -257,21 +255,19 @@ bool BookListModel::cacheLoaded() const
     return d->cacheLoaded;
 }
 
-void BookListModel::setContentModel(QObject* newModel)
+void BookListModel::setContentModel(QObject *newModel)
 {
-    if(d->contentModel)
-    {
+    if (d->contentModel) {
         d->contentModel->disconnect(this);
     }
-    d->contentModel = qobject_cast<QAbstractListModel*>(newModel);
-    if(d->contentModel)
-    {
+    d->contentModel = qobject_cast<QAbstractListModel *>(newModel);
+    if (d->contentModel) {
         connect(d->contentModel, &QAbstractItemModel::rowsInserted, this, &BookListModel::contentModelItemsInserted);
     }
     emit contentModelChanged();
 }
 
-QObject * BookListModel::contentModel() const
+QObject *BookListModel::contentModel() const
 {
     return d->contentModel;
 }
@@ -282,15 +278,14 @@ void BookListModel::contentModelItemsInserted(QModelIndex index, int first, int 
     int newRow = d->entries.count();
     beginInsertRows(QModelIndex(), newRow, newRow + (last - first));
     int role = d->contentModel->roleNames().key("filePath");
-    for(int i = first; i < last + 1; ++i)
-    {
+    for (int i = first; i < last + 1; ++i) {
         QVariant filePath = d->contentModel->data(d->contentModel->index(first, 0, index), role);
         BookEntry entry;
         entry.filename = filePath.toUrl().toLocalFile();
         QStringList splitName = entry.filename.split("/");
         if (!splitName.isEmpty())
             entry.filetitle = splitName.takeLast();
-        if(!splitName.isEmpty()) {
+        if (!splitName.isEmpty()) {
             entry.series = QStringList(splitName.takeLast()); // hahahaheuristics (dumb assumptions about filesystems, go!)
             entry.seriesNumbers = QStringList("0");
             entry.seriesVolumes = QStringList("0");
@@ -300,11 +295,11 @@ void BookListModel::contentModelItemsInserted(QModelIndex index, int first, int 
         QFileInfo fileinfo(entry.filename);
         entry.title = fileinfo.completeBaseName();
 
-        if(entry.filename.toLower().endsWith("cbr") || entry.filename.toLower().endsWith("cbz")) {
+        if (entry.filename.toLower().endsWith("cbr") || entry.filename.toLower().endsWith("cbz")) {
             entry.thumbnail = QString("image://comiccover/").append(entry.filename);
         }
 #ifdef USE_PERUSE_PDFTHUMBNAILER
-        else if(entry.filename.toLower().endsWith("pdf")) {
+        else if (entry.filename.toLower().endsWith("pdf")) {
             entry.thumbnail = QString("image://pdfcover/").append(entry.filename);
         }
 #endif
@@ -320,35 +315,37 @@ void BookListModel::contentModelItemsInserted(QModelIndex index, int first, int 
         QVariantHash metadata = d->contentModel->data(d->contentModel->index(first, 0, index), Qt::UserRole + 2).toHash();
         QVariantHash::const_iterator it = metadata.constBegin();
         for (; it != metadata.constEnd(); it++) {
-            if(it.key() == QLatin1String("author"))
-            { entry.author = it.value().toStringList(); }
-            else if(it.key() == QLatin1String("title"))
-            { entry.title = it.value().toString().trimmed(); }
-            else if(it.key() == QLatin1String("publisher"))
-            { entry.publisher = it.value().toString().trimmed(); }
-            else if(it.key() == QLatin1String("created"))
-            { entry.created = it.value().toDateTime(); }
-            else if(it.key() == QLatin1String("currentPage"))
-            { entry.currentPage = it.value().toInt(); }
-            else if(it.key() == QLatin1String("totalPages"))
-            { entry.totalPages = it.value().toInt(); }
-            else if(it.key() == QLatin1String("comments"))
-            { entry.comment = it.value().toString();}
-            else if(it.key() == QLatin1String("tags"))
-            { entry.tags = it.value().toStringList();}
-            else if(it.key() == QLatin1String("rating"))
-            { entry.rating = it.value().toInt();}
+            if (it.key() == QLatin1String("author")) {
+                entry.author = it.value().toStringList();
+            } else if (it.key() == QLatin1String("title")) {
+                entry.title = it.value().toString().trimmed();
+            } else if (it.key() == QLatin1String("publisher")) {
+                entry.publisher = it.value().toString().trimmed();
+            } else if (it.key() == QLatin1String("created")) {
+                entry.created = it.value().toDateTime();
+            } else if (it.key() == QLatin1String("currentPage")) {
+                entry.currentPage = it.value().toInt();
+            } else if (it.key() == QLatin1String("totalPages")) {
+                entry.totalPages = it.value().toInt();
+            } else if (it.key() == QLatin1String("comments")) {
+                entry.comment = it.value().toString();
+            } else if (it.key() == QLatin1String("tags")) {
+                entry.tags = it.value().toStringList();
+            } else if (it.key() == QLatin1String("rating")) {
+                entry.rating = it.value().toInt();
+            }
         }
         // ACBF information is always preferred for CBRs, so let's just use that if it's there
         QMimeDatabase db;
         QString mimetype = db.mimeTypeForFile(entry.filename).name();
-        if(mimetype == "application/x-cbz" || mimetype == "application/x-cbr" || mimetype == "application/vnd.comicbook+zip" || mimetype == "application/vnd.comicbook+rar") {
-            ArchiveBookModel* bookModel = new ArchiveBookModel(this);
+        if (mimetype == "application/x-cbz" || mimetype == "application/x-cbr" || mimetype == "application/vnd.comicbook+zip"
+            || mimetype == "application/vnd.comicbook+rar") {
+            ArchiveBookModel *bookModel = new ArchiveBookModel(this);
             bookModel->setFilename(entry.filename);
 
-            AdvancedComicBookFormat::Document* acbfDocument = qobject_cast<AdvancedComicBookFormat::Document*>(bookModel->acbfData());
-            if(acbfDocument) {
-                for(AdvancedComicBookFormat::Sequence* sequence : acbfDocument->metaData()->bookInfo()->sequence()) {
+            AdvancedComicBookFormat::Document *acbfDocument = qobject_cast<AdvancedComicBookFormat::Document *>(bookModel->acbfData());
+            if (acbfDocument) {
+                for (AdvancedComicBookFormat::Sequence *sequence : acbfDocument->metaData()->bookInfo()->sequence()) {
                     if (!entry.series.contains(sequence->title())) {
                         entry.series.append(sequence->title());
                         entry.seriesNumbers.append(QString::number(sequence->number()));
@@ -358,9 +355,8 @@ void BookListModel::contentModelItemsInserted(QModelIndex index, int first, int 
                         entry.seriesNumbers.replace(series, QString::number(sequence->number()));
                         entry.seriesVolumes.replace(series, QString::number(sequence->volume()));
                     }
-
                 }
-                for(AdvancedComicBookFormat::Author* author : acbfDocument->metaData()->bookInfo()->author()) {
+                for (AdvancedComicBookFormat::Author *author : acbfDocument->metaData()->bookInfo()->author()) {
                     entry.author.append(author->displayName());
                 }
                 entry.description = acbfDocument->metaData()->bookInfo()->annotation("");
@@ -392,7 +388,7 @@ void BookListModel::contentModelItemsInserted(QModelIndex index, int first, int 
                 entry.author = result.authors;
                 entry.publisher = result.publishers.join(u", "_s);
                 entry.genres = result.genres;
-                //metadata["comments"_L1] = result.description;
+                // metadata["comments"_L1] = result.description;
                 entry.created = result.creation;
             }
         }
@@ -405,30 +401,30 @@ void BookListModel::contentModelItemsInserted(QModelIndex index, int first, int 
     qApp->processEvents();
 }
 
-QObject * BookListModel::titleCategoryModel() const
+QObject *BookListModel::titleCategoryModel() const
 {
     return d->titleCategoryModel;
 }
 
-QObject * BookListModel::newlyAddedCategoryModel() const
+QObject *BookListModel::newlyAddedCategoryModel() const
 {
     return d->newlyAddedCategoryModel;
 }
 
-QObject * BookListModel::authorCategoryModel() const
+QObject *BookListModel::authorCategoryModel() const
 {
     return d->authorCategoryModel;
 }
 
-QObject * BookListModel::seriesCategoryModel() const
+QObject *BookListModel::seriesCategoryModel() const
 {
     return d->seriesCategoryModel;
 }
 
-CategoryEntriesModel* BookListModel::seriesModelForEntry(const QString &fileName)
+CategoryEntriesModel *BookListModel::seriesModelForEntry(const QString &fileName)
 {
     for (const BookEntry &entry : std::as_const(d->entries)) {
-        if(entry.filename == fileName) {
+        if (entry.filename == fileName) {
             return d->seriesCategoryModel->leafModelForEntry(entry);
         }
     }
@@ -445,7 +441,7 @@ QObject *BookListModel::keywordCategoryModel() const
     return d->keywordCategoryModel;
 }
 
-QObject * BookListModel::folderCategoryModel() const
+QObject *BookListModel::folderCategoryModel() const
 {
     return d->folderCategoryModel;
 }
@@ -457,30 +453,21 @@ int BookListModel::count() const
 
 void BookListModel::setBookData(QString fileName, QString property, QString value)
 {
-    for(BookEntry &entry : d->entries) {
-        if(entry.filename == fileName)
-        {
-            if(property == "totalPages")
-            {
+    for (BookEntry &entry : d->entries) {
+        if (entry.filename == fileName) {
+            if (property == "totalPages") {
                 entry.totalPages = value.toInt();
                 d->db->updateEntry(entry.filename, property, QVariant(value.toInt()));
-            }
-            else if(property == "currentPage")
-            {
+            } else if (property == "currentPage") {
                 entry.currentPage = value.toInt();
                 d->db->updateEntry(entry.filename, property, QVariant(value.toInt()));
-            }
-            else if(property == "rating")
-            {
+            } else if (property == "rating") {
                 entry.rating = value.toInt();
                 d->db->updateEntry(entry.filename, property, QVariant(value.toInt()));
-            }
-            else if(property == "tags")
-            {
+            } else if (property == "tags") {
                 entry.tags = value.split(",");
                 d->db->updateEntry(entry.filename, property, QVariant(value.split(",")));
-            }
-            else if(property == "comment") {
+            } else if (property == "comment") {
                 entry.comment = value;
                 d->db->updateEntry(entry.filename, property, QVariant(value));
             }
@@ -492,13 +479,13 @@ void BookListModel::setBookData(QString fileName, QString property, QString valu
 
 void BookListModel::removeBook(QString fileName, bool deleteFile)
 {
-    if(deleteFile) {
-        KIO::DeleteJob* job = KIO::del(QUrl::fromLocalFile(fileName), KIO::HideProgressInfo);
+    if (deleteFile) {
+        KIO::DeleteJob *job = KIO::del(QUrl::fromLocalFile(fileName), KIO::HideProgressInfo);
         job->start();
     }
 
-    for(const BookEntry &entry : std::as_const(d->entries)) {
-        if(entry.filename == fileName) {
+    for (const BookEntry &entry : std::as_const(d->entries)) {
+        if (entry.filename == fileName) {
             emit entryRemoved(entry);
             d->db->removeEntry(entry);
             break;
@@ -509,7 +496,7 @@ void BookListModel::removeBook(QString fileName, bool deleteFile)
 QStringList BookListModel::knownBookFiles() const
 {
     QStringList files;
-    for(const BookEntry &entry : std::as_const(d->entries)) {
+    for (const BookEntry &entry : std::as_const(d->entries)) {
         files.append(entry.filename);
     }
     return files;

@@ -21,21 +21,22 @@
 
 #include "AcbfDocument.h"
 #include "AcbfBody.h"
-#include "AcbfMetadata.h"
 #include "AcbfBookinfo.h"
 #include "AcbfData.h"
+#include "AcbfDocument.h"
+#include "AcbfMetadata.h"
 #include "AcbfReferences.h"
 #include "AcbfStyleSheet.h"
-#include "AcbfDocument.h"
 
 #include <QXmlStreamReader>
 
-#include <acbf_debug.h>
 #include <QBuffer>
+#include <acbf_debug.h>
 
 using namespace AdvancedComicBookFormat;
 
-class Document::Private {
+class Document::Private
+{
 public:
     Private(Metadata *_metadata, Body *_body, Data *_data, References *_references, StyleSheet *_styleSheet)
         : metaData(_metadata)
@@ -43,15 +44,16 @@ public:
         , data(_data)
         , references(_references)
         , cssStyleSheet(_styleSheet)
-    {}
-    Metadata* const metaData;
-    Body* const body;
-    Data* const data;
-    References* const references;
-    StyleSheet* const cssStyleSheet;
+    {
+    }
+    Metadata *const metaData;
+    Body *const body;
+    Data *const data;
+    References *const references;
+    StyleSheet *const cssStyleSheet;
 };
 
-Document::Document(QObject* parent)
+Document::Document(QObject *parent)
     : QObject(parent)
     , d(new Private(new Metadata(this), new Body(this), new Data(this), new References(this), new StyleSheet(this)))
 {
@@ -83,57 +85,42 @@ QString Document::toXml()
 bool Document::fromXml(QString xmlDocument)
 {
     QXmlStreamReader xmlReader(xmlDocument);
-    if(xmlReader.readNextStartElement())
-    {
-        if(xmlReader.name() == QStringLiteral("ACBF")
+    if (xmlReader.readNextStartElement()) {
+        if (xmlReader.name() == QStringLiteral("ACBF")
             && (xmlReader.namespaceUri().startsWith(QStringLiteral("http://www.fictionbook-lib.org/xml/acbf/"))
-                || xmlReader.namespaceUri().startsWith(QStringLiteral("http://www.acbf.info/xml/acbf/"))
-            ))
-        {
-            while(xmlReader.readNextStartElement())
-            {
-                if(xmlReader.name() == QStringLiteral("meta-data"))
-                {
-                    if(!d->metaData->fromXml(&xmlReader, xmlDocument)) {
+                || xmlReader.namespaceUri().startsWith(QStringLiteral("http://www.acbf.info/xml/acbf/")))) {
+            while (xmlReader.readNextStartElement()) {
+                if (xmlReader.name() == QStringLiteral("meta-data")) {
+                    if (!d->metaData->fromXml(&xmlReader, xmlDocument)) {
                         break;
                     }
-                }
-                else if(xmlReader.name() == QStringLiteral("body"))
-                {
-                    if(!d->body->fromXml(&xmlReader, xmlDocument)) {
+                } else if (xmlReader.name() == QStringLiteral("body")) {
+                    if (!d->body->fromXml(&xmlReader, xmlDocument)) {
                         break;
                     }
-                }
-                else if(xmlReader.name() == QStringLiteral("data"))
-                {
-                    if(!d->data->fromXml(&xmlReader)) {
+                } else if (xmlReader.name() == QStringLiteral("data")) {
+                    if (!d->data->fromXml(&xmlReader)) {
                         break;
                     }
-                }
-                else if(xmlReader.name() == QStringLiteral("references"))
-                {
-                    if(!d->references->fromXml(&xmlReader, xmlDocument)) {
+                } else if (xmlReader.name() == QStringLiteral("references")) {
+                    if (!d->references->fromXml(&xmlReader, xmlDocument)) {
                         break;
                     }
-                }
-                else if(xmlReader.name() == QStringLiteral("style"))
-                {
-                    if(!d->cssStyleSheet->fromXml(&xmlReader, xmlDocument)) {
+                } else if (xmlReader.name() == QStringLiteral("style")) {
+                    if (!d->cssStyleSheet->fromXml(&xmlReader, xmlDocument)) {
                         break;
                     }
-                }
-                else
-                {
+                } else {
                     qCWarning(ACBF_LOG) << Q_FUNC_INFO << "currently unsupported subsection:" << xmlReader.name();
                     xmlReader.skipCurrentElement();
                 }
             }
             // Ensure that all the internal forward references are up to date, by running through all the paragraphs in all the places
             // That is, run through all objects, check if they're referenceable, and update their forward references if they are
-            std::function<void(const QObject* parent)> updateAllForwardReferences;
+            std::function<void(const QObject *parent)> updateAllForwardReferences;
             updateAllForwardReferences = [&updateAllForwardReferences](const QObject *parent) {
                 for (QObject *child : parent->children()) {
-                    InternalReferenceObject* refObj = qobject_cast<InternalReferenceObject*>(child);
+                    InternalReferenceObject *refObj = qobject_cast<InternalReferenceObject *>(child);
                     if (refObj) {
                         refObj->updateForwardReferences();
                     }
@@ -141,58 +128,58 @@ bool Document::fromXml(QString xmlDocument)
                 }
             };
             updateAllForwardReferences(this);
-        }
-        else {
+        } else {
             qCWarning(ACBF_LOG) << Q_FUNC_INFO << "not an ACBF XML document";
             return false;
         }
     }
     if (xmlReader.hasError()) {
-        qCWarning(ACBF_LOG) << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader.name() << "(" << xmlReader.lineNumber() << ":" << xmlReader.columnNumber() << ") The reported error was:" << xmlReader.errorString();
+        qCWarning(ACBF_LOG) << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader.name() << "(" << xmlReader.lineNumber() << ":"
+                            << xmlReader.columnNumber() << ") The reported error was:" << xmlReader.errorString();
     }
     qCDebug(ACBF_LOG) << Q_FUNC_INFO << "Completed ACBF document creation for" << d->metaData->bookInfo()->title();
     return !xmlReader.hasError();
 }
 
-Metadata * Document::metaData() const
+Metadata *Document::metaData() const
 {
     return d->metaData;
 }
 
-Body * Document::body() const
+Body *Document::body() const
 {
     return d->body;
 }
 
-Data * Document::data() const
+Data *Document::data() const
 {
     return d->data;
 }
 
-References * Document::references() const
+References *Document::references() const
 {
     return d->references;
 }
 
-StyleSheet * Document::styleSheet() const
+StyleSheet *Document::styleSheet() const
 {
     return d->cssStyleSheet;
 }
 
-QObject * Document::objectByID(const QString& id) const
+QObject *Document::objectByID(const QString &id) const
 {
-    QObject* obj{nullptr};
+    QObject *obj{nullptr};
     // We could introspect for id here, but that would be much more expensive, so let's not
-    for (QObject* child : d->references->references()) {
-        Reference* ref = qobject_cast<Reference*>(child);
+    for (QObject *child : d->references->references()) {
+        Reference *ref = qobject_cast<Reference *>(child);
         if (ref->id() == id) {
             obj = child;
             break;
         }
     }
     if (!obj) {
-        for (QObject* child : d->data->binaries()) {
-            Binary* ref = qobject_cast<Binary*>(child);
+        for (QObject *child : d->data->binaries()) {
+            Binary *ref = qobject_cast<Binary *>(child);
             if (ref->id() == id) {
                 obj = child;
                 break;

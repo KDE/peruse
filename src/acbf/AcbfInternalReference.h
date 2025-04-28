@@ -22,8 +22,8 @@
 #ifndef ACBFINTERNALREFERENCE_H
 #define ACBFINTERNALREFERENCE_H
 
-#include <memory>
 #include <QObject>
+#include <memory>
 
 #include <AcbfInternalReferenceObject.h>
 
@@ -45,7 +45,7 @@ class ACBF_EXPORT InternalReference : public QObject
      * The top level origin of the link (this will either be a Reference or a TextArea).
      * To determine the granular location, use the paragraph and character properties.
      */
-    Q_PROPERTY(QObject* from READ from CONSTANT)
+    Q_PROPERTY(QObject *from READ from CONSTANT)
     /**
      * The index of the paragraph in the origin where the link can be found.
      */
@@ -59,15 +59,16 @@ class ACBF_EXPORT InternalReference : public QObject
     /**
      * The destination for the reference (this will be either a Reference or a TextArea).
      */
-    Q_PROPERTY(QObject* to READ to CONSTANT)
+    Q_PROPERTY(QObject *to READ to CONSTANT)
 public:
-    explicit InternalReference(InternalReferenceObject* from, int paragraph, int character, InternalReferenceObject* to, QObject* parent = nullptr);
+    explicit InternalReference(InternalReferenceObject *from, int paragraph, int character, InternalReferenceObject *to, QObject *parent = nullptr);
     virtual ~InternalReference();
 
-    QObject* from() const;
+    QObject *from() const;
     int paragraph() const;
     int character() const;
-    QObject* to() const;
+    QObject *to() const;
+
 private:
     class Private;
     std::unique_ptr<Private> d;
@@ -75,4 +76,4 @@ private:
 
 };
 
-#endif//ACBFINTERNALREFERENCE_H
+#endif // ACBFINTERNALREFERENCE_H

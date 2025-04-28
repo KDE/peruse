@@ -27,7 +27,6 @@
 #include "PDFCoverImageProvider.h"
 #endif
 
-
 #include <QQmlEngine>
 #include <QtQml/qqml.h>
 

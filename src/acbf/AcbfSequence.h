@@ -27,10 +27,10 @@
 #include "AcbfBookinfo.h"
 /**
  * \brief Class to handle the sequence information.
- * 
+ *
  * A comic book can be part of several collections or series.
  * ACBF can handle multiple sequences, with numbers and volumes.
- * 
+ *
  */
 namespace AdvancedComicBookFormat
 {
@@ -41,13 +41,13 @@ class ACBF_EXPORT Sequence : public QObject
     Q_PROPERTY(int volume READ volume WRITE setVolume NOTIFY volumeChanged)
     Q_PROPERTY(int number READ number WRITE setNumber NOTIFY numberChanged)
 public:
-    explicit Sequence(BookInfo * parent = nullptr);
+    explicit Sequence(BookInfo *parent = nullptr);
     ~Sequence() override;
 
     /**
      * \brief Write the sequence into the xml writer.
      */
-    void toXml(QXmlStreamWriter* writer);
+    void toXml(QXmlStreamWriter *writer);
     /**
      * \brief load the sequence element into this object.
      * @return True if the xmlReader encountered no errors.
@@ -62,7 +62,7 @@ public:
      * \brief set the name of the sequence.
      * @param title - the name of the sequence as a QString.
      */
-    void setTitle(const QString& title);
+    void setTitle(const QString &title);
 
     Q_SIGNAL void titleChanged();
 
@@ -91,10 +91,11 @@ public:
     void setNumber(int number);
 
     Q_SIGNAL void numberChanged();
+
 private:
     class Private;
     std::unique_ptr<Private> d;
 };
 }
 
-#endif//ACBFSEQUENCE_H
+#endif // ACBFSEQUENCE_H

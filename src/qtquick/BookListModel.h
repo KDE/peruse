@@ -28,18 +28,18 @@
 
 /**
  * \brief Main catalogue model class.
- * 
+ *
  * BookListModel extends CategoryEntriesModel, and is the main model that
  * handles book entries and the different categories that books can be in.
- * 
+ *
  * It also extends QQmlParseStatus to ensure that the loading the cache of
  * books is postponed until the application UI has been painted at least once.
- * 
+ *
  * BookListModel keeps track of which books there are, how they can be sorted
  * and how far the reader is in reading a specific book.
- * 
+ *
  * It caches its entries in the BookDataBase.
- * 
+ *
  * ContentModel is the model used to enable searching the collection, it is
  * typically a ContentList.
  */
@@ -55,35 +55,35 @@ class BookListModel : public CategoryEntriesModel, public QQmlParserStatus
     /**
      * \brief The content model is an abstract list model that holds data to search through.
      */
-    Q_PROPERTY(QObject* contentModel READ contentModel WRITE setContentModel NOTIFY contentModelChanged)
+    Q_PROPERTY(QObject *contentModel READ contentModel WRITE setContentModel NOTIFY contentModelChanged)
     /**
      * \brief The "newly added" category entries model manages the newly added entries.
      */
-    Q_PROPERTY(QObject* newlyAddedCategoryModel READ newlyAddedCategoryModel NOTIFY newlyAddedCategoryModelChanged)
+    Q_PROPERTY(QObject *newlyAddedCategoryModel READ newlyAddedCategoryModel NOTIFY newlyAddedCategoryModelChanged)
     /**
      * \brief The "title" category entries model manages the sorting of entries by title.
      */
-    Q_PROPERTY(QObject* titleCategoryModel READ titleCategoryModel NOTIFY titleCategoryModelChanged)
+    Q_PROPERTY(QObject *titleCategoryModel READ titleCategoryModel NOTIFY titleCategoryModelChanged)
     /**
      * \brief The "author" category entries model manages the sorting of entries by author.
      */
-    Q_PROPERTY(QObject* authorCategoryModel READ authorCategoryModel NOTIFY authorCategoryModelChanged)
+    Q_PROPERTY(QObject *authorCategoryModel READ authorCategoryModel NOTIFY authorCategoryModelChanged)
     /**
      * \brief The "series" category entries model managed the sorting of entry by series.
      */
-    Q_PROPERTY(QObject* seriesCategoryModel READ seriesCategoryModel NOTIFY seriesCategoryModelChanged)
+    Q_PROPERTY(QObject *seriesCategoryModel READ seriesCategoryModel NOTIFY seriesCategoryModelChanged)
     /**
      * \brief The "publisher" category entries model managed the sorting of entry by publisher.
      */
-    Q_PROPERTY(QObject* publisherCategoryModel READ publisherCategoryModel NOTIFY publisherCategoryModelChanged)
+    Q_PROPERTY(QObject *publisherCategoryModel READ publisherCategoryModel NOTIFY publisherCategoryModelChanged)
     /**
      * \brief The "keyword" category entries model managed the sorting of entry by keyword.
      */
-    Q_PROPERTY(QObject* keywordCategoryModel READ keywordCategoryModel NOTIFY keywordCategoryModelChanged)
+    Q_PROPERTY(QObject *keywordCategoryModel READ keywordCategoryModel NOTIFY keywordCategoryModelChanged)
     /**
      * \brief The "folder" category entries model managed the sorting of entry by file system folder.
      */
-    Q_PROPERTY(QObject* folderCategoryModel READ folderCategoryModel NOTIFY folderCategoryModelChanged)
+    Q_PROPERTY(QObject *folderCategoryModel READ folderCategoryModel NOTIFY folderCategoryModelChanged)
     /**
      * \brief cacheLoaded holds whether the database cache has been loaded..
      */
@@ -91,13 +91,13 @@ class BookListModel : public CategoryEntriesModel, public QQmlParserStatus
     Q_ENUMS(Grouping)
     Q_INTERFACES(QQmlParserStatus)
 public:
-    explicit BookListModel(QObject* parent = nullptr);
+    explicit BookListModel(QObject *parent = nullptr);
     ~BookListModel() override;
 
     /**
      * Inherited from QmlParserStatus, not implemented.
      */
-    void classBegin() override {};
+    void classBegin() override { };
     /**
      * \brief triggers the loading of the cache.
      * Inherited from QmlParserStatus
@@ -119,12 +119,12 @@ public:
     /**
      * @return the contentModel. Used for searching.
      */
-    QObject* contentModel() const;
+    QObject *contentModel() const;
     /**
      * \brief set the ContentModel.
      * @param newModel The new content model.
      */
-    void setContentModel(QObject* newModel);
+    void setContentModel(QObject *newModel);
     /**
      * \brief Fires when the content model has changed.
      */
@@ -142,7 +142,7 @@ public:
     /**
      * @return The categoryEntriesModel that manages the sorting of entries by title.
      */
-    QObject* titleCategoryModel() const;
+    QObject *titleCategoryModel() const;
     /**
      * \brief Fires when the titleCategoryModel has changed or finished initializing.
      */
@@ -151,7 +151,7 @@ public:
     /**
      * @return The categoryEntriesModel that manages the recently added entries.
      */
-    QObject* newlyAddedCategoryModel() const;
+    QObject *newlyAddedCategoryModel() const;
     /**
      * \brief Fires when the newlyAddedCategoryModel has changed or finished initializing.
      */
@@ -160,7 +160,7 @@ public:
     /**
      * @return The categoryEntriesModel that manages the sorting of entries by author.
      */
-    QObject* authorCategoryModel() const;
+    QObject *authorCategoryModel() const;
     /**
      * \brief Fires when the authorCategoryModel has changed or finished initializing.
      */
@@ -169,17 +169,17 @@ public:
     /**
      * @return The categoryEntriesModel that manages the sorting of entries by series.
      */
-    QObject* seriesCategoryModel() const;
+    QObject *seriesCategoryModel() const;
     /**
      * \brief Fires when the seriesCategoryModel has changed or finished initializing.
      */
     Q_SIGNAL void seriesCategoryModelChanged();
-    
+
     /**
      * Returns the leaf model representing the series the entry with the passed URL is a part of
      * Base assumption: A book is only part of one series. This is not always true, but not sure how
      * to sensibly represent that.
-     * 
+     *
      * @param fileName the File Name of the entry to get the series of.
      */
     Q_INVOKABLE CategoryEntriesModel *seriesModelForEntry(const QString &fileName);
@@ -187,7 +187,7 @@ public:
     /**
      * @return The categoryEntriesModel that manages the sorting of entries by publisher.
      */
-    QObject* publisherCategoryModel() const;
+    QObject *publisherCategoryModel() const;
     /**
      * \brief Fires when the publisherCategoryModel has changed or finished initializing.
      */
@@ -195,7 +195,7 @@ public:
     /**
      * @return The categoryEntriesModel that manages the sorting of entries by keywords, names and genres.
      */
-    QObject* keywordCategoryModel() const;
+    QObject *keywordCategoryModel() const;
     /**
      * \brief Fires when the keywordCategoryModel has changed or finished initializing.
      */
@@ -203,7 +203,7 @@ public:
     /**
      * @return The categoryEntriesModel that manages the sorting of entries by folder.
      */
-    QObject* folderCategoryModel() const;
+    QObject *folderCategoryModel() const;
     /**
      * \brief Fires when the folderCategoryModel has changed or finished initializing.
      */
@@ -220,9 +220,9 @@ public:
 
     /**
      * \brief Update the data of a book at runtime
-     * 
+     *
      * This is used in to update totalPages and currentPage.
-     * 
+     *
      * @param fileName The filename to update the page for.
      * @param property The property to update, can be "currentPage" or
      * "totalPages".
@@ -242,11 +242,12 @@ public:
      * @returns a QStringList with paths to known books.
      */
     Q_INVOKABLE QStringList knownBookFiles() const;
+
 private:
     class Private;
-    Private* d;
+    Private *d;
 
-    Q_SLOT void contentModelItemsInserted(QModelIndex index,int first, int last);
+    Q_SLOT void contentModelItemsInserted(QModelIndex index, int first, int last);
 };
 
-#endif//BOOKLISTMODEL_H
+#endif // BOOKLISTMODEL_H

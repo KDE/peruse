@@ -33,7 +33,9 @@ using namespace AdvancedComicBookFormat;
 class PublishInfo::Private
 {
 public:
-    Private() {}
+    Private()
+    {
+    }
     QString publisher;
     QDate publishDate;
     QString city;
@@ -41,11 +43,11 @@ public:
     QString license;
 };
 
-PublishInfo::PublishInfo(Metadata* parent)
+PublishInfo::PublishInfo(Metadata *parent)
     : QObject(parent)
     , d(new Private)
 {
-    static const int typeId = qRegisterMetaType<PublishInfo*>("PublishInfo*");
+    static const int typeId = qRegisterMetaType<PublishInfo *>("PublishInfo*");
     Q_UNUSED(typeId);
 }
 
@@ -81,43 +83,32 @@ void PublishInfo::toXml(QXmlStreamWriter *writer)
 
 bool PublishInfo::fromXml(QXmlStreamReader *xmlReader)
 {
-    while(xmlReader->readNextStartElement())
-    {
-        if(xmlReader->name() == QStringLiteral("publisher"))
-        {
+    while (xmlReader->readNextStartElement()) {
+        if (xmlReader->name() == QStringLiteral("publisher")) {
             setPublisher(xmlReader->readElementText());
-        }
-        else if(xmlReader->name() == QStringLiteral("publish-date"))
-        {
+        } else if (xmlReader->name() == QStringLiteral("publish-date")) {
             QString date = xmlReader->attributes().value(QStringLiteral("value")).toString();
-            if(date.isEmpty() || !QDate::fromString(date, Qt::ISODate).isValid()) {
+            if (date.isEmpty() || !QDate::fromString(date, Qt::ISODate).isValid()) {
                 date = xmlReader->readElementText();
                 setPublishDate(QDate::fromString(date));
             } else {
                 setPublishDate(QDate::fromString(date, Qt::ISODate));
                 xmlReader->skipCurrentElement();
             }
-        }
-        else if(xmlReader->name() == QStringLiteral("city"))
-        {
+        } else if (xmlReader->name() == QStringLiteral("city")) {
             setCity(xmlReader->readElementText());
-        }
-        else if(xmlReader->name() == QStringLiteral("isbn"))
-        {
+        } else if (xmlReader->name() == QStringLiteral("isbn")) {
             setIsbn(xmlReader->readElementText());
-        }
-        else if(xmlReader->name() == QStringLiteral("license"))
-        {
+        } else if (xmlReader->name() == QStringLiteral("license")) {
             setLicense(xmlReader->readElementText());
-        }
-        else
-        {
+        } else {
             qCWarning(ACBF_LOG) << Q_FUNC_INFO << "currently unsupported subsection:" << xmlReader->name();
             xmlReader->skipCurrentElement();
         }
     }
     if (xmlReader->hasError()) {
-        qCWarning(ACBF_LOG) << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader->name() << "(" << xmlReader->lineNumber() << ":" << xmlReader->columnNumber() << ") The reported error was:" << xmlReader->errorString();
+        qCWarning(ACBF_LOG) << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader->name() << "(" << xmlReader->lineNumber() << ":"
+                            << xmlReader->columnNumber() << ") The reported error was:" << xmlReader->errorString();
     }
     qCDebug(ACBF_LOG) << Q_FUNC_INFO << "Created publisher information for" << publisher();
     return !xmlReader->hasError();
@@ -128,7 +119,7 @@ QString PublishInfo::publisher() const
     return d->publisher;
 }
 
-void PublishInfo::setPublisher(const QString& publisher)
+void PublishInfo::setPublisher(const QString &publisher)
 {
     d->publisher = publisher;
     emit publisherChanged();
@@ -143,7 +134,7 @@ QDate PublishInfo::publishDate() const
     }
 }
 
-void PublishInfo::setPublishDate(const QDate& publishDate)
+void PublishInfo::setPublishDate(const QDate &publishDate)
 {
     d->publishDate = publishDate;
     emit publishDateChanged();
@@ -160,7 +151,7 @@ QString PublishInfo::city() const
     return d->city;
 }
 
-void PublishInfo::setCity(const QString& city)
+void PublishInfo::setCity(const QString &city)
 {
     d->city = city;
     emit cityChanged();
@@ -171,7 +162,7 @@ QString PublishInfo::isbn() const
     return d->isbn;
 }
 
-void PublishInfo::setIsbn(const QString& isbn)
+void PublishInfo::setIsbn(const QString &isbn)
 {
     d->isbn = isbn;
     emit isbnChanged();
@@ -182,7 +173,7 @@ QString PublishInfo::license() const
     return d->license;
 }
 
-void PublishInfo::setLicense(const QString& license)
+void PublishInfo::setLicense(const QString &license)
 {
     d->license = license;
     emit licenseChanged();

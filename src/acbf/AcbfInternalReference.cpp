@@ -25,14 +25,16 @@ using namespace AdvancedComicBookFormat;
 class InternalReference::Private
 {
 public:
-    Private() {}
-    InternalReferenceObject* from;
+    Private()
+    {
+    }
+    InternalReferenceObject *from;
     int paragraph;
     int character;
-    InternalReferenceObject* to;
+    InternalReferenceObject *to;
 };
 
-InternalReference::InternalReference(InternalReferenceObject* from, int paragraph, int character, InternalReferenceObject* to, QObject* parent)
+InternalReference::InternalReference(InternalReferenceObject *from, int paragraph, int character, InternalReferenceObject *to, QObject *parent)
     : QObject(parent)
     , d(new Private)
 {
@@ -44,7 +46,7 @@ InternalReference::InternalReference(InternalReferenceObject* from, int paragrap
 
 InternalReference::~InternalReference() = default;
 
-QObject* InternalReference::from() const
+QObject *InternalReference::from() const
 {
     return d->from;
 }
@@ -59,7 +61,7 @@ int InternalReference::character() const
     return d->character;
 }
 
-QObject* InternalReference::to() const
+QObject *InternalReference::to() const
 {
     return d->to;
 }

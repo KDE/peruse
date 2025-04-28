@@ -55,7 +55,7 @@ class TextViewerItem : public QQuickItem
      * The style which should be used to render the text in this item. This must be
      * an instance of AdvancedComicBookFormat::Style.
      */
-    Q_PROPERTY(QObject* style READ style WRITE setStyle NOTIFY styleChanged)
+    Q_PROPERTY(QObject *style READ style WRITE setStyle NOTIFY styleChanged)
     /**
      * The specific font family to be used for the text. This is expected to exist on the system
      * and works best in conjunction with the ArchiveBookModel::fontFamilyName(QString) function.
@@ -75,27 +75,27 @@ public:
     virtual ~TextViewerItem();
 
     QStringList paragraphs() const;
-    void setParagraphs(const QStringList& newParagraphs);
+    void setParagraphs(const QStringList &newParagraphs);
     Q_SIGNAL void paragraphsChanged();
 
     QVariantList shape() const;
-    void setShape(const QVariantList& newShape);
+    void setShape(const QVariantList &newShape);
     Q_SIGNAL void shapeChanged();
 
     QPoint shapeOffset() const;
-    void setShapeOffset(const QPoint& newShapeOffset);
+    void setShapeOffset(const QPoint &newShapeOffset);
     Q_SIGNAL void shapeOffsetChanged();
 
     double shapeMultiplier() const;
     void setShapeMultiplier(double newShapeMultiplier);
     Q_SIGNAL void shapeMultiplierChanged();
 
-    QObject* style() const;
-    void setStyle(QObject* newStyle);
+    QObject *style() const;
+    void setStyle(QObject *newStyle);
     Q_SIGNAL void styleChanged();
 
     QString fontFamily() const;
-    void setFontFamily(const QString& newFontFamily);
+    void setFontFamily(const QString &newFontFamily);
     Q_SIGNAL void fontFamilyChanged();
 
     QVariantList linkRects() const;
@@ -103,20 +103,21 @@ public:
 
     QString hoveredLink() const;
     Q_SIGNAL void hoveredLinkChanged();
-    Q_SIGNAL void linkHovered(const QString& link);
-    Q_SIGNAL void linkActivated(const QString& link);
+    Q_SIGNAL void linkHovered(const QString &link);
+    Q_SIGNAL void linkActivated(const QString &link);
+
 protected:
     void updatePolish() override;
     QSGNode *updatePaintNode(QSGNode *, UpdatePaintNodeData *) override;
     void geometryChange(const QRectF &newGeometry, const QRectF &oldGeometry) override;
-    void hoverMoveEvent(QHoverEvent* event) override;
-    void hoverLeaveEvent(QHoverEvent* event) override;
+    void hoverMoveEvent(QHoverEvent *event) override;
+    void hoverLeaveEvent(QHoverEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
-    void mouseReleaseEvent(QMouseEvent * event) override;
+    void mouseReleaseEvent(QMouseEvent *event) override;
 
 private:
     class Private;
-    Private* d;
+    Private *d;
 };
 
 #endif

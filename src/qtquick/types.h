@@ -7,9 +7,9 @@
 #include <qqmlregistration.h>
 
 #include "AcbfBinary.h"
+#include "AcbfIdentifiedObjectModel.h"
 #include "AcbfReference.h"
 #include "AcbfStyle.h"
-#include "AcbfIdentifiedObjectModel.h"
 
 class IdentifiedObjectModelForeign : public QObject
 {
@@ -41,4 +41,3 @@ class StyleForeign : public QObject
     QML_NAMED_ELEMENT(Style);
     QML_UNCREATABLE("Don't attempt to create ACBF types directly, use the convenience functions on their container types for creating them")
 };
-

@@ -27,11 +27,11 @@
 #include "AcbfBookinfo.h"
 /**
  * \brief Class to handle the content rating of the work.
- * 
+ *
  * Because there are multiple ContentRating systems over various
  * countries, ACBF can handle multiple content rating objects, and
  * has entries for handling which system said rating is in.
- * 
+ *
  * This is used in the BookInfo object.
  */
 namespace AdvancedComicBookFormat
@@ -42,13 +42,13 @@ class ACBF_EXPORT ContentRating : public QObject
     Q_PROPERTY(QString rating READ rating WRITE setRating NOTIFY ratingChanged)
     Q_PROPERTY(QString type READ type WRITE setType NOTIFY typeChanged)
 public:
-    explicit ContentRating(BookInfo* parent = nullptr);
+    explicit ContentRating(BookInfo *parent = nullptr);
     ~ContentRating() override;
 
     /**
      * \brief write this content rating to the xml writer.
      */
-    void toXml(QXmlStreamWriter* writer);
+    void toXml(QXmlStreamWriter *writer);
     /**
      * \brief load a content-rating section from the xml into this object.
      * @return True if the xmlReader encountered no errors.
@@ -63,7 +63,7 @@ public:
      * \brief set the system that defines this rating.
      * @param type - the name of the system.
      */
-    Q_INVOKABLE void setType(const QString& type);
+    Q_INVOKABLE void setType(const QString &type);
     /**
      * @brief fires when the type changes.
      */
@@ -77,15 +77,16 @@ public:
      * \brief set the rating.
      * @param rating - the name of the rating label as a QString.
      */
-    Q_INVOKABLE void setRating(const QString& rating);
+    Q_INVOKABLE void setRating(const QString &rating);
     /**
      * @brief fires when the rating changes.
      */
     Q_SIGNAL void ratingChanged();
+
 private:
     class Private;
     std::unique_ptr<Private> d;
 };
 }
 
-#endif//ACBFCONTENTRATING_H
+#endif // ACBFCONTENTRATING_H

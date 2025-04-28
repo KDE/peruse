@@ -27,17 +27,17 @@
 struct BookEntry;
 /**
  * \brief A Class to hold a cache of known books to reduce the amount of time spent indexing.
- * 
+ *
  * BookDatabase handles holding the conversion between SQL entry and
  * BookEntry structs.
- * 
+ *
  * The BookEntry struct is defined in CategoryEntriesModel.
  */
 class BookDatabase : public QObject
 {
     Q_OBJECT
 public:
-    explicit BookDatabase(QObject* parent = nullptr);
+    explicit BookDatabase(QObject *parent = nullptr);
     ~BookDatabase() override;
 
     /**
@@ -61,9 +61,10 @@ public:
      * @param value a QVariant with the value.
      */
     void updateEntry(QString fileName, QString property, QVariant value);
+
 private:
     class Private;
-    Private* d;
+    Private *d;
 };
 
-#endif//BOOKDATABASE_H
+#endif // BOOKDATABASE_H

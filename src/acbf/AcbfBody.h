@@ -33,11 +33,11 @@ class QXmlStreamWriter;
 class QXmlStreamReader;
 /**
  * \brief Class to handle the body section of ACBF.
- * 
+ *
  * ACBF's body section holds all the pages. Beyond that,
  * it has a bgcolor. The presence of the body section
  * is mandatory.
- * 
+ *
  * This class can load and save the body section.
  * It also holds the page objects and allows
  * ordering/adding/removing them.
@@ -52,35 +52,35 @@ class ACBF_EXPORT Body : public QObject
     Q_PROPERTY(QString bgcolor READ bgcolor WRITE setBgcolor NOTIFY bgcolorChanged)
     Q_PROPERTY(int pageCount READ pageCount NOTIFY pageCountChanged)
 public:
-    explicit Body(Document* parent = nullptr);
+    explicit Body(Document *parent = nullptr);
     ~Body();
 
-    Document* document() const;
+    Document *document() const;
 
     /**
      * \brief write body data into the XMLWriter.
      */
     void toXml(QXmlStreamWriter *writer);
-    
+
     /**
      * \brief Load data from the xml into this body object.
      * @return True if the xmlReader encountered no errors.
      */
-    bool fromXml(QXmlStreamReader *xmlReader, const QString& xmlData);
+    bool fromXml(QXmlStreamReader *xmlReader, const QString &xmlData);
 
     /**
      * @return the background color as a QString.
-     * 
+     *
      * It should be an 8bit per channel rgb hexcode.
      */
     QString bgcolor() const;
-    
+
     /**
      * \brief set the background color.
-     * 
+     *
      * @param newColor - a String with an 8bit per channel rgb hexcode (#ff00ff, or the like)
      */
-    void setBgcolor(const QString& newColor);
+    void setBgcolor(const QString &newColor);
     /**
      * @brief fires when the background color changes.
      */
@@ -89,44 +89,44 @@ public:
     /**
      * @return a QList of all the pages stored currently.
      */
-    QList<Page*> pages() const;
+    QList<Page *> pages() const;
 
     /**
      * @brief Fires when a new page is added to the list of pages
      * @param The newly added page
      */
-    Q_SIGNAL void pageAdded(Page* newPage);
+    Q_SIGNAL void pageAdded(Page *newPage);
 
     /**
      * @param index - the index of the page.
      * @return the page object at the given index.
      */
-    Q_INVOKABLE Page* page(int index) const;
+    Q_INVOKABLE Page *page(int index) const;
 
     /**
      * @param page - The page for which to return the index.
      * @return index of the page given, will return -1 if the page isn't in this document.
      */
-    int pageIndex(Page* page) const;
+    int pageIndex(Page *page) const;
 
     /**
      * Add a page to the list, optionally at a specified position in the list
      * @param page The page to add to the list
      * @param index The position at which to insert the page (if -1, the page will be appended)
      */
-    void addPage(Page* page, int index = -1);
+    void addPage(Page *page, int index = -1);
 
     /**
      * \brief remove the given page object from this body.
      * @param page - the page to remove.
      */
-    void removePage(Page* page);
+    void removePage(Page *page);
     /**
      * \brief Swap two pages in the list.
      * @param swapThis - the first page to swap.
      * @param withThis - the second page to swap.
      */
-    bool swapPages(Page* swapThis, Page* withThis);
+    bool swapPages(Page *swapThis, Page *withThis);
     /**
      * @brief pageCount
      * @return
@@ -143,4 +143,4 @@ private:
 };
 }
 
-#endif//ACBFBODY_H
+#endif // ACBFBODY_H

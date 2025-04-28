@@ -20,11 +20,11 @@
  */
 
 #include "FolderBookModel.h"
-#include <QMimeDatabase>
-#include <QDir>
 #include <KFileMetaData/UserMetaData>
+#include <QDir>
+#include <QMimeDatabase>
 
-FolderBookModel::FolderBookModel(QObject* parent)
+FolderBookModel::FolderBookModel(QObject *parent)
     : BookModel(parent)
 {
 }
@@ -41,25 +41,23 @@ void FolderBookModel::setFilename(QString newFilename)
     QMimeDatabase mimeDb;
     QString mimeType = mimeDb.mimeTypeForFile(newFilename).name();
     QString currentPageFile;
-    if(mimeType == "image/jpeg" || mimeType == "image/png") {
+    if (mimeType == "image/jpeg" || mimeType == "image/png") {
         QFileInfo file(newFilename);
         newFilename = file.absolutePath();
         currentPageFile = file.fileName();
     }
 
     QDir dir(newFilename);
-    if(dir.exists())
-    {
+    if (dir.exists()) {
         QFileInfoList entries = dir.entryInfoList(QDir::Files, QDir::Name);
         QLatin1String undesired("thumbs.db");
         int i = 0;
-        for(const QFileInfo& entry : std::as_const(entries))
-        {
-            if(entry.fileName().toLower() == undesired) {
+        for (const QFileInfo &entry : std::as_const(entries)) {
+            if (entry.fileName().toLower() == undesired) {
                 continue;
             }
             addPage(QString("file://").append(entry.canonicalFilePath()), entry.fileName());
-            if(currentPageFile == entry.fileName()) {
+            if (currentPageFile == entry.fileName()) {
                 BookModel::setCurrentPage(i, false);
             }
             ++i;
@@ -73,10 +71,9 @@ void FolderBookModel::setFilename(QString newFilename)
     // than the directory (because it makes for much simpler code), so reset rather than
     // doing other magic.
     KFileMetaData::UserMetaData data(filename());
-    if(data.hasAttribute("peruse.currentPage"))
+    if (data.hasAttribute("peruse.currentPage"))
         BookModel::setCurrentPage(data.attribute("peruse.currentPage").toInt(), false);
 
     emit loadingCompleted(true);
     setProcessing(false);
 }
-

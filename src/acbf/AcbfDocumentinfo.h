@@ -31,11 +31,11 @@
 
 /**
  * \brief Class to handle the DocumentInfo section.
- * 
+ *
  * DocumentInfo, in ACBF is the data about the ACBF file itself.
  * It contains the ACBF author, creation date, original source, version
  * number and a version history.
- * 
+ *
  * Sources is a stringlist, which is useful when the ACBF encompasses several
  * pages of a webcomic, for example.
  */
@@ -55,10 +55,10 @@ class ACBF_EXPORT DocumentInfo : public QObject
     Q_PROPERTY(float version READ version WRITE setVersion NOTIFY versionChanged)
     Q_PROPERTY(QStringList history READ history WRITE setHistory NOTIFY historyChanged)
 public:
-    explicit DocumentInfo(Metadata* parent = nullptr);
+    explicit DocumentInfo(Metadata *parent = nullptr);
     ~DocumentInfo() override;
 
-    Metadata* metadata() const;
+    Metadata *metadata() const;
 
     /**
      * \brief write the documentinfo into the XML writer.
@@ -68,23 +68,23 @@ public:
      * \brief load the DocumentInfo into this object.
      * @return True if the xmlReader encountered no errors.
      */
-    bool fromXml(QXmlStreamReader *xmlReader, const QString& xmlData);
+    bool fromXml(QXmlStreamReader *xmlReader, const QString &xmlData);
 
     /**
      * \brief the list of authors that worked on this specific acbf.
      * @return a list of author objects.
      */
-    QList<Author*> author() const;
+    QList<Author *> author() const;
     /**
      * \brief add an Author object to the list of authors.
      * @param author - an author object.
      */
-    void addAuthor(Author* author);
+    void addAuthor(Author *author);
     /**
      * \brief remove an Author object from the list of authors.
      * @param author - an author object.
      */
-    void removeAuthor(Author* author);
+    void removeAuthor(Author *author);
 
     /**
      * @return The list of authors that worked on this book as
@@ -96,7 +96,7 @@ public:
      * \brief get an author object by index.
      * @param index - the index of the author.
      */
-    Q_INVOKABLE Author* getAuthor(int index) const;
+    Q_INVOKABLE Author *getAuthor(int index) const;
 
     /**
      * \brief add an author to the list.
@@ -110,7 +110,14 @@ public:
      * @param homePages - a homepage url to associate with this author.
      * @param emails - an email address to associate with this author.
      */
-    Q_INVOKABLE void addAuthor(QString activity, QString language, QString firstName, QString middleName, QString lastName, QString nickName, QStringList homePages, QStringList emails);
+    Q_INVOKABLE void addAuthor(QString activity,
+                               QString language,
+                               QString firstName,
+                               QString middleName,
+                               QString lastName,
+                               QString nickName,
+                               QStringList homePages,
+                               QStringList emails);
     /**
      * \brief make changes to an author in the list.
      * @param index - The index of this author in the author list.
@@ -124,7 +131,15 @@ public:
      * @param homePages - a homepage url to associate with this author.
      * @param emails - an email address to associate with this author.
      */
-    Q_INVOKABLE void setAuthor(int index, QString activity, QString language, QString firstName, QString middleName, QString lastName, QString nickName, QStringList homePages, QStringList emails);
+    Q_INVOKABLE void setAuthor(int index,
+                               QString activity,
+                               QString language,
+                               QString firstName,
+                               QString middleName,
+                               QString lastName,
+                               QString nickName,
+                               QStringList homePages,
+                               QStringList emails);
 
     /**
      * \brief remove an author in the list.
@@ -144,17 +159,17 @@ public:
      * \brief set the creation date of this file.
      * @param creationDate - a QDate object holding the creation date.
      */
-    void setCreationDate(const QDate& creationDate);
+    void setCreationDate(const QDate &creationDate);
 
     /**
      * @return a list of sources that this ACBF is an adaptation of.
-     */ 
+     */
     QStringList source() const;
     /**
      * \brief set the list of source that this ACBF is an adaptation of.
      * @param source - a stringlist of sources.
      */
-    void setSource(const QStringList& source);
+    void setSource(const QStringList &source);
 
     /**
      * @brief remove the source  by index.
@@ -174,7 +189,7 @@ public:
      * \brief set the unique ID for this file used for cataloguing purposes.
      * @param id - a unique ID. Can be any kind of string, a UUID is recommended as default.
      */
-    void setId(const QString& id);
+    void setId(const QString &id);
 
     /**
      * @return the version of this document as a float.
@@ -184,7 +199,7 @@ public:
      * \brief set the version of this document
      * @param version - the version as a floating point number.
      */
-    void setVersion(const float& version);
+    void setVersion(const float &version);
     /**
      * @brief fires when the version of the document changes.
      */
@@ -197,12 +212,12 @@ public:
      * \brief set the whole history list as a single stringlist.
      * @param history - the whole history of the document as a stringlist.
      */
-    void setHistory(const QStringList& history);
+    void setHistory(const QStringList &history);
     /**
      * \brief add a single entry to the document history.
      * @param historyLine - a single entry in the document.
      */
-    void addHistoryLine(const QString& historyLine);
+    void addHistoryLine(const QString &historyLine);
     /**
      * @brief remove the history line by index.
      * @param index - index of the line to remove.
@@ -212,10 +227,11 @@ public:
      * @brief fires when the history stringlist changes.
      */
     Q_SIGNAL void historyChanged();
+
 private:
     class Private;
-    Private* d;
+    Private *d;
 };
 }
 
-#endif//ACBFDOCUMENTINFO_H
+#endif // ACBFDOCUMENTINFO_H

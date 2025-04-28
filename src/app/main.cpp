@@ -17,27 +17,26 @@
  *
  */
 
-
 #include <KAboutData>
 #include <KLocalizedString>
 #include <KQuickIconProvider>
 
-#include <QStandardPaths>
-#include <QDir>
-#include <QQmlContext>
 #include <QApplication>
-#include <QCommandLineParser>
 #include <QCommandLineOption>
+#include <QCommandLineParser>
+#include <QDir>
 #include <QIcon>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
+#include <QStandardPaths>
 
-#include "peruse_helpers.h"
 #include "config-peruse.h"
+#include "peruse_helpers.h"
 
 #include <app_debug.h>
 
 Q_DECL_EXPORT
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
     app.setWindowIcon(QIcon::fromTheme(QStringLiteral("peruse")));
@@ -45,9 +44,17 @@ int main(int argc, char** argv)
     app.setOrganizationDomain("kde.org");
 
     KLocalizedString::setApplicationDomain("peruse");
-    KAboutData about(QStringLiteral("peruse"), i18n("Peruse Reader"), PERUSE_VERSION_STRING, i18n("Comic Book Reader by KDE"),
-                     KAboutLicense::GPL, i18n("© 2016-2021 KDE"));
-    about.addAuthor(i18n("Dan Leinir Turthra Jensen"), QString("Maintainer and Lead Developer"), QStringLiteral("admin@leinir.dk"), QStringLiteral("https://leinir.dk/"), QStringLiteral("leinir"));
+    KAboutData about(QStringLiteral("peruse"),
+                     i18n("Peruse Reader"),
+                     PERUSE_VERSION_STRING,
+                     i18n("Comic Book Reader by KDE"),
+                     KAboutLicense::GPL,
+                     i18n("© 2016-2021 KDE"));
+    about.addAuthor(i18n("Dan Leinir Turthra Jensen"),
+                    QString("Maintainer and Lead Developer"),
+                    QStringLiteral("admin@leinir.dk"),
+                    QStringLiteral("https://leinir.dk/"),
+                    QStringLiteral("leinir"));
     about.setProductName("peruse/peruse");
     about.setProgramLogo(app.windowIcon());
     KAboutData::setApplicationData(about);
@@ -57,7 +64,6 @@ int main(int argc, char** argv)
     parser.addPositionalArgument(QStringLiteral("file"), i18n("Open file in peruse."));
     parser.addHelpOption();
     parser.process(app);
-
 
     QString filename;
     if (parser.positionalArguments().size() > 0) {
@@ -70,15 +76,13 @@ int main(int argc, char** argv)
 
     if (parser.isSet(QStringLiteral("clear-db"))) {
         QString dbfile = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/library.sqlite";
-        if(QFile::exists(dbfile)) {
+        if (QFile::exists(dbfile)) {
             qCDebug(APP_LOG) << "Remove database at" << dbfile;
             QFile::remove(dbfile);
         }
     }
     QString platformEnv(qgetenv("PLASMA_PLATFORM"));
-    QString path = platformEnv.startsWith("phone")
-        ? QStringLiteral("MobileMain")
-        : QStringLiteral("Main");
+    QString path = platformEnv.startsWith("phone") ? QStringLiteral("MobileMain") : QStringLiteral("Main");
 
     QQmlApplicationEngine engine;
     engine.addImageProvider(QStringLiteral("icon"), new KQuickIconProvider);

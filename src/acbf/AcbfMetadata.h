@@ -22,10 +22,10 @@
 #ifndef ACBFMETADATA_H
 #define ACBFMETADATA_H
 
-#include "acbf_export.h"
 #include "AcbfBookinfo.h"
 #include "AcbfDocumentinfo.h"
 #include "AcbfPublishinfo.h"
+#include "acbf_export.h"
 
 #include <QObject>
 
@@ -33,13 +33,13 @@
 
 /**
  * \brief Class to handle the metadata section of ACBF.
- * 
+ *
  * ACBF metadata is split into three sections:
- * 
+ *
  * - Book-info, which handles the metadata about the story.
  * - Publishing-info, which handles the metadata about the publishing.
  * - Document-info, which handles the metadata about this specific ACBF document.
- * 
+ *
  * All three are mandatory.
  */
 class QXmlStreamWriter;
@@ -48,16 +48,17 @@ namespace AdvancedComicBookFormat
 {
 class Document;
 
-class ACBF_EXPORT Metadata : public QObject {
+class ACBF_EXPORT Metadata : public QObject
+{
     Q_OBJECT
-    Q_PROPERTY(AdvancedComicBookFormat::BookInfo* bookInfo READ bookInfo NOTIFY bookInfoChanged)
-    Q_PROPERTY(AdvancedComicBookFormat::PublishInfo* publishInfo READ publishInfo NOTIFY publishInfoChanged)
-    Q_PROPERTY(AdvancedComicBookFormat::DocumentInfo* documentInfo READ documentInfo NOTIFY documentInfoChanged)
+    Q_PROPERTY(AdvancedComicBookFormat::BookInfo *bookInfo READ bookInfo NOTIFY bookInfoChanged)
+    Q_PROPERTY(AdvancedComicBookFormat::PublishInfo *publishInfo READ publishInfo NOTIFY publishInfoChanged)
+    Q_PROPERTY(AdvancedComicBookFormat::DocumentInfo *documentInfo READ documentInfo NOTIFY documentInfoChanged)
 public:
-    explicit Metadata(Document* parent = nullptr);
+    explicit Metadata(Document *parent = nullptr);
     ~Metadata() override;
 
-    Document* document() const;
+    Document *document() const;
 
     /**
      * \brief Write the metadata into the xml writer.
@@ -67,12 +68,12 @@ public:
      * \brief load the metadata element into this object.
      * @return True if the xmlReader encountered no errors.
      */
-    bool fromXml(QXmlStreamReader *xmlReader, const QString& xmlData);
+    bool fromXml(QXmlStreamReader *xmlReader, const QString &xmlData);
 
     /**
      * @return the bookinfo object.
      */
-    BookInfo* bookInfo() const;
+    BookInfo *bookInfo() const;
     /**
      * \brief triggers when the bookinfo is changed.
      */
@@ -80,7 +81,7 @@ public:
     /**
      * @returns the publishinfo object.
      */
-    PublishInfo* publishInfo() const;
+    PublishInfo *publishInfo() const;
     /**
      * @brief fires when the publishing info changes.
      */
@@ -88,17 +89,18 @@ public:
     /**
      * @returns the documentinfo object.
      */
-    DocumentInfo* documentInfo() const;
+    DocumentInfo *documentInfo() const;
     /**
      * @brief fires when the document info changes.
      */
     Q_SIGNAL void documentInfoChanged();
+
 private:
     class Private;
     std::unique_ptr<Private> d;
 };
 }
 
-Q_DECLARE_METATYPE(AdvancedComicBookFormat::Metadata*)
+Q_DECLARE_METATYPE(AdvancedComicBookFormat::Metadata *)
 
-#endif//ACBFMETADATA_H
+#endif // ACBFMETADATA_H

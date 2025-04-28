@@ -32,43 +32,43 @@
 
 /**
  * \brief Class for handling the book metadata.
- * 
+ *
  * ACBF book-info is all the metadata that relates
  * to the story inside.
- * 
+ *
  * This class holds all the authors, titles, languages,
  * summaries, genres, keywords, hashtags and more.
- * 
+ *
  * It also handles adding and removing, as well as storing
  * and reading it from the xml.
- * 
+ *
  * ACBF can hold multiple authors per book. Authors have their own object.
- * 
+ *
  * ACBF can hold titles, annotations(summaries or descriptions) and
  * a list of comma separated keywords in several languages.
- * 
+ *
  * Annotations in particular are a stringlist of paragraphs.
- * 
+ *
  * The library handles retrieving title, keywords and annotation when there is no
  * language defined as follows: It checks if there is an entry for "", if not, tries
  * the entry for the first language object, and if that doesn't work, returns the first
  * value it can find.
- * 
+ *
  * ACBF's language support is further detailed in the Language object.
- * 
+ *
  * ACBF can have multiple genres, but they are limited to a list of keys, given
  * by availableGenres().
  * Genres can also indicate how much they apply on the given story, using
  * a match percentage. This allows noting that a story is 80% romance, and
  * 20% western for example.
- * 
+ *
  * ACBF can also hold character names. Character names are a type of tag, and
  * especially relevant with American style multiverses, but also in Creative
  * Commons stories because the permissive licenses allow for easier reusage of
  * existing characters.
- * 
+ *
  * The coverpage is defined in the book-info as a Page object.
- * 
+ *
  * Finally, ACBF can hold metadata about database references, sequences and
  * content rating. All these too have their own objects.
  */
@@ -96,39 +96,39 @@ class ACBF_EXPORT BookInfo : public QObject
     Q_PROPERTY(int contentRatingCount READ contentRatingCount NOTIFY contentRatingCountChanged)
     Q_PROPERTY(bool rightToLeft READ rightToLeft WRITE setRightToLeft NOTIFY rightToLeftChanged)
 public:
-    explicit BookInfo(Metadata* parent = nullptr);
+    explicit BookInfo(Metadata *parent = nullptr);
     ~BookInfo() override;
 
-    Metadata* metadata();
+    Metadata *metadata();
 
     /**
      * \brief write the whole book-info section to the XML writer.
      */
     void toXml(QXmlStreamWriter *writer);
-    
+
     /**
      * \brief load the whole book-info section from the xml into this object.
      * @return True if the xmlReader encountered no errors.
      */
-    bool fromXml(QXmlStreamReader *xmlReader, const QString& xmlData);
+    bool fromXml(QXmlStreamReader *xmlReader, const QString &xmlData);
 
     /**
      * @return The list of authors that worked on this book as author objects.
      */
-    QList<Author*> author();
-    
+    QList<Author *> author();
+
     /**
      * @return The list of authors that worked on this book as
      * a stringlist of names.
      */
     QStringList authorNames() const;
-    
+
     /**
      * \brief get an author object by index.
      * @param index - the index of the author.
      */
-    Q_INVOKABLE Author* getAuthor(int index) const;
-    
+    Q_INVOKABLE Author *getAuthor(int index) const;
+
     /**
      * \brief add an author to the list.
      * @param activity - the role this author played.
@@ -141,7 +141,14 @@ public:
      * @param homePages - a homepage url to associate with this author.
      * @param emails - an email address to associate with this author.
      */
-    Q_INVOKABLE void addAuthor(QString activity, QString language, QString firstName, QString middleName, QString lastName, QString nickName, QStringList homePages, QStringList emails);
+    Q_INVOKABLE void addAuthor(QString activity,
+                               QString language,
+                               QString firstName,
+                               QString middleName,
+                               QString lastName,
+                               QString nickName,
+                               QStringList homePages,
+                               QStringList emails);
     /**
      * \brief make changes to an author in the list.
      * @param index - The index of this author in the author list.
@@ -155,7 +162,15 @@ public:
      * @param homePages - a homepage url to associate with this author.
      * @param emails - an email address to associate with this author.
      */
-    Q_INVOKABLE void setAuthor(int index, QString activity, QString language, QString firstName, QString middleName, QString lastName, QString nickName, QStringList homePages, QStringList emails);
+    Q_INVOKABLE void setAuthor(int index,
+                               QString activity,
+                               QString language,
+                               QString firstName,
+                               QString middleName,
+                               QString lastName,
+                               QString nickName,
+                               QStringList homePages,
+                               QStringList emails);
     /**
      * \brief remove an author in the list.
      * @param index - the index of the author to remove.
@@ -165,12 +180,12 @@ public:
      * \brief add an author to the list.
      * @param author - the author object to add.
      */
-    void addAuthor(Author* author);
+    void addAuthor(Author *author);
     /**
      * \brief remove an author to the list.
      * @param author - the author object to remove.
      */
-    void removeAuthor(Author* author);
+    void removeAuthor(Author *author);
     /**
      * \brief triggers when the authors list changes.
      */
@@ -199,7 +214,7 @@ public:
      * code format joined by a dash (not an underscore).
      */
     Q_INVOKABLE void setTitle(QString title, QString language = "");
-    
+
     /**
      * \brief triggers when a title is set for any language.
      */
@@ -307,12 +322,12 @@ public:
     /**
      * @return the coverpage as a page object.
      */
-    Q_INVOKABLE Page* coverpage();
+    Q_INVOKABLE Page *coverpage();
     /**
      * \brief set a cover page.
      * @param newCover A page object with the new cover.
      */
-    void setCoverpage(Page* newCover);
+    void setCoverpage(Page *newCover);
 
     /**
      * @return a list of language objects for determining translations.
@@ -326,7 +341,7 @@ public:
      * \brief add a language to the list of translations.
      * @param language - language object to add.
      */
-    void addLanguage(Language* language);
+    void addLanguage(Language *language);
 
     /**
      * @brief languageEntryList
@@ -339,12 +354,12 @@ public:
      * @param language - language for which to add a language object.
      * @param show - whether to set the language object to 'show'.
      */
-    Q_INVOKABLE void addLanguage(QString language="", bool show=false);
+    Q_INVOKABLE void addLanguage(QString language = "", bool show = false);
     /**
      * \brief remove a language from the translations.
      * @param language - language object to remove.
      */
-    void removeLanguage(Language* language);
+    void removeLanguage(Language *language);
     /**
      * @brief removeLanguage
      * @param index
@@ -355,13 +370,13 @@ public:
      * @return a list of sequence objects that describe the series and
      * collections this book is part of.
      */
-    QList<Sequence*> sequence();
+    QList<Sequence *> sequence();
     /**
      * \brief add a sequence object to indicate this book is part of one.
      * @param sequence - the sequence object that describes this book's place in
      * a sequence.
      */
-    void addSequence(Sequence* sequence);
+    void addSequence(Sequence *sequence);
 
     /**
      * @brief add a sequence from basic strings.
@@ -377,7 +392,7 @@ public:
      * @param sequence - the sequence object that describes this book's place in
      * a sequence.
      */
-    void removeSequence(Sequence* sequence);
+    void removeSequence(Sequence *sequence);
 
     /**
      * @brief remove a sequence by index.
@@ -388,7 +403,7 @@ public:
      * @brief get a sequence by index.
      * @param index = index of the sequence to get.
      */
-    Q_INVOKABLE Sequence* sequence(int index) const;
+    Q_INVOKABLE Sequence *sequence(int index) const;
 
     /**
      * @brief get total amount of sequences.
@@ -402,26 +417,26 @@ public:
     /**
      * @returns a list of entries that this book has in various databases.
      */
-    QList<DatabaseRef*> databaseRef();
+    QList<DatabaseRef *> databaseRef();
     /**
      * \brief add a database entry that this book has.
      * @param databaseRef - a databaseRef object describing this work's place
      * in a database.
      */
-    void addDatabaseRef(DatabaseRef* databaseRef);
+    void addDatabaseRef(DatabaseRef *databaseRef);
     /**
      * @brief add a database entry that this book has.
      * @param reference the entry itself.
      * @param dbname the name of the database.
      * @param type the type of entry, optional.
      */
-    Q_INVOKABLE void addDatabaseRef(QString reference, QString dbname, QString type="");
+    Q_INVOKABLE void addDatabaseRef(QString reference, QString dbname, QString type = "");
     /**
      * \brief remove a database entry that this book has.
      * @param databaseRef - a databaseRef object describing this work's place
      * in a database.
      */
-    void removeDatabaseRef(DatabaseRef* databaseRef);
+    void removeDatabaseRef(DatabaseRef *databaseRef);
     /**
      * @brief removeDatabaseRef
      * @param index of the database reference to remove.
@@ -433,7 +448,7 @@ public:
      * @param index - index of the database ref to get.
      * @return databaseTef at index.
      */
-    Q_INVOKABLE DatabaseRef* databaseRef(int index);
+    Q_INVOKABLE DatabaseRef *databaseRef(int index);
     /**
      * @brief databaseRefCount
      * @return amount of database references.
@@ -448,13 +463,13 @@ public:
      * @returns a list of contentRating objects describing the audience for this
      * book.
      */
-    QList<ContentRating*> contentRating();
+    QList<ContentRating *> contentRating();
     /**
      * \brief add a contentRating object to the contentratings.
      * @param contentRating - a contentRating object describing the label and
      * contentrating system.
      */
-    void addContentRating(ContentRating* contentRating);
+    void addContentRating(ContentRating *contentRating);
     /**
      * @brief add a contentRating object to the contentratings.
      * @param rating - The label of the rating.
@@ -466,7 +481,7 @@ public:
      * @param contentRating - a contentRating object describing the label and
      * contentrating system.
      */
-    void removeContentRating(ContentRating* contentRating);
+    void removeContentRating(ContentRating *contentRating);
     /**
      * @brief removeContentRating
      * @param index the entry to remove.
@@ -477,7 +492,7 @@ public:
      * @param index - index of the content rating to get.
      * @return the content rating for the index.
      */
-    Q_INVOKABLE ContentRating* contentRating(int index);
+    Q_INVOKABLE ContentRating *contentRating(int index);
     /**
      * @brief contentRatingCount
      * @return the total amount of content ratings in this book.
@@ -493,22 +508,23 @@ public:
      * @return true when the reading direction is right to left.
      */
     bool rightToLeft() const;
-    
+
     /**
      * @brief set the Reading direction for this comic. This indicates
      * how the UI will lay out the buttons and controls.
      * An ACBF 1.2 feature.
      * @param rtl a boolean indicating whether the reading direction is right to left.
      */
-    void setRightToLeft(const bool& rtl = false);
+    void setRightToLeft(const bool &rtl = false);
     /**
      * @brief fires when right to left changes.
      */
     Q_SIGNAL void rightToLeftChanged();
+
 private:
     class Private;
     std::unique_ptr<Private> d;
 };
 }
 
-#endif//ACBFBOOKINFO_H
+#endif // ACBFBOOKINFO_H

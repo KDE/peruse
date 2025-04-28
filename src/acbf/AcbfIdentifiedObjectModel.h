@@ -27,19 +27,21 @@
 
 #include "acbf_export.h"
 
-namespace AdvancedComicBookFormat {
+namespace AdvancedComicBookFormat
+{
 
 /**
  * \brief A model which exposes all the identified objects (that is, objects with an explicit ID) in a specific AdvancedComicBookFormat::Document
  */
-class ACBF_EXPORT IdentifiedObjectModel : public QAbstractListModel {
+class ACBF_EXPORT IdentifiedObjectModel : public QAbstractListModel
+{
     Q_OBJECT
     /**
      * The AdvancedComicBookFormat::Document instance this model should represent objects of
      */
-    Q_PROPERTY(QObject* document READ document WRITE setDocument NOTIFY documentChanged)
+    Q_PROPERTY(QObject *document READ document WRITE setDocument NOTIFY documentChanged)
 public:
-    explicit IdentifiedObjectModel(QObject* parent = nullptr);
+    explicit IdentifiedObjectModel(QObject *parent = nullptr);
     virtual ~IdentifiedObjectModel();
 
     enum Roles {
@@ -71,15 +73,15 @@ public:
      *
      * @return a QVariant with the requested data, or an invalid variant if no information was available.
      */
-    QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     /**
      * @param parent The QModel index of the parent, not used here.
      * @returns the number of total number of identified objects in this document.
      */
-    int rowCount(const QModelIndex& parent = QModelIndex()) const override;
+    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 
-    QObject* document() const;
-    void setDocument(QObject* document);
+    QObject *document() const;
+    void setDocument(QObject *document);
     Q_SIGNAL void documentChanged();
 
     /**
@@ -88,11 +90,12 @@ public:
      * @param id The ID of the object you wish to get
      * @return Either an object with the given ID, or null if none was found
      */
-    Q_INVOKABLE QObject* objectById(const QString& id);
+    Q_INVOKABLE QObject *objectById(const QString &id);
+
 private:
     class Private;
     std::unique_ptr<Private> d;
 };
 };
 
-#endif//ACBFIDENTIFIEDOBJECTMODEL_H
+#endif // ACBFIDENTIFIEDOBJECTMODEL_H

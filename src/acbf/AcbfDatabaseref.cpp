@@ -30,27 +30,29 @@ using namespace AdvancedComicBookFormat;
 class DatabaseRef::Private
 {
 public:
-    Private() {}
+    Private()
+    {
+    }
     QString dbname;
     QString type;
     QString reference;
 };
 
-DatabaseRef::DatabaseRef(BookInfo* parent)
+DatabaseRef::DatabaseRef(BookInfo *parent)
     : QObject(parent)
     , d(new Private)
 {
-    static const int typeId = qRegisterMetaType<DatabaseRef*>("DatabaseRef*");
+    static const int typeId = qRegisterMetaType<DatabaseRef *>("DatabaseRef*");
     Q_UNUSED(typeId);
 }
 
 DatabaseRef::~DatabaseRef() = default;
 
-void DatabaseRef::toXml(QXmlStreamWriter* writer)
+void DatabaseRef::toXml(QXmlStreamWriter *writer)
 {
     writer->writeStartElement(QStringLiteral("databaseref"));
     writer->writeAttribute(QStringLiteral("dbname"), d->dbname);
-    if(!d->type.isEmpty()) {
+    if (!d->type.isEmpty()) {
         writer->writeAttribute(QStringLiteral("type"), d->type);
     }
     writer->writeCharacters(d->reference);
@@ -71,7 +73,7 @@ QString DatabaseRef::dbname() const
     return d->dbname;
 }
 
-void DatabaseRef::setDbname(const QString& dbname)
+void DatabaseRef::setDbname(const QString &dbname)
 {
     d->dbname = dbname;
     emit dbnameChanged();
@@ -82,7 +84,7 @@ QString DatabaseRef::type() const
     return d->type;
 }
 
-void DatabaseRef::setType(const QString& type)
+void DatabaseRef::setType(const QString &type)
 {
     d->type = type;
     emit typeChanged();
@@ -93,7 +95,7 @@ QString DatabaseRef::reference() const
     return d->reference;
 }
 
-void DatabaseRef::setReference(const QString& reference)
+void DatabaseRef::setReference(const QString &reference)
 {
     d->reference = reference;
     emit referenceChanged();

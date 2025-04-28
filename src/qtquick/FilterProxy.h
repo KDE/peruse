@@ -28,7 +28,7 @@
 #include <memory>
 /**
  * \brief a Filter proxy for handling search with.
- * 
+ *
  * Extends QSortFilterProxyModel, is caseInsensitive.
  */
 class FilterProxy : public QSortFilterProxyModel
@@ -46,7 +46,7 @@ class FilterProxy : public QSortFilterProxyModel
     Q_PROPERTY(bool filterIntEnabled READ filterIntEnabled WRITE setFilterIntEnabled NOTIFY filterIntEnabledChanged)
     Q_PROPERTY(int count READ count NOTIFY countChanged)
 public:
-    explicit FilterProxy(QObject* parent = nullptr);
+    explicit FilterProxy(QObject *parent = nullptr);
     ~FilterProxy() override;
 
     void setFilterString(const QString &string);
@@ -69,6 +69,7 @@ public:
     Q_SIGNAL void countChanged();
 
     Q_INVOKABLE int sourceIndex(const int &filterIndex);
+
 protected:
     bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
 
@@ -77,4 +78,4 @@ private:
     std::unique_ptr<Private> d;
 };
 
-#endif//FILTERPROXY_H
+#endif // FILTERPROXY_H

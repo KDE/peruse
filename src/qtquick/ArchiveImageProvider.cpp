@@ -31,18 +31,20 @@
 #include <QPainter>
 #include <QThreadPool>
 
-#include <AcbfDocument.h>
 #include <AcbfBinary.h>
 #include <AcbfData.h>
+#include <AcbfDocument.h>
 
 #include <qtquick_debug.h>
 
 class ArchiveImageProvider::Private
 {
 public:
-    Private() {}
+    Private()
+    {
+    }
 
-    ArchiveBookModel* bookModel{nullptr};
+    ArchiveBookModel *bookModel{nullptr};
     QString prefix;
 };
 
@@ -59,42 +61,43 @@ ArchiveImageProvider::~ArchiveImageProvider()
 
 class ArchiveImageResponse : public QQuickImageResponse
 {
-    public:
-        ArchiveImageResponse(const QString &id, const QSize &requestedSize, ArchiveBookModel* bookModel, const QString& prefix)
-        {
-            m_runnable = new ArchiveImageRunnable(id, requestedSize, bookModel, prefix);
-            m_runnable->setAutoDelete(false);
-            connect(m_runnable, &ArchiveImageRunnable::done, this, &ArchiveImageResponse::handleDone, Qt::QueuedConnection);
-            connect(this, &QQuickImageResponse::finished, m_runnable, &QObject::deleteLater,  Qt::QueuedConnection);
-            QThreadPool::globalInstance()->start(m_runnable);
-        }
+public:
+    ArchiveImageResponse(const QString &id, const QSize &requestedSize, ArchiveBookModel *bookModel, const QString &prefix)
+    {
+        m_runnable = new ArchiveImageRunnable(id, requestedSize, bookModel, prefix);
+        m_runnable->setAutoDelete(false);
+        connect(m_runnable, &ArchiveImageRunnable::done, this, &ArchiveImageResponse::handleDone, Qt::QueuedConnection);
+        connect(this, &QQuickImageResponse::finished, m_runnable, &QObject::deleteLater, Qt::QueuedConnection);
+        QThreadPool::globalInstance()->start(m_runnable);
+    }
 
-        void handleDone(QImage image) {
-            m_image = image;
-            Q_EMIT finished();
-        }
+    void handleDone(QImage image)
+    {
+        m_image = image;
+        Q_EMIT finished();
+    }
 
-        QQuickTextureFactory *textureFactory() const override
-        {
-            return QQuickTextureFactory::textureFactoryForImage(m_image);
-        }
+    QQuickTextureFactory *textureFactory() const override
+    {
+        return QQuickTextureFactory::textureFactoryForImage(m_image);
+    }
 
-        void cancel() override
-        {
-            m_runnable->abort();
-        }
+    void cancel() override
+    {
+        m_runnable->abort();
+    }
 
-        ArchiveImageRunnable* m_runnable{nullptr};
-        QImage m_image;
+    ArchiveImageRunnable *m_runnable{nullptr};
+    QImage m_image;
 };
 
-QQuickImageResponse * ArchiveImageProvider::requestImageResponse(const QString& id, const QSize& requestedSize)
+QQuickImageResponse *ArchiveImageProvider::requestImageResponse(const QString &id, const QSize &requestedSize)
 {
-    ArchiveImageResponse* response = new ArchiveImageResponse(id, requestedSize, d->bookModel, d->prefix);
+    ArchiveImageResponse *response = new ArchiveImageResponse(id, requestedSize, d->bookModel, d->prefix);
     return response;
 }
 
-void ArchiveImageProvider::setArchiveBookModel(ArchiveBookModel* model)
+void ArchiveImageProvider::setArchiveBookModel(ArchiveBookModel *model)
 {
     d->bookModel = model;
 }
@@ -109,20 +112,24 @@ QString ArchiveImageProvider::prefix() const
     return d->prefix;
 }
 
-class ArchiveImageRunnable::Private {
+class ArchiveImageRunnable::Private
+{
 public:
-    Private() {}
+    Private()
+    {
+    }
     QString id;
     QSize requestedSize;
 
     bool abort{false};
     QMutex abortMutex;
-    bool isAborted() {
+    bool isAborted()
+    {
         QMutexLocker locker(&abortMutex);
         return abort;
     }
 
-    ArchiveBookModel* bookModel{nullptr};
+    ArchiveBookModel *bookModel{nullptr};
     QString prefix;
 
     QString errorString;
@@ -142,7 +149,7 @@ public:
     }
 };
 
-ArchiveImageRunnable::ArchiveImageRunnable(const QString& id, const QSize& requestedSize, ArchiveBookModel* bookModel, const QString& prefix)
+ArchiveImageRunnable::ArchiveImageRunnable(const QString &id, const QSize &requestedSize, ArchiveBookModel *bookModel, const QString &prefix)
     : d(new Private)
 {
     d->id = id;
@@ -163,7 +170,7 @@ void ArchiveImageRunnable::abort()
     d->abort = true;
 }
 
-void ArchiveImageRunnable::run()//const QString& id, QSize* size, const QSize& requestedSize)
+void ArchiveImageRunnable::run() // const QString& id, QSize* size, const QSize& requestedSize)
 {
     QImage img;
     bool success = false;
@@ -175,10 +182,10 @@ void ArchiveImageRunnable::run()//const QString& id, QSize* size, const QSize& r
      * TODO: binary files can also handle fonts, and those cannot be loaded into a QImage.
      */
     if (d->id.startsWith('#')) {
-        auto document = qobject_cast<AdvancedComicBookFormat::Document*>(d->bookModel->acbfData());
+        auto document = qobject_cast<AdvancedComicBookFormat::Document *>(d->bookModel->acbfData());
 
         if (document) {
-            AdvancedComicBookFormat::Binary* binary = qobject_cast<AdvancedComicBookFormat::Binary*>(document->objectByID(d->id.mid(1)));
+            AdvancedComicBookFormat::Binary *binary = qobject_cast<AdvancedComicBookFormat::Binary *>(document->objectByID(d->id.mid(1)));
 
             if (!d->isAborted() && binary) {
                 success = d->loadImage(&img, binary->data());
@@ -188,9 +195,9 @@ void ArchiveImageRunnable::run()//const QString& id, QSize* size, const QSize& r
 
     if (!d->isAborted() && !success) {
         QMutexLocker locker(&d->bookModel->archiveMutex);
-        const KArchiveFile* entry = d->bookModel->archiveFile(d->id);
+        const KArchiveFile *entry = d->bookModel->archiveFile(d->id);
 
-        if(!d->isAborted() && entry) {
+        if (!d->isAborted() && entry) {
             success = d->loadImage(&img, entry->data());
         }
     }

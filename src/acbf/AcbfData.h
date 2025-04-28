@@ -33,11 +33,11 @@
 class QXmlStreamReader;
 /**
  * \brief Class to handle the list of embedded data in an ACBF document.
- * 
+ *
  * ACBF allows embedding images and fonts as Base64 bytearrays.
  * They are stored in the data section of the file, with a binary
  * element each.
- * 
+ *
  * This class holds Binary objects which in turn hold the binary data.
  * This class cannot yet modify the entries or add and remove entries.
  */
@@ -52,7 +52,7 @@ class ACBF_EXPORT Data : public QObject
     Q_PROPERTY(QObjectList binaries READ binaries NOTIFY binariesChanged)
     Q_PROPERTY(QStringList binaryIds READ binaryIds NOTIFY binariesChanged)
 public:
-    explicit Data(Document* parent = nullptr);
+    explicit Data(Document *parent = nullptr);
     ~Data() override;
 
     /**
@@ -69,12 +69,12 @@ public:
      * @param id - the id that is used to reference to this object.
      * @return the binary object referenced by this id.
      */
-    Binary* binary(const QString& id) const;
+    Binary *binary(const QString &id) const;
 
     /**
      * Adds a new, empty binary entry to the list, and returns that entry
      */
-    Q_INVOKABLE AdvancedComicBookFormat::Binary* addBinary(const QString& id);
+    Q_INVOKABLE AdvancedComicBookFormat::Binary *addBinary(const QString &id);
 
     /**
      * The position in the binaries object list of the binary passed to the function
@@ -84,7 +84,7 @@ public:
     QObjectList binaries() const;
 
     QStringList binaryIds() const;
-    int binaryIndex(Binary* binary);
+    int binaryIndex(Binary *binary);
     Q_SIGNAL void binariesChanged();
     Q_SIGNAL void binaryAdded(QObject *binary);
 
@@ -94,13 +94,14 @@ public:
      * @param swapThis The first object, which will take the position of the second
      * @param withThis The second object, which will take the position of the first
      */
-    Q_INVOKABLE void swapBinaries(QObject *swapThis, QObject* withThis);
+    Q_INVOKABLE void swapBinaries(QObject *swapThis, QObject *withThis);
     /**
      * A convenience function for swapping binary positions directly by ID.
      * @param swapThis The index of the first object, which will take the position of the second
      * @param withThis The index of the second object, which will take the position of the first
      */
     Q_INVOKABLE void swapBinariesByIndex(int swapThis, int withThis);
+
 private:
     class Private;
     std::unique_ptr<Private> d;

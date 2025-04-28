@@ -23,16 +23,19 @@
 
 #include <QFile>
 #include <QString>
-#include <QXmlStreamWriter>
 #include <QXmlStreamReader>
+#include <QXmlStreamWriter>
 
 #include "AcbfData.h"
 
 using namespace AdvancedComicBookFormat;
 
-class Binary::Private {
+class Binary::Private
+{
 public:
-    Private() {}
+    Private()
+    {
+    }
     Data *parent;
 
     QString id;
@@ -40,11 +43,11 @@ public:
     QByteArray data;
 };
 
-Binary::Binary(Data* parent)
+Binary::Binary(Data *parent)
     : InternalReferenceObject(InternalReferenceObject::ReferenceTarget, parent)
     , d(new Private)
 {
-    static const int typeId = qRegisterMetaType<Binary*>("Binary*");
+    static const int typeId = qRegisterMetaType<Binary *>("Binary*");
     Q_UNUSED(typeId);
     d->parent = parent;
     // Hook up properties to the parent's global data change signal
@@ -55,7 +58,7 @@ Binary::Binary(Data* parent)
 
 Binary::~Binary() = default;
 
-void Binary::toXml(QXmlStreamWriter* writer)
+void Binary::toXml(QXmlStreamWriter *writer)
 {
     writer->writeStartElement(QStringLiteral("binary"));
 
@@ -66,7 +69,7 @@ void Binary::toXml(QXmlStreamWriter* writer)
     writer->writeEndElement();
 }
 
-bool Binary::fromXml(QXmlStreamReader* xmlReader)
+bool Binary::fromXml(QXmlStreamReader *xmlReader)
 {
     setId(xmlReader->attributes().value(QStringLiteral("id")).toString());
     setContentType(xmlReader->attributes().value(QStringLiteral("content-type")).toString());
@@ -80,7 +83,7 @@ QString Binary::id() const
     return d->id;
 }
 
-void Binary::setId(const QString& newId)
+void Binary::setId(const QString &newId)
 {
     if (d->id != newId) {
         d->id = newId;
@@ -93,7 +96,7 @@ QString Binary::contentType() const
     return d->contentType;
 }
 
-void Binary::setContentType(const QString& newContentType)
+void Binary::setContentType(const QString &newContentType)
 {
     if (d->contentType != newContentType) {
         d->contentType = newContentType;
@@ -111,7 +114,7 @@ int Binary::size() const
     return d->data.size();
 }
 
-void Binary::setData(const QByteArray& newData)
+void Binary::setData(const QByteArray &newData)
 {
     if (d->data != newData) {
         d->data = newData;
@@ -119,7 +122,7 @@ void Binary::setData(const QByteArray& newData)
     }
 }
 
-void AdvancedComicBookFormat::Binary::setDataFromFile(const QString& fileName)
+void AdvancedComicBookFormat::Binary::setDataFromFile(const QString &fileName)
 {
     d->data.clear();
     QFile file(fileName);

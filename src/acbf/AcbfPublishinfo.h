@@ -34,7 +34,7 @@ class QXmlStreamReader;
 
 /**
  * \brief Class to handle the publishing info.
- * 
+ *
  * The Publishing info in ACBF is about who published the book,
  * when, where, the ISBN number, and which license it was published
  * under.
@@ -51,7 +51,7 @@ class ACBF_EXPORT PublishInfo : public QObject
     Q_PROPERTY(QString isbn READ isbn WRITE setIsbn NOTIFY isbnChanged)
     Q_PROPERTY(QString license READ license WRITE setLicense NOTIFY licenseChanged)
 public:
-    explicit PublishInfo(Metadata* parent = nullptr);
+    explicit PublishInfo(Metadata *parent = nullptr);
     ~PublishInfo() override;
 
     /**
@@ -71,7 +71,7 @@ public:
     /**
      * \brief set the name of the publisher.
      */
-    void setPublisher(const QString& publisher);
+    void setPublisher(const QString &publisher);
     /**
      * @brief fires when the publisher has changed.
      */
@@ -85,14 +85,14 @@ public:
      * \brief set the publishing date.
      * @param publishDate - the publishingdate as a QDate object.
      */
-    void setPublishDate(const QDate& publishDate);
+    void setPublishDate(const QDate &publishDate);
     /**
      * @brief a function to work around strangeness surrounding qml date.
      * @param year - publishing year.
      * @param month - publishing month, from 1 to 12
      * @param day - publishing day.
      */
-    Q_INVOKABLE void setPublishDateFromInts(const int& year, const int& month, const int& day);
+    Q_INVOKABLE void setPublishDateFromInts(const int &year, const int &month, const int &day);
     /**
      * @brief fires when the date has changed.
      */
@@ -106,7 +106,7 @@ public:
      * \brief set the name of the city the work was published in.
      * @param city - the name of the city as a QString.
      */
-    void setCity(const QString& city = QString());
+    void setCity(const QString &city = QString());
     /**
      * @brief fires when the city has changed.
      */
@@ -120,7 +120,7 @@ public:
      * \brief set the ISBN number.
      * @param isbn - the ISBN number as a QString. ISBN numbers should be registered.
      */
-    void setIsbn(const QString& isbn = QString());
+    void setIsbn(const QString &isbn = QString());
     /**
      * @brief fires when the usbn has changed.
      */
@@ -134,15 +134,16 @@ public:
      * \brief set the License that the work was published under.
      * @param license - the name of the license as a QString.
      */
-    void setLicense(const QString& license = QString());
+    void setLicense(const QString &license = QString());
     /**
      * @brief fires when the license has changed.
      */
     Q_SIGNAL void licenseChanged();
+
 private:
     class Private;
     std::unique_ptr<Private> d;
 };
 }
 
-#endif//ACBFPUBLISHINFO_H
+#endif // ACBFPUBLISHINFO_H

@@ -27,8 +27,8 @@
 #include "AcbfTextlayer.h"
 
 #include <QHash>
-#include <QXmlStreamReader>
 #include <QTimer>
+#include <QXmlStreamReader>
 #include <QtGlobal>
 
 #include <acbf_debug.h>
@@ -49,18 +49,18 @@ public:
     QString transition;
     QHash<QString, QString> title;
     QString imageHref;
-    QHash<QString, Textlayer*> textLayers;
-    QList<Frame*> frames;
-    QList<Jump*> jumps;
+    QHash<QString, Textlayer *> textLayers;
+    QList<Frame *> frames;
+    QList<Jump *> jumps;
     QTimer jumpsUpdateTimer;
     bool isCoverPage;
 };
 
-Page::Page(Document* parent)
+Page::Page(Document *parent)
     : InternalReferenceObject(InternalReferenceObject::ReferenceTarget, parent)
     , d(new Private)
 {
-    static const int typeId = qRegisterMetaType<Page*>("Page*");
+    static const int typeId = qRegisterMetaType<Page *>("Page*");
     Q_UNUSED(typeId);
 
     QObject::connect(&d->jumpsUpdateTimer, &QTimer::timeout, &d->jumpsUpdateTimer, [this]() {
@@ -78,27 +78,26 @@ Page::Page(Document* parent)
 
 Page::~Page() = default;
 
-void Page::toXml(QXmlStreamWriter* writer)
+void Page::toXml(QXmlStreamWriter *writer)
 {
-    if(d->isCoverPage) {
+    if (d->isCoverPage) {
         writer->writeStartElement(QStringLiteral("coverpage"));
-    }
-    else {
+    } else {
         writer->writeStartElement(QStringLiteral("page"));
     }
-    if(!d->id.isEmpty()) {
+    if (!d->id.isEmpty()) {
         writer->writeAttribute(QStringLiteral("id"), id());
     }
 
-    if(!d->bgcolor.isEmpty()) {
+    if (!d->bgcolor.isEmpty()) {
         writer->writeAttribute(QStringLiteral("bgcolor"), d->bgcolor);
     }
-    if(!d->transition.isEmpty()) {
+    if (!d->transition.isEmpty()) {
         writer->writeAttribute(QStringLiteral("transition"), d->transition);
     }
 
     QHashIterator<QString, QString> titles(d->title);
-    while(titles.hasNext()) {
+    while (titles.hasNext()) {
         titles.next();
         writer->writeStartElement(QStringLiteral("title"));
         writer->writeAttribute(QStringLiteral("lang"), titles.key());
@@ -110,80 +109,69 @@ void Page::toXml(QXmlStreamWriter* writer)
     writer->writeAttribute(QStringLiteral("href"), d->imageHref);
     writer->writeEndElement();
 
-    for(Textlayer* layer : d->textLayers.values()) {
+    for (Textlayer *layer : d->textLayers.values()) {
         layer->toXml(writer);
     }
 
-     for(Frame* frame : d->frames) {
-         frame->toXml(writer);
-     }
+    for (Frame *frame : d->frames) {
+        frame->toXml(writer);
+    }
 
-     for(Jump* jump : d->jumps) {
-         jump->toXml(writer);
-     }
+    for (Jump *jump : d->jumps) {
+        jump->toXml(writer);
+    }
 
     writer->writeEndElement();
 }
 
-bool Page::fromXml(QXmlStreamReader *xmlReader, const QString& xmlData)
+bool Page::fromXml(QXmlStreamReader *xmlReader, const QString &xmlData)
 {
     setId(xmlReader->attributes().value(QStringLiteral("id")).toString());
     setBgcolor(xmlReader->attributes().value(QStringLiteral("bgcolor")).toString());
     setTransition(xmlReader->attributes().value(QStringLiteral("transition")).toString());
-    while(xmlReader->readNextStartElement())
-    {
-        if(xmlReader->name() == QStringLiteral("title"))
-        {
+    while (xmlReader->readNextStartElement()) {
+        if (xmlReader->name() == QStringLiteral("title")) {
             d->title[xmlReader->attributes().value(QStringLiteral("lang")).toString()] = xmlReader->readElementText();
-        }
-        else if(xmlReader->name() == QStringLiteral("image"))
-        {
+        } else if (xmlReader->name() == QStringLiteral("image")) {
             /**
              * There are some acbf files out there that have backslashes in their
              * image href. This is probably a mistake from windows users, but not proper XML.
              * We should thus replace those with forward slashes so the image can be loaded.
              */
             QString href = xmlReader->attributes().value(QStringLiteral("href")).toString();
-            setImageHref(href.replace(QStringLiteral("\\"), QStringLiteral("/"))); 
+            setImageHref(href.replace(QStringLiteral("\\"), QStringLiteral("/")));
             xmlReader->skipCurrentElement();
-        }
-        else if(xmlReader->name() == QStringLiteral("text-layer"))
-        {
-            Textlayer* newLayer = new Textlayer(this);
-            if(!newLayer->fromXml(xmlReader, xmlData)) {
+        } else if (xmlReader->name() == QStringLiteral("text-layer")) {
+            Textlayer *newLayer = new Textlayer(this);
+            if (!newLayer->fromXml(xmlReader, xmlData)) {
                 return false;
             }
             d->textLayers[newLayer->language()] = newLayer;
-        }
-        else if(xmlReader->name() == QStringLiteral("frame"))
-        {
-            Frame* newFrame = new Frame(this);
-            if(!newFrame->fromXml(xmlReader)) {
+        } else if (xmlReader->name() == QStringLiteral("frame")) {
+            Frame *newFrame = new Frame(this);
+            if (!newFrame->fromXml(xmlReader)) {
                 return false;
             }
             d->frames.append(newFrame);
 
             // Frames have no child elements, so we need to force the reader to go to the next one.
             xmlReader->readNext();
-        }
-         else if(xmlReader->name() == QStringLiteral("jump"))
-         {
-             Jump* newJump = new Jump(this);
-             if(!newJump->fromXml(xmlReader)) {
-                 return false;
-             }
-             // Jumps have no child elements, so we need to force the reader to go to the next one.
-             addJump(newJump, -1);
-             xmlReader->readNext();
-         }
-        else
-        {
+        } else if (xmlReader->name() == QStringLiteral("jump")) {
+            Jump *newJump = new Jump(this);
+            if (!newJump->fromXml(xmlReader)) {
+                return false;
+            }
+            // Jumps have no child elements, so we need to force the reader to go to the next one.
+            addJump(newJump, -1);
+            xmlReader->readNext();
+        } else {
             qCWarning(ACBF_LOG) << Q_FUNC_INFO << "currently unsupported subsection:" << xmlReader->name();
             xmlReader->skipCurrentElement();
         }
     }
     if (xmlReader->hasError()) {
-        qCWarning(ACBF_LOG) << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader->name() << "(" << xmlReader->lineNumber() << ":" << xmlReader->columnNumber() << ") The reported error was:" << xmlReader->errorString();
+        qCWarning(ACBF_LOG) << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader->name() << "(" << xmlReader->lineNumber() << ":"
+                            << xmlReader->columnNumber() << ") The reported error was:" << xmlReader->errorString();
     }
     qCDebug(ACBF_LOG) << Q_FUNC_INFO << "Created page for image" << d->imageHref;
     return !xmlReader->hasError();
@@ -194,7 +182,7 @@ QString Page::id() const
     return d->id;
 }
 
-void Page::setId(const QString& newId)
+void Page::setId(const QString &newId)
 {
     if (d->id != newId) {
         d->id = newId;
@@ -205,7 +193,7 @@ void Page::setId(const QString& newId)
 QString Page::bgcolor() const
 {
     if (d->bgcolor.isEmpty()) {
-        Document* document = qobject_cast<Document*>(parent());
+        Document *document = qobject_cast<Document *>(parent());
         if (document && document->body()) {
             return document->body()->bgcolor();
         }
@@ -213,7 +201,7 @@ QString Page::bgcolor() const
     return d->bgcolor;
 }
 
-void Page::setBgcolor(const QString& newColor)
+void Page::setBgcolor(const QString &newColor)
 {
     d->bgcolor = newColor;
     emit bgcolorChanged();
@@ -224,7 +212,7 @@ QString Page::transition() const
     return d->transition;
 }
 
-void Page::setTransition(const QString& transition)
+void Page::setTransition(const QString &transition)
 {
     d->transition = transition;
     emit transitionChanged();
@@ -246,9 +234,9 @@ QStringList Page::titleForAllLanguages() const
     return d->title.values();
 }
 
-QString Page::title(const QString& language) const
+QString Page::title(const QString &language) const
 {
-    if (d->title.count()==0) {
+    if (d->title.count() == 0) {
         return "";
     }
     if (!d->title.keys().contains(language)) {
@@ -264,14 +252,11 @@ QString Page::title(const QString& language) const
     return title;
 }
 
-void Page::setTitle(const QString& title, const QString& language)
+void Page::setTitle(const QString &title, const QString &language)
 {
-    if(title.isEmpty())
-    {
+    if (title.isEmpty()) {
         d->title.remove(language);
-    }
-    else
-    {
+    } else {
         d->title[language] = title;
     }
     emit titlesChanged();
@@ -282,7 +267,7 @@ QString Page::imageHref() const
     return d->imageHref;
 }
 
-void Page::setImageHref(const QString& imageHref)
+void Page::setImageHref(const QString &imageHref)
 {
     d->imageHref = imageHref;
 }
@@ -292,7 +277,7 @@ QList<Textlayer *> Page::textLayersForAllLanguages() const
     return d->textLayers.values();
 }
 
-Textlayer * Page::textLayer(const QString& language) const
+Textlayer *Page::textLayer(const QString &language) const
 {
     if (!d->textLayers.keys().contains("") && language == QString() && d->textLayers.count() > 0) {
         return d->textLayers.values().at(0);
@@ -300,16 +285,13 @@ Textlayer * Page::textLayer(const QString& language) const
     return d->textLayers.value(language);
 }
 
-void Page::setTextLayer(Textlayer* textlayer, const QString& language)
+void Page::setTextLayer(Textlayer *textlayer, const QString &language)
 {
-    if(textlayer)
-    {
+    if (textlayer) {
         d->textLayers[language] = textlayer;
         Q_EMIT textLayerAdded(textlayer);
-    }
-    else
-    {
-        Textlayer* layer = d->textLayers.take(language);
+    } else {
+        Textlayer *layer = d->textLayers.take(language);
         if (layer) {
             layer->deleteLater();
         }
@@ -319,7 +301,7 @@ void Page::setTextLayer(Textlayer* textlayer, const QString& language)
 
 void Page::addTextLayer(const QString &language)
 {
-    Textlayer* textLayer = new Textlayer(this);
+    Textlayer *textLayer = new Textlayer(this);
     textLayer->setLanguage(language);
     setTextLayer(textLayer, language);
 }
@@ -331,12 +313,12 @@ void Page::removeTextLayer(const QString &language)
 
 void Page::duplicateTextLayer(const QString &languageFrom, const QString &languageTo)
 {
-    Textlayer* to = new Textlayer(this);
+    Textlayer *to = new Textlayer(this);
     to->setLanguage(languageTo);
     if (d->textLayers[languageFrom]) {
-        Textlayer* from = d->textLayers[languageFrom];
+        Textlayer *from = d->textLayers[languageFrom];
         to->setBgcolor(from->bgcolor());
-        for (int i=0; i<from->textareaPointStrings().size(); i++) {
+        for (int i = 0; i < from->textareaPointStrings().size(); i++) {
             to->addTextarea(i);
             to->textarea(i)->setBgcolor(from->textarea(i)->bgcolor());
             to->textarea(i)->setInverted(from->textarea(i)->inverted());
@@ -344,7 +326,7 @@ void Page::duplicateTextLayer(const QString &languageFrom, const QString &langua
             to->textarea(i)->setTextRotation(from->textarea(i)->textRotation());
             to->textarea(i)->setType(from->textarea(i)->type());
             to->textarea(i)->setParagraphs(from->textarea(i)->paragraphs());
-            for (int p=0; p<from->textarea(i)->pointCount(); p++) {
+            for (int p = 0; p < from->textarea(i)->pointCount(); p++) {
                 to->textarea(i)->addPoint(from->textarea(i)->point(p));
             }
         }
@@ -365,29 +347,28 @@ QList<Frame *> Page::frames() const
     return d->frames;
 }
 
-Frame * Page::frame(int index) const
+Frame *Page::frame(int index) const
 {
     return d->frames.at(index);
 }
 
-int Page::frameIndex(Frame* frame) const
+int Page::frameIndex(Frame *frame) const
 {
     return d->frames.indexOf(frame);
 }
 
-void Page::addFrame(Frame* frame, int index)
+void Page::addFrame(Frame *frame, int index)
 {
-    if(index > -1 && d->frames.count() < index) {
+    if (index > -1 && d->frames.count() < index) {
         d->frames.insert(index, frame);
-    }
-    else {
+    } else {
         d->frames.append(frame);
     }
     Q_EMIT frameAdded(frame);
     emit framePointStringsChanged();
 }
 
-void Page::removeFrame(Frame* frame)
+void Page::removeFrame(Frame *frame)
 {
     d->frames.removeAll(frame);
     emit framePointStringsChanged();
@@ -400,13 +381,13 @@ void Page::removeFrame(int index)
 
 void Page::addFrame(int index)
 {
-    Frame* frame = new Frame(this);
+    Frame *frame = new Frame(this);
     addFrame(frame, index);
 }
 
 bool Page::swapFrames(int swapThis, int withThis)
 {
-    if(swapThis > -1 && withThis > -1) {
+    if (swapThis > -1 && withThis > -1) {
         d->frames.swapItemsAt(swapThis, withThis);
         emit framePointStringsChanged();
         return true;
@@ -417,9 +398,9 @@ bool Page::swapFrames(int swapThis, int withThis)
 QStringList Page::framePointStrings()
 {
     QStringList frameList;
-    for (int i=0; i<d->frames.size(); i++) {
+    for (int i = 0; i < d->frames.size(); i++) {
         QStringList framePoints;
-        for (int p=0; p< frame(i)->pointCount(); p++) {
+        for (int p = 0; p < frame(i)->pointCount(); p++) {
             framePoints.append(QString("%1,%2").arg(frame(i)->point(p).x()).arg(frame(i)->point(p).y()));
         }
         frameList.append(framePoints.join(" "));
@@ -432,24 +413,24 @@ QObjectList Page::jumps() const
 {
     QObjectList jumpsList;
 
-    for(int i = 0; i < d->jumps.size(); i++) {
+    for (int i = 0; i < d->jumps.size(); i++) {
         jumpsList.append(d->jumps.at(i));
     }
 
     return jumpsList;
 }
 
-Jump* Page::jump(int index) const
+Jump *Page::jump(int index) const
 {
     return d->jumps.at(index);
 }
 
-int Page::jumpIndex(Jump* jump) const
+int Page::jumpIndex(Jump *jump) const
 {
     return d->jumps.indexOf(jump);
 }
 
-void Page::addJump(Jump* jump, int index)
+void Page::addJump(Jump *jump, int index)
 {
     QObject::connect(jump, &Jump::pointCountChanged, &d->jumpsUpdateTimer, QOverload<>::of(&QTimer::start));
     QObject::connect(jump, &Jump::boundsChanged, &d->jumpsUpdateTimer, QOverload<>::of(&QTimer::start));
@@ -459,7 +440,7 @@ void Page::addJump(Jump* jump, int index)
         d->jumpsUpdateTimer.start();
     });
 
-    if(index > -1 && index < d->jumps.count()) {
+    if (index > -1 && index < d->jumps.count()) {
         d->jumps.insert(index, jump);
     } else {
         d->jumps.append(jump);
@@ -470,12 +451,12 @@ void Page::addJump(Jump* jump, int index)
 
 void Page::addJump(int pageIndex, int index)
 {
-    Jump* jump = new Jump(this);
+    Jump *jump = new Jump(this);
     jump->setPageIndex(pageIndex);
     addJump(jump, index);
 }
 
-void Page::removeJump(Jump* jump)
+void Page::removeJump(Jump *jump)
 {
     d->jumps.removeAll(jump);
     emit jumpsChanged();
@@ -488,7 +469,7 @@ void Page::removeJump(int index)
 
 bool Page::swapJumps(int swapThis, int withThis)
 {
-    if(swapThis > -1 && withThis > -1) {
+    if (swapThis > -1 && withThis > -1) {
         d->jumps.swapItemsAt(swapThis, withThis);
         emit jumpsChanged();
         return true;
@@ -508,7 +489,7 @@ void Page::setIsCoverPage(bool isCoverPage)
 
 int Page::localIndex()
 {
-    Document* document = qobject_cast<Document*>(parent());
+    Document *document = qobject_cast<Document *>(parent());
     if (document && document->body()) {
         return document->body()->pageIndex(this);
     }

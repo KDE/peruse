@@ -25,18 +25,18 @@
 #include <kio/previewjob.h>
 
 #include <QCoreApplication>
+#include <QDebug>
 #include <QDir>
-#include <QTimer>
 #include <QIcon>
 #include <QMimeDatabase>
 #include <QMutex>
 #include <QThreadPool>
-#include <QDebug>
+#include <QTimer>
 
 class PreviewImageProvider::Private
 {
 public:
-    Private() {};
+    Private() { };
 };
 
 PreviewImageProvider::PreviewImageProvider()
@@ -53,55 +53,60 @@ PreviewImageProvider::~PreviewImageProvider()
 
 class PreviewResponse : public QQuickImageResponse
 {
-    public:
-        PreviewResponse(const QString &id, const QSize &requestedSize)
-        {
-            m_runnable = new PreviewRunnable(id, requestedSize);
-            m_runnable->setAutoDelete(false);
-            connect(m_runnable, &PreviewRunnable::done, this, &PreviewResponse::handleDone, Qt::QueuedConnection);
-            connect(this, &QQuickImageResponse::finished, m_runnable, &QObject::deleteLater,  Qt::QueuedConnection);
-            QThreadPool::globalInstance()->start(m_runnable);
-        }
+public:
+    PreviewResponse(const QString &id, const QSize &requestedSize)
+    {
+        m_runnable = new PreviewRunnable(id, requestedSize);
+        m_runnable->setAutoDelete(false);
+        connect(m_runnable, &PreviewRunnable::done, this, &PreviewResponse::handleDone, Qt::QueuedConnection);
+        connect(this, &QQuickImageResponse::finished, m_runnable, &QObject::deleteLater, Qt::QueuedConnection);
+        QThreadPool::globalInstance()->start(m_runnable);
+    }
 
-        void handleDone(QImage image) {
-            m_image = image;
-            Q_EMIT finished();
-        }
+    void handleDone(QImage image)
+    {
+        m_image = image;
+        Q_EMIT finished();
+    }
 
-        QQuickTextureFactory *textureFactory() const override
-        {
-            return QQuickTextureFactory::textureFactoryForImage(m_image);
-        }
+    QQuickTextureFactory *textureFactory() const override
+    {
+        return QQuickTextureFactory::textureFactoryForImage(m_image);
+    }
 
-        void cancel() override
-        {
-            m_runnable->abort();
-        }
+    void cancel() override
+    {
+        m_runnable->abort();
+    }
 
-        PreviewRunnable* m_runnable{nullptr};
-        QImage m_image;
+    PreviewRunnable *m_runnable{nullptr};
+    QImage m_image;
 };
 
-QQuickImageResponse * PreviewImageProvider::requestImageResponse(const QString& id, const QSize& requestedSize)
+QQuickImageResponse *PreviewImageProvider::requestImageResponse(const QString &id, const QSize &requestedSize)
 {
     // We sometimes get malformed IDs (that is, extra slashes at the start), so fix those up
     QString adjustedId{id};
     while (adjustedId.startsWith("//")) {
         adjustedId = adjustedId.mid(1);
     }
-    PreviewResponse* response = new PreviewResponse(adjustedId, requestedSize);
+    PreviewResponse *response = new PreviewResponse(adjustedId, requestedSize);
     return response;
 }
 
-class PreviewRunnable::Private {
+class PreviewRunnable::Private
+{
 public:
-    Private() {}
+    Private()
+    {
+    }
     QString id;
     QSize requestedSize;
 
     bool abort{false};
     QMutex abortMutex;
-    bool isAborted() {
+    bool isAborted()
+    {
         QMutexLocker locker(&abortMutex);
         return abort;
     }
@@ -111,7 +116,7 @@ public:
     QString mimetype;
 };
 
-PreviewRunnable::PreviewRunnable(const QString& id, const QSize& requestedSize)
+PreviewRunnable::PreviewRunnable(const QString &id, const QSize &requestedSize)
     : d(new Private)
 {
     d->id = id;
@@ -126,23 +131,19 @@ PreviewRunnable::~PreviewRunnable()
 
 void PreviewRunnable::run()
 {
-
     QSize ourSize(KIconLoader::SizeEnormous, KIconLoader::SizeEnormous);
-    if(d->requestedSize.width() > 0 && d->requestedSize.height() > 0)
-    {
+    if (d->requestedSize.width() > 0 && d->requestedSize.height() > 0) {
         ourSize = d->requestedSize;
     }
 
-    if(QFile(d->id).exists())
-    {
+    if (QFile(d->id).exists()) {
         QMimeDatabase db;
         QList<QMimeType> mimetypes = db.mimeTypesForFileName(d->id);
-        if(mimetypes.count() > 0)
-        {
+        if (mimetypes.count() > 0) {
             d->mimetype = mimetypes.first().name();
         }
 
-        if(!d->isAborted()) {
+        if (!d->isAborted()) {
             static QStringList allPlugins{KIO::PreviewJob::availablePlugins()};
             d->job = new KIO::PreviewJob(KFileItemList() << KFileItem(QUrl::fromLocalFile(d->id), d->mimetype, 0), ourSize, &allPlugins);
             d->job->setIgnoreMaximumSize(true);
@@ -152,23 +153,23 @@ void PreviewRunnable::run()
             connect(d->job, &KIO::PreviewJob::finished, this, &PreviewRunnable::finishedPreview);
             d->job->start();
 
-            QTimer* breaker = new QTimer();
+            QTimer *breaker = new QTimer();
             breaker->moveToThread(thread());
             breaker->setParent(this);
             breaker->setSingleShot(true);
             breaker->setInterval(3000);
-            connect(breaker, &QTimer::timeout, this, [this](){
+            connect(breaker, &QTimer::timeout, this, [this]() {
                 if (!d->isAborted()) {
                     abort();
                 }
             });
-            QTimer::singleShot(0, breaker, [breaker](){ breaker->start(); });
+            QTimer::singleShot(0, breaker, [breaker]() {
+                breaker->start();
+            });
         } else {
             finishedPreview(nullptr);
         }
-    }
-    else
-    {
+    } else {
         finishedPreview(nullptr);
     }
 }
@@ -183,11 +184,10 @@ void PreviewRunnable::abort()
     }
 }
 
-void PreviewRunnable::fallbackPreview(const KFileItem& item)
+void PreviewRunnable::fallbackPreview(const KFileItem &item)
 {
-    KIO::PreviewJob* previewJob = qobject_cast<KIO::PreviewJob*>(sender());
-    if(previewJob)
-    {
+    KIO::PreviewJob *previewJob = qobject_cast<KIO::PreviewJob *>(sender());
+    if (previewJob) {
         QMimeDatabase db;
         QIcon mimeIcon = QIcon::fromTheme(db.mimeTypeForName(item.mimetype()).iconName());
         QSize actualSize = mimeIcon.actualSize(d->requestedSize);
@@ -195,18 +195,17 @@ void PreviewRunnable::fallbackPreview(const KFileItem& item)
     }
 }
 
-void PreviewRunnable::updatePreview(const KFileItem&, const QPixmap& p)
+void PreviewRunnable::updatePreview(const KFileItem &, const QPixmap &p)
 {
-    KIO::PreviewJob* previewJob = qobject_cast<KIO::PreviewJob*>(sender());
-    if(previewJob)
-    {
+    KIO::PreviewJob *previewJob = qobject_cast<KIO::PreviewJob *>(sender());
+    if (previewJob) {
         d->preview = p.toImage();
     }
 }
 
-void PreviewRunnable::finishedPreview(KJob* /*job*/)
+void PreviewRunnable::finishedPreview(KJob * /*job*/)
 {
-    if(d->isAborted()) {
+    if (d->isAborted()) {
         if (d->preview.isNull()) {
             QMimeDatabase db;
             QIcon mimeIcon = QIcon::fromTheme(db.mimeTypeForName(d->mimetype).iconName());
@@ -214,7 +213,7 @@ void PreviewRunnable::finishedPreview(KJob* /*job*/)
             d->preview = mimeIcon.pixmap(actualSize).toImage();
         }
     } else {
-        if(d->requestedSize.width() > 0 && d->requestedSize.height() > 0) {
+        if (d->requestedSize.width() > 0 && d->requestedSize.height() > 0) {
             d->preview = d->preview.scaled(d->requestedSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
         }
     }

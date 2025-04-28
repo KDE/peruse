@@ -20,8 +20,8 @@
  */
 
 #include "AcbfBody.h"
-#include "AcbfPage.h"
 #include "AcbfDocument.h"
+#include "AcbfPage.h"
 
 #include <QXmlStreamReader>
 
@@ -32,58 +32,57 @@ using namespace AdvancedComicBookFormat;
 class Body::Private
 {
 public:
-    Private() {}
+    Private()
+    {
+    }
     QString bgcolor;
-    QList<Page*> pages;
+    QList<Page *> pages;
 };
 
-Body::Body(Document* parent)
+Body::Body(Document *parent)
     : QObject(parent)
     , d(new Private)
 {
-    static const int typeId = qRegisterMetaType<Body*>("Body*");
+    static const int typeId = qRegisterMetaType<Body *>("Body*");
     Q_UNUSED(typeId);
 }
 
 Body::~Body() = default;
 
-Document * Body::document() const
+Document *Body::document() const
 {
-    return qobject_cast<Document*>(parent());
+    return qobject_cast<Document *>(parent());
 }
 
 void Body::toXml(QXmlStreamWriter *writer)
 {
     writer->writeStartElement(QStringLiteral("body"));
 
-    for(Page* page : d->pages) {
+    for (Page *page : d->pages) {
         page->toXml(writer);
     }
 
     writer->writeEndElement();
 }
 
-bool Body::fromXml(QXmlStreamReader *xmlReader, const QString& xmlData)
+bool Body::fromXml(QXmlStreamReader *xmlReader, const QString &xmlData)
 {
     setBgcolor(xmlReader->attributes().value(QStringLiteral("bgcolor")).toString());
-    while(xmlReader->readNextStartElement())
-    {
-        if(xmlReader->name() == QStringLiteral("page"))
-        {
-            Page* newPage = new Page(document());
-            if(!newPage->fromXml(xmlReader, xmlData)) {
+    while (xmlReader->readNextStartElement()) {
+        if (xmlReader->name() == QStringLiteral("page")) {
+            Page *newPage = new Page(document());
+            if (!newPage->fromXml(xmlReader, xmlData)) {
                 return false;
             }
             d->pages.append(newPage);
-        }
-        else
-        {
+        } else {
             qCWarning(ACBF_LOG) << Q_FUNC_INFO << "currently unsupported subsection:" << xmlReader->name();
             xmlReader->skipCurrentElement();
         }
     }
     if (xmlReader->hasError()) {
-        qCWarning(ACBF_LOG) << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader->name() << "(" << xmlReader->lineNumber() << ":" << xmlReader->columnNumber() << ") The reported error was:" << xmlReader->errorString();
+        qCWarning(ACBF_LOG) << Q_FUNC_INFO << "Failed to read ACBF XML document at token" << xmlReader->name() << "(" << xmlReader->lineNumber() << ":"
+                            << xmlReader->columnNumber() << ") The reported error was:" << xmlReader->errorString();
     }
     qCDebug(ACBF_LOG) << Q_FUNC_INFO << "Created body with" << d->pages.count() << "pages";
     return !xmlReader->hasError();
@@ -94,7 +93,7 @@ QString Body::bgcolor() const
     return d->bgcolor;
 }
 
-void Body::setBgcolor(const QString& newColor)
+void Body::setBgcolor(const QString &newColor)
 {
     d->bgcolor = newColor;
     emit bgcolorChanged();
@@ -105,39 +104,38 @@ QList<Page *> Body::pages() const
     return d->pages;
 }
 
-Page * Body::page(int index) const
+Page *Body::page(int index) const
 {
     return d->pages.at(index);
 }
 
-int Body::pageIndex(Page* page) const
+int Body::pageIndex(Page *page) const
 {
     return d->pages.indexOf(page);
 }
 
-void Body::addPage(Page* page, int index)
+void Body::addPage(Page *page, int index)
 {
-    if(index > -1 && d->pages.count() < index) {
+    if (index > -1 && d->pages.count() < index) {
         d->pages.insert(index, page);
-    }
-    else {
+    } else {
         d->pages.append(page);
     }
     Q_EMIT pageAdded(page);
     emit pageCountChanged();
 }
 
-void Body::removePage(Page* page)
+void Body::removePage(Page *page)
 {
     d->pages.removeAll(page);
     emit pageCountChanged();
 }
 
-bool Body::swapPages(Page* swapThis, Page* withThis)
+bool Body::swapPages(Page *swapThis, Page *withThis)
 {
     int index1 = d->pages.indexOf(swapThis);
     int index2 = d->pages.indexOf(withThis);
-    if(index1 > -1 && index2 > -1) {
+    if (index1 > -1 && index2 > -1) {
         d->pages.swapItemsAt(index1, index2);
         emit pageCountChanged();
         return true;
