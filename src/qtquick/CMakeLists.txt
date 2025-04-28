@@ -4,6 +4,7 @@
 add_subdirectory(karchive-rar)
 
 add_library(qtquick_internal STATIC)
+set_target_properties(qtquick_internal PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
 target_sources(qtquick_internal PUBLIC
     karchive-rar/KRar.cpp
@@ -57,10 +58,6 @@ target_sources(perusethumbnail PRIVATE
 if(USE_PERUSE_PDFTHUMBNAILER)
     target_sources(perusethumbnail PRIVATE
         PDFCoverImageProvider.cpp
-    )
-
-    target_compile_definitions(peruseqmlplugin PRIVATE
-        -DUSE_PERUSE_PDFTHUMBNAILER
     )
 endif()
 
@@ -118,6 +115,12 @@ if (ZLIB_FOUND)
     target_link_libraries(peruseqmlplugin PRIVATE ${ZLIB_LIBRARIES})
     add_definitions(-DHAVE_ZLIB)
 endif(ZLIB_FOUND)
+
+if(USE_PERUSE_PDFTHUMBNAILER)
+    target_compile_definitions(peruseqmlplugin PRIVATE
+        -DUSE_PERUSE_PDFTHUMBNAILER
+    )
+endif()
 
 ecm_finalize_qml_module(peruseqmlplugin DESTINATION ${KDE_INSTALL_QMLDIR})
 

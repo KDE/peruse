@@ -52,7 +52,6 @@ find_package(KF6 ${KF_DEP_VERSION} REQUIRED
     Attica
     Codecs
     Completion
-    ConfigWidgets
     CoreAddons
     ItemViews
     JobWidgets
@@ -62,7 +61,6 @@ find_package(KF6 ${KF_DEP_VERSION} REQUIRED
     Solid
     WidgetsAddons
     WindowSystem
-    XmlGui
 )
 
 if (NOT WIN32)
