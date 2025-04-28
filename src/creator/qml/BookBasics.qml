@@ -19,13 +19,15 @@
  *
  */
 
-import QtQuick 2.12
-import QtQuick.Layouts 1.4
-import QtQuick.Controls 2.12 as QtControls
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls as QtControls
 
-import org.kde.kirigami 2.13 as Kirigami
+import org.kde.kirigami as Kirigami
+import org.kde.kirigamiaddons.delegates as Delegates
 
 import org.kde.peruse as Peruse
+
 /**
  * @brief the page shows basic information about the book
  */
@@ -95,32 +97,22 @@ Kirigami.ScrollablePage {
                 text: i18nc("Header for a list which shows every file contained in the archive which makes up this book", "Every File In The Book:");
             }
         }
-        delegate: Kirigami.SwipeListItem {
-            id: listItem;
+        delegate: Delegates.RoundedItemDelegate {
+            id: listItem
+
+            required property int index
+            required property var modelData
+
             property int depth: (modelData.match(/\//g) || []).length;
             property bool isDirectory: root.model.fileEntryIsDirectory(modelData);
             property bool markedForDeletion: root.model.fileEntriesToDelete.includes(modelData);
             property int isReferenced: root.model.fileEntryReferenced(modelData);
-            height: Kirigami.Units.iconSizes.huge + Kirigami.Units.smallSpacing * 2;
-            supportsMouseEvents: true;
+
             onClicked: {
                 // Show a dialog with details for this file...
             }
-            actions: [
-                Kirigami.Action {
-                    text: listItem.markedForDeletion
-                        ? i18nc("action which marks the file to be included next time the book is saved", "Include File")
-                        : i18nc("action which marks the file to NOT be included next time the book is saved", "Mark File For Deletion");
-                    icon.name: listItem.markedForDeletion ? "list-add" : "list-remove"
-                    onTriggered: {
-                        root.model.markArchiveFileForDeletion(modelData, !listItem.markedForDeletion);
-                    }
-                    visible: !listItem.isDirectory;
-                }
-            ]
+            background: null // see above
             contentItem: RowLayout {
-                Layout.fillWidth: true;
-                Layout.fillHeight: true;
                 Repeater {
                     model: listItem.depth;
                     Rectangle {
@@ -199,6 +191,18 @@ Kirigami.ScrollablePage {
                             }
                         }
                     }
+                }
+
+                QtControls.Button {
+                    text: listItem.markedForDeletion
+                        ? i18nc("action which marks the file to be included next time the book is saved", "Include File")
+                        : i18nc("action which marks the file to NOT be included next time the book is saved", "Mark File For Deletion");
+                    icon.name: listItem.markedForDeletion ? "list-add" : "list-remove"
+                    onClicked: {
+                        root.model.markArchiveFileForDeletion(modelData, !listItem.markedForDeletion);
+                    }
+                    visible: !listItem.isDirectory;
+                    display: QtControls.Button.IconOnly
                 }
             }
         }
