@@ -25,7 +25,7 @@ ecm_add_qml_module(perusecreator
         qml/Main.qml
         qml/MessageBoxSheet.qml
         qml/PageMetaInfo.qml
-        qml/Settings.qml
+        qml/SettingsPage.qml
         qml/WelcomePage.qml
         qml/metainfoeditors/AuthorEntryEditor.qml
         qml/metainfoeditors/LanguageTextEntryEditor.qml

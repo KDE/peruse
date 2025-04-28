@@ -74,7 +74,7 @@ Kirigami.ApplicationWindow {
     }
 
     contextDrawer: Kirigami.ContextDrawer {}
-    globalDrawer: Kirigami.ContextDrawer {
+    globalDrawer: Kirigami.OverlayDrawer {
         edge: Qt.application.layoutDirection === Qt.RightToLeft ? Qt.RightEdge : Qt.LeftEdge
         modal: Kirigami.Settings.isMobile || (applicationWindow().width < Kirigami.Units.gridUnit * 50 && !collapsed) // Only modal when not collapsed, otherwise collapsed won't show.
         z: modal ? Math.round(position * 10000000) : 100
@@ -302,13 +302,12 @@ Kirigami.ApplicationWindow {
     }
 
     Component {
-        id: settingsPage;
-        Settings {
-        }
+        id: settingsPage
+        SettingsPage { }
     }
 
     Component {
-        id: aboutPage;
+        id: aboutPage
         FormCard.AboutPage {}
     }
 
