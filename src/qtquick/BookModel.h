@@ -223,7 +223,7 @@ public:
      * ownership of the object. It will further delete any previous objects set as
      * acbfData.
      */
-    void setAcbfData(QObject* obj);
+    virtual void setAcbfData(QObject* obj);
     /**
      * \brief Fires when the ACBF data has changed.
      */

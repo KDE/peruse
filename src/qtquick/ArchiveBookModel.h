@@ -255,9 +255,13 @@ public:
     Q_INVOKABLE QString firstAvailableFont(const QStringList& fontList);
 
     friend class ArchiveImageRunnable;
+
+    void setAcbfData(QObject* obj) override;
+
 protected:
     const KArchiveFile* archiveFile(const QString& filePath) const;
     QMutex archiveMutex;
+
 
 private:
     class Private;

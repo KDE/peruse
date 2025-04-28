@@ -25,102 +25,102 @@ import QtQuick.Controls as QtControls
 
 import org.kde.kirigami as Kirigami
 import org.kde.kirigamiaddons.delegates as Delegates
+import org.kde.kirigamiaddons.formcard as FormCard
 
 import org.kde.peruse as Peruse
+import org.kde.peruse.acbf as Acbf
 
 /**
  * @brief the page shows basic information about the book
  */
 Kirigami.ScrollablePage {
-    id: root;
-    property string categoryName: "bookStylesheet";
-    property QtObject model;
-    signal requestCategoryChange(string categoryName);
-    title: i18nc("title of the page which lets the user manage the book's stylesheet", "Stylesheet");
-    actions: [
-        saveBookAction,
-        addStyleAction,
-    ]
-    Kirigami.Action {
-        id: saveBookAction;
-        text: i18nc("Saves the book to a file on disk", "Save Book");
-        icon.name: "document-save-symbolic"
-        onTriggered: root.model.saveBook();
-        enabled: root.model ? root.model.hasUnsavedChanges : false;
-    }
-    Kirigami.Action {
-        id: addStyleAction;
-        text: i18nc("Creates a new, empty stylesheet entry and lets the user edit it", "Add Style...");
-        icon.name: "list-add-font-symbolic";
-        onTriggered: {
-            var newStyle = root.model.acbfData.styleSheet.addStyle();
-            editStyleSheet.editStyle(newStyle);
-        }
-    }
+    id: root
 
-    Kirigami.OverlaySheet {
-        id: editStyleSheet;
-        property QtObject styleObject: null;
-        function editStyle(styleObject) {
+    property string categoryName: "bookStylesheet"
+    property QtObject model
+
+    signal requestCategoryChange(string categoryName)
+
+    title: i18nc("title of the page which lets the user manage the book's stylesheet", "Stylesheet")
+    actions: [
+        Kirigami.Action {
+            id: saveBookAction
+            text: i18nc("Saves the book to a file on disk", "Save Book")
+            icon.name: "document-save-symbolic"
+            onTriggered: root.model.saveBook();
+            enabled: root.model?.hasUnsavedChanges ?? false
+        },
+        Kirigami.Action {
+            id: addStyleAction
+            text: i18nc("Creates a new, empty stylesheet entry and lets the user edit it", "Add Style...")
+            icon.name: "list-add-font-symbolic"
+            onTriggered: {
+                const newStyle = root.model.acbfData.styleSheet.addStyle();
+                editStyleSheet.editStyle(newStyle);
+            }
+        }
+    ]
+
+    FormCard.FormCardDialog {
+        id: editStyleSheet
+
+        property Acbf.Style styleObject: null;
+
+        function editStyle(styleObject: Acbf.Style): void {
             editStyleSheet.styleObject = styleObject;
-            styleElement.text = styleObject.element;
+            styleElement.currentIndex = styleElement.indexOfValue(styleObject.element);
+            if (styleElement.currentIndex === -1) {
+                styleElement.currentIndex = 0;
+            }
+            inverted.checked = styleObject.inverted;
+            color.color = styleObject.color;
+            type.currentIndex = type.indexOfValue(styleObject.type);
+            if (type.currentIndex === -1) {
+                type.currentIndex = 0;
+            }
             open();
         }
-        showCloseButton: true
-        header: RowLayout {
-            Kirigami.Heading {
-                text: i18nc("title text for a sheet which lets the user edit a binary entry", "Edit Style");
-                Layout.fillWidth: true;
-                elide: Text.ElideRight;
-            }
-            QtControls.ToolButton {
-                icon.name: "document-save";
-                text: i18nc("label for a button which updates the style entry with the new details", "OK");
-                onClicked: {
-                    editStyleSheet.styleObject.element = styleElement.text;
-                    editStyleSheet.close();
-                }
-            }
+
+        title: i18nc("@title:dialog", "Edit Style")
+
+        standardButtons: QtControls.Dialog.Cancel | QtControls.Dialog.Save
+        implicitWidth: Math.min(parent.width - Kirigami.Units.gridUnit * 2, Kirigami.Units.gridUnit * 25)
+
+        onRejected: close()
+        onAccepted: {
+            styleObject.element = styleElement.currentValue;
+            styleObject.inverted = inverted.checked;
+            styleObject.color = color.color;
+            close();
         }
-        Kirigami.FormLayout {
-            QtControls.TextField {
-                id: styleElement;
-                Layout.fillWidth: true;
-                Kirigami.FormData.label: i18nc("Label for the style element input field", "Element");
-                placeholderText: i18nc("Placeholder text for the style element input field", "Enter the name of the element you want to style");
-            }
+
+        FormCard.FormComboBoxDelegate {
+            id: styleElement
+            text: i18nc("Label for the style element input field", "Element");
+            model: ["*", "text-area", "emphasis", "strong"]
+        }
+
+        FormCard.FormSwitchDelegate {
+            id: inverted
+            text: i18nc("@option:check", "Apply to style elements which request an inverted scheme");
+        }
+
+        FormCard.FormComboBoxDelegate {
+            id: type
+            text: i18nc("@option:check", "Sub-element selector type");
+            model: [i18n("None"), "code", "letter", "commentary", "formal", "heading", "audio", "thought", "sign"]
+        }
+
+        FormCard.FormColorDelegate {
+            id: color
+            text: i18nc("@option:check", "Color");
         }
     }
 
     ListView {
-        id: stylesList;
-        Layout.fillWidth: true;
-        model: root.model.acbfData.styleSheet.styles;
-        header: ColumnLayout {
-            width: stylesList.width - Kirigami.Units.largeSpacing * 4;
-            Item { height: Kirigami.Units.largeSpacing; Layout.fillWidth: true; }
-            RowLayout {
-                Layout.fillWidth: true;
-                Item { height: Kirigami.Units.gridUnit; Layout.fillWidth: true; Layout.minimumWidth: Kirigami.Units.largeSpacing * 2; }
-                Kirigami.AbstractCard {
-                    header: Kirigami.Heading {
-                        text: stylesList.count === 0
-                            ? i18nc("title text for a card which informs the user there are no styles defined, and what those are", "No Styling Information")
-                            : i18nc("title text for a card which informs the user what styles are", "Styling Information");
-                        Layout.fillWidth: true;
-                        elide: Text.ElideRight;
-                    }
-                    contentItem: QtControls.Label {
-                        Layout.fillWidth: true;
-                        wrapMode: Text.Wrap;
-                        text: stylesList.count === 0
-                            ? i18nc("Help text for the stylesheet page, when there are no styles defined", "There is no embedded data in your book yet. You can add such data by creating a new entry, and then adding data to that entry from some existing file on your system. That data will be imported into your book, and leaves the external file otherwise untouched.")
-                            : i18nc("Help text for the stylesheet page, when there is already styles defined in the book", "You can add such new binary data entries by creating a new entry, and then adding data to that entry from some existing file on your system. That data will be imported into your book, and leaves the external file otherwise untouched.");
-                    }
-                }
-            }
-            Item { height: Kirigami.Units.largeSpacing; Layout.fillWidth: true; }
-        }
+        id: stylesList
+
+        model: root.model.acbfData.styleSheet.styles
         delegate: Delegates.RoundedItemDelegate {
             id: listItem
             onClicked: {
@@ -149,25 +149,14 @@ Kirigami.ScrollablePage {
                 }
             }
         }
-        Rectangle {
-            id: processingBackground;
-            anchors.fill: parent;
-            opacity: root.model && root.model.processing ? 0.5 : 0;
-            Behavior on opacity { NumberAnimation { duration: mainWindow.animationDuration; } }
-            MouseArea {
-                anchors.fill: parent;
-                enabled: parent.opacity > 0;
-                onClicked: { }
-            }
-        }
-        QtControls.BusyIndicator {
-            anchors {
-                horizontalCenter: processingBackground.horizontalCenter;
-                top: parent.top
-                topMargin: x;
-            }
-            running: processingBackground.opacity > 0;
-            visible: running;
+
+        Kirigami.PlaceholderMessage {
+            text: i18nc("@info:placeholder", "No Styling Information")
+            explanation: i18nc("@info:placeholder", "You can add such data by creating a new entry, and then adding data to that entry from some existing file on your system. That data will be imported into your book, and leaves the external file otherwise untouched.")
+            visible: stylesList.count === 0
+            width: parent.width - Kirigami.Units.gridUnit * 4
+            anchors.centerIn: parent
+            helpfulAction: addStyleAction
         }
     }
 }

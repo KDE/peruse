@@ -45,7 +45,7 @@ public:
     QString title;
     QList<BookPage*> entries;
     int currentPage;
-    AdvancedComicBookFormat::Document* acbfData;
+    AdvancedComicBookFormat::Document* acbfData = nullptr;
     bool processing;
     QString processingDescription;
 };

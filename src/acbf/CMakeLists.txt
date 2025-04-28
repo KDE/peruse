@@ -152,3 +152,19 @@ ecm_qt_install_logging_categories(
     FILE AdvancedComicBookFormat.categories
     DESTINATION ${KDE_INSTALL_LOGGINGCATEGORIESDIR}
 )
+
+### QML Plugin
+
+ecm_add_qml_module(acbfplugin
+    URI "org.kde.peruse.acbf"
+    GENERATE_PLUGIN_SOURCE
+    DEPENDENCIES
+        org.kde.coreaddons
+    SOURCES
+        qmlplugin.h
+        qmlplugin.cpp
+)
+
+target_link_libraries(acbfplugin PUBLIC acbf Qt::QmlIntegration)
+
+ecm_finalize_qml_module(acbfplugin DESTINATION ${KDE_INSTALL_QMLDIR} EXPORT KirigamiAddonsTargets)

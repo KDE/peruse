@@ -52,11 +52,11 @@ namespace AdvancedComicBookFormat
 class ACBF_EXPORT Document : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(AdvancedComicBookFormat::Metadata *metaData READ metaData NOTIFY metaDataChanged)
-    Q_PROPERTY(AdvancedComicBookFormat::Body *body READ body NOTIFY bodyChanged)
-    Q_PROPERTY(AdvancedComicBookFormat::References *references READ references NOTIFY referencesChanged)
-    Q_PROPERTY(AdvancedComicBookFormat::Data *data READ data NOTIFY dataChanged)
-    Q_PROPERTY(AdvancedComicBookFormat::StyleSheet *styleSheet READ styleSheet NOTIFY stylesheetChanged)
+    Q_PROPERTY(AdvancedComicBookFormat::Metadata *metaData READ metaData CONSTANT)
+    Q_PROPERTY(AdvancedComicBookFormat::Body *body READ body CONSTANT)
+    Q_PROPERTY(AdvancedComicBookFormat::References *references READ references CONSTANT)
+    Q_PROPERTY(AdvancedComicBookFormat::Data *data READ data CONSTANT)
+    Q_PROPERTY(AdvancedComicBookFormat::StyleSheet *styleSheet READ styleSheet CONSTANT)
 public:
     explicit Document(QObject* parent = nullptr);
     ~Document() override;
@@ -75,19 +75,11 @@ public:
      * @returns The metadata object.
      */
     Metadata* metaData() const;
-    /**
-     * @brief fires when the metadata is changed.
-     */
-    Q_SIGNAL void metaDataChanged();
 
     /**
      * @returns the Body object.
      */
     Body* body() const;
-    /**
-     * @return fires when the body changes. Not used.
-     */
-    Q_SIGNAL void bodyChanged();
     
     /**
      * @brief The reference section.
@@ -95,19 +87,11 @@ public:
      * @return a References object with the references.
      */
     References* references() const;
-    /**
-     * Fired when the references change. Not used (track the references inside the References object itself).
-     */
-    Q_SIGNAL void referencesChanged();
 
     /**
      * @returns the Data object.
      */
     Data* data() const;
-    /**
-     * Fired when the data changes. Not used (track the binary data inside the Data object itself)
-     */
-    Q_SIGNAL void dataChanged();
 
     /**
      * @brief The style section, which contains a css stylesheet.
@@ -115,11 +99,6 @@ public:
      * @return A StyleSheet object with the css.
      */
     StyleSheet* styleSheet() const;
-    /**
-     * Fired when the stylesheet changes.
-     * Not used (track the stylesheet information inside the stylesheet object itself)
-     */
-    Q_SIGNAL void stylesheetChanged();
 
     /**
      * Find some child object by their string ID

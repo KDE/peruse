@@ -37,29 +37,24 @@ using namespace AdvancedComicBookFormat;
 
 class Document::Private {
 public:
-    Private()
-        : metaData(nullptr)
-        , body(nullptr)
-        , data(nullptr)
+    Private(Metadata *_metadata, Body *_body, Data *_data, References *_references, StyleSheet *_styleSheet)
+        : metaData(_metadata)
+        , body(_body)
+        , data(_data)
+        , references(_references)
+        , cssStyleSheet(_styleSheet)
     {}
-    Metadata* metaData;
-    Body* body;
-    Data* data;
-    References* references;
-    StyleSheet* cssStyleSheet;
+    Metadata* const metaData;
+    Body* const body;
+    Data* const data;
+    References* const references;
+    StyleSheet* const cssStyleSheet;
 };
 
 Document::Document(QObject* parent)
     : QObject(parent)
-    , d(new Private)
+    , d(new Private(new Metadata(this), new Body(this), new Data(this), new References(this), new StyleSheet(this)))
 {
-    static const int typeId = qRegisterMetaType<QObjectList>("QObjectList");
-    Q_UNUSED(typeId);
-    d->metaData = new Metadata(this);
-    d->body = new Body(this);
-    d->data = new Data(this);
-    d->references = new References(this);
-    d->cssStyleSheet = new StyleSheet(this);
 }
 
 Document::~Document() = default;

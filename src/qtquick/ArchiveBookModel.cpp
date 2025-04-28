@@ -162,9 +162,31 @@ public:
 
         q->setAcbfData(acbfDocument);
         setDirty();
+
         return acbfDocument;
     }
 };
+
+void ArchiveBookModel::setAcbfData(QObject* obj)
+{
+    auto old = acbfData();
+
+    if (old) {
+        if (auto document = qobject_cast<AdvancedComicBookFormat::Document *>(old)) {
+            disconnect(document->styleSheet(), &AdvancedComicBookFormat::StyleSheet::stylesChanged, this, nullptr);
+        }
+    }
+
+    BookModel::setAcbfData(obj);
+
+    if (obj) {
+        if (auto document = qobject_cast<AdvancedComicBookFormat::Document *>(obj)) {
+            connect(document->styleSheet(), &AdvancedComicBookFormat::StyleSheet::stylesChanged, this, [this]() {
+                d->setDirty();
+            });
+        }
+    }
+}
 
 ArchiveBookModel::ArchiveBookModel(QObject* parent)
     : BookModel(parent)
