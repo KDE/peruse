@@ -21,7 +21,7 @@
 
 import QtQuick
 import QtQuick.Controls as QtControls
-import Qt.labs.folderlistmodel 2.1
+import Qt.labs.folderlistmodel
 
 import org.kde.kirigami as Kirigami
 import org.kde.kirigamiaddons.delegates as Delegates

@@ -19,11 +19,11 @@
  *
  */
 
-import QtQuick 2.12
-import QtQuick.Layouts 1.12
-import QtQuick.Window 2.12
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Window
 
-import org.kde.kirigami 2.13 as Kirigami
+import org.kde.kirigami as Kirigami
 
 import org.kde.peruse as Peruse
 import "helpers" as Helpers

@@ -19,7 +19,7 @@
  *
  */
 
-import QtQuick 2.12
+import QtQuick
 
 /**
  * @brief Renders a rectangle of a solid color, with a hole somewhere inside it

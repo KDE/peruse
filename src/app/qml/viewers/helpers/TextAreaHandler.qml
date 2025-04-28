@@ -19,10 +19,10 @@
  *
  */
 
-import QtQuick 2.12
-import QtQuick.Controls 2.12 as QQC2
-import QtQuick.Shapes 1.15
-import org.kde.kirigami 2.7 as Kirigami
+import QtQuick
+import QtQuick.Controls as QQC2
+import QtQuick.Shapes
+import org.kde.kirigami as Kirigami
 import org.kde.peruse as Peruse
 
 Item {

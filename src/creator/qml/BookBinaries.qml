@@ -19,11 +19,11 @@
  *
  */
 
-import QtQuick 2.12
-import QtQuick.Layouts 1.4
-import QtQuick.Controls 2.12 as QtControls
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls as QtControls
 
-import org.kde.kirigami 2.13 as Kirigami
+import org.kde.kirigami as Kirigami
 import org.kde.kirigamiaddons.delegates as Delegates
 
 import org.kde.peruse as Peruse

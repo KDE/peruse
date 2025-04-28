@@ -23,7 +23,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as QQC2
 import org.kde.kirigami as Kirigami
-import org.kde.kirigamiaddons.formcard 1.0 as FormCard
+import org.kde.kirigamiaddons.formcard as FormCard
 
 /**
  * @brief The page on which Peruse Creator opens.

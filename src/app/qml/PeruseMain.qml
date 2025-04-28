@@ -26,7 +26,7 @@ import QtQuick.Controls as QQC2
 import org.kde.kirigami as Kirigami
 import org.kde.kirigamiaddons.delegates as Delegates
 import org.kde.peruse as Peruse
-import org.kde.contentlist 0.1
+import org.kde.contentlist
 
 /**
  * @brief main application window.

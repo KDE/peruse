@@ -19,9 +19,9 @@
  *
  */
 
-import QtQuick 2.12
-import QtQuick.Shapes 1.15
-import org.kde.kirigami 2.7 as Kirigami
+import QtQuick
+import QtQuick.Shapes
+import org.kde.kirigami as Kirigami
 
 /**
  * @brief a component that should handle jumps

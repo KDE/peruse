@@ -19,8 +19,8 @@
  *
  */
 
-import QtQuick 2.12
-import org.kde.kirigami 2.7 as Kirigami
+import QtQuick
+import org.kde.kirigami as Kirigami
 
 /**
  * @brief Navigation overlay for all books

@@ -19,10 +19,10 @@
  *
  */
 
-import QtQuick 2.12
-import QtQuick.Controls 2.12 as QQC2
+import QtQuick
+import QtQuick.Controls as QQC2
 
-import org.kde.kirigami 2.7 as Kirigami
+import org.kde.kirigami as Kirigami
 /**
  * Page that holds an image to edit the frames on.
  */

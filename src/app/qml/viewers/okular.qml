@@ -19,11 +19,11 @@
  *
  */
 
-import QtQuick 2.12
-import QtQuick.Controls 2.12 as QtControls
+import QtQuick
+import QtQuick.Controls as QtControls
 
-import org.kde.kirigami 2.7 as Kirigami
-import org.kde.okular 2.0 as Okular
+import org.kde.kirigami as Kirigami
+import org.kde.okular as Okular
 
 import "helpers" as Helpers
 
