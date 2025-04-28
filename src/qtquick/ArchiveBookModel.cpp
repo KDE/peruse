@@ -47,7 +47,7 @@
 #include <kzip.h>
 #include "KRar.h" // "" because it's a custom thing for now
 
-#include <qregularexpression.h>
+#include <QRegularExpression>
 #include <qtquick_debug.h>
 #include <AcbfData.h>
 
@@ -740,7 +740,6 @@ void ArchiveBookModel::addPageFromFile(QString fileUrl, int insertAfter)
         d->fileEntries.sort();
         Q_EMIT fileEntriesChanged();
         saveBook();
-        qWarning() << "Page added";
     }
 }
 
