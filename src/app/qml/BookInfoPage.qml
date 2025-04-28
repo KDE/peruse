@@ -31,7 +31,7 @@ FormCard.FormCardPage {
     }
 
     Kirigami.Heading {
-        text: root.title
+        text: root.bookEntry.title
         horizontalAlignment: Qt.AlignHCenter
 
         Layout.fillWidth: true

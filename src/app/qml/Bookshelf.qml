@@ -47,7 +47,7 @@ Kirigami.ScrollablePage {
     signal bookSelected(string filename, int currentPage);
 
     property bool isCurrentContext: isCurrentPage && !applicationWindow().bookOpen
-    property alias pageHeader: shelfList.header;
+    property alias pageHeader: contentDirectoryView.header;
     property string categoryName: "bookshelf";
     property QtObject model;
     /**
@@ -63,7 +63,7 @@ Kirigami.ScrollablePage {
 
     function openBook(index: int): void {
         applicationWindow().contextDrawer.close();
-        const whatModel = isSearching ? searchFilterProxy.sourceModel : shelfList.model;
+        const whatModel = isSearching ? searchFilterProxy.sourceModel : contentDirectoryView.model;
         const whatIndex = isSearching ? searchFilterProxy.sourceIndex(index) : index;
         if (!whatModel) {
             return;
@@ -113,7 +113,8 @@ Kirigami.ScrollablePage {
     }
 
     GridView {
-        id: shelfList;
+        id: contentDirectoryView
+
         model: isSearching ? searchFilterProxy : root.model;
         Peruse.FilterProxy {
             id: searchFilterProxy;
@@ -125,16 +126,23 @@ Kirigami.ScrollablePage {
         Kirigami.PlaceholderMessage {
             id: placeholderMessage
             width: parent.width - (Kirigami.Units.gridUnit * 4)
-            visible: shelfList.count === 0
+            visible: contentDirectoryView.count === 0
             anchors.centerIn: parent
             text: i18nc("Placeholder Text when there are no comics in the library that match the filter", "No matches")
         }
 
-        readonly property int scrollBarSpace: root.flickable.QtControls.ScrollBar.vertical ? root.flickable.QtControls.ScrollBar.vertical.width : 0
-        readonly property int availableWidth: shelfList.width - scrollBarSpace - 4
-        readonly property int implicitCellWidth: Kirigami.Units.gridUnit * 15
-        cellWidth: Math.floor(availableWidth / Math.max(Math.floor(availableWidth / (implicitCellWidth + Kirigami.Units.gridUnit)), 2))
-        cellHeight: Kirigami.Units.gridUnit * 13;
+        cellWidth: {
+            const viewWidth = contentDirectoryView.width - Kirigami.Units.smallSpacing * 2;
+            let columns = Math.max(Math.floor(viewWidth / 170), 2);
+            return Math.floor(viewWidth / columns);
+        }
+        cellHeight: {
+            if (Kirigami.Settings.isMobile) {
+                return cellWidth + Kirigami.Units.gridUnit * 2 + Kirigami.Units.largeSpacing;
+            } else {
+                return 170 + Kirigami.Units.gridUnit * 2 + Kirigami.Units.largeSpacing
+            }
+        }
 
         currentIndex: -1
 
@@ -166,23 +174,23 @@ Kirigami.ScrollablePage {
             DelegateChoice {
                 roleValue: "category"
                 ListComponents.CategoryTileTall {
-                    height: shelfList.cellHeight
-                    width: shelfList.cellWidth
+                    width: Kirigami.Settings.isMobile ? contentDirectoryView.cellWidth : 170
+                    height: contentDirectoryView.cellHeight
 
-                    selected: shelfList.currentIndex === index
+                    selected: contentDirectoryView.currentIndex === index
                 }
             }
 
             DelegateChoice {
                 roleValue: "book"
                 ListComponents.BookTileTall {
-                    height: shelfList.cellHeight
-                    width: shelfList.cellWidth
+                    width: Kirigami.Settings.isMobile ? contentDirectoryView.cellWidth : 170
+                    height: contentDirectoryView.cellHeight
                     //author: model.author ? model.author : i18nc("used for the author data in book lists if author is empty", "(unknown)");
-                    selected: shelfList.currentIndex === index
+                    selected: contentDirectoryView.currentIndex === index
                     onBookSelected: root.bookSelected(filename, currentPage);
                     onPressAndHold: {
-                        const whatModel = isSearching ? searchFilterProxy.sourceModel : shelfList.model;
+                        const whatModel = isSearching ? searchFilterProxy.sourceModel : contentDirectoryView.model;
                         const whatIndex = isSearching ? searchFilterProxy.sourceIndex(index) : index;
                         contextMenu.currentBook = whatModel.getBookEntry(whatIndex);
                         contextMenu.popup();
