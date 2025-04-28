@@ -20,75 +20,29 @@
  */
 
 #include "CategoryEntriesModel.h"
-#include "PropertyContainer.h"
-#include <KFileMetaData/UserMetaData>
+
 #include <QDir>
 #include <QFileInfo>
+#include <QMimeDatabase>
+
+#include <KFileMetaData/UserMetaData>
 
 class CategoryEntriesModel::Private {
 public:
     Private(CategoryEntriesModel* qq)
         : q(qq)
     {};
-    ~Private()
-    {
-        // No deleting the entries - this is done by the master BookListModel already, so do that at your own risk
-        // If we have manually unwrapped any books, though, those need removing
-        qDeleteAll(unwrappedBooks);
-    }
+    ~Private() = default;
     CategoryEntriesModel* q;
     QString name;
-    QList<BookEntry*> entries;
-    QList<CategoryEntriesModel*> categoryModels;
-
-    QObject* wrapBookEntry(const BookEntry* entry) {
-        PropertyContainer* obj = new PropertyContainer("book", q);
-        obj->setProperty("author", entry->author);
-        obj->setProperty("currentPage", QString::number(entry->currentPage));
-        obj->setProperty("filename", entry->filename);
-        obj->setProperty("filetitle", entry->filetitle);
-        obj->setProperty("genres", entry->genres);
-        obj->setProperty("keywords", entry->keywords);
-        obj->setProperty("characters", entry->characters);
-        obj->setProperty("created", entry->created);
-        obj->setProperty("lastOpenedTime", entry->lastOpenedTime);
-        obj->setProperty("publisher", entry->publisher);
-        obj->setProperty("series", entry->series);
-        obj->setProperty("title", entry->title);
-        obj->setProperty("totalPages", entry->totalPages);
-        obj->setProperty("thumbnail", entry->thumbnail);
-        obj->setProperty("description", entry->description);
-        obj->setProperty("comment", entry->comment);
-        obj->setProperty("tags", entry->tags);
-        obj->setProperty("rating", QString::number(entry->rating));
-        return obj;
-    }
-
-    QList<BookEntry*> unwrappedBooks;
-    BookEntry* unwrapBookEntry(const QObject* obj) {
-        BookEntry* entry = new BookEntry;
-        entry->author = obj->property("author").toStringList();
-        entry->currentPage = obj->property("currentPage").toInt();
-        entry->filename = obj->property("filename").toString();
-        entry->filetitle = obj->property("filetitle").toString();
-        entry->genres = obj->property("genres").toStringList();
-        entry->keywords = obj->property("keywords").toStringList();
-        entry->characters = obj->property("characters").toStringList();
-        entry->created = obj->property("created").toDateTime();
-        entry->lastOpenedTime = obj->property("lastOpenedTime").toDateTime();
-        entry->publisher = obj->property("publisher").toString();
-        entry->series = obj->property("series").toStringList();
-        entry->title = obj->property("title").toString();
-        entry->totalPages = obj->property("totalPages").toInt();
-        entry->thumbnail = obj->property("thumbnail").toString();
-        entry->description = obj->property("description").toStringList();
-        entry->comment = obj->property("comment").toString();
-        entry->tags = obj->property("tags").toStringList();
-        entry->rating = obj->property("rating").toInt();
-        unwrappedBooks << entry;
-        return entry;
-    }
+    QList<BookEntry> entries;
+    QList<CategoryEntriesModel *> categoryModels;
 };
+
+bool operator==(const BookEntry &b1, const BookEntry &b2) noexcept
+{
+    return b1.filename == b2.filename;
+}
 
 CategoryEntriesModel::CategoryEntriesModel(QObject* parent)
     : QAbstractListModel(parent)
@@ -154,56 +108,56 @@ QVariant CategoryEntriesModel::data(const QModelIndex& index, int role) const
         }
     }
 
-    const BookEntry* entry = d->entries[index.row() - d->categoryModels.count()];
+    const BookEntry &entry = d->entries[index.row() - d->categoryModels.count()];
     switch(role) {
     case Qt::DisplayRole:
     case TypeRole:
         return "book";
     case FilenameRole:
-        return entry->filename;
+        return entry.filename;
     case FiletitleRole:
-        return entry->filetitle;
+        return entry.filetitle;
     case TitleRole:
-        return entry->title;
+        return entry.title;
     case GenreRole:
-        return entry->genres;
+        return entry.genres;
     case KeywordRole:
-        return entry->keywords;
+        return entry.keywords;
     case CharacterRole:
-        return entry->characters;
+        return entry.characters;
     case SeriesRole:
-        return entry->series;
+        return entry.series;
     case SeriesNumbersRole:
-        return entry->seriesNumbers;
+        return entry.seriesNumbers;
     case SeriesVolumesRole:
-        return entry->seriesVolumes;
+        return entry.seriesVolumes;
     case AuthorRole:
-        return entry->author;
+        return entry.author;
     case PublisherRole:
-        return entry->publisher;
+        return entry.publisher;
     case CreatedRole:
-        return entry->created;
+        return entry.created;
     case LastOpenedTimeRole:
-        return entry->lastOpenedTime;
+        return entry.lastOpenedTime;
     case TotalPagesRole:
-        return entry->totalPages;
+        return entry.totalPages;
     case CurrentPageRole:
-        return entry->currentPage;
+        return entry.currentPage;
     case CategoryEntriesModelRole:
         // Nothing, if we're not equipped with one such...
         return {};
     case CategoryEntriesCountRole:
         return 0;
     case ThumbnailRole:
-        return entry->thumbnail;
+        return entry.thumbnail;
     case DescriptionRole:
-        return entry->description;
+        return entry.description;
     case CommentRole:
-        return entry->comment;
+        return entry.comment;
     case TagsRole:
-        return entry->tags;
+        return entry.tags;
     case RatingRole:
-        return entry->rating;
+        return entry.rating;
     default:
         return QString("Unknown role");
     }
@@ -221,7 +175,7 @@ int CategoryEntriesModel::count() const
     return rowCount();
 }
 
-void CategoryEntriesModel::append(BookEntry* entry, Roles compareRole)
+void CategoryEntriesModel::append(const BookEntry &entry, Roles compareRole)
 {
     int insertionIndex = 0;
     if(compareRole == UnknownRole) {
@@ -231,10 +185,10 @@ void CategoryEntriesModel::append(BookEntry* entry, Roles compareRole)
     else {
         int seriesOne = -1; int seriesTwo = -1;
         if(compareRole == SeriesRole) {
-            seriesOne = entry->series.indexOf(name());
-            if (entry->series.contains(name(), Qt::CaseInsensitive) && seriesOne == -1){
-                for (int s=0; s<entry->series.size();s++) {
-                    if (QString::compare(name(), entry->series.at(s), Qt::CaseInsensitive)) {
+            seriesOne = entry.series.indexOf(name());
+            if (entry.series.contains(name(), Qt::CaseInsensitive) && seriesOne == -1){
+                for (int s=0; s<entry.series.size();s++) {
+                    if (QString::compare(name(), entry.series.at(s), Qt::CaseInsensitive)) {
                         seriesOne = s;
                     }
                 }
@@ -243,10 +197,10 @@ void CategoryEntriesModel::append(BookEntry* entry, Roles compareRole)
         for(; insertionIndex < d->entries.count(); ++insertionIndex)
         {
             if(compareRole == SeriesRole) {
-                seriesTwo = d->entries.at(insertionIndex)->series.indexOf(name());
-                if ( d->entries.at(insertionIndex)->series.contains(name(), Qt::CaseInsensitive) && seriesTwo == -1){
-                    for (int s=0; s< d->entries.at(insertionIndex)->series.size();s++) {
-                        if (QString::compare(name(), d->entries.at(insertionIndex)->series.at(s), Qt::CaseInsensitive)) {
+                seriesTwo = d->entries.at(insertionIndex).series.indexOf(name());
+                if ( d->entries.at(insertionIndex).series.contains(name(), Qt::CaseInsensitive) && seriesTwo == -1){
+                    for (int s=0; s< d->entries.at(insertionIndex).series.size();s++) {
+                        if (QString::compare(name(), d->entries.at(insertionIndex).series.at(s), Qt::CaseInsensitive)) {
                             seriesTwo = s;
                         }
                     }
@@ -254,27 +208,29 @@ void CategoryEntriesModel::append(BookEntry* entry, Roles compareRole)
             }
             if(compareRole == CreatedRole)
             {
-                if(entry->created <= d->entries.at(insertionIndex)->created)
-                { continue; }
+                if(entry.created <= d->entries.at(insertionIndex).created) {
+                    continue;
+                }
                 break;
             }
             else if((seriesOne>-1 && seriesTwo>-1)
-                    && entry->seriesNumbers.count() > -1 && entry->seriesNumbers.count() > seriesOne
-                    && d->entries.at(insertionIndex)->seriesNumbers.count() > -1 && d->entries.at(insertionIndex)->seriesNumbers.count() > seriesTwo
-                    && entry->seriesNumbers.at(seriesOne).toInt() > 0
-                    && d->entries.at(insertionIndex)->seriesNumbers.at(seriesTwo).toInt() > 0)
+                    && entry.seriesNumbers.count() > -1 && entry.seriesNumbers.count() > seriesOne
+                    && d->entries.at(insertionIndex).seriesNumbers.count() > -1 && d->entries.at(insertionIndex).seriesNumbers.count() > seriesTwo
+                    && entry.seriesNumbers.at(seriesOne).toInt() > 0
+                    && d->entries.at(insertionIndex).seriesNumbers.at(seriesTwo).toInt() > 0)
             {
-                if (entry->seriesVolumes.count() > -1 && entry->seriesVolumes.count() > seriesOne
-                        && d->entries.at(insertionIndex)->seriesVolumes.count() > -1 && d->entries.at(insertionIndex)->seriesVolumes.count() > seriesTwo
-                        && entry->seriesVolumes.at(seriesOne).toInt() >= d->entries.at(insertionIndex)->seriesVolumes.at(seriesTwo).toInt()
-                        && entry->seriesNumbers.at(seriesOne).toInt() > d->entries.at(insertionIndex)->seriesNumbers.at(seriesTwo).toInt())
+                if (entry.seriesVolumes.count() > -1 && entry.seriesVolumes.count() > seriesOne
+                        && d->entries.at(insertionIndex).seriesVolumes.count() > -1 && d->entries.at(insertionIndex).seriesVolumes.count() > seriesTwo
+                        && entry.seriesVolumes.at(seriesOne).toInt() >= d->entries.at(insertionIndex).seriesVolumes.at(seriesTwo).toInt()
+                        && entry.seriesNumbers.at(seriesOne).toInt() > d->entries.at(insertionIndex).seriesNumbers.at(seriesTwo).toInt())
                 {continue;}
                 break;
             }
             else
             {
-                if(QString::localeAwareCompare(d->entries.at(insertionIndex)->title, entry->title) > 0)
-                { break; }
+                if(QString::localeAwareCompare(d->entries.at(insertionIndex).title, entry.title) > 0) {
+                    break;
+                }
             }
         }
     }
@@ -284,16 +240,14 @@ void CategoryEntriesModel::append(BookEntry* entry, Roles compareRole)
     endInsertRows();
 }
 
-void CategoryEntriesModel::appendFakeBook ( QObject* book, CategoryEntriesModel::Roles compareRole )
+void CategoryEntriesModel::appendFakeBook(const BookEntry &book, CategoryEntriesModel::Roles compareRole )
 {
-    append(d->unwrapBookEntry(book), compareRole);
+    append(book, compareRole);
 }
 
 void CategoryEntriesModel::clear()
 {
     beginResetModel();
-    qDeleteAll(d->unwrappedBooks);
-    d->unwrappedBooks.clear();
     d->entries.clear();
     endResetModel();
 }
@@ -308,19 +262,15 @@ void CategoryEntriesModel::setName(const QString& newName)
     d->name = newName;
 }
 
-QObject * CategoryEntriesModel::leafModelForEntry(BookEntry* entry)
+CategoryEntriesModel *CategoryEntriesModel::leafModelForEntry(const BookEntry &entry)
 {
-    QObject* model(nullptr);
-    if(d->categoryModels.count() == 0)
-    {
+    CategoryEntriesModel* model(nullptr);
+    if(d->categoryModels.count() == 0) {
         if(d->entries.contains(entry)) {
             model = this;
         }
-    }
-    else
-    {
-        for(CategoryEntriesModel* testModel : d->categoryModels)
-        {
+    } else {
+        for(CategoryEntriesModel* testModel : std::as_const(d->categoryModels)) {
             model = testModel->leafModelForEntry(entry);
             if(model) {
                 break;
@@ -330,7 +280,7 @@ QObject * CategoryEntriesModel::leafModelForEntry(BookEntry* entry)
     return model;
 }
 
-void CategoryEntriesModel::addCategoryEntry(const QString& categoryName, BookEntry* entry, Roles compareRole)
+void CategoryEntriesModel::addCategoryEntry(const QString& categoryName, const BookEntry &entry, Roles compareRole)
 {
     if(categoryName.length() > 0)
     {
@@ -368,7 +318,7 @@ void CategoryEntriesModel::addCategoryEntry(const QString& categoryName, BookEnt
             d->categoryModels.insert(insertionIndex, categoryModel);
             endInsertRows();
         }
-        if (categoryModel->indexOfFile(entry->filename) == -1) {
+        if (categoryModel->indexOfFile(entry.filename) == -1) {
             categoryModel->append(entry, compareRole);
         }
         if(splitPos > -1)
@@ -376,41 +326,21 @@ void CategoryEntriesModel::addCategoryEntry(const QString& categoryName, BookEnt
     }
 }
 
-QObject* CategoryEntriesModel::get(int index)
+BookEntry CategoryEntriesModel::getBookEntry(int index) const
 {
-    BookEntry* entry = new BookEntry();
-    bool deleteEntry = true;
-    if(index > -1 && index < d->entries.count())
-    {
-        entry = d->entries.at(index);
-        deleteEntry = false;
+    if (index > -1 && index < d->entries.count()) {
+        return d->entries.at(index);
     }
-    QObject* obj = d->wrapBookEntry(entry);
-    if(deleteEntry)
-    {
-        delete entry;
-    }
-    return obj;
+    return BookEntry{};
 }
 
-BookEntry * CategoryEntriesModel::getBookEntry ( int index )
-{
-    BookEntry* entry{nullptr};
-    if(index > -1 && index < d->entries.count())
-    {
-        entry = d->entries.at(index);
-    }
-    return entry;
-}
-
-int CategoryEntriesModel::indexOfFile(const QString& filename)
+int CategoryEntriesModel::indexOfFile(const QString& filename) const
 {
     int index = -1, i = 0;
     if(QFile::exists(filename))
     {
-        for(BookEntry* entry : d->entries)
-        {
-            if(entry->filename == filename)
+        for(const BookEntry &entry : d->entries) {
+            if(entry.filename == filename)
             {
                 index = i;
                 break;
@@ -421,7 +351,7 @@ int CategoryEntriesModel::indexOfFile(const QString& filename)
     return index;
 }
 
-bool CategoryEntriesModel::indexIsBook(int index)
+bool CategoryEntriesModel::indexIsBook(int index) const
 {
     if(index < d->categoryModels.count() || index >= rowCount()) {
         return false;
@@ -434,48 +364,43 @@ int CategoryEntriesModel::bookCount() const
     return d->entries.count();
 }
 
-QObject* CategoryEntriesModel::getEntry(int index)
+CategoryEntriesModel *CategoryEntriesModel::getCategoryEntry(int index) const
 {
-    PropertyContainer* obj = new PropertyContainer("book", this);
     if(index > d->categoryModels.count() - 1 && index < rowCount()) {
-        // This is a book - get a book!
-        obj = qobject_cast<PropertyContainer*>(get(index - d->categoryModels.count()));
+        return nullptr;
     }
-    else if (index >= 0 && index < d->categoryModels.count()) {
-        CategoryEntriesModel* catEntry = d->categoryModels.at(index);
-        obj->setProperty("title", catEntry->name());
-        obj->setProperty("categoryEntriesCount", catEntry->bookCount());
-        obj->setProperty("entriesModel", QVariant::fromValue(catEntry));
+    if (index >= 0 && index < d->categoryModels.count()) {
+        return d->categoryModels.at(index);
     }
-    return obj;
+
+    return nullptr;
 }
 
-QObject* CategoryEntriesModel::bookFromFile(const QString& filename)
+BookEntry CategoryEntriesModel::bookFromFile(const QString& filename) const
 {
-    PropertyContainer* obj = qobject_cast<PropertyContainer*>(get(indexOfFile(filename)));
-    if(obj->property("filename").toString().isEmpty()) {
+    auto obj = getBookEntry(indexOfFile(filename));
+    if(obj.filename.isEmpty()) {
         if(QFileInfo::exists(filename)) {
+            qWarning() << "bookFromFile" << filename;
             QFileInfo info(filename);
-            obj->setProperty("title", info.completeBaseName());
-            obj->setProperty("created", info.birthTime());
+            obj.title = info.completeBaseName();
+            obj.created = info.birthTime();
 
             KFileMetaData::UserMetaData data(filename);
             if (data.hasAttribute("peruse.currentPage")) {
-                int currentPage = data.attribute("peruse.currentPage").toInt();
-                obj->setProperty("currentPage", QVariant::fromValue<int>(currentPage));
+                obj.currentPage = data.attribute("peruse.currentPage").toInt();
             }
             if (data.hasAttribute("peruse.totalPages")) {
-                int totalPages = data.attribute("peruse.totalPages").toInt();
-                obj->setProperty("totalPages", QVariant::fromValue<int>(totalPages));
+                obj.totalPages = data.attribute("peruse.totalPages").toInt();
             }
-            obj->setProperty("rating", QVariant::fromValue<int>(data.rating()));
+            obj.rating = data.rating();
             if (!data.tags().isEmpty()) {
-                obj->setProperty("tags", QVariant::fromValue<QStringList>(data.tags()));
+                obj.tags = data.tags();
             }
             if (!data.userComment().isEmpty()) {
-                obj->setProperty("comment", QVariant::fromValue<QString>(data.userComment()));
+                obj.comment = data.userComment();
             }
-            obj->setProperty("filename", filename);
+            obj.filename = filename;
 
             QString thumbnail;
             if(filename.toLower().endsWith("cbr") || filename.toLower().endsWith("cbz")) {
@@ -489,20 +414,20 @@ QObject* CategoryEntriesModel::bookFromFile(const QString& filename)
             else {
                 thumbnail = QString("image://preview/").append(filename);
             }
-            obj->setProperty("thumbnail", thumbnail);
+            obj.thumbnail = thumbnail;
         }
     }
     return obj;
 }
 
-void CategoryEntriesModel::entryDataChanged(BookEntry* entry)
+void CategoryEntriesModel::entryDataChanged(const BookEntry &entry)
 {
     int entryIndex = d->entries.indexOf(entry) + d->categoryModels.count();
     QModelIndex changed = index(entryIndex);
     dataChanged(changed, changed);
 }
 
-void CategoryEntriesModel::entryRemove(BookEntry* entry)
+void CategoryEntriesModel::entryRemove(const BookEntry &entry)
 {
     int listIndex = d->entries.indexOf(entry);
     if(listIndex > -1) {

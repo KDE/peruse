@@ -24,7 +24,7 @@ Delegates.RoundedItemDelegate {
     required property int categoryEntriesCount
     required property bool selected
 
-    onClicked: applicationWindow().pageStack.push(bookshelf, { focus: true, headerText: root.title, model: root.categoryEntriesModel })
+    onClicked: applicationWindow().pageStack.push(bookshelf, { focus: true, title: root.title, model: root.categoryEntriesModel })
 
     TextMetrics {
         id: categoryTitleSize
@@ -96,7 +96,7 @@ Delegates.RoundedItemDelegate {
                     fill: parent;
                     margins: Kirigami.Units.largeSpacing;
                 }
-                source: root.categoryEntriesModel ? root.categoryEntriesModel.get(0).readProperty("thumbnail") : "";
+                source: root.categoryEntriesModel ? root.categoryEntriesModel.getBookEntry(0).thumbnail : "";
                 placeholder: "application-vnd.oasis.opendocument.text";
                 fallback: "folder-documents-symbolic"
             }

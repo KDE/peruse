@@ -387,7 +387,7 @@ Kirigami.Page {
     onFileChanged: {
         // Let's set the page title to something useful
         var book = contentList.bookFromFile(file);
-        root.title = book.readProperty("title");
+        root.title = book.title;
 
         // The idea is to have a number of specialised options as relevant to various
         // types of comic books, and then finally fall back to Okular as a catch-all

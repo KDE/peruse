@@ -82,7 +82,6 @@ target_sources(peruseqmlplugin PRIVATE
     FilterProxy.cpp
     FolderBookModel.cpp
     PeruseConfig.cpp
-    PropertyContainer.cpp
     TextDocumentEditor.cpp
     TextViewerItem.cpp
 

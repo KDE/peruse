@@ -182,7 +182,7 @@ public:
      * 
      * @param fileName the File Name of the entry to get the series of.
      */
-    Q_INVOKABLE QObject* seriesModelForEntry(QString fileName);
+    Q_INVOKABLE CategoryEntriesModel *seriesModelForEntry(const QString &fileName);
 
     /**
      * @return The categoryEntriesModel that manages the sorting of entries by publisher.

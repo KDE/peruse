@@ -158,11 +158,12 @@ void BalooContentLister::queryResult(const ContentQuery* query, const QString& l
     balooFile.load();
     KFileMetaData::PropertyMap properties = balooFile.properties();
     KFileMetaData::PropertyMap::const_iterator it = properties.constBegin();
-    for (; it != properties.constEnd(); it++)
-    {
+    for (; it != properties.constEnd(); it++) {
         KFileMetaData::PropertyInfo propInfo(it.key());
         metadata[propInfo.name()] = it.value();
     }
+
+    qWarning() << metadata;
 
     emit fileFound(file, metadata);
 }

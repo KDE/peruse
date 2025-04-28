@@ -28,7 +28,7 @@ public:
         : actualContentList(nullptr)
     {
     }
-    QList<ContentEntry *> entries;
+    QList<ContentEntry> entries;
     ContentListerBase *actualContentList;
 
     QList<ContentQuery *> queries;
@@ -124,10 +124,10 @@ void ContentList::fileFound(const QString &filePath, const QVariantMap &metaData
 
     auto fileUrl = QUrl::fromLocalFile(filePath);
 
-    ContentEntry *entry = new ContentEntry();
-    entry->filename = fileUrl.fileName();
-    entry->filePath = fileUrl;
-    entry->metadata = metaData;
+    ContentEntry entry;
+    entry.filename = fileUrl.fileName();
+    entry.filePath = fileUrl;
+    entry.metadata = metaData;
 
     int newRow = d->entries.count();
     beginInsertRows({}, newRow, newRow);
@@ -169,12 +169,13 @@ void ContentList::setKnownFiles(const QStringList &results)
     d->entries.clear();
     d->knownFiles.clear();
     for (const auto &result : results) {
-        auto entry = new ContentEntry{};
-        auto url = QUrl::fromLocalFile(result);
+        const auto url = QUrl::fromLocalFile(result);
 
-        entry->filename = url.fileName();
-        entry->filePath = url;
-        entry->metadata = ContentListerBase::metaDataForFile(result);
+        const ContentEntry entry {
+            url.fileName(),
+            url,
+            ContentListerBase::metaDataForFile(result)
+        };
 
         d->entries.append(entry);
         d->knownFiles.insert(result);
@@ -197,14 +198,14 @@ QVariant ContentList::data(const QModelIndex &index, int role) const
         return {};
     }
 
-    const ContentEntry *entry = d->entries[index.row()];
+    const ContentEntry &entry = d->entries[index.row()];
     switch (role) {
     case FilenameRole:
-        return entry->filename;
+        return entry.filename;
     case FilePathRole:
-        return entry->filePath;
+        return entry.filePath;
     case MetadataRole:
-        return entry->metadata;
+        return entry.metadata;
     }
     return {};
 }

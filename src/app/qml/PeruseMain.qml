@@ -319,12 +319,11 @@ Kirigami.ApplicationWindow {
     }
 
     Component {
-        id: bookshelfTitle;
-        Bookshelf {
-            model: contentList.titleCategoryModel;
-            headerText: i18nc("Title of the page with books grouped by the title start letters", "Group by Title");
-            onBookSelected: mainWindow.showBook(filename, currentPage);
-            categoryName: "bookshelfTitle";
+        id: bookshelfTitle
+
+        BooksByTitlePage {
+            model: contentList
+            onBookSelected: (filename, currentPage) => mainWindow.showBook(filename, currentPage);
         }
     }
 
@@ -332,7 +331,7 @@ Kirigami.ApplicationWindow {
         id: bookshelfAdded;
         Bookshelf {
             model: contentList.newlyAddedCategoryModel;
-            headerText: i18nc("Title of the page with all books ordered by which was added most recently", "Recently Added Books");
+            title: i18nc("Title of the page with all books ordered by which was added most recently", "Recently Added Books");
             sectionRole: "created";
             sectionCriteria: ViewSection.FullString;
             onBookSelected: mainWindow.showBook(filename, currentPage);
@@ -342,31 +341,37 @@ Kirigami.ApplicationWindow {
 
     Component {
         id: bookshelfSeries;
-        Bookshelf {
-            model: contentList.seriesCategoryModel;
-            headerText: i18nc("Title of the page with books grouped by what series they are in", "Group by Series");
-            onBookSelected: mainWindow.showBook(filename, currentPage);
-            categoryName: "bookshelfSeries";
+
+        CategoryPage {
+            model: contentList.seriesCategoryModel
+            categoryName: "bookshelfSeries"
+            emptyPlaceholder: i18nc("@info:placeholder", "No series found")
+            onBookSelected: mainWindow.showBook(filename, currentPage)
+            title: i18nc("@title", "Series")
         }
     }
 
     Component {
-        id: bookshelfAuthor;
-        Bookshelf {
-            model: contentList.authorCategoryModel;
-            headerText: i18nc("Title of the page with books grouped by author", "Group by Author");
-            onBookSelected: mainWindow.showBook(filename, currentPage);
-            categoryName: "bookshelfAuthor";
+        id: bookshelfAuthor
+
+        CategoryPage {
+            model: contentList.authorCategoryModel
+            categoryName: "bookshelfAuthor"
+            emptyPlaceholder: i18nc("@info:placeholder", "No authors found")
+            onBookSelected: mainWindow.showBook(filename, currentPage)
+            title: i18nc("@title", "Authors")
         }
     }
 
     Component {
-        id: bookshelfPublisher;
-        Bookshelf {
-            model: contentList.publisherCategoryModel;
-            headerText: i18nc("Title of the page with books grouped by who published them", "Group by Publisher");
-            onBookSelected: mainWindow.showBook(filename, currentPage);
-            categoryName: "bookshelfPublisher";
+        id: bookshelfPublisher
+
+        CategoryPage {
+            model: contentList.publisherCategoryModel
+            categoryName: "bookshelfPublisher"
+            emptyPlaceholder: i18nc("@info:placeholder", "No publishers found")
+            onBookSelected: mainWindow.showBook(filename, currentPage)
+            title: i18nc("@title", "Publishers")
         }
     }
 
@@ -374,7 +379,7 @@ Kirigami.ApplicationWindow {
         id: bookshelfKeywords;
         Bookshelf {
             model: contentList.keywordCategoryModel;
-            headerText: i18nc("Title of the page with books grouped by keywords, character or genres", "Group by Keywords, Characters and Genres");
+            title: i18nc("Title of the page with books grouped by keywords, character or genres", "Group by Keywords, Characters and Genres");
             onBookSelected: mainWindow.showBook(filename, currentPage);
             categoryName: "bookshelfKeywords";
         }
@@ -384,7 +389,7 @@ Kirigami.ApplicationWindow {
         id: bookshelfFolder;
         Bookshelf {
             model: contentList.folderCategoryModel;
-            headerText: i18nc("Title of the page with books grouped by what folder they are in", "Filter by Folder");
+            title: i18nc("Title of the page with books grouped by what folder they are in", "Filter by Folder");
             onBookSelected: mainWindow.showBook(filename, currentPage);
             categoryName: "bookshelfFolder";
         }

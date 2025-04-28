@@ -57,7 +57,6 @@ Kirigami.ScrollablePage {
     property alias searchModel: searchFilterProxy.sourceModel;
     property string sectionRole: "title";
     property int sectionCriteria: ViewSection.FirstCharacter;
-    property string headerText;
     property string searchText: ""
     property bool searching: searchText.length > 0
     property bool isSearching: searchFilterProxy.filterString.length > 0;
@@ -70,51 +69,21 @@ Kirigami.ScrollablePage {
             return;
         }
         if (whatModel.indexIsBook(whatIndex)) {
-            const book = whatModel.get(whatIndex);
-            root.bookSelected(book.readProperty("filename"), book.readProperty("currentPage"));
+            const book = whatModel.getBookEntry(whatIndex);
+            root.bookSelected(book.filename, book.currentPage);
         } else {
-            const catEntry = whatModel.getEntry(whatIndex);
-            applicationWindow().pageStack.push(bookshelf, { focus: true, headerText: catEntry.readProperty("title"), model: catEntry.readProperty("entriesModel") });
+            const catEntry = whatModel.getCategoryEntry(whatIndex);
+            applicationWindow().pageStack.push(bookshelf, {
+                focus: true,
+                title: catEntry.name,
+                model: catEntry,
+            });
         }
     }
 
-    function closeShelf(): void {
-        applicationWindow().contextDrawer.close();
-        applicationWindow().pageStack.pop();
-    }
-
-    title: headerText;
     objectName: "bookshelf";
 
-    actions: {
-        var ret = [];
-        ret.push(mainShelfAction);
-        if (!Kirigami.Settings.isMobile) {
-            ret.push(backAction);
-            ret.push(openAction);
-        }
-
-        return ret;
-    }
-    Kirigami.Action {
-        id: backAction
-        text: i18nc("Navigate one page back", "Back");
-        shortcut: "Esc";
-        icon.name: "dialog-close";
-        onTriggered: closeShelf();
-        enabled: root.isCurrentContext && !Kirigami.Settings.isMobile && applicationWindow().pageStack.currentIndex > 0;
-    }
-
-    Kirigami.Action {
-        id: openAction
-        text: i18nc("Open the book which is currently selected in the list", "Open Selected Book");
-        shortcut: "Return";
-        icon.name: "document-open";
-        onTriggered: openBook(shelfList.currentIndex);
-        enabled: root.isCurrentContext && !Kirigami.Settings.isMobile;
-    }
-
-    Kirigami.Action {
+    actions: Kirigami.Action {
         id: mainShelfAction;
         text: i18nc("search in the list of books (not inside the books)", "Search Books");
         icon.name: "system-search";
@@ -172,28 +141,21 @@ Kirigami.ScrollablePage {
         QtControls.Menu {
             id: contextMenu
 
-            property var currentBook
+            property Peruse.bookEntry currentBook
 
             QtControls.MenuItem {
                 text: i18nc("@action:inmenu", "Open")
                 onTriggered: root.bookSelected(
-                    contextMenu.currentBook.readProperty("filename"),
-                    contextMenu.bookDetails.currentBook.readProperty("currentPage")
+                    contextMenu.currentBook.filename,
+                    contextMenu.bookDetails.currentBook.currentPage
                 );
             }
 
             QtControls.MenuItem {
                 text: i18nc("@action:inmenu", "Details")
                 onTriggered: {
-                    const page = applicationWindow().pageStack.pushDialogLayer(Qt.createComponent("org.kde.peruse.app", "BookInfoPage"), {
-                        title: contextMenu.currentBook.readProperty("title"),
-                        author: contextMenu.currentBook.readProperty("author"),
-                        filename: contextMenu.currentBook.readProperty("filename"),
-                        publisher: contextMenu.currentBook.readProperty("publisher"),
-                        thumbnail: contextMenu.currentBook.readProperty("thumbnail"),
-                        currentPage: contextMenu.currentBook.readProperty("currentPage"),
-                        totalPages: contextMenu.currentBook.readProperty("totalPages"),
-                        description: contextMenu.currentBook.readProperty("description"),
+                    applicationWindow().pageStack.pushDialogLayer(Qt.createComponent("org.kde.peruse.app", "BookInfoPage"), {
+                        bookEntry: contextMenu.currentBook
                     });
                 }
             }
@@ -222,7 +184,7 @@ Kirigami.ScrollablePage {
                     onPressAndHold: {
                         const whatModel = isSearching ? searchFilterProxy.sourceModel : shelfList.model;
                         const whatIndex = isSearching ? searchFilterProxy.sourceIndex(index) : index;
-                        contextMenu.currentBook = whatModel.getEntry(whatIndex);
+                        contextMenu.currentBook = whatModel.getBookEntry(whatIndex);
                         contextMenu.popup();
 
                         // todo

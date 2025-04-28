@@ -5,26 +5,21 @@ import QtQuick
 import QtQuick.Controls as Controls
 import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
+import org.kde.peruse as Peruse
 import org.kde.kirigamiaddons.formcard as FormCard
 
 FormCard.FormCardPage {
     id: root
 
-    property var author: []
-    property string publisher
-    property string filename
-    property string thumbnail
-    property string currentPage
-    property string totalPages
-    property var description: []
-    property string comment: peruseConfig.getFilesystemProperty(root.filename, "comment")
-    property var tags: peruseConfig.getFilesystemProperty(root.filename, "tags").split(",")
-    property int rating: peruseConfig.getFilesystemProperty(root.filename, "rating")
+    property Peruse.bookEntry bookEntry
+    property string comment: peruseConfig.getFilesystemProperty(root.bookEntry.filename, "comment")
+    property var tags: peruseConfig.getFilesystemProperty(root.bookEntry.filename, "tags").split(",")
+    property int rating: peruseConfig.getFilesystemProperty(root.bookEntry.filename, "rating")
 
     Kirigami.Icon {
         id: coverImage;
 
-        source: root.thumbnail
+        source: root.bookEntry.thumbnail
         placeholder: "application-vnd.oasis.opendocument.text"
         fallback: "paint-unknown"
 
@@ -46,21 +41,21 @@ FormCard.FormCardPage {
     FormCard.FormCard {
         FormCard.FormTextDelegate {
             text: i18nc("@label", "Author(s):")
-            description: root.author.length > 0 ? root.author.join(', ') : i18nc("@info:placeholder", "Unknown")
+            description: root.bookEntry.author.length > 0 ? root.bookEntry.author.join(', ') : i18nc("@info:placeholder", "Unknown")
         }
 
         FormCard.FormDelegateSeparator {}
 
         FormCard.FormTextDelegate {
             text: i18nc("@label", "Publisher:")
-            description: root.publisher.length > 0 ? root.publisher : i18nc("@info:placeholder", "Unknown")
+            description: root.bookEntry.publisher.length > 0 ? root.bookEntry.publisher : i18nc("@info:placeholder", "Unknown")
         }
 
         FormCard.FormDelegateSeparator {}
 
         FormCard.FormTextDelegate {
             text: i18nc("@label", "Location:")
-            description: root.filename
+            description: root.bookEntry.filename
         }
     }
 
@@ -110,7 +105,10 @@ FormCard.FormCardPage {
                                 height: parent.height
                                 color: (parent.focusReason == Qt.TabFocusReason || parent.focusReason == Qt.BacktabFocusReason) && parent.activeFocus ? Kirigami.Theme.highlightColor : Kirigami.Theme.textColor
                             }
-                            onClicked: root.rating = ratingTo;
+                            onClicked: {
+                                root.rating = ratingTo;
+                                peruseConfig.setFilesystemProperty(root.bookEntry.filename, "rating", ratingTo)
+                            }
                         }
                     }
                 }
@@ -131,6 +129,7 @@ FormCard.FormCardPage {
                     tags[i] = tags[i].trim();
                 }
                 root.tags = tags;
+                peruseConfig.setFilesystemProperty(root.bookEntry.filename, "tags", tags.join(","))
             }
         }
     }

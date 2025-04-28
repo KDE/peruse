@@ -13,7 +13,6 @@ ecm_add_qml_module(peruse
         "org.kde.kirigamiaddons.delegates"
     QML_FILES
         qml/Book.qml
-        qml/BookDetails.qml
         qml/BookInfoPage.qml
         qml/Bookshelf.qml
         qml/FileFinder.qml
@@ -24,6 +23,8 @@ ecm_add_qml_module(peruse
         qml/Settings.qml
         qml/Store.qml
         qml/WelcomePage.qml
+        qml/BooksByTitlePage.qml
+        qml/CategoryPage.qml
 )
 
 ecm_target_qml_sources(peruse
@@ -35,7 +36,6 @@ ecm_target_qml_sources(peruse
         qml/listcomponents/CategoryTile.qml
         qml/listcomponents/CategoryTileTall.qml
         qml/listcomponents/ListPageHeader.qml
-        qml/listcomponents/Section.qml
 )
 
 ecm_target_qml_sources(peruse

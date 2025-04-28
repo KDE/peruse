@@ -43,17 +43,17 @@ public:
     /**
      * @return a list of all known books in the database.
      */
-    QList<BookEntry*> loadEntries();
+    QList<BookEntry> loadEntries();
     /**
      * \brief Add a new book to the cache.
      * @param entry The entry to add.
      */
-    void addEntry(BookEntry* entry);
+    void addEntry(const BookEntry &entry);
     /**
      * @brief remove an entry by filename from the cache.
      * @param entry the entry to remove.
      */
-    void removeEntry(BookEntry* entry);
+    void removeEntry(const BookEntry &entry);
     /**
      * @brief updateEntry update an entry by filename.
      * @param fileName the filename of the entry to update.

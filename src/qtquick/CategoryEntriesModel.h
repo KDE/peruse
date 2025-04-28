@@ -24,13 +24,38 @@
 
 #include <QAbstractListModel>
 #include <QDateTime>
-#include <qqmlregistration.h>
+#include <qqmlintegration.h>
 
 class CategoryEntriesModel;
 /**
  * \brief A struct for an Entry to the Book Database.
  */
 struct BookEntry {
+    Q_GADGET
+    QML_VALUE_TYPE(bookEntry)
+
+    Q_PROPERTY(QString filename MEMBER filename CONSTANT)
+    Q_PROPERTY(QString filetitle MEMBER filetitle CONSTANT)
+    Q_PROPERTY(QString title MEMBER title CONSTANT)
+    Q_PROPERTY(QStringList genres MEMBER genres CONSTANT)
+    Q_PROPERTY(QStringList keywords MEMBER keywords CONSTANT)
+    Q_PROPERTY(QStringList characters MEMBER characters CONSTANT)
+    Q_PROPERTY(QStringList series MEMBER series CONSTANT)
+    Q_PROPERTY(QStringList seriesNumbers MEMBER seriesNumbers CONSTANT)
+    Q_PROPERTY(QStringList seriesVolumes MEMBER seriesVolumes CONSTANT)
+    Q_PROPERTY(QStringList author MEMBER author CONSTANT)
+    Q_PROPERTY(QString publisher MEMBER publisher CONSTANT)
+    Q_PROPERTY(QDateTime created MEMBER created CONSTANT)
+    Q_PROPERTY(QDateTime lastOpenedTime MEMBER lastOpenedTime CONSTANT)
+    Q_PROPERTY(int totalPages MEMBER totalPages CONSTANT)
+    Q_PROPERTY(int currentPage MEMBER currentPage CONSTANT)
+    Q_PROPERTY(QString thumbnail MEMBER thumbnail CONSTANT)
+    Q_PROPERTY(QStringList description MEMBER description CONSTANT)
+    Q_PROPERTY(QString comment MEMBER comment CONSTANT)
+    Q_PROPERTY(QStringList tags MEMBER tags CONSTANT)
+    Q_PROPERTY(int rating MEMBER rating CONSTANT)
+
+public:
     explicit BookEntry()
         : totalPages(0)
         , currentPage(0)
@@ -57,6 +82,8 @@ struct BookEntry {
     QStringList tags;
     int rating;
 };
+
+bool operator==(const BookEntry &a1, const BookEntry &a2) noexcept;
 
 /**
  * \brief Model to handle the filter categories.
@@ -153,7 +180,7 @@ public:
      * @param compareRole The role that determines the data to sort the entry into.
      * Defaults to the Book title.
      */
-    Q_INVOKABLE void append(BookEntry* entry, Roles compareRole = TitleRole);
+    Q_INVOKABLE void append(const BookEntry &entry, Roles compareRole = TitleRole);
 
     /**
      * \brief Add a book entry to the model, using a fake book
@@ -161,7 +188,7 @@ public:
      * @param book The fake book (such as returned by get(int))
      * @param compareRole The role that determines the data used to sort the entry (defaults to TitleRole)
      */
-    Q_INVOKABLE void appendFakeBook(QObject* book, Roles compareRole = TitleRole);
+    Q_INVOKABLE void appendFakeBook(const BookEntry &book, Roles compareRole = TitleRole);
 
     /**
      * \brief Remove all entries from the model
@@ -173,40 +200,31 @@ public:
      * 
      * This also adds it to the model's list of entries.
      */
-    void addCategoryEntry(const QString& categoryName, BookEntry* entry, Roles compareRole = TitleRole);
+    void addCategoryEntry(const QString& categoryName, const BookEntry &entry, Roles compareRole = TitleRole);
 
-    /**
-     * @param index an integer index pointing at the desired book.
-     * @returns a QObject wrapper around a BookEntry struct for the given index.
-     */
-    Q_INVOKABLE QObject* get(int index);
     /**
      * @param index an integer index pointing at the desired book.
      * @returns the BookEntry struct for the given index (owned by this model, do not delete)
      */
-    Q_INVOKABLE BookEntry* getBookEntry(int index);
-    /**
-     * TODO: This is backwards... need to fox this to make get return the actual thing, not just a book, and create a getter for books...
-     * @return an entry object. This can be either a category or a book.
-     * @param index the index of the object.
-     */
-    Q_INVOKABLE QObject* getEntry(int index);
+    Q_INVOKABLE BookEntry getBookEntry(int index) const;
+
+    Q_INVOKABLE CategoryEntriesModel *getCategoryEntry(int index) const;
     /**
      * @return an entry object for the given filename. Used to get the recently
      * read books.
      * @param filename the filename associated with an entry object.
      */
-    Q_INVOKABLE QObject* bookFromFile(const QString &filename);
+    Q_INVOKABLE BookEntry bookFromFile(const QString &filename) const;
     /**
      * @return an entry index for the given filename.
      * @param filename the filename associated with an entry object.
      */
-    Q_INVOKABLE int indexOfFile(const QString &filename);
+    Q_INVOKABLE int indexOfFile(const QString &filename) const;
     /**
      * @return whether the entry is a bookentry or a category entry.
      * @param index the index of the entry.
      */
-    Q_INVOKABLE bool indexIsBook(int index);
+    Q_INVOKABLE bool indexIsBook(int index) const;
     /**
      * @return an integer with the total books in the model.
      */
@@ -218,25 +236,25 @@ public:
      * 
      * Used in the BookListModel::setBookData()
      */
-    Q_SIGNAL void entryDataUpdated(BookEntry* entry);
+    Q_SIGNAL void entryDataUpdated(const BookEntry &entry);
     /**
      * \brief set a book entry as changed.
      * @param entry The changed entry.
      */
-    Q_SLOT void entryDataChanged(BookEntry* entry);
+    Q_SLOT void entryDataChanged(const BookEntry &entry);
     /**
      * \brief Fires when a book entry is removed.
      * @param entry The removed entry
      */ 
-    Q_SIGNAL void entryRemoved(BookEntry* entry);
+    Q_SIGNAL void entryRemoved(const BookEntry &entry);
     /**
      * \brief Remove a book entry.
      * @param entry The entry to remove.
      */
-    Q_SLOT void entryRemove(BookEntry* entry);
+    Q_SLOT void entryRemove(const BookEntry &entry);
 
     // This will iterate over all sub-models and find the model which contains the entry, or null if not found
-    QObject* leafModelForEntry(BookEntry* entry);
+    CategoryEntriesModel *leafModelForEntry(const BookEntry &entry);
 protected:
     /**
      * @return the name of the model.
