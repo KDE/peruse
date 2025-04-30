@@ -6,6 +6,7 @@
 #include <QAbstractListModel>
 #include <QQmlListProperty>
 #include <QQmlParserStatus>
+#include <qqmlintegration.h>
 
 #include "ContentQuery.h"
 
@@ -20,6 +21,7 @@
 class ContentList : public QAbstractListModel, public QQmlParserStatus
 {
     Q_OBJECT
+    QML_ELEMENT
     Q_CLASSINFO("DefaultProperty", "queries")
     Q_INTERFACES(QQmlParserStatus)
     /**

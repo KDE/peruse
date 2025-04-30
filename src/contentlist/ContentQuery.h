@@ -7,6 +7,7 @@
 #include <memory>
 
 #include <QObject>
+#include <qqmlintegration.h>
 
 /**
  * Encapsulates searching parameters for files on the file system.
@@ -14,6 +15,8 @@
 class ContentQuery : public QObject
 {
     Q_OBJECT
+    QML_ELEMENT
+
     /**
      * The type of files to search for.
      */

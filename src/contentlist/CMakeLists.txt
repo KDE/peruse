@@ -1,32 +1,35 @@
-set(qmlplugin_SRCS
-    qmlplugin.cpp
-    ContentList.cpp
-    ContentListerBase.cpp
-    FilesystemContentLister.cpp
-    ContentQuery.cpp
+# SPDX-FileCopyrightText: 2025 Carl Schwan <carl@carlschwan.eu>
+# SPDX-License-Identifier: BSD-2-Clauses
+
+ecm_add_qml_module(contentlistqmlplugin
+    URI "org.kde.peruse.contentlist"
+    GENERATE_PLUGIN_SOURCE
 )
 
+target_sources(contentlistqmlplugin PRIVATE
+    ContentList.cpp
+    ContentList.h
+    ContentListerBase.cpp
+    ContentListerBase.h
+    FilesystemContentLister.cpp
+    FilesystemContentLister.h
+    ContentQuery.cpp
+    ContentQuery.h
+)
 
-if(KF5Baloo_FOUND)
-    set(qmlplugin_baloo_SRCS
-        BalooContentLister.cpp
-    )
-endif()
-
-add_library (contentlistqmlplugin SHARED ${qmlplugin_SRCS} ${qmlplugin_baloo_SRCS})
-
-target_link_libraries (contentlistqmlplugin
+target_link_libraries(contentlistqmlplugin PRIVATE
     Qt::Gui
     Qt::Qml
-    KF${QT_MAJOR_VERSION}::FileMetaData
+    KF6::FileMetaData
 )
 
-if(KF6Baloo_FOUND)
-    target_compile_definitions(contentlistqmlplugin PRIVATE -DBALOO_FOUND="${KF6Baloo_FOUND}")
-    target_link_libraries(contentlistqmlplugin    
-        KF6::Baloo
+if (TARGET KF::Baloo)
+    target_sources(contentlistqmlplugin PRIVATE
+        BalooContentLister.cpp
+        BalooContentLister.h
     )
+    target_compile_definitions(contentlistqmlplugin PRIVATE -DBALOO_FOUND=1)
+    target_link_libraries(contentlistqmlplugin PRIVATE KF6::Baloo)
 endif()
 
-install (TARGETS contentlistqmlplugin DESTINATION ${KDE_INSTALL_QMLDIR}/org/kde/contentlist)
-install (FILES qmldir DESTINATION ${KDE_INSTALL_QMLDIR}/org/kde/contentlist)
+ecm_finalize_qml_module(contentlistqmlplugin DESTINATION ${KDE_INSTALL_QMLDIR})
