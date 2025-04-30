@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: peruse\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-29 00:40+0000\n"
+"POT-Creation-Date: 2025-04-30 00:40+0000\n"
 "PO-Revision-Date: 2023-07-25 01:11+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -27,49 +27,49 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "kde@peremen.name"
 
-#: app/main.cpp:49
+#: app/main.cpp:48
 #, kde-format
 msgid "Peruse Reader"
 msgstr "Peruse 리더"
 
-#: app/main.cpp:49
+#: app/main.cpp:50
 #, kde-format
 msgid "Comic Book Reader by KDE"
 msgstr "KDE의 만화책 리더"
 
-#: app/main.cpp:50 creator/main.cpp:45
+#: app/main.cpp:52 creator/main.cpp:48
 #, kde-format
 msgid "© 2016-2021 KDE"
 msgstr "© 2016-2021 KDE"
 
-#: app/main.cpp:51 creator/main.cpp:46
+#: app/main.cpp:53 creator/main.cpp:49
 #, kde-format
 msgid "Dan Leinir Turthra Jensen"
 msgstr "Dan Leinir Turthra Jensen"
 
-#: app/main.cpp:57
+#: app/main.cpp:63
 #, kde-format
 msgid "Clear the metainfo cache and perform a full rescan."
 msgstr "메타 정보 캐시를 비우고 전체 재검색을 실행합니다."
 
-#: app/main.cpp:58 creator/main.cpp:52
+#: app/main.cpp:64 creator/main.cpp:59
 #, kde-format
 msgid "Open file in peruse."
 msgstr "Peruse로 파일을 엽니다."
 
-#: app/qml/Book.qml:186
+#: app/qml/Book.qml:182
 #, kde-format
 msgctxt "Enter full screen mode on a touch-based device"
 msgid "Go Full Screen"
 msgstr "전체 화면으로 전환"
 
-#: app/qml/Book.qml:186
+#: app/qml/Book.qml:182
 #, kde-format
 msgctxt "Exit full sceen mode on a touch based device"
 msgid "Exit Full Screen"
 msgstr "전체 화면 나가기"
 
-#: app/qml/Book.qml:192
+#: app/qml/Book.qml:188
 #, kde-format
 msgctxt ""
 "Action used on touch devices to close the currently open book and return to "
@@ -77,14 +77,14 @@ msgctxt ""
 msgid "Close Book"
 msgstr "책 닫기"
 
-#: app/qml/Book.qml:201
+#: app/qml/Book.qml:197
 #, kde-format
 msgctxt ""
 "Top level entry leading to a submenu with options for the book display"
 msgid "View Options"
 msgstr "보기 옵션"
 
-#: app/qml/Book.qml:204
+#: app/qml/Book.qml:200
 #, kde-format
 msgctxt ""
 "Header title for the section in which the direction the book will be "
@@ -92,57 +92,57 @@ msgctxt ""
 msgid "Reading Direction"
 msgstr "읽는 방향"
 
-#: app/qml/Book.qml:207
+#: app/qml/Book.qml:203
 #, kde-format
 msgctxt ""
 "Title for the option which will make the book navigate from left to right"
 msgid "Left to Right"
 msgstr "왼쪽에서 오른쪽으로"
 
-#: app/qml/Book.qml:214
+#: app/qml/Book.qml:210
 #, kde-format
 msgctxt ""
 "Title for the option which will make the book navigate from right to left"
 msgid "Right to Left"
 msgstr "오른쪽에서 왼쪽으로"
 
-#: app/qml/Book.qml:244
+#: app/qml/Book.qml:240
 #, kde-format
 msgctxt "Go to the previous frame on the current page"
 msgid "Previous Frame"
 msgstr "이전 프레임"
 
-#: app/qml/Book.qml:251
+#: app/qml/Book.qml:247
 #, kde-format
 msgctxt "Go to the next frame on the current page"
 msgid "Next Frame"
 msgstr "다음 프레임"
 
-#: app/qml/Book.qml:258
+#: app/qml/Book.qml:254
 #, kde-format
 msgctxt "Go to the previous page in the book"
 msgid "Previous Page"
 msgstr "이전 쪽"
 
-#: app/qml/Book.qml:265
+#: app/qml/Book.qml:261
 #, kde-format
 msgctxt "Go to the next page in the book"
 msgid "Next Page"
 msgstr "다음 쪽"
 
-#: app/qml/Book.qml:272
+#: app/qml/Book.qml:268
 #, kde-format
 msgctxt "Enter full screen mode on a non-touch-based device"
 msgid "Go Full Screen"
 msgstr "전체 화면으로 전환"
 
-#: app/qml/Book.qml:272
+#: app/qml/Book.qml:268
 #, kde-format
 msgctxt "Exit full sceen mode on a non-touch based device"
 msgid "Exit Full Screen"
 msgstr "전체 화면 나가기"
 
-#: app/qml/Book.qml:279
+#: app/qml/Book.qml:275
 #, kde-format
 msgctxt ""
 "Action used on non-touch devices to close the currently open book and return "
@@ -150,13 +150,7 @@ msgctxt ""
 msgid "Close Book"
 msgstr "책 닫기"
 
-#: app/qml/Book.qml:323
-#, kde-format
-msgctxt "Closes the book information drawer"
-msgid "Close"
-msgstr "닫기"
-
-#: app/qml/Book.qml:418
+#: app/qml/Book.qml:382
 #, kde-format
 msgctxt ""
 "Message shown on the book reader view when there is an issue loading any "
@@ -165,7 +159,7 @@ msgctxt ""
 msgid "Failed to load the reader component"
 msgstr "읽기 구성 요소를 불러올 수 없음"
 
-#: app/qml/Book.qml:419
+#: app/qml/Book.qml:383
 #, kde-format
 msgctxt ""
 "Message shown on the book reader view when there is an issue loading any "
@@ -178,85 +172,79 @@ msgstr ""
 "패키징이 잘못되었을 때 오류가 발생할 수 있습니다. 패키지를 배포한 곳에 오류"
 "에 대해서 알려 주십시오."
 
-#: app/qml/BookDetails.qml:49
-#, kde-format
-msgctxt "Label for the author field"
-msgid "Author:"
-msgstr "작가:"
+#: app/qml/BookInfoPage.qml:43
+#, fuzzy, kde-format
+#| msgctxt "Label for authors"
+#| msgid "Author(s)"
+msgctxt "@label"
+msgid "Author(s):"
+msgstr "작가"
 
-#: app/qml/BookDetails.qml:50
-#, kde-format
-msgctxt "Label for the publisher field"
+#: app/qml/BookInfoPage.qml:44 app/qml/BookInfoPage.qml:51
+#, fuzzy, kde-format
+#| msgctxt "used for the author data in book lists if author is empty"
+#| msgid "(unknown)"
+msgctxt "@info:placeholder"
+msgid "Unknown"
+msgstr "(알 수 없음)"
+
+#: app/qml/BookInfoPage.qml:50
+#, fuzzy, kde-format
+#| msgctxt "Label for the publisher field"
+#| msgid "Publisher:"
+msgctxt "@label"
 msgid "Publisher:"
 msgstr "제작사:"
 
-#: app/qml/BookDetails.qml:51
-#, kde-format
-msgctxt "Label for the series field"
-msgid "Series:"
-msgstr "시리즈:"
+#: app/qml/BookInfoPage.qml:57
+#, fuzzy, kde-format
+#| msgctxt "label text for the edit field for the default annotation"
+#| msgid "Annotation"
+msgctxt "@label"
+msgid "Location:"
+msgstr "추가 설명"
 
-#: app/qml/BookDetails.qml:52
+#: app/qml/BookInfoPage.qml:63
 #, kde-format
-msgctxt "Label for the filename field"
-msgid "Filename:"
-msgstr "파일 이름:"
+msgctxt "@title:group"
+msgid "File Metadata"
+msgstr ""
 
-#: app/qml/BookDetails.qml:147 app/qml/listcomponents/BookTile.qml:373
+#: app/qml/BookInfoPage.qml:70
+#, fuzzy, kde-format
+#| msgctxt "label for rating widget"
+#| msgid "Rating"
+msgctxt "@label"
+msgid "Rating:"
+msgstr "별점"
+
+#: app/qml/BookInfoPage.qml:92
 #, kde-format
-msgctxt "Spawn inline dialog box to confirm permanent removal of this book"
-msgid "Delete from Device"
-msgstr "장치에서 삭제"
+msgid "Set rating to %1"
+msgstr ""
 
-#: app/qml/BookDetails.qml:174 app/qml/listcomponents/BookTile.qml:401
+#: app/qml/BookInfoPage.qml:123
+#, fuzzy, kde-format
+#| msgctxt "label for tags field"
+#| msgid "Tags"
+msgctxt "@label"
+msgid "Tags:"
+msgstr "태그"
+
+#: app/qml/BookInfoPage.qml:125 app/qml/listcomponents/BookTile.qml:291
 #, kde-format
-msgctxt "Dialog text for delete book dialog"
-msgid "Are you sure you want to delete this from your device?"
-msgstr "장치에서 이 책을 삭제하시겠습니까?"
+msgctxt "Placeholder tag field"
+msgid "(No tags)"
+msgstr "(태그 없음)"
 
-#: app/qml/BookDetails.qml:184 app/qml/listcomponents/BookTile.qml:411
+#: app/qml/BooksByTitlePage.qml:22
 #, kde-format
-msgctxt "Confirmation button for book delete dialog"
-msgid "Yes, Really Delete"
-msgstr "예, 삭제합니다"
+msgctxt "Title of the page with books grouped by the title start letters"
+msgid "Group by Title"
+msgstr "제목으로 묶기"
 
-#: app/qml/BookDetails.qml:198 app/qml/listcomponents/BookTile.qml:422
-#, kde-format
-msgctxt "Cancellation button or book delete dialog"
-msgid "No, Cancel Delete"
-msgstr "아니요, 취소합니다"
-
-#: app/qml/Bookshelf.qml:87
-#, kde-format
-msgctxt "Navigate one page back"
-msgid "Back"
-msgstr "뒤로"
-
-#: app/qml/Bookshelf.qml:94
-#, kde-format
-msgctxt "Open the book which is currently selected in the list"
-msgid "Open Selected Book"
-msgstr "선택한 책 열기"
-
-#: app/qml/Bookshelf.qml:107
-#, kde-format
-msgctxt "search in the list of books (not inside the books)"
-msgid "Search Books"
-msgstr "책 목록 검색"
-
-#: app/qml/Bookshelf.qml:114
-#, kde-format
-msgctxt "placeholder text for the search field"
-msgid "Tap and type to search"
-msgstr "탭하고 입력하여 찾기"
-
-#: app/qml/Bookshelf.qml:135
-#, kde-format
-msgctxt "Closes the book details drawer"
-msgid "Close"
-msgstr "닫기"
-
-#: app/qml/Bookshelf.qml:157
+#: app/qml/BooksByTitlePage.qml:76 app/qml/Bookshelf.qml:131
+#: app/qml/CategoryPage.qml:82
 #, kde-format
 msgctxt ""
 "Placeholder Text when there are no comics in the library that match the "
@@ -264,13 +252,50 @@ msgctxt ""
 msgid "No matches"
 msgstr "검색 결과 없음"
 
-#: app/qml/Bookshelf.qml:186
+#: app/qml/BooksByTitlePage.qml:76
 #, kde-format
-msgctxt "used for the author data in book lists if author is empty"
-msgid "(unknown)"
-msgstr "(알 수 없음)"
+msgctxt "@info:placeholder"
+msgid "No authors available"
+msgstr ""
 
-#: app/qml/FileFinder.qml:91
+#: app/qml/Bookshelf.qml:88
+#, kde-format
+msgctxt "search in the list of books (not inside the books)"
+msgid "Search Books"
+msgstr "책 목록 검색"
+
+#: app/qml/Bookshelf.qml:95
+#, kde-format
+msgctxt "placeholder text for the search field"
+msgid "Tap and type to search"
+msgstr "탭하고 입력하여 찾기"
+
+#: app/qml/Bookshelf.qml:155
+#, fuzzy, kde-format
+#| msgctxt "label for a button which activates an external link"
+#| msgid "Open Link"
+msgctxt "@action:inmenu"
+msgid "Open"
+msgstr "링크 열기"
+
+#: app/qml/Bookshelf.qml:163
+#, fuzzy, kde-format
+#| msgctxt ""
+#| "Opens a sheet which lets the user change the name and language of the "
+#| "reference"
+#| msgid "Edit Details..."
+msgctxt "@action:inmenu"
+msgid "Details"
+msgstr "자세한 정보 편집..."
+
+#: app/qml/CategoryPage.qml:65
+#, kde-format
+msgctxt "@info"
+msgid "%1 book"
+msgid_plural "%1 books"
+msgstr[0] ""
+
+#: app/qml/FileFinder.qml:90
 #, kde-format
 msgctxt ""
 "A fake folder item which if activated will cause the folder list to navigate "
@@ -302,12 +327,6 @@ msgctxt "label for tags field"
 msgid "Tags"
 msgstr "태그"
 
-#: app/qml/listcomponents/BookTile.qml:291
-#, kde-format
-msgctxt "Placeholder tag field"
-msgid "(No tags)"
-msgstr "(태그 없음)"
-
 #: app/qml/listcomponents/BookTile.qml:312
 #, kde-format
 msgctxt "label for comment field"
@@ -327,34 +346,60 @@ msgctxt ""
 msgid "(no description available for this book)"
 msgstr "(이 책의 설명 없음)"
 
-#: app/qml/listcomponents/BookTileTall.qml:112
+#: app/qml/listcomponents/BookTile.qml:373
+#, kde-format
+msgctxt "Spawn inline dialog box to confirm permanent removal of this book"
+msgid "Delete from Device"
+msgstr "장치에서 삭제"
+
+#: app/qml/listcomponents/BookTile.qml:401
+#, kde-format
+msgctxt "Dialog text for delete book dialog"
+msgid "Are you sure you want to delete this from your device?"
+msgstr "장치에서 이 책을 삭제하시겠습니까?"
+
+#: app/qml/listcomponents/BookTile.qml:411
+#, kde-format
+msgctxt "Confirmation button for book delete dialog"
+msgid "Yes, Really Delete"
+msgstr "예, 삭제합니다"
+
+#: app/qml/listcomponents/BookTile.qml:422
+#, kde-format
+msgctxt "Cancellation button or book delete dialog"
+msgid "No, Cancel Delete"
+msgstr "아니요, 취소합니다"
+
+#: app/qml/listcomponents/BookTileTall.qml:93
 #, kde-format
 msgctxt "A percentage of progress"
 msgid "%1%"
 msgstr "%1%"
 
-#: app/qml/listcomponents/BookTileTall.qml:135
+#: app/qml/listcomponents/BookTileTall.qml:93
+#, kde-format
+msgctxt "should be keep short, inside a label. Will be in uppercase"
+msgid "New"
+msgstr ""
+
+#: app/qml/listcomponents/BookTileTall.qml:126
 #, kde-format
 msgctxt "The last item in a list of author names when there is more than one"
 msgid ", and %1"
 msgstr " 및 %1"
 
-#: app/qml/listcomponents/BookTileTall.qml:138
+#: app/qml/listcomponents/BookTileTall.qml:129
 #, kde-format
 msgctxt "An item in a list of authors (but not the last)"
 msgid ", %1"
 msgstr ", %1"
 
-#: app/qml/listcomponents/BookTileTall.qml:141
-#, kde-format
-msgctxt "The first author in a list of authors"
-msgid "by %1"
-msgstr "제작: %1"
-
-#: app/qml/listcomponents/BookTileTall.qml:147
-#, kde-format
+#: app/qml/listcomponents/BookTileTall.qml:138
+#, fuzzy, kde-format
+#| msgctxt "Author name used when there are no known authors for a book"
+#| msgid "by an unknown author"
 msgctxt "Author name used when there are no known authors for a book"
-msgid "by an unknown author"
+msgid "Unknown author"
 msgstr "알 수 없는 작가 제작"
 
 #: app/qml/listcomponents/CategoryTile.qml:40
@@ -362,7 +407,7 @@ msgstr "알 수 없는 작가 제작"
 msgid "Comics in folder: %1"
 msgstr "폴더의 만화책 수: %1"
 
-#: app/qml/Main.qml:38
+#: app/qml/Main.qml:39
 #, kde-format
 msgctxt ""
 "@title:window standard file open dialog used to open a book not in the "
@@ -378,12 +423,12 @@ msgctxt ""
 msgid "Open Comics not in Your Collection"
 msgstr "모음집에 없는 만화책 선택"
 
-#: app/qml/PeruseContextDrawer.qml:37
+#: app/qml/PeruseContextDrawer.qml:38
 #, kde-format
 msgid "Actions"
 msgstr "동작"
 
-#: app/qml/PeruseContextDrawer.qml:171
+#: app/qml/PeruseContextDrawer.qml:177
 #, kde-format
 msgid "Back"
 msgstr "뒤로"
@@ -399,24 +444,24 @@ msgstr "만화책 뷰어"
 msgid "Peruse"
 msgstr "Peruse"
 
-#: app/qml/PeruseMain.qml:165
+#: app/qml/PeruseMain.qml:165 creator/qml/Main.qml:130
 #, kde-format
 msgid "Show intro page"
 msgstr "소개 페이지 표시"
 
-#: app/qml/PeruseMain.qml:202
+#: app/qml/PeruseMain.qml:203
 #, kde-format
 msgctxt "Switch to the listing page showing the most recently read books"
 msgid "Home"
 msgstr "홈"
 
-#: app/qml/PeruseMain.qml:213
+#: app/qml/PeruseMain.qml:214
 #, kde-format
 msgctxt "Switch to the listing page showing the most recently discovered books"
 msgid "Recently Added Books"
 msgstr "최근에 추가된 책"
 
-#: app/qml/PeruseMain.qml:219 creator/qml/Main.qml:117
+#: app/qml/PeruseMain.qml:220 creator/qml/Main.qml:176
 #, kde-format
 msgctxt ""
 "Open a book from somewhere on disk (uses the open dialog, or a drilldown on "
@@ -424,7 +469,7 @@ msgctxt ""
 msgid "Open Other..."
 msgstr "기타 열기..."
 
-#: app/qml/PeruseMain.qml:226
+#: app/qml/PeruseMain.qml:227
 #, kde-format
 msgctxt ""
 "Heading for switching to listing page showing items grouped by some "
@@ -432,31 +477,31 @@ msgctxt ""
 msgid "Group By"
 msgstr "그룹화 기준"
 
-#: app/qml/PeruseMain.qml:229
+#: app/qml/PeruseMain.qml:230
 #, kde-format
 msgctxt "Switch to the listing page showing items grouped by title"
 msgid "Title"
 msgstr "제목"
 
-#: app/qml/PeruseMain.qml:235
+#: app/qml/PeruseMain.qml:236
 #, kde-format
 msgctxt "Switch to the listing page showing items grouped by author"
 msgid "Author"
 msgstr "작가"
 
-#: app/qml/PeruseMain.qml:241
+#: app/qml/PeruseMain.qml:242
 #, kde-format
 msgctxt "Switch to the listing page showing items grouped by series"
 msgid "Series"
 msgstr "시리즈"
 
-#: app/qml/PeruseMain.qml:247
+#: app/qml/PeruseMain.qml:248
 #, kde-format
 msgctxt "Switch to the listing page showing items grouped by publisher"
 msgid "Publisher"
 msgstr "출판사"
 
-#: app/qml/PeruseMain.qml:253
+#: app/qml/PeruseMain.qml:254
 #, kde-format
 msgctxt ""
 "Switch to the listing page showing items grouped by keywords, characters or "
@@ -464,36 +509,30 @@ msgctxt ""
 msgid "Keywords"
 msgstr "키워드"
 
-#: app/qml/PeruseMain.qml:259
+#: app/qml/PeruseMain.qml:260
 #, kde-format
 msgctxt ""
 "Switch to the listing page showing items grouped by their filesystem folder"
 msgid "Folder"
 msgstr "폴더"
 
-#: app/qml/PeruseMain.qml:275
+#: app/qml/PeruseMain.qml:276
 #, kde-format
 msgctxt "shown with a throbber when searching for books on the device"
 msgid "Please wait while we find your books..."
 msgstr "책을 찾는 동안 기다려 주십시오..."
 
-#: app/qml/PeruseMain.qml:285 creator/qml/Main.qml:174
+#: app/qml/PeruseMain.qml:286 creator/qml/Main.qml:246
 #, kde-format
 msgctxt "Open the settings page"
 msgid "Settings"
 msgstr "설정"
 
-#: app/qml/PeruseMain.qml:292 creator/qml/Main.qml:180
+#: app/qml/PeruseMain.qml:293 creator/qml/Main.qml:253
 #, kde-format
 msgctxt "Open the about page"
 msgid "About"
 msgstr "정보"
-
-#: app/qml/PeruseMain.qml:324
-#, kde-format
-msgctxt "Title of the page with books grouped by the title start letters"
-msgid "Group by Title"
-msgstr "제목으로 묶기"
 
 #: app/qml/PeruseMain.qml:334
 #, kde-format
@@ -502,65 +541,93 @@ msgctxt ""
 msgid "Recently Added Books"
 msgstr "최근에 추가된 책"
 
-#: app/qml/PeruseMain.qml:346
+#: app/qml/PeruseMain.qml:348
 #, kde-format
-msgctxt "Title of the page with books grouped by what series they are in"
-msgid "Group by Series"
-msgstr "시리즈로 묶기"
+msgctxt "@info:placeholder"
+msgid "No series found"
+msgstr ""
 
-#: app/qml/PeruseMain.qml:356
+#: app/qml/PeruseMain.qml:350
+#, fuzzy, kde-format
+#| msgctxt "Switch to the listing page showing items grouped by series"
+#| msgid "Series"
+msgctxt "@title"
+msgid "Series"
+msgstr "시리즈"
+
+#: app/qml/PeruseMain.qml:360
 #, kde-format
-msgctxt "Title of the page with books grouped by author"
-msgid "Group by Author"
-msgstr "작가로 묶기"
+msgctxt "@info:placeholder"
+msgid "No authors found"
+msgstr ""
 
-#: app/qml/PeruseMain.qml:366
-#, kde-format
-msgctxt "Title of the page with books grouped by who published them"
-msgid "Group by Publisher"
-msgstr "출판사로 묶기"
+#: app/qml/PeruseMain.qml:362
+#, fuzzy, kde-format
+#| msgctxt "Switch to the listing page showing items grouped by author"
+#| msgid "Author"
+msgctxt "@title"
+msgid "Authors"
+msgstr "작가"
 
-#: app/qml/PeruseMain.qml:376
+#: app/qml/PeruseMain.qml:372
+#, fuzzy, kde-format
+#| msgctxt "label text for the form for the publishing info list"
+#| msgid "Publisher Info"
+msgctxt "@info:placeholder"
+msgid "No publishers found"
+msgstr "출판사 정보"
+
+#: app/qml/PeruseMain.qml:374
+#, fuzzy, kde-format
+#| msgctxt "Label for publisher"
+#| msgid "Publisher"
+msgctxt "@title"
+msgid "Publishers"
+msgstr "출판사"
+
+#: app/qml/PeruseMain.qml:382
 #, kde-format
 msgctxt "Title of the page with books grouped by keywords, character or genres"
 msgid "Group by Keywords, Characters and Genres"
 msgstr "키워드, 캐릭터, 장르로 묶기"
 
-#: app/qml/PeruseMain.qml:386
+#: app/qml/PeruseMain.qml:392
 #, kde-format
 msgctxt "Title of the page with books grouped by what folder they are in"
 msgid "Filter by Folder"
 msgstr "폴더로 필터"
 
-#: app/qml/Settings.qml:43
+#: app/qml/Settings.qml:45
 #, kde-format
 msgctxt "title of the settings page"
 msgid "Configure the indexed folders"
 msgstr "색인되는 폴더 설정"
 
-#: app/qml/Settings.qml:48
+#: app/qml/Settings.qml:50
 #, kde-format
 msgid "Add folder"
 msgstr "폴더 추가"
 
-#: app/qml/Settings.qml:86
-#, kde-format
-msgctxt "remove the search folder from the list"
+#: app/qml/Settings.qml:83
+#, fuzzy, kde-format
+#| msgctxt "remove the search folder from the list"
+#| msgid "Delete"
+msgctxt "@action:button"
 msgid "Delete"
 msgstr "삭제"
 
-#: app/qml/Settings.qml:98
+#: app/qml/Settings.qml:96
 #, kde-format
 msgid "There are no folder currently indexed."
 msgstr "색인되는 폴더가 없습니다."
 
-#: app/qml/Settings.qml:108
+#: app/qml/Settings.qml:106
 #, kde-format
 msgctxt "@title:window Dialogue used to add a new search folder"
 msgid "Select a folder"
 msgstr "폴더 선택"
 
-#: app/qml/Settings.qml:125
+#: app/qml/Settings.qml:123
 #, kde-format
 msgctxt "@title:window dialogue used to add a new search folder"
 msgid "Select a Folder"
@@ -585,14 +652,14 @@ msgstr ""
 "죄송합니다, 책이 없습니다.\n"
 "인터넷 연결이나 스토어에 문제가 있습니다."
 
-#: app/qml/viewers/cbr.qml:91 creator/qml/BookPage.qml:84
+#: app/qml/viewers/cbr.qml:91 creator/qml/BookPage.qml:80
 #, kde-format
 msgctxt ""
 "A submenu which allows the user to chose between translations of the book"
 msgid "Translations"
 msgstr "번역"
 
-#: app/qml/viewers/cbr.qml:94 creator/qml/BookPage.qml:87
+#: app/qml/viewers/cbr.qml:94 creator/qml/BookPage.qml:83
 #, kde-format
 msgctxt "The option used to show no translation should be used"
 msgid "No Translation"
@@ -709,7 +776,7 @@ msgstr "%1(으)로 제목이 \"%2\"인 이메일 보내기"
 msgid "Compose email for: %1"
 msgstr "이메일 보내기: %1"
 
-#: app/qml/WelcomePage.qml:42 creator/qml/WelcomePage.qml:38
+#: app/qml/WelcomePage.qml:42 creator/qml/WelcomePage.qml:42
 #, kde-format
 msgctxt "title of the welcome page"
 msgid "Welcome"
@@ -727,47 +794,49 @@ msgctxt "title of list of recently discovered books"
 msgid "Recently Added"
 msgstr "최근 추가됨"
 
-#: creator/main.cpp:44
+#: creator/main.cpp:44 creator/qml/Main.qml:118
 #, kde-format
 msgid "Peruse Creator"
 msgstr "Peruse 생성기"
 
-#: creator/main.cpp:44
+#: creator/main.cpp:46
 #, kde-format
 msgid "Comic Book Creator by KDE"
 msgstr "KDE의 만화책 생성기"
 
-#: creator/qml/AddPageArea.qml:61
+#: creator/qml/AddPageArea.qml:62
 #, kde-format
 msgctxt "title text for the add page area sheet"
 msgid "Add Page Area"
 msgstr "쪽 영역 추가"
 
-#: creator/qml/AddPageArea.qml:84
+#: creator/qml/AddPageArea.qml:85
 #, kde-format
 msgctxt "Button which creates a new frame, and closes the dialog"
 msgid "Create Frame"
 msgstr "프레임 만들기"
 
-#: creator/qml/AddPageArea.qml:98
+#: creator/qml/AddPageArea.qml:99
 #, kde-format
 msgctxt "Button which creates new textarea, and closes the dialog"
 msgid "Create Textarea"
 msgstr "텍스트 영역 만들기"
 
-#: creator/qml/AddPageArea.qml:112
+#: creator/qml/AddPageArea.qml:113
 #, kde-format
 msgctxt "Button which creates a new jump, and closes the dialog"
 msgid "Create Jump"
 msgstr "점프 만들기"
 
-#: creator/qml/AddPageSheet.qml:42
-#, kde-format
-msgctxt "title text for the add page sheet"
-msgid "Add a Page?"
-msgstr "쪽을 추가하시겠습니까?"
+#: creator/qml/AddPageSheet.qml:43
+#, fuzzy, kde-format
+#| msgctxt "adds a new page at the end of the book"
+#| msgid "Add Page"
+msgctxt "@title"
+msgid "Add Page"
+msgstr "쪽 추가"
 
-#: creator/qml/AddPageSheet.qml:47
+#: creator/qml/AddPageSheet.qml:46
 #, kde-format
 msgctxt "help text for the add page sheet"
 msgid ""
@@ -777,7 +846,7 @@ msgstr ""
 "쪽을 추가할 방식을 선택하십시오. 이 동작을 실행해도 프로젝트 외부를 변경하지"
 "는 않습니다."
 
-#: creator/qml/AddPageSheet.qml:57
+#: creator/qml/AddPageSheet.qml:55
 #, kde-format
 msgctxt ""
 "@action:button add a page by finding an image on the filesystem and copying "
@@ -793,7 +862,7 @@ msgctxt ""
 msgid "Please Choose an Image to Add"
 msgstr "추가할 그림 선택"
 
-#: creator/qml/AddPageSheet.qml:78
+#: creator/qml/AddPageSheet.qml:75
 #, kde-format
 msgctxt ""
 "@action:button add a page by creating a new image using an image editor"
@@ -806,89 +875,94 @@ msgctxt "@action:button add a page by taking a photo with a camera"
 msgid "Take a Photo and Add That"
 msgstr "사진을 찍어서 추가하기"
 
-#: creator/qml/Book.qml:42
+#: creator/qml/Book.qml:50
 #, kde-format
 msgctxt "title of the main book editor page"
 msgid "Pages in %1"
 msgstr "%1의 쪽"
 
-#: creator/qml/Book.qml:50 creator/qml/BookBasics.qml:43
-#: creator/qml/BookBinaries.qml:44 creator/qml/BookMetainfoPage.qml:47
-#: creator/qml/BookStylesheet.qml:44
+#: creator/qml/Book.qml:59 creator/qml/BookBasics.qml:42
+#: creator/qml/BookBinaries.qml:42 creator/qml/BookMetainfoPage.qml:32
+#: creator/qml/BookStylesheet.qml:48
 #, kde-format
 msgctxt "Saves the book to a file on disk"
 msgid "Save Book"
 msgstr "책 저장"
 
-#: creator/qml/Book.qml:57
+#: creator/qml/Book.qml:66
 #, kde-format
 msgctxt "adds a new page at the end of the book"
 msgid "Add Page"
 msgstr "쪽 추가"
 
-#: creator/qml/Book.qml:63
-#, kde-format
-msgctxt "closes the add page sheet"
-msgid "Do not Add a Page"
-msgstr "쪽을 추가하지 않음"
-
-#: creator/qml/Book.qml:95 creator/qml/BookReferences.qml:101
+#: creator/qml/Book.qml:104 creator/qml/BookReferences.qml:66
 #, kde-format
 msgctxt "swap the position of this page with the previous one"
 msgid "Move Up"
 msgstr "위로 이동"
 
-#: creator/qml/Book.qml:102 creator/qml/BookReferences.qml:108
+#: creator/qml/Book.qml:111 creator/qml/BookReferences.qml:74
 #, kde-format
 msgctxt "swap the position of this page with the next one"
 msgid "Move Down"
 msgstr "아래로 이동"
 
-#: creator/qml/Book.qml:109
+#: creator/qml/Book.qml:118
 #, kde-format
 msgctxt "remove the page from the book"
 msgid "Delete Page"
 msgstr "쪽 삭제"
 
-#: creator/qml/Book.qml:114
+#: creator/qml/Book.qml:123
 #, kde-format
 msgctxt "add a page to the book after this one"
 msgid "Add Page After This"
 msgstr "현재 쪽 뒤에 쪽 추가"
 
-#: creator/qml/Book.qml:119
+#: creator/qml/Book.qml:128
 #, kde-format
 msgctxt "Edit page data such as title, frames, etc."
 msgid "Edit Page"
 msgstr "쪽 편집"
 
-#: creator/qml/BookBasics.qml:37
+#: creator/qml/Book.qml:189
+#, kde-format
+msgctxt "Empty page list placeholder message"
+msgid "Your book is empty"
+msgstr ""
+
+#: creator/qml/Book.qml:190
+#, kde-format
+msgid "Start adding pages to your book"
+msgstr ""
+
+#: creator/qml/BookBasics.qml:39
 #, kde-format
 msgctxt "title of the basic book information page"
 msgid "Your Book At A Glance"
 msgstr "내 책 한눈에 보기"
 
-#: creator/qml/BookBasics.qml:86
+#: creator/qml/BookBasics.qml:85
 #, kde-format
 msgctxt ""
 "The descriptive label for a label which displays the title of the book"
 msgid "Book Title:"
 msgstr "책 제목:"
 
-#: creator/qml/BookBasics.qml:90
+#: creator/qml/BookBasics.qml:89
 #, kde-format
 msgctxt ""
 "The descriptive label for a link which shows the number of pages in the book"
 msgid "Pages:"
 msgstr "쪽:"
 
-#: creator/qml/BookBasics.qml:91
+#: creator/qml/BookBasics.qml:90
 #, kde-format
 msgctxt "A link which when clicked shows the book pages editor"
 msgid "%1 total pages"
 msgstr "총 %1쪽"
 
-#: creator/qml/BookBasics.qml:98
+#: creator/qml/BookBasics.qml:97
 #, kde-format
 msgctxt ""
 "Header for a list which shows every file contained in the archive which "
@@ -896,45 +970,45 @@ msgctxt ""
 msgid "Every File In The Book:"
 msgstr "책의 모든 파일:"
 
-#: creator/qml/BookBasics.qml:115
+#: creator/qml/BookBasics.qml:184
+#, kde-format
+msgctxt "If a file is not referenced at all"
+msgid "Unreferenced file"
+msgstr "참조되지 않은 파일"
+
+#: creator/qml/BookBasics.qml:186
+#, kde-format
+msgctxt "If a file is referenced by its full path"
+msgid "Referenced by full path"
+msgstr "전체 경로로 참조"
+
+#: creator/qml/BookBasics.qml:188
+#, kde-format
+msgctxt "If a file is referenced partially, describe that"
+msgid "Referenced by filename only"
+msgstr "파일 이름만으로 참조"
+
+#: creator/qml/BookBasics.qml:190
+#, kde-format
+msgctxt "What happens if we have an unexpected reference amount"
+msgid "%1 might be referenced, but in some way we've not accounted for"
+msgstr "%1이(가) 참조되었을 수도 있으나 참조 방식을 알 수 없음"
+
+#: creator/qml/BookBasics.qml:198
 #, kde-format
 msgctxt ""
 "action which marks the file to be included next time the book is saved"
 msgid "Include File"
 msgstr "파일 포함"
 
-#: creator/qml/BookBasics.qml:116
+#: creator/qml/BookBasics.qml:199
 #, kde-format
 msgctxt ""
 "action which marks the file to NOT be included next time the book is saved"
 msgid "Mark File For Deletion"
 msgstr "파일을 삭제할 것으로 표시"
 
-#: creator/qml/BookBasics.qml:195
-#, kde-format
-msgctxt "If a file is not referenced at all"
-msgid "Unreferenced file"
-msgstr "참조되지 않은 파일"
-
-#: creator/qml/BookBasics.qml:197
-#, kde-format
-msgctxt "If a file is referenced by its full path"
-msgid "Referenced by full path"
-msgstr "전체 경로로 참조"
-
-#: creator/qml/BookBasics.qml:199
-#, kde-format
-msgctxt "If a file is referenced partially, describe that"
-msgid "Referenced by filename only"
-msgstr "파일 이름만으로 참조"
-
-#: creator/qml/BookBasics.qml:201
-#, kde-format
-msgctxt "What happens if we have an unexpected reference amount"
-msgid "%1 might be referenced, but in some way we've not accounted for"
-msgstr "%1이(가) 참조되었을 수도 있으나 참조 방식을 알 수 없음"
-
-#: creator/qml/BookBinaries.qml:37
+#: creator/qml/BookBinaries.qml:38
 #, kde-format
 msgctxt ""
 "title of the page which lets the user manage chunks of binary data embedded "
@@ -942,19 +1016,19 @@ msgctxt ""
 msgid "Embedded Data"
 msgstr "임베드된 데이터"
 
-#: creator/qml/BookBinaries.qml:51
+#: creator/qml/BookBinaries.qml:49
 #, kde-format
 msgctxt "Lets the user pick a file to append as a binary item"
 msgid "Add File..."
 msgstr "파일 추가..."
 
-#: creator/qml/BookBinaries.qml:54 creator/qml/BookBinaryEditor.qml:97
+#: creator/qml/BookBinaries.qml:52 creator/qml/BookBinaryEditor.qml:97
 #, kde-format
 msgctxt "The initial identifier used for a newly created binary data element"
 msgid "Unnamed Binary"
 msgstr "이름 없는 바이너리"
 
-#: creator/qml/BookBinaries.qml:81
+#: creator/qml/BookBinaries.qml:80
 #, kde-format
 msgctxt ""
 "title text for a card which informs the user there are no binary data "
@@ -962,13 +1036,13 @@ msgctxt ""
 msgid "No Embedded Binary Data Entries"
 msgstr "임베드된 바이너리 데이터 항목 없음"
 
-#: creator/qml/BookBinaries.qml:82
+#: creator/qml/BookBinaries.qml:81
 #, kde-format
 msgctxt "title text for a card which informs the user what binary data is"
 msgid "Embedded Binary Data"
 msgstr "임베드된 바이너리 데이터"
 
-#: creator/qml/BookBinaries.qml:90
+#: creator/qml/BookBinaries.qml:89
 #, kde-format
 msgctxt ""
 "Help text for the binaries page, when there are no embedded binary data "
@@ -982,7 +1056,7 @@ msgstr ""
 "책에 임베드된 데이터가 없습니다. 새 항목을 만들고 기존 파일을 선택해서 임베드"
 "할 수 있습니다. 책으로 가져온 후 원본 데이터는 변경되지 않습니다."
 
-#: creator/qml/BookBinaries.qml:91
+#: creator/qml/BookBinaries.qml:90
 #, kde-format
 msgctxt ""
 "Help text for the binaries page, when there is already data embedded in the "
@@ -995,7 +1069,7 @@ msgstr ""
 "새 항목을 만들고 기존 파일을 선택해서 새 바이너리 데이터를 임베드할 수 있습니"
 "다. 책으로 가져온 후 원본 데이터는 변경되지 않습니다."
 
-#: creator/qml/BookBinaries.qml:135
+#: creator/qml/BookBinaries.qml:99
 #, kde-format
 msgctxt ""
 "Title used in the list of binary data when there is no id defined for that "
@@ -1003,7 +1077,7 @@ msgctxt ""
 msgid "Unnamed piece of data"
 msgstr "이름 없는 데이터 조각"
 
-#: creator/qml/BookBinaries.qml:140
+#: creator/qml/BookBinaries.qml:133
 #, kde-format
 msgctxt "Label which describes which content type this entry is supposed to be"
 msgid "Content type: %1"
@@ -1084,7 +1158,7 @@ msgctxt ""
 msgid "Pick A File To Add"
 msgstr "추가할 파일 선택"
 
-#: creator/qml/BookBinaryEditor.qml:109 creator/qml/Main.qml:264
+#: creator/qml/BookBinaryEditor.qml:109 creator/qml/Main.qml:336
 #, kde-format
 msgctxt "The file type filter for showing all files"
 msgid "All files %1"
@@ -1121,257 +1195,309 @@ msgctxt "The option used to let the user abort the proposed action"
 msgid "Don't Add"
 msgstr "추가하지 않음"
 
-#: creator/qml/BookMetainfoPage.qml:39
+#: creator/qml/BookMetainfoPage.qml:26
 #, kde-format
 msgctxt "title text for the book meta information editor sheet"
 msgid "Edit Meta Information"
 msgstr "메타 정보 편집"
 
-#: creator/qml/BookMetainfoPage.qml:67 creator/qml/CreateNewBook.qml:67
-#, kde-format
-msgctxt "label text for the edit field for the book title"
+#: creator/qml/BookMetainfoPage.qml:49
+#, fuzzy, kde-format
+#| msgctxt "Switch to the listing page showing items grouped by title"
+#| msgid "Title"
+msgctxt "@label:textfield"
 msgid "Title"
 msgstr "제목"
 
-#: creator/qml/BookMetainfoPage.qml:74
-#, kde-format
-msgctxt "placeholder text for default title text-input"
-msgid "Write to add default title"
-msgstr "제목을 추가하려면 입력하십시오"
-
-#: creator/qml/BookMetainfoPage.qml:85
-#, kde-format
-msgctxt "label text for the edit field for the default annotation"
+#: creator/qml/BookMetainfoPage.qml:62
+#, fuzzy, kde-format
+#| msgctxt "label text for the edit field for the default annotation"
+#| msgid "Annotation"
+msgctxt "@label:textfield"
 msgid "Annotation"
 msgstr "추가 설명"
 
-#: creator/qml/BookMetainfoPage.qml:91
-#, kde-format
-msgctxt "placeholder text for default annotation text-area"
-msgid "Write to add default annotation"
-msgstr "추가 설명을 추가하려면 입력하십시오"
-
-#: creator/qml/BookMetainfoPage.qml:102
-#, kde-format
-msgctxt "label text for the edit field for the keyword list"
+#: creator/qml/BookMetainfoPage.qml:75
+#, fuzzy, kde-format
+#| msgctxt ""
+#| "Switch to the listing page showing items grouped by keywords, characters "
+#| "or genres"
+#| msgid "Keywords"
+msgctxt "@label:textfield"
 msgid "Keywords"
 msgstr "키워드"
 
-#: creator/qml/BookMetainfoPage.qml:108
-#, kde-format
-msgctxt "placeholder text for the add new keyword text entry"
+#: creator/qml/BookMetainfoPage.qml:76
+#, fuzzy, kde-format
+#| msgctxt "placeholder text for the add new keyword text entry"
+#| msgid "Write a comma separated list of keywords."
+msgctxt "@info:placeholder"
 msgid "Write a comma separated list of keywords."
 msgstr "쉼표로 구분된 키워드를 입력하십시오."
 
-#: creator/qml/BookMetainfoPage.qml:123
-#, kde-format
-msgctxt "label text for the edit field for the author list"
-msgid "Authors (%1)"
-msgstr "작가(%1)"
-
-#: creator/qml/BookMetainfoPage.qml:130 creator/qml/BookMetainfoPage.qml:800
-#, kde-format
-msgctxt "The text used in place of an author's name if one has not been set"
-msgid "(unnamed)"
-msgstr "(이름 없음)"
-
-#: creator/qml/BookMetainfoPage.qml:169 creator/qml/BookMetainfoPage.qml:839
-#, kde-format
-msgctxt "placeholder text for the add new author text entry"
-msgid "Write to add new author (nickname)"
-msgstr "새 작가(별명)를 추가하려면 입력하십시오"
-
-#: creator/qml/BookMetainfoPage.qml:198
-#, kde-format
-msgctxt "label text for the edit field for the genre list"
-msgid "Genres"
-msgstr "장르"
-
-#: creator/qml/BookMetainfoPage.qml:277
-#, kde-format
-msgctxt "label text for the edit field for the character list"
-msgid "Characters"
-msgstr "캐릭터"
-
-#: creator/qml/BookMetainfoPage.qml:306
-#, kde-format
-msgctxt "placeholder text for the add new character text entry"
-msgid "Write to add new character"
-msgstr "새 캐릭터를 추가하려면 입력하십시오"
-
-#: creator/qml/BookMetainfoPage.qml:334
-#, kde-format
-msgctxt "label text for the edit field for the sequence list"
-msgid "Sequence"
-msgstr "순서"
-
-#: creator/qml/BookMetainfoPage.qml:362
-#, kde-format
-msgctxt "Label for sequence number"
-msgid "Number:"
-msgstr "번호:"
-
-#: creator/qml/BookMetainfoPage.qml:386
-#, kde-format
-msgctxt "Label for sequence volume"
-msgid "Volume:"
-msgstr "권:"
-
-#: creator/qml/BookMetainfoPage.qml:433
-#, kde-format
-msgctxt "placeholder text for the add new series text entry"
-msgid "Write to add new series"
-msgstr "새 시리즈를 추가하려면 입력하십시오"
-
-#: creator/qml/BookMetainfoPage.qml:461
-#, kde-format
-msgctxt "label text for the edit field for the database reference list"
-msgid "Database References"
-msgstr "데이터베이스 참조"
-
-#: creator/qml/BookMetainfoPage.qml:502
-#, kde-format
-msgctxt "placeholder text for the add reference type text entry"
-msgid "Write to add reference type"
-msgstr "참조 형식을 추가하려면 입력하십시오"
-
-#: creator/qml/BookMetainfoPage.qml:539
-#, kde-format
-msgctxt "placeholder text for the add new reference text entry"
-msgid "Write to add new reference"
-msgstr "새 참조를 추가하려면 입력하십시오"
-
-#: creator/qml/BookMetainfoPage.qml:549
-#, kde-format
-msgctxt "placeholder text for the add databasename text entry"
-msgid "Write to add database name for new reference."
-msgstr "새 참조의 데이터베이스 이름을 추가하려면 입력하십시오."
-
-#: creator/qml/BookMetainfoPage.qml:570
-#, kde-format
-msgctxt "label text for the edit field for the content rating list"
-msgid "Content Ratings"
-msgstr "내용 등급"
-
-#: creator/qml/BookMetainfoPage.qml:588 creator/qml/BookMetainfoPage.qml:634
-#, kde-format
-msgctxt "placeholder text for the add content rating text entry"
-msgid "Write to add rating label."
-msgstr "내용 등급을 추가하려면 입력하십시오."
-
-#: creator/qml/BookMetainfoPage.qml:599 creator/qml/BookMetainfoPage.qml:644
-#, kde-format
-msgctxt "placeholder text for the add content rating system text entry"
-msgid "Write to add rating system."
-msgstr "등급 체계를 추가하려면 입력하십시오."
-
-#: creator/qml/BookMetainfoPage.qml:664
-#, kde-format
-msgctxt "label text for the form for reading direction."
-msgid "Reading Direction"
-msgstr "읽는 방향"
-
-#: creator/qml/BookMetainfoPage.qml:668
-#, kde-format
-msgctxt "label text for right to left checkbox."
-msgid "Right to left."
-msgstr "오른쪽에서 왼쪽으로"
-
-#: creator/qml/BookMetainfoPage.qml:676
-#, kde-format
-msgctxt "label text for the form for the publishing info list"
-msgid "Publisher Info"
-msgstr "출판사 정보"
-
-#: creator/qml/BookMetainfoPage.qml:679
-#, kde-format
-msgctxt "Label for publisher"
-msgid "Publisher:"
-msgstr "출판사:"
-
-#: creator/qml/BookMetainfoPage.qml:684
-#, kde-format
-msgctxt "placeholder text for the publisher entry"
-msgid "Write to add publisher"
-msgstr "출판사를 추가하려면 입력하십시오"
-
-#: creator/qml/BookMetainfoPage.qml:694
-#, kde-format
-msgctxt "Label for publishing date"
-msgid "Publishing Date:"
-msgstr "출판일:"
-
-#: creator/qml/BookMetainfoPage.qml:744
-#, kde-format
-msgctxt "Label for city"
-msgid "City:"
-msgstr "도시:"
-
-#: creator/qml/BookMetainfoPage.qml:749
-#, kde-format
-msgctxt "placeholder text for the publishing city entry"
-msgid "Write to add city"
-msgstr "도시를 추가하려면 입력하십시오"
-
-#: creator/qml/BookMetainfoPage.qml:759
-#, kde-format
-msgctxt "Label for ISBN"
-msgid "ISBN:"
-msgstr "ISBN:"
-
-#: creator/qml/BookMetainfoPage.qml:765
-#, kde-format
-msgctxt "placeholder text for the publishing ISBN entry"
-msgid "Write to add ISBN"
-msgstr "ISBN을 추가하려면 입력하십시오"
-
-#: creator/qml/BookMetainfoPage.qml:775
-#, kde-format
-msgctxt "Label for license"
-msgid "License:"
-msgstr "라이선스:"
-
-#: creator/qml/BookMetainfoPage.qml:780
-#, kde-format
-msgctxt "placeholder text for the publishing license entry"
-msgid "Write to add license"
-msgstr "라이선스를 추가하려면 입력하십시오"
-
-#: creator/qml/BookMetainfoPage.qml:792
-#, kde-format
-msgctxt "label text for the form for the document info list"
-msgid "Document Authors"
-msgstr "문서 저자"
-
-#: creator/qml/BookMetainfoPage.qml:868
-#, kde-format
-msgctxt "label text for the form for the sources list"
-msgid "Document Sources"
-msgstr "문서 원본"
-
-#: creator/qml/BookMetainfoPage.qml:930
-#, kde-format
-msgctxt "label text for the form for the history list"
-msgid "Document History"
-msgstr "문서 역사"
-
-#: creator/qml/BookMetainfoPage.qml:995
+#: creator/qml/BookMetainfoPage.qml:92
 #, kde-format
 msgctxt "Label for the document version spinbox"
 msgid "Document Version:"
 msgstr "문서 버전:"
 
-#: creator/qml/BookMetainfoPage.qml:1037
+#: creator/qml/BookMetainfoPage.qml:120
+#, fuzzy, kde-format
+#| msgctxt "Switch to the listing page showing items grouped by author"
+#| msgid "Author"
+msgctxt "@title:group"
+msgid "Authors"
+msgstr "작가"
+
+#: creator/qml/BookMetainfoPage.qml:132 creator/qml/BookMetainfoPage.qml:842
 #, kde-format
-msgctxt "label text for the form for the body background color."
+msgctxt "The text used in place of an author's name if one has not been set"
+msgid "(unnamed)"
+msgstr "(이름 없음)"
+
+#: creator/qml/BookMetainfoPage.qml:139
+#, fuzzy, kde-format
+#| msgctxt "title text for the edit author sheet"
+#| msgid "Edit Author"
+msgctxt "@action:button"
+msgid "Edit author"
+msgstr "작가 편집"
+
+#: creator/qml/BookMetainfoPage.qml:151
+#, kde-format
+msgctxt "@action:button"
+msgid "Remove author"
+msgstr ""
+
+#: creator/qml/BookMetainfoPage.qml:176 creator/qml/BookMetainfoPage.qml:880
+#, fuzzy, kde-format
+#| msgctxt "placeholder text for the add new author text entry"
+#| msgid "Write to add new author (nickname)"
+msgctxt "@label:textfield"
+msgid "New author (nickname)"
+msgstr "새 작가(별명)를 추가하려면 입력하십시오"
+
+#: creator/qml/BookMetainfoPage.qml:189
+#, kde-format
+msgctxt "@action:button"
+msgid "Add new author"
+msgstr ""
+
+#: creator/qml/BookMetainfoPage.qml:197
+#, fuzzy, kde-format
+#| msgctxt "label text for the edit field for the genre list"
+#| msgid "Genres"
+msgctxt "@title:group"
+msgid "Genres"
+msgstr "장르"
+
+#: creator/qml/BookMetainfoPage.qml:223
+#, kde-format
+msgctxt "@action:button"
+msgid "Remove genre"
+msgstr ""
+
+#: creator/qml/BookMetainfoPage.qml:294
+#, fuzzy, kde-format
+#| msgctxt "label text for the edit field for the character list"
+#| msgid "Characters"
+msgctxt "@title:group"
+msgid "Characters"
+msgstr "캐릭터"
+
+#: creator/qml/BookMetainfoPage.qml:339
+#, kde-format
+msgctxt "placeholder text for the add new character text entry"
+msgid "Write to add new character"
+msgstr "새 캐릭터를 추가하려면 입력하십시오"
+
+#: creator/qml/BookMetainfoPage.qml:363
+#, fuzzy, kde-format
+#| msgctxt "label text for the edit field for the sequence list"
+#| msgid "Sequence"
+msgctxt "@title:group"
+msgid "Sequence"
+msgstr "순서"
+
+#: creator/qml/BookMetainfoPage.qml:414
+#, kde-format
+msgctxt "Label for sequence number"
+msgid "Number:"
+msgstr "번호:"
+
+#: creator/qml/BookMetainfoPage.qml:434
+#, kde-format
+msgctxt "Label for sequence volume"
+msgid "Volume:"
+msgstr "권:"
+
+#: creator/qml/BookMetainfoPage.qml:462
+#, fuzzy, kde-format
+#| msgctxt ""
+#| "Action which when triggered adds a new reference to the book and opens "
+#| "the reference editor"
+#| msgid "New Reference"
+msgctxt "@label:textfield"
+msgid "New serie"
+msgstr "새 참조"
+
+#: creator/qml/BookMetainfoPage.qml:481
+#, fuzzy, kde-format
+#| msgctxt "label text for the edit field for the database reference list"
+#| msgid "Database References"
+msgctxt "@title:group"
+msgid "Database References"
+msgstr "데이터베이스 참조"
+
+#: creator/qml/BookMetainfoPage.qml:507 creator/qml/BookMetainfoPage.qml:595
+#, fuzzy, kde-format
+#| msgctxt "title text for the references page"
+#| msgid "References"
+msgctxt "@label:textfield"
+msgid "Reference:"
+msgstr "참조"
+
+#: creator/qml/BookMetainfoPage.qml:533 creator/qml/BookMetainfoPage.qml:609
+#, fuzzy, kde-format
+#| msgctxt "label text for the edit field for the database reference list"
+#| msgid "Database References"
+msgctxt "@label:textfield"
+msgid "Database name:"
+msgstr "데이터베이스 참조"
+
+#: creator/qml/BookMetainfoPage.qml:550
+#, fuzzy, kde-format
+#| msgctxt "title text for the references page"
+#| msgid "References"
+msgctxt "@label:textfield"
+msgid "Reference type:"
+msgstr "참조"
+
+#: creator/qml/BookMetainfoPage.qml:628
+#, fuzzy, kde-format
+#| msgctxt "label text for the edit field for the content rating list"
+#| msgid "Content Ratings"
+msgctxt "@title:group"
+msgid "Content Ratings"
+msgstr "내용 등급"
+
+#: creator/qml/BookMetainfoPage.qml:652
+#, kde-format
+msgctxt "placeholder text for the add content rating text entry"
+msgid "Write to add rating label."
+msgstr "내용 등급을 추가하려면 입력하십시오."
+
+#: creator/qml/BookMetainfoPage.qml:665
+#, kde-format
+msgctxt "placeholder text for the add content rating system text entry"
+msgid "Write to add rating system."
+msgstr "등급 체계를 추가하려면 입력하십시오."
+
+#: creator/qml/BookMetainfoPage.qml:717
+#, kde-format
+msgctxt "@label:textfield"
+msgid "Review title"
+msgstr ""
+
+#: creator/qml/BookMetainfoPage.qml:733
+#, fuzzy, kde-format
+#| msgctxt "Label for the link destination input field"
+#| msgid "Destination"
+msgctxt "@label:textfield"
+msgid "Description"
+msgstr "대상"
+
+#: creator/qml/BookMetainfoPage.qml:754
+#, fuzzy, kde-format
+#| msgctxt "label text for the form for the publishing info list"
+#| msgid "Publisher Info"
+msgctxt "@title:group"
+msgid "Publisher Info"
+msgstr "출판사 정보"
+
+#: creator/qml/BookMetainfoPage.qml:760
+#, kde-format
+msgctxt "Label for publisher"
+msgid "Publisher:"
+msgstr "출판사:"
+
+#: creator/qml/BookMetainfoPage.qml:761
+#, kde-format
+msgctxt "placeholder text for the publisher entry"
+msgid "Write to add publisher"
+msgstr "출판사를 추가하려면 입력하십시오"
+
+#: creator/qml/BookMetainfoPage.qml:774
+#, kde-format
+msgctxt "Label for publishing date"
+msgid "Publishing Date:"
+msgstr "출판일:"
+
+#: creator/qml/BookMetainfoPage.qml:788
+#, kde-format
+msgctxt "Label for city"
+msgid "City:"
+msgstr "도시:"
+
+#: creator/qml/BookMetainfoPage.qml:803
+#, kde-format
+msgctxt "Label for ISBN"
+msgid "ISBN:"
+msgstr "ISBN:"
+
+#: creator/qml/BookMetainfoPage.qml:818
+#, kde-format
+msgctxt "Label for license"
+msgid "License:"
+msgstr "라이선스:"
+
+#: creator/qml/BookMetainfoPage.qml:830
+#, fuzzy, kde-format
+#| msgctxt "label text for the form for the document info list"
+#| msgid "Document Authors"
+msgctxt "@title:group"
+msgid "Document Authors"
+msgstr "문서 저자"
+
+#: creator/qml/BookMetainfoPage.qml:900
+#, fuzzy, kde-format
+#| msgctxt "label text for the form for the sources list"
+#| msgid "Document Sources"
+msgctxt "@title:group"
+msgid "Document Sources"
+msgstr "문서 원본"
+
+#: creator/qml/BookMetainfoPage.qml:941
+#, fuzzy, kde-format
+#| msgctxt "label text for the form for the sources list"
+#| msgid "Document Sources"
+msgctxt "@label:textfield"
+msgid "New document source"
+msgstr "문서 원본"
+
+#: creator/qml/BookMetainfoPage.qml:960
+#, fuzzy, kde-format
+#| msgctxt "label text for the form for the history list"
+#| msgid "Document History"
+msgctxt "@title:group"
+msgid "Document History"
+msgstr "문서 역사"
+
+#: creator/qml/BookMetainfoPage.qml:1001
+#, fuzzy, kde-format
+#| msgctxt "label text for the form for the history list"
+#| msgid "Document History"
+msgctxt "@label:textfield"
+msgid "New document info"
+msgstr "문서 역사"
+
+#: creator/qml/BookMetainfoPage.qml:1020
+#, fuzzy, kde-format
+#| msgctxt "label text for the form for the body background color."
+#| msgid "General Page Background Color"
+msgctxt "@title:group"
 msgid "General Page Background Color"
 msgstr "일반 쪽 배경색"
-
-#: creator/qml/BookMetainfoPage.qml:1074
-#, kde-format
-msgctxt "@title color choosing dialog"
-msgid "Choose the general background color for this comic"
-msgstr "이 만화의 일반 배경색 선택"
 
 #: creator/qml/BookPage.qml:32
 #, kde-format
@@ -1384,19 +1510,19 @@ msgstr "%1쪽"
 msgid "Page %1"
 msgstr "%1쪽"
 
-#: creator/qml/BookPage.qml:98
+#: creator/qml/BookPage.qml:99
 #, kde-format
 msgctxt "Saves the remaining unsaved edited fields and closes the page editor"
 msgid "Save and Close Page"
 msgstr "쪽 저장하고 닫기"
 
-#: creator/qml/BookPage.qml:110
+#: creator/qml/BookPage.qml:111
 #, kde-format
 msgctxt "Edit the page data in detail"
 msgid "Edit Page Data"
 msgstr "쪽 데이터 편집"
 
-#: creator/qml/BookReferenceEditor.qml:36
+#: creator/qml/BookReferenceEditor.qml:30
 #, kde-format
 msgctxt ""
 "title text for the reference editor page, when the reference has no language "
@@ -1404,13 +1530,31 @@ msgctxt ""
 msgid "Editing %1 (default language)"
 msgstr "%1(기본 언어) 편집"
 
-#: creator/qml/BookReferenceEditor.qml:37
+#: creator/qml/BookReferenceEditor.qml:31
 #, kde-format
 msgctxt "title text for the reference editor page"
 msgid "Editing %1 (language: %2)"
 msgstr "%1(언어: %2) 편집"
 
+#: creator/qml/BookReferenceEditor.qml:42
+#, kde-format
+msgctxt "Save the reference and close the editor"
+msgid "Save and Close Editor"
+msgstr "저장하고 편집기 닫기"
+
+#: creator/qml/BookReferenceEditor.qml:51
+#, kde-format
+msgctxt "Save the reference and keep editing"
+msgid "Save"
+msgstr "저장"
+
 #: creator/qml/BookReferenceEditor.qml:59
+#, kde-format
+msgctxt "Abort the changes made in the editor, and close the editor"
+msgid "Abort Changes"
+msgstr "변경 중단"
+
+#: creator/qml/BookReferenceEditor.qml:66
 #, kde-format
 msgctxt ""
 "Opens a sheet which lets the user change the name and language of the "
@@ -1418,25 +1562,25 @@ msgctxt ""
 msgid "Edit Details..."
 msgstr "자세한 정보 편집..."
 
-#: creator/qml/BookReferenceEditor.qml:65
+#: creator/qml/BookReferenceEditor.qml:72
 #, kde-format
 msgctxt "Copies the selected text"
 msgid "Copy"
 msgstr "복사"
 
-#: creator/qml/BookReferenceEditor.qml:71
+#: creator/qml/BookReferenceEditor.qml:78
 #, kde-format
 msgctxt "Cuts the selected text"
 msgid "Cut"
 msgstr "잘라내기"
 
-#: creator/qml/BookReferenceEditor.qml:77
+#: creator/qml/BookReferenceEditor.qml:84
 #, kde-format
 msgctxt "Pastes the clipboard contents into the current location"
 msgid "Paste"
 msgstr "붙여넣기"
 
-#: creator/qml/BookReferenceEditor.qml:84 creator/qml/EditPageArea.qml:245
+#: creator/qml/BookReferenceEditor.qml:91 creator/qml/EditPageArea.qml:245
 #, kde-format
 msgctxt ""
 "Edit the link the cursor is currently positioned on (or convert the "
@@ -1444,63 +1588,39 @@ msgctxt ""
 msgid "Edit Link"
 msgstr "링크 편집"
 
-#: creator/qml/BookReferenceEditor.qml:91
-#, kde-format
-msgctxt "Save the reference and close the editor"
-msgid "Save and Close Editor"
-msgstr "저장하고 편집기 닫기"
-
 #: creator/qml/BookReferenceEditor.qml:100
-#, kde-format
-msgctxt "Save the reference and keep editing"
-msgid "Save"
-msgstr "저장"
-
-#: creator/qml/BookReferenceEditor.qml:108
-#, kde-format
-msgctxt "Abort the changes made in the editor, and close the editor"
-msgid "Abort Changes"
-msgstr "변경 중단"
-
-#: creator/qml/BookReferenceEditor.qml:121
-#, kde-format
-msgctxt ""
-"title text for a sheet which lets the user edit the details of a reference"
+#, fuzzy, kde-format
+#| msgctxt ""
+#| "title text for a sheet which lets the user edit the details of a reference"
+#| msgid "Edit Reference Details"
+msgctxt "@title:dialog"
 msgid "Edit Reference Details"
 msgstr "참조 정보 편집"
 
-#: creator/qml/BookReferenceEditor.qml:130
-#, kde-format
-msgctxt "Label for the reference identifier input field"
-msgid "Unique Identifier"
+#: creator/qml/BookReferenceEditor.qml:107
+#, fuzzy, kde-format
+#| msgctxt "Label for the reference identifier input field"
+#| msgid "Unique Identifier"
+msgctxt "@label:textfield"
+msgid "Unique identifier"
 msgstr "고유 식별자"
 
-#: creator/qml/BookReferenceEditor.qml:131
-#, kde-format
-msgctxt "Placeholder text for the reference identifier input field"
-msgid "Enter your reference ID here (should be unique)"
-msgstr "참조 고유 ID를 입력하십시오(중복되면 안 됨)"
-
-#: creator/qml/BookReferenceEditor.qml:136
-#, kde-format
-msgctxt "Label for the reference language input field"
+#: creator/qml/BookReferenceEditor.qml:112
+#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:109
+#, fuzzy, kde-format
+#| msgctxt "Label for the reference language input field"
+#| msgid "Language"
+msgctxt "@label:textfield"
 msgid "Language"
 msgstr "언어"
 
-#: creator/qml/BookReferenceEditor.qml:137
-#, kde-format
-msgctxt "Placeholder text for the reference language input field"
-msgid ""
-"Enter the language ID here (leave empty for the document default language)"
-msgstr "참조 언어 ID를 입력하십시오(비워 두면 문서 기본 언어 사용)"
-
-#: creator/qml/BookReferences.qml:35
+#: creator/qml/BookReferences.qml:19
 #, kde-format
 msgctxt "title text for the references page"
 msgid "References"
 msgstr "참조"
 
-#: creator/qml/BookReferences.qml:43
+#: creator/qml/BookReferences.qml:24
 #, kde-format
 msgctxt ""
 "Action which when triggered adds a new reference to the book and opens the "
@@ -1508,13 +1628,13 @@ msgctxt ""
 msgid "New Reference"
 msgstr "새 참조"
 
-#: creator/qml/BookReferences.qml:47
+#: creator/qml/BookReferences.qml:28
 #, kde-format
 msgctxt "The default ID for new references"
 msgid "Unnamed Reference"
 msgstr "이름 없는 참조"
 
-#: creator/qml/BookReferences.qml:48
+#: creator/qml/BookReferences.qml:29
 #, kde-format
 msgctxt "The default text for new references"
 msgid ""
@@ -1524,42 +1644,24 @@ msgstr ""
 "<p>참조 문서의 본문을 입력하십시오.</p>\n"
 "<p>다음과 같이 표시됩니다: <a href=\"대상\">적절한 링크</a></p>"
 
-#: creator/qml/BookReferences.qml:75
+#: creator/qml/BookReferences.qml:92
 #, kde-format
-msgctxt ""
-"title text for a card which informs the user there are no references, and "
-"what references are"
-msgid "No References"
-msgstr "참조 없음"
-
-#: creator/qml/BookReferences.qml:76
-#, kde-format
-msgctxt "title text for a card which informs what references are"
-msgid "References"
-msgstr "참조"
-
-#: creator/qml/BookReferences.qml:84
-#, kde-format
-msgctxt "Help text for the references page, when there are no references"
-msgid ""
-"There is no reference information in your book yet. You can create a new "
-"reference piece by clicking on the New Reference control. References are "
-"collections of paragraphs of text, which you can fill with simple formatting "
-"(strong, emphasis, and other simple layouting like that), as well as links "
-"to both internal things (other references or one of the pieces of binary "
-"data), or to an external resource, such as a website."
+msgid "There is no reference information in your book yet"
 msgstr ""
-"책에 참조 정보가 없습니다. 새 참조 컨트롤을 클릭해서 새 참조를 추가할 수 있습"
-"니다. 참조를 입력할 때에는 서식 있는 텍스트(굵은 글씨, 강조, 기타 간단한 레이"
-"아웃)뿐만 아니라 내부 요소(바이너리 데이터나 다른 참조) 및 웹사이트와 같은 외"
-"부 요소를 가리킬 수도 있습니다."
 
-#: creator/qml/BookReferences.qml:85
-#, kde-format
-msgctxt ""
-"Help text for the references page, when there are already references defined"
+#: creator/qml/BookReferences.qml:93
+#, fuzzy, kde-format
+#| msgctxt ""
+#| "Help text for the references page, when there are already references "
+#| "defined"
+#| msgid ""
+#| "Create a new reference piece by clicking on the New Reference control. "
+#| "References are collections of paragraphs of text, which you can fill with "
+#| "simple formatting (strong, emphasis, and other simple layouting like "
+#| "that), as well as links to both internal things (other references or one "
+#| "of the pieces of binary data), or to an external resource, such as a "
+#| "website."
 msgid ""
-"Create a new reference piece by clicking on the New Reference control. "
 "References are collections of paragraphs of text, which you can fill with "
 "simple formatting (strong, emphasis, and other simple layouting like that), "
 "as well as links to both internal things (other references or one of the "
@@ -1570,83 +1672,56 @@ msgstr ""
 "(바이너리 데이터나 다른 참조) 및 웹사이트와 같은 외부 요소를 가리킬 수도 있습"
 "니다."
 
-#: creator/qml/BookStylesheet.qml:37
+#: creator/qml/BookStylesheet.qml:44
 #, kde-format
 msgctxt "title of the page which lets the user manage the book's stylesheet"
 msgid "Stylesheet"
 msgstr "스타일시트"
 
-#: creator/qml/BookStylesheet.qml:51
+#: creator/qml/BookStylesheet.qml:55
 #, kde-format
 msgctxt "Creates a new, empty stylesheet entry and lets the user edit it"
 msgid "Add Style..."
 msgstr "스타일 추가..."
 
-#: creator/qml/BookStylesheet.qml:70
-#, kde-format
-msgctxt "title text for a sheet which lets the user edit a binary entry"
+#: creator/qml/BookStylesheet.qml:84
+#, fuzzy, kde-format
+#| msgctxt "title text for a sheet which lets the user edit a binary entry"
+#| msgid "Edit Style"
+msgctxt "@title:dialog"
 msgid "Edit Style"
 msgstr "스타일 편집"
 
-#: creator/qml/BookStylesheet.qml:76
-#, kde-format
-msgctxt "label for a button which updates the style entry with the new details"
-msgid "OK"
-msgstr "확인"
-
-#: creator/qml/BookStylesheet.qml:87
+#: creator/qml/BookStylesheet.qml:99
 #, kde-format
 msgctxt "Label for the style element input field"
 msgid "Element"
 msgstr "요소"
 
-#: creator/qml/BookStylesheet.qml:88
+#: creator/qml/BookStylesheet.qml:105
 #, kde-format
-msgctxt "Placeholder text for the style element input field"
-msgid "Enter the name of the element you want to style"
-msgstr "스타일을 적용할 요소 이름을 입력하십시오"
-
-#: creator/qml/BookStylesheet.qml:106
-#, kde-format
-msgctxt ""
-"title text for a card which informs the user there are no styles defined, "
-"and what those are"
-msgid "No Styling Information"
-msgstr "스타일 정보 없음"
-
-#: creator/qml/BookStylesheet.qml:107
-#, kde-format
-msgctxt "title text for a card which informs the user what styles are"
-msgid "Styling Information"
-msgstr "스타일 정보"
-
-#: creator/qml/BookStylesheet.qml:115
-#, kde-format
-msgctxt "Help text for the stylesheet page, when there are no styles defined"
-msgid ""
-"There is no embedded data in your book yet. You can add such data by "
-"creating a new entry, and then adding data to that entry from some existing "
-"file on your system. That data will be imported into your book, and leaves "
-"the external file otherwise untouched."
+msgctxt "@option:check"
+msgid "Apply to style elements which request an inverted scheme"
 msgstr ""
-"책에 임베드된 데이터가 없습니다. 새 항목을 만들고 기존 파일을 선택해서 임베드"
-"할 수 있습니다. 책으로 가져온 후 원본 데이터는 변경되지 않습니다."
+
+#: creator/qml/BookStylesheet.qml:110
+#, kde-format
+msgctxt "@option:check"
+msgid "Sub-element selector type"
+msgstr ""
+
+#: creator/qml/BookStylesheet.qml:111
+#, kde-format
+msgid "None"
+msgstr ""
 
 #: creator/qml/BookStylesheet.qml:116
 #, kde-format
-msgctxt ""
-"Help text for the stylesheet page, when there is already styles defined in "
-"the book"
-msgid ""
-"You can add such new binary data entries by creating a new entry, and then "
-"adding data to that entry from some existing file on your system. That data "
-"will be imported into your book, and leaves the external file otherwise "
-"untouched."
+msgctxt "@option:check"
+msgid "Color"
 msgstr ""
-"새 항목을 만들고 기존 파일을 선택해서 새 바이너리 데이터를 임베드할 수 있습니"
-"다. 책으로 가져온 후 원본 데이터는 변경되지 않습니다."
 
-#: creator/qml/BookStylesheet.qml:133
+#: creator/qml/BookStylesheet.qml:139
 #, kde-format
 msgctxt ""
 "The title of a style entry which has a type, and which represents the "
@@ -1654,7 +1729,7 @@ msgctxt ""
 msgid "%1 (inverted)"
 msgstr "%1(반전됨)"
 
-#: creator/qml/BookStylesheet.qml:135
+#: creator/qml/BookStylesheet.qml:141
 #, kde-format
 msgctxt ""
 "The title of a style entry which does not have type, and which represents "
@@ -1662,69 +1737,132 @@ msgctxt ""
 msgid "%1 (sub type: %2, inverted)"
 msgstr "%1(하위 형식: %2, 반전됨)"
 
-#: creator/qml/BookStylesheet.qml:139
+#: creator/qml/BookStylesheet.qml:145
 #, kde-format
 msgctxt "The title of a style entry which has a type"
 msgid "%1"
 msgstr "%1"
 
-#: creator/qml/BookStylesheet.qml:141
+#: creator/qml/BookStylesheet.qml:147
 #, kde-format
 msgctxt "The title of a style entry which does not have type"
 msgid "%1 (sub type: %2)"
 msgstr "%1(하위 형식: %2)"
 
-#: creator/qml/CreateNewBook.qml:38
+#: creator/qml/BookStylesheet.qml:154
+#, fuzzy, kde-format
+#| msgctxt ""
+#| "title text for a card which informs the user there are no styles defined, "
+#| "and what those are"
+#| msgid "No Styling Information"
+msgctxt "@info:placeholder"
+msgid "No Styling Information"
+msgstr "스타일 정보 없음"
+
+#: creator/qml/BookStylesheet.qml:155
+#, fuzzy, kde-format
+#| msgctxt ""
+#| "Help text for the stylesheet page, when there is already styles defined "
+#| "in the book"
+#| msgid ""
+#| "You can add such new binary data entries by creating a new entry, and "
+#| "then adding data to that entry from some existing file on your system. "
+#| "That data will be imported into your book, and leaves the external file "
+#| "otherwise untouched."
+msgctxt "@info:placeholder"
+msgid ""
+"You can add such data by creating a new entry, and then adding data to that "
+"entry from some existing file on your system. That data will be imported "
+"into your book, and leaves the external file otherwise untouched."
+msgstr ""
+"새 항목을 만들고 기존 파일을 선택해서 새 바이너리 데이터를 임베드할 수 있습니"
+"다. 책으로 가져온 후 원본 데이터는 변경되지 않습니다."
+
+#: creator/qml/CreateNewBook.qml:44
 #, kde-format
 msgctxt "title of the new book creation page"
 msgid "Create New Book"
 msgstr "새 책 만들기"
 
-#: creator/qml/CreateNewBook.qml:42
+#: creator/qml/CreateNewBook.qml:47
 #, kde-format
 msgctxt "Accept button which will create a new book"
 msgid "Create Book"
 msgstr "책 만들기"
 
-#: creator/qml/CreateNewBook.qml:72
+#: creator/qml/CreateNewBook.qml:65
+#, kde-format
+msgctxt "label text for the edit field for the book title"
+msgid "Title"
+msgstr "제목"
+
+#: creator/qml/CreateNewBook.qml:66
 #, kde-format
 msgctxt "Default name for new books"
 msgid "Untitled"
 msgstr "제목 없음"
 
-#: creator/qml/CreateNewBook.qml:78
+#: creator/qml/CreateNewBook.qml:74
 #, kde-format
 msgctxt ""
 "label text for the edit field for the file system location for the book"
 msgid "Folder"
 msgstr "폴더"
 
-#: creator/qml/CreateNewBook.qml:95
+#: creator/qml/CreateNewBook.qml:99
+#, fuzzy, kde-format
+#| msgctxt "@title:window dialogue used to add a new search folder"
+#| msgid "Select a Folder"
+msgctxt "@action:button"
+msgid "Select Folder"
+msgstr "폴더 선택"
+
+#: creator/qml/CreateNewBook.qml:111
+#, kde-format
+msgctxt "File filter cbz file"
+msgid "*.cbz"
+msgstr ""
+
+#: creator/qml/CreateNewBook.qml:113
 #, kde-format
 msgctxt "@title:window folder dialog used to select the location of a new book"
 msgid "Please Choose the Location for the Book"
 msgstr "책 위치를 선택하십시오"
 
-#: creator/qml/CreateNewBook.qml:104
+#: creator/qml/CreateNewBook.qml:130
 #, kde-format
 msgctxt "label text for the edit field for the cover image for the book"
 msgid "Cover Image"
 msgstr "표지 그림"
 
-#: creator/qml/CreateNewBook.qml:117
+#: creator/qml/CreateNewBook.qml:157
+#, kde-format
+msgctxt "placeholder message for missing cover image"
+msgid "Missing cover image"
+msgstr ""
+
+#: creator/qml/CreateNewBook.qml:160
+#, fuzzy, kde-format
+#| msgctxt "@title:window Dialogue used to add a new search folder"
+#| msgid "Select a folder"
+msgctxt "@action:button"
+msgid "Select image"
+msgstr "폴더 선택"
+
+#: creator/qml/CreateNewBook.qml:184
 #, kde-format
 msgctxt ""
 "@title:window file dialog used to select the cover image for a new book"
 msgid "Please Choose Your Cover Image"
 msgstr "표지 그림을 선택하십시오"
 
-#: creator/qml/CreateNewBook.qml:120
+#: creator/qml/CreateNewBook.qml:187
 #, kde-format
 msgctxt "File filter option for displaying only jpeg files"
 msgid "JPEG images %1"
 msgstr "JPEG 그림 %1"
 
-#: creator/qml/CreateNewBook.qml:121
+#: creator/qml/CreateNewBook.qml:188
 #, kde-format
 msgctxt "File filter option for displaying all files"
 msgid "All files %1"
@@ -1825,132 +1963,56 @@ msgctxt "Button which saves the page area, and closes the dialog"
 msgid "Save"
 msgstr "저장"
 
-#: creator/qml/LinkEditorSheet.qml:67
-#, kde-format
-msgctxt ""
-"title text for a sheet which lets the user edit the parameters of a link"
+#: creator/qml/LinkEditorSheet.qml:70
+#, fuzzy, kde-format
+#| msgctxt ""
+#| "Edit the link the cursor is currently positioned on (or convert the "
+#| "selection to a link, or add a new one if there is no selection)"
+#| msgid "Edit Link"
+msgctxt "@title:dialog"
 msgid "Edit Link"
 msgstr "링크 편집"
 
-#: creator/qml/LinkEditorSheet.qml:73
-#, kde-format
-msgctxt ""
-"label for a button which updates the link in the text with the new "
-"information from the link editor"
-msgid "OK"
-msgstr "확인"
-
-#: creator/qml/LinkEditorSheet.qml:93
-#, kde-format
-msgctxt "Label for the link text input field"
+#: creator/qml/LinkEditorSheet.qml:90
+#, fuzzy, kde-format
+#| msgctxt "Label for the link text input field"
+#| msgid "Text"
+msgctxt "@label:textfield"
 msgid "Text"
 msgstr "텍스트"
 
-#: creator/qml/LinkEditorSheet.qml:94
-#, kde-format
-msgctxt "Placeholder text for the link text input field"
-msgid "Enter the text of your link here"
-msgstr "링크 텍스트를 입력하십시오"
-
-#: creator/qml/LinkEditorSheet.qml:97
-#, kde-format
-msgctxt "Label for the link destination input field"
+#: creator/qml/LinkEditorSheet.qml:95
+#, fuzzy, kde-format
+#| msgctxt "Label for the link destination input field"
+#| msgid "Destination"
+msgctxt "@label:textfield"
 msgid "Destination"
 msgstr "대상"
 
-#: creator/qml/LinkEditorSheet.qml:102
+#: creator/qml/LinkEditorSheet.qml:157
 #, kde-format
-msgctxt "Placeholder text for the link destination input field"
-msgid "Enter the destination for your link here"
-msgstr "링크 대상을 입력하십시오"
+msgid "Preview"
+msgstr ""
 
-#: creator/qml/LinkEditorSheet.qml:128
-#, kde-format
-msgctxt ""
-"Entry in a dropdown list which gives the name of a reference object, and "
-"identifies it as one such"
-msgid "%1 (Reference)"
-msgstr "%1(참조)"
-
-#: creator/qml/LinkEditorSheet.qml:131
-#, kde-format
-msgctxt ""
-"Entry in a dropdown list which gives the name of a binary object, and "
-"identifies it as one such"
-msgid "%1 (Binary)"
-msgstr "%1(바이너리)"
-
-#: creator/qml/LinkEditorSheet.qml:134
-#, kde-format
-msgctxt ""
-"Entry in a dropdown list which gives the base details of a Textarea object, "
-"and identifies it as one such"
-msgid "Textarea (ID: %1, text: %2)"
-msgstr "텍스트 영역(ID: %1, 텍스트: %2)"
-
-#: creator/qml/LinkEditorSheet.qml:137
-#, kde-format
-msgctxt ""
-"Entry in a dropdown list which gives the name of a frame object, and "
-"identifies it as one such"
-msgid "%1 (Frame)"
-msgstr "%1(프레임)"
-
-#: creator/qml/LinkEditorSheet.qml:140
-#, kde-format
-msgctxt "Entry in a dropdown list which gives the title and ID of a page"
-msgid "Page \"%1\" (ID: %2)"
-msgstr "쪽 \"%1\"(ID: %2)"
-
-#: creator/qml/LinkEditorSheet.qml:144
-#, kde-format
-msgctxt ""
-"Entry in a dropdown list which gives the name of an identified object of an "
-"unknown type, and marks it as one such"
-msgid "%1 (Unknown Type)"
-msgstr "%1(알 수 없는 형식)"
-
-#: creator/qml/LinkEditorSheet.qml:155
-#, kde-format
-msgctxt "Label for the link demonstration display field"
-msgid "Demonstration"
-msgstr "시험"
-
-#: creator/qml/Main.qml:76
-#, kde-format
-msgctxt "application title for the sidebar"
-msgid "Peruse Creator"
-msgstr "Peruse 생성기"
-
-#: creator/qml/Main.qml:90
-#, kde-format
-msgid "Navigation"
-msgstr "탐색"
-
-#: creator/qml/Main.qml:105
-#, kde-format
-msgid "Switch to the welcome page"
-msgstr "시작 페이지로 전환"
-
-#: creator/qml/Main.qml:112
+#: creator/qml/Main.qml:170
 #, kde-format
 msgctxt "Create a book"
 msgid "Create a New Book..."
 msgstr "새 책 만들기..."
 
-#: creator/qml/Main.qml:130
+#: creator/qml/Main.qml:192
 #, kde-format
 msgctxt "The book's title when there are unsaved changes"
 msgid "%1 (unsaved)"
 msgstr "%1(저장되지 않음)"
 
-#: creator/qml/Main.qml:137
+#: creator/qml/Main.qml:200
 #, kde-format
 msgctxt "Switch to the page which displays the pages in the current book"
 msgid "Pages"
 msgstr "쪽"
 
-#: creator/qml/Main.qml:144
+#: creator/qml/Main.qml:208
 #, kde-format
 msgctxt ""
 "Switch to the page where the user can edit the meta information for the "
@@ -1958,7 +2020,7 @@ msgctxt ""
 msgid "Metainfo"
 msgstr "메타 정보"
 
-#: creator/qml/Main.qml:151
+#: creator/qml/Main.qml:216
 #, kde-format
 msgctxt ""
 "Switch to the page where the user can edit the references (that is, snippets "
@@ -1966,7 +2028,7 @@ msgctxt ""
 msgid "References"
 msgstr "참조"
 
-#: creator/qml/Main.qml:158
+#: creator/qml/Main.qml:224
 #, kde-format
 msgctxt ""
 "Switch to the page where the user can work with the bits of binary data "
@@ -1974,13 +2036,13 @@ msgctxt ""
 msgid "Embedded Data"
 msgstr "임베드된 데이터"
 
-#: creator/qml/Main.qml:165
+#: creator/qml/Main.qml:232
 #, kde-format
 msgctxt "Switch to the page where the user can work with the book's stylesheet"
 msgid "Stylesheet"
 msgstr "스타일시트"
 
-#: creator/qml/Main.qml:260
+#: creator/qml/Main.qml:332
 #, kde-format
 msgctxt ""
 "@title:window standard file open dialog used to open a book not in the "
@@ -1988,182 +2050,176 @@ msgctxt ""
 msgid "Please Choose a Book to Open"
 msgstr "열 책 선택"
 
-#: creator/qml/Main.qml:263
+#: creator/qml/Main.qml:335
 #, kde-format
 msgctxt "The file type filter for comic book archives"
 msgid "Comic Book Archive zip format %1"
 msgstr "만화책 ZIP 압축 파일 %1"
 
-#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:73
+#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:54
 #, kde-format
 msgctxt "title text for the edit author sheet"
 msgid "Edit Author"
 msgstr "작가 편집"
 
-#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:98
+#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:69
 #, kde-format
 msgctxt "help text for the edit author sheet"
 msgid "Please complete the information for this author."
 msgstr "이 작가의 정보를 모두 입력하십시오."
 
-#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:109
-#, kde-format
-msgctxt "label for the activity field"
-msgid "Activity:"
-msgstr "활동:"
-
-#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:122
-#, kde-format
-msgctxt "label for the language field"
-msgid "Language:"
-msgstr "언어:"
-
-#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:128
-#, kde-format
-msgctxt "placeholder text for the language field"
-msgid "Language"
-msgstr "언어"
-
-#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:135
-#, kde-format
-msgctxt "label for the first name field"
-msgid "First name:"
-msgstr "이름:"
-
-#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:141
-#, kde-format
-msgctxt "placeholder text for the first name field"
-msgid "First Name"
-msgstr "이름"
-
-#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:148
-#, kde-format
-msgctxt "label for the middle name field"
-msgid "Middle name:"
-msgstr "가운데 이름:"
-
-#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:154
-#, kde-format
-msgctxt "placeholder text for the middle name field"
-msgid "Middle Name"
-msgstr "가운데 이름"
-
-#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:161
-#, kde-format
-msgctxt "label for the last name field"
-msgid "Last name:"
-msgstr "성:"
-
-#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:167
-#, kde-format
-msgctxt "placeholder text for the last name field"
-msgid "Last Name"
+#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:74
+#, fuzzy, kde-format
+#| msgctxt "placeholder text for the last name field"
+#| msgid "Last Name"
+msgctxt "@title:group"
+msgid "Name"
 msgstr "성"
 
-#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:174
-#, kde-format
-msgctxt "label for the nickname field"
-msgid "Nickname:"
-msgstr "별명:"
+#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:80
+#, fuzzy, kde-format
+#| msgctxt "label for the first name field"
+#| msgid "First name:"
+msgctxt "@label:textfield"
+msgid "First name"
+msgstr "이름:"
 
-#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:180
-#, kde-format
-msgctxt "placeholder text for the nickname field"
+#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:85
+#, fuzzy, kde-format
+#| msgctxt "label for the middle name field"
+#| msgid "Middle name:"
+msgctxt "@label:textfield"
+msgid "Middle name"
+msgstr "가운데 이름:"
+
+#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:90
+#, fuzzy, kde-format
+#| msgctxt "label for the last name field"
+#| msgid "Last name:"
+msgctxt "@label:textfield"
+msgid "Last name"
+msgstr "성:"
+
+#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:95
+#, fuzzy, kde-format
+#| msgctxt "placeholder text for the nickname field"
+#| msgid "Nickname"
+msgctxt "@label:textfield"
 msgid "Nickname"
 msgstr "별명"
 
-#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:187
-#, kde-format
-msgctxt "label for the homepage field"
-msgid "Homepage addresses:"
+#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:104
+#, fuzzy, kde-format
+#| msgctxt "label for the activity field"
+#| msgid "Activity:"
+msgctxt "@label:listbox"
+msgid "Activity"
+msgstr "활동:"
+
+#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:114
+#, fuzzy, kde-format
+#| msgctxt "label for the homepage field"
+#| msgid "Homepage addresses:"
+msgctxt "@title:group"
+msgid "Homepage addresses"
 msgstr "홈페이지 주소:"
 
-#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:216
-#, kde-format
-msgctxt "placeholder text for the homepage field"
-msgid "Add Homepage"
+#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:152
+#, fuzzy, kde-format
+#| msgctxt "placeholder text for the homepage field"
+#| msgid "Add Homepage"
+msgctxt "@label:textfield"
+msgid "New Homepage"
 msgstr "홈페이지 추가"
 
-#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:243
-#, kde-format
-msgctxt "label for the email field"
-msgid "Email addresses:"
+#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:171
+#, fuzzy, kde-format
+#| msgctxt "label for the email field"
+#| msgid "Email addresses:"
+msgctxt "@title:group"
+msgid "Email addresses"
 msgstr "이메일 주소:"
 
-#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:272
-#, kde-format
+#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:209
+#, fuzzy, kde-format
+#| msgctxt "placeholder text for the email field"
+#| msgid "Add Email address"
 msgctxt "placeholder text for the email field"
-msgid "Add Email address"
+msgid "New Email address"
 msgstr "이메일 주소 추가"
 
-#: creator/qml/PageMetaInfo.qml:35
+#: creator/qml/PageMetaInfo.qml:42
 #, kde-format
 msgctxt "title text for the page meta information editor sheet"
 msgid "Edit Page Information"
 msgstr "쪽 정보 편집"
 
-#: creator/qml/PageMetaInfo.qml:45
+#: creator/qml/PageMetaInfo.qml:46
 #, kde-format
 msgctxt ""
 "Saves the remaining unsaved edited fields and closes the metainfo editor"
 msgid "Close Editor"
 msgstr "편집기 닫기"
 
-#: creator/qml/PageMetaInfo.qml:59
+#: creator/qml/PageMetaInfo.qml:57
 #, kde-format
-msgctxt "label text for the edit field for the page title"
-msgid "Title"
+msgctxt "@title:group"
+msgid "General"
+msgstr ""
+
+#: creator/qml/PageMetaInfo.qml:63
+#, fuzzy, kde-format
+#| msgctxt "Switch to the listing page showing items grouped by title"
+#| msgid "Title"
+msgctxt "@label:textfield"
+msgid "Title:"
 msgstr "제목"
 
-#: creator/qml/PageMetaInfo.qml:60
-#, kde-format
-msgctxt "placeholder text for the page title text-input"
-msgid "Write to add default title"
-msgstr "제목을 추가하려면 입력하십시오"
+#: creator/qml/PageMetaInfo.qml:72
+#, fuzzy, kde-format
+#| msgctxt "Label for the ID input field"
+#| msgid "ID:"
+msgctxt "@label:textfield"
+msgid "ID:"
+msgstr "ID:"
 
-#: creator/qml/PageMetaInfo.qml:66
-#, kde-format
-msgctxt "label text for the edit field for the page id"
-msgid "ID"
-msgstr "ID"
-
-#: creator/qml/PageMetaInfo.qml:67
-#, kde-format
-msgctxt "placeholder text for page ID text-input"
-msgid "Write to add an ID"
-msgstr "ID를 추가하려면 입력하십시오"
-
-#: creator/qml/PageMetaInfo.qml:73
-#, kde-format
-msgctxt "label text for the edit field for the page transition type"
-msgid "Transition"
+#: creator/qml/PageMetaInfo.qml:82
+#, fuzzy, kde-format
+#| msgctxt "label text for the edit field for the page transition type"
+#| msgid "Transition"
+msgctxt "@label:listbox"
+msgid "Transition:"
 msgstr "전환"
 
-#: creator/qml/PageMetaInfo.qml:81
-#, kde-format
-msgctxt "label text for the edit field for the page background color"
-msgid "Background Color"
-msgstr "배경색"
+#: creator/qml/PageMetaInfo.qml:95
+#, fuzzy, kde-format
+#| msgctxt "Label from frame background color."
+#| msgid "Background Color:"
+msgctxt "@label:chooser"
+msgid "Background Color:"
+msgstr "배경색:"
 
-#: creator/qml/PageMetaInfo.qml:103
-#, kde-format
-msgctxt "@title color choosing dialog"
-msgid "Choose the background color for page"
-msgstr "쪽 배경색 선택"
-
-#: creator/qml/PageMetaInfo.qml:111
-#, kde-format
-msgctxt "label text for the edit field for the page frames"
+#: creator/qml/PageMetaInfo.qml:102
+#, fuzzy, kde-format
+#| msgctxt "label text for the edit field for the page frames"
+#| msgid "Frames"
+msgctxt "@title:group"
 msgid "Frames"
 msgstr "프레임"
 
-#: creator/qml/PageMetaInfo.qml:118
+#: creator/qml/PageMetaInfo.qml:108
+#, kde-format
+msgctxt "@info:placeholder"
+msgid "No frames present"
+msgstr ""
+
+#: creator/qml/PageMetaInfo.qml:119
 #, kde-format
 msgctxt "Comic book panel frame name."
 msgid "Frame %1"
 msgstr "프레임 %1"
 
-#: creator/qml/PageMetaInfo.qml:122
+#: creator/qml/PageMetaInfo.qml:124
 #, kde-format
 msgctxt ""
 "A switch which lets the user change the background colour of the page when "
@@ -2171,133 +2227,139 @@ msgctxt ""
 msgid "Change page background color"
 msgstr "쪽 배경색 변경"
 
-#: creator/qml/PageMetaInfo.qml:127
+#: creator/qml/PageMetaInfo.qml:129
 #, kde-format
 msgctxt "Label from frame background color."
 msgid "Background Color:"
 msgstr "배경색:"
 
-#: creator/qml/PageMetaInfo.qml:147
+#: creator/qml/PageMetaInfo.qml:149
 #, kde-format
 msgctxt "@title color choosing dialog"
 msgid "Choose background color for this frame"
 msgstr "이 프레임의 배경색 선택"
 
-#: creator/qml/PageMetaInfo.qml:157
+#: creator/qml/PageMetaInfo.qml:159
 #, kde-format
 msgctxt "swap the position of this frame with the previous one"
 msgid "Move Up"
 msgstr "위로 이동"
 
-#: creator/qml/PageMetaInfo.qml:166
+#: creator/qml/PageMetaInfo.qml:168
 #, kde-format
 msgctxt "swap the position of this frame with the next one"
 msgid "Move Down"
 msgstr "아래로 이동"
 
-#: creator/qml/PageMetaInfo.qml:175
+#: creator/qml/PageMetaInfo.qml:177
 #, kde-format
 msgctxt "remove the frame from the page"
 msgid "Delete Frame"
 msgstr "프레임 삭제"
 
-#: creator/qml/PageMetaInfo.qml:183
-#, kde-format
-msgctxt "label text for the edit field for the page textareas"
+#: creator/qml/PageMetaInfo.qml:187
+#, fuzzy, kde-format
+#| msgctxt "label text for the edit field for the page textareas"
+#| msgid "Text Areas"
+msgctxt "@title:group"
 msgid "Text Areas"
 msgstr "텍스트 영역"
 
-#: creator/qml/PageMetaInfo.qml:188
+#: creator/qml/PageMetaInfo.qml:200
 #, kde-format
-msgctxt "Label from textlayer background color."
-msgid "Background Color:"
-msgstr "배경색:"
+msgctxt "@info:placeholder"
+msgid "No text areas present"
+msgstr ""
 
-#: creator/qml/PageMetaInfo.qml:209
-#, kde-format
-msgctxt "@title color choosing dialog"
-msgid "Choose the background color for all text areas on this page"
-msgstr "이 쪽의 텍스트 영역 배경색 선택"
-
-#: creator/qml/PageMetaInfo.qml:223
+#: creator/qml/PageMetaInfo.qml:213
 #, kde-format
 msgctxt "swap the position of this text area with the previous one"
 msgid "Move Up"
 msgstr "위로 이동"
 
-#: creator/qml/PageMetaInfo.qml:230
+#: creator/qml/PageMetaInfo.qml:220
 #, kde-format
 msgctxt "swap the position of this text area with the next one"
 msgid "Move Down"
 msgstr "아래로 이동"
 
-#: creator/qml/PageMetaInfo.qml:237
+#: creator/qml/PageMetaInfo.qml:227
 #, kde-format
 msgctxt "remove the text area from the page"
 msgid "Delete Text Area"
 msgstr "텍스트 영역 삭제"
 
-#: creator/qml/PageMetaInfo.qml:247
+#: creator/qml/PageMetaInfo.qml:237
 #, kde-format
 msgctxt "Comic book panel textarea name."
 msgid "Text Area %1"
 msgstr "텍스트 영역 %1"
 
-#: creator/qml/PageMetaInfo.qml:263
-#, kde-format
-msgctxt "label text for the edit field for the page jumps"
+#: creator/qml/PageMetaInfo.qml:255
+#, fuzzy, kde-format
+#| msgctxt "label text for the edit field for the page jumps"
+#| msgid "Jumps"
+msgctxt "@title:group"
 msgid "Jumps"
 msgstr "점프"
 
-#: creator/qml/PageMetaInfo.qml:275
+#: creator/qml/PageMetaInfo.qml:261
+#, kde-format
+msgctxt "@info:placeholder"
+msgid "No jumps present"
+msgstr ""
+
+#: creator/qml/PageMetaInfo.qml:273
 #, kde-format
 msgctxt "swap the position of this jump with the previous one"
 msgid "Move Up"
 msgstr "위로 이동"
 
-#: creator/qml/PageMetaInfo.qml:282
+#: creator/qml/PageMetaInfo.qml:280
 #, kde-format
 msgctxt "swap the position of this jump with the next one"
 msgid "Move Down"
 msgstr "아래로 이동"
 
-#: creator/qml/PageMetaInfo.qml:289
+#: creator/qml/PageMetaInfo.qml:287
 #, kde-format
 msgctxt "remove the jump from the page"
 msgid "Delete Jump"
 msgstr "점프 삭제"
 
-#: creator/qml/PageMetaInfo.qml:299
+#: creator/qml/PageMetaInfo.qml:297
 #, kde-format
 msgctxt "Comic book panel jump name."
 msgid "Jump %1"
 msgstr "점프 %1"
 
-#: creator/qml/PageMetaInfo.qml:308
+#: creator/qml/PageMetaInfo.qml:306
 #, kde-format
 msgctxt "Label from jump page index."
 msgid "Page Index:"
 msgstr "쪽 색인:"
 
-#: creator/qml/Settings.qml:31
-#, kde-format
-msgctxt "title of the settings page"
+#: creator/qml/SettingsPage.qml:17
+#, fuzzy, kde-format
+#| msgctxt "Open the settings page"
+#| msgid "Settings"
+msgctxt "@title"
 msgid "Settings"
 msgstr "설정"
 
-#: creator/qml/WelcomePage.qml:59
+#: creator/qml/WelcomePage.qml:54
 #, kde-format
 msgctxt "The application's name"
 msgid "Peruse Creator"
 msgstr "Peruse 생성기"
 
-#: creator/qml/WelcomePage.qml:69
+#: creator/qml/WelcomePage.qml:61
 #, kde-format
 msgctxt "application subtitle"
 msgid "Comic Book Creation Tool"
 msgstr "만화책 생성 도구"
 
-#: creator/qml/WelcomePage.qml:86
+#: creator/qml/WelcomePage.qml:71
 #, kde-format
 msgctxt "Longer introduction text used on the welcome page"
 msgid ""
@@ -2315,27 +2377,28 @@ msgstr ""
 "KDE 스토어의 온라인 만화책 부분에 앱 내에서 올리거나 친구들과 공유할 수 있습"
 "니다."
 
-#: creator/qml/WelcomePage.qml:93
+#: creator/qml/WelcomePage.qml:81
 #, kde-format
 msgctxt "@action:button open existing comic book archive"
 msgid "Open Existing..."
 msgstr "기존 항목 열기..."
 
-#: creator/qml/WelcomePage.qml:99
+#: creator/qml/WelcomePage.qml:89
 #, kde-format
 msgctxt "@action:button create a new, empty comic book archive"
 msgid "Create Blank"
 msgstr "빈 책 만들기"
 
-#: creator/qml/WelcomePage.qml:105
-#, kde-format
-msgctxt ""
-"@action:button create a new comic book archive by copying in a bunch of "
-"pictures"
-msgid "Create from Images..."
-msgstr "그림에서 만들기..."
+#: creator/qml/WelcomePage.qml:96
+#, fuzzy, kde-format
+#| msgctxt ""
+#| "Switch to the listing page showing the most recently discovered books"
+#| msgid "Recently Added Books"
+msgctxt "@title:group"
+msgid "Recent books"
+msgstr "최근에 추가된 책"
 
-#: creator/qml/WelcomePage.qml:115
+#: creator/qml/WelcomePage.qml:116
 #, kde-format
 msgctxt ""
 "@action:button continue working on the most recently opened comic book "
@@ -2343,38 +2406,339 @@ msgctxt ""
 msgid "Continue working on %1"
 msgstr "%1에서 작업 계속 진행하기"
 
-#: qtquick/ArchiveBookModel.cpp:555
+#: creator/qml/WelcomePage.qml:129
+#, fuzzy, kde-format
+#| msgid "There are no folder currently indexed."
+msgctxt "@info:placeholder"
+msgid "There are no recent books"
+msgstr "색인되는 폴더가 없습니다."
+
+#: qtquick/ArchiveBookModel.cpp:527
 #, kde-format
 msgid "Creating archive in %1"
 msgstr "%1에 압축 파일 생성"
 
-#: qtquick/ArchiveBookModel.cpp:567
+#: qtquick/ArchiveBookModel.cpp:539
 #, kde-format
 msgid "Writing in ACBF data"
 msgstr "ACBF 형식 데이터 기록 중"
 
-#: qtquick/ArchiveBookModel.cpp:578
+#: qtquick/ArchiveBookModel.cpp:549
 #, kde-format
 msgid "Copying across all files not marked for deletion"
 msgstr "삭제하기로 표시하지 않은 모든 파일 복사 중"
 
-#: qtquick/ArchiveBookModel.cpp:586
+#: qtquick/ArchiveBookModel.cpp:557
 #, kde-format
 msgid "Copying over %1"
 msgstr "%1 복사 중"
 
-#: qtquick/ArchiveBookModel.cpp:615
+#: qtquick/ArchiveBookModel.cpp:584
 #, kde-format
 msgid "Copying all content from %1 to %2"
 msgstr "%1의 모든 내용을 %2(으)로 복사 중"
 
-#: qtquick/ArchiveBookModel.cpp:625
+#: qtquick/ArchiveBookModel.cpp:592
 #, kde-format
 msgid ""
 "Successfully replaced old archive with the new archive - now loading the new "
 "archive..."
 msgstr ""
 "기존 압축 파일을 새 압축 파일로 교체했습니다. 새 압축 파일 불러오는 중..."
+
+#~ msgctxt "Closes the book information drawer"
+#~ msgid "Close"
+#~ msgstr "닫기"
+
+#~ msgctxt "Label for the author field"
+#~ msgid "Author:"
+#~ msgstr "작가:"
+
+#~ msgctxt "Label for the series field"
+#~ msgid "Series:"
+#~ msgstr "시리즈:"
+
+#~ msgctxt "Label for the filename field"
+#~ msgid "Filename:"
+#~ msgstr "파일 이름:"
+
+#~ msgctxt "Navigate one page back"
+#~ msgid "Back"
+#~ msgstr "뒤로"
+
+#~ msgctxt "Open the book which is currently selected in the list"
+#~ msgid "Open Selected Book"
+#~ msgstr "선택한 책 열기"
+
+#~ msgctxt "Closes the book details drawer"
+#~ msgid "Close"
+#~ msgstr "닫기"
+
+#~ msgctxt "The first author in a list of authors"
+#~ msgid "by %1"
+#~ msgstr "제작: %1"
+
+#~ msgctxt "Title of the page with books grouped by what series they are in"
+#~ msgid "Group by Series"
+#~ msgstr "시리즈로 묶기"
+
+#~ msgctxt "Title of the page with books grouped by author"
+#~ msgid "Group by Author"
+#~ msgstr "작가로 묶기"
+
+#~ msgctxt "Title of the page with books grouped by who published them"
+#~ msgid "Group by Publisher"
+#~ msgstr "출판사로 묶기"
+
+#~ msgctxt "title text for the add page sheet"
+#~ msgid "Add a Page?"
+#~ msgstr "쪽을 추가하시겠습니까?"
+
+#~ msgctxt "closes the add page sheet"
+#~ msgid "Do not Add a Page"
+#~ msgstr "쪽을 추가하지 않음"
+
+#~ msgctxt "placeholder text for default title text-input"
+#~ msgid "Write to add default title"
+#~ msgstr "제목을 추가하려면 입력하십시오"
+
+#~ msgctxt "placeholder text for default annotation text-area"
+#~ msgid "Write to add default annotation"
+#~ msgstr "추가 설명을 추가하려면 입력하십시오"
+
+#~ msgctxt "label text for the edit field for the keyword list"
+#~ msgid "Keywords"
+#~ msgstr "키워드"
+
+#~ msgctxt "label text for the edit field for the author list"
+#~ msgid "Authors (%1)"
+#~ msgstr "작가(%1)"
+
+#~ msgctxt "placeholder text for the add new series text entry"
+#~ msgid "Write to add new series"
+#~ msgstr "새 시리즈를 추가하려면 입력하십시오"
+
+#~ msgctxt "placeholder text for the add reference type text entry"
+#~ msgid "Write to add reference type"
+#~ msgstr "참조 형식을 추가하려면 입력하십시오"
+
+#~ msgctxt "placeholder text for the add new reference text entry"
+#~ msgid "Write to add new reference"
+#~ msgstr "새 참조를 추가하려면 입력하십시오"
+
+#~ msgctxt "placeholder text for the add databasename text entry"
+#~ msgid "Write to add database name for new reference."
+#~ msgstr "새 참조의 데이터베이스 이름을 추가하려면 입력하십시오."
+
+#~ msgctxt "label text for the form for reading direction."
+#~ msgid "Reading Direction"
+#~ msgstr "읽는 방향"
+
+#~ msgctxt "label text for right to left checkbox."
+#~ msgid "Right to left."
+#~ msgstr "오른쪽에서 왼쪽으로"
+
+#~ msgctxt "placeholder text for the publishing city entry"
+#~ msgid "Write to add city"
+#~ msgstr "도시를 추가하려면 입력하십시오"
+
+#~ msgctxt "placeholder text for the publishing ISBN entry"
+#~ msgid "Write to add ISBN"
+#~ msgstr "ISBN을 추가하려면 입력하십시오"
+
+#~ msgctxt "placeholder text for the publishing license entry"
+#~ msgid "Write to add license"
+#~ msgstr "라이선스를 추가하려면 입력하십시오"
+
+#~ msgctxt "@title color choosing dialog"
+#~ msgid "Choose the general background color for this comic"
+#~ msgstr "이 만화의 일반 배경색 선택"
+
+#~ msgctxt "Placeholder text for the reference identifier input field"
+#~ msgid "Enter your reference ID here (should be unique)"
+#~ msgstr "참조 고유 ID를 입력하십시오(중복되면 안 됨)"
+
+#~ msgctxt "Placeholder text for the reference language input field"
+#~ msgid ""
+#~ "Enter the language ID here (leave empty for the document default language)"
+#~ msgstr "참조 언어 ID를 입력하십시오(비워 두면 문서 기본 언어 사용)"
+
+#~ msgctxt ""
+#~ "title text for a card which informs the user there are no references, and "
+#~ "what references are"
+#~ msgid "No References"
+#~ msgstr "참조 없음"
+
+#~ msgctxt "title text for a card which informs what references are"
+#~ msgid "References"
+#~ msgstr "참조"
+
+#~ msgctxt "Help text for the references page, when there are no references"
+#~ msgid ""
+#~ "There is no reference information in your book yet. You can create a new "
+#~ "reference piece by clicking on the New Reference control. References are "
+#~ "collections of paragraphs of text, which you can fill with simple "
+#~ "formatting (strong, emphasis, and other simple layouting like that), as "
+#~ "well as links to both internal things (other references or one of the "
+#~ "pieces of binary data), or to an external resource, such as a website."
+#~ msgstr ""
+#~ "책에 참조 정보가 없습니다. 새 참조 컨트롤을 클릭해서 새 참조를 추가할 수 "
+#~ "있습니다. 참조를 입력할 때에는 서식 있는 텍스트(굵은 글씨, 강조, 기타 간단"
+#~ "한 레이아웃)뿐만 아니라 내부 요소(바이너리 데이터나 다른 참조) 및 웹사이트"
+#~ "와 같은 외부 요소를 가리킬 수도 있습니다."
+
+#~ msgctxt ""
+#~ "label for a button which updates the style entry with the new details"
+#~ msgid "OK"
+#~ msgstr "확인"
+
+#~ msgctxt "Placeholder text for the style element input field"
+#~ msgid "Enter the name of the element you want to style"
+#~ msgstr "스타일을 적용할 요소 이름을 입력하십시오"
+
+#~ msgctxt "title text for a card which informs the user what styles are"
+#~ msgid "Styling Information"
+#~ msgstr "스타일 정보"
+
+#~ msgctxt ""
+#~ "Help text for the stylesheet page, when there are no styles defined"
+#~ msgid ""
+#~ "There is no embedded data in your book yet. You can add such data by "
+#~ "creating a new entry, and then adding data to that entry from some "
+#~ "existing file on your system. That data will be imported into your book, "
+#~ "and leaves the external file otherwise untouched."
+#~ msgstr ""
+#~ "책에 임베드된 데이터가 없습니다. 새 항목을 만들고 기존 파일을 선택해서 임"
+#~ "베드할 수 있습니다. 책으로 가져온 후 원본 데이터는 변경되지 않습니다."
+
+#~ msgctxt ""
+#~ "title text for a sheet which lets the user edit the parameters of a link"
+#~ msgid "Edit Link"
+#~ msgstr "링크 편집"
+
+#~ msgctxt ""
+#~ "label for a button which updates the link in the text with the new "
+#~ "information from the link editor"
+#~ msgid "OK"
+#~ msgstr "확인"
+
+#~ msgctxt "Placeholder text for the link text input field"
+#~ msgid "Enter the text of your link here"
+#~ msgstr "링크 텍스트를 입력하십시오"
+
+#~ msgctxt "Placeholder text for the link destination input field"
+#~ msgid "Enter the destination for your link here"
+#~ msgstr "링크 대상을 입력하십시오"
+
+#~ msgctxt ""
+#~ "Entry in a dropdown list which gives the name of a reference object, and "
+#~ "identifies it as one such"
+#~ msgid "%1 (Reference)"
+#~ msgstr "%1(참조)"
+
+#~ msgctxt ""
+#~ "Entry in a dropdown list which gives the name of a binary object, and "
+#~ "identifies it as one such"
+#~ msgid "%1 (Binary)"
+#~ msgstr "%1(바이너리)"
+
+#~ msgctxt ""
+#~ "Entry in a dropdown list which gives the base details of a Textarea "
+#~ "object, and identifies it as one such"
+#~ msgid "Textarea (ID: %1, text: %2)"
+#~ msgstr "텍스트 영역(ID: %1, 텍스트: %2)"
+
+#~ msgctxt ""
+#~ "Entry in a dropdown list which gives the name of a frame object, and "
+#~ "identifies it as one such"
+#~ msgid "%1 (Frame)"
+#~ msgstr "%1(프레임)"
+
+#~ msgctxt "Entry in a dropdown list which gives the title and ID of a page"
+#~ msgid "Page \"%1\" (ID: %2)"
+#~ msgstr "쪽 \"%1\"(ID: %2)"
+
+#~ msgctxt ""
+#~ "Entry in a dropdown list which gives the name of an identified object of "
+#~ "an unknown type, and marks it as one such"
+#~ msgid "%1 (Unknown Type)"
+#~ msgstr "%1(알 수 없는 형식)"
+
+#~ msgctxt "Label for the link demonstration display field"
+#~ msgid "Demonstration"
+#~ msgstr "시험"
+
+#~ msgctxt "application title for the sidebar"
+#~ msgid "Peruse Creator"
+#~ msgstr "Peruse 생성기"
+
+#~ msgid "Navigation"
+#~ msgstr "탐색"
+
+#~ msgid "Switch to the welcome page"
+#~ msgstr "시작 페이지로 전환"
+
+#~ msgctxt "label for the language field"
+#~ msgid "Language:"
+#~ msgstr "언어:"
+
+#~ msgctxt "placeholder text for the language field"
+#~ msgid "Language"
+#~ msgstr "언어"
+
+#~ msgctxt "placeholder text for the first name field"
+#~ msgid "First Name"
+#~ msgstr "이름"
+
+#~ msgctxt "placeholder text for the middle name field"
+#~ msgid "Middle Name"
+#~ msgstr "가운데 이름"
+
+#~ msgctxt "label for the nickname field"
+#~ msgid "Nickname:"
+#~ msgstr "별명:"
+
+#~ msgctxt "label text for the edit field for the page title"
+#~ msgid "Title"
+#~ msgstr "제목"
+
+#~ msgctxt "placeholder text for the page title text-input"
+#~ msgid "Write to add default title"
+#~ msgstr "제목을 추가하려면 입력하십시오"
+
+#~ msgctxt "label text for the edit field for the page id"
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#~ msgctxt "placeholder text for page ID text-input"
+#~ msgid "Write to add an ID"
+#~ msgstr "ID를 추가하려면 입력하십시오"
+
+#~ msgctxt "label text for the edit field for the page background color"
+#~ msgid "Background Color"
+#~ msgstr "배경색"
+
+#~ msgctxt "@title color choosing dialog"
+#~ msgid "Choose the background color for page"
+#~ msgstr "쪽 배경색 선택"
+
+#~ msgctxt "Label from textlayer background color."
+#~ msgid "Background Color:"
+#~ msgstr "배경색:"
+
+#~ msgctxt "@title color choosing dialog"
+#~ msgid "Choose the background color for all text areas on this page"
+#~ msgstr "이 쪽의 텍스트 영역 배경색 선택"
+
+#~ msgctxt "title of the settings page"
+#~ msgid "Settings"
+#~ msgstr "설정"
+
+#~ msgctxt ""
+#~ "@action:button create a new comic book archive by copying in a bunch of "
+#~ "pictures"
+#~ msgid "Create from Images..."
+#~ msgstr "그림에서 만들기..."
 
 #~ msgctxt "Switch to the listing page showing items grouped by author"
 #~ msgid "Group by Author"

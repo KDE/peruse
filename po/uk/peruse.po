@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: peruse\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-29 00:40+0000\n"
+"POT-Creation-Date: 2025-04-30 00:40+0000\n"
 "PO-Revision-Date: 2023-05-20 08:42+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
@@ -30,49 +30,49 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "yurchor@ukr.net"
 
-#: app/main.cpp:49
+#: app/main.cpp:48
 #, kde-format
 msgid "Peruse Reader"
 msgstr "Peruse Reader"
 
-#: app/main.cpp:49
+#: app/main.cpp:50
 #, kde-format
 msgid "Comic Book Reader by KDE"
 msgstr "Програма для читання коміксів від KDE"
 
-#: app/main.cpp:50 creator/main.cpp:45
+#: app/main.cpp:52 creator/main.cpp:48
 #, kde-format
 msgid "© 2016-2021 KDE"
 msgstr "© KDE, 2016–2021"
 
-#: app/main.cpp:51 creator/main.cpp:46
+#: app/main.cpp:53 creator/main.cpp:49
 #, kde-format
 msgid "Dan Leinir Turthra Jensen"
 msgstr "Dan Leinir Turthra Jensen"
 
-#: app/main.cpp:57
+#: app/main.cpp:63
 #, kde-format
 msgid "Clear the metainfo cache and perform a full rescan."
 msgstr "Спорожнити кеш метаданих і виконати повне повторне сканування."
 
-#: app/main.cpp:58 creator/main.cpp:52
+#: app/main.cpp:64 creator/main.cpp:59
 #, kde-format
 msgid "Open file in peruse."
 msgstr "Відкрити файл у peruse."
 
-#: app/qml/Book.qml:186
+#: app/qml/Book.qml:182
 #, kde-format
 msgctxt "Enter full screen mode on a touch-based device"
 msgid "Go Full Screen"
 msgstr "Повноекранний режим"
 
-#: app/qml/Book.qml:186
+#: app/qml/Book.qml:182
 #, kde-format
 msgctxt "Exit full sceen mode on a touch based device"
 msgid "Exit Full Screen"
 msgstr "Вийти з повноекранного режиму"
 
-#: app/qml/Book.qml:192
+#: app/qml/Book.qml:188
 #, kde-format
 msgctxt ""
 "Action used on touch devices to close the currently open book and return to "
@@ -80,14 +80,14 @@ msgctxt ""
 msgid "Close Book"
 msgstr "закрити книгу"
 
-#: app/qml/Book.qml:201
+#: app/qml/Book.qml:197
 #, kde-format
 msgctxt ""
 "Top level entry leading to a submenu with options for the book display"
 msgid "View Options"
 msgstr "Параметри перегляду"
 
-#: app/qml/Book.qml:204
+#: app/qml/Book.qml:200
 #, kde-format
 msgctxt ""
 "Header title for the section in which the direction the book will be "
@@ -95,57 +95,57 @@ msgctxt ""
 msgid "Reading Direction"
 msgstr "Напрямок читання"
 
-#: app/qml/Book.qml:207
+#: app/qml/Book.qml:203
 #, kde-format
 msgctxt ""
 "Title for the option which will make the book navigate from left to right"
 msgid "Left to Right"
 msgstr "Зліва праворуч"
 
-#: app/qml/Book.qml:214
+#: app/qml/Book.qml:210
 #, kde-format
 msgctxt ""
 "Title for the option which will make the book navigate from right to left"
 msgid "Right to Left"
 msgstr "Справа ліворуч"
 
-#: app/qml/Book.qml:244
+#: app/qml/Book.qml:240
 #, kde-format
 msgctxt "Go to the previous frame on the current page"
 msgid "Previous Frame"
 msgstr "Попередній кадр"
 
-#: app/qml/Book.qml:251
+#: app/qml/Book.qml:247
 #, kde-format
 msgctxt "Go to the next frame on the current page"
 msgid "Next Frame"
 msgstr "Наступний кадр"
 
-#: app/qml/Book.qml:258
+#: app/qml/Book.qml:254
 #, kde-format
 msgctxt "Go to the previous page in the book"
 msgid "Previous Page"
 msgstr "Попередня сторінка"
 
-#: app/qml/Book.qml:265
+#: app/qml/Book.qml:261
 #, kde-format
 msgctxt "Go to the next page in the book"
 msgid "Next Page"
 msgstr "Наступна сторінка"
 
-#: app/qml/Book.qml:272
+#: app/qml/Book.qml:268
 #, kde-format
 msgctxt "Enter full screen mode on a non-touch-based device"
 msgid "Go Full Screen"
 msgstr "Повноекранний режим"
 
-#: app/qml/Book.qml:272
+#: app/qml/Book.qml:268
 #, kde-format
 msgctxt "Exit full sceen mode on a non-touch based device"
 msgid "Exit Full Screen"
 msgstr "Вийти з повноекранного режиму"
 
-#: app/qml/Book.qml:279
+#: app/qml/Book.qml:275
 #, kde-format
 msgctxt ""
 "Action used on non-touch devices to close the currently open book and return "
@@ -153,13 +153,7 @@ msgctxt ""
 msgid "Close Book"
 msgstr "закрити книгу"
 
-#: app/qml/Book.qml:323
-#, kde-format
-msgctxt "Closes the book information drawer"
-msgid "Close"
-msgstr "Закрити"
-
-#: app/qml/Book.qml:418
+#: app/qml/Book.qml:382
 #, kde-format
 msgctxt ""
 "Message shown on the book reader view when there is an issue loading any "
@@ -168,7 +162,7 @@ msgctxt ""
 msgid "Failed to load the reader component"
 msgstr "Не вдалося завантажити компонент засобу читання"
 
-#: app/qml/Book.qml:419
+#: app/qml/Book.qml:383
 #, kde-format
 msgctxt ""
 "Message shown on the book reader view when there is an issue loading any "
@@ -181,85 +175,79 @@ msgstr ""
 "Зазвичай, такі проблеми виникають через помилки у пакуванні програми. "
 "Зв'яжіться із авторами пакунка і повідомте їм про цю помилку."
 
-#: app/qml/BookDetails.qml:49
-#, kde-format
-msgctxt "Label for the author field"
-msgid "Author:"
-msgstr "Автор:"
+#: app/qml/BookInfoPage.qml:43
+#, fuzzy, kde-format
+#| msgctxt "Label for authors"
+#| msgid "Author(s)"
+msgctxt "@label"
+msgid "Author(s):"
+msgstr "Автори"
 
-#: app/qml/BookDetails.qml:50
-#, kde-format
-msgctxt "Label for the publisher field"
+#: app/qml/BookInfoPage.qml:44 app/qml/BookInfoPage.qml:51
+#, fuzzy, kde-format
+#| msgctxt "used for the author data in book lists if author is empty"
+#| msgid "(unknown)"
+msgctxt "@info:placeholder"
+msgid "Unknown"
+msgstr "(невідомий)"
+
+#: app/qml/BookInfoPage.qml:50
+#, fuzzy, kde-format
+#| msgctxt "Label for the publisher field"
+#| msgid "Publisher:"
+msgctxt "@label"
 msgid "Publisher:"
 msgstr "Видавець:"
 
-#: app/qml/BookDetails.qml:51
-#, kde-format
-msgctxt "Label for the series field"
-msgid "Series:"
-msgstr "Варіант:"
+#: app/qml/BookInfoPage.qml:57
+#, fuzzy, kde-format
+#| msgctxt "label text for the edit field for the default annotation"
+#| msgid "Annotation"
+msgctxt "@label"
+msgid "Location:"
+msgstr "Анотація"
 
-#: app/qml/BookDetails.qml:52
+#: app/qml/BookInfoPage.qml:63
 #, kde-format
-msgctxt "Label for the filename field"
-msgid "Filename:"
-msgstr "Назва файла:"
+msgctxt "@title:group"
+msgid "File Metadata"
+msgstr ""
 
-#: app/qml/BookDetails.qml:147 app/qml/listcomponents/BookTile.qml:373
+#: app/qml/BookInfoPage.qml:70
+#, fuzzy, kde-format
+#| msgctxt "label for rating widget"
+#| msgid "Rating"
+msgctxt "@label"
+msgid "Rating:"
+msgstr "Оцінка"
+
+#: app/qml/BookInfoPage.qml:92
 #, kde-format
-msgctxt "Spawn inline dialog box to confirm permanent removal of this book"
-msgid "Delete from Device"
-msgstr "Вилучити з пристрою"
+msgid "Set rating to %1"
+msgstr ""
 
-#: app/qml/BookDetails.qml:174 app/qml/listcomponents/BookTile.qml:401
+#: app/qml/BookInfoPage.qml:123
+#, fuzzy, kde-format
+#| msgctxt "label for tags field"
+#| msgid "Tags"
+msgctxt "@label"
+msgid "Tags:"
+msgstr "Мітки"
+
+#: app/qml/BookInfoPage.qml:125 app/qml/listcomponents/BookTile.qml:291
 #, kde-format
-msgctxt "Dialog text for delete book dialog"
-msgid "Are you sure you want to delete this from your device?"
-msgstr "Ви справді хочете вилучити це з вашого пристрою?"
+msgctxt "Placeholder tag field"
+msgid "(No tags)"
+msgstr "(Немає міток)"
 
-#: app/qml/BookDetails.qml:184 app/qml/listcomponents/BookTile.qml:411
+#: app/qml/BooksByTitlePage.qml:22
 #, kde-format
-msgctxt "Confirmation button for book delete dialog"
-msgid "Yes, Really Delete"
-msgstr "Так, хочу вилучити"
+msgctxt "Title of the page with books grouped by the title start letters"
+msgid "Group by Title"
+msgstr "Групувати за заголовками"
 
-#: app/qml/BookDetails.qml:198 app/qml/listcomponents/BookTile.qml:422
-#, kde-format
-msgctxt "Cancellation button or book delete dialog"
-msgid "No, Cancel Delete"
-msgstr "Ні, скасувати вилучення"
-
-#: app/qml/Bookshelf.qml:87
-#, kde-format
-msgctxt "Navigate one page back"
-msgid "Back"
-msgstr "Назад"
-
-#: app/qml/Bookshelf.qml:94
-#, kde-format
-msgctxt "Open the book which is currently selected in the list"
-msgid "Open Selected Book"
-msgstr "Відкрити позначену книгу"
-
-#: app/qml/Bookshelf.qml:107
-#, kde-format
-msgctxt "search in the list of books (not inside the books)"
-msgid "Search Books"
-msgstr "Шукати книги"
-
-#: app/qml/Bookshelf.qml:114
-#, kde-format
-msgctxt "placeholder text for the search field"
-msgid "Tap and type to search"
-msgstr "Торкніться і введіть слова для пошуку"
-
-#: app/qml/Bookshelf.qml:135
-#, kde-format
-msgctxt "Closes the book details drawer"
-msgid "Close"
-msgstr "Закрити"
-
-#: app/qml/Bookshelf.qml:157
+#: app/qml/BooksByTitlePage.qml:76 app/qml/Bookshelf.qml:131
+#: app/qml/CategoryPage.qml:82
 #, kde-format
 msgctxt ""
 "Placeholder Text when there are no comics in the library that match the "
@@ -267,13 +255,53 @@ msgctxt ""
 msgid "No matches"
 msgstr "Немає відповідників"
 
-#: app/qml/Bookshelf.qml:186
+#: app/qml/BooksByTitlePage.qml:76
 #, kde-format
-msgctxt "used for the author data in book lists if author is empty"
-msgid "(unknown)"
-msgstr "(невідомий)"
+msgctxt "@info:placeholder"
+msgid "No authors available"
+msgstr ""
 
-#: app/qml/FileFinder.qml:91
+#: app/qml/Bookshelf.qml:88
+#, kde-format
+msgctxt "search in the list of books (not inside the books)"
+msgid "Search Books"
+msgstr "Шукати книги"
+
+#: app/qml/Bookshelf.qml:95
+#, kde-format
+msgctxt "placeholder text for the search field"
+msgid "Tap and type to search"
+msgstr "Торкніться і введіть слова для пошуку"
+
+#: app/qml/Bookshelf.qml:155
+#, fuzzy, kde-format
+#| msgctxt "label for a button which activates an external link"
+#| msgid "Open Link"
+msgctxt "@action:inmenu"
+msgid "Open"
+msgstr "Відкрити посилання"
+
+#: app/qml/Bookshelf.qml:163
+#, fuzzy, kde-format
+#| msgctxt ""
+#| "Opens a sheet which lets the user change the name and language of the "
+#| "reference"
+#| msgid "Edit Details..."
+msgctxt "@action:inmenu"
+msgid "Details"
+msgstr "Редагувати параметри…"
+
+#: app/qml/CategoryPage.qml:65
+#, kde-format
+msgctxt "@info"
+msgid "%1 book"
+msgid_plural "%1 books"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+
+#: app/qml/FileFinder.qml:90
 #, kde-format
 msgctxt ""
 "A fake folder item which if activated will cause the folder list to navigate "
@@ -305,12 +333,6 @@ msgctxt "label for tags field"
 msgid "Tags"
 msgstr "Мітки"
 
-#: app/qml/listcomponents/BookTile.qml:291
-#, kde-format
-msgctxt "Placeholder tag field"
-msgid "(No tags)"
-msgstr "(Немає міток)"
-
 #: app/qml/listcomponents/BookTile.qml:312
 #, kde-format
 msgctxt "label for comment field"
@@ -330,34 +352,60 @@ msgctxt ""
 msgid "(no description available for this book)"
 msgstr "(ця книга не має опису)"
 
-#: app/qml/listcomponents/BookTileTall.qml:112
+#: app/qml/listcomponents/BookTile.qml:373
+#, kde-format
+msgctxt "Spawn inline dialog box to confirm permanent removal of this book"
+msgid "Delete from Device"
+msgstr "Вилучити з пристрою"
+
+#: app/qml/listcomponents/BookTile.qml:401
+#, kde-format
+msgctxt "Dialog text for delete book dialog"
+msgid "Are you sure you want to delete this from your device?"
+msgstr "Ви справді хочете вилучити це з вашого пристрою?"
+
+#: app/qml/listcomponents/BookTile.qml:411
+#, kde-format
+msgctxt "Confirmation button for book delete dialog"
+msgid "Yes, Really Delete"
+msgstr "Так, хочу вилучити"
+
+#: app/qml/listcomponents/BookTile.qml:422
+#, kde-format
+msgctxt "Cancellation button or book delete dialog"
+msgid "No, Cancel Delete"
+msgstr "Ні, скасувати вилучення"
+
+#: app/qml/listcomponents/BookTileTall.qml:93
 #, kde-format
 msgctxt "A percentage of progress"
 msgid "%1%"
 msgstr "%1%"
 
-#: app/qml/listcomponents/BookTileTall.qml:135
+#: app/qml/listcomponents/BookTileTall.qml:93
+#, kde-format
+msgctxt "should be keep short, inside a label. Will be in uppercase"
+msgid "New"
+msgstr ""
+
+#: app/qml/listcomponents/BookTileTall.qml:126
 #, kde-format
 msgctxt "The last item in a list of author names when there is more than one"
 msgid ", and %1"
 msgstr " і %1"
 
-#: app/qml/listcomponents/BookTileTall.qml:138
+#: app/qml/listcomponents/BookTileTall.qml:129
 #, kde-format
 msgctxt "An item in a list of authors (but not the last)"
 msgid ", %1"
 msgstr ", %1"
 
-#: app/qml/listcomponents/BookTileTall.qml:141
-#, kde-format
-msgctxt "The first author in a list of authors"
-msgid "by %1"
-msgstr "%1"
-
-#: app/qml/listcomponents/BookTileTall.qml:147
-#, kde-format
+#: app/qml/listcomponents/BookTileTall.qml:138
+#, fuzzy, kde-format
+#| msgctxt "Author name used when there are no known authors for a book"
+#| msgid "by an unknown author"
 msgctxt "Author name used when there are no known authors for a book"
-msgid "by an unknown author"
+msgid "Unknown author"
 msgstr "автор невідомий"
 
 #: app/qml/listcomponents/CategoryTile.qml:40
@@ -365,7 +413,7 @@ msgstr "автор невідомий"
 msgid "Comics in folder: %1"
 msgstr "Комікси у теці: %1"
 
-#: app/qml/Main.qml:38
+#: app/qml/Main.qml:39
 #, kde-format
 msgctxt ""
 "@title:window standard file open dialog used to open a book not in the "
@@ -381,12 +429,12 @@ msgctxt ""
 msgid "Open Comics not in Your Collection"
 msgstr "Відкриття коміксів поза вашою збіркою"
 
-#: app/qml/PeruseContextDrawer.qml:37
+#: app/qml/PeruseContextDrawer.qml:38
 #, kde-format
 msgid "Actions"
 msgstr "Дії"
 
-#: app/qml/PeruseContextDrawer.qml:171
+#: app/qml/PeruseContextDrawer.qml:177
 #, kde-format
 msgid "Back"
 msgstr "Назад"
@@ -402,24 +450,24 @@ msgstr "Програма для читання коміксів"
 msgid "Peruse"
 msgstr "Peruse"
 
-#: app/qml/PeruseMain.qml:165
+#: app/qml/PeruseMain.qml:165 creator/qml/Main.qml:130
 #, kde-format
 msgid "Show intro page"
 msgstr "Показати вступну сторінку"
 
-#: app/qml/PeruseMain.qml:202
+#: app/qml/PeruseMain.qml:203
 #, kde-format
 msgctxt "Switch to the listing page showing the most recently read books"
 msgid "Home"
 msgstr "Домівка"
 
-#: app/qml/PeruseMain.qml:213
+#: app/qml/PeruseMain.qml:214
 #, kde-format
 msgctxt "Switch to the listing page showing the most recently discovered books"
 msgid "Recently Added Books"
 msgstr "Нещодавно додані книги"
 
-#: app/qml/PeruseMain.qml:219 creator/qml/Main.qml:117
+#: app/qml/PeruseMain.qml:220 creator/qml/Main.qml:176
 #, kde-format
 msgctxt ""
 "Open a book from somewhere on disk (uses the open dialog, or a drilldown on "
@@ -427,7 +475,7 @@ msgctxt ""
 msgid "Open Other..."
 msgstr "Відкрити інший…"
 
-#: app/qml/PeruseMain.qml:226
+#: app/qml/PeruseMain.qml:227
 #, kde-format
 msgctxt ""
 "Heading for switching to listing page showing items grouped by some "
@@ -435,31 +483,31 @@ msgctxt ""
 msgid "Group By"
 msgstr "Згрупувати за"
 
-#: app/qml/PeruseMain.qml:229
+#: app/qml/PeruseMain.qml:230
 #, kde-format
 msgctxt "Switch to the listing page showing items grouped by title"
 msgid "Title"
 msgstr "Заголовок"
 
-#: app/qml/PeruseMain.qml:235
+#: app/qml/PeruseMain.qml:236
 #, kde-format
 msgctxt "Switch to the listing page showing items grouped by author"
 msgid "Author"
 msgstr "Автор"
 
-#: app/qml/PeruseMain.qml:241
+#: app/qml/PeruseMain.qml:242
 #, kde-format
 msgctxt "Switch to the listing page showing items grouped by series"
 msgid "Series"
 msgstr "Цикл"
 
-#: app/qml/PeruseMain.qml:247
+#: app/qml/PeruseMain.qml:248
 #, kde-format
 msgctxt "Switch to the listing page showing items grouped by publisher"
 msgid "Publisher"
 msgstr "Видавець"
 
-#: app/qml/PeruseMain.qml:253
+#: app/qml/PeruseMain.qml:254
 #, kde-format
 msgctxt ""
 "Switch to the listing page showing items grouped by keywords, characters or "
@@ -467,36 +515,30 @@ msgctxt ""
 msgid "Keywords"
 msgstr "Ключові слова"
 
-#: app/qml/PeruseMain.qml:259
+#: app/qml/PeruseMain.qml:260
 #, kde-format
 msgctxt ""
 "Switch to the listing page showing items grouped by their filesystem folder"
 msgid "Folder"
 msgstr "Тека"
 
-#: app/qml/PeruseMain.qml:275
+#: app/qml/PeruseMain.qml:276
 #, kde-format
 msgctxt "shown with a throbber when searching for books on the device"
 msgid "Please wait while we find your books..."
 msgstr "Будь ласка, зачекайте, доки буде знайдено ваші книги…"
 
-#: app/qml/PeruseMain.qml:285 creator/qml/Main.qml:174
+#: app/qml/PeruseMain.qml:286 creator/qml/Main.qml:246
 #, kde-format
 msgctxt "Open the settings page"
 msgid "Settings"
 msgstr "Параметри"
 
-#: app/qml/PeruseMain.qml:292 creator/qml/Main.qml:180
+#: app/qml/PeruseMain.qml:293 creator/qml/Main.qml:253
 #, kde-format
 msgctxt "Open the about page"
 msgid "About"
 msgstr "Про програму"
-
-#: app/qml/PeruseMain.qml:324
-#, kde-format
-msgctxt "Title of the page with books grouped by the title start letters"
-msgid "Group by Title"
-msgstr "Групувати за заголовками"
 
 #: app/qml/PeruseMain.qml:334
 #, kde-format
@@ -505,65 +547,93 @@ msgctxt ""
 msgid "Recently Added Books"
 msgstr "Нещодавно додані книги"
 
-#: app/qml/PeruseMain.qml:346
+#: app/qml/PeruseMain.qml:348
 #, kde-format
-msgctxt "Title of the page with books grouped by what series they are in"
-msgid "Group by Series"
-msgstr "Групувати за серіями"
+msgctxt "@info:placeholder"
+msgid "No series found"
+msgstr ""
 
-#: app/qml/PeruseMain.qml:356
+#: app/qml/PeruseMain.qml:350
+#, fuzzy, kde-format
+#| msgctxt "Switch to the listing page showing items grouped by series"
+#| msgid "Series"
+msgctxt "@title"
+msgid "Series"
+msgstr "Цикл"
+
+#: app/qml/PeruseMain.qml:360
 #, kde-format
-msgctxt "Title of the page with books grouped by author"
-msgid "Group by Author"
-msgstr "Групувати за автором"
+msgctxt "@info:placeholder"
+msgid "No authors found"
+msgstr ""
 
-#: app/qml/PeruseMain.qml:366
-#, kde-format
-msgctxt "Title of the page with books grouped by who published them"
-msgid "Group by Publisher"
-msgstr "Групувати за видавцями"
+#: app/qml/PeruseMain.qml:362
+#, fuzzy, kde-format
+#| msgctxt "Switch to the listing page showing items grouped by author"
+#| msgid "Author"
+msgctxt "@title"
+msgid "Authors"
+msgstr "Автор"
 
-#: app/qml/PeruseMain.qml:376
+#: app/qml/PeruseMain.qml:372
+#, fuzzy, kde-format
+#| msgctxt "label text for the form for the publishing info list"
+#| msgid "Publisher Info"
+msgctxt "@info:placeholder"
+msgid "No publishers found"
+msgstr "Дані видавця"
+
+#: app/qml/PeruseMain.qml:374
+#, fuzzy, kde-format
+#| msgctxt "Label for publisher"
+#| msgid "Publisher"
+msgctxt "@title"
+msgid "Publishers"
+msgstr "Видавець"
+
+#: app/qml/PeruseMain.qml:382
 #, kde-format
 msgctxt "Title of the page with books grouped by keywords, character or genres"
 msgid "Group by Keywords, Characters and Genres"
 msgstr "Групувати за ключовими словами, персонажами та жанрами"
 
-#: app/qml/PeruseMain.qml:386
+#: app/qml/PeruseMain.qml:392
 #, kde-format
 msgctxt "Title of the page with books grouped by what folder they are in"
 msgid "Filter by Folder"
 msgstr "Фільтр за текою"
 
-#: app/qml/Settings.qml:43
+#: app/qml/Settings.qml:45
 #, kde-format
 msgctxt "title of the settings page"
 msgid "Configure the indexed folders"
 msgstr "Налаштування індексованих тек"
 
-#: app/qml/Settings.qml:48
+#: app/qml/Settings.qml:50
 #, kde-format
 msgid "Add folder"
 msgstr "Додати теку"
 
-#: app/qml/Settings.qml:86
-#, kde-format
-msgctxt "remove the search folder from the list"
+#: app/qml/Settings.qml:83
+#, fuzzy, kde-format
+#| msgctxt "remove the search folder from the list"
+#| msgid "Delete"
+msgctxt "@action:button"
 msgid "Delete"
 msgstr "Вилучити"
 
-#: app/qml/Settings.qml:98
+#: app/qml/Settings.qml:96
 #, kde-format
 msgid "There are no folder currently indexed."
 msgstr "Зараз не виконується індексування жодної теки."
 
-#: app/qml/Settings.qml:108
+#: app/qml/Settings.qml:106
 #, kde-format
 msgctxt "@title:window Dialogue used to add a new search folder"
 msgid "Select a folder"
 msgstr "Виберіть теку"
 
-#: app/qml/Settings.qml:125
+#: app/qml/Settings.qml:123
 #, kde-format
 msgctxt "@title:window dialogue used to add a new search folder"
 msgid "Select a Folder"
@@ -589,14 +659,14 @@ msgstr ""
 "Це не нормально і, зазвичай, означає, що немає з'єднання із інтернетом або "
 "ваша книжкова крамниця не працює."
 
-#: app/qml/viewers/cbr.qml:91 creator/qml/BookPage.qml:84
+#: app/qml/viewers/cbr.qml:91 creator/qml/BookPage.qml:80
 #, kde-format
 msgctxt ""
 "A submenu which allows the user to chose between translations of the book"
 msgid "Translations"
 msgstr "Переклади"
 
-#: app/qml/viewers/cbr.qml:94 creator/qml/BookPage.qml:87
+#: app/qml/viewers/cbr.qml:94 creator/qml/BookPage.qml:83
 #, kde-format
 msgctxt "The option used to show no translation should be used"
 msgid "No Translation"
@@ -719,7 +789,7 @@ msgstr "Створити повідомлення електронної пош�
 msgid "Compose email for: %1"
 msgstr "Створити повідомлення до: %1"
 
-#: app/qml/WelcomePage.qml:42 creator/qml/WelcomePage.qml:38
+#: app/qml/WelcomePage.qml:42 creator/qml/WelcomePage.qml:42
 #, kde-format
 msgctxt "title of the welcome page"
 msgid "Welcome"
@@ -737,47 +807,49 @@ msgctxt "title of list of recently discovered books"
 msgid "Recently Added"
 msgstr "Нещодавно додані"
 
-#: creator/main.cpp:44
+#: creator/main.cpp:44 creator/qml/Main.qml:118
 #, kde-format
 msgid "Peruse Creator"
 msgstr "Peruse Creator"
 
-#: creator/main.cpp:44
+#: creator/main.cpp:46
 #, kde-format
 msgid "Comic Book Creator by KDE"
 msgstr "Засіб для створення коміксів від KDE"
 
-#: creator/qml/AddPageArea.qml:61
+#: creator/qml/AddPageArea.qml:62
 #, kde-format
 msgctxt "title text for the add page area sheet"
 msgid "Add Page Area"
 msgstr "Додати область сторінки"
 
-#: creator/qml/AddPageArea.qml:84
+#: creator/qml/AddPageArea.qml:85
 #, kde-format
 msgctxt "Button which creates a new frame, and closes the dialog"
 msgid "Create Frame"
 msgstr "Створити кадр"
 
-#: creator/qml/AddPageArea.qml:98
+#: creator/qml/AddPageArea.qml:99
 #, kde-format
 msgctxt "Button which creates new textarea, and closes the dialog"
 msgid "Create Textarea"
 msgstr "Створити область тексту"
 
-#: creator/qml/AddPageArea.qml:112
+#: creator/qml/AddPageArea.qml:113
 #, kde-format
 msgctxt "Button which creates a new jump, and closes the dialog"
 msgid "Create Jump"
 msgstr "Створити перехід"
 
-#: creator/qml/AddPageSheet.qml:42
-#, kde-format
-msgctxt "title text for the add page sheet"
-msgid "Add a Page?"
-msgstr "Додати сторінку?"
+#: creator/qml/AddPageSheet.qml:43
+#, fuzzy, kde-format
+#| msgctxt "adds a new page at the end of the book"
+#| msgid "Add Page"
+msgctxt "@title"
+msgid "Add Page"
+msgstr "Додати сторінку"
 
-#: creator/qml/AddPageSheet.qml:47
+#: creator/qml/AddPageSheet.qml:46
 #, kde-format
 msgctxt "help text for the add page sheet"
 msgid ""
@@ -787,7 +859,7 @@ msgstr ""
 "Будь ласка, виберіть метод додавання нової сторінки. Виконання вказаних вами "
 "дій не призведе до будь-яких змін поза проєктом."
 
-#: creator/qml/AddPageSheet.qml:57
+#: creator/qml/AddPageSheet.qml:55
 #, kde-format
 msgctxt ""
 "@action:button add a page by finding an image on the filesystem and copying "
@@ -803,7 +875,7 @@ msgctxt ""
 msgid "Please Choose an Image to Add"
 msgstr "Будь ласка, виберіть зображення для додавання"
 
-#: creator/qml/AddPageSheet.qml:78
+#: creator/qml/AddPageSheet.qml:75
 #, kde-format
 msgctxt ""
 "@action:button add a page by creating a new image using an image editor"
@@ -816,89 +888,94 @@ msgctxt "@action:button add a page by taking a photo with a camera"
 msgid "Take a Photo and Add That"
 msgstr "Зробити фото і додати його"
 
-#: creator/qml/Book.qml:42
+#: creator/qml/Book.qml:50
 #, kde-format
 msgctxt "title of the main book editor page"
 msgid "Pages in %1"
 msgstr "Сторінки у %1"
 
-#: creator/qml/Book.qml:50 creator/qml/BookBasics.qml:43
-#: creator/qml/BookBinaries.qml:44 creator/qml/BookMetainfoPage.qml:47
-#: creator/qml/BookStylesheet.qml:44
+#: creator/qml/Book.qml:59 creator/qml/BookBasics.qml:42
+#: creator/qml/BookBinaries.qml:42 creator/qml/BookMetainfoPage.qml:32
+#: creator/qml/BookStylesheet.qml:48
 #, kde-format
 msgctxt "Saves the book to a file on disk"
 msgid "Save Book"
 msgstr "Зберегти книгу"
 
-#: creator/qml/Book.qml:57
+#: creator/qml/Book.qml:66
 #, kde-format
 msgctxt "adds a new page at the end of the book"
 msgid "Add Page"
 msgstr "Додати сторінку"
 
-#: creator/qml/Book.qml:63
-#, kde-format
-msgctxt "closes the add page sheet"
-msgid "Do not Add a Page"
-msgstr "Не додавати сторінку"
-
-#: creator/qml/Book.qml:95 creator/qml/BookReferences.qml:101
+#: creator/qml/Book.qml:104 creator/qml/BookReferences.qml:66
 #, kde-format
 msgctxt "swap the position of this page with the previous one"
 msgid "Move Up"
 msgstr "Пересунути вище"
 
-#: creator/qml/Book.qml:102 creator/qml/BookReferences.qml:108
+#: creator/qml/Book.qml:111 creator/qml/BookReferences.qml:74
 #, kde-format
 msgctxt "swap the position of this page with the next one"
 msgid "Move Down"
 msgstr "Пересунути нижче"
 
-#: creator/qml/Book.qml:109
+#: creator/qml/Book.qml:118
 #, kde-format
 msgctxt "remove the page from the book"
 msgid "Delete Page"
 msgstr "Вилучити сторінку"
 
-#: creator/qml/Book.qml:114
+#: creator/qml/Book.qml:123
 #, kde-format
 msgctxt "add a page to the book after this one"
 msgid "Add Page After This"
 msgstr "Додати сторінку після цієї"
 
-#: creator/qml/Book.qml:119
+#: creator/qml/Book.qml:128
 #, kde-format
 msgctxt "Edit page data such as title, frames, etc."
 msgid "Edit Page"
 msgstr "Редагування сторінки"
 
-#: creator/qml/BookBasics.qml:37
+#: creator/qml/Book.qml:189
+#, kde-format
+msgctxt "Empty page list placeholder message"
+msgid "Your book is empty"
+msgstr ""
+
+#: creator/qml/Book.qml:190
+#, kde-format
+msgid "Start adding pages to your book"
+msgstr ""
+
+#: creator/qml/BookBasics.qml:39
 #, kde-format
 msgctxt "title of the basic book information page"
 msgid "Your Book At A Glance"
 msgstr "Ваша книга на перший погляд"
 
-#: creator/qml/BookBasics.qml:86
+#: creator/qml/BookBasics.qml:85
 #, kde-format
 msgctxt ""
 "The descriptive label for a label which displays the title of the book"
 msgid "Book Title:"
 msgstr "Назва книги:"
 
-#: creator/qml/BookBasics.qml:90
+#: creator/qml/BookBasics.qml:89
 #, kde-format
 msgctxt ""
 "The descriptive label for a link which shows the number of pages in the book"
 msgid "Pages:"
 msgstr "Сторінки:"
 
-#: creator/qml/BookBasics.qml:91
+#: creator/qml/BookBasics.qml:90
 #, kde-format
 msgctxt "A link which when clicked shows the book pages editor"
 msgid "%1 total pages"
 msgstr "Загалом сторінок %1"
 
-#: creator/qml/BookBasics.qml:98
+#: creator/qml/BookBasics.qml:97
 #, kde-format
 msgctxt ""
 "Header for a list which shows every file contained in the archive which "
@@ -906,45 +983,45 @@ msgctxt ""
 msgid "Every File In The Book:"
 msgstr "Кожен файл у книзі:"
 
-#: creator/qml/BookBasics.qml:115
+#: creator/qml/BookBasics.qml:184
+#, kde-format
+msgctxt "If a file is not referenced at all"
+msgid "Unreferenced file"
+msgstr "Файл без посилань на нього"
+
+#: creator/qml/BookBasics.qml:186
+#, kde-format
+msgctxt "If a file is referenced by its full path"
+msgid "Referenced by full path"
+msgstr "Посилання за повним шляхом"
+
+#: creator/qml/BookBasics.qml:188
+#, kde-format
+msgctxt "If a file is referenced partially, describe that"
+msgid "Referenced by filename only"
+msgstr "Посилання лише за назвою файла"
+
+#: creator/qml/BookBasics.qml:190
+#, kde-format
+msgctxt "What happens if we have an unexpected reference amount"
+msgid "%1 might be referenced, but in some way we've not accounted for"
+msgstr "Можливо, на %1 є посилання, але якимось чином їх не було враховано"
+
+#: creator/qml/BookBasics.qml:198
 #, kde-format
 msgctxt ""
 "action which marks the file to be included next time the book is saved"
 msgid "Include File"
 msgstr "Включити файл"
 
-#: creator/qml/BookBasics.qml:116
+#: creator/qml/BookBasics.qml:199
 #, kde-format
 msgctxt ""
 "action which marks the file to NOT be included next time the book is saved"
 msgid "Mark File For Deletion"
 msgstr "Позначити файл для вилучення"
 
-#: creator/qml/BookBasics.qml:195
-#, kde-format
-msgctxt "If a file is not referenced at all"
-msgid "Unreferenced file"
-msgstr "Файл без посилань на нього"
-
-#: creator/qml/BookBasics.qml:197
-#, kde-format
-msgctxt "If a file is referenced by its full path"
-msgid "Referenced by full path"
-msgstr "Посилання за повним шляхом"
-
-#: creator/qml/BookBasics.qml:199
-#, kde-format
-msgctxt "If a file is referenced partially, describe that"
-msgid "Referenced by filename only"
-msgstr "Посилання лише за назвою файла"
-
-#: creator/qml/BookBasics.qml:201
-#, kde-format
-msgctxt "What happens if we have an unexpected reference amount"
-msgid "%1 might be referenced, but in some way we've not accounted for"
-msgstr "Можливо, на %1 є посилання, але якимось чином їх не було враховано"
-
-#: creator/qml/BookBinaries.qml:37
+#: creator/qml/BookBinaries.qml:38
 #, kde-format
 msgctxt ""
 "title of the page which lets the user manage chunks of binary data embedded "
@@ -952,19 +1029,19 @@ msgctxt ""
 msgid "Embedded Data"
 msgstr "Вбудовані дані"
 
-#: creator/qml/BookBinaries.qml:51
+#: creator/qml/BookBinaries.qml:49
 #, kde-format
 msgctxt "Lets the user pick a file to append as a binary item"
 msgid "Add File..."
 msgstr "Додати файл…"
 
-#: creator/qml/BookBinaries.qml:54 creator/qml/BookBinaryEditor.qml:97
+#: creator/qml/BookBinaries.qml:52 creator/qml/BookBinaryEditor.qml:97
 #, kde-format
 msgctxt "The initial identifier used for a newly created binary data element"
 msgid "Unnamed Binary"
 msgstr "Двійковий файл без назви"
 
-#: creator/qml/BookBinaries.qml:81
+#: creator/qml/BookBinaries.qml:80
 #, kde-format
 msgctxt ""
 "title text for a card which informs the user there are no binary data "
@@ -972,13 +1049,13 @@ msgctxt ""
 msgid "No Embedded Binary Data Entries"
 msgstr "Немає записів вбудованих двійкових даних"
 
-#: creator/qml/BookBinaries.qml:82
+#: creator/qml/BookBinaries.qml:81
 #, kde-format
 msgctxt "title text for a card which informs the user what binary data is"
 msgid "Embedded Binary Data"
 msgstr "Вбудовані двійкові дані"
 
-#: creator/qml/BookBinaries.qml:90
+#: creator/qml/BookBinaries.qml:89
 #, kde-format
 msgctxt ""
 "Help text for the binaries page, when there are no embedded binary data "
@@ -994,7 +1071,7 @@ msgstr ""
 "якогось з файлів, які вже існують у вашій системі. Ці дані буде імпортовано "
 "до вашої книги — зовнішній файл змінено не буде."
 
-#: creator/qml/BookBinaries.qml:91
+#: creator/qml/BookBinaries.qml:90
 #, kde-format
 msgctxt ""
 "Help text for the binaries page, when there is already data embedded in the "
@@ -1009,7 +1086,7 @@ msgstr ""
 "системі. Ці дані буде імпортовано до вашої книги — зовнішній файл змінено не "
 "буде."
 
-#: creator/qml/BookBinaries.qml:135
+#: creator/qml/BookBinaries.qml:99
 #, kde-format
 msgctxt ""
 "Title used in the list of binary data when there is no id defined for that "
@@ -1017,7 +1094,7 @@ msgctxt ""
 msgid "Unnamed piece of data"
 msgstr "Фрагмент даних без назви"
 
-#: creator/qml/BookBinaries.qml:140
+#: creator/qml/BookBinaries.qml:133
 #, kde-format
 msgctxt "Label which describes which content type this entry is supposed to be"
 msgid "Content type: %1"
@@ -1100,7 +1177,7 @@ msgctxt ""
 msgid "Pick A File To Add"
 msgstr "Виберіть файл для додавання"
 
-#: creator/qml/BookBinaryEditor.qml:109 creator/qml/Main.qml:264
+#: creator/qml/BookBinaryEditor.qml:109 creator/qml/Main.qml:336
 #, kde-format
 msgctxt "The file type filter for showing all files"
 msgid "All files %1"
@@ -1138,257 +1215,309 @@ msgctxt "The option used to let the user abort the proposed action"
 msgid "Don't Add"
 msgstr "Не додавати"
 
-#: creator/qml/BookMetainfoPage.qml:39
+#: creator/qml/BookMetainfoPage.qml:26
 #, kde-format
 msgctxt "title text for the book meta information editor sheet"
 msgid "Edit Meta Information"
 msgstr "Редагування метаданих"
 
-#: creator/qml/BookMetainfoPage.qml:67 creator/qml/CreateNewBook.qml:67
-#, kde-format
-msgctxt "label text for the edit field for the book title"
+#: creator/qml/BookMetainfoPage.qml:49
+#, fuzzy, kde-format
+#| msgctxt "Switch to the listing page showing items grouped by title"
+#| msgid "Title"
+msgctxt "@label:textfield"
 msgid "Title"
 msgstr "Заголовок"
 
-#: creator/qml/BookMetainfoPage.qml:74
-#, kde-format
-msgctxt "placeholder text for default title text-input"
-msgid "Write to add default title"
-msgstr "Впишіть типовий заголовок"
-
-#: creator/qml/BookMetainfoPage.qml:85
-#, kde-format
-msgctxt "label text for the edit field for the default annotation"
+#: creator/qml/BookMetainfoPage.qml:62
+#, fuzzy, kde-format
+#| msgctxt "label text for the edit field for the default annotation"
+#| msgid "Annotation"
+msgctxt "@label:textfield"
 msgid "Annotation"
 msgstr "Анотація"
 
-#: creator/qml/BookMetainfoPage.qml:91
-#, kde-format
-msgctxt "placeholder text for default annotation text-area"
-msgid "Write to add default annotation"
-msgstr "Впишіть типову анотацію"
-
-#: creator/qml/BookMetainfoPage.qml:102
-#, kde-format
-msgctxt "label text for the edit field for the keyword list"
+#: creator/qml/BookMetainfoPage.qml:75
+#, fuzzy, kde-format
+#| msgctxt ""
+#| "Switch to the listing page showing items grouped by keywords, characters "
+#| "or genres"
+#| msgid "Keywords"
+msgctxt "@label:textfield"
 msgid "Keywords"
 msgstr "Ключові слова"
 
-#: creator/qml/BookMetainfoPage.qml:108
-#, kde-format
-msgctxt "placeholder text for the add new keyword text entry"
+#: creator/qml/BookMetainfoPage.qml:76
+#, fuzzy, kde-format
+#| msgctxt "placeholder text for the add new keyword text entry"
+#| msgid "Write a comma separated list of keywords."
+msgctxt "@info:placeholder"
 msgid "Write a comma separated list of keywords."
 msgstr "Впишіть ключові слова, відокремлені комами."
 
-#: creator/qml/BookMetainfoPage.qml:123
-#, kde-format
-msgctxt "label text for the edit field for the author list"
-msgid "Authors (%1)"
-msgstr "Автори (%1)"
-
-#: creator/qml/BookMetainfoPage.qml:130 creator/qml/BookMetainfoPage.qml:800
-#, kde-format
-msgctxt "The text used in place of an author's name if one has not been set"
-msgid "(unnamed)"
-msgstr "(без назви)"
-
-#: creator/qml/BookMetainfoPage.qml:169 creator/qml/BookMetainfoPage.qml:839
-#, kde-format
-msgctxt "placeholder text for the add new author text entry"
-msgid "Write to add new author (nickname)"
-msgstr "Впишіть нового автора (псевдонім)"
-
-#: creator/qml/BookMetainfoPage.qml:198
-#, kde-format
-msgctxt "label text for the edit field for the genre list"
-msgid "Genres"
-msgstr "Жанри"
-
-#: creator/qml/BookMetainfoPage.qml:277
-#, kde-format
-msgctxt "label text for the edit field for the character list"
-msgid "Characters"
-msgstr "Персонажі"
-
-#: creator/qml/BookMetainfoPage.qml:306
-#, kde-format
-msgctxt "placeholder text for the add new character text entry"
-msgid "Write to add new character"
-msgstr "Впишіть нового персонажа"
-
-#: creator/qml/BookMetainfoPage.qml:334
-#, kde-format
-msgctxt "label text for the edit field for the sequence list"
-msgid "Sequence"
-msgstr "Послідовність"
-
-#: creator/qml/BookMetainfoPage.qml:362
-#, kde-format
-msgctxt "Label for sequence number"
-msgid "Number:"
-msgstr "Номер:"
-
-#: creator/qml/BookMetainfoPage.qml:386
-#, kde-format
-msgctxt "Label for sequence volume"
-msgid "Volume:"
-msgstr "Том:"
-
-#: creator/qml/BookMetainfoPage.qml:433
-#, kde-format
-msgctxt "placeholder text for the add new series text entry"
-msgid "Write to add new series"
-msgstr "Впишіть нову серію"
-
-#: creator/qml/BookMetainfoPage.qml:461
-#, kde-format
-msgctxt "label text for the edit field for the database reference list"
-msgid "Database References"
-msgstr "Посилання на бази даних"
-
-#: creator/qml/BookMetainfoPage.qml:502
-#, kde-format
-msgctxt "placeholder text for the add reference type text entry"
-msgid "Write to add reference type"
-msgstr "Впишіть тип посилання"
-
-#: creator/qml/BookMetainfoPage.qml:539
-#, kde-format
-msgctxt "placeholder text for the add new reference text entry"
-msgid "Write to add new reference"
-msgstr "Впишіть нове посилання"
-
-#: creator/qml/BookMetainfoPage.qml:549
-#, kde-format
-msgctxt "placeholder text for the add databasename text entry"
-msgid "Write to add database name for new reference."
-msgstr "Впишіть назву бази даних для нового посилання."
-
-#: creator/qml/BookMetainfoPage.qml:570
-#, kde-format
-msgctxt "label text for the edit field for the content rating list"
-msgid "Content Ratings"
-msgstr "Оцінка вмісту"
-
-#: creator/qml/BookMetainfoPage.qml:588 creator/qml/BookMetainfoPage.qml:634
-#, kde-format
-msgctxt "placeholder text for the add content rating text entry"
-msgid "Write to add rating label."
-msgstr "Впишіть мітку оцінювання."
-
-#: creator/qml/BookMetainfoPage.qml:599 creator/qml/BookMetainfoPage.qml:644
-#, kde-format
-msgctxt "placeholder text for the add content rating system text entry"
-msgid "Write to add rating system."
-msgstr "Впишіть систему оцінювання."
-
-#: creator/qml/BookMetainfoPage.qml:664
-#, kde-format
-msgctxt "label text for the form for reading direction."
-msgid "Reading Direction"
-msgstr "Напрямок читання"
-
-#: creator/qml/BookMetainfoPage.qml:668
-#, kde-format
-msgctxt "label text for right to left checkbox."
-msgid "Right to left."
-msgstr "Справа ліворуч."
-
-#: creator/qml/BookMetainfoPage.qml:676
-#, kde-format
-msgctxt "label text for the form for the publishing info list"
-msgid "Publisher Info"
-msgstr "Дані видавця"
-
-#: creator/qml/BookMetainfoPage.qml:679
-#, kde-format
-msgctxt "Label for publisher"
-msgid "Publisher:"
-msgstr "Видавець:"
-
-#: creator/qml/BookMetainfoPage.qml:684
-#, kde-format
-msgctxt "placeholder text for the publisher entry"
-msgid "Write to add publisher"
-msgstr "Впишіть видавця"
-
-#: creator/qml/BookMetainfoPage.qml:694
-#, kde-format
-msgctxt "Label for publishing date"
-msgid "Publishing Date:"
-msgstr "Дата видання:"
-
-#: creator/qml/BookMetainfoPage.qml:744
-#, kde-format
-msgctxt "Label for city"
-msgid "City:"
-msgstr "Місто:"
-
-#: creator/qml/BookMetainfoPage.qml:749
-#, kde-format
-msgctxt "placeholder text for the publishing city entry"
-msgid "Write to add city"
-msgstr "Впишіть місто"
-
-#: creator/qml/BookMetainfoPage.qml:759
-#, kde-format
-msgctxt "Label for ISBN"
-msgid "ISBN:"
-msgstr "ISBN:"
-
-#: creator/qml/BookMetainfoPage.qml:765
-#, kde-format
-msgctxt "placeholder text for the publishing ISBN entry"
-msgid "Write to add ISBN"
-msgstr "Впишіть ISBN"
-
-#: creator/qml/BookMetainfoPage.qml:775
-#, kde-format
-msgctxt "Label for license"
-msgid "License:"
-msgstr "Ліцензування:"
-
-#: creator/qml/BookMetainfoPage.qml:780
-#, kde-format
-msgctxt "placeholder text for the publishing license entry"
-msgid "Write to add license"
-msgstr "Впишіть умови ліцензування"
-
-#: creator/qml/BookMetainfoPage.qml:792
-#, kde-format
-msgctxt "label text for the form for the document info list"
-msgid "Document Authors"
-msgstr "Автори документа"
-
-#: creator/qml/BookMetainfoPage.qml:868
-#, kde-format
-msgctxt "label text for the form for the sources list"
-msgid "Document Sources"
-msgstr "Джерела документа"
-
-#: creator/qml/BookMetainfoPage.qml:930
-#, kde-format
-msgctxt "label text for the form for the history list"
-msgid "Document History"
-msgstr "Недавні зображення"
-
-#: creator/qml/BookMetainfoPage.qml:995
+#: creator/qml/BookMetainfoPage.qml:92
 #, kde-format
 msgctxt "Label for the document version spinbox"
 msgid "Document Version:"
 msgstr "Версія документа:"
 
-#: creator/qml/BookMetainfoPage.qml:1037
+#: creator/qml/BookMetainfoPage.qml:120
+#, fuzzy, kde-format
+#| msgctxt "Switch to the listing page showing items grouped by author"
+#| msgid "Author"
+msgctxt "@title:group"
+msgid "Authors"
+msgstr "Автор"
+
+#: creator/qml/BookMetainfoPage.qml:132 creator/qml/BookMetainfoPage.qml:842
 #, kde-format
-msgctxt "label text for the form for the body background color."
+msgctxt "The text used in place of an author's name if one has not been set"
+msgid "(unnamed)"
+msgstr "(без назви)"
+
+#: creator/qml/BookMetainfoPage.qml:139
+#, fuzzy, kde-format
+#| msgctxt "title text for the edit author sheet"
+#| msgid "Edit Author"
+msgctxt "@action:button"
+msgid "Edit author"
+msgstr "Редагування автора"
+
+#: creator/qml/BookMetainfoPage.qml:151
+#, kde-format
+msgctxt "@action:button"
+msgid "Remove author"
+msgstr ""
+
+#: creator/qml/BookMetainfoPage.qml:176 creator/qml/BookMetainfoPage.qml:880
+#, fuzzy, kde-format
+#| msgctxt "placeholder text for the add new author text entry"
+#| msgid "Write to add new author (nickname)"
+msgctxt "@label:textfield"
+msgid "New author (nickname)"
+msgstr "Впишіть нового автора (псевдонім)"
+
+#: creator/qml/BookMetainfoPage.qml:189
+#, kde-format
+msgctxt "@action:button"
+msgid "Add new author"
+msgstr ""
+
+#: creator/qml/BookMetainfoPage.qml:197
+#, fuzzy, kde-format
+#| msgctxt "label text for the edit field for the genre list"
+#| msgid "Genres"
+msgctxt "@title:group"
+msgid "Genres"
+msgstr "Жанри"
+
+#: creator/qml/BookMetainfoPage.qml:223
+#, kde-format
+msgctxt "@action:button"
+msgid "Remove genre"
+msgstr ""
+
+#: creator/qml/BookMetainfoPage.qml:294
+#, fuzzy, kde-format
+#| msgctxt "label text for the edit field for the character list"
+#| msgid "Characters"
+msgctxt "@title:group"
+msgid "Characters"
+msgstr "Персонажі"
+
+#: creator/qml/BookMetainfoPage.qml:339
+#, kde-format
+msgctxt "placeholder text for the add new character text entry"
+msgid "Write to add new character"
+msgstr "Впишіть нового персонажа"
+
+#: creator/qml/BookMetainfoPage.qml:363
+#, fuzzy, kde-format
+#| msgctxt "label text for the edit field for the sequence list"
+#| msgid "Sequence"
+msgctxt "@title:group"
+msgid "Sequence"
+msgstr "Послідовність"
+
+#: creator/qml/BookMetainfoPage.qml:414
+#, kde-format
+msgctxt "Label for sequence number"
+msgid "Number:"
+msgstr "Номер:"
+
+#: creator/qml/BookMetainfoPage.qml:434
+#, kde-format
+msgctxt "Label for sequence volume"
+msgid "Volume:"
+msgstr "Том:"
+
+#: creator/qml/BookMetainfoPage.qml:462
+#, fuzzy, kde-format
+#| msgctxt ""
+#| "Action which when triggered adds a new reference to the book and opens "
+#| "the reference editor"
+#| msgid "New Reference"
+msgctxt "@label:textfield"
+msgid "New serie"
+msgstr "Створити посилання"
+
+#: creator/qml/BookMetainfoPage.qml:481
+#, fuzzy, kde-format
+#| msgctxt "label text for the edit field for the database reference list"
+#| msgid "Database References"
+msgctxt "@title:group"
+msgid "Database References"
+msgstr "Посилання на бази даних"
+
+#: creator/qml/BookMetainfoPage.qml:507 creator/qml/BookMetainfoPage.qml:595
+#, fuzzy, kde-format
+#| msgctxt "title text for the references page"
+#| msgid "References"
+msgctxt "@label:textfield"
+msgid "Reference:"
+msgstr "Посилання"
+
+#: creator/qml/BookMetainfoPage.qml:533 creator/qml/BookMetainfoPage.qml:609
+#, fuzzy, kde-format
+#| msgctxt "label text for the edit field for the database reference list"
+#| msgid "Database References"
+msgctxt "@label:textfield"
+msgid "Database name:"
+msgstr "Посилання на бази даних"
+
+#: creator/qml/BookMetainfoPage.qml:550
+#, fuzzy, kde-format
+#| msgctxt "title text for the references page"
+#| msgid "References"
+msgctxt "@label:textfield"
+msgid "Reference type:"
+msgstr "Посилання"
+
+#: creator/qml/BookMetainfoPage.qml:628
+#, fuzzy, kde-format
+#| msgctxt "label text for the edit field for the content rating list"
+#| msgid "Content Ratings"
+msgctxt "@title:group"
+msgid "Content Ratings"
+msgstr "Оцінка вмісту"
+
+#: creator/qml/BookMetainfoPage.qml:652
+#, kde-format
+msgctxt "placeholder text for the add content rating text entry"
+msgid "Write to add rating label."
+msgstr "Впишіть мітку оцінювання."
+
+#: creator/qml/BookMetainfoPage.qml:665
+#, kde-format
+msgctxt "placeholder text for the add content rating system text entry"
+msgid "Write to add rating system."
+msgstr "Впишіть систему оцінювання."
+
+#: creator/qml/BookMetainfoPage.qml:717
+#, kde-format
+msgctxt "@label:textfield"
+msgid "Review title"
+msgstr ""
+
+#: creator/qml/BookMetainfoPage.qml:733
+#, fuzzy, kde-format
+#| msgctxt "Label for the link destination input field"
+#| msgid "Destination"
+msgctxt "@label:textfield"
+msgid "Description"
+msgstr "Призначення"
+
+#: creator/qml/BookMetainfoPage.qml:754
+#, fuzzy, kde-format
+#| msgctxt "label text for the form for the publishing info list"
+#| msgid "Publisher Info"
+msgctxt "@title:group"
+msgid "Publisher Info"
+msgstr "Дані видавця"
+
+#: creator/qml/BookMetainfoPage.qml:760
+#, kde-format
+msgctxt "Label for publisher"
+msgid "Publisher:"
+msgstr "Видавець:"
+
+#: creator/qml/BookMetainfoPage.qml:761
+#, kde-format
+msgctxt "placeholder text for the publisher entry"
+msgid "Write to add publisher"
+msgstr "Впишіть видавця"
+
+#: creator/qml/BookMetainfoPage.qml:774
+#, kde-format
+msgctxt "Label for publishing date"
+msgid "Publishing Date:"
+msgstr "Дата видання:"
+
+#: creator/qml/BookMetainfoPage.qml:788
+#, kde-format
+msgctxt "Label for city"
+msgid "City:"
+msgstr "Місто:"
+
+#: creator/qml/BookMetainfoPage.qml:803
+#, kde-format
+msgctxt "Label for ISBN"
+msgid "ISBN:"
+msgstr "ISBN:"
+
+#: creator/qml/BookMetainfoPage.qml:818
+#, kde-format
+msgctxt "Label for license"
+msgid "License:"
+msgstr "Ліцензування:"
+
+#: creator/qml/BookMetainfoPage.qml:830
+#, fuzzy, kde-format
+#| msgctxt "label text for the form for the document info list"
+#| msgid "Document Authors"
+msgctxt "@title:group"
+msgid "Document Authors"
+msgstr "Автори документа"
+
+#: creator/qml/BookMetainfoPage.qml:900
+#, fuzzy, kde-format
+#| msgctxt "label text for the form for the sources list"
+#| msgid "Document Sources"
+msgctxt "@title:group"
+msgid "Document Sources"
+msgstr "Джерела документа"
+
+#: creator/qml/BookMetainfoPage.qml:941
+#, fuzzy, kde-format
+#| msgctxt "label text for the form for the sources list"
+#| msgid "Document Sources"
+msgctxt "@label:textfield"
+msgid "New document source"
+msgstr "Джерела документа"
+
+#: creator/qml/BookMetainfoPage.qml:960
+#, fuzzy, kde-format
+#| msgctxt "label text for the form for the history list"
+#| msgid "Document History"
+msgctxt "@title:group"
+msgid "Document History"
+msgstr "Недавні зображення"
+
+#: creator/qml/BookMetainfoPage.qml:1001
+#, fuzzy, kde-format
+#| msgctxt "label text for the form for the history list"
+#| msgid "Document History"
+msgctxt "@label:textfield"
+msgid "New document info"
+msgstr "Недавні зображення"
+
+#: creator/qml/BookMetainfoPage.qml:1020
+#, fuzzy, kde-format
+#| msgctxt "label text for the form for the body background color."
+#| msgid "General Page Background Color"
+msgctxt "@title:group"
 msgid "General Page Background Color"
 msgstr "Загальний колір тла сторінки"
-
-#: creator/qml/BookMetainfoPage.qml:1074
-#, kde-format
-msgctxt "@title color choosing dialog"
-msgid "Choose the general background color for this comic"
-msgstr "Виберіть загальний коліт тла для цього коміксу"
 
 #: creator/qml/BookPage.qml:32
 #, kde-format
@@ -1401,19 +1530,19 @@ msgstr "Сторінка %1"
 msgid "Page %1"
 msgstr "Сторінка %1"
 
-#: creator/qml/BookPage.qml:98
+#: creator/qml/BookPage.qml:99
 #, kde-format
 msgctxt "Saves the remaining unsaved edited fields and closes the page editor"
 msgid "Save and Close Page"
 msgstr "Зберегти і закрити сторінку"
 
-#: creator/qml/BookPage.qml:110
+#: creator/qml/BookPage.qml:111
 #, kde-format
 msgctxt "Edit the page data in detail"
 msgid "Edit Page Data"
 msgstr "Змінити дані сторінки"
 
-#: creator/qml/BookReferenceEditor.qml:36
+#: creator/qml/BookReferenceEditor.qml:30
 #, kde-format
 msgctxt ""
 "title text for the reference editor page, when the reference has no language "
@@ -1421,13 +1550,31 @@ msgctxt ""
 msgid "Editing %1 (default language)"
 msgstr "Редагування %1 (типова мова)"
 
-#: creator/qml/BookReferenceEditor.qml:37
+#: creator/qml/BookReferenceEditor.qml:31
 #, kde-format
 msgctxt "title text for the reference editor page"
 msgid "Editing %1 (language: %2)"
 msgstr "Редагування %1 (мова: %2)"
 
+#: creator/qml/BookReferenceEditor.qml:42
+#, kde-format
+msgctxt "Save the reference and close the editor"
+msgid "Save and Close Editor"
+msgstr "Зберегти і закрити редактор"
+
+#: creator/qml/BookReferenceEditor.qml:51
+#, kde-format
+msgctxt "Save the reference and keep editing"
+msgid "Save"
+msgstr "Зберегти"
+
 #: creator/qml/BookReferenceEditor.qml:59
+#, kde-format
+msgctxt "Abort the changes made in the editor, and close the editor"
+msgid "Abort Changes"
+msgstr "Відкинути зміни"
+
+#: creator/qml/BookReferenceEditor.qml:66
 #, kde-format
 msgctxt ""
 "Opens a sheet which lets the user change the name and language of the "
@@ -1435,25 +1582,25 @@ msgctxt ""
 msgid "Edit Details..."
 msgstr "Редагувати параметри…"
 
-#: creator/qml/BookReferenceEditor.qml:65
+#: creator/qml/BookReferenceEditor.qml:72
 #, kde-format
 msgctxt "Copies the selected text"
 msgid "Copy"
 msgstr "Копіювати"
 
-#: creator/qml/BookReferenceEditor.qml:71
+#: creator/qml/BookReferenceEditor.qml:78
 #, kde-format
 msgctxt "Cuts the selected text"
 msgid "Cut"
 msgstr "Вирізати"
 
-#: creator/qml/BookReferenceEditor.qml:77
+#: creator/qml/BookReferenceEditor.qml:84
 #, kde-format
 msgctxt "Pastes the clipboard contents into the current location"
 msgid "Paste"
 msgstr "Вставити"
 
-#: creator/qml/BookReferenceEditor.qml:84 creator/qml/EditPageArea.qml:245
+#: creator/qml/BookReferenceEditor.qml:91 creator/qml/EditPageArea.qml:245
 #, kde-format
 msgctxt ""
 "Edit the link the cursor is currently positioned on (or convert the "
@@ -1461,65 +1608,39 @@ msgctxt ""
 msgid "Edit Link"
 msgstr "Редагувати посилання"
 
-#: creator/qml/BookReferenceEditor.qml:91
-#, kde-format
-msgctxt "Save the reference and close the editor"
-msgid "Save and Close Editor"
-msgstr "Зберегти і закрити редактор"
-
 #: creator/qml/BookReferenceEditor.qml:100
-#, kde-format
-msgctxt "Save the reference and keep editing"
-msgid "Save"
-msgstr "Зберегти"
-
-#: creator/qml/BookReferenceEditor.qml:108
-#, kde-format
-msgctxt "Abort the changes made in the editor, and close the editor"
-msgid "Abort Changes"
-msgstr "Відкинути зміни"
-
-#: creator/qml/BookReferenceEditor.qml:121
-#, kde-format
-msgctxt ""
-"title text for a sheet which lets the user edit the details of a reference"
+#, fuzzy, kde-format
+#| msgctxt ""
+#| "title text for a sheet which lets the user edit the details of a reference"
+#| msgid "Edit Reference Details"
+msgctxt "@title:dialog"
 msgid "Edit Reference Details"
 msgstr "Редагування параметрів посилання"
 
-#: creator/qml/BookReferenceEditor.qml:130
-#, kde-format
-msgctxt "Label for the reference identifier input field"
-msgid "Unique Identifier"
+#: creator/qml/BookReferenceEditor.qml:107
+#, fuzzy, kde-format
+#| msgctxt "Label for the reference identifier input field"
+#| msgid "Unique Identifier"
+msgctxt "@label:textfield"
+msgid "Unique identifier"
 msgstr "Унікальний ідентифікатор"
 
-#: creator/qml/BookReferenceEditor.qml:131
-#, kde-format
-msgctxt "Placeholder text for the reference identifier input field"
-msgid "Enter your reference ID here (should be unique)"
-msgstr "Тут слід ввести ваш ідентифікатор посилання (має бути унікальним)"
-
-#: creator/qml/BookReferenceEditor.qml:136
-#, kde-format
-msgctxt "Label for the reference language input field"
+#: creator/qml/BookReferenceEditor.qml:112
+#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:109
+#, fuzzy, kde-format
+#| msgctxt "Label for the reference language input field"
+#| msgid "Language"
+msgctxt "@label:textfield"
 msgid "Language"
 msgstr "Мова"
 
-#: creator/qml/BookReferenceEditor.qml:137
-#, kde-format
-msgctxt "Placeholder text for the reference language input field"
-msgid ""
-"Enter the language ID here (leave empty for the document default language)"
-msgstr ""
-"Тут слід ввести ідентифікатор мови (не заповнюйте, якщо це типова мова "
-"документа)"
-
-#: creator/qml/BookReferences.qml:35
+#: creator/qml/BookReferences.qml:19
 #, kde-format
 msgctxt "title text for the references page"
 msgid "References"
 msgstr "Посилання"
 
-#: creator/qml/BookReferences.qml:43
+#: creator/qml/BookReferences.qml:24
 #, kde-format
 msgctxt ""
 "Action which when triggered adds a new reference to the book and opens the "
@@ -1527,13 +1648,13 @@ msgctxt ""
 msgid "New Reference"
 msgstr "Створити посилання"
 
-#: creator/qml/BookReferences.qml:47
+#: creator/qml/BookReferences.qml:28
 #, kde-format
 msgctxt "The default ID for new references"
 msgid "Unnamed Reference"
 msgstr "Посилання без назви"
 
-#: creator/qml/BookReferences.qml:48
+#: creator/qml/BookReferences.qml:29
 #, kde-format
 msgctxt "The default text for new references"
 msgid ""
@@ -1544,44 +1665,24 @@ msgstr ""
 "<p>Ось як мають виглядати посилання: <a href=\"призначення\">Якесь "
 "посилання</a></p>"
 
-#: creator/qml/BookReferences.qml:75
+#: creator/qml/BookReferences.qml:92
 #, kde-format
-msgctxt ""
-"title text for a card which informs the user there are no references, and "
-"what references are"
-msgid "No References"
-msgstr "Немає посилань"
-
-#: creator/qml/BookReferences.qml:76
-#, kde-format
-msgctxt "title text for a card which informs what references are"
-msgid "References"
-msgstr "Посилання"
-
-#: creator/qml/BookReferences.qml:84
-#, kde-format
-msgctxt "Help text for the references page, when there are no references"
-msgid ""
-"There is no reference information in your book yet. You can create a new "
-"reference piece by clicking on the New Reference control. References are "
-"collections of paragraphs of text, which you can fill with simple formatting "
-"(strong, emphasis, and other simple layouting like that), as well as links "
-"to both internal things (other references or one of the pieces of binary "
-"data), or to an external resource, such as a website."
+msgid "There is no reference information in your book yet"
 msgstr ""
-"У вашій книзі ще немає даних посилань. Ви можете створити посилання "
-"клацанням на кнопці «Створити посилання». Посилання є збіркою абзаців "
-"тексту, у якій ви можете використовувати просте форматування (напівжирний "
-"або курсивний шрифт та інші прості засоби компонування), а також посилання "
-"на інші вбудовані об'єкти (інші посилання або якісь двійкові дані) або на "
-"звонішні ресурси, наприклад сайти."
 
-#: creator/qml/BookReferences.qml:85
-#, kde-format
-msgctxt ""
-"Help text for the references page, when there are already references defined"
+#: creator/qml/BookReferences.qml:93
+#, fuzzy, kde-format
+#| msgctxt ""
+#| "Help text for the references page, when there are already references "
+#| "defined"
+#| msgid ""
+#| "Create a new reference piece by clicking on the New Reference control. "
+#| "References are collections of paragraphs of text, which you can fill with "
+#| "simple formatting (strong, emphasis, and other simple layouting like "
+#| "that), as well as links to both internal things (other references or one "
+#| "of the pieces of binary data), or to an external resource, such as a "
+#| "website."
 msgid ""
-"Create a new reference piece by clicking on the New Reference control. "
 "References are collections of paragraphs of text, which you can fill with "
 "simple formatting (strong, emphasis, and other simple layouting like that), "
 "as well as links to both internal things (other references or one of the "
@@ -1593,87 +1694,56 @@ msgstr ""
 "компонування), а також посилання на інші вбудовані об'єкти (інші посилання "
 "або якісь двійкові дані) або на звонішні ресурси, наприклад сайти."
 
-#: creator/qml/BookStylesheet.qml:37
+#: creator/qml/BookStylesheet.qml:44
 #, kde-format
 msgctxt "title of the page which lets the user manage the book's stylesheet"
 msgid "Stylesheet"
 msgstr "Таблиця стилів"
 
-#: creator/qml/BookStylesheet.qml:51
+#: creator/qml/BookStylesheet.qml:55
 #, kde-format
 msgctxt "Creates a new, empty stylesheet entry and lets the user edit it"
 msgid "Add Style..."
 msgstr "Додати стиль…"
 
-#: creator/qml/BookStylesheet.qml:70
-#, kde-format
-msgctxt "title text for a sheet which lets the user edit a binary entry"
+#: creator/qml/BookStylesheet.qml:84
+#, fuzzy, kde-format
+#| msgctxt "title text for a sheet which lets the user edit a binary entry"
+#| msgid "Edit Style"
+msgctxt "@title:dialog"
 msgid "Edit Style"
 msgstr "Редагування стилю"
 
-#: creator/qml/BookStylesheet.qml:76
-#, kde-format
-msgctxt "label for a button which updates the style entry with the new details"
-msgid "OK"
-msgstr "Гаразд"
-
-#: creator/qml/BookStylesheet.qml:87
+#: creator/qml/BookStylesheet.qml:99
 #, kde-format
 msgctxt "Label for the style element input field"
 msgid "Element"
 msgstr "Елемент"
 
-#: creator/qml/BookStylesheet.qml:88
+#: creator/qml/BookStylesheet.qml:105
 #, kde-format
-msgctxt "Placeholder text for the style element input field"
-msgid "Enter the name of the element you want to style"
-msgstr "Введіть назву елемента, який ви хочете стилізувати"
-
-#: creator/qml/BookStylesheet.qml:106
-#, kde-format
-msgctxt ""
-"title text for a card which informs the user there are no styles defined, "
-"and what those are"
-msgid "No Styling Information"
-msgstr "Немає даних щодо стилізації"
-
-#: creator/qml/BookStylesheet.qml:107
-#, kde-format
-msgctxt "title text for a card which informs the user what styles are"
-msgid "Styling Information"
-msgstr "Відомості щодо стилізації"
-
-#: creator/qml/BookStylesheet.qml:115
-#, kde-format
-msgctxt "Help text for the stylesheet page, when there are no styles defined"
-msgid ""
-"There is no embedded data in your book yet. You can add such data by "
-"creating a new entry, and then adding data to that entry from some existing "
-"file on your system. That data will be imported into your book, and leaves "
-"the external file otherwise untouched."
+msgctxt "@option:check"
+msgid "Apply to style elements which request an inverted scheme"
 msgstr ""
-"У вашій книзі ще немає вбудованих даних. Ви можете додати такі дані "
-"створенням нового запису з наступним додаванням даних до цього запису з "
-"якогось з файлів, які вже існують у вашій системі. Ці дані буде імпортовано "
-"до вашої книги — зовнішній файл змінено не буде."
+
+#: creator/qml/BookStylesheet.qml:110
+#, kde-format
+msgctxt "@option:check"
+msgid "Sub-element selector type"
+msgstr ""
+
+#: creator/qml/BookStylesheet.qml:111
+#, kde-format
+msgid "None"
+msgstr ""
 
 #: creator/qml/BookStylesheet.qml:116
 #, kde-format
-msgctxt ""
-"Help text for the stylesheet page, when there is already styles defined in "
-"the book"
-msgid ""
-"You can add such new binary data entries by creating a new entry, and then "
-"adding data to that entry from some existing file on your system. That data "
-"will be imported into your book, and leaves the external file otherwise "
-"untouched."
+msgctxt "@option:check"
+msgid "Color"
 msgstr ""
-"Ви можете додати такі записи двійкових даних створенням нового запису з "
-"наступним додаванням даних до цього запису з якогось з файлів, які вже "
-"існують у вашій системі. Ці дані буде імпортовано до вашої книги — зовнішній "
-"файл змінено не буде."
 
-#: creator/qml/BookStylesheet.qml:133
+#: creator/qml/BookStylesheet.qml:139
 #, kde-format
 msgctxt ""
 "The title of a style entry which has a type, and which represents the "
@@ -1681,7 +1751,7 @@ msgctxt ""
 msgid "%1 (inverted)"
 msgstr "%1 (інвертовано)"
 
-#: creator/qml/BookStylesheet.qml:135
+#: creator/qml/BookStylesheet.qml:141
 #, kde-format
 msgctxt ""
 "The title of a style entry which does not have type, and which represents "
@@ -1689,69 +1759,134 @@ msgctxt ""
 msgid "%1 (sub type: %2, inverted)"
 msgstr "%1 (підтип: %2, інвертовано)"
 
-#: creator/qml/BookStylesheet.qml:139
+#: creator/qml/BookStylesheet.qml:145
 #, kde-format
 msgctxt "The title of a style entry which has a type"
 msgid "%1"
 msgstr "%1"
 
-#: creator/qml/BookStylesheet.qml:141
+#: creator/qml/BookStylesheet.qml:147
 #, kde-format
 msgctxt "The title of a style entry which does not have type"
 msgid "%1 (sub type: %2)"
 msgstr "%1 (підтип: %2)"
 
-#: creator/qml/CreateNewBook.qml:38
+#: creator/qml/BookStylesheet.qml:154
+#, fuzzy, kde-format
+#| msgctxt ""
+#| "title text for a card which informs the user there are no styles defined, "
+#| "and what those are"
+#| msgid "No Styling Information"
+msgctxt "@info:placeholder"
+msgid "No Styling Information"
+msgstr "Немає даних щодо стилізації"
+
+#: creator/qml/BookStylesheet.qml:155
+#, fuzzy, kde-format
+#| msgctxt ""
+#| "Help text for the stylesheet page, when there is already styles defined "
+#| "in the book"
+#| msgid ""
+#| "You can add such new binary data entries by creating a new entry, and "
+#| "then adding data to that entry from some existing file on your system. "
+#| "That data will be imported into your book, and leaves the external file "
+#| "otherwise untouched."
+msgctxt "@info:placeholder"
+msgid ""
+"You can add such data by creating a new entry, and then adding data to that "
+"entry from some existing file on your system. That data will be imported "
+"into your book, and leaves the external file otherwise untouched."
+msgstr ""
+"Ви можете додати такі записи двійкових даних створенням нового запису з "
+"наступним додаванням даних до цього запису з якогось з файлів, які вже "
+"існують у вашій системі. Ці дані буде імпортовано до вашої книги — зовнішній "
+"файл змінено не буде."
+
+#: creator/qml/CreateNewBook.qml:44
 #, kde-format
 msgctxt "title of the new book creation page"
 msgid "Create New Book"
 msgstr "Створення книги"
 
-#: creator/qml/CreateNewBook.qml:42
+#: creator/qml/CreateNewBook.qml:47
 #, kde-format
 msgctxt "Accept button which will create a new book"
 msgid "Create Book"
 msgstr "Створити книгу"
 
-#: creator/qml/CreateNewBook.qml:72
+#: creator/qml/CreateNewBook.qml:65
+#, kde-format
+msgctxt "label text for the edit field for the book title"
+msgid "Title"
+msgstr "Заголовок"
+
+#: creator/qml/CreateNewBook.qml:66
 #, kde-format
 msgctxt "Default name for new books"
 msgid "Untitled"
 msgstr "Без назви"
 
-#: creator/qml/CreateNewBook.qml:78
+#: creator/qml/CreateNewBook.qml:74
 #, kde-format
 msgctxt ""
 "label text for the edit field for the file system location for the book"
 msgid "Folder"
 msgstr "Тека"
 
-#: creator/qml/CreateNewBook.qml:95
+#: creator/qml/CreateNewBook.qml:99
+#, fuzzy, kde-format
+#| msgctxt "@title:window dialogue used to add a new search folder"
+#| msgid "Select a Folder"
+msgctxt "@action:button"
+msgid "Select Folder"
+msgstr "Виберіть теку призначення"
+
+#: creator/qml/CreateNewBook.qml:111
+#, kde-format
+msgctxt "File filter cbz file"
+msgid "*.cbz"
+msgstr ""
+
+#: creator/qml/CreateNewBook.qml:113
 #, kde-format
 msgctxt "@title:window folder dialog used to select the location of a new book"
 msgid "Please Choose the Location for the Book"
 msgstr "Будь ласка, виберіть місце для нової книги"
 
-#: creator/qml/CreateNewBook.qml:104
+#: creator/qml/CreateNewBook.qml:130
 #, kde-format
 msgctxt "label text for the edit field for the cover image for the book"
 msgid "Cover Image"
 msgstr "Зображення обкладинки"
 
-#: creator/qml/CreateNewBook.qml:117
+#: creator/qml/CreateNewBook.qml:157
+#, kde-format
+msgctxt "placeholder message for missing cover image"
+msgid "Missing cover image"
+msgstr ""
+
+#: creator/qml/CreateNewBook.qml:160
+#, fuzzy, kde-format
+#| msgctxt "@title:window Dialogue used to add a new search folder"
+#| msgid "Select a folder"
+msgctxt "@action:button"
+msgid "Select image"
+msgstr "Виберіть теку"
+
+#: creator/qml/CreateNewBook.qml:184
 #, kde-format
 msgctxt ""
 "@title:window file dialog used to select the cover image for a new book"
 msgid "Please Choose Your Cover Image"
 msgstr "Будь ласка, виберіть зображення для обкладинки"
 
-#: creator/qml/CreateNewBook.qml:120
+#: creator/qml/CreateNewBook.qml:187
 #, kde-format
 msgctxt "File filter option for displaying only jpeg files"
 msgid "JPEG images %1"
 msgstr "Зображення JPEG %1"
 
-#: creator/qml/CreateNewBook.qml:121
+#: creator/qml/CreateNewBook.qml:188
 #, kde-format
 msgctxt "File filter option for displaying all files"
 msgid "All files %1"
@@ -1852,132 +1987,56 @@ msgctxt "Button which saves the page area, and closes the dialog"
 msgid "Save"
 msgstr "Зберегти"
 
-#: creator/qml/LinkEditorSheet.qml:67
-#, kde-format
-msgctxt ""
-"title text for a sheet which lets the user edit the parameters of a link"
+#: creator/qml/LinkEditorSheet.qml:70
+#, fuzzy, kde-format
+#| msgctxt ""
+#| "Edit the link the cursor is currently positioned on (or convert the "
+#| "selection to a link, or add a new one if there is no selection)"
+#| msgid "Edit Link"
+msgctxt "@title:dialog"
 msgid "Edit Link"
-msgstr "Редагування посилання"
+msgstr "Редагувати посилання"
 
-#: creator/qml/LinkEditorSheet.qml:73
-#, kde-format
-msgctxt ""
-"label for a button which updates the link in the text with the new "
-"information from the link editor"
-msgid "OK"
-msgstr "Гаразд"
-
-#: creator/qml/LinkEditorSheet.qml:93
-#, kde-format
-msgctxt "Label for the link text input field"
+#: creator/qml/LinkEditorSheet.qml:90
+#, fuzzy, kde-format
+#| msgctxt "Label for the link text input field"
+#| msgid "Text"
+msgctxt "@label:textfield"
 msgid "Text"
 msgstr "Текст"
 
-#: creator/qml/LinkEditorSheet.qml:94
-#, kde-format
-msgctxt "Placeholder text for the link text input field"
-msgid "Enter the text of your link here"
-msgstr "Тут можна ввести текст для вашого посилання"
-
-#: creator/qml/LinkEditorSheet.qml:97
-#, kde-format
-msgctxt "Label for the link destination input field"
+#: creator/qml/LinkEditorSheet.qml:95
+#, fuzzy, kde-format
+#| msgctxt "Label for the link destination input field"
+#| msgid "Destination"
+msgctxt "@label:textfield"
 msgid "Destination"
 msgstr "Призначення"
 
-#: creator/qml/LinkEditorSheet.qml:102
+#: creator/qml/LinkEditorSheet.qml:157
 #, kde-format
-msgctxt "Placeholder text for the link destination input field"
-msgid "Enter the destination for your link here"
-msgstr "Тут можна ввести призначення для вашого посилання"
+msgid "Preview"
+msgstr ""
 
-#: creator/qml/LinkEditorSheet.qml:128
-#, kde-format
-msgctxt ""
-"Entry in a dropdown list which gives the name of a reference object, and "
-"identifies it as one such"
-msgid "%1 (Reference)"
-msgstr "%1 (посилання)"
-
-#: creator/qml/LinkEditorSheet.qml:131
-#, kde-format
-msgctxt ""
-"Entry in a dropdown list which gives the name of a binary object, and "
-"identifies it as one such"
-msgid "%1 (Binary)"
-msgstr "%1 (двійковий)"
-
-#: creator/qml/LinkEditorSheet.qml:134
-#, kde-format
-msgctxt ""
-"Entry in a dropdown list which gives the base details of a Textarea object, "
-"and identifies it as one such"
-msgid "Textarea (ID: %1, text: %2)"
-msgstr "Текстова область (ід.: %1, текст: %2)"
-
-#: creator/qml/LinkEditorSheet.qml:137
-#, kde-format
-msgctxt ""
-"Entry in a dropdown list which gives the name of a frame object, and "
-"identifies it as one such"
-msgid "%1 (Frame)"
-msgstr "%1 (кадр)"
-
-#: creator/qml/LinkEditorSheet.qml:140
-#, kde-format
-msgctxt "Entry in a dropdown list which gives the title and ID of a page"
-msgid "Page \"%1\" (ID: %2)"
-msgstr "Сторінка «%1» (Ід.: %2)"
-
-#: creator/qml/LinkEditorSheet.qml:144
-#, kde-format
-msgctxt ""
-"Entry in a dropdown list which gives the name of an identified object of an "
-"unknown type, and marks it as one such"
-msgid "%1 (Unknown Type)"
-msgstr "%1 (невідомий тип)"
-
-#: creator/qml/LinkEditorSheet.qml:155
-#, kde-format
-msgctxt "Label for the link demonstration display field"
-msgid "Demonstration"
-msgstr "Демонстрація"
-
-#: creator/qml/Main.qml:76
-#, kde-format
-msgctxt "application title for the sidebar"
-msgid "Peruse Creator"
-msgstr "Peruse Creator"
-
-#: creator/qml/Main.qml:90
-#, kde-format
-msgid "Navigation"
-msgstr "Навігація"
-
-#: creator/qml/Main.qml:105
-#, kde-format
-msgid "Switch to the welcome page"
-msgstr "Перемкнутися на сторінку вітання"
-
-#: creator/qml/Main.qml:112
+#: creator/qml/Main.qml:170
 #, kde-format
 msgctxt "Create a book"
 msgid "Create a New Book..."
 msgstr "Створити книгу…"
 
-#: creator/qml/Main.qml:130
+#: creator/qml/Main.qml:192
 #, kde-format
 msgctxt "The book's title when there are unsaved changes"
 msgid "%1 (unsaved)"
 msgstr "%1 (не збережено)"
 
-#: creator/qml/Main.qml:137
+#: creator/qml/Main.qml:200
 #, kde-format
 msgctxt "Switch to the page which displays the pages in the current book"
 msgid "Pages"
 msgstr "Сторінки"
 
-#: creator/qml/Main.qml:144
+#: creator/qml/Main.qml:208
 #, kde-format
 msgctxt ""
 "Switch to the page where the user can edit the meta information for the "
@@ -1985,7 +2044,7 @@ msgctxt ""
 msgid "Metainfo"
 msgstr "Метадані"
 
-#: creator/qml/Main.qml:151
+#: creator/qml/Main.qml:216
 #, kde-format
 msgctxt ""
 "Switch to the page where the user can edit the references (that is, snippets "
@@ -1993,7 +2052,7 @@ msgctxt ""
 msgid "References"
 msgstr "Посилання"
 
-#: creator/qml/Main.qml:158
+#: creator/qml/Main.qml:224
 #, kde-format
 msgctxt ""
 "Switch to the page where the user can work with the bits of binary data "
@@ -2001,13 +2060,13 @@ msgctxt ""
 msgid "Embedded Data"
 msgstr "Вбудовані дані"
 
-#: creator/qml/Main.qml:165
+#: creator/qml/Main.qml:232
 #, kde-format
 msgctxt "Switch to the page where the user can work with the book's stylesheet"
 msgid "Stylesheet"
 msgstr "Таблиця стилів"
 
-#: creator/qml/Main.qml:260
+#: creator/qml/Main.qml:332
 #, kde-format
 msgctxt ""
 "@title:window standard file open dialog used to open a book not in the "
@@ -2015,182 +2074,176 @@ msgctxt ""
 msgid "Please Choose a Book to Open"
 msgstr "Будь ласка, виберіть книгу, яку слід відкрити"
 
-#: creator/qml/Main.qml:263
+#: creator/qml/Main.qml:335
 #, kde-format
 msgctxt "The file type filter for comic book archives"
 msgid "Comic Book Archive zip format %1"
 msgstr "формат архіву коміксів у zip %1"
 
-#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:73
+#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:54
 #, kde-format
 msgctxt "title text for the edit author sheet"
 msgid "Edit Author"
 msgstr "Редагування автора"
 
-#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:98
+#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:69
 #, kde-format
 msgctxt "help text for the edit author sheet"
 msgid "Please complete the information for this author."
 msgstr "Будь ласка, заповніть дані щодо цього автора."
 
-#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:109
-#, kde-format
-msgctxt "label for the activity field"
-msgid "Activity:"
-msgstr "Дія:"
-
-#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:122
-#, kde-format
-msgctxt "label for the language field"
-msgid "Language:"
-msgstr "Мова:"
-
-#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:128
-#, kde-format
-msgctxt "placeholder text for the language field"
-msgid "Language"
-msgstr "Мова"
-
-#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:135
-#, kde-format
-msgctxt "label for the first name field"
-msgid "First name:"
-msgstr "Ім'я:"
-
-#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:141
-#, kde-format
-msgctxt "placeholder text for the first name field"
-msgid "First Name"
-msgstr "Ім'я"
-
-#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:148
-#, kde-format
-msgctxt "label for the middle name field"
-msgid "Middle name:"
-msgstr "По-батькові:"
-
-#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:154
-#, kde-format
-msgctxt "placeholder text for the middle name field"
-msgid "Middle Name"
-msgstr "По-батькові"
-
-#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:161
-#, kde-format
-msgctxt "label for the last name field"
-msgid "Last name:"
-msgstr "Прізвище:"
-
-#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:167
-#, kde-format
-msgctxt "placeholder text for the last name field"
-msgid "Last Name"
+#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:74
+#, fuzzy, kde-format
+#| msgctxt "placeholder text for the last name field"
+#| msgid "Last Name"
+msgctxt "@title:group"
+msgid "Name"
 msgstr "Прізвище"
 
-#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:174
-#, kde-format
-msgctxt "label for the nickname field"
-msgid "Nickname:"
-msgstr "Псевдонім:"
+#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:80
+#, fuzzy, kde-format
+#| msgctxt "label for the first name field"
+#| msgid "First name:"
+msgctxt "@label:textfield"
+msgid "First name"
+msgstr "Ім'я:"
 
-#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:180
-#, kde-format
-msgctxt "placeholder text for the nickname field"
+#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:85
+#, fuzzy, kde-format
+#| msgctxt "label for the middle name field"
+#| msgid "Middle name:"
+msgctxt "@label:textfield"
+msgid "Middle name"
+msgstr "По-батькові:"
+
+#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:90
+#, fuzzy, kde-format
+#| msgctxt "label for the last name field"
+#| msgid "Last name:"
+msgctxt "@label:textfield"
+msgid "Last name"
+msgstr "Прізвище:"
+
+#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:95
+#, fuzzy, kde-format
+#| msgctxt "placeholder text for the nickname field"
+#| msgid "Nickname"
+msgctxt "@label:textfield"
 msgid "Nickname"
 msgstr "Псевдонім"
 
-#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:187
-#, kde-format
-msgctxt "label for the homepage field"
-msgid "Homepage addresses:"
+#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:104
+#, fuzzy, kde-format
+#| msgctxt "label for the activity field"
+#| msgid "Activity:"
+msgctxt "@label:listbox"
+msgid "Activity"
+msgstr "Дія:"
+
+#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:114
+#, fuzzy, kde-format
+#| msgctxt "label for the homepage field"
+#| msgid "Homepage addresses:"
+msgctxt "@title:group"
+msgid "Homepage addresses"
 msgstr "Адреси домашніх сторінок:"
 
-#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:216
-#, kde-format
-msgctxt "placeholder text for the homepage field"
-msgid "Add Homepage"
+#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:152
+#, fuzzy, kde-format
+#| msgctxt "placeholder text for the homepage field"
+#| msgid "Add Homepage"
+msgctxt "@label:textfield"
+msgid "New Homepage"
 msgstr "Додати домашню сторінку"
 
-#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:243
-#, kde-format
-msgctxt "label for the email field"
-msgid "Email addresses:"
+#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:171
+#, fuzzy, kde-format
+#| msgctxt "label for the email field"
+#| msgid "Email addresses:"
+msgctxt "@title:group"
+msgid "Email addresses"
 msgstr "Адреси ел. пошти:"
 
-#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:272
-#, kde-format
+#: creator/qml/metainfoeditors/AuthorEntryEditor.qml:209
+#, fuzzy, kde-format
+#| msgctxt "placeholder text for the email field"
+#| msgid "Add Email address"
 msgctxt "placeholder text for the email field"
-msgid "Add Email address"
+msgid "New Email address"
 msgstr "Додати адресу електронної пошти"
 
-#: creator/qml/PageMetaInfo.qml:35
+#: creator/qml/PageMetaInfo.qml:42
 #, kde-format
 msgctxt "title text for the page meta information editor sheet"
 msgid "Edit Page Information"
 msgstr "Редагування даних щодо сторінки"
 
-#: creator/qml/PageMetaInfo.qml:45
+#: creator/qml/PageMetaInfo.qml:46
 #, kde-format
 msgctxt ""
 "Saves the remaining unsaved edited fields and closes the metainfo editor"
 msgid "Close Editor"
 msgstr "Закрити вікно редактора"
 
-#: creator/qml/PageMetaInfo.qml:59
+#: creator/qml/PageMetaInfo.qml:57
 #, kde-format
-msgctxt "label text for the edit field for the page title"
-msgid "Title"
+msgctxt "@title:group"
+msgid "General"
+msgstr ""
+
+#: creator/qml/PageMetaInfo.qml:63
+#, fuzzy, kde-format
+#| msgctxt "Switch to the listing page showing items grouped by title"
+#| msgid "Title"
+msgctxt "@label:textfield"
+msgid "Title:"
 msgstr "Заголовок"
 
-#: creator/qml/PageMetaInfo.qml:60
-#, kde-format
-msgctxt "placeholder text for the page title text-input"
-msgid "Write to add default title"
-msgstr "Впишіть типовий заголовок"
+#: creator/qml/PageMetaInfo.qml:72
+#, fuzzy, kde-format
+#| msgctxt "Label for the ID input field"
+#| msgid "ID:"
+msgctxt "@label:textfield"
+msgid "ID:"
+msgstr "Ід.:"
 
-#: creator/qml/PageMetaInfo.qml:66
-#, kde-format
-msgctxt "label text for the edit field for the page id"
-msgid "ID"
-msgstr "Ід."
-
-#: creator/qml/PageMetaInfo.qml:67
-#, kde-format
-msgctxt "placeholder text for page ID text-input"
-msgid "Write to add an ID"
-msgstr "Впишіть ідентифікатор"
-
-#: creator/qml/PageMetaInfo.qml:73
-#, kde-format
-msgctxt "label text for the edit field for the page transition type"
-msgid "Transition"
+#: creator/qml/PageMetaInfo.qml:82
+#, fuzzy, kde-format
+#| msgctxt "label text for the edit field for the page transition type"
+#| msgid "Transition"
+msgctxt "@label:listbox"
+msgid "Transition:"
 msgstr "Перехід"
 
-#: creator/qml/PageMetaInfo.qml:81
-#, kde-format
-msgctxt "label text for the edit field for the page background color"
-msgid "Background Color"
-msgstr "Колір тла"
+#: creator/qml/PageMetaInfo.qml:95
+#, fuzzy, kde-format
+#| msgctxt "Label from frame background color."
+#| msgid "Background Color:"
+msgctxt "@label:chooser"
+msgid "Background Color:"
+msgstr "Колір тла:"
 
-#: creator/qml/PageMetaInfo.qml:103
-#, kde-format
-msgctxt "@title color choosing dialog"
-msgid "Choose the background color for page"
-msgstr "Виберіть колір тла сторінки"
-
-#: creator/qml/PageMetaInfo.qml:111
-#, kde-format
-msgctxt "label text for the edit field for the page frames"
+#: creator/qml/PageMetaInfo.qml:102
+#, fuzzy, kde-format
+#| msgctxt "label text for the edit field for the page frames"
+#| msgid "Frames"
+msgctxt "@title:group"
 msgid "Frames"
 msgstr "Кадри"
 
-#: creator/qml/PageMetaInfo.qml:118
+#: creator/qml/PageMetaInfo.qml:108
+#, kde-format
+msgctxt "@info:placeholder"
+msgid "No frames present"
+msgstr ""
+
+#: creator/qml/PageMetaInfo.qml:119
 #, kde-format
 msgctxt "Comic book panel frame name."
 msgid "Frame %1"
 msgstr "Кадр %1"
 
-#: creator/qml/PageMetaInfo.qml:122
+#: creator/qml/PageMetaInfo.qml:124
 #, kde-format
 msgctxt ""
 "A switch which lets the user change the background colour of the page when "
@@ -2198,133 +2251,139 @@ msgctxt ""
 msgid "Change page background color"
 msgstr "Змінити колір тла сторінки"
 
-#: creator/qml/PageMetaInfo.qml:127
+#: creator/qml/PageMetaInfo.qml:129
 #, kde-format
 msgctxt "Label from frame background color."
 msgid "Background Color:"
 msgstr "Колір тла:"
 
-#: creator/qml/PageMetaInfo.qml:147
+#: creator/qml/PageMetaInfo.qml:149
 #, kde-format
 msgctxt "@title color choosing dialog"
 msgid "Choose background color for this frame"
 msgstr "Виберіть колір тла цього кадру"
 
-#: creator/qml/PageMetaInfo.qml:157
+#: creator/qml/PageMetaInfo.qml:159
 #, kde-format
 msgctxt "swap the position of this frame with the previous one"
 msgid "Move Up"
 msgstr "Пересунути вище"
 
-#: creator/qml/PageMetaInfo.qml:166
+#: creator/qml/PageMetaInfo.qml:168
 #, kde-format
 msgctxt "swap the position of this frame with the next one"
 msgid "Move Down"
 msgstr "Пересунути нижче"
 
-#: creator/qml/PageMetaInfo.qml:175
+#: creator/qml/PageMetaInfo.qml:177
 #, kde-format
 msgctxt "remove the frame from the page"
 msgid "Delete Frame"
 msgstr "Вилучити кадр"
 
-#: creator/qml/PageMetaInfo.qml:183
-#, kde-format
-msgctxt "label text for the edit field for the page textareas"
+#: creator/qml/PageMetaInfo.qml:187
+#, fuzzy, kde-format
+#| msgctxt "label text for the edit field for the page textareas"
+#| msgid "Text Areas"
+msgctxt "@title:group"
 msgid "Text Areas"
 msgstr "Області тексту"
 
-#: creator/qml/PageMetaInfo.qml:188
+#: creator/qml/PageMetaInfo.qml:200
 #, kde-format
-msgctxt "Label from textlayer background color."
-msgid "Background Color:"
-msgstr "Колір тла:"
+msgctxt "@info:placeholder"
+msgid "No text areas present"
+msgstr ""
 
-#: creator/qml/PageMetaInfo.qml:209
-#, kde-format
-msgctxt "@title color choosing dialog"
-msgid "Choose the background color for all text areas on this page"
-msgstr "Виберіть колір тла усіх текстових областей на цій сторінці"
-
-#: creator/qml/PageMetaInfo.qml:223
+#: creator/qml/PageMetaInfo.qml:213
 #, kde-format
 msgctxt "swap the position of this text area with the previous one"
 msgid "Move Up"
 msgstr "Пересунути вище"
 
-#: creator/qml/PageMetaInfo.qml:230
+#: creator/qml/PageMetaInfo.qml:220
 #, kde-format
 msgctxt "swap the position of this text area with the next one"
 msgid "Move Down"
 msgstr "Пересунути нижче"
 
-#: creator/qml/PageMetaInfo.qml:237
+#: creator/qml/PageMetaInfo.qml:227
 #, kde-format
 msgctxt "remove the text area from the page"
 msgid "Delete Text Area"
 msgstr "Вилучити область тексту"
 
-#: creator/qml/PageMetaInfo.qml:247
+#: creator/qml/PageMetaInfo.qml:237
 #, kde-format
 msgctxt "Comic book panel textarea name."
 msgid "Text Area %1"
 msgstr "Область тексту %1"
 
-#: creator/qml/PageMetaInfo.qml:263
-#, kde-format
-msgctxt "label text for the edit field for the page jumps"
+#: creator/qml/PageMetaInfo.qml:255
+#, fuzzy, kde-format
+#| msgctxt "label text for the edit field for the page jumps"
+#| msgid "Jumps"
+msgctxt "@title:group"
 msgid "Jumps"
 msgstr "Переходи"
 
-#: creator/qml/PageMetaInfo.qml:275
+#: creator/qml/PageMetaInfo.qml:261
+#, kde-format
+msgctxt "@info:placeholder"
+msgid "No jumps present"
+msgstr ""
+
+#: creator/qml/PageMetaInfo.qml:273
 #, kde-format
 msgctxt "swap the position of this jump with the previous one"
 msgid "Move Up"
 msgstr "Пересунути вище"
 
-#: creator/qml/PageMetaInfo.qml:282
+#: creator/qml/PageMetaInfo.qml:280
 #, kde-format
 msgctxt "swap the position of this jump with the next one"
 msgid "Move Down"
 msgstr "Пересунути нижче"
 
-#: creator/qml/PageMetaInfo.qml:289
+#: creator/qml/PageMetaInfo.qml:287
 #, kde-format
 msgctxt "remove the jump from the page"
 msgid "Delete Jump"
 msgstr "Вилучити перехід"
 
-#: creator/qml/PageMetaInfo.qml:299
+#: creator/qml/PageMetaInfo.qml:297
 #, kde-format
 msgctxt "Comic book panel jump name."
 msgid "Jump %1"
 msgstr "Перехід %1"
 
-#: creator/qml/PageMetaInfo.qml:308
+#: creator/qml/PageMetaInfo.qml:306
 #, kde-format
 msgctxt "Label from jump page index."
 msgid "Page Index:"
 msgstr "Індекс сторінки:"
 
-#: creator/qml/Settings.qml:31
-#, kde-format
-msgctxt "title of the settings page"
+#: creator/qml/SettingsPage.qml:17
+#, fuzzy, kde-format
+#| msgctxt "Open the settings page"
+#| msgid "Settings"
+msgctxt "@title"
 msgid "Settings"
 msgstr "Параметри"
 
-#: creator/qml/WelcomePage.qml:59
+#: creator/qml/WelcomePage.qml:54
 #, kde-format
 msgctxt "The application's name"
 msgid "Peruse Creator"
 msgstr "Peruse Creator"
 
-#: creator/qml/WelcomePage.qml:69
+#: creator/qml/WelcomePage.qml:61
 #, kde-format
 msgctxt "application subtitle"
 msgid "Comic Book Creation Tool"
 msgstr "Засіб для створення коміксів"
 
-#: creator/qml/WelcomePage.qml:86
+#: creator/qml/WelcomePage.qml:71
 #, kde-format
 msgctxt "Longer introduction text used on the welcome page"
 msgid ""
@@ -2344,27 +2403,28 @@ msgstr ""
 "коміксів на KDE Store за допомогою цієї ж програми або просто поділитися "
 "створеними файлами з друзями."
 
-#: creator/qml/WelcomePage.qml:93
+#: creator/qml/WelcomePage.qml:81
 #, kde-format
 msgctxt "@action:button open existing comic book archive"
 msgid "Open Existing..."
 msgstr "Відкрити наявний…"
 
-#: creator/qml/WelcomePage.qml:99
+#: creator/qml/WelcomePage.qml:89
 #, kde-format
 msgctxt "@action:button create a new, empty comic book archive"
 msgid "Create Blank"
 msgstr "Створити порожній"
 
-#: creator/qml/WelcomePage.qml:105
-#, kde-format
-msgctxt ""
-"@action:button create a new comic book archive by copying in a bunch of "
-"pictures"
-msgid "Create from Images..."
-msgstr "Створити на основі зображень…"
+#: creator/qml/WelcomePage.qml:96
+#, fuzzy, kde-format
+#| msgctxt ""
+#| "Switch to the listing page showing the most recently discovered books"
+#| msgid "Recently Added Books"
+msgctxt "@title:group"
+msgid "Recent books"
+msgstr "Нещодавно додані книги"
 
-#: creator/qml/WelcomePage.qml:115
+#: creator/qml/WelcomePage.qml:116
 #, kde-format
 msgctxt ""
 "@action:button continue working on the most recently opened comic book "
@@ -2372,37 +2432,344 @@ msgctxt ""
 msgid "Continue working on %1"
 msgstr "Продовжити роботу з %1"
 
-#: qtquick/ArchiveBookModel.cpp:555
+#: creator/qml/WelcomePage.qml:129
+#, fuzzy, kde-format
+#| msgid "There are no folder currently indexed."
+msgctxt "@info:placeholder"
+msgid "There are no recent books"
+msgstr "Зараз не виконується індексування жодної теки."
+
+#: qtquick/ArchiveBookModel.cpp:527
 #, kde-format
 msgid "Creating archive in %1"
 msgstr "Створюємо архів у %1"
 
-#: qtquick/ArchiveBookModel.cpp:567
+#: qtquick/ArchiveBookModel.cpp:539
 #, kde-format
 msgid "Writing in ACBF data"
 msgstr "Записуємо дані ACBF"
 
-#: qtquick/ArchiveBookModel.cpp:578
+#: qtquick/ArchiveBookModel.cpp:549
 #, kde-format
 msgid "Copying across all files not marked for deletion"
 msgstr "Копіюємо усі файли, які не позначено для вилучення"
 
-#: qtquick/ArchiveBookModel.cpp:586
+#: qtquick/ArchiveBookModel.cpp:557
 #, kde-format
 msgid "Copying over %1"
 msgstr "Копіюємо %1"
 
-#: qtquick/ArchiveBookModel.cpp:615
+#: qtquick/ArchiveBookModel.cpp:584
 #, kde-format
 msgid "Copying all content from %1 to %2"
 msgstr "Копіюємо усі дані з %1 до %2"
 
-#: qtquick/ArchiveBookModel.cpp:625
+#: qtquick/ArchiveBookModel.cpp:592
 #, kde-format
 msgid ""
 "Successfully replaced old archive with the new archive - now loading the new "
 "archive..."
 msgstr "Старий архів успішно замінено новим — тепер завантажуємо новий архів…"
+
+#~ msgctxt "Closes the book information drawer"
+#~ msgid "Close"
+#~ msgstr "Закрити"
+
+#~ msgctxt "Label for the author field"
+#~ msgid "Author:"
+#~ msgstr "Автор:"
+
+#~ msgctxt "Label for the series field"
+#~ msgid "Series:"
+#~ msgstr "Варіант:"
+
+#~ msgctxt "Label for the filename field"
+#~ msgid "Filename:"
+#~ msgstr "Назва файла:"
+
+#~ msgctxt "Navigate one page back"
+#~ msgid "Back"
+#~ msgstr "Назад"
+
+#~ msgctxt "Open the book which is currently selected in the list"
+#~ msgid "Open Selected Book"
+#~ msgstr "Відкрити позначену книгу"
+
+#~ msgctxt "Closes the book details drawer"
+#~ msgid "Close"
+#~ msgstr "Закрити"
+
+#~ msgctxt "The first author in a list of authors"
+#~ msgid "by %1"
+#~ msgstr "%1"
+
+#~ msgctxt "Title of the page with books grouped by what series they are in"
+#~ msgid "Group by Series"
+#~ msgstr "Групувати за серіями"
+
+#~ msgctxt "Title of the page with books grouped by author"
+#~ msgid "Group by Author"
+#~ msgstr "Групувати за автором"
+
+#~ msgctxt "Title of the page with books grouped by who published them"
+#~ msgid "Group by Publisher"
+#~ msgstr "Групувати за видавцями"
+
+#~ msgctxt "title text for the add page sheet"
+#~ msgid "Add a Page?"
+#~ msgstr "Додати сторінку?"
+
+#~ msgctxt "closes the add page sheet"
+#~ msgid "Do not Add a Page"
+#~ msgstr "Не додавати сторінку"
+
+#~ msgctxt "placeholder text for default title text-input"
+#~ msgid "Write to add default title"
+#~ msgstr "Впишіть типовий заголовок"
+
+#~ msgctxt "placeholder text for default annotation text-area"
+#~ msgid "Write to add default annotation"
+#~ msgstr "Впишіть типову анотацію"
+
+#~ msgctxt "label text for the edit field for the keyword list"
+#~ msgid "Keywords"
+#~ msgstr "Ключові слова"
+
+#~ msgctxt "label text for the edit field for the author list"
+#~ msgid "Authors (%1)"
+#~ msgstr "Автори (%1)"
+
+#~ msgctxt "placeholder text for the add new series text entry"
+#~ msgid "Write to add new series"
+#~ msgstr "Впишіть нову серію"
+
+#~ msgctxt "placeholder text for the add reference type text entry"
+#~ msgid "Write to add reference type"
+#~ msgstr "Впишіть тип посилання"
+
+#~ msgctxt "placeholder text for the add new reference text entry"
+#~ msgid "Write to add new reference"
+#~ msgstr "Впишіть нове посилання"
+
+#~ msgctxt "placeholder text for the add databasename text entry"
+#~ msgid "Write to add database name for new reference."
+#~ msgstr "Впишіть назву бази даних для нового посилання."
+
+#~ msgctxt "label text for the form for reading direction."
+#~ msgid "Reading Direction"
+#~ msgstr "Напрямок читання"
+
+#~ msgctxt "label text for right to left checkbox."
+#~ msgid "Right to left."
+#~ msgstr "Справа ліворуч."
+
+#~ msgctxt "placeholder text for the publishing city entry"
+#~ msgid "Write to add city"
+#~ msgstr "Впишіть місто"
+
+#~ msgctxt "placeholder text for the publishing ISBN entry"
+#~ msgid "Write to add ISBN"
+#~ msgstr "Впишіть ISBN"
+
+#~ msgctxt "placeholder text for the publishing license entry"
+#~ msgid "Write to add license"
+#~ msgstr "Впишіть умови ліцензування"
+
+#~ msgctxt "@title color choosing dialog"
+#~ msgid "Choose the general background color for this comic"
+#~ msgstr "Виберіть загальний коліт тла для цього коміксу"
+
+#~ msgctxt "Placeholder text for the reference identifier input field"
+#~ msgid "Enter your reference ID here (should be unique)"
+#~ msgstr "Тут слід ввести ваш ідентифікатор посилання (має бути унікальним)"
+
+#~ msgctxt "Placeholder text for the reference language input field"
+#~ msgid ""
+#~ "Enter the language ID here (leave empty for the document default language)"
+#~ msgstr ""
+#~ "Тут слід ввести ідентифікатор мови (не заповнюйте, якщо це типова мова "
+#~ "документа)"
+
+#~ msgctxt ""
+#~ "title text for a card which informs the user there are no references, and "
+#~ "what references are"
+#~ msgid "No References"
+#~ msgstr "Немає посилань"
+
+#~ msgctxt "title text for a card which informs what references are"
+#~ msgid "References"
+#~ msgstr "Посилання"
+
+#~ msgctxt "Help text for the references page, when there are no references"
+#~ msgid ""
+#~ "There is no reference information in your book yet. You can create a new "
+#~ "reference piece by clicking on the New Reference control. References are "
+#~ "collections of paragraphs of text, which you can fill with simple "
+#~ "formatting (strong, emphasis, and other simple layouting like that), as "
+#~ "well as links to both internal things (other references or one of the "
+#~ "pieces of binary data), or to an external resource, such as a website."
+#~ msgstr ""
+#~ "У вашій книзі ще немає даних посилань. Ви можете створити посилання "
+#~ "клацанням на кнопці «Створити посилання». Посилання є збіркою абзаців "
+#~ "тексту, у якій ви можете використовувати просте форматування (напівжирний "
+#~ "або курсивний шрифт та інші прості засоби компонування), а також "
+#~ "посилання на інші вбудовані об'єкти (інші посилання або якісь двійкові "
+#~ "дані) або на звонішні ресурси, наприклад сайти."
+
+#~ msgctxt ""
+#~ "label for a button which updates the style entry with the new details"
+#~ msgid "OK"
+#~ msgstr "Гаразд"
+
+#~ msgctxt "Placeholder text for the style element input field"
+#~ msgid "Enter the name of the element you want to style"
+#~ msgstr "Введіть назву елемента, який ви хочете стилізувати"
+
+#~ msgctxt "title text for a card which informs the user what styles are"
+#~ msgid "Styling Information"
+#~ msgstr "Відомості щодо стилізації"
+
+#~ msgctxt ""
+#~ "Help text for the stylesheet page, when there are no styles defined"
+#~ msgid ""
+#~ "There is no embedded data in your book yet. You can add such data by "
+#~ "creating a new entry, and then adding data to that entry from some "
+#~ "existing file on your system. That data will be imported into your book, "
+#~ "and leaves the external file otherwise untouched."
+#~ msgstr ""
+#~ "У вашій книзі ще немає вбудованих даних. Ви можете додати такі дані "
+#~ "створенням нового запису з наступним додаванням даних до цього запису з "
+#~ "якогось з файлів, які вже існують у вашій системі. Ці дані буде "
+#~ "імпортовано до вашої книги — зовнішній файл змінено не буде."
+
+#~ msgctxt ""
+#~ "title text for a sheet which lets the user edit the parameters of a link"
+#~ msgid "Edit Link"
+#~ msgstr "Редагування посилання"
+
+#~ msgctxt ""
+#~ "label for a button which updates the link in the text with the new "
+#~ "information from the link editor"
+#~ msgid "OK"
+#~ msgstr "Гаразд"
+
+#~ msgctxt "Placeholder text for the link text input field"
+#~ msgid "Enter the text of your link here"
+#~ msgstr "Тут можна ввести текст для вашого посилання"
+
+#~ msgctxt "Placeholder text for the link destination input field"
+#~ msgid "Enter the destination for your link here"
+#~ msgstr "Тут можна ввести призначення для вашого посилання"
+
+#~ msgctxt ""
+#~ "Entry in a dropdown list which gives the name of a reference object, and "
+#~ "identifies it as one such"
+#~ msgid "%1 (Reference)"
+#~ msgstr "%1 (посилання)"
+
+#~ msgctxt ""
+#~ "Entry in a dropdown list which gives the name of a binary object, and "
+#~ "identifies it as one such"
+#~ msgid "%1 (Binary)"
+#~ msgstr "%1 (двійковий)"
+
+#~ msgctxt ""
+#~ "Entry in a dropdown list which gives the base details of a Textarea "
+#~ "object, and identifies it as one such"
+#~ msgid "Textarea (ID: %1, text: %2)"
+#~ msgstr "Текстова область (ід.: %1, текст: %2)"
+
+#~ msgctxt ""
+#~ "Entry in a dropdown list which gives the name of a frame object, and "
+#~ "identifies it as one such"
+#~ msgid "%1 (Frame)"
+#~ msgstr "%1 (кадр)"
+
+#~ msgctxt "Entry in a dropdown list which gives the title and ID of a page"
+#~ msgid "Page \"%1\" (ID: %2)"
+#~ msgstr "Сторінка «%1» (Ід.: %2)"
+
+#~ msgctxt ""
+#~ "Entry in a dropdown list which gives the name of an identified object of "
+#~ "an unknown type, and marks it as one such"
+#~ msgid "%1 (Unknown Type)"
+#~ msgstr "%1 (невідомий тип)"
+
+#~ msgctxt "Label for the link demonstration display field"
+#~ msgid "Demonstration"
+#~ msgstr "Демонстрація"
+
+#~ msgctxt "application title for the sidebar"
+#~ msgid "Peruse Creator"
+#~ msgstr "Peruse Creator"
+
+#~ msgid "Navigation"
+#~ msgstr "Навігація"
+
+#~ msgid "Switch to the welcome page"
+#~ msgstr "Перемкнутися на сторінку вітання"
+
+#~ msgctxt "label for the language field"
+#~ msgid "Language:"
+#~ msgstr "Мова:"
+
+#~ msgctxt "placeholder text for the language field"
+#~ msgid "Language"
+#~ msgstr "Мова"
+
+#~ msgctxt "placeholder text for the first name field"
+#~ msgid "First Name"
+#~ msgstr "Ім'я"
+
+#~ msgctxt "placeholder text for the middle name field"
+#~ msgid "Middle Name"
+#~ msgstr "По-батькові"
+
+#~ msgctxt "label for the nickname field"
+#~ msgid "Nickname:"
+#~ msgstr "Псевдонім:"
+
+#~ msgctxt "label text for the edit field for the page title"
+#~ msgid "Title"
+#~ msgstr "Заголовок"
+
+#~ msgctxt "placeholder text for the page title text-input"
+#~ msgid "Write to add default title"
+#~ msgstr "Впишіть типовий заголовок"
+
+#~ msgctxt "label text for the edit field for the page id"
+#~ msgid "ID"
+#~ msgstr "Ід."
+
+#~ msgctxt "placeholder text for page ID text-input"
+#~ msgid "Write to add an ID"
+#~ msgstr "Впишіть ідентифікатор"
+
+#~ msgctxt "label text for the edit field for the page background color"
+#~ msgid "Background Color"
+#~ msgstr "Колір тла"
+
+#~ msgctxt "@title color choosing dialog"
+#~ msgid "Choose the background color for page"
+#~ msgstr "Виберіть колір тла сторінки"
+
+#~ msgctxt "Label from textlayer background color."
+#~ msgid "Background Color:"
+#~ msgstr "Колір тла:"
+
+#~ msgctxt "@title color choosing dialog"
+#~ msgid "Choose the background color for all text areas on this page"
+#~ msgstr "Виберіть колір тла усіх текстових областей на цій сторінці"
+
+#~ msgctxt "title of the settings page"
+#~ msgid "Settings"
+#~ msgstr "Параметри"
+
+#~ msgctxt ""
+#~ "@action:button create a new comic book archive by copying in a bunch of "
+#~ "pictures"
+#~ msgid "Create from Images..."
+#~ msgstr "Створити на основі зображень…"
 
 #~ msgctxt "Switch to the listing page showing items grouped by author"
 #~ msgid "Group by Author"
