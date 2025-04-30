@@ -21,10 +21,10 @@ target_link_libraries (contentlistqmlplugin
     KF${QT_MAJOR_VERSION}::FileMetaData
 )
 
-if(KF5Baloo_FOUND)
-    target_compile_definitions(contentlistqmlplugin PRIVATE -DBALOO_FOUND="${KF5Baloo_FOUND}")
+if(KF6Baloo_FOUND)
+    target_compile_definitions(contentlistqmlplugin PRIVATE -DBALOO_FOUND="${KF6Baloo_FOUND}")
     target_link_libraries(contentlistqmlplugin    
-        KF5::Baloo
+        KF6::Baloo
     )
 endif()
 
