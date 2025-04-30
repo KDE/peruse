@@ -23,10 +23,12 @@
 #include <QMimeDatabase>
 #include <QtGui/QImageReader>
 
+using namespace Qt::StringLiterals;
+
 class ContentQuery::Private
 {
 public:
-    QStringList mimeTypesForType(Type type);
+    QStringList mimeTypesForType(Type type) const;
 
     Type type = Any;
     QString searchString;
@@ -36,7 +38,7 @@ public:
 
 ContentQuery::ContentQuery(QObject *parent)
     : QObject(parent)
-    , d(new Private)
+    , d(std::make_unique<Private>())
 {
 }
 
@@ -108,47 +110,47 @@ namespace
 QStringList contentQueryVideo()
 {
     return {
-        QStringLiteral("video/x-matroska"),
-        QStringLiteral("video/mp4"),
-        QStringLiteral("video/mpeg"),
-        QStringLiteral("video/ogg"),
-        QStringLiteral("video/quicktime"),
-        QStringLiteral("video/webm"),
-        QStringLiteral("video/x-ms-wmv"),
-        QStringLiteral("video/x-msvideo"),
-        QStringLiteral("video/x-ogm+ogg"),
-        QStringLiteral("video/x-theora+ogg"),
+        u"video/x-matroska"_s,
+        u"video/mp4"_s,
+        u"video/mpeg"_s,
+        u"video/ogg"_s,
+        u"video/quicktime"_s,
+        u"video/webm"_s,
+        u"video/x-ms-wmv"_s,
+        u"video/x-msvideo"_s,
+        u"video/x-ogm+ogg"_s,
+        u"video/x-theora+ogg"_s,
     };
 }
 
 QStringList contentQueryAudio()
 {
-    return {QStringLiteral("audio/aac"),
-            QStringLiteral("audio/flac"),
-            QStringLiteral("audio/mp2"),
-            QStringLiteral("audio/mp4"),
-            QStringLiteral("audio/mpeg"),
-            QStringLiteral("audio/ogg"),
-            QStringLiteral("audio/webm"),
-            QStringLiteral("audio/x-opus+ogg"),
-            QStringLiteral("audio/x-ms-wma"),
-            QStringLiteral("audio/x-vorbis+ogg"),
-            QStringLiteral("audio/x-wav")};
+    return {u"audio/aac"_s,
+            u"audio/flac"_s,
+            u"audio/mp2"_s,
+            u"audio/mp4"_s,
+            u"audio/mpeg"_s,
+            u"audio/ogg"_s,
+            u"audio/webm"_s,
+            u"audio/x-opus+ogg"_s,
+            u"audio/x-ms-wma"_s,
+            u"audio/x-vorbis+ogg"_s,
+            u"audio/x-wav"_s};
 }
 
 QStringList contentQueryDocuments()
 {
-    return {QStringLiteral("application/vnd.oasis.opendocument.text"),
-            QStringLiteral("application/vnd.oasis.opendocument.spreadsheet"),
-            QStringLiteral("application/vnd.oasis.opendocument.presentation"),
-            QStringLiteral("application/vnd.ms-word"),
-            QStringLiteral("application/vnd.ms-excel"),
-            QStringLiteral("application/vnd.ms-powerpoint"),
-            QStringLiteral("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.xml"),
-            QStringLiteral("application/vnd.openxmlformats-officedocument.wordprocessingml.document.xml"),
-            QStringLiteral("application/vnd.openxmlformats-officedocument.presentationml.presentation.xml"),
-            QStringLiteral("text/plain"),
-            QStringLiteral("application/pdf")};
+    return {u"application/vnd.oasis.opendocument.text"_s,
+            u"application/vnd.oasis.opendocument.spreadsheet"_s,
+            u"application/vnd.oasis.opendocument.presentation"_s,
+            u"application/vnd.ms-word"_s,
+            u"application/vnd.ms-excel"_s,
+            u"application/vnd.ms-powerpoint"_s,
+            u"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.xml"_s,
+            u"application/vnd.openxmlformats-officedocument.wordprocessingml.document.xml"_s,
+            u"application/vnd.openxmlformats-officedocument.presentationml.presentation.xml"_s,
+            u"text/plain"_s,
+            u"application/pdf"_s};
 }
 
 QStringList contentQueryImages()
@@ -156,7 +158,8 @@ QStringList contentQueryImages()
     // only popylate once.
     static QStringList result;
     if (result.isEmpty()) {
-        for (const auto &item : QImageReader::supportedMimeTypes()) {
+        const auto items = QImageReader::supportedMimeTypes();
+        for (const auto &item : items) {
             result << QString::fromUtf8(item);
         }
     }
@@ -165,41 +168,35 @@ QStringList contentQueryImages()
 
 QStringList contentQueryComics()
 {
-    return {QStringLiteral("application/x-cbz"),
-            QStringLiteral("application/x-cbr"),
-            QStringLiteral("application/x-cb7"),
-            QStringLiteral("application/x-cbt"),
-            QStringLiteral("application/x-cba"),
-            QStringLiteral("application/vnd.comicbook+zip"),
-            QStringLiteral("application/vnd.comicbook+rar"),
-            QStringLiteral("application/vnd.ms-htmlhelp"),
-            QStringLiteral("image/vnd.djvu"),
-            QStringLiteral("image/x-djvu"),
-            QStringLiteral("application/epub+zip"),
-            QStringLiteral("application/pdf")};
+    return {u"application/x-cbz"_s,
+            u"application/x-cbr"_s,
+            u"application/x-cb7"_s,
+            u"application/x-cbt"_s,
+            u"application/x-cba"_s,
+            u"application/vnd.comicbook+zip"_s,
+            u"application/vnd.comicbook+rar"_s,
+            u"application/vnd.ms-htmlhelp"_s,
+            u"image/vnd.djvu"_s,
+            u"image/x-djvu"_s,
+            u"application/epub+zip"_s,
+            u"application/pdf"_s};
 }
 }
-QStringList ContentQuery::Private::mimeTypesForType(ContentQuery::Type type)
+QStringList ContentQuery::Private::mimeTypesForType(ContentQuery::Type type) const
 {
-    QStringList ret{};
     switch (type) {
     case ContentQuery::Type::Video:
-        ret = contentQueryVideo();
-        break;
+        return contentQueryVideo();
     case ContentQuery::Type::Audio:
-        ret = contentQueryAudio();
-        break;
+        return contentQueryAudio();
     case ContentQuery::Type::Documents:
-        ret = contentQueryDocuments();
-        break;
+        return contentQueryDocuments();
     case ContentQuery::Type::Images:
-        ret = contentQueryImages();
-        break;
+        return contentQueryImages();
     case ContentQuery::Type::Comics:
-        ret = contentQueryComics();
-        break;
+        return contentQueryComics();
     case ContentQuery::Type::Any: /* do nothing */
-        break;
+    default:
+        return {};
     }
-    return ret;
 }

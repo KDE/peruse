@@ -77,7 +77,7 @@ public:
     /**
      * Destructor
      */
-    ~ContentQuery();
+    ~ContentQuery() override;
 
     /**
      * Get the type property.
