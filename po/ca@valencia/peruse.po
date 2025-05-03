@@ -1,16 +1,16 @@
 # Translation of peruse.po to Catalan (Valencian)
-# Copyright (C) 2018-2024 This_file_is_part_of_KDE
+# Copyright (C) 2018-2025 This_file_is_part_of_KDE
 # This file is distributed under the license LGPL version 2.1 or
 # version 3 or later versions approved by the membership of KDE e.V.
 #
-# Josep M. Ferrer <txemaq@gmail.com>, 2018, 2019, 2020, 2021, 2022, 2023, 2024.
+# SPDX-FileCopyrightText: 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025 Josep M. Ferrer <txemaq@gmail.com>
 # Antoni Bella Pérez <antonibella5@yahoo.com>, 2018, 2020, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: peruse\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-30 00:40+0000\n"
-"PO-Revision-Date: 2024-01-30 11:01+0100\n"
+"PO-Revision-Date: 2025-04-30 11:11+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 25.04.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -179,63 +179,51 @@ msgstr ""
 "haja fet este paquet i informeu-li d'este error."
 
 #: app/qml/BookInfoPage.qml:43
-#, fuzzy, kde-format
-#| msgctxt "Label for authors"
-#| msgid "Author(s)"
+#, kde-format
 msgctxt "@label"
 msgid "Author(s):"
-msgstr "Autoria"
+msgstr "Autoria:"
 
 #: app/qml/BookInfoPage.qml:44 app/qml/BookInfoPage.qml:51
-#, fuzzy, kde-format
-#| msgctxt "used for the author data in book lists if author is empty"
-#| msgid "(unknown)"
+#, kde-format
 msgctxt "@info:placeholder"
 msgid "Unknown"
-msgstr "(desconegut)"
+msgstr "Desconegut"
 
 #: app/qml/BookInfoPage.qml:50
-#, fuzzy, kde-format
-#| msgctxt "Label for the publisher field"
-#| msgid "Publisher:"
+#, kde-format
 msgctxt "@label"
 msgid "Publisher:"
 msgstr "Editorial:"
 
 #: app/qml/BookInfoPage.qml:57
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the default annotation"
-#| msgid "Annotation"
+#, kde-format
 msgctxt "@label"
 msgid "Location:"
-msgstr "Anotació"
+msgstr "Ubicació:"
 
 #: app/qml/BookInfoPage.qml:63
 #, kde-format
 msgctxt "@title:group"
 msgid "File Metadata"
-msgstr ""
+msgstr "Metadades del fitxer"
 
 #: app/qml/BookInfoPage.qml:70
-#, fuzzy, kde-format
-#| msgctxt "label for rating widget"
-#| msgid "Rating"
+#, kde-format
 msgctxt "@label"
 msgid "Rating:"
-msgstr "Valoració"
+msgstr "Valoració:"
 
 #: app/qml/BookInfoPage.qml:92
 #, kde-format
 msgid "Set rating to %1"
-msgstr ""
+msgstr "Establix la valoració a %1"
 
 #: app/qml/BookInfoPage.qml:123
-#, fuzzy, kde-format
-#| msgctxt "label for tags field"
-#| msgid "Tags"
+#, kde-format
 msgctxt "@label"
 msgid "Tags:"
-msgstr "Etiquetes"
+msgstr "Etiquetes:"
 
 #: app/qml/BookInfoPage.qml:125 app/qml/listcomponents/BookTile.qml:291
 #, kde-format
@@ -262,7 +250,7 @@ msgstr "No s'ha trobat cap coincidència"
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "No authors available"
-msgstr ""
+msgstr "No hi ha cap autor disponible"
 
 #: app/qml/Bookshelf.qml:88
 #, kde-format
@@ -277,30 +265,24 @@ msgid "Tap and type to search"
 msgstr "Toqueu i teclegeu per a buscar"
 
 #: app/qml/Bookshelf.qml:155
-#, fuzzy, kde-format
-#| msgctxt "label for a button which activates an external link"
-#| msgid "Open Link"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Open"
-msgstr "Obri l'enllaç"
+msgstr "Obri"
 
 #: app/qml/Bookshelf.qml:163
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "Opens a sheet which lets the user change the name and language of the "
-#| "reference"
-#| msgid "Edit Details..."
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Details"
-msgstr "Edita els detalls…"
+msgstr "Detalls"
 
 #: app/qml/CategoryPage.qml:65
 #, kde-format
 msgctxt "@info"
 msgid "%1 book"
 msgid_plural "%1 books"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 llibre"
+msgstr[1] "%1 llibres"
 
 #: app/qml/FileFinder.qml:90
 #, kde-format
@@ -387,7 +369,7 @@ msgstr "%1%"
 #, kde-format
 msgctxt "should be keep short, inside a label. Will be in uppercase"
 msgid "New"
-msgstr ""
+msgstr "Nou"
 
 #: app/qml/listcomponents/BookTileTall.qml:126
 #, kde-format
@@ -402,12 +384,10 @@ msgid ", %1"
 msgstr ", %1"
 
 #: app/qml/listcomponents/BookTileTall.qml:138
-#, fuzzy, kde-format
-#| msgctxt "Author name used when there are no known authors for a book"
-#| msgid "by an unknown author"
+#, kde-format
 msgctxt "Author name used when there are no known authors for a book"
 msgid "Unknown author"
-msgstr "per un autor desconegut"
+msgstr "Autoria desconeguda"
 
 #: app/qml/listcomponents/CategoryTile.qml:40
 #, kde-format
@@ -552,12 +532,10 @@ msgstr "Llibres afegits recentment"
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "No series found"
-msgstr ""
+msgstr "No s'ha trobat cap sèrie"
 
 #: app/qml/PeruseMain.qml:350
-#, fuzzy, kde-format
-#| msgctxt "Switch to the listing page showing items grouped by series"
-#| msgid "Series"
+#, kde-format
 msgctxt "@title"
 msgid "Series"
 msgstr "Sèries"
@@ -566,31 +544,25 @@ msgstr "Sèries"
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "No authors found"
-msgstr ""
+msgstr "No s'ha trobat cap autor"
 
 #: app/qml/PeruseMain.qml:362
-#, fuzzy, kde-format
-#| msgctxt "Switch to the listing page showing items grouped by author"
-#| msgid "Author"
+#, kde-format
 msgctxt "@title"
 msgid "Authors"
 msgstr "Autoria"
 
 #: app/qml/PeruseMain.qml:372
-#, fuzzy, kde-format
-#| msgctxt "label text for the form for the publishing info list"
-#| msgid "Publisher Info"
+#, kde-format
 msgctxt "@info:placeholder"
 msgid "No publishers found"
-msgstr "Informació de l'editorial"
+msgstr "No s'ha trobat cap editorial"
 
 #: app/qml/PeruseMain.qml:374
-#, fuzzy, kde-format
-#| msgctxt "Label for publisher"
-#| msgid "Publisher"
+#, kde-format
 msgctxt "@title"
 msgid "Publishers"
-msgstr "Editorial"
+msgstr "Editors"
 
 #: app/qml/PeruseMain.qml:382
 #, kde-format
@@ -616,9 +588,7 @@ msgid "Add folder"
 msgstr "Afig una carpeta"
 
 #: app/qml/Settings.qml:83
-#, fuzzy, kde-format
-#| msgctxt "remove the search folder from the list"
-#| msgid "Delete"
+#, kde-format
 msgctxt "@action:button"
 msgid "Delete"
 msgstr "Suprimix"
@@ -840,9 +810,7 @@ msgid "Create Jump"
 msgstr "Crea un salt"
 
 #: creator/qml/AddPageSheet.qml:43
-#, fuzzy, kde-format
-#| msgctxt "adds a new page at the end of the book"
-#| msgid "Add Page"
+#, kde-format
 msgctxt "@title"
 msgid "Add Page"
 msgstr "Afig una pàgina"
@@ -940,12 +908,12 @@ msgstr "Edita la pàgina"
 #, kde-format
 msgctxt "Empty page list placeholder message"
 msgid "Your book is empty"
-msgstr ""
+msgstr "El llibre està buit"
 
 #: creator/qml/Book.qml:190
 #, kde-format
 msgid "Start adding pages to your book"
-msgstr ""
+msgstr "Comenceu afegint pàgines al llibre"
 
 #: creator/qml/BookBasics.qml:39
 #, kde-format
@@ -1219,35 +1187,25 @@ msgid "Edit Meta Information"
 msgstr "Edita la meta-informació"
 
 #: creator/qml/BookMetainfoPage.qml:49
-#, fuzzy, kde-format
-#| msgctxt "Switch to the listing page showing items grouped by title"
-#| msgid "Title"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Title"
 msgstr "Títol"
 
 #: creator/qml/BookMetainfoPage.qml:62
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the default annotation"
-#| msgid "Annotation"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Annotation"
 msgstr "Anotació"
 
 #: creator/qml/BookMetainfoPage.qml:75
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "Switch to the listing page showing items grouped by keywords, characters "
-#| "or genres"
-#| msgid "Keywords"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Keywords"
 msgstr "Paraules clau"
 
 #: creator/qml/BookMetainfoPage.qml:76
-#, fuzzy, kde-format
-#| msgctxt "placeholder text for the add new keyword text entry"
-#| msgid "Write a comma separated list of keywords."
+#, kde-format
 msgctxt "@info:placeholder"
 msgid "Write a comma separated list of keywords."
 msgstr "Escriu una llista separada per comes de paraules clau."
@@ -1259,9 +1217,7 @@ msgid "Document Version:"
 msgstr "Versió del document:"
 
 #: creator/qml/BookMetainfoPage.qml:120
-#, fuzzy, kde-format
-#| msgctxt "Switch to the listing page showing items grouped by author"
-#| msgid "Author"
+#, kde-format
 msgctxt "@title:group"
 msgid "Authors"
 msgstr "Autoria"
@@ -1273,9 +1229,7 @@ msgid "(unnamed)"
 msgstr "(sense nom)"
 
 #: creator/qml/BookMetainfoPage.qml:139
-#, fuzzy, kde-format
-#| msgctxt "title text for the edit author sheet"
-#| msgid "Edit Author"
+#, kde-format
 msgctxt "@action:button"
 msgid "Edit author"
 msgstr "Edita l'autor"
@@ -1284,26 +1238,22 @@ msgstr "Edita l'autor"
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove author"
-msgstr ""
+msgstr "Elimina l'autor"
 
 #: creator/qml/BookMetainfoPage.qml:176 creator/qml/BookMetainfoPage.qml:880
-#, fuzzy, kde-format
-#| msgctxt "placeholder text for the add new author text entry"
-#| msgid "Write to add new author (nickname)"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "New author (nickname)"
-msgstr "Escriu per a afegir un autor nou (sobrenom)"
+msgstr "Autoria nou (sobrenom)"
 
 #: creator/qml/BookMetainfoPage.qml:189
 #, kde-format
 msgctxt "@action:button"
 msgid "Add new author"
-msgstr ""
+msgstr "Afig un autor nou"
 
 #: creator/qml/BookMetainfoPage.qml:197
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the genre list"
-#| msgid "Genres"
+#, kde-format
 msgctxt "@title:group"
 msgid "Genres"
 msgstr "Gèneres"
@@ -1312,12 +1262,10 @@ msgstr "Gèneres"
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove genre"
-msgstr ""
+msgstr "Elimina el gènere"
 
 #: creator/qml/BookMetainfoPage.qml:294
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the character list"
-#| msgid "Characters"
+#, kde-format
 msgctxt "@title:group"
 msgid "Characters"
 msgstr "Personatges"
@@ -1329,9 +1277,7 @@ msgid "Write to add new character"
 msgstr "Escriu per a afegir un personatge nou"
 
 #: creator/qml/BookMetainfoPage.qml:363
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the sequence list"
-#| msgid "Sequence"
+#, kde-format
 msgctxt "@title:group"
 msgid "Sequence"
 msgstr "Seqüència"
@@ -1349,51 +1295,37 @@ msgid "Volume:"
 msgstr "Volum:"
 
 #: creator/qml/BookMetainfoPage.qml:462
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "Action which when triggered adds a new reference to the book and opens "
-#| "the reference editor"
-#| msgid "New Reference"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "New serie"
-msgstr "Referència nova"
+msgstr "Sèrie nova"
 
 #: creator/qml/BookMetainfoPage.qml:481
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the database reference list"
-#| msgid "Database References"
+#, kde-format
 msgctxt "@title:group"
 msgid "Database References"
 msgstr "Referències de la base de dades"
 
 #: creator/qml/BookMetainfoPage.qml:507 creator/qml/BookMetainfoPage.qml:595
-#, fuzzy, kde-format
-#| msgctxt "title text for the references page"
-#| msgid "References"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Reference:"
-msgstr "Referències"
+msgstr "Referència:"
 
 #: creator/qml/BookMetainfoPage.qml:533 creator/qml/BookMetainfoPage.qml:609
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the database reference list"
-#| msgid "Database References"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Database name:"
-msgstr "Referències de la base de dades"
+msgstr "Nom de la base de dades:"
 
 #: creator/qml/BookMetainfoPage.qml:550
-#, fuzzy, kde-format
-#| msgctxt "title text for the references page"
-#| msgid "References"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Reference type:"
-msgstr "Referències"
+msgstr "Tipus de referència:"
 
 #: creator/qml/BookMetainfoPage.qml:628
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the content rating list"
-#| msgid "Content Ratings"
+#, kde-format
 msgctxt "@title:group"
 msgid "Content Ratings"
 msgstr "Valoració del contingut"
@@ -1414,20 +1346,16 @@ msgstr "Escriu per a afegir un sistema de valoració."
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Review title"
-msgstr ""
+msgstr "Títol de la ressenya"
 
 #: creator/qml/BookMetainfoPage.qml:733
-#, fuzzy, kde-format
-#| msgctxt "Label for the link destination input field"
-#| msgid "Destination"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Description"
-msgstr "Destinació"
+msgstr "Descripció"
 
 #: creator/qml/BookMetainfoPage.qml:754
-#, fuzzy, kde-format
-#| msgctxt "label text for the form for the publishing info list"
-#| msgid "Publisher Info"
+#, kde-format
 msgctxt "@title:group"
 msgid "Publisher Info"
 msgstr "Informació de l'editorial"
@@ -1469,49 +1397,37 @@ msgid "License:"
 msgstr "Llicència:"
 
 #: creator/qml/BookMetainfoPage.qml:830
-#, fuzzy, kde-format
-#| msgctxt "label text for the form for the document info list"
-#| msgid "Document Authors"
+#, kde-format
 msgctxt "@title:group"
 msgid "Document Authors"
 msgstr "Autoria del document"
 
 #: creator/qml/BookMetainfoPage.qml:900
-#, fuzzy, kde-format
-#| msgctxt "label text for the form for the sources list"
-#| msgid "Document Sources"
+#, kde-format
 msgctxt "@title:group"
 msgid "Document Sources"
 msgstr "Fonts del document"
 
 #: creator/qml/BookMetainfoPage.qml:941
-#, fuzzy, kde-format
-#| msgctxt "label text for the form for the sources list"
-#| msgid "Document Sources"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "New document source"
-msgstr "Fonts del document"
+msgstr "Font nova del document"
 
 #: creator/qml/BookMetainfoPage.qml:960
-#, fuzzy, kde-format
-#| msgctxt "label text for the form for the history list"
-#| msgid "Document History"
+#, kde-format
 msgctxt "@title:group"
 msgid "Document History"
 msgstr "Historial del document"
 
 #: creator/qml/BookMetainfoPage.qml:1001
-#, fuzzy, kde-format
-#| msgctxt "label text for the form for the history list"
-#| msgid "Document History"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "New document info"
-msgstr "Historial del document"
+msgstr "Informació nova del document"
 
 #: creator/qml/BookMetainfoPage.qml:1020
-#, fuzzy, kde-format
-#| msgctxt "label text for the form for the body background color."
-#| msgid "General Page Background Color"
+#, kde-format
 msgctxt "@title:group"
 msgid "General Page Background Color"
 msgstr "Color de fons general de la pàgina"
@@ -1606,27 +1522,20 @@ msgid "Edit Link"
 msgstr "Edita l'enllaç"
 
 #: creator/qml/BookReferenceEditor.qml:100
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "title text for a sheet which lets the user edit the details of a reference"
-#| msgid "Edit Reference Details"
+#, kde-format
 msgctxt "@title:dialog"
 msgid "Edit Reference Details"
 msgstr "Edita els detalls de les referències"
 
 #: creator/qml/BookReferenceEditor.qml:107
-#, fuzzy, kde-format
-#| msgctxt "Label for the reference identifier input field"
-#| msgid "Unique Identifier"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Unique identifier"
 msgstr "Identificador únic"
 
 #: creator/qml/BookReferenceEditor.qml:112
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:109
-#, fuzzy, kde-format
-#| msgctxt "Label for the reference language input field"
-#| msgid "Language"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Language"
 msgstr "Idioma"
@@ -1664,29 +1573,18 @@ msgstr ""
 #: creator/qml/BookReferences.qml:92
 #, kde-format
 msgid "There is no reference information in your book yet"
-msgstr ""
+msgstr "Encara no hi ha informació de la referència en el llibre"
 
 #: creator/qml/BookReferences.qml:93
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "Help text for the references page, when there are already references "
-#| "defined"
-#| msgid ""
-#| "Create a new reference piece by clicking on the New Reference control. "
-#| "References are collections of paragraphs of text, which you can fill with "
-#| "simple formatting (strong, emphasis, and other simple layouting like "
-#| "that), as well as links to both internal things (other references or one "
-#| "of the pieces of binary data), or to an external resource, such as a "
-#| "website."
+#, kde-format
 msgid ""
 "References are collections of paragraphs of text, which you can fill with "
 "simple formatting (strong, emphasis, and other simple layouting like that), "
 "as well as links to both internal things (other references or one of the "
 "pieces of binary data), or to an external resource, such as a website."
 msgstr ""
-"Creeu una peça nova de referència fent clic en el control de Referència "
-"nova. Les referències són col·leccions de paràgrafs de text, que es poden "
-"emplenar amb un format senzill (negreta, èmfasi, i altres marcadors senzills "
+"Les referències són col·leccions de paràgrafs de text, que es poden emplenar "
+"amb un format senzill (negreta, èmfasi, i altres marcadors senzills "
 "semblants), així com enllaços tant a objectes interns (altres referències o "
 "una de les peces de dades binàries), o a un recurs extern, com un lloc web."
 
@@ -1703,9 +1601,7 @@ msgid "Add Style..."
 msgstr "Afig un estil…"
 
 #: creator/qml/BookStylesheet.qml:84
-#, fuzzy, kde-format
-#| msgctxt "title text for a sheet which lets the user edit a binary entry"
-#| msgid "Edit Style"
+#, kde-format
 msgctxt "@title:dialog"
 msgid "Edit Style"
 msgstr "Edita l'estil"
@@ -1720,24 +1616,24 @@ msgstr "Element"
 #, kde-format
 msgctxt "@option:check"
 msgid "Apply to style elements which request an inverted scheme"
-msgstr ""
+msgstr "Aplica als elements d'estil que demanen un esquema invertit"
 
 #: creator/qml/BookStylesheet.qml:110
 #, kde-format
 msgctxt "@option:check"
 msgid "Sub-element selector type"
-msgstr ""
+msgstr "Tipus de selector de subelement"
 
 #: creator/qml/BookStylesheet.qml:111
 #, kde-format
 msgid "None"
-msgstr ""
+msgstr "Cap"
 
 #: creator/qml/BookStylesheet.qml:116
 #, kde-format
 msgctxt "@option:check"
 msgid "Color"
-msgstr ""
+msgstr "Color"
 
 #: creator/qml/BookStylesheet.qml:139
 #, kde-format
@@ -1768,35 +1664,22 @@ msgid "%1 (sub type: %2)"
 msgstr "%1 (subtipus: %2)"
 
 #: creator/qml/BookStylesheet.qml:154
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "title text for a card which informs the user there are no styles defined, "
-#| "and what those are"
-#| msgid "No Styling Information"
+#, kde-format
 msgctxt "@info:placeholder"
 msgid "No Styling Information"
 msgstr "No hi ha informació d'estil"
 
 #: creator/qml/BookStylesheet.qml:155
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "Help text for the stylesheet page, when there is already styles defined "
-#| "in the book"
-#| msgid ""
-#| "You can add such new binary data entries by creating a new entry, and "
-#| "then adding data to that entry from some existing file on your system. "
-#| "That data will be imported into your book, and leaves the external file "
-#| "otherwise untouched."
+#, kde-format
 msgctxt "@info:placeholder"
 msgid ""
 "You can add such data by creating a new entry, and then adding data to that "
 "entry from some existing file on your system. That data will be imported "
 "into your book, and leaves the external file otherwise untouched."
 msgstr ""
-"Es poden afegir estes entrades de dades binàries creant una entrada nova, i "
-"després afegint les dades a esta entrada des d'un fitxer existent al "
-"sistema. Estes dades s'importaran al llibre, i deixarà el fitxer extern "
-"sense modificar."
+"Es poden afegir estes dades creant una entrada nova, i després afegint les "
+"dades a esta entrada des d'un fitxer existent al sistema. Estes dades "
+"s'importaran al llibre, i deixarà el fitxer extern sense modificar."
 
 #: creator/qml/CreateNewBook.qml:44
 #, kde-format
@@ -1830,9 +1713,7 @@ msgid "Folder"
 msgstr "Carpeta"
 
 #: creator/qml/CreateNewBook.qml:99
-#, fuzzy, kde-format
-#| msgctxt "@title:window dialogue used to add a new search folder"
-#| msgid "Select a Folder"
+#, kde-format
 msgctxt "@action:button"
 msgid "Select Folder"
 msgstr "Seleccioneu una carpeta"
@@ -1841,7 +1722,7 @@ msgstr "Seleccioneu una carpeta"
 #, kde-format
 msgctxt "File filter cbz file"
 msgid "*.cbz"
-msgstr ""
+msgstr "*.cbz"
 
 #: creator/qml/CreateNewBook.qml:113
 #, kde-format
@@ -1859,15 +1740,13 @@ msgstr "Imatge de la portada"
 #, kde-format
 msgctxt "placeholder message for missing cover image"
 msgid "Missing cover image"
-msgstr ""
+msgstr "Falta la imatge de la portada"
 
 #: creator/qml/CreateNewBook.qml:160
-#, fuzzy, kde-format
-#| msgctxt "@title:window Dialogue used to add a new search folder"
-#| msgid "Select a folder"
+#, kde-format
 msgctxt "@action:button"
 msgid "Select image"
-msgstr "Seleccioneu una carpeta"
+msgstr "Seleccioneu una imatge"
 
 #: creator/qml/CreateNewBook.qml:184
 #, kde-format
@@ -1984,27 +1863,19 @@ msgid "Save"
 msgstr "Guarda"
 
 #: creator/qml/LinkEditorSheet.qml:70
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "Edit the link the cursor is currently positioned on (or convert the "
-#| "selection to a link, or add a new one if there is no selection)"
-#| msgid "Edit Link"
+#, kde-format
 msgctxt "@title:dialog"
 msgid "Edit Link"
 msgstr "Edita l'enllaç"
 
 #: creator/qml/LinkEditorSheet.qml:90
-#, fuzzy, kde-format
-#| msgctxt "Label for the link text input field"
-#| msgid "Text"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Text"
 msgstr "Text"
 
 #: creator/qml/LinkEditorSheet.qml:95
-#, fuzzy, kde-format
-#| msgctxt "Label for the link destination input field"
-#| msgid "Destination"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Destination"
 msgstr "Destinació"
@@ -2012,7 +1883,7 @@ msgstr "Destinació"
 #: creator/qml/LinkEditorSheet.qml:157
 #, kde-format
 msgid "Preview"
-msgstr ""
+msgstr "Vista prèvia"
 
 #: creator/qml/Main.qml:170
 #, kde-format
@@ -2089,84 +1960,64 @@ msgid "Please complete the information for this author."
 msgstr "Completeu la informació d'este autor."
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:74
-#, fuzzy, kde-format
-#| msgctxt "placeholder text for the last name field"
-#| msgid "Last Name"
+#, kde-format
 msgctxt "@title:group"
 msgid "Name"
-msgstr "Cognoms"
+msgstr "Nom"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:80
-#, fuzzy, kde-format
-#| msgctxt "label for the first name field"
-#| msgid "First name:"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "First name"
-msgstr "Nom:"
+msgstr "Nom"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:85
-#, fuzzy, kde-format
-#| msgctxt "label for the middle name field"
-#| msgid "Middle name:"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Middle name"
-msgstr "Segon nom:"
+msgstr "Segon nom"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:90
-#, fuzzy, kde-format
-#| msgctxt "label for the last name field"
-#| msgid "Last name:"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Last name"
-msgstr "Cognoms:"
+msgstr "Cognoms"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:95
-#, fuzzy, kde-format
-#| msgctxt "placeholder text for the nickname field"
-#| msgid "Nickname"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Nickname"
 msgstr "Sobrenom"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:104
-#, fuzzy, kde-format
-#| msgctxt "label for the activity field"
-#| msgid "Activity:"
+#, kde-format
 msgctxt "@label:listbox"
 msgid "Activity"
-msgstr "Activitat:"
+msgstr "Activitat"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:114
-#, fuzzy, kde-format
-#| msgctxt "label for the homepage field"
-#| msgid "Homepage addresses:"
+#, kde-format
 msgctxt "@title:group"
 msgid "Homepage addresses"
-msgstr "Adreces de la pàgina web:"
+msgstr "Adreces de la pàgina web"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:152
-#, fuzzy, kde-format
-#| msgctxt "placeholder text for the homepage field"
-#| msgid "Add Homepage"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "New Homepage"
-msgstr "Afig una pàgina web"
+msgstr "Pàgina web nova"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:171
-#, fuzzy, kde-format
-#| msgctxt "label for the email field"
-#| msgid "Email addresses:"
+#, kde-format
 msgctxt "@title:group"
 msgid "Email addresses"
-msgstr "Adreces de correu:"
+msgstr "Adreces de correu"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:209
-#, fuzzy, kde-format
-#| msgctxt "placeholder text for the email field"
-#| msgid "Add Email address"
+#, kde-format
 msgctxt "placeholder text for the email field"
 msgid "New Email address"
-msgstr "Afig una adreça de correu"
+msgstr "Adreça de correu nova"
 
 #: creator/qml/PageMetaInfo.qml:42
 #, kde-format
@@ -2185,44 +2036,34 @@ msgstr "Tanca l'editor"
 #, kde-format
 msgctxt "@title:group"
 msgid "General"
-msgstr ""
+msgstr "General"
 
 #: creator/qml/PageMetaInfo.qml:63
-#, fuzzy, kde-format
-#| msgctxt "Switch to the listing page showing items grouped by title"
-#| msgid "Title"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Title:"
-msgstr "Títol"
+msgstr "Títol:"
 
 #: creator/qml/PageMetaInfo.qml:72
-#, fuzzy, kde-format
-#| msgctxt "Label for the ID input field"
-#| msgid "ID:"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "ID:"
 msgstr "ID:"
 
 #: creator/qml/PageMetaInfo.qml:82
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the page transition type"
-#| msgid "Transition"
+#, kde-format
 msgctxt "@label:listbox"
 msgid "Transition:"
-msgstr "Transició"
+msgstr "Transició:"
 
 #: creator/qml/PageMetaInfo.qml:95
-#, fuzzy, kde-format
-#| msgctxt "Label from frame background color."
-#| msgid "Background Color:"
+#, kde-format
 msgctxt "@label:chooser"
 msgid "Background Color:"
 msgstr "Color de fons:"
 
 #: creator/qml/PageMetaInfo.qml:102
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the page frames"
-#| msgid "Frames"
+#, kde-format
 msgctxt "@title:group"
 msgid "Frames"
 msgstr "Marcs"
@@ -2231,7 +2072,7 @@ msgstr "Marcs"
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "No frames present"
-msgstr ""
+msgstr "No hi ha cap marc present"
 
 #: creator/qml/PageMetaInfo.qml:119
 #, kde-format
@@ -2278,9 +2119,7 @@ msgid "Delete Frame"
 msgstr "Suprimix el marc"
 
 #: creator/qml/PageMetaInfo.qml:187
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the page textareas"
-#| msgid "Text Areas"
+#, kde-format
 msgctxt "@title:group"
 msgid "Text Areas"
 msgstr "Àrees de text"
@@ -2289,7 +2128,7 @@ msgstr "Àrees de text"
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "No text areas present"
-msgstr ""
+msgstr "No hi ha cap àrea de text present"
 
 #: creator/qml/PageMetaInfo.qml:213
 #, kde-format
@@ -2316,9 +2155,7 @@ msgid "Text Area %1"
 msgstr "Àrea de text %1"
 
 #: creator/qml/PageMetaInfo.qml:255
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the page jumps"
-#| msgid "Jumps"
+#, kde-format
 msgctxt "@title:group"
 msgid "Jumps"
 msgstr "Salts"
@@ -2327,7 +2164,7 @@ msgstr "Salts"
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "No jumps present"
-msgstr ""
+msgstr "No hi ha cap salt present"
 
 #: creator/qml/PageMetaInfo.qml:273
 #, kde-format
@@ -2360,9 +2197,7 @@ msgid "Page Index:"
 msgstr "Índex de pàgina:"
 
 #: creator/qml/SettingsPage.qml:17
-#, fuzzy, kde-format
-#| msgctxt "Open the settings page"
-#| msgid "Settings"
+#, kde-format
 msgctxt "@title"
 msgid "Settings"
 msgstr "Configuració"
@@ -2412,13 +2247,10 @@ msgid "Create Blank"
 msgstr "Crea en blanc"
 
 #: creator/qml/WelcomePage.qml:96
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "Switch to the listing page showing the most recently discovered books"
-#| msgid "Recently Added Books"
+#, kde-format
 msgctxt "@title:group"
 msgid "Recent books"
-msgstr "Llibres afegits recentment"
+msgstr "Llibres recents"
 
 #: creator/qml/WelcomePage.qml:116
 #, kde-format
@@ -2429,11 +2261,10 @@ msgid "Continue working on %1"
 msgstr "Continua treballant a %1"
 
 #: creator/qml/WelcomePage.qml:129
-#, fuzzy, kde-format
-#| msgid "There are no folder currently indexed."
+#, kde-format
 msgctxt "@info:placeholder"
 msgid "There are no recent books"
-msgstr "Actualment no hi ha cap carpeta indexada."
+msgstr "No hi ha cap llibre recent"
 
 #: qtquick/ArchiveBookModel.cpp:527
 #, kde-format
@@ -2468,306 +2299,3 @@ msgid ""
 msgstr ""
 "S'ha reemplaçat correctament l'arxiu antic per l'arxiu nou - ara es carrega "
 "l'arxiu nou…"
-
-#~ msgctxt "Closes the book information drawer"
-#~ msgid "Close"
-#~ msgstr "Tanca"
-
-#~ msgctxt "Label for the author field"
-#~ msgid "Author:"
-#~ msgstr "Autoria:"
-
-#~ msgctxt "Label for the series field"
-#~ msgid "Series:"
-#~ msgstr "Sèries:"
-
-#~ msgctxt "Label for the filename field"
-#~ msgid "Filename:"
-#~ msgstr "Nom de fitxer:"
-
-#~ msgctxt "Navigate one page back"
-#~ msgid "Back"
-#~ msgstr "Arrere"
-
-#~ msgctxt "Open the book which is currently selected in the list"
-#~ msgid "Open Selected Book"
-#~ msgstr "Obri el llibre seleccionat"
-
-#~ msgctxt "Closes the book details drawer"
-#~ msgid "Close"
-#~ msgstr "Tanca"
-
-#~ msgctxt "The first author in a list of authors"
-#~ msgid "by %1"
-#~ msgstr "per %1"
-
-#~ msgctxt "Title of the page with books grouped by what series they are in"
-#~ msgid "Group by Series"
-#~ msgstr "Agrupa per sèries"
-
-#~ msgctxt "Title of the page with books grouped by author"
-#~ msgid "Group by Author"
-#~ msgstr "Agrupa per autor"
-
-#~ msgctxt "Title of the page with books grouped by who published them"
-#~ msgid "Group by Publisher"
-#~ msgstr "Agrupa per editorial"
-
-#~ msgctxt "title text for the add page sheet"
-#~ msgid "Add a Page?"
-#~ msgstr "Voleu afegir una pàgina?"
-
-#~ msgctxt "closes the add page sheet"
-#~ msgid "Do not Add a Page"
-#~ msgstr "No afig cap pàgina"
-
-#~ msgctxt "placeholder text for default title text-input"
-#~ msgid "Write to add default title"
-#~ msgstr "Escriu per a afegir un títol predeterminat"
-
-#~ msgctxt "placeholder text for default annotation text-area"
-#~ msgid "Write to add default annotation"
-#~ msgstr "Escriu per a afegir una anotació predeterminada"
-
-#~ msgctxt "label text for the edit field for the keyword list"
-#~ msgid "Keywords"
-#~ msgstr "Paraules clau"
-
-#~ msgctxt "label text for the edit field for the author list"
-#~ msgid "Authors (%1)"
-#~ msgstr "Autoria (%1)"
-
-#~ msgctxt "placeholder text for the add new series text entry"
-#~ msgid "Write to add new series"
-#~ msgstr "Escriu per a afegir sèries noves"
-
-#~ msgctxt "placeholder text for the add reference type text entry"
-#~ msgid "Write to add reference type"
-#~ msgstr "Escriu per a afegir un tipus de referència"
-
-#~ msgctxt "placeholder text for the add new reference text entry"
-#~ msgid "Write to add new reference"
-#~ msgstr "Escriu per a afegir una referència nova"
-
-#~ msgctxt "placeholder text for the add databasename text entry"
-#~ msgid "Write to add database name for new reference."
-#~ msgstr ""
-#~ "Escriu per a afegir un nom de la base de dades per a una referència nova."
-
-#~ msgctxt "label text for the form for reading direction."
-#~ msgid "Reading Direction"
-#~ msgstr "Direcció de lectura"
-
-#~ msgctxt "label text for right to left checkbox."
-#~ msgid "Right to left."
-#~ msgstr "De dreta a esquerra."
-
-#~ msgctxt "placeholder text for the publishing city entry"
-#~ msgid "Write to add city"
-#~ msgstr "Escriu per a afegir la ciutat"
-
-#~ msgctxt "placeholder text for the publishing ISBN entry"
-#~ msgid "Write to add ISBN"
-#~ msgstr "Escriu per a afegir l'ISBN"
-
-#~ msgctxt "placeholder text for the publishing license entry"
-#~ msgid "Write to add license"
-#~ msgstr "Escriu per a afegir la llicència"
-
-#~ msgctxt "@title color choosing dialog"
-#~ msgid "Choose the general background color for this comic"
-#~ msgstr "Seleccioneu el color de fons d'este còmic"
-
-#~ msgctxt "Placeholder text for the reference identifier input field"
-#~ msgid "Enter your reference ID here (should be unique)"
-#~ msgstr "Introduïu ací l'ID de la referència (cal que siga únic)"
-
-#~ msgctxt "Placeholder text for the reference language input field"
-#~ msgid ""
-#~ "Enter the language ID here (leave empty for the document default language)"
-#~ msgstr ""
-#~ "Introduïu ací l'ID de l'idioma (deixeu-ho buit per a l'idioma "
-#~ "predeterminat del document)"
-
-#~ msgctxt ""
-#~ "title text for a card which informs the user there are no references, and "
-#~ "what references are"
-#~ msgid "No References"
-#~ msgstr "Sense referències"
-
-#~ msgctxt "title text for a card which informs what references are"
-#~ msgid "References"
-#~ msgstr "Referències"
-
-#~ msgctxt "Help text for the references page, when there are no references"
-#~ msgid ""
-#~ "There is no reference information in your book yet. You can create a new "
-#~ "reference piece by clicking on the New Reference control. References are "
-#~ "collections of paragraphs of text, which you can fill with simple "
-#~ "formatting (strong, emphasis, and other simple layouting like that), as "
-#~ "well as links to both internal things (other references or one of the "
-#~ "pieces of binary data), or to an external resource, such as a website."
-#~ msgstr ""
-#~ "Encara no hi ha cap informació de referència en el llibre. Podeu crear "
-#~ "una peça nova de referència fent clic en el control de Referència nova. "
-#~ "Les referències són col·leccions de paràgrafs de text, que es poden "
-#~ "emplenar amb un format senzill (negreta, èmfasi, i altres marcadors "
-#~ "senzills semblants), així com enllaços tant a objectes interns (altres "
-#~ "referències o una de les peces de dades binàries), o a un recurs extern, "
-#~ "com un lloc web."
-
-#~ msgctxt ""
-#~ "label for a button which updates the style entry with the new details"
-#~ msgid "OK"
-#~ msgstr "D'acord"
-
-#~ msgctxt "Placeholder text for the style element input field"
-#~ msgid "Enter the name of the element you want to style"
-#~ msgstr "Introduïu el nom de l'element al qual voleu aplicar l'estil"
-
-#~ msgctxt "title text for a card which informs the user what styles are"
-#~ msgid "Styling Information"
-#~ msgstr "Informació d'estil"
-
-#~ msgctxt ""
-#~ "Help text for the stylesheet page, when there are no styles defined"
-#~ msgid ""
-#~ "There is no embedded data in your book yet. You can add such data by "
-#~ "creating a new entry, and then adding data to that entry from some "
-#~ "existing file on your system. That data will be imported into your book, "
-#~ "and leaves the external file otherwise untouched."
-#~ msgstr ""
-#~ "Encara no hi ha cap dada incrustada en el llibre. Es poden afegir estes "
-#~ "dades creant una entrada nova, i després afegint les dades a esta entrada "
-#~ "des d'un fitxer existent al sistema. Estes dades s'importaran al llibre, "
-#~ "i deixarà el fitxer extern sense modificar."
-
-#~ msgctxt ""
-#~ "title text for a sheet which lets the user edit the parameters of a link"
-#~ msgid "Edit Link"
-#~ msgstr "Edita l'enllaç"
-
-#~ msgctxt ""
-#~ "label for a button which updates the link in the text with the new "
-#~ "information from the link editor"
-#~ msgid "OK"
-#~ msgstr "D'acord"
-
-#~ msgctxt "Placeholder text for the link text input field"
-#~ msgid "Enter the text of your link here"
-#~ msgstr "Introduïu ací el text de l'enllaç"
-
-#~ msgctxt "Placeholder text for the link destination input field"
-#~ msgid "Enter the destination for your link here"
-#~ msgstr "Introduïu ací la destinació de l'enllaç"
-
-#~ msgctxt ""
-#~ "Entry in a dropdown list which gives the name of a reference object, and "
-#~ "identifies it as one such"
-#~ msgid "%1 (Reference)"
-#~ msgstr "%1 (referència)"
-
-#~ msgctxt ""
-#~ "Entry in a dropdown list which gives the name of a binary object, and "
-#~ "identifies it as one such"
-#~ msgid "%1 (Binary)"
-#~ msgstr "%1 (binari)"
-
-#~ msgctxt ""
-#~ "Entry in a dropdown list which gives the base details of a Textarea "
-#~ "object, and identifies it as one such"
-#~ msgid "Textarea (ID: %1, text: %2)"
-#~ msgstr "Àrea de text (ID: %1, text: %2)"
-
-#~ msgctxt ""
-#~ "Entry in a dropdown list which gives the name of a frame object, and "
-#~ "identifies it as one such"
-#~ msgid "%1 (Frame)"
-#~ msgstr "%1 (Marc)"
-
-#~ msgctxt "Entry in a dropdown list which gives the title and ID of a page"
-#~ msgid "Page \"%1\" (ID: %2)"
-#~ msgstr "Pàgina «%1» (ID: %2)"
-
-#~ msgctxt ""
-#~ "Entry in a dropdown list which gives the name of an identified object of "
-#~ "an unknown type, and marks it as one such"
-#~ msgid "%1 (Unknown Type)"
-#~ msgstr "%1 (Tipus desconegut)"
-
-#~ msgctxt "Label for the link demonstration display field"
-#~ msgid "Demonstration"
-#~ msgstr "Demostració"
-
-#~ msgctxt "application title for the sidebar"
-#~ msgid "Peruse Creator"
-#~ msgstr "Creador de Peruse"
-
-#~ msgid "Navigation"
-#~ msgstr "Navegueu"
-
-#~ msgid "Switch to the welcome page"
-#~ msgstr "Alterna a la pàgina de benvinguda"
-
-#~ msgctxt "label for the language field"
-#~ msgid "Language:"
-#~ msgstr "Idioma:"
-
-#~ msgctxt "placeholder text for the language field"
-#~ msgid "Language"
-#~ msgstr "Idioma"
-
-#~ msgctxt "placeholder text for the first name field"
-#~ msgid "First Name"
-#~ msgstr "Nom"
-
-#~ msgctxt "placeholder text for the middle name field"
-#~ msgid "Middle Name"
-#~ msgstr "Segon nom"
-
-#~ msgctxt "label for the nickname field"
-#~ msgid "Nickname:"
-#~ msgstr "Sobrenom:"
-
-#~ msgctxt "label text for the edit field for the page title"
-#~ msgid "Title"
-#~ msgstr "Títol"
-
-#~ msgctxt "placeholder text for the page title text-input"
-#~ msgid "Write to add default title"
-#~ msgstr "Escriu per a afegir un títol predeterminat"
-
-#~ msgctxt "label text for the edit field for the page id"
-#~ msgid "ID"
-#~ msgstr "ID"
-
-#~ msgctxt "placeholder text for page ID text-input"
-#~ msgid "Write to add an ID"
-#~ msgstr "Escriu per a afegir un ID"
-
-#~ msgctxt "label text for the edit field for the page background color"
-#~ msgid "Background Color"
-#~ msgstr "Color de fons"
-
-#~ msgctxt "@title color choosing dialog"
-#~ msgid "Choose the background color for page"
-#~ msgstr "Seleccioneu el color de fons per a la pàgina"
-
-#~ msgctxt "Label from textlayer background color."
-#~ msgid "Background Color:"
-#~ msgstr "Color de fons:"
-
-#~ msgctxt "@title color choosing dialog"
-#~ msgid "Choose the background color for all text areas on this page"
-#~ msgstr ""
-#~ "Seleccioneu el color de fons per a totes les àrees de text d'esta pàgina"
-
-#~ msgctxt "title of the settings page"
-#~ msgid "Settings"
-#~ msgstr "Configuració"
-
-#~ msgctxt ""
-#~ "@action:button create a new comic book archive by copying in a bunch of "
-#~ "pictures"
-#~ msgid "Create from Images..."
-#~ msgstr "Crea des d'imatges…"
