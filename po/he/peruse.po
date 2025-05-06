@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: peruse\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-30 00:40+0000\n"
-"PO-Revision-Date: 2025-05-03 16:01+0300\n"
+"PO-Revision-Date: 2025-05-05 13:12+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
-"n % 10 == 0) ? 2 : 3));\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n==2 ? 1 : n>10 && n%10==0 ? "
+"2 : 3);\n"
 "X-Generator: Lokalize 25.04.0\n"
 
 #, kde-format
@@ -569,7 +569,7 @@ msgstr "קיבוץ לפי מילות מפתח, דמויות וסוגים"
 #, kde-format
 msgctxt "Title of the page with books grouped by what folder they are in"
 msgid "Filter by Folder"
-msgstr ""
+msgstr "סינון לפי תיקייה"
 
 #: app/qml/Settings.qml:45
 #, kde-format
@@ -580,13 +580,13 @@ msgstr ""
 #: app/qml/Settings.qml:50
 #, kde-format
 msgid "Add folder"
-msgstr ""
+msgstr "הוספת תיקייה"
 
 #: app/qml/Settings.qml:83
 #, kde-format
 msgctxt "@action:button"
 msgid "Delete"
-msgstr ""
+msgstr "מחיקה"
 
 #: app/qml/Settings.qml:96
 #, kde-format
@@ -597,13 +597,13 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window Dialogue used to add a new search folder"
 msgid "Select a folder"
-msgstr ""
+msgstr "בחירת תיקייה"
 
 #: app/qml/Settings.qml:123
 #, kde-format
 msgctxt "@title:window dialogue used to add a new search folder"
 msgid "Select a Folder"
-msgstr ""
+msgstr "בחירת תיקייה"
 
 #: app/qml/Store.qml:37
 #, kde-format
