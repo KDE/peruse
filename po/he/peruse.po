@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: peruse\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-30 00:40+0000\n"
-"PO-Revision-Date: 2025-05-05 13:12+0300\n"
+"PO-Revision-Date: 2025-05-09 17:16+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -158,7 +158,7 @@ msgctxt ""
 "reader at all (usually when Okular's qml components are not installed for "
 "some reason)"
 msgid "Failed to load the reader component"
-msgstr ""
+msgstr "טעינת רכיב ההצגה נכשלה"
 
 #: app/qml/Book.qml:383
 #, kde-format
@@ -170,6 +170,8 @@ msgid ""
 "This is generally caused by broken packaging. Contact whomever you got this "
 "package from and inform them of this error."
 msgstr ""
+"זה בדרךך כלל נגרם עקב פגם באריזה. נא ליצור קשר עם יוצרי החבילה ולהודיע להם "
+"על השגיאה הזאת."
 
 #: app/qml/BookInfoPage.qml:43
 #, kde-format
@@ -255,7 +257,7 @@ msgstr "חיפוש ספרים"
 #, kde-format
 msgctxt "placeholder text for the search field"
 msgid "Tap and type to search"
-msgstr ""
+msgstr "נא לגעת ולהקליד כדי לחפש"
 
 #: app/qml/Bookshelf.qml:155
 #, kde-format
@@ -370,13 +372,13 @@ msgstr "חדש"
 #, kde-format
 msgctxt "The last item in a list of author names when there is more than one"
 msgid ", and %1"
-msgstr ""
+msgstr "וגם %1"
 
 #: app/qml/listcomponents/BookTileTall.qml:129
 #, kde-format
 msgctxt "An item in a list of authors (but not the last)"
 msgid ", %1"
-msgstr ""
+msgstr ", %1"
 
 #: app/qml/listcomponents/BookTileTall.qml:138
 #, kde-format
@@ -449,7 +451,7 @@ msgctxt ""
 "Open a book from somewhere on disk (uses the open dialog, or a drilldown on "
 "touch devices)"
 msgid "Open Other..."
-msgstr ""
+msgstr "פתיחה ממקום אחר…"
 
 #: app/qml/PeruseMain.qml:227
 #, kde-format
@@ -575,7 +577,7 @@ msgstr "סינון לפי תיקייה"
 #, kde-format
 msgctxt "title of the settings page"
 msgid "Configure the indexed folders"
-msgstr ""
+msgstr "הגדרת התיקיות ששמורות במפתח"
 
 #: app/qml/Settings.qml:50
 #, kde-format
@@ -591,7 +593,7 @@ msgstr "מחיקה"
 #: app/qml/Settings.qml:96
 #, kde-format
 msgid "There are no folder currently indexed."
-msgstr ""
+msgstr "אף תיקייה לא שמורה במפתח כרגע."
 
 #: app/qml/Settings.qml:106
 #, kde-format
@@ -609,7 +611,7 @@ msgstr "בחירת תיקייה"
 #, kde-format
 msgctxt "title of the book store page"
 msgid "Book Store"
-msgstr ""
+msgstr "אחסון ספרים"
 
 #: app/qml/Store.qml:97
 #, kde-format
@@ -627,13 +629,13 @@ msgstr ""
 msgctxt ""
 "A submenu which allows the user to chose between translations of the book"
 msgid "Translations"
-msgstr ""
+msgstr "תרגומים"
 
 #: app/qml/viewers/cbr.qml:94 creator/qml/BookPage.qml:83
 #, kde-format
 msgctxt "The option used to show no translation should be used"
 msgid "No Translation"
-msgstr ""
+msgstr "אין תרגום"
 
 #: app/qml/viewers/ImageBrowser.qml:89
 #, kde-format
@@ -678,13 +680,13 @@ msgstr ""
 msgctxt ""
 "Title for a dialog offering the user to open a link to some external resource"
 msgid "Open External Link?"
-msgstr ""
+msgstr "לפתוח קישור חיצוני?"
 
 #: app/qml/viewers/ViewerBase.qml:106
 #, kde-format
 msgctxt "label for a button which activates an external link"
 msgid "Open Link"
-msgstr ""
+msgstr "פתיחת קישור"
 
 #: app/qml/viewers/ViewerBase.qml:118
 #, kde-format
@@ -819,7 +821,7 @@ msgstr ""
 #, kde-format
 msgctxt "title of the main book editor page"
 msgid "Pages in %1"
-msgstr ""
+msgstr "עמודים ב־%1"
 
 #: creator/qml/Book.qml:59 creator/qml/BookBasics.qml:42
 #: creator/qml/BookBinaries.qml:42 creator/qml/BookMetainfoPage.qml:32
@@ -827,80 +829,80 @@ msgstr ""
 #, kde-format
 msgctxt "Saves the book to a file on disk"
 msgid "Save Book"
-msgstr ""
+msgstr "שמירת ספר"
 
 #: creator/qml/Book.qml:66
 #, kde-format
 msgctxt "adds a new page at the end of the book"
 msgid "Add Page"
-msgstr ""
+msgstr "הוספת עמוד"
 
 #: creator/qml/Book.qml:104 creator/qml/BookReferences.qml:66
 #, kde-format
 msgctxt "swap the position of this page with the previous one"
 msgid "Move Up"
-msgstr ""
+msgstr "העלאה למעלה"
 
 #: creator/qml/Book.qml:111 creator/qml/BookReferences.qml:74
 #, kde-format
 msgctxt "swap the position of this page with the next one"
 msgid "Move Down"
-msgstr ""
+msgstr "הורדה למטה"
 
 #: creator/qml/Book.qml:118
 #, kde-format
 msgctxt "remove the page from the book"
 msgid "Delete Page"
-msgstr ""
+msgstr "מחיקת עמוד"
 
 #: creator/qml/Book.qml:123
 #, kde-format
 msgctxt "add a page to the book after this one"
 msgid "Add Page After This"
-msgstr ""
+msgstr "הוספת עמוד אחרי הנוכחי"
 
 #: creator/qml/Book.qml:128
 #, kde-format
 msgctxt "Edit page data such as title, frames, etc."
 msgid "Edit Page"
-msgstr ""
+msgstr "עריכת עמוד"
 
 #: creator/qml/Book.qml:189
 #, kde-format
 msgctxt "Empty page list placeholder message"
 msgid "Your book is empty"
-msgstr ""
+msgstr "הספר שלך ריק"
 
 #: creator/qml/Book.qml:190
 #, kde-format
 msgid "Start adding pages to your book"
-msgstr ""
+msgstr "אפשר להתחיל להוסיף עמודים לספר שלך"
 
 #: creator/qml/BookBasics.qml:39
 #, kde-format
 msgctxt "title of the basic book information page"
 msgid "Your Book At A Glance"
-msgstr ""
+msgstr "הספר שלך במבט חטוף"
 
 #: creator/qml/BookBasics.qml:85
 #, kde-format
 msgctxt ""
 "The descriptive label for a label which displays the title of the book"
 msgid "Book Title:"
-msgstr ""
+msgstr "כותרת ספר:"
 
 #: creator/qml/BookBasics.qml:89
 #, kde-format
 msgctxt ""
 "The descriptive label for a link which shows the number of pages in the book"
 msgid "Pages:"
-msgstr ""
+msgstr "עמודים:"
 
 #: creator/qml/BookBasics.qml:90
 #, kde-format
 msgctxt "A link which when clicked shows the book pages editor"
 msgid "%1 total pages"
-msgstr ""
+msgstr "%1 עמודים בסך הכול"
 
 #: creator/qml/BookBasics.qml:97
 #, kde-format
@@ -908,25 +910,25 @@ msgctxt ""
 "Header for a list which shows every file contained in the archive which "
 "makes up this book"
 msgid "Every File In The Book:"
-msgstr ""
+msgstr "כל קובץ בספר:"
 
 #: creator/qml/BookBasics.qml:184
 #, kde-format
 msgctxt "If a file is not referenced at all"
 msgid "Unreferenced file"
-msgstr ""
+msgstr "קובץ ללא סימוכין"
 
 #: creator/qml/BookBasics.qml:186
 #, kde-format
 msgctxt "If a file is referenced by its full path"
 msgid "Referenced by full path"
-msgstr ""
+msgstr "סימוכין בנתיב מלא"
 
 #: creator/qml/BookBasics.qml:188
 #, kde-format
 msgctxt "If a file is referenced partially, describe that"
 msgid "Referenced by filename only"
-msgstr ""
+msgstr "סימוכין בשם קובץ בלבד"
 
 #: creator/qml/BookBasics.qml:190
 #, kde-format
@@ -939,14 +941,14 @@ msgstr ""
 msgctxt ""
 "action which marks the file to be included next time the book is saved"
 msgid "Include File"
-msgstr ""
+msgstr "הכללת קובץ"
 
 #: creator/qml/BookBasics.qml:199
 #, kde-format
 msgctxt ""
 "action which marks the file to NOT be included next time the book is saved"
 msgid "Mark File For Deletion"
-msgstr ""
+msgstr "סימון קובץ למחיקה"
 
 #: creator/qml/BookBinaries.qml:38
 #, kde-format
@@ -954,19 +956,19 @@ msgctxt ""
 "title of the page which lets the user manage chunks of binary data embedded "
 "in the book"
 msgid "Embedded Data"
-msgstr ""
+msgstr "נתונים מוטמעים"
 
 #: creator/qml/BookBinaries.qml:49
 #, kde-format
 msgctxt "Lets the user pick a file to append as a binary item"
 msgid "Add File..."
-msgstr ""
+msgstr "הוספת קובץ…"
 
 #: creator/qml/BookBinaries.qml:52 creator/qml/BookBinaryEditor.qml:97
 #, kde-format
 msgctxt "The initial identifier used for a newly created binary data element"
 msgid "Unnamed Binary"
-msgstr ""
+msgstr "קובץ בינרי ללא שם"
 
 #: creator/qml/BookBinaries.qml:80
 #, kde-format
@@ -993,6 +995,9 @@ msgid ""
 "file on your system. That data will be imported into your book, and leaves "
 "the external file otherwise untouched."
 msgstr ""
+"אין נתונים שהוטמעו בספר שלך עדיין. אפשר להוסיף נתונים כאלה על ידי יצירת "
+"רשומה חדשה ואז להוסיף את הנתונים לרשומה הזאת מקובץ קיים במערכת שלך. הנתונים "
+"האלו ייובאו לספר שלך וישאירו את הקובץ החיצוני ללא שום שינוי."
 
 #: creator/qml/BookBinaries.qml:90
 #, kde-format
@@ -1029,13 +1034,13 @@ msgstr ""
 #, kde-format
 msgctxt "label for a button which updates the binary with the new details"
 msgid "OK"
-msgstr ""
+msgstr "אישור"
 
 #: creator/qml/BookBinaryEditor.qml:64
 #, kde-format
 msgctxt "Label for the binary ID input field"
 msgid "ID"
-msgstr ""
+msgstr "מזהה"
 
 #: creator/qml/BookBinaryEditor.qml:65
 #, kde-format
@@ -1047,7 +1052,7 @@ msgstr ""
 #, kde-format
 msgctxt "Label for the binary content type input field"
 msgid "Content Type"
-msgstr ""
+msgstr "סוג תוכן"
 
 #: creator/qml/BookBinaryEditor.qml:71
 #, kde-format
@@ -1061,7 +1066,7 @@ msgctxt ""
 "Label for the field which describes the data currently held by the current "
 "instance"
 msgid "Current Data"
-msgstr ""
+msgstr "נתונים נוכחיים"
 
 #: creator/qml/BookBinaryEditor.qml:81
 #, kde-format
@@ -1069,7 +1074,7 @@ msgctxt ""
 "Label used in the binary editor sheet to describe the size of the binary "
 "data contained in the current instance"
 msgid "%1 bytes"
-msgstr ""
+msgstr "%1 בתים"
 
 #: creator/qml/BookBinaryEditor.qml:83
 #, kde-format
@@ -1085,14 +1090,14 @@ msgctxt ""
 "Label for the button in the binary editor sheet which lets the user replace "
 "the data contained in the current instance"
 msgid "Import Data..."
-msgstr ""
+msgstr "ייבוא נתונים…"
 
 #: creator/qml/BookBinaryEditor.qml:106
 #, kde-format
 msgctxt ""
 "@title:window standard file open dialog used to add file data into the book"
 msgid "Pick A File To Add"
-msgstr ""
+msgstr "בחירת קובץ להוספה"
 
 #: creator/qml/BookBinaryEditor.qml:109 creator/qml/Main.qml:336
 #, kde-format
@@ -1122,13 +1127,13 @@ msgstr ""
 #, kde-format
 msgctxt "The option used to let the user agree to the proposed action"
 msgid "Yes, Add Large File"
-msgstr ""
+msgstr "כן, להוסיף קבצים גדולים"
 
 #: creator/qml/BookBinaryEditor.qml:145
 #, kde-format
 msgctxt "The option used to let the user abort the proposed action"
 msgid "Don't Add"
-msgstr ""
+msgstr "לא להוסיף"
 
 #: creator/qml/BookMetainfoPage.qml:26
 #, kde-format
