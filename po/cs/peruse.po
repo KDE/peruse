@@ -195,12 +195,10 @@ msgid "Publisher:"
 msgstr "Vydavatel:"
 
 #: app/qml/BookInfoPage.qml:57
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the default annotation"
-#| msgid "Annotation"
+#, kde-format
 msgctxt "@label"
 msgid "Location:"
-msgstr "Poznámka"
+msgstr "Umístění:"
 
 #: app/qml/BookInfoPage.qml:63
 #, kde-format
@@ -209,25 +207,21 @@ msgid "File Metadata"
 msgstr ""
 
 #: app/qml/BookInfoPage.qml:70
-#, fuzzy, kde-format
-#| msgctxt "label for rating widget"
-#| msgid "Rating"
+#, kde-format
 msgctxt "@label"
 msgid "Rating:"
-msgstr "Hodnocení"
+msgstr "Hodnocení:"
 
 #: app/qml/BookInfoPage.qml:92
 #, kde-format
 msgid "Set rating to %1"
-msgstr ""
+msgstr "Nastavit hodnocení na %1"
 
 #: app/qml/BookInfoPage.qml:123
-#, fuzzy, kde-format
-#| msgctxt "label for tags field"
-#| msgid "Tags"
+#, kde-format
 msgctxt "@label"
 msgid "Tags:"
-msgstr "Značky"
+msgstr "Značky:"
 
 #: app/qml/BookInfoPage.qml:125 app/qml/listcomponents/BookTile.qml:291
 #, kde-format
@@ -269,12 +263,10 @@ msgid "Tap and type to search"
 msgstr ""
 
 #: app/qml/Bookshelf.qml:155
-#, fuzzy, kde-format
-#| msgctxt "label for a button which activates an external link"
-#| msgid "Open Link"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Open"
-msgstr "Otevřít odkaz"
+msgstr "Otevřít"
 
 #: app/qml/Bookshelf.qml:163
 #, fuzzy, kde-format
@@ -380,7 +372,7 @@ msgstr "%1%"
 #, kde-format
 msgctxt "should be keep short, inside a label. Will be in uppercase"
 msgid "New"
-msgstr ""
+msgstr "Nový"
 
 #: app/qml/listcomponents/BookTileTall.qml:126
 #, kde-format
@@ -560,12 +552,10 @@ msgid "No authors found"
 msgstr ""
 
 #: app/qml/PeruseMain.qml:362
-#, fuzzy, kde-format
-#| msgctxt "Switch to the listing page showing items grouped by author"
-#| msgid "Author"
+#, kde-format
 msgctxt "@title"
 msgid "Authors"
-msgstr "Autor"
+msgstr "Autoři"
 
 #: app/qml/PeruseMain.qml:372
 #, kde-format
@@ -605,9 +595,7 @@ msgid "Add folder"
 msgstr "Přidat složku"
 
 #: app/qml/Settings.qml:83
-#, fuzzy, kde-format
-#| msgctxt "remove the search folder from the list"
-#| msgid "Delete"
+#, kde-format
 msgctxt "@action:button"
 msgid "Delete"
 msgstr "Smazat"
@@ -1644,10 +1632,11 @@ msgctxt "@option:check"
 msgid "Sub-element selector type"
 msgstr ""
 
+# žádné parametry funkce v inspektoru funkcí
 #: creator/qml/BookStylesheet.qml:111
 #, kde-format
 msgid "None"
-msgstr ""
+msgstr "Nic"
 
 #: creator/qml/BookStylesheet.qml:116
 #, kde-format
@@ -1912,7 +1901,7 @@ msgstr "Cíl"
 #: creator/qml/LinkEditorSheet.qml:157
 #, kde-format
 msgid "Preview"
-msgstr ""
+msgstr "Náhled"
 
 #: creator/qml/Main.qml:170
 #, kde-format
@@ -2085,7 +2074,7 @@ msgstr "Zavřít editor"
 #, kde-format
 msgctxt "@title:group"
 msgid "General"
-msgstr ""
+msgstr "Obecné"
 
 #: creator/qml/PageMetaInfo.qml:63
 #, fuzzy, kde-format
@@ -2260,9 +2249,7 @@ msgid "Page Index:"
 msgstr ""
 
 #: creator/qml/SettingsPage.qml:17
-#, fuzzy, kde-format
-#| msgctxt "Open the settings page"
-#| msgid "Settings"
+#, kde-format
 msgctxt "@title"
 msgid "Settings"
 msgstr "Nastavení"
