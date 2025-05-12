@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: peruse\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-30 00:40+0000\n"
-"PO-Revision-Date: 2025-05-09 17:16+0300\n"
+"PO-Revision-Date: 2025-05-11 19:29+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -51,7 +51,7 @@ msgstr "דן לייניר טורסתרה ג׳נסן"
 #: app/main.cpp:63
 #, kde-format
 msgid "Clear the metainfo cache and perform a full rescan."
-msgstr ""
+msgstr "לנקות את מטמון פרטי העל ולבצע סריקה מלא מחדש."
 
 #: app/main.cpp:64 creator/main.cpp:59
 #, kde-format
@@ -720,7 +720,7 @@ msgstr ""
 #: app/qml/viewers/ViewerBase.qml:147
 #, kde-format
 msgid "Compose email for: %1"
-msgstr ""
+msgstr "כתיבת דוא״ל עבור: %1"
 
 #: app/qml/WelcomePage.qml:42 creator/qml/WelcomePage.qml:42
 #, kde-format
@@ -794,7 +794,7 @@ msgctxt ""
 "@action:button add a page by finding an image on the filesystem and copying "
 "it into the book"
 msgid "Copy Image from Device"
-msgstr ""
+msgstr "העתקת תמונה ממכשיר"
 
 #: creator/qml/AddPageSheet.qml:61
 #, kde-format
@@ -802,20 +802,20 @@ msgctxt ""
 "@title:window standard file open dialog used to find a page to add to the "
 "book"
 msgid "Please Choose an Image to Add"
-msgstr ""
+msgstr "נא לבחור תמונה להוספה"
 
 #: creator/qml/AddPageSheet.qml:75
 #, kde-format
 msgctxt ""
 "@action:button add a page by creating a new image using an image editor"
 msgid "Create a New Image Using an Image Editor"
-msgstr ""
+msgstr "יצירת תמונה חדשה עם עורך תמונות"
 
 #: creator/qml/AddPageSheet.qml:83
 #, kde-format
 msgctxt "@action:button add a page by taking a photo with a camera"
 msgid "Take a Photo and Add That"
-msgstr ""
+msgstr "צילום תמונה והוספתה"
 
 #: creator/qml/Book.qml:50
 #, kde-format
@@ -982,7 +982,7 @@ msgstr ""
 #, kde-format
 msgctxt "title text for a card which informs the user what binary data is"
 msgid "Embedded Binary Data"
-msgstr ""
+msgstr "נתונים בינריים מוטמעים"
 
 #: creator/qml/BookBinaries.qml:89
 #, kde-format
@@ -1016,19 +1016,19 @@ msgctxt ""
 "Title used in the list of binary data when there is no id defined for that "
 "entry"
 msgid "Unnamed piece of data"
-msgstr ""
+msgstr "חתיכת נתונים ללא שם"
 
 #: creator/qml/BookBinaries.qml:133
 #, kde-format
 msgctxt "Label which describes which content type this entry is supposed to be"
 msgid "Content type: %1"
-msgstr ""
+msgstr "סוג תוכן: %1"
 
 #: creator/qml/BookBinaryEditor.qml:46
 #, kde-format
 msgctxt "title text for a sheet which lets the user edit a binary entry"
 msgid "Edit Binary"
-msgstr ""
+msgstr "עריכת בינרי"
 
 #: creator/qml/BookBinaryEditor.qml:52
 #, kde-format
@@ -1082,7 +1082,7 @@ msgctxt ""
 "Label used in the binary editor sheet when there is no data in the current "
 "instance"
 msgid "No data set"
-msgstr ""
+msgstr "לא הוגדרו נתונים"
 
 #: creator/qml/BookBinaryEditor.qml:89
 #, kde-format
@@ -1139,7 +1139,7 @@ msgstr "לא להוסיף"
 #, kde-format
 msgctxt "title text for the book meta information editor sheet"
 msgid "Edit Meta Information"
-msgstr ""
+msgstr "עריכת פרטי על"
 
 #: creator/qml/BookMetainfoPage.qml:49
 #, kde-format
@@ -1175,7 +1175,7 @@ msgstr "גרסת מסמך:"
 #, kde-format
 msgctxt "@title:group"
 msgid "Authors"
-msgstr ""
+msgstr "יוצרים"
 
 #: creator/qml/BookMetainfoPage.qml:132 creator/qml/BookMetainfoPage.qml:842
 #, kde-format
@@ -1253,7 +1253,7 @@ msgstr "כרך:"
 #, kde-format
 msgctxt "@label:textfield"
 msgid "New serie"
-msgstr ""
+msgstr "סדרה חדשה"
 
 #: creator/qml/BookMetainfoPage.qml:481
 #, kde-format
@@ -1289,97 +1289,97 @@ msgstr "דירוגי תוכן"
 #, kde-format
 msgctxt "placeholder text for the add content rating text entry"
 msgid "Write to add rating label."
-msgstr ""
+msgstr "יש לכתוב כדי להוסיף תווית דירוג."
 
 #: creator/qml/BookMetainfoPage.qml:665
 #, kde-format
 msgctxt "placeholder text for the add content rating system text entry"
 msgid "Write to add rating system."
-msgstr ""
+msgstr "יש לכתוב כדי להוסיף מערכת דירוג."
 
 #: creator/qml/BookMetainfoPage.qml:717
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Review title"
-msgstr ""
+msgstr "כותרת סקירה"
 
 #: creator/qml/BookMetainfoPage.qml:733
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Description"
-msgstr ""
+msgstr "תיאור"
 
 #: creator/qml/BookMetainfoPage.qml:754
 #, kde-format
 msgctxt "@title:group"
 msgid "Publisher Info"
-msgstr ""
+msgstr "פרטי הוצאה לאור"
 
 #: creator/qml/BookMetainfoPage.qml:760
 #, kde-format
 msgctxt "Label for publisher"
 msgid "Publisher:"
-msgstr ""
+msgstr "הוצאה לאור:"
 
 #: creator/qml/BookMetainfoPage.qml:761
 #, kde-format
 msgctxt "placeholder text for the publisher entry"
 msgid "Write to add publisher"
-msgstr ""
+msgstr "יש לכתוב כדי להוסיף הוצאה לאור"
 
 #: creator/qml/BookMetainfoPage.qml:774
 #, kde-format
 msgctxt "Label for publishing date"
 msgid "Publishing Date:"
-msgstr ""
+msgstr "תאריך הוצאה לאור:"
 
 #: creator/qml/BookMetainfoPage.qml:788
 #, kde-format
 msgctxt "Label for city"
 msgid "City:"
-msgstr ""
+msgstr "עיר:"
 
 #: creator/qml/BookMetainfoPage.qml:803
 #, kde-format
 msgctxt "Label for ISBN"
 msgid "ISBN:"
-msgstr ""
+msgstr "מסת״ב:"
 
 #: creator/qml/BookMetainfoPage.qml:818
 #, kde-format
 msgctxt "Label for license"
 msgid "License:"
-msgstr ""
+msgstr "רישיון:"
 
 #: creator/qml/BookMetainfoPage.qml:830
 #, kde-format
 msgctxt "@title:group"
 msgid "Document Authors"
-msgstr ""
+msgstr "יוצרי המסמך"
 
 #: creator/qml/BookMetainfoPage.qml:900
 #, kde-format
 msgctxt "@title:group"
 msgid "Document Sources"
-msgstr ""
+msgstr "מקורות המסמך"
 
 #: creator/qml/BookMetainfoPage.qml:941
 #, kde-format
 msgctxt "@label:textfield"
 msgid "New document source"
-msgstr ""
+msgstr "מקור מסמכים חדש"
 
 #: creator/qml/BookMetainfoPage.qml:960
 #, kde-format
 msgctxt "@title:group"
 msgid "Document History"
-msgstr ""
+msgstr "היסטוריית המסמך"
 
 #: creator/qml/BookMetainfoPage.qml:1001
 #, kde-format
 msgctxt "@label:textfield"
 msgid "New document info"
-msgstr ""
+msgstr "פרטי מסמך חדשים"
 
 #: creator/qml/BookMetainfoPage.qml:1020
 #, kde-format
@@ -1391,24 +1391,24 @@ msgstr ""
 #, kde-format
 msgctxt "title of the page editing sub-page for the book editor"
 msgid "Page %1"
-msgstr ""
+msgstr "עמוד %1"
 
 #: creator/qml/BookPage.qml:70
 #, kde-format
 msgid "Page %1"
-msgstr ""
+msgstr "עמוד %1"
 
 #: creator/qml/BookPage.qml:99
 #, kde-format
 msgctxt "Saves the remaining unsaved edited fields and closes the page editor"
 msgid "Save and Close Page"
-msgstr ""
+msgstr "שמירת וסגירת העמוד"
 
 #: creator/qml/BookPage.qml:111
 #, kde-format
 msgctxt "Edit the page data in detail"
 msgid "Edit Page Data"
-msgstr ""
+msgstr "עריכת נתוני העמוד"
 
 #: creator/qml/BookReferenceEditor.qml:30
 #, kde-format
@@ -1416,31 +1416,31 @@ msgctxt ""
 "title text for the reference editor page, when the reference has no language "
 "set"
 msgid "Editing %1 (default language)"
-msgstr ""
+msgstr "%1 בעריכה (שפת ברירת המחדל)"
 
 #: creator/qml/BookReferenceEditor.qml:31
 #, kde-format
 msgctxt "title text for the reference editor page"
 msgid "Editing %1 (language: %2)"
-msgstr ""
+msgstr "%1 בעריכה (שפה: %2)"
 
 #: creator/qml/BookReferenceEditor.qml:42
 #, kde-format
 msgctxt "Save the reference and close the editor"
 msgid "Save and Close Editor"
-msgstr ""
+msgstr "שמירת וסגירת העורך"
 
 #: creator/qml/BookReferenceEditor.qml:51
 #, kde-format
 msgctxt "Save the reference and keep editing"
 msgid "Save"
-msgstr ""
+msgstr "שמירה"
 
 #: creator/qml/BookReferenceEditor.qml:59
 #, kde-format
 msgctxt "Abort the changes made in the editor, and close the editor"
 msgid "Abort Changes"
-msgstr ""
+msgstr "ביטול גורף של השינויים"
 
 #: creator/qml/BookReferenceEditor.qml:66
 #, kde-format
@@ -1448,25 +1448,25 @@ msgctxt ""
 "Opens a sheet which lets the user change the name and language of the "
 "reference"
 msgid "Edit Details..."
-msgstr ""
+msgstr "עריכת פרטים…"
 
 #: creator/qml/BookReferenceEditor.qml:72
 #, kde-format
 msgctxt "Copies the selected text"
 msgid "Copy"
-msgstr ""
+msgstr "העתקה"
 
 #: creator/qml/BookReferenceEditor.qml:78
 #, kde-format
 msgctxt "Cuts the selected text"
 msgid "Cut"
-msgstr ""
+msgstr "גזירה"
 
 #: creator/qml/BookReferenceEditor.qml:84
 #, kde-format
 msgctxt "Pastes the clipboard contents into the current location"
 msgid "Paste"
-msgstr ""
+msgstr "הדבקה"
 
 #: creator/qml/BookReferenceEditor.qml:91 creator/qml/EditPageArea.qml:245
 #, kde-format
@@ -1474,19 +1474,19 @@ msgctxt ""
 "Edit the link the cursor is currently positioned on (or convert the "
 "selection to a link, or add a new one if there is no selection)"
 msgid "Edit Link"
-msgstr ""
+msgstr "עריכת קישור"
 
 #: creator/qml/BookReferenceEditor.qml:100
 #, kde-format
 msgctxt "@title:dialog"
 msgid "Edit Reference Details"
-msgstr ""
+msgstr "עריכת פרטי סימוכין"
 
 #: creator/qml/BookReferenceEditor.qml:107
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Unique identifier"
-msgstr ""
+msgstr "מזהה ייחודי"
 
 #: creator/qml/BookReferenceEditor.qml:112
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:109
@@ -1671,25 +1671,25 @@ msgstr "בחירת תיקייה"
 #, kde-format
 msgctxt "File filter cbz file"
 msgid "*.cbz"
-msgstr ""
+msgstr "‎*.cbz"
 
 #: creator/qml/CreateNewBook.qml:113
 #, kde-format
 msgctxt "@title:window folder dialog used to select the location of a new book"
 msgid "Please Choose the Location for the Book"
-msgstr ""
+msgstr "נא לבחור את מקום הספר"
 
 #: creator/qml/CreateNewBook.qml:130
 #, kde-format
 msgctxt "label text for the edit field for the cover image for the book"
 msgid "Cover Image"
-msgstr ""
+msgstr "תמונת עטיפה"
 
 #: creator/qml/CreateNewBook.qml:157
 #, kde-format
 msgctxt "placeholder message for missing cover image"
 msgid "Missing cover image"
-msgstr ""
+msgstr "תמונת עטיפה חסרה"
 
 #: creator/qml/CreateNewBook.qml:160
 #, kde-format
@@ -1725,7 +1725,7 @@ msgstr "עריכת אזור העמוד"
 #: creator/qml/EditPageArea.qml:136
 #, kde-format
 msgid "Text Rotation Guide"
-msgstr ""
+msgstr "מדריך להטיית טקסט"
 
 #: creator/qml/EditPageArea.qml:148
 #, kde-format
@@ -1900,13 +1900,13 @@ msgstr ""
 #, kde-format
 msgctxt "title text for the edit author sheet"
 msgid "Edit Author"
-msgstr ""
+msgstr "עריכת יוצר/ת"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:69
 #, kde-format
 msgctxt "help text for the edit author sheet"
 msgid "Please complete the information for this author."
-msgstr ""
+msgstr "נא להשלים את הפרטים של היוצר/ת האלה."
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:74
 #, kde-format
