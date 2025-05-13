@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: kdeorg\n"
 "X-Crowdin-Project-ID: 269464\n"
 "X-Crowdin-Language: zh-CN\n"
-"X-Crowdin-File: /kf5-trunk/messages/peruse/peruse.pot\n"
-"X-Crowdin-File-ID: 7997\n"
+"X-Crowdin-File: /kf6-trunk/messages/peruse/peruse.pot\n"
+"X-Crowdin-File-ID: 57428\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -171,36 +171,28 @@ msgid ""
 msgstr ""
 
 #: app/qml/BookInfoPage.qml:43
-#, fuzzy, kde-format
-#| msgctxt "Label for the author field"
-#| msgid "Author:"
+#, kde-format
 msgctxt "@label"
 msgid "Author(s):"
-msgstr "作者："
+msgstr ""
 
 #: app/qml/BookInfoPage.qml:44 app/qml/BookInfoPage.qml:51
-#, fuzzy, kde-format
-#| msgctxt "used for the author data in book lists if author is empty"
-#| msgid "(unknown)"
+#, kde-format
 msgctxt "@info:placeholder"
 msgid "Unknown"
-msgstr "(未知算法)"
+msgstr ""
 
 #: app/qml/BookInfoPage.qml:50
-#, fuzzy, kde-format
-#| msgctxt "Label for the publisher field"
-#| msgid "Publisher:"
+#, kde-format
 msgctxt "@label"
 msgid "Publisher:"
 msgstr "发布者："
 
 #: app/qml/BookInfoPage.qml:57
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the default annotation"
-#| msgid "Annotation"
+#, kde-format
 msgctxt "@label"
 msgid "Location:"
-msgstr "注解"
+msgstr ""
 
 #: app/qml/BookInfoPage.qml:63
 #, kde-format
@@ -209,12 +201,10 @@ msgid "File Metadata"
 msgstr ""
 
 #: app/qml/BookInfoPage.qml:70
-#, fuzzy, kde-format
-#| msgctxt "label for rating widget"
-#| msgid "Rating"
+#, kde-format
 msgctxt "@label"
 msgid "Rating:"
-msgstr "等级"
+msgstr ""
 
 #: app/qml/BookInfoPage.qml:92
 #, kde-format
@@ -222,12 +212,10 @@ msgid "Set rating to %1"
 msgstr ""
 
 #: app/qml/BookInfoPage.qml:123
-#, fuzzy, kde-format
-#| msgctxt "label for tags field"
-#| msgid "Tags"
+#, kde-format
 msgctxt "@label"
 msgid "Tags:"
-msgstr "标记"
+msgstr ""
 
 #: app/qml/BookInfoPage.qml:125 app/qml/listcomponents/BookTile.qml:291
 #, kde-format
@@ -538,12 +526,10 @@ msgid "No series found"
 msgstr ""
 
 #: app/qml/PeruseMain.qml:350
-#, fuzzy, kde-format
-#| msgctxt "Label for the series field"
-#| msgid "Series:"
+#, kde-format
 msgctxt "@title"
 msgid "Series"
-msgstr "系列："
+msgstr ""
 
 #: app/qml/PeruseMain.qml:360
 #, kde-format
@@ -552,12 +538,10 @@ msgid "No authors found"
 msgstr ""
 
 #: app/qml/PeruseMain.qml:362
-#, fuzzy, kde-format
-#| msgctxt "Label for the author field"
-#| msgid "Author:"
+#, kde-format
 msgctxt "@title"
 msgid "Authors"
-msgstr "作者："
+msgstr ""
 
 #: app/qml/PeruseMain.qml:372
 #, kde-format
@@ -566,12 +550,10 @@ msgid "No publishers found"
 msgstr ""
 
 #: app/qml/PeruseMain.qml:374
-#, fuzzy, kde-format
-#| msgctxt "Label for publisher"
-#| msgid "Publisher"
+#, kde-format
 msgctxt "@title"
 msgid "Publishers"
-msgstr "出版社"
+msgstr ""
 
 #: app/qml/PeruseMain.qml:382
 #, kde-format
@@ -597,9 +579,7 @@ msgid "Add folder"
 msgstr ""
 
 #: app/qml/Settings.qml:83
-#, fuzzy, kde-format
-#| msgctxt "remove the search folder from the list"
-#| msgid "Delete"
+#, kde-format
 msgctxt "@action:button"
 msgid "Delete"
 msgstr "删除"
@@ -789,9 +769,7 @@ msgid "Create Jump"
 msgstr ""
 
 #: creator/qml/AddPageSheet.qml:43
-#, fuzzy, kde-format
-#| msgctxt "adds a new page at the end of the book"
-#| msgid "Add Page"
+#, kde-format
 msgctxt "@title"
 msgid "Add Page"
 msgstr "添加页面"
@@ -1155,30 +1133,22 @@ msgid "Edit Meta Information"
 msgstr ""
 
 #: creator/qml/BookMetainfoPage.qml:49
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the book title"
-#| msgid "Title"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Title"
 msgstr "名称"
 
 #: creator/qml/BookMetainfoPage.qml:62
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the default annotation"
-#| msgid "Annotation"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Annotation"
 msgstr "注解"
 
 #: creator/qml/BookMetainfoPage.qml:75
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "Switch to the listing page showing items grouped by keywords, characters "
-#| "or genres"
-#| msgid "Keywords"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Keywords"
-msgstr "关键词"
+msgstr "关键字"
 
 #: creator/qml/BookMetainfoPage.qml:76
 #, kde-format
@@ -1193,12 +1163,10 @@ msgid "Document Version:"
 msgstr ""
 
 #: creator/qml/BookMetainfoPage.qml:120
-#, fuzzy, kde-format
-#| msgctxt "Label for the author field"
-#| msgid "Author:"
+#, kde-format
 msgctxt "@title:group"
 msgid "Authors"
-msgstr "作者："
+msgstr ""
 
 #: creator/qml/BookMetainfoPage.qml:132 creator/qml/BookMetainfoPage.qml:842
 #, kde-format
@@ -1231,9 +1199,7 @@ msgid "Add new author"
 msgstr ""
 
 #: creator/qml/BookMetainfoPage.qml:197
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the genre list"
-#| msgid "Genres"
+#, kde-format
 msgctxt "@title:group"
 msgid "Genres"
 msgstr "流派"
@@ -1245,9 +1211,7 @@ msgid "Remove genre"
 msgstr ""
 
 #: creator/qml/BookMetainfoPage.qml:294
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the character list"
-#| msgid "Characters"
+#, kde-format
 msgctxt "@title:group"
 msgid "Characters"
 msgstr "字符"
@@ -1259,9 +1223,7 @@ msgid "Write to add new character"
 msgstr ""
 
 #: creator/qml/BookMetainfoPage.qml:363
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the sequence list"
-#| msgid "Sequence"
+#, kde-format
 msgctxt "@title:group"
 msgid "Sequence"
 msgstr "序列"
@@ -1297,12 +1259,10 @@ msgid "Reference:"
 msgstr ""
 
 #: creator/qml/BookMetainfoPage.qml:533 creator/qml/BookMetainfoPage.qml:609
-#, fuzzy, kde-format
-#| msgctxt "label for the last name field"
-#| msgid "Last name:"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Database name:"
-msgstr "姓："
+msgstr ""
 
 #: creator/qml/BookMetainfoPage.qml:550
 #, kde-format
@@ -1311,12 +1271,10 @@ msgid "Reference type:"
 msgstr ""
 
 #: creator/qml/BookMetainfoPage.qml:628
-#, fuzzy, kde-format
-#| msgctxt "Open the settings page"
-#| msgid "Settings"
+#, kde-format
 msgctxt "@title:group"
 msgid "Content Ratings"
-msgstr "设置"
+msgstr ""
 
 #: creator/qml/BookMetainfoPage.qml:652
 #, kde-format
@@ -1343,12 +1301,10 @@ msgid "Description"
 msgstr ""
 
 #: creator/qml/BookMetainfoPage.qml:754
-#, fuzzy, kde-format
-#| msgctxt "Label for publisher"
-#| msgid "Publisher"
+#, kde-format
 msgctxt "@title:group"
 msgid "Publisher Info"
-msgstr "出版社"
+msgstr ""
 
 #: creator/qml/BookMetainfoPage.qml:760
 #, kde-format
@@ -1417,12 +1373,10 @@ msgid "New document info"
 msgstr ""
 
 #: creator/qml/BookMetainfoPage.qml:1020
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the page background color"
-#| msgid "Background Color"
+#, kde-format
 msgctxt "@title:group"
 msgid "General Page Background Color"
-msgstr "背景色"
+msgstr ""
 
 #: creator/qml/BookPage.qml:32
 #, kde-format
@@ -1527,9 +1481,7 @@ msgstr ""
 
 #: creator/qml/BookReferenceEditor.qml:112
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:109
-#, fuzzy, kde-format
-#| msgctxt "placeholder text for the language field"
-#| msgid "Language"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Language"
 msgstr "语言"
@@ -1698,12 +1650,10 @@ msgid "Folder"
 msgstr "文件夹"
 
 #: creator/qml/CreateNewBook.qml:99
-#, fuzzy, kde-format
-#| msgctxt "@title:window dialogue used to add a new search folder"
-#| msgid "Select a Folder"
+#, kde-format
 msgctxt "@action:button"
 msgid "Select Folder"
-msgstr "选择文件夹"
+msgstr ""
 
 #: creator/qml/CreateNewBook.qml:111
 #, kde-format
@@ -1730,12 +1680,10 @@ msgid "Missing cover image"
 msgstr ""
 
 #: creator/qml/CreateNewBook.qml:160
-#, fuzzy, kde-format
-#| msgctxt "@title:window dialogue used to add a new search folder"
-#| msgid "Select a Folder"
+#, kde-format
 msgctxt "@action:button"
 msgid "Select image"
-msgstr "选择文件夹"
+msgstr ""
 
 #: creator/qml/CreateNewBook.qml:184
 #, kde-format
@@ -1949,60 +1897,46 @@ msgid "Please complete the information for this author."
 msgstr ""
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:74
-#, fuzzy, kde-format
-#| msgctxt "placeholder text for the last name field"
-#| msgid "Last Name"
+#, kde-format
 msgctxt "@title:group"
 msgid "Name"
-msgstr "姓"
+msgstr ""
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:80
-#, fuzzy, kde-format
-#| msgctxt "label for the first name field"
-#| msgid "First name:"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "First name"
-msgstr "名："
+msgstr ""
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:85
-#, fuzzy, kde-format
-#| msgctxt "placeholder text for the middle name field"
-#| msgid "Middle Name"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Middle name"
-msgstr "中间名"
+msgstr ""
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:90
-#, fuzzy, kde-format
-#| msgctxt "label for the last name field"
-#| msgid "Last name:"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Last name"
-msgstr "姓："
+msgstr ""
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:95
-#, fuzzy, kde-format
-#| msgctxt "placeholder text for the nickname field"
-#| msgid "Nickname"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Nickname"
 msgstr "昵称"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:104
-#, fuzzy, kde-format
-#| msgctxt "label for the activity field"
-#| msgid "Activity:"
+#, kde-format
 msgctxt "@label:listbox"
 msgid "Activity"
-msgstr "活动:"
+msgstr ""
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:114
-#, fuzzy, kde-format
-#| msgctxt "label for the email field"
-#| msgid "Email addresses:"
+#, kde-format
 msgctxt "@title:group"
 msgid "Homepage addresses"
-msgstr "电子邮件地址："
+msgstr ""
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:152
 #, kde-format
@@ -2011,20 +1945,16 @@ msgid "New Homepage"
 msgstr ""
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:171
-#, fuzzy, kde-format
-#| msgctxt "label for the email field"
-#| msgid "Email addresses:"
+#, kde-format
 msgctxt "@title:group"
 msgid "Email addresses"
-msgstr "电子邮件地址："
+msgstr ""
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:209
-#, fuzzy, kde-format
-#| msgctxt "label for the email field"
-#| msgid "Email addresses:"
+#, kde-format
 msgctxt "placeholder text for the email field"
 msgid "New Email address"
-msgstr "电子邮件地址："
+msgstr ""
 
 #: creator/qml/PageMetaInfo.qml:42
 #, kde-format
@@ -2046,12 +1976,10 @@ msgid "General"
 msgstr ""
 
 #: creator/qml/PageMetaInfo.qml:63
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the book title"
-#| msgid "Title"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Title:"
-msgstr "名称"
+msgstr ""
 
 #: creator/qml/PageMetaInfo.qml:72
 #, kde-format
@@ -2066,17 +1994,13 @@ msgid "Transition:"
 msgstr ""
 
 #: creator/qml/PageMetaInfo.qml:95
-#, fuzzy, kde-format
-#| msgctxt "Label from frame background color."
-#| msgid "Background Color:"
+#, kde-format
 msgctxt "@label:chooser"
 msgid "Background Color:"
 msgstr "背景颜色："
 
 #: creator/qml/PageMetaInfo.qml:102
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the page frames"
-#| msgid "Frames"
+#, kde-format
 msgctxt "@title:group"
 msgid "Frames"
 msgstr "框架"
@@ -2168,9 +2092,7 @@ msgid "Text Area %1"
 msgstr ""
 
 #: creator/qml/PageMetaInfo.qml:255
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the page jumps"
-#| msgid "Jumps"
+#, kde-format
 msgctxt "@title:group"
 msgid "Jumps"
 msgstr "跳转"
@@ -2212,9 +2134,7 @@ msgid "Page Index:"
 msgstr ""
 
 #: creator/qml/SettingsPage.qml:17
-#, fuzzy, kde-format
-#| msgctxt "Open the settings page"
-#| msgid "Settings"
+#, kde-format
 msgctxt "@title"
 msgid "Settings"
 msgstr "设置"
@@ -2307,51 +2227,3 @@ msgid ""
 "Successfully replaced old archive with the new archive - now loading the new "
 "archive..."
 msgstr ""
-
-#~ msgctxt "Closes the book information drawer"
-#~ msgid "Close"
-#~ msgstr "关闭文档"
-
-#~ msgctxt "Label for the filename field"
-#~ msgid "Filename:"
-#~ msgstr "文件名："
-
-#~ msgctxt "Navigate one page back"
-#~ msgid "Back"
-#~ msgstr "背面"
-
-#~ msgctxt "Title of the page with books grouped by author"
-#~ msgid "Group by Author"
-#~ msgstr "按作者分组"
-
-#~ msgctxt "label text for the edit field for the keyword list"
-#~ msgid "Keywords"
-#~ msgstr "关键字"
-
-#~ msgctxt "label text for right to left checkbox."
-#~ msgid "Right to left."
-#~ msgstr "从右到左."
-
-#~ msgctxt "label for the language field"
-#~ msgid "Language:"
-#~ msgstr "语言："
-
-#~ msgctxt "placeholder text for the first name field"
-#~ msgid "First Name"
-#~ msgstr "名"
-
-#~ msgctxt "label for the nickname field"
-#~ msgid "Nickname:"
-#~ msgstr "昵称："
-
-#~ msgctxt "label text for the edit field for the page title"
-#~ msgid "Title"
-#~ msgstr "标题"
-
-#~ msgctxt "Label from textlayer background color."
-#~ msgid "Background Color:"
-#~ msgstr "背景色："
-
-#~ msgctxt "title of the settings page"
-#~ msgid "Settings"
-#~ msgstr "设置"
