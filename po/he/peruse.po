@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: peruse\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-30 00:40+0000\n"
-"PO-Revision-Date: 2025-05-11 19:29+0300\n"
+"PO-Revision-Date: 2025-05-13 20:58+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -695,6 +695,8 @@ msgid ""
 "check the details of the link below, to make sure that you really do want to "
 "open it, or just close this sheet."
 msgstr ""
+"הקישור שלחצת עליו מצביע למקום מחוץ לספר. נא לבדוק את הפרטים של הקישור להלן, "
+"כדי לוודא שאכן התכוונת לפתוח אותו או פשוט לסגור את הגיליון הזה."
 
 #: app/qml/viewers/ViewerBase.qml:141
 #, kde-format
@@ -786,7 +788,7 @@ msgctxt "help text for the add page sheet"
 msgid ""
 "Please select the method you want to add the new page. No changes will be "
 "made outside of the project by performing these actions."
-msgstr ""
+msgstr "נא לבחור את השיטה הר"
 
 #: creator/qml/AddPageSheet.qml:55
 #, kde-format
@@ -1121,7 +1123,7 @@ msgctxt ""
 msgid ""
 "The file you are attempting to add, %1, is more than 10MiB. Are you sure you "
 "want to add it to the book?"
-msgstr ""
+msgstr "גודל הקובץ %1 שניסית להוסיף הוא מעל ל־10 MiB. להוסיף אותו לספר?"
 
 #: creator/qml/BookBinaryEditor.qml:141
 #, kde-format
@@ -1385,7 +1387,7 @@ msgstr "פרטי מסמך חדשים"
 #, kde-format
 msgctxt "@title:group"
 msgid "General Page Background Color"
-msgstr ""
+msgstr "צבע רקע עמוד כללי"
 
 #: creator/qml/BookPage.qml:32
 #, kde-format
@@ -1522,11 +1524,13 @@ msgid ""
 "<p>Enter the body of your reference document here.</p>\n"
 "<p>This is what links look like: <a href=\"destination\">Some Link</a></p>"
 msgstr ""
+"<p>נא למלא את גוף מסמך הסימוכין שלך להלן.</p>\n"
+"<p>ככה נראים קישורים: <a href=\"יעד\">קישור כלשהו</a></p>"
 
 #: creator/qml/BookReferences.qml:92
 #, kde-format
 msgid "There is no reference information in your book yet"
-msgstr ""
+msgstr "אין עדיין פרטי סימוכין בספר שלך"
 
 #: creator/qml/BookReferences.qml:93
 #, kde-format
