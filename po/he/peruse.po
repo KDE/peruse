@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: peruse\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-30 00:40+0000\n"
-"PO-Revision-Date: 2025-05-13 20:58+0300\n"
+"PO-Revision-Date: 2025-05-19 09:50+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Lokalize 25.04.0\n"
+"X-Generator: Lokalize 25.04.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -623,6 +623,8 @@ msgid ""
 "Sorry, no books.\n"
 "This is unusual, and likely means your internet is down, or the store is."
 msgstr ""
+"אין ספרים, סליחה.\n"
+"זה מצב חריג וכנראה שמעיד על כך שהאינטרנט או החנות לא עובדים."
 
 #: app/qml/viewers/cbr.qml:91 creator/qml/BookPage.qml:80
 #, kde-format
@@ -646,6 +648,10 @@ msgid ""
 "about it. Please report a bug, and make the book available to us, so we can "
 "try and work out how to handle this!"
 msgstr ""
+"הקישור שניסית להפעיל מפנה למשהו שאנחנו לא באמת יודעים מה לעשות איתו. המצב "
+"הזה מעיד על כך שהספר שמופיע לא תואם למפרט תסדיר ספרי הקומיקס המתקדם, אך "
+"עדיין נשמח להכיר את המימוש הזה. נא לדווח לנו על תקלה ולהנגיש לנו את הספר כדי "
+"שנוכל לנסות ולמצוא איך לטפל בזה!"
 
 #: app/qml/viewers/ImageBrowser.qml:93
 #, kde-format
@@ -654,6 +660,8 @@ msgid ""
 "something with the ID %1 but didn't locate anything. This is likely an error "
 "in the book, and the author would probably like to know about it."
 msgstr ""
+"נראה שהקישור שהפעלת לא מפנה לשום מקום. ניסינו למצוא משהו עם המזהה %1 אבל לא "
+"איתרנו שום דבר. זאת, כפי הנראה, בעיה בספר, והיוצרים ודאי ישמחו לדעת על כך."
 
 #: app/qml/viewers/ImageBrowser.qml:501
 #, kde-format
@@ -705,6 +713,9 @@ msgid ""
 "\n"
 "%2"
 msgstr ""
+"כתיבת דוא״ל אל %1, עקב הקישור הבא:\n"
+"\n"
+"%2"
 
 #: app/qml/viewers/ViewerBase.qml:143
 #, kde-format
@@ -713,11 +724,14 @@ msgid ""
 "\n"
 "%3"
 msgstr ""
+"כתיבת דוא״ל אל %1 עם הנושא „%2” והתוכן הבא:\n"
+"\n"
+"%3"
 
 #: app/qml/viewers/ViewerBase.qml:145
 #, kde-format
 msgid "Compose an email for %1 with the subject \"%2\""
-msgstr ""
+msgstr "כתיבת דוא״ל אל %1 עם הנושא „%2”"
 
 #: app/qml/viewers/ViewerBase.qml:147
 #, kde-format
@@ -936,7 +950,7 @@ msgstr "סימוכין בשם קובץ בלבד"
 #, kde-format
 msgctxt "What happens if we have an unexpected reference amount"
 msgid "%1 might be referenced, but in some way we've not accounted for"
-msgstr ""
+msgstr "אפשר להפנות אל %1, אך בדרך חריגה מהתקינה שידועה לנו"
 
 #: creator/qml/BookBasics.qml:198
 #, kde-format
@@ -978,7 +992,7 @@ msgctxt ""
 "title text for a card which informs the user there are no binary data "
 "entries, and what those are"
 msgid "No Embedded Binary Data Entries"
-msgstr ""
+msgstr "אין רשומות נתונים בינריים מוטמעות"
 
 #: creator/qml/BookBinaries.qml:81
 #, kde-format
@@ -1011,6 +1025,9 @@ msgid ""
 "data to that entry from some existing file on your system. That data will be "
 "imported into your book, and leaves the external file otherwise untouched."
 msgstr ""
+"אפשר להוסיף רשומות נתונים בינריים חדשות על ידי יצירת רשומה חדשה ואז להוסיף "
+"את הנתונים לרשומה הזאת מקובץ קיים במערכת שלך. הנתונים האלו ייובאו לספר שלך "
+"וישאירו את הקובץ החיצוני ללא שום שינוי."
 
 #: creator/qml/BookBinaries.qml:99
 #, kde-format
@@ -1048,7 +1065,7 @@ msgstr "מזהה"
 #, kde-format
 msgctxt "Placeholder text for the binary ID input field"
 msgid "Enter the name of your binary here (often a filename)"
-msgstr ""
+msgstr "נא למלא את שם הבינרי שלך כאן (בדרך כלל שם קובץ)"
 
 #: creator/qml/BookBinaryEditor.qml:69
 #, kde-format
@@ -1060,7 +1077,7 @@ msgstr "סוג תוכן"
 #, kde-format
 msgctxt "Placeholder text for the binary content type input field"
 msgid "Enter the content type of your binary here (aka mimetype)"
-msgstr ""
+msgstr "נא למלא את סוג תוכן המקטע הבינרי שלך כאן (כלומר סוג תוכן/mime)"
 
 #: creator/qml/BookBinaryEditor.qml:75
 #, kde-format
@@ -1165,7 +1182,7 @@ msgstr "מילות מפתח"
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "Write a comma separated list of keywords."
-msgstr ""
+msgstr "נא לכתוב רשימה של מילות מפתח מופרדות בפסיקים."
 
 #: creator/qml/BookMetainfoPage.qml:92
 #, kde-format
@@ -1540,6 +1557,9 @@ msgid ""
 "as well as links to both internal things (other references or one of the "
 "pieces of binary data), or to an external resource, such as a website."
 msgstr ""
+"הפניות הן אוספים של פסקאות טקסט, שאפשר למלא בהן עיצוב פשוט (מוגדל, מודגש "
+"ועוד הגדרות פריסה פשוטות כאלה), לרבות קישורים לדברים פנימיים (הפניות אחרות "
+"או אחד מהחלקים הבינריים), או למשאב חיצוני כגון אתר."
 
 #: creator/qml/BookStylesheet.qml:44
 #, kde-format
@@ -1569,13 +1589,13 @@ msgstr "רכיב"
 #, kde-format
 msgctxt "@option:check"
 msgid "Apply to style elements which request an inverted scheme"
-msgstr ""
+msgstr "החלה על רכיבי סגנון שמבקשים ערכת צבע הפוכה"
 
 #: creator/qml/BookStylesheet.qml:110
 #, kde-format
 msgctxt "@option:check"
 msgid "Sub-element selector type"
-msgstr ""
+msgstr "סוג בורר תת־רכיב"
 
 #: creator/qml/BookStylesheet.qml:111
 #, kde-format
@@ -1898,7 +1918,7 @@ msgstr "נא לבחור ספר לפתיחה"
 #, kde-format
 msgctxt "The file type filter for comic book archives"
 msgid "Comic Book Archive zip format %1"
-msgstr ""
+msgstr "תסדיר ארכיון ספרי קומיקס ב־zip‏ %1"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:54
 #, kde-format
