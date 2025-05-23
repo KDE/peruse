@@ -1,31 +1,32 @@
-# Copyright (C) YEAR This file is copyright:
+# Copyright (C) 2025 This file is copyright:
 # This file is distributed under the same license as the peruse package.
 #
 # pan93412 <pan93412@gmail.com>, 2019.
+# SPDX-FileCopyrightText: 2025 Kisaragi Hiu <mail@kisaragi-hiu.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: peruse\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-30 00:40+0000\n"
-"PO-Revision-Date: 2019-12-15 22:23+0800\n"
-"Last-Translator: pan93412 <pan93412@gmail.com>\n"
-"Language-Team: Chinese <zh-l10n@lists.linux.org.tw>\n"
+"PO-Revision-Date: 2025-05-22 14:58+0900\n"
+"Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
+"Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 19.12.0\n"
+"X-Generator: Lokalize 25.07.70\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "pan93412, Kisaragi Hiu"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "pan93412@gmail.com, mail@kisaragi-hiu.com"
 
 #: app/main.cpp:48
 #, kde-format
@@ -38,10 +39,9 @@ msgid "Comic Book Reader by KDE"
 msgstr "KDE 出品的漫畫書閱讀工具"
 
 #: app/main.cpp:52 creator/main.cpp:48
-#, fuzzy, kde-format
-#| msgid "© 2016-2019 KDE"
+#, kde-format
 msgid "© 2016-2021 KDE"
-msgstr "© 2016-2019 KDE"
+msgstr "© 2016-2021 KDE"
 
 #: app/main.cpp:53 creator/main.cpp:49
 #, kde-format
@@ -51,24 +51,24 @@ msgstr "Dan Leinir Turthra Jensen"
 #: app/main.cpp:63
 #, kde-format
 msgid "Clear the metainfo cache and perform a full rescan."
-msgstr ""
+msgstr "清除中繼資料快取並進行完整掃描。"
 
 #: app/main.cpp:64 creator/main.cpp:59
 #, kde-format
 msgid "Open file in peruse."
-msgstr ""
+msgstr "用 Peruse 開啟檔案。"
 
 #: app/qml/Book.qml:182
 #, kde-format
 msgctxt "Enter full screen mode on a touch-based device"
 msgid "Go Full Screen"
-msgstr ""
+msgstr "進入全螢幕"
 
 #: app/qml/Book.qml:182
 #, kde-format
 msgctxt "Exit full sceen mode on a touch based device"
 msgid "Exit Full Screen"
-msgstr ""
+msgstr "離開全螢幕"
 
 #: app/qml/Book.qml:188
 #, kde-format
@@ -76,14 +76,14 @@ msgctxt ""
 "Action used on touch devices to close the currently open book and return to "
 "whatever page was most recently shown"
 msgid "Close Book"
-msgstr ""
+msgstr "關閉書本"
 
 #: app/qml/Book.qml:197
 #, kde-format
 msgctxt ""
 "Top level entry leading to a submenu with options for the book display"
 msgid "View Options"
-msgstr ""
+msgstr "檢視選項"
 
 #: app/qml/Book.qml:200
 #, kde-format
@@ -91,57 +91,57 @@ msgctxt ""
 "Header title for the section in which the direction the book will be "
 "navigated can be picked"
 msgid "Reading Direction"
-msgstr ""
+msgstr "閱讀方向"
 
 #: app/qml/Book.qml:203
 #, kde-format
 msgctxt ""
 "Title for the option which will make the book navigate from left to right"
 msgid "Left to Right"
-msgstr ""
+msgstr "左到右"
 
 #: app/qml/Book.qml:210
 #, kde-format
 msgctxt ""
 "Title for the option which will make the book navigate from right to left"
 msgid "Right to Left"
-msgstr ""
+msgstr "右到左"
 
 #: app/qml/Book.qml:240
 #, kde-format
 msgctxt "Go to the previous frame on the current page"
 msgid "Previous Frame"
-msgstr ""
+msgstr "上一個框架"
 
 #: app/qml/Book.qml:247
 #, kde-format
 msgctxt "Go to the next frame on the current page"
 msgid "Next Frame"
-msgstr ""
+msgstr "下一個框架"
 
 #: app/qml/Book.qml:254
 #, kde-format
 msgctxt "Go to the previous page in the book"
 msgid "Previous Page"
-msgstr ""
+msgstr "上一頁"
 
 #: app/qml/Book.qml:261
 #, kde-format
 msgctxt "Go to the next page in the book"
 msgid "Next Page"
-msgstr ""
+msgstr "下一頁"
 
 #: app/qml/Book.qml:268
 #, kde-format
 msgctxt "Enter full screen mode on a non-touch-based device"
 msgid "Go Full Screen"
-msgstr ""
+msgstr "進入全螢幕"
 
 #: app/qml/Book.qml:268
 #, kde-format
 msgctxt "Exit full sceen mode on a non-touch based device"
 msgid "Exit Full Screen"
-msgstr ""
+msgstr "離開全螢幕"
 
 #: app/qml/Book.qml:275
 #, kde-format
@@ -149,7 +149,7 @@ msgctxt ""
 "Action used on non-touch devices to close the currently open book and return "
 "to whatever page was most recently shown"
 msgid "Close Book"
-msgstr ""
+msgstr "關閉書本"
 
 #: app/qml/Book.qml:382
 #, kde-format
@@ -158,7 +158,7 @@ msgctxt ""
 "reader at all (usually when Okular's qml components are not installed for "
 "some reason)"
 msgid "Failed to load the reader component"
-msgstr ""
+msgstr "載入閱讀工具部件失敗"
 
 #: app/qml/Book.qml:383
 #, kde-format
@@ -169,66 +169,66 @@ msgctxt ""
 msgid ""
 "This is generally caused by broken packaging. Contact whomever you got this "
 "package from and inform them of this error."
-msgstr ""
+msgstr "這通常代表軟體包打包有問題。請與您取得此軟體的來源聯繫告知有這個問題。"
 
 #: app/qml/BookInfoPage.qml:43
 #, kde-format
 msgctxt "@label"
 msgid "Author(s):"
-msgstr ""
+msgstr "作者："
 
 #: app/qml/BookInfoPage.qml:44 app/qml/BookInfoPage.qml:51
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "Unknown"
-msgstr ""
+msgstr "未知"
 
 #: app/qml/BookInfoPage.qml:50
 #, kde-format
 msgctxt "@label"
 msgid "Publisher:"
-msgstr ""
+msgstr "出版社："
 
 #: app/qml/BookInfoPage.qml:57
 #, kde-format
 msgctxt "@label"
 msgid "Location:"
-msgstr ""
+msgstr "位置："
 
 #: app/qml/BookInfoPage.qml:63
 #, kde-format
 msgctxt "@title:group"
 msgid "File Metadata"
-msgstr ""
+msgstr "檔案中繼資料"
 
 #: app/qml/BookInfoPage.qml:70
 #, kde-format
 msgctxt "@label"
 msgid "Rating:"
-msgstr ""
+msgstr "評分："
 
 #: app/qml/BookInfoPage.qml:92
 #, kde-format
 msgid "Set rating to %1"
-msgstr ""
+msgstr "設定評分為 %1"
 
 #: app/qml/BookInfoPage.qml:123
 #, kde-format
 msgctxt "@label"
 msgid "Tags:"
-msgstr ""
+msgstr "標籤："
 
 #: app/qml/BookInfoPage.qml:125 app/qml/listcomponents/BookTile.qml:291
 #, kde-format
 msgctxt "Placeholder tag field"
 msgid "(No tags)"
-msgstr ""
+msgstr "（沒有標籤）"
 
 #: app/qml/BooksByTitlePage.qml:22
 #, kde-format
 msgctxt "Title of the page with books grouped by the title start letters"
 msgid "Group by Title"
-msgstr ""
+msgstr "依標題分組"
 
 #: app/qml/BooksByTitlePage.qml:76 app/qml/Bookshelf.qml:131
 #: app/qml/CategoryPage.qml:82
@@ -237,44 +237,44 @@ msgctxt ""
 "Placeholder Text when there are no comics in the library that match the "
 "filter"
 msgid "No matches"
-msgstr ""
+msgstr "無相符"
 
 #: app/qml/BooksByTitlePage.qml:76
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "No authors available"
-msgstr ""
+msgstr "沒有可用作者"
 
 #: app/qml/Bookshelf.qml:88
 #, kde-format
 msgctxt "search in the list of books (not inside the books)"
 msgid "Search Books"
-msgstr ""
+msgstr "搜尋書本"
 
 #: app/qml/Bookshelf.qml:95
 #, kde-format
 msgctxt "placeholder text for the search field"
 msgid "Tap and type to search"
-msgstr ""
+msgstr "輕點並輸入來搜尋"
 
 #: app/qml/Bookshelf.qml:155
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Open"
-msgstr ""
+msgstr "開啟"
 
 #: app/qml/Bookshelf.qml:163
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Details"
-msgstr ""
+msgstr "詳細資料"
 
 #: app/qml/CategoryPage.qml:65
 #, kde-format
 msgctxt "@info"
 msgid "%1 book"
 msgid_plural "%1 books"
-msgstr[0] ""
+msgstr[0] "%1 本書"
 
 #: app/qml/FileFinder.qml:90
 #, kde-format
@@ -282,104 +282,104 @@ msgctxt ""
 "A fake folder item which if activated will cause the folder list to navigate "
 "up through the folder structure by one step"
 msgid "(go up one level)"
-msgstr ""
+msgstr "（往上一層）"
 
 #: app/qml/listcomponents/BookTile.qml:150
 #, kde-format
 msgctxt "Label for authors"
 msgid "Author(s)"
-msgstr ""
+msgstr "作者"
 
 #: app/qml/listcomponents/BookTile.qml:173
 #, kde-format
 msgctxt "Label for publisher"
 msgid "Publisher"
-msgstr ""
+msgstr "出版社"
 
 #: app/qml/listcomponents/BookTile.qml:213
 #, kde-format
 msgctxt "label for rating widget"
 msgid "Rating"
-msgstr ""
+msgstr "評分"
 
 #: app/qml/listcomponents/BookTile.qml:275
 #, kde-format
 msgctxt "label for tags field"
 msgid "Tags"
-msgstr ""
+msgstr "標籤"
 
 #: app/qml/listcomponents/BookTile.qml:312
 #, kde-format
 msgctxt "label for comment field"
 msgid "Comment"
-msgstr ""
+msgstr "備註"
 
 #: app/qml/listcomponents/BookTile.qml:328
 #, kde-format
 msgctxt "Placeholder comment field"
 msgid "(No comment)"
-msgstr ""
+msgstr "（沒有備註）"
 
 #: app/qml/listcomponents/BookTile.qml:348
 #, kde-format
 msgctxt ""
 "Placeholder text for the book description field when no description is set"
 msgid "(no description available for this book)"
-msgstr ""
+msgstr "（這本書沒有可用的描述）"
 
 #: app/qml/listcomponents/BookTile.qml:373
 #, kde-format
 msgctxt "Spawn inline dialog box to confirm permanent removal of this book"
 msgid "Delete from Device"
-msgstr ""
+msgstr "從裝置刪除"
 
 #: app/qml/listcomponents/BookTile.qml:401
 #, kde-format
 msgctxt "Dialog text for delete book dialog"
 msgid "Are you sure you want to delete this from your device?"
-msgstr ""
+msgstr "您確定要從裝置刪除它嗎？"
 
 #: app/qml/listcomponents/BookTile.qml:411
 #, kde-format
 msgctxt "Confirmation button for book delete dialog"
 msgid "Yes, Really Delete"
-msgstr ""
+msgstr "是的，確定要刪除"
 
 #: app/qml/listcomponents/BookTile.qml:422
 #, kde-format
 msgctxt "Cancellation button or book delete dialog"
 msgid "No, Cancel Delete"
-msgstr ""
+msgstr "否，不要刪除"
 
 #: app/qml/listcomponents/BookTileTall.qml:93
 #, kde-format
 msgctxt "A percentage of progress"
 msgid "%1%"
-msgstr ""
+msgstr "%1%"
 
 #: app/qml/listcomponents/BookTileTall.qml:93
 #, kde-format
 msgctxt "should be keep short, inside a label. Will be in uppercase"
 msgid "New"
-msgstr ""
+msgstr "新增"
 
 #: app/qml/listcomponents/BookTileTall.qml:126
 #, kde-format
 msgctxt "The last item in a list of author names when there is more than one"
 msgid ", and %1"
-msgstr ""
+msgstr "，和 %1"
 
 #: app/qml/listcomponents/BookTileTall.qml:129
 #, kde-format
 msgctxt "An item in a list of authors (but not the last)"
 msgid ", %1"
-msgstr ""
+msgstr "、%1"
 
 #: app/qml/listcomponents/BookTileTall.qml:138
 #, kde-format
 msgctxt "Author name used when there are no known authors for a book"
 msgid "Unknown author"
-msgstr ""
+msgstr "未知的作者"
 
 #: app/qml/listcomponents/CategoryTile.qml:40
 #, kde-format
@@ -392,7 +392,7 @@ msgctxt ""
 "@title:window standard file open dialog used to open a book not in the "
 "collection"
 msgid "Please Choose a Comic to Open"
-msgstr ""
+msgstr "請選擇要開啟的漫畫書"
 
 #: app/qml/MobileMain.qml:42
 #, kde-format
@@ -400,47 +400,45 @@ msgctxt ""
 "Title of a page which lets you open comics not in your collection by using a "
 "standard touch-friendly dig-down style filesystem browser"
 msgid "Open Comics not in Your Collection"
-msgstr ""
+msgstr "開啟不在您的收藏當中的漫畫書"
 
 #: app/qml/PeruseContextDrawer.qml:38
 #, kde-format
 msgid "Actions"
-msgstr ""
+msgstr "動作"
 
 #: app/qml/PeruseContextDrawer.qml:177
 #, kde-format
 msgid "Back"
-msgstr ""
+msgstr "返回"
 
 #: app/qml/PeruseMain.qml:56
-#, fuzzy, kde-format
-#| msgid "Comic Book Reader by KDE"
+#, kde-format
 msgctxt "@title:window the generic descriptive title of the application"
 msgid "Comic Book Reader"
-msgstr "KDE 出品的漫畫書閱讀工具"
+msgstr "漫畫書閱讀工具"
 
 #: app/qml/PeruseMain.qml:153
-#, fuzzy, kde-format
-#| msgid "Peruse Reader"
+#, kde-format
 msgid "Peruse"
-msgstr "Peruse 閱讀工具"
+msgstr "Peruse"
 
 #: app/qml/PeruseMain.qml:165 creator/qml/Main.qml:130
 #, kde-format
 msgid "Show intro page"
-msgstr ""
+msgstr "顯示初始頁面"
 
 #: app/qml/PeruseMain.qml:203
 #, kde-format
 msgctxt "Switch to the listing page showing the most recently read books"
 msgid "Home"
-msgstr ""
+msgstr "首頁"
 
 #: app/qml/PeruseMain.qml:214
 #, kde-format
 msgctxt "Switch to the listing page showing the most recently discovered books"
 msgid "Recently Added Books"
-msgstr ""
+msgstr "最近新增的書本"
 
 #: app/qml/PeruseMain.qml:220 creator/qml/Main.qml:176
 #, kde-format
@@ -448,7 +446,7 @@ msgctxt ""
 "Open a book from somewhere on disk (uses the open dialog, or a drilldown on "
 "touch devices)"
 msgid "Open Other..."
-msgstr ""
+msgstr "開啟另一本…"
 
 #: app/qml/PeruseMain.qml:227
 #, kde-format
@@ -456,31 +454,31 @@ msgctxt ""
 "Heading for switching to listing page showing items grouped by some "
 "properties"
 msgid "Group By"
-msgstr ""
+msgstr "分組方式"
 
 #: app/qml/PeruseMain.qml:230
 #, kde-format
 msgctxt "Switch to the listing page showing items grouped by title"
 msgid "Title"
-msgstr ""
+msgstr "標題"
 
 #: app/qml/PeruseMain.qml:236
 #, kde-format
 msgctxt "Switch to the listing page showing items grouped by author"
 msgid "Author"
-msgstr ""
+msgstr "作者"
 
 #: app/qml/PeruseMain.qml:242
 #, kde-format
 msgctxt "Switch to the listing page showing items grouped by series"
 msgid "Series"
-msgstr ""
+msgstr "系列"
 
 #: app/qml/PeruseMain.qml:248
 #, kde-format
 msgctxt "Switch to the listing page showing items grouped by publisher"
 msgid "Publisher"
-msgstr ""
+msgstr "出版社"
 
 #: app/qml/PeruseMain.qml:254
 #, kde-format
@@ -488,121 +486,121 @@ msgctxt ""
 "Switch to the listing page showing items grouped by keywords, characters or "
 "genres"
 msgid "Keywords"
-msgstr ""
+msgstr "關鍵字"
 
 #: app/qml/PeruseMain.qml:260
 #, kde-format
 msgctxt ""
 "Switch to the listing page showing items grouped by their filesystem folder"
 msgid "Folder"
-msgstr ""
+msgstr "資料夾"
 
 #: app/qml/PeruseMain.qml:276
 #, kde-format
 msgctxt "shown with a throbber when searching for books on the device"
 msgid "Please wait while we find your books..."
-msgstr ""
+msgstr "請稍候，等我們尋找書本…"
 
 #: app/qml/PeruseMain.qml:286 creator/qml/Main.qml:246
 #, kde-format
 msgctxt "Open the settings page"
 msgid "Settings"
-msgstr ""
+msgstr "設定"
 
 #: app/qml/PeruseMain.qml:293 creator/qml/Main.qml:253
 #, kde-format
 msgctxt "Open the about page"
 msgid "About"
-msgstr ""
+msgstr "關於"
 
 #: app/qml/PeruseMain.qml:334
 #, kde-format
 msgctxt ""
 "Title of the page with all books ordered by which was added most recently"
 msgid "Recently Added Books"
-msgstr ""
+msgstr "最近新增的書本"
 
 #: app/qml/PeruseMain.qml:348
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "No series found"
-msgstr ""
+msgstr "沒有找到系列"
 
 #: app/qml/PeruseMain.qml:350
 #, kde-format
 msgctxt "@title"
 msgid "Series"
-msgstr ""
+msgstr "系列"
 
 #: app/qml/PeruseMain.qml:360
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "No authors found"
-msgstr ""
+msgstr "沒有找到作者"
 
 #: app/qml/PeruseMain.qml:362
 #, kde-format
 msgctxt "@title"
 msgid "Authors"
-msgstr ""
+msgstr "作者群"
 
 #: app/qml/PeruseMain.qml:372
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "No publishers found"
-msgstr ""
+msgstr "沒有找到出版社"
 
 #: app/qml/PeruseMain.qml:374
 #, kde-format
 msgctxt "@title"
 msgid "Publishers"
-msgstr ""
+msgstr "出版社"
 
 #: app/qml/PeruseMain.qml:382
 #, kde-format
 msgctxt "Title of the page with books grouped by keywords, character or genres"
 msgid "Group by Keywords, Characters and Genres"
-msgstr ""
+msgstr "依關鍵字、角色及風格分組"
 
 #: app/qml/PeruseMain.qml:392
 #, kde-format
 msgctxt "Title of the page with books grouped by what folder they are in"
 msgid "Filter by Folder"
-msgstr ""
+msgstr "依資料夾過濾"
 
 #: app/qml/Settings.qml:45
 #, kde-format
 msgctxt "title of the settings page"
 msgid "Configure the indexed folders"
-msgstr ""
+msgstr "設定索引的資料夾"
 
 #: app/qml/Settings.qml:50
 #, kde-format
 msgid "Add folder"
-msgstr ""
+msgstr "新增資料夾"
 
 #: app/qml/Settings.qml:83
 #, kde-format
 msgctxt "@action:button"
 msgid "Delete"
-msgstr ""
+msgstr "刪除"
 
 #: app/qml/Settings.qml:96
 #, kde-format
 msgid "There are no folder currently indexed."
-msgstr ""
+msgstr "沒有已索引的資料夾。"
 
 #: app/qml/Settings.qml:106
 #, kde-format
 msgctxt "@title:window Dialogue used to add a new search folder"
 msgid "Select a folder"
-msgstr ""
+msgstr "選擇資料夾"
 
 #: app/qml/Settings.qml:123
 #, kde-format
 msgctxt "@title:window dialogue used to add a new search folder"
 msgid "Select a Folder"
-msgstr ""
+msgstr "選擇資料夾"
 
 #: app/qml/Store.qml:37
 #, kde-format
@@ -626,13 +624,13 @@ msgstr ""
 msgctxt ""
 "A submenu which allows the user to chose between translations of the book"
 msgid "Translations"
-msgstr ""
+msgstr "翻譯"
 
 #: app/qml/viewers/cbr.qml:94 creator/qml/BookPage.qml:83
 #, kde-format
 msgctxt "The option used to show no translation should be used"
 msgid "No Translation"
-msgstr ""
+msgstr "沒有翻譯"
 
 #: app/qml/viewers/ImageBrowser.qml:89
 #, kde-format
@@ -677,13 +675,13 @@ msgstr ""
 msgctxt ""
 "Title for a dialog offering the user to open a link to some external resource"
 msgid "Open External Link?"
-msgstr ""
+msgstr "開啟外部連結？"
 
 #: app/qml/viewers/ViewerBase.qml:106
 #, kde-format
 msgctxt "label for a button which activates an external link"
 msgid "Open Link"
-msgstr ""
+msgstr "開啟連結"
 
 #: app/qml/viewers/ViewerBase.qml:118
 #, kde-format
@@ -723,59 +721,59 @@ msgstr ""
 #, kde-format
 msgctxt "title of the welcome page"
 msgid "Welcome"
-msgstr ""
+msgstr "歡迎"
 
 #: app/qml/WelcomePage.qml:84
 #, kde-format
 msgctxt "title of list of recently opened books"
 msgid "Continue Reading"
-msgstr ""
+msgstr "繼續閱讀"
 
 #: app/qml/WelcomePage.qml:86
 #, kde-format
 msgctxt "title of list of recently discovered books"
 msgid "Recently Added"
-msgstr ""
+msgstr "最近新增"
 
 #: creator/main.cpp:44 creator/qml/Main.qml:118
 #, kde-format
 msgid "Peruse Creator"
-msgstr ""
+msgstr "Peruse 建立工具"
 
 #: creator/main.cpp:46
 #, kde-format
 msgid "Comic Book Creator by KDE"
-msgstr ""
+msgstr "來自 KDE 的漫畫書建立工具"
 
 #: creator/qml/AddPageArea.qml:62
 #, kde-format
 msgctxt "title text for the add page area sheet"
 msgid "Add Page Area"
-msgstr ""
+msgstr "新增頁面區域"
 
 #: creator/qml/AddPageArea.qml:85
 #, kde-format
 msgctxt "Button which creates a new frame, and closes the dialog"
 msgid "Create Frame"
-msgstr ""
+msgstr "建立框架"
 
 #: creator/qml/AddPageArea.qml:99
 #, kde-format
 msgctxt "Button which creates new textarea, and closes the dialog"
 msgid "Create Textarea"
-msgstr ""
+msgstr "建立文字區域"
 
 #: creator/qml/AddPageArea.qml:113
 #, kde-format
 msgctxt "Button which creates a new jump, and closes the dialog"
 msgid "Create Jump"
-msgstr ""
+msgstr "建立跳躍點"
 
 #: creator/qml/AddPageSheet.qml:43
 #, kde-format
 msgctxt "@title"
 msgid "Add Page"
-msgstr ""
+msgstr "新增頁面"
 
 #: creator/qml/AddPageSheet.qml:46
 #, kde-format
@@ -791,7 +789,7 @@ msgctxt ""
 "@action:button add a page by finding an image on the filesystem and copying "
 "it into the book"
 msgid "Copy Image from Device"
-msgstr ""
+msgstr "從裝置複製影像"
 
 #: creator/qml/AddPageSheet.qml:61
 #, kde-format
@@ -812,7 +810,7 @@ msgstr ""
 #, kde-format
 msgctxt "@action:button add a page by taking a photo with a camera"
 msgid "Take a Photo and Add That"
-msgstr ""
+msgstr "拍照並加入"
 
 #: creator/qml/Book.qml:50
 #, kde-format
@@ -826,49 +824,49 @@ msgstr ""
 #, kde-format
 msgctxt "Saves the book to a file on disk"
 msgid "Save Book"
-msgstr ""
+msgstr "儲存書本"
 
 #: creator/qml/Book.qml:66
 #, kde-format
 msgctxt "adds a new page at the end of the book"
 msgid "Add Page"
-msgstr ""
+msgstr "新增頁面"
 
 #: creator/qml/Book.qml:104 creator/qml/BookReferences.qml:66
 #, kde-format
 msgctxt "swap the position of this page with the previous one"
 msgid "Move Up"
-msgstr ""
+msgstr "上移"
 
 #: creator/qml/Book.qml:111 creator/qml/BookReferences.qml:74
 #, kde-format
 msgctxt "swap the position of this page with the next one"
 msgid "Move Down"
-msgstr ""
+msgstr "下移"
 
 #: creator/qml/Book.qml:118
 #, kde-format
 msgctxt "remove the page from the book"
 msgid "Delete Page"
-msgstr ""
+msgstr "刪除頁面"
 
 #: creator/qml/Book.qml:123
 #, kde-format
 msgctxt "add a page to the book after this one"
 msgid "Add Page After This"
-msgstr ""
+msgstr "新增頁面在此頁面後方"
 
 #: creator/qml/Book.qml:128
 #, kde-format
 msgctxt "Edit page data such as title, frames, etc."
 msgid "Edit Page"
-msgstr ""
+msgstr "編輯頁面"
 
 #: creator/qml/Book.qml:189
 #, kde-format
 msgctxt "Empty page list placeholder message"
 msgid "Your book is empty"
-msgstr ""
+msgstr "您的書本是空的"
 
 #: creator/qml/Book.qml:190
 #, kde-format
@@ -886,20 +884,20 @@ msgstr ""
 msgctxt ""
 "The descriptive label for a label which displays the title of the book"
 msgid "Book Title:"
-msgstr ""
+msgstr "書名："
 
 #: creator/qml/BookBasics.qml:89
 #, kde-format
 msgctxt ""
 "The descriptive label for a link which shows the number of pages in the book"
 msgid "Pages:"
-msgstr ""
+msgstr "頁面數："
 
 #: creator/qml/BookBasics.qml:90
 #, kde-format
 msgctxt "A link which when clicked shows the book pages editor"
 msgid "%1 total pages"
-msgstr ""
+msgstr "總共 %1 頁"
 
 #: creator/qml/BookBasics.qml:97
 #, kde-format
@@ -907,25 +905,25 @@ msgctxt ""
 "Header for a list which shows every file contained in the archive which "
 "makes up this book"
 msgid "Every File In The Book:"
-msgstr ""
+msgstr "書本中的所有檔案"
 
 #: creator/qml/BookBasics.qml:184
 #, kde-format
 msgctxt "If a file is not referenced at all"
 msgid "Unreferenced file"
-msgstr ""
+msgstr "未參照的檔案"
 
 #: creator/qml/BookBasics.qml:186
 #, kde-format
 msgctxt "If a file is referenced by its full path"
 msgid "Referenced by full path"
-msgstr ""
+msgstr "依完整路徑參照"
 
 #: creator/qml/BookBasics.qml:188
 #, kde-format
 msgctxt "If a file is referenced partially, describe that"
 msgid "Referenced by filename only"
-msgstr ""
+msgstr "僅依檔案名稱參照"
 
 #: creator/qml/BookBasics.qml:190
 #, kde-format
@@ -938,14 +936,14 @@ msgstr ""
 msgctxt ""
 "action which marks the file to be included next time the book is saved"
 msgid "Include File"
-msgstr ""
+msgstr "包含檔案"
 
 #: creator/qml/BookBasics.qml:199
 #, kde-format
 msgctxt ""
 "action which marks the file to NOT be included next time the book is saved"
 msgid "Mark File For Deletion"
-msgstr ""
+msgstr "標記檔案要刪除"
 
 #: creator/qml/BookBinaries.qml:38
 #, kde-format
@@ -953,19 +951,19 @@ msgctxt ""
 "title of the page which lets the user manage chunks of binary data embedded "
 "in the book"
 msgid "Embedded Data"
-msgstr ""
+msgstr "內嵌資料"
 
 #: creator/qml/BookBinaries.qml:49
 #, kde-format
 msgctxt "Lets the user pick a file to append as a binary item"
 msgid "Add File..."
-msgstr ""
+msgstr "加入檔案"
 
 #: creator/qml/BookBinaries.qml:52 creator/qml/BookBinaryEditor.qml:97
 #, kde-format
 msgctxt "The initial identifier used for a newly created binary data element"
 msgid "Unnamed Binary"
-msgstr ""
+msgstr "未命名的二進制元素"
 
 #: creator/qml/BookBinaries.qml:80
 #, kde-format
@@ -973,13 +971,13 @@ msgctxt ""
 "title text for a card which informs the user there are no binary data "
 "entries, and what those are"
 msgid "No Embedded Binary Data Entries"
-msgstr ""
+msgstr "沒有內嵌的二進制資料項目"
 
 #: creator/qml/BookBinaries.qml:81
 #, kde-format
 msgctxt "title text for a card which informs the user what binary data is"
 msgid "Embedded Binary Data"
-msgstr ""
+msgstr "內嵌的二進制資料"
 
 #: creator/qml/BookBinaries.qml:89
 #, kde-format
@@ -992,6 +990,8 @@ msgid ""
 "file on your system. That data will be imported into your book, and leaves "
 "the external file otherwise untouched."
 msgstr ""
+"您的書本還沒有任何內嵌資料。您可以建立新項目，然後從您的系統上加入檔案的資料"
+"到該項目當中。加入的資料會匯入到書本內，之後的變更不會再影響到該外部檔案。"
 
 #: creator/qml/BookBinaries.qml:90
 #, kde-format
@@ -1003,6 +1003,8 @@ msgid ""
 "data to that entry from some existing file on your system. That data will be "
 "imported into your book, and leaves the external file otherwise untouched."
 msgstr ""
+"要建立新的二進制資料項目，請建立新項目，然後從您的系統上加入檔案的資料到該項"
+"目當中。加入的資料會匯入到書本內，之後的變更不會再影響到該外部檔案。"
 
 #: creator/qml/BookBinaries.qml:99
 #, kde-format
@@ -1010,13 +1012,13 @@ msgctxt ""
 "Title used in the list of binary data when there is no id defined for that "
 "entry"
 msgid "Unnamed piece of data"
-msgstr ""
+msgstr "未命名的資料"
 
 #: creator/qml/BookBinaries.qml:133
 #, kde-format
 msgctxt "Label which describes which content type this entry is supposed to be"
 msgid "Content type: %1"
-msgstr ""
+msgstr "內容型態：%1"
 
 #: creator/qml/BookBinaryEditor.qml:46
 #, kde-format
@@ -1028,13 +1030,13 @@ msgstr ""
 #, kde-format
 msgctxt "label for a button which updates the binary with the new details"
 msgid "OK"
-msgstr ""
+msgstr "確定"
 
 #: creator/qml/BookBinaryEditor.qml:64
 #, kde-format
 msgctxt "Label for the binary ID input field"
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: creator/qml/BookBinaryEditor.qml:65
 #, kde-format
@@ -1046,7 +1048,7 @@ msgstr ""
 #, kde-format
 msgctxt "Label for the binary content type input field"
 msgid "Content Type"
-msgstr ""
+msgstr "內容型態"
 
 #: creator/qml/BookBinaryEditor.qml:71
 #, kde-format
@@ -1060,7 +1062,7 @@ msgctxt ""
 "Label for the field which describes the data currently held by the current "
 "instance"
 msgid "Current Data"
-msgstr ""
+msgstr "目前資料"
 
 #: creator/qml/BookBinaryEditor.qml:81
 #, kde-format
@@ -1068,7 +1070,7 @@ msgctxt ""
 "Label used in the binary editor sheet to describe the size of the binary "
 "data contained in the current instance"
 msgid "%1 bytes"
-msgstr ""
+msgstr "%1 位元組"
 
 #: creator/qml/BookBinaryEditor.qml:83
 #, kde-format
@@ -1076,7 +1078,7 @@ msgctxt ""
 "Label used in the binary editor sheet when there is no data in the current "
 "instance"
 msgid "No data set"
-msgstr ""
+msgstr "未設定資料"
 
 #: creator/qml/BookBinaryEditor.qml:89
 #, kde-format
@@ -1084,20 +1086,20 @@ msgctxt ""
 "Label for the button in the binary editor sheet which lets the user replace "
 "the data contained in the current instance"
 msgid "Import Data..."
-msgstr ""
+msgstr "匯入資料..."
 
 #: creator/qml/BookBinaryEditor.qml:106
 #, kde-format
 msgctxt ""
 "@title:window standard file open dialog used to add file data into the book"
 msgid "Pick A File To Add"
-msgstr ""
+msgstr "選擇要加入的檔案"
 
 #: creator/qml/BookBinaryEditor.qml:109 creator/qml/Main.qml:336
 #, kde-format
 msgctxt "The file type filter for showing all files"
 msgid "All files %1"
-msgstr ""
+msgstr "所有檔案 %1"
 
 #: creator/qml/BookBinaryEditor.qml:137
 #, kde-format
@@ -1105,7 +1107,7 @@ msgctxt ""
 "@title:window a message box used to ask the user if they really want to add "
 "a very large file to their book"
 msgid "Very Large File"
-msgstr ""
+msgstr "大檔案"
 
 #: creator/qml/BookBinaryEditor.qml:138
 #, kde-format
@@ -1115,19 +1117,19 @@ msgctxt ""
 msgid ""
 "The file you are attempting to add, %1, is more than 10MiB. Are you sure you "
 "want to add it to the book?"
-msgstr ""
+msgstr "您正在嘗試加入的檔案 %1 大於 10MiB。您確定要將它加入書本裡嗎？"
 
 #: creator/qml/BookBinaryEditor.qml:141
 #, kde-format
 msgctxt "The option used to let the user agree to the proposed action"
 msgid "Yes, Add Large File"
-msgstr ""
+msgstr "是的，加入大檔案"
 
 #: creator/qml/BookBinaryEditor.qml:145
 #, kde-format
 msgctxt "The option used to let the user abort the proposed action"
 msgid "Don't Add"
-msgstr ""
+msgstr "不要加入"
 
 #: creator/qml/BookMetainfoPage.qml:26
 #, kde-format
@@ -1139,157 +1141,157 @@ msgstr ""
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Title"
-msgstr ""
+msgstr "標題"
 
 #: creator/qml/BookMetainfoPage.qml:62
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Annotation"
-msgstr ""
+msgstr "註記"
 
 #: creator/qml/BookMetainfoPage.qml:75
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Keywords"
-msgstr ""
+msgstr "關鍵字"
 
 #: creator/qml/BookMetainfoPage.qml:76
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "Write a comma separated list of keywords."
-msgstr ""
+msgstr "輸入以逗號分隔的關鍵字列表。"
 
 #: creator/qml/BookMetainfoPage.qml:92
 #, kde-format
 msgctxt "Label for the document version spinbox"
 msgid "Document Version:"
-msgstr ""
+msgstr "文件版本："
 
 #: creator/qml/BookMetainfoPage.qml:120
 #, kde-format
 msgctxt "@title:group"
 msgid "Authors"
-msgstr ""
+msgstr "作者群"
 
 #: creator/qml/BookMetainfoPage.qml:132 creator/qml/BookMetainfoPage.qml:842
 #, kde-format
 msgctxt "The text used in place of an author's name if one has not been set"
 msgid "(unnamed)"
-msgstr ""
+msgstr "（未命名）"
 
 #: creator/qml/BookMetainfoPage.qml:139
 #, kde-format
 msgctxt "@action:button"
 msgid "Edit author"
-msgstr ""
+msgstr "編輯作者"
 
 #: creator/qml/BookMetainfoPage.qml:151
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove author"
-msgstr ""
+msgstr "移除作者"
 
 #: creator/qml/BookMetainfoPage.qml:176 creator/qml/BookMetainfoPage.qml:880
 #, kde-format
 msgctxt "@label:textfield"
 msgid "New author (nickname)"
-msgstr ""
+msgstr "新作者（暱稱）"
 
 #: creator/qml/BookMetainfoPage.qml:189
 #, kde-format
 msgctxt "@action:button"
 msgid "Add new author"
-msgstr ""
+msgstr "加入新作者"
 
 #: creator/qml/BookMetainfoPage.qml:197
 #, kde-format
 msgctxt "@title:group"
 msgid "Genres"
-msgstr ""
+msgstr "風格"
 
 #: creator/qml/BookMetainfoPage.qml:223
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove genre"
-msgstr ""
+msgstr "移除風格"
 
 #: creator/qml/BookMetainfoPage.qml:294
 #, kde-format
 msgctxt "@title:group"
 msgid "Characters"
-msgstr ""
+msgstr "角色"
 
 #: creator/qml/BookMetainfoPage.qml:339
 #, kde-format
 msgctxt "placeholder text for the add new character text entry"
 msgid "Write to add new character"
-msgstr ""
+msgstr "輸入來加入新角色"
 
 #: creator/qml/BookMetainfoPage.qml:363
 #, kde-format
 msgctxt "@title:group"
 msgid "Sequence"
-msgstr ""
+msgstr "序列"
 
 #: creator/qml/BookMetainfoPage.qml:414
 #, kde-format
 msgctxt "Label for sequence number"
 msgid "Number:"
-msgstr ""
+msgstr "編號："
 
 #: creator/qml/BookMetainfoPage.qml:434
 #, kde-format
 msgctxt "Label for sequence volume"
 msgid "Volume:"
-msgstr ""
+msgstr "冊數："
 
 #: creator/qml/BookMetainfoPage.qml:462
 #, kde-format
 msgctxt "@label:textfield"
 msgid "New serie"
-msgstr ""
+msgstr "新增系列"
 
 #: creator/qml/BookMetainfoPage.qml:481
 #, kde-format
 msgctxt "@title:group"
 msgid "Database References"
-msgstr ""
+msgstr "資料庫參考"
 
 #: creator/qml/BookMetainfoPage.qml:507 creator/qml/BookMetainfoPage.qml:595
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Reference:"
-msgstr ""
+msgstr "參考："
 
 #: creator/qml/BookMetainfoPage.qml:533 creator/qml/BookMetainfoPage.qml:609
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Database name:"
-msgstr ""
+msgstr "資料庫名稱："
 
 #: creator/qml/BookMetainfoPage.qml:550
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Reference type:"
-msgstr ""
+msgstr "參考類型"
 
 #: creator/qml/BookMetainfoPage.qml:628
 #, kde-format
 msgctxt "@title:group"
 msgid "Content Ratings"
-msgstr ""
+msgstr "內容評級"
 
 #: creator/qml/BookMetainfoPage.qml:652
 #, kde-format
 msgctxt "placeholder text for the add content rating text entry"
 msgid "Write to add rating label."
-msgstr ""
+msgstr "輸入來加入評分標記。"
 
 #: creator/qml/BookMetainfoPage.qml:665
 #, kde-format
 msgctxt "placeholder text for the add content rating system text entry"
 msgid "Write to add rating system."
-msgstr ""
+msgstr "輸入來加入評分系統。"
 
 #: creator/qml/BookMetainfoPage.qml:717
 #, kde-format
@@ -1301,108 +1303,108 @@ msgstr ""
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Description"
-msgstr ""
+msgstr "描述"
 
 #: creator/qml/BookMetainfoPage.qml:754
 #, kde-format
 msgctxt "@title:group"
 msgid "Publisher Info"
-msgstr ""
+msgstr "出版社資訊："
 
 #: creator/qml/BookMetainfoPage.qml:760
 #, kde-format
 msgctxt "Label for publisher"
 msgid "Publisher:"
-msgstr ""
+msgstr "出版社："
 
 #: creator/qml/BookMetainfoPage.qml:761
 #, kde-format
 msgctxt "placeholder text for the publisher entry"
 msgid "Write to add publisher"
-msgstr ""
+msgstr "輸入來加入出版社"
 
 #: creator/qml/BookMetainfoPage.qml:774
 #, kde-format
 msgctxt "Label for publishing date"
 msgid "Publishing Date:"
-msgstr ""
+msgstr "出版日期："
 
 #: creator/qml/BookMetainfoPage.qml:788
 #, kde-format
 msgctxt "Label for city"
 msgid "City:"
-msgstr ""
+msgstr "城市："
 
 #: creator/qml/BookMetainfoPage.qml:803
 #, kde-format
 msgctxt "Label for ISBN"
 msgid "ISBN:"
-msgstr ""
+msgstr "ISBN："
 
 #: creator/qml/BookMetainfoPage.qml:818
 #, kde-format
 msgctxt "Label for license"
 msgid "License:"
-msgstr ""
+msgstr "授權條款："
 
 #: creator/qml/BookMetainfoPage.qml:830
 #, kde-format
 msgctxt "@title:group"
 msgid "Document Authors"
-msgstr ""
+msgstr "文件作者"
 
 #: creator/qml/BookMetainfoPage.qml:900
 #, kde-format
 msgctxt "@title:group"
 msgid "Document Sources"
-msgstr ""
+msgstr "文件來源"
 
 #: creator/qml/BookMetainfoPage.qml:941
 #, kde-format
 msgctxt "@label:textfield"
 msgid "New document source"
-msgstr ""
+msgstr "新文件來源"
 
 #: creator/qml/BookMetainfoPage.qml:960
 #, kde-format
 msgctxt "@title:group"
 msgid "Document History"
-msgstr ""
+msgstr "文件歷史紀錄"
 
 #: creator/qml/BookMetainfoPage.qml:1001
 #, kde-format
 msgctxt "@label:textfield"
 msgid "New document info"
-msgstr ""
+msgstr "新文件資訊"
 
 #: creator/qml/BookMetainfoPage.qml:1020
 #, kde-format
 msgctxt "@title:group"
 msgid "General Page Background Color"
-msgstr ""
+msgstr "一般頁面背景色"
 
 #: creator/qml/BookPage.qml:32
 #, kde-format
 msgctxt "title of the page editing sub-page for the book editor"
 msgid "Page %1"
-msgstr ""
+msgstr "第 %1 頁"
 
 #: creator/qml/BookPage.qml:70
 #, kde-format
 msgid "Page %1"
-msgstr ""
+msgstr "第 %1 頁"
 
 #: creator/qml/BookPage.qml:99
 #, kde-format
 msgctxt "Saves the remaining unsaved edited fields and closes the page editor"
 msgid "Save and Close Page"
-msgstr ""
+msgstr "儲存並關閉頁面"
 
 #: creator/qml/BookPage.qml:111
 #, kde-format
 msgctxt "Edit the page data in detail"
 msgid "Edit Page Data"
-msgstr ""
+msgstr "編輯頁面資訊"
 
 #: creator/qml/BookReferenceEditor.qml:30
 #, kde-format
@@ -1410,31 +1412,31 @@ msgctxt ""
 "title text for the reference editor page, when the reference has no language "
 "set"
 msgid "Editing %1 (default language)"
-msgstr ""
+msgstr "正在編輯 %1（預設語言）"
 
 #: creator/qml/BookReferenceEditor.qml:31
 #, kde-format
 msgctxt "title text for the reference editor page"
 msgid "Editing %1 (language: %2)"
-msgstr ""
+msgstr "正在編輯 %1（語言：%2）"
 
 #: creator/qml/BookReferenceEditor.qml:42
 #, kde-format
 msgctxt "Save the reference and close the editor"
 msgid "Save and Close Editor"
-msgstr ""
+msgstr "儲存並關閉編輯器"
 
 #: creator/qml/BookReferenceEditor.qml:51
 #, kde-format
 msgctxt "Save the reference and keep editing"
 msgid "Save"
-msgstr ""
+msgstr "儲存"
 
 #: creator/qml/BookReferenceEditor.qml:59
 #, kde-format
 msgctxt "Abort the changes made in the editor, and close the editor"
 msgid "Abort Changes"
-msgstr ""
+msgstr "中止變更"
 
 #: creator/qml/BookReferenceEditor.qml:66
 #, kde-format
@@ -1442,25 +1444,25 @@ msgctxt ""
 "Opens a sheet which lets the user change the name and language of the "
 "reference"
 msgid "Edit Details..."
-msgstr ""
+msgstr "編輯詳細資訊..."
 
 #: creator/qml/BookReferenceEditor.qml:72
 #, kde-format
 msgctxt "Copies the selected text"
 msgid "Copy"
-msgstr ""
+msgstr "複製"
 
 #: creator/qml/BookReferenceEditor.qml:78
 #, kde-format
 msgctxt "Cuts the selected text"
 msgid "Cut"
-msgstr ""
+msgstr "剪下"
 
 #: creator/qml/BookReferenceEditor.qml:84
 #, kde-format
 msgctxt "Pastes the clipboard contents into the current location"
 msgid "Paste"
-msgstr ""
+msgstr "貼上"
 
 #: creator/qml/BookReferenceEditor.qml:91 creator/qml/EditPageArea.qml:245
 #, kde-format
@@ -1468,32 +1470,32 @@ msgctxt ""
 "Edit the link the cursor is currently positioned on (or convert the "
 "selection to a link, or add a new one if there is no selection)"
 msgid "Edit Link"
-msgstr ""
+msgstr "編輯連結"
 
 #: creator/qml/BookReferenceEditor.qml:100
 #, kde-format
 msgctxt "@title:dialog"
 msgid "Edit Reference Details"
-msgstr ""
+msgstr "編輯參考資訊"
 
 #: creator/qml/BookReferenceEditor.qml:107
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Unique identifier"
-msgstr ""
+msgstr "獨特 ID"
 
 #: creator/qml/BookReferenceEditor.qml:112
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:109
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Language"
-msgstr ""
+msgstr "語言"
 
 #: creator/qml/BookReferences.qml:19
 #, kde-format
 msgctxt "title text for the references page"
 msgid "References"
-msgstr ""
+msgstr "參考"
 
 #: creator/qml/BookReferences.qml:24
 #, kde-format
@@ -1501,13 +1503,13 @@ msgctxt ""
 "Action which when triggered adds a new reference to the book and opens the "
 "reference editor"
 msgid "New Reference"
-msgstr ""
+msgstr "新增參考"
 
 #: creator/qml/BookReferences.qml:28
 #, kde-format
 msgctxt "The default ID for new references"
 msgid "Unnamed Reference"
-msgstr ""
+msgstr "未命名參考"
 
 #: creator/qml/BookReferences.qml:29
 #, kde-format
@@ -1535,25 +1537,25 @@ msgstr ""
 #, kde-format
 msgctxt "title of the page which lets the user manage the book's stylesheet"
 msgid "Stylesheet"
-msgstr ""
+msgstr "樣式表"
 
 #: creator/qml/BookStylesheet.qml:55
 #, kde-format
 msgctxt "Creates a new, empty stylesheet entry and lets the user edit it"
 msgid "Add Style..."
-msgstr ""
+msgstr "新增樣式…"
 
 #: creator/qml/BookStylesheet.qml:84
 #, kde-format
 msgctxt "@title:dialog"
 msgid "Edit Style"
-msgstr ""
+msgstr "編輯樣式"
 
 #: creator/qml/BookStylesheet.qml:99
 #, kde-format
 msgctxt "Label for the style element input field"
 msgid "Element"
-msgstr ""
+msgstr "元素"
 
 #: creator/qml/BookStylesheet.qml:105
 #, kde-format
@@ -1570,13 +1572,13 @@ msgstr ""
 #: creator/qml/BookStylesheet.qml:111
 #, kde-format
 msgid "None"
-msgstr ""
+msgstr "無"
 
 #: creator/qml/BookStylesheet.qml:116
 #, kde-format
 msgctxt "@option:check"
 msgid "Color"
-msgstr ""
+msgstr "色彩"
 
 #: creator/qml/BookStylesheet.qml:139
 #, kde-format
@@ -1610,7 +1612,7 @@ msgstr ""
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "No Styling Information"
-msgstr ""
+msgstr "沒有樣式資訊"
 
 #: creator/qml/BookStylesheet.qml:155
 #, kde-format
@@ -1620,98 +1622,100 @@ msgid ""
 "entry from some existing file on your system. That data will be imported "
 "into your book, and leaves the external file otherwise untouched."
 msgstr ""
+"要加入二進制資料，請建立新項目，然後從您的系統上加入檔案的資料到該項目當中。"
+"加入的資料會匯入到書本內，之後的變更不會再影響到該外部檔案。"
 
 #: creator/qml/CreateNewBook.qml:44
 #, kde-format
 msgctxt "title of the new book creation page"
 msgid "Create New Book"
-msgstr ""
+msgstr "建立新書本"
 
 #: creator/qml/CreateNewBook.qml:47
 #, kde-format
 msgctxt "Accept button which will create a new book"
 msgid "Create Book"
-msgstr ""
+msgstr "建立書本"
 
 #: creator/qml/CreateNewBook.qml:65
 #, kde-format
 msgctxt "label text for the edit field for the book title"
 msgid "Title"
-msgstr ""
+msgstr "標題"
 
 #: creator/qml/CreateNewBook.qml:66
 #, kde-format
 msgctxt "Default name for new books"
 msgid "Untitled"
-msgstr ""
+msgstr "未命名"
 
 #: creator/qml/CreateNewBook.qml:74
 #, kde-format
 msgctxt ""
 "label text for the edit field for the file system location for the book"
 msgid "Folder"
-msgstr ""
+msgstr "資料夾"
 
 #: creator/qml/CreateNewBook.qml:99
 #, kde-format
 msgctxt "@action:button"
 msgid "Select Folder"
-msgstr ""
+msgstr "選擇資料夾"
 
 #: creator/qml/CreateNewBook.qml:111
 #, kde-format
 msgctxt "File filter cbz file"
 msgid "*.cbz"
-msgstr ""
+msgstr "*.cbz"
 
 #: creator/qml/CreateNewBook.qml:113
 #, kde-format
 msgctxt "@title:window folder dialog used to select the location of a new book"
 msgid "Please Choose the Location for the Book"
-msgstr ""
+msgstr "請選擇書本的位置"
 
 #: creator/qml/CreateNewBook.qml:130
 #, kde-format
 msgctxt "label text for the edit field for the cover image for the book"
 msgid "Cover Image"
-msgstr ""
+msgstr "封面影像"
 
 #: creator/qml/CreateNewBook.qml:157
 #, kde-format
 msgctxt "placeholder message for missing cover image"
 msgid "Missing cover image"
-msgstr ""
+msgstr "缺乏封面影像"
 
 #: creator/qml/CreateNewBook.qml:160
 #, kde-format
 msgctxt "@action:button"
 msgid "Select image"
-msgstr ""
+msgstr "選擇影像"
 
 #: creator/qml/CreateNewBook.qml:184
 #, kde-format
 msgctxt ""
 "@title:window file dialog used to select the cover image for a new book"
 msgid "Please Choose Your Cover Image"
-msgstr ""
+msgstr "請選擇封面影像"
 
 #: creator/qml/CreateNewBook.qml:187
 #, kde-format
 msgctxt "File filter option for displaying only jpeg files"
 msgid "JPEG images %1"
-msgstr ""
+msgstr "JPEG 影像 %1"
 
 #: creator/qml/CreateNewBook.qml:188
 #, kde-format
 msgctxt "File filter option for displaying all files"
 msgid "All files %1"
-msgstr ""
+msgstr "所有檔案 %1"
 
 #: creator/qml/EditPageArea.qml:115
 #, kde-format
 msgctxt "title text for the edit page area sheet"
 msgid "Edit Page Area"
-msgstr ""
+msgstr "編輯頁面區域"
 
 #: creator/qml/EditPageArea.qml:136
 #, kde-format
@@ -1722,31 +1726,31 @@ msgstr ""
 #, kde-format
 msgctxt "Label for the ID input field"
 msgid "ID:"
-msgstr ""
+msgstr "ID："
 
 #: creator/qml/EditPageArea.qml:149
 #, kde-format
 msgctxt "Placeholder text for the page area ID text-field"
 msgid "Write to add an ID"
-msgstr ""
+msgstr "輸入來加入 ID"
 
 #: creator/qml/EditPageArea.qml:153 creator/qml/EditPageArea.qml:184
 #, kde-format
 msgctxt "Label for background color button"
 msgid "Background color:"
-msgstr ""
+msgstr "背景色彩："
 
 #: creator/qml/EditPageArea.qml:175 creator/qml/EditPageArea.qml:208
 #, kde-format
 msgctxt "@title color choosing dialog"
 msgid "Choose the background color for this frame"
-msgstr ""
+msgstr "選擇此框架的背景色"
 
 #: creator/qml/EditPageArea.qml:218
 #, kde-format
 msgctxt "Option for making the background of a text area transparent"
 msgid "Transparent"
-msgstr ""
+msgstr "透明"
 
 #: creator/qml/EditPageArea.qml:223
 #, kde-format
@@ -1754,31 +1758,31 @@ msgctxt ""
 "Option for making the background of a text area cause what is behind it to "
 "be inverted"
 msgid "Inverted"
-msgstr ""
+msgstr "反轉色彩"
 
 #: creator/qml/EditPageArea.qml:227
 #, kde-format
 msgctxt "Label for text rotation slider"
 msgid "Text rotation:"
-msgstr ""
+msgstr "文字旋轉："
 
 #: creator/qml/EditPageArea.qml:235
 #, kde-format
 msgctxt "Label for text type combobox"
 msgid "Type:"
-msgstr ""
+msgstr "類型："
 
 #: creator/qml/EditPageArea.qml:254
 #, kde-format
 msgctxt "Label for the text area body field"
 msgid "Textarea Body:"
-msgstr ""
+msgstr "文字區域內文："
 
 #: creator/qml/EditPageArea.qml:299
 #, kde-format
 msgctxt "Label for a text input box in which to input a hyperlink destination"
 msgid "Jump Destination:"
-msgstr ""
+msgstr "跳躍點目標："
 
 #: creator/qml/EditPageArea.qml:301
 #, kde-format
@@ -1786,7 +1790,7 @@ msgctxt ""
 "Placeholder text for a text input box in which to input a hyperlink "
 "destination"
 msgid "Enter the jump destination here"
-msgstr ""
+msgstr "在此輸入跳躍點目標"
 
 #: creator/qml/EditPageArea.qml:305
 #, kde-format
@@ -1794,36 +1798,36 @@ msgctxt ""
 "Label for the dropdown which will let you pick a page a jump will send the "
 "reader to when activated"
 msgid "Page Index:"
-msgstr ""
+msgstr "頁面索引值："
 
 #: creator/qml/EditPageArea.qml:315
 #, kde-format
 msgctxt "Button which saves the page area, and closes the dialog"
 msgid "Save"
-msgstr ""
+msgstr "儲存"
 
 #: creator/qml/LinkEditorSheet.qml:70
 #, kde-format
 msgctxt "@title:dialog"
 msgid "Edit Link"
-msgstr ""
+msgstr "編輯連接"
 
 #: creator/qml/LinkEditorSheet.qml:90
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Text"
-msgstr ""
+msgstr "文字"
 
 #: creator/qml/LinkEditorSheet.qml:95
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Destination"
-msgstr ""
+msgstr "目標"
 
 #: creator/qml/LinkEditorSheet.qml:157
 #, kde-format
 msgid "Preview"
-msgstr ""
+msgstr "預覽"
 
 #: creator/qml/Main.qml:170
 #, kde-format
@@ -1835,13 +1839,13 @@ msgstr ""
 #, kde-format
 msgctxt "The book's title when there are unsaved changes"
 msgid "%1 (unsaved)"
-msgstr ""
+msgstr "%1（未儲存）"
 
 #: creator/qml/Main.qml:200
 #, kde-format
 msgctxt "Switch to the page which displays the pages in the current book"
 msgid "Pages"
-msgstr ""
+msgstr "頁面"
 
 #: creator/qml/Main.qml:208
 #, kde-format
@@ -1849,7 +1853,7 @@ msgctxt ""
 "Switch to the page where the user can edit the meta information for the "
 "entire book"
 msgid "Metainfo"
-msgstr ""
+msgstr "中繼資料"
 
 #: creator/qml/Main.qml:216
 #, kde-format
@@ -1857,7 +1861,7 @@ msgctxt ""
 "Switch to the page where the user can edit the references (that is, snippets "
 "of information) found in the book"
 msgid "References"
-msgstr ""
+msgstr "參考"
 
 #: creator/qml/Main.qml:224
 #, kde-format
@@ -1865,13 +1869,13 @@ msgctxt ""
 "Switch to the page where the user can work with the bits of binary data "
 "found in the book"
 msgid "Embedded Data"
-msgstr ""
+msgstr "內嵌資料"
 
 #: creator/qml/Main.qml:232
 #, kde-format
 msgctxt "Switch to the page where the user can work with the book's stylesheet"
 msgid "Stylesheet"
-msgstr ""
+msgstr "樣式表"
 
 #: creator/qml/Main.qml:332
 #, kde-format
@@ -1879,146 +1883,146 @@ msgctxt ""
 "@title:window standard file open dialog used to open a book not in the "
 "collection"
 msgid "Please Choose a Book to Open"
-msgstr ""
+msgstr "請選擇要開啟的書本"
 
 #: creator/qml/Main.qml:335
 #, kde-format
 msgctxt "The file type filter for comic book archives"
 msgid "Comic Book Archive zip format %1"
-msgstr ""
+msgstr "漫畫書封存 zip 格式 %1"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:54
 #, kde-format
 msgctxt "title text for the edit author sheet"
 msgid "Edit Author"
-msgstr ""
+msgstr "編輯作者"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:69
 #, kde-format
 msgctxt "help text for the edit author sheet"
 msgid "Please complete the information for this author."
-msgstr ""
+msgstr "請完成輸入此作者的資訊。"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:74
 #, kde-format
 msgctxt "@title:group"
 msgid "Name"
-msgstr ""
+msgstr "名稱"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:80
 #, kde-format
 msgctxt "@label:textfield"
 msgid "First name"
-msgstr ""
+msgstr "名字"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:85
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Middle name"
-msgstr ""
+msgstr "中間名"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:90
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Last name"
-msgstr ""
+msgstr "姓氏"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:95
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Nickname"
-msgstr ""
+msgstr "暱稱"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:104
 #, kde-format
 msgctxt "@label:listbox"
 msgid "Activity"
-msgstr ""
+msgstr "活動"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:114
 #, kde-format
 msgctxt "@title:group"
 msgid "Homepage addresses"
-msgstr ""
+msgstr "首頁網址"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:152
 #, kde-format
 msgctxt "@label:textfield"
 msgid "New Homepage"
-msgstr ""
+msgstr "新首頁"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:171
 #, kde-format
 msgctxt "@title:group"
 msgid "Email addresses"
-msgstr ""
+msgstr "電子郵件地址"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:209
 #, kde-format
 msgctxt "placeholder text for the email field"
 msgid "New Email address"
-msgstr ""
+msgstr "新電子郵件"
 
 #: creator/qml/PageMetaInfo.qml:42
 #, kde-format
 msgctxt "title text for the page meta information editor sheet"
 msgid "Edit Page Information"
-msgstr ""
+msgstr "編輯頁面資訊"
 
 #: creator/qml/PageMetaInfo.qml:46
 #, kde-format
 msgctxt ""
 "Saves the remaining unsaved edited fields and closes the metainfo editor"
 msgid "Close Editor"
-msgstr ""
+msgstr "關閉編輯器"
 
 #: creator/qml/PageMetaInfo.qml:57
 #, kde-format
 msgctxt "@title:group"
 msgid "General"
-msgstr ""
+msgstr "一般"
 
 #: creator/qml/PageMetaInfo.qml:63
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Title:"
-msgstr ""
+msgstr "標題："
 
 #: creator/qml/PageMetaInfo.qml:72
 #, kde-format
 msgctxt "@label:textfield"
 msgid "ID:"
-msgstr ""
+msgstr "ID："
 
 #: creator/qml/PageMetaInfo.qml:82
 #, kde-format
 msgctxt "@label:listbox"
 msgid "Transition:"
-msgstr ""
+msgstr "轉場："
 
 #: creator/qml/PageMetaInfo.qml:95
 #, kde-format
 msgctxt "@label:chooser"
 msgid "Background Color:"
-msgstr ""
+msgstr "背景色："
 
 #: creator/qml/PageMetaInfo.qml:102
 #, kde-format
 msgctxt "@title:group"
 msgid "Frames"
-msgstr ""
+msgstr "框架"
 
 #: creator/qml/PageMetaInfo.qml:108
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "No frames present"
-msgstr ""
+msgstr "沒有框架"
 
 #: creator/qml/PageMetaInfo.qml:119
 #, kde-format
 msgctxt "Comic book panel frame name."
 msgid "Frame %1"
-msgstr ""
+msgstr "框架 %1"
 
 #: creator/qml/PageMetaInfo.qml:124
 #, kde-format
@@ -2026,134 +2030,133 @@ msgctxt ""
 "A switch which lets the user change the background colour of the page when "
 "this frame is focused"
 msgid "Change page background color"
-msgstr ""
+msgstr "變更頁面背景色"
 
 #: creator/qml/PageMetaInfo.qml:129
 #, kde-format
 msgctxt "Label from frame background color."
 msgid "Background Color:"
-msgstr ""
+msgstr "背景色："
 
 #: creator/qml/PageMetaInfo.qml:149
 #, kde-format
 msgctxt "@title color choosing dialog"
 msgid "Choose background color for this frame"
-msgstr ""
+msgstr "選擇此框架的背景色"
 
 #: creator/qml/PageMetaInfo.qml:159
 #, kde-format
 msgctxt "swap the position of this frame with the previous one"
 msgid "Move Up"
-msgstr ""
+msgstr "上移"
 
 #: creator/qml/PageMetaInfo.qml:168
 #, kde-format
 msgctxt "swap the position of this frame with the next one"
 msgid "Move Down"
-msgstr ""
+msgstr "下移"
 
 #: creator/qml/PageMetaInfo.qml:177
 #, kde-format
 msgctxt "remove the frame from the page"
 msgid "Delete Frame"
-msgstr ""
+msgstr "刪除框架"
 
 #: creator/qml/PageMetaInfo.qml:187
 #, kde-format
 msgctxt "@title:group"
 msgid "Text Areas"
-msgstr ""
+msgstr "文字區域"
 
 #: creator/qml/PageMetaInfo.qml:200
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "No text areas present"
-msgstr ""
+msgstr "沒有文字區域"
 
 #: creator/qml/PageMetaInfo.qml:213
 #, kde-format
 msgctxt "swap the position of this text area with the previous one"
 msgid "Move Up"
-msgstr ""
+msgstr "上移"
 
 #: creator/qml/PageMetaInfo.qml:220
 #, kde-format
 msgctxt "swap the position of this text area with the next one"
 msgid "Move Down"
-msgstr ""
+msgstr "下移"
 
 #: creator/qml/PageMetaInfo.qml:227
 #, kde-format
 msgctxt "remove the text area from the page"
 msgid "Delete Text Area"
-msgstr ""
+msgstr "刪除文字區域"
 
 #: creator/qml/PageMetaInfo.qml:237
 #, kde-format
 msgctxt "Comic book panel textarea name."
 msgid "Text Area %1"
-msgstr ""
+msgstr "文字區域 %1"
 
 #: creator/qml/PageMetaInfo.qml:255
 #, kde-format
 msgctxt "@title:group"
 msgid "Jumps"
-msgstr ""
+msgstr "跳躍點"
 
 #: creator/qml/PageMetaInfo.qml:261
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "No jumps present"
-msgstr ""
+msgstr "沒有跳躍點"
 
 #: creator/qml/PageMetaInfo.qml:273
 #, kde-format
 msgctxt "swap the position of this jump with the previous one"
 msgid "Move Up"
-msgstr ""
+msgstr "上移"
 
 #: creator/qml/PageMetaInfo.qml:280
 #, kde-format
 msgctxt "swap the position of this jump with the next one"
 msgid "Move Down"
-msgstr ""
+msgstr "下移"
 
 #: creator/qml/PageMetaInfo.qml:287
 #, kde-format
 msgctxt "remove the jump from the page"
 msgid "Delete Jump"
-msgstr ""
+msgstr "刪除跳躍點"
 
 #: creator/qml/PageMetaInfo.qml:297
 #, kde-format
 msgctxt "Comic book panel jump name."
 msgid "Jump %1"
-msgstr ""
+msgstr "跳躍點 %1"
 
 #: creator/qml/PageMetaInfo.qml:306
 #, kde-format
 msgctxt "Label from jump page index."
 msgid "Page Index:"
-msgstr ""
+msgstr "頁面索引值："
 
 #: creator/qml/SettingsPage.qml:17
 #, kde-format
 msgctxt "@title"
 msgid "Settings"
-msgstr ""
+msgstr "設定"
 
 #: creator/qml/WelcomePage.qml:54
-#, fuzzy, kde-format
-#| msgid "Peruse Reader"
+#, kde-format
 msgctxt "The application's name"
 msgid "Peruse Creator"
-msgstr "Peruse 閱讀工具"
+msgstr "Peruse 建立工具"
 
 #: creator/qml/WelcomePage.qml:61
 #, kde-format
 msgctxt "application subtitle"
 msgid "Comic Book Creation Tool"
-msgstr ""
+msgstr "漫畫書建立工具"
 
 #: creator/qml/WelcomePage.qml:71
 #, kde-format
@@ -2167,24 +2170,28 @@ msgid ""
 "archive at the KDE Store from within the application, or just share the "
 "files with your friends."
 msgstr ""
+"歡迎使用 Peruse 建立工具，它設計來幫助您建立能在任何支援 cbz 的漫畫書閱讀工具"
+"進行閱讀的漫畫書封存。您可以從零開始建立新的漫畫書封存，從圖片集建立封存，或"
+"是編輯現有的封存。建立封存之後，您甚至可以從應用程式裡將它公開到 KDE Store 的"
+"線上漫畫書集合，或是不想要公開的話也可以跟朋友分享檔案。"
 
 #: creator/qml/WelcomePage.qml:81
 #, kde-format
 msgctxt "@action:button open existing comic book archive"
 msgid "Open Existing..."
-msgstr ""
+msgstr "開啟現有的封存…"
 
 #: creator/qml/WelcomePage.qml:89
 #, kde-format
 msgctxt "@action:button create a new, empty comic book archive"
 msgid "Create Blank"
-msgstr ""
+msgstr "建立空白的封存"
 
 #: creator/qml/WelcomePage.qml:96
 #, kde-format
 msgctxt "@title:group"
 msgid "Recent books"
-msgstr ""
+msgstr "最近的書本"
 
 #: creator/qml/WelcomePage.qml:116
 #, kde-format
@@ -2192,23 +2199,23 @@ msgctxt ""
 "@action:button continue working on the most recently opened comic book "
 "archive"
 msgid "Continue working on %1"
-msgstr ""
+msgstr "繼續開啟 %1"
 
 #: creator/qml/WelcomePage.qml:129
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "There are no recent books"
-msgstr ""
+msgstr "沒有最近的書本"
 
 #: qtquick/ArchiveBookModel.cpp:527
 #, kde-format
 msgid "Creating archive in %1"
-msgstr ""
+msgstr "正在於 %1 建立封存"
 
 #: qtquick/ArchiveBookModel.cpp:539
 #, kde-format
 msgid "Writing in ACBF data"
-msgstr ""
+msgstr "正在寫入 ACBF 資料"
 
 #: qtquick/ArchiveBookModel.cpp:549
 #, kde-format
@@ -2230,4 +2237,4 @@ msgstr ""
 msgid ""
 "Successfully replaced old archive with the new archive - now loading the new "
 "archive..."
-msgstr ""
+msgstr "成功將舊封存替換為新封存 - 正在載入新封存…"
