@@ -721,7 +721,7 @@ msgid ""
 "check the details of the link below, to make sure that you really do want to "
 "open it, or just close this sheet."
 msgstr ""
-"L'enllaç que acabeu de fer-hi clic apunta cap a alguna cosa fora del llibre. "
+"L'enllaç que acabeu de clicar apunta cap a alguna cosa fora del llibre. "
 "Comproveu els detalls de l'enllaç de davall, per a assegurar-se que realment "
 "vulgueu obrir-lo, o tanqueu este full."
 
@@ -839,7 +839,7 @@ msgctxt ""
 "@title:window standard file open dialog used to find a page to add to the "
 "book"
 msgid "Please Choose an Image to Add"
-msgstr "Escolliu una imatge que s'haja d'afegir"
+msgstr "Trieu una imatge que s'haja d'afegir"
 
 #: creator/qml/AddPageSheet.qml:75
 #, kde-format
@@ -1728,7 +1728,7 @@ msgstr "*.cbz"
 #, kde-format
 msgctxt "@title:window folder dialog used to select the location of a new book"
 msgid "Please Choose the Location for the Book"
-msgstr "Escolliu la ubicació del llibre"
+msgstr "Trieu la ubicació del llibre"
 
 #: creator/qml/CreateNewBook.qml:130
 #, kde-format
@@ -1753,7 +1753,7 @@ msgstr "Seleccioneu una imatge"
 msgctxt ""
 "@title:window file dialog used to select the cover image for a new book"
 msgid "Please Choose Your Cover Image"
-msgstr "Escolliu la imatge de la portada"
+msgstr "Trieu la imatge de la portada"
 
 #: creator/qml/CreateNewBook.qml:187
 #, kde-format
@@ -1939,7 +1939,7 @@ msgctxt ""
 "@title:window standard file open dialog used to open a book not in the "
 "collection"
 msgid "Please Choose a Book to Open"
-msgstr "Escolliu un llibre que s'ha d'obrir"
+msgstr "Trieu un llibre que s'ha d'obrir"
 
 #: creator/qml/Main.qml:335
 #, kde-format
