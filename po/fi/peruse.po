@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: peruse\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-30 00:40+0000\n"
-"PO-Revision-Date: 2025-05-29 19:18+0300\n"
+"PO-Revision-Date: 2025-06-06 11:19+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -110,13 +110,13 @@ msgstr "Oikealta vasemmalle"
 #, kde-format
 msgctxt "Go to the previous frame on the current page"
 msgid "Previous Frame"
-msgstr "Edellinen kuva"
+msgstr "Edellinen kehys"
 
 #: app/qml/Book.qml:247
 #, kde-format
 msgctxt "Go to the next frame on the current page"
 msgid "Next Frame"
-msgstr "Seuraava kuva"
+msgstr "Seuraava kehys"
 
 #: app/qml/Book.qml:254
 #, kde-format
@@ -1565,28 +1565,17 @@ msgid "There is no reference information in your book yet"
 msgstr "Kirjassa ei ole vielä viitetietoja"
 
 #: creator/qml/BookReferences.qml:93
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "Help text for the references page, when there are already references "
-#| "defined"
-#| msgid ""
-#| "Create a new reference piece by clicking on the New Reference control. "
-#| "References are collections of paragraphs of text, which you can fill with "
-#| "simple formatting (strong, emphasis, and other simple layouting like "
-#| "that), as well as links to both internal things (other references or one "
-#| "of the pieces of binary data), or to an external resource, such as a "
-#| "website."
+#, kde-format
 msgid ""
 "References are collections of paragraphs of text, which you can fill with "
 "simple formatting (strong, emphasis, and other simple layouting like that), "
 "as well as links to both internal things (other references or one of the "
 "pieces of binary data), or to an external resource, such as a website."
 msgstr ""
-"Luo uusi viite napsauttamalla Uusi viite -painiketta. Viitteet ovat "
-"tekstikappalekokoelmia, joissa voi käyttää yksinkertaista muotoilua "
-"(vahvennus, korostus ym. yksinkertaiset asettelut) samoin kuin linkkejä niin "
-"sisäisiin (muut viitteet tai jokin binaaritietomuodoista) kuin ulkoisiinkin "
-"resursseihin (kuten verkkosivustoihin)."
+"Viitteet ovat tekstikappalekokoelmia, joissa voi käyttää yksinkertaista "
+"muotoilua (vahvennus, korostus ym. yksinkertaiset asettelut) samoin kuin "
+"linkkejä niin sisäisiin (muut viitteet tai jokin binaaritietomuodoista) kuin "
+"ulkoisiinkin resursseihin kuten verkkosivustoihin."
 
 #: creator/qml/BookStylesheet.qml:44
 #, kde-format
@@ -1601,9 +1590,7 @@ msgid "Add Style..."
 msgstr "Lisää tyyli…"
 
 #: creator/qml/BookStylesheet.qml:84
-#, fuzzy, kde-format
-#| msgctxt "title text for a sheet which lets the user edit a binary entry"
-#| msgid "Edit Style"
+#, kde-format
 msgctxt "@title:dialog"
 msgid "Edit Style"
 msgstr "Muokkaa tyyliä"
@@ -1618,7 +1605,7 @@ msgstr "Kenttä"
 #, kde-format
 msgctxt "@option:check"
 msgid "Apply to style elements which request an inverted scheme"
-msgstr ""
+msgstr "Käytä tyylialkioihin, jotka pyytävät käänteisiä värejä"
 
 #: creator/qml/BookStylesheet.qml:110
 #, kde-format
@@ -1666,34 +1653,22 @@ msgid "%1 (sub type: %2)"
 msgstr "%1 (alityyppi: %2)"
 
 #: creator/qml/BookStylesheet.qml:154
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "title text for a card which informs the user there are no styles defined, "
-#| "and what those are"
-#| msgid "No Styling Information"
+#, kde-format
 msgctxt "@info:placeholder"
 msgid "No Styling Information"
 msgstr "Ei tyylitietoa"
 
 #: creator/qml/BookStylesheet.qml:155
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "Help text for the stylesheet page, when there is already styles defined "
-#| "in the book"
-#| msgid ""
-#| "You can add such new binary data entries by creating a new entry, and "
-#| "then adding data to that entry from some existing file on your system. "
-#| "That data will be imported into your book, and leaves the external file "
-#| "otherwise untouched."
+#, kde-format
 msgctxt "@info:placeholder"
 msgid ""
 "You can add such data by creating a new entry, and then adding data to that "
 "entry from some existing file on your system. That data will be imported "
 "into your book, and leaves the external file otherwise untouched."
 msgstr ""
-"Uutta binaaritietoa voi lisätä luomalla ensin uuden tietueen ja lisäämällä "
-"sitten tietueeseen tietoa olemassa olevasta tiedostosta. Tieto tuodaan "
-"kirjaan eikä ulkoista tiedostoa muuteta."
+"Uutta dataa voi lisätä luomalla ensin uuden tietueen ja lisäämällä sitten "
+"datan tietueeseen olemassa olevasta tiedostosta. Tieto tuodaan kirjaan eikä "
+"ulkoista tiedostoa muuteta."
 
 #: creator/qml/CreateNewBook.qml:44
 #, kde-format
@@ -2004,12 +1979,10 @@ msgid "Nickname"
 msgstr "Kutsumanimi"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:104
-#, fuzzy, kde-format
-#| msgctxt "label for the activity field"
-#| msgid "Activity:"
+#, kde-format
 msgctxt "@label:listbox"
 msgid "Activity"
-msgstr "Aktiviteetti:"
+msgstr "Toiminta"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:114
 #, kde-format
@@ -2088,7 +2061,7 @@ msgstr "Kehykset"
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "No frames present"
-msgstr ""
+msgstr "Ei kehyksiä"
 
 #: creator/qml/PageMetaInfo.qml:119
 #, kde-format
@@ -2180,7 +2153,7 @@ msgstr "Hypyt"
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "No jumps present"
-msgstr ""
+msgstr "Ei hyppyjä"
 
 #: creator/qml/PageMetaInfo.qml:273
 #, kde-format
