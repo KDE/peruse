@@ -2348,11 +2348,11 @@ msgstr ""
 
 #~ msgctxt "placeholder text for default title text-input"
 #~ msgid "Write to add default title"
-#~ msgstr "ნაგულისხმები სათაურის დასამატებლად აკრიფეთ"
+#~ msgstr "ნაგულისხმევი სათაურის დასამატებლად აკრიფეთ"
 
 #~ msgctxt "placeholder text for default annotation text-area"
 #~ msgid "Write to add default annotation"
-#~ msgstr "აკრიფეთ ნაგულისხმები ანოტაციის დასამატებლად"
+#~ msgstr "აკრიფეთ ნაგულისხმევი ანოტაციის დასამატებლად"
 
 #~ msgctxt "label text for the edit field for the keyword list"
 #~ msgid "Keywords"
@@ -2508,7 +2508,7 @@ msgstr ""
 
 #~ msgctxt "placeholder text for the page title text-input"
 #~ msgid "Write to add default title"
-#~ msgstr "ნაგულისხმები სათაურის დასამატებლად აკრიფეთ"
+#~ msgstr "ნაგულისხმევი სათაურის დასამატებლად აკრიფეთ"
 
 #~ msgctxt "label text for the edit field for the page id"
 #~ msgid "ID"
