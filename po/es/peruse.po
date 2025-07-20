@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: peruse\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-30 00:40+0000\n"
-"PO-Revision-Date: 2025-06-09 02:20+0100\n"
+"PO-Revision-Date: 2025-07-20 00:15+0100\n"
 "Last-Translator: Víctor Rodrigo Córdoba <vrcordoba@gmail.com>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 20.04.2\n"
+"X-Generator: Lokalize 25.04.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -175,63 +175,51 @@ msgstr ""
 "proporcionó este paquete e informele del error."
 
 #: app/qml/BookInfoPage.qml:43
-#, fuzzy, kde-format
-#| msgctxt "Label for authors"
-#| msgid "Author(s)"
+#, kde-format
 msgctxt "@label"
 msgid "Author(s):"
-msgstr "Autor(es)"
+msgstr "Autor(es):"
 
 #: app/qml/BookInfoPage.qml:44 app/qml/BookInfoPage.qml:51
-#, fuzzy, kde-format
-#| msgctxt "used for the author data in book lists if author is empty"
-#| msgid "(unknown)"
+#, kde-format
 msgctxt "@info:placeholder"
 msgid "Unknown"
-msgstr "(desconocido)"
+msgstr "Desconocido"
 
 #: app/qml/BookInfoPage.qml:50
-#, fuzzy, kde-format
-#| msgctxt "Label for the publisher field"
-#| msgid "Publisher:"
+#, kde-format
 msgctxt "@label"
 msgid "Publisher:"
 msgstr "Editor:"
 
 #: app/qml/BookInfoPage.qml:57
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the default annotation"
-#| msgid "Annotation"
+#, kde-format
 msgctxt "@label"
 msgid "Location:"
-msgstr "Anotación"
+msgstr "Localización:"
 
 #: app/qml/BookInfoPage.qml:63
 #, kde-format
 msgctxt "@title:group"
 msgid "File Metadata"
-msgstr ""
+msgstr "Metadatos del archivo"
 
 #: app/qml/BookInfoPage.qml:70
-#, fuzzy, kde-format
-#| msgctxt "label for rating widget"
-#| msgid "Rating"
+#, kde-format
 msgctxt "@label"
 msgid "Rating:"
-msgstr "Calificación"
+msgstr "Calificación:"
 
 #: app/qml/BookInfoPage.qml:92
 #, kde-format
 msgid "Set rating to %1"
-msgstr ""
+msgstr "Calificar con %1"
 
 #: app/qml/BookInfoPage.qml:123
-#, fuzzy, kde-format
-#| msgctxt "label for tags field"
-#| msgid "Tags"
+#, kde-format
 msgctxt "@label"
 msgid "Tags:"
-msgstr "Etiquetas"
+msgstr "Etiquetas:"
 
 #: app/qml/BookInfoPage.qml:125 app/qml/listcomponents/BookTile.qml:291
 #, kde-format
@@ -258,7 +246,7 @@ msgstr "Sin resultados"
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "No authors available"
-msgstr ""
+msgstr "No hay autores disponibles"
 
 #: app/qml/Bookshelf.qml:88
 #, kde-format
@@ -273,30 +261,24 @@ msgid "Tap and type to search"
 msgstr "Pulse y escriba para buscar"
 
 #: app/qml/Bookshelf.qml:155
-#, fuzzy, kde-format
-#| msgctxt "label for a button which activates an external link"
-#| msgid "Open Link"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Open"
-msgstr "Abrir enlace"
+msgstr "Abrir"
 
 #: app/qml/Bookshelf.qml:163
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "Opens a sheet which lets the user change the name and language of the "
-#| "reference"
-#| msgid "Edit Details..."
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Details"
-msgstr "Editar detalles..."
+msgstr "Detalles"
 
 #: app/qml/CategoryPage.qml:65
 #, kde-format
 msgctxt "@info"
 msgid "%1 book"
 msgid_plural "%1 books"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 libro"
+msgstr[1] "%1 libros"
 
 #: app/qml/FileFinder.qml:90
 #, kde-format
@@ -383,7 +365,7 @@ msgstr "%1%"
 #, kde-format
 msgctxt "should be keep short, inside a label. Will be in uppercase"
 msgid "New"
-msgstr ""
+msgstr "Nuevo"
 
 #: app/qml/listcomponents/BookTileTall.qml:126
 #, kde-format
@@ -398,12 +380,10 @@ msgid ", %1"
 msgstr ", %1"
 
 #: app/qml/listcomponents/BookTileTall.qml:138
-#, fuzzy, kde-format
-#| msgctxt "Author name used when there are no known authors for a book"
-#| msgid "by an unknown author"
+#, kde-format
 msgctxt "Author name used when there are no known authors for a book"
 msgid "Unknown author"
-msgstr "anónimo"
+msgstr "Anónimo"
 
 #: app/qml/listcomponents/CategoryTile.qml:40
 #, kde-format
@@ -548,12 +528,10 @@ msgstr "Libros añadidos recientemente"
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "No series found"
-msgstr ""
+msgstr "No se han encontrado series"
 
 #: app/qml/PeruseMain.qml:350
-#, fuzzy, kde-format
-#| msgctxt "Switch to the listing page showing items grouped by series"
-#| msgid "Series"
+#, kde-format
 msgctxt "@title"
 msgid "Series"
 msgstr "Serie"
@@ -562,31 +540,25 @@ msgstr "Serie"
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "No authors found"
-msgstr ""
+msgstr "No se han encontrado autores"
 
 #: app/qml/PeruseMain.qml:362
-#, fuzzy, kde-format
-#| msgctxt "Switch to the listing page showing items grouped by author"
-#| msgid "Author"
+#, kde-format
 msgctxt "@title"
 msgid "Authors"
-msgstr "Autor"
+msgstr "Autores"
 
 #: app/qml/PeruseMain.qml:372
-#, fuzzy, kde-format
-#| msgctxt "label text for the form for the publishing info list"
-#| msgid "Publisher Info"
+#, kde-format
 msgctxt "@info:placeholder"
 msgid "No publishers found"
-msgstr "Información del editor"
+msgstr "Ningún editor encontrado"
 
 #: app/qml/PeruseMain.qml:374
-#, fuzzy, kde-format
-#| msgctxt "Label for publisher"
-#| msgid "Publisher"
+#, kde-format
 msgctxt "@title"
 msgid "Publishers"
-msgstr "Editor"
+msgstr "Editores"
 
 #: app/qml/PeruseMain.qml:382
 #, kde-format
@@ -612,9 +584,7 @@ msgid "Add folder"
 msgstr "Añadir carpeta"
 
 #: app/qml/Settings.qml:83
-#, fuzzy, kde-format
-#| msgctxt "remove the search folder from the list"
-#| msgid "Delete"
+#, kde-format
 msgctxt "@action:button"
 msgid "Delete"
 msgstr "Borrar"
@@ -837,9 +807,7 @@ msgid "Create Jump"
 msgstr "Crear salto"
 
 #: creator/qml/AddPageSheet.qml:43
-#, fuzzy, kde-format
-#| msgctxt "adds a new page at the end of the book"
-#| msgid "Add Page"
+#, kde-format
 msgctxt "@title"
 msgid "Add Page"
 msgstr "Añadir página"
@@ -938,12 +906,12 @@ msgstr "Editar página"
 #, kde-format
 msgctxt "Empty page list placeholder message"
 msgid "Your book is empty"
-msgstr ""
+msgstr "Su libro está vacío"
 
 #: creator/qml/Book.qml:190
 #, kde-format
 msgid "Start adding pages to your book"
-msgstr ""
+msgstr "Empiece añadiendo páginas a su libro"
 
 #: creator/qml/BookBasics.qml:39
 #, kde-format
@@ -1220,35 +1188,25 @@ msgid "Edit Meta Information"
 msgstr "Editar meta-información"
 
 #: creator/qml/BookMetainfoPage.qml:49
-#, fuzzy, kde-format
-#| msgctxt "Switch to the listing page showing items grouped by title"
-#| msgid "Title"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Title"
 msgstr "Título"
 
 #: creator/qml/BookMetainfoPage.qml:62
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the default annotation"
-#| msgid "Annotation"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Annotation"
 msgstr "Anotación"
 
 #: creator/qml/BookMetainfoPage.qml:75
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "Switch to the listing page showing items grouped by keywords, characters "
-#| "or genres"
-#| msgid "Keywords"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Keywords"
 msgstr "Palabras clave"
 
 #: creator/qml/BookMetainfoPage.qml:76
-#, fuzzy, kde-format
-#| msgctxt "placeholder text for the add new keyword text entry"
-#| msgid "Write a comma separated list of keywords."
+#, kde-format
 msgctxt "@info:placeholder"
 msgid "Write a comma separated list of keywords."
 msgstr "Escriba una lista de palabras clave separadas por comas."
@@ -1260,12 +1218,10 @@ msgid "Document Version:"
 msgstr "Versión del documento:"
 
 #: creator/qml/BookMetainfoPage.qml:120
-#, fuzzy, kde-format
-#| msgctxt "Switch to the listing page showing items grouped by author"
-#| msgid "Author"
+#, kde-format
 msgctxt "@title:group"
 msgid "Authors"
-msgstr "Autor"
+msgstr "Autores"
 
 #: creator/qml/BookMetainfoPage.qml:132 creator/qml/BookMetainfoPage.qml:842
 #, kde-format
@@ -1274,9 +1230,7 @@ msgid "(unnamed)"
 msgstr "(sin nombre)"
 
 #: creator/qml/BookMetainfoPage.qml:139
-#, fuzzy, kde-format
-#| msgctxt "title text for the edit author sheet"
-#| msgid "Edit Author"
+#, kde-format
 msgctxt "@action:button"
 msgid "Edit author"
 msgstr "Editar autor"
@@ -1285,26 +1239,22 @@ msgstr "Editar autor"
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove author"
-msgstr ""
+msgstr "Eliminar autor"
 
 #: creator/qml/BookMetainfoPage.qml:176 creator/qml/BookMetainfoPage.qml:880
-#, fuzzy, kde-format
-#| msgctxt "placeholder text for the add new author text entry"
-#| msgid "Write to add new author (nickname)"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "New author (nickname)"
-msgstr "Escriba para añadir un nuevo autor (apodo)"
+msgstr "Nuevo autor (apodo)"
 
 #: creator/qml/BookMetainfoPage.qml:189
 #, kde-format
 msgctxt "@action:button"
 msgid "Add new author"
-msgstr ""
+msgstr "Añadir autor nuevo"
 
 #: creator/qml/BookMetainfoPage.qml:197
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the genre list"
-#| msgid "Genres"
+#, kde-format
 msgctxt "@title:group"
 msgid "Genres"
 msgstr "Géneros"
@@ -1313,12 +1263,10 @@ msgstr "Géneros"
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove genre"
-msgstr ""
+msgstr "Eliminar género"
 
 #: creator/qml/BookMetainfoPage.qml:294
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the character list"
-#| msgid "Characters"
+#, kde-format
 msgctxt "@title:group"
 msgid "Characters"
 msgstr "Personajes"
@@ -1330,9 +1278,7 @@ msgid "Write to add new character"
 msgstr "Escriba para añadir un nuevo personaje"
 
 #: creator/qml/BookMetainfoPage.qml:363
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the sequence list"
-#| msgid "Sequence"
+#, kde-format
 msgctxt "@title:group"
 msgid "Sequence"
 msgstr "Secuencia"
@@ -1350,51 +1296,37 @@ msgid "Volume:"
 msgstr "Volumen:"
 
 #: creator/qml/BookMetainfoPage.qml:462
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "Action which when triggered adds a new reference to the book and opens "
-#| "the reference editor"
-#| msgid "New Reference"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "New serie"
-msgstr "Nueva referencia"
+msgstr "Nueva serie"
 
 #: creator/qml/BookMetainfoPage.qml:481
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the database reference list"
-#| msgid "Database References"
+#, kde-format
 msgctxt "@title:group"
 msgid "Database References"
 msgstr "Referencias de la base de datos"
 
 #: creator/qml/BookMetainfoPage.qml:507 creator/qml/BookMetainfoPage.qml:595
-#, fuzzy, kde-format
-#| msgctxt "title text for the references page"
-#| msgid "References"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Reference:"
-msgstr "Referencias"
+msgstr "Referencia:"
 
 #: creator/qml/BookMetainfoPage.qml:533 creator/qml/BookMetainfoPage.qml:609
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the database reference list"
-#| msgid "Database References"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Database name:"
-msgstr "Referencias de la base de datos"
+msgstr "Nombre de la base de datos:"
 
 #: creator/qml/BookMetainfoPage.qml:550
-#, fuzzy, kde-format
-#| msgctxt "title text for the references page"
-#| msgid "References"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Reference type:"
-msgstr "Referencias"
+msgstr "Tipo de referencia:"
 
 #: creator/qml/BookMetainfoPage.qml:628
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the content rating list"
-#| msgid "Content Ratings"
+#, kde-format
 msgctxt "@title:group"
 msgid "Content Ratings"
 msgstr "Calificación del contenido"
@@ -1415,20 +1347,16 @@ msgstr "Escriba para añadir un sistema de calificación."
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Review title"
-msgstr ""
+msgstr "Revisar título"
 
 #: creator/qml/BookMetainfoPage.qml:733
-#, fuzzy, kde-format
-#| msgctxt "Label for the link destination input field"
-#| msgid "Destination"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Description"
-msgstr "Destino"
+msgstr "Descripción"
 
 #: creator/qml/BookMetainfoPage.qml:754
-#, fuzzy, kde-format
-#| msgctxt "label text for the form for the publishing info list"
-#| msgid "Publisher Info"
+#, kde-format
 msgctxt "@title:group"
 msgid "Publisher Info"
 msgstr "Información del editor"
@@ -1470,49 +1398,37 @@ msgid "License:"
 msgstr "Licencia:"
 
 #: creator/qml/BookMetainfoPage.qml:830
-#, fuzzy, kde-format
-#| msgctxt "label text for the form for the document info list"
-#| msgid "Document Authors"
+#, kde-format
 msgctxt "@title:group"
 msgid "Document Authors"
 msgstr "Autores del documento"
 
 #: creator/qml/BookMetainfoPage.qml:900
-#, fuzzy, kde-format
-#| msgctxt "label text for the form for the sources list"
-#| msgid "Document Sources"
+#, kde-format
 msgctxt "@title:group"
 msgid "Document Sources"
 msgstr "Fuentes del documento"
 
 #: creator/qml/BookMetainfoPage.qml:941
-#, fuzzy, kde-format
-#| msgctxt "label text for the form for the sources list"
-#| msgid "Document Sources"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "New document source"
-msgstr "Fuentes del documento"
+msgstr "Nueva fuente del documento"
 
 #: creator/qml/BookMetainfoPage.qml:960
-#, fuzzy, kde-format
-#| msgctxt "label text for the form for the history list"
-#| msgid "Document History"
+#, kde-format
 msgctxt "@title:group"
 msgid "Document History"
 msgstr "Historia del documento"
 
 #: creator/qml/BookMetainfoPage.qml:1001
-#, fuzzy, kde-format
-#| msgctxt "label text for the form for the history list"
-#| msgid "Document History"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "New document info"
-msgstr "Historia del documento"
+msgstr "Nueva información del documento"
 
 #: creator/qml/BookMetainfoPage.qml:1020
-#, fuzzy, kde-format
-#| msgctxt "label text for the form for the body background color."
-#| msgid "General Page Background Color"
+#, kde-format
 msgctxt "@title:group"
 msgid "General Page Background Color"
 msgstr "Color de fondo general para las páginas"
@@ -1607,27 +1523,20 @@ msgid "Edit Link"
 msgstr "Editar enlace"
 
 #: creator/qml/BookReferenceEditor.qml:100
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "title text for a sheet which lets the user edit the details of a reference"
-#| msgid "Edit Reference Details"
+#, kde-format
 msgctxt "@title:dialog"
 msgid "Edit Reference Details"
 msgstr "Editar detalles de la referencia"
 
 #: creator/qml/BookReferenceEditor.qml:107
-#, fuzzy, kde-format
-#| msgctxt "Label for the reference identifier input field"
-#| msgid "Unique Identifier"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Unique identifier"
 msgstr "Identificador único"
 
 #: creator/qml/BookReferenceEditor.qml:112
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:109
-#, fuzzy, kde-format
-#| msgctxt "Label for the reference language input field"
-#| msgid "Language"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Language"
 msgstr "Idioma"
@@ -1666,30 +1575,19 @@ msgstr ""
 #: creator/qml/BookReferences.qml:92
 #, kde-format
 msgid "There is no reference information in your book yet"
-msgstr ""
+msgstr "No hay información de referencia en ti libro de momento"
 
 #: creator/qml/BookReferences.qml:93
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "Help text for the references page, when there are already references "
-#| "defined"
-#| msgid ""
-#| "Create a new reference piece by clicking on the New Reference control. "
-#| "References are collections of paragraphs of text, which you can fill with "
-#| "simple formatting (strong, emphasis, and other simple layouting like "
-#| "that), as well as links to both internal things (other references or one "
-#| "of the pieces of binary data), or to an external resource, such as a "
-#| "website."
+#, kde-format
 msgid ""
 "References are collections of paragraphs of text, which you can fill with "
 "simple formatting (strong, emphasis, and other simple layouting like that), "
 "as well as links to both internal things (other references or one of the "
 "pieces of binary data), or to an external resource, such as a website."
 msgstr ""
-"Crear una nueva referencia pulsando en el control de nueva referencia. Las "
-"referencias son colecciones de párrafos de texto, los cuales puede rellenar "
-"con formato simple (fuerte, énfasis u otros formatos como esos), o con "
-"enlaces a elementos internos (otras referencias o a datos binarios), o a "
+"Las referencias son colecciones de párrafos de texto, los cuales puede "
+"rellenar con formato simple (fuerte, énfasis u otros formatos como esos), o "
+"con enlaces a elementos internos (otras referencias o a datos binarios), o a "
 "recursos externos, como webs."
 
 #: creator/qml/BookStylesheet.qml:44
@@ -1705,9 +1603,7 @@ msgid "Add Style..."
 msgstr "Añadir estilo…"
 
 #: creator/qml/BookStylesheet.qml:84
-#, fuzzy, kde-format
-#| msgctxt "title text for a sheet which lets the user edit a binary entry"
-#| msgid "Edit Style"
+#, kde-format
 msgctxt "@title:dialog"
 msgid "Edit Style"
 msgstr "Editar estilo"
@@ -1722,24 +1618,24 @@ msgstr "Elemento"
 #, kde-format
 msgctxt "@option:check"
 msgid "Apply to style elements which request an inverted scheme"
-msgstr ""
+msgstr "Aplicar a elementos de estilo que requieren un esquema invertido"
 
 #: creator/qml/BookStylesheet.qml:110
 #, kde-format
 msgctxt "@option:check"
 msgid "Sub-element selector type"
-msgstr ""
+msgstr "Tipo de selector de sub-elementos"
 
 #: creator/qml/BookStylesheet.qml:111
 #, kde-format
 msgid "None"
-msgstr ""
+msgstr "Ninguno"
 
 #: creator/qml/BookStylesheet.qml:116
 #, kde-format
 msgctxt "@option:check"
 msgid "Color"
-msgstr ""
+msgstr "Color"
 
 #: creator/qml/BookStylesheet.qml:139
 #, kde-format
@@ -1770,25 +1666,13 @@ msgid "%1 (sub type: %2)"
 msgstr "%1 (subtipo: %2)"
 
 #: creator/qml/BookStylesheet.qml:154
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "title text for a card which informs the user there are no styles defined, "
-#| "and what those are"
-#| msgid "No Styling Information"
+#, kde-format
 msgctxt "@info:placeholder"
 msgid "No Styling Information"
 msgstr "Sin información de estilo"
 
 #: creator/qml/BookStylesheet.qml:155
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "Help text for the stylesheet page, when there is already styles defined "
-#| "in the book"
-#| msgid ""
-#| "You can add such new binary data entries by creating a new entry, and "
-#| "then adding data to that entry from some existing file on your system. "
-#| "That data will be imported into your book, and leaves the external file "
-#| "otherwise untouched."
+#, kde-format
 msgctxt "@info:placeholder"
 msgid ""
 "You can add such data by creating a new entry, and then adding data to that "
@@ -1831,18 +1715,16 @@ msgid "Folder"
 msgstr "Carpeta"
 
 #: creator/qml/CreateNewBook.qml:99
-#, fuzzy, kde-format
-#| msgctxt "@title:window dialogue used to add a new search folder"
-#| msgid "Select a Folder"
+#, kde-format
 msgctxt "@action:button"
 msgid "Select Folder"
-msgstr "Seleccione una carpeta"
+msgstr "Seleccione carpeta"
 
 #: creator/qml/CreateNewBook.qml:111
 #, kde-format
 msgctxt "File filter cbz file"
 msgid "*.cbz"
-msgstr ""
+msgstr "*.cbz"
 
 #: creator/qml/CreateNewBook.qml:113
 #, kde-format
@@ -1860,15 +1742,13 @@ msgstr "Imagen de portada"
 #, kde-format
 msgctxt "placeholder message for missing cover image"
 msgid "Missing cover image"
-msgstr ""
+msgstr "Imagen de portada no presente"
 
 #: creator/qml/CreateNewBook.qml:160
-#, fuzzy, kde-format
-#| msgctxt "@title:window Dialogue used to add a new search folder"
-#| msgid "Select a folder"
+#, kde-format
 msgctxt "@action:button"
 msgid "Select image"
-msgstr "Seleccione una carpeta"
+msgstr "Seleccione imagen"
 
 #: creator/qml/CreateNewBook.qml:184
 #, kde-format
@@ -1985,27 +1865,19 @@ msgid "Save"
 msgstr "Guardar"
 
 #: creator/qml/LinkEditorSheet.qml:70
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "Edit the link the cursor is currently positioned on (or convert the "
-#| "selection to a link, or add a new one if there is no selection)"
-#| msgid "Edit Link"
+#, kde-format
 msgctxt "@title:dialog"
 msgid "Edit Link"
 msgstr "Editar enlace"
 
 #: creator/qml/LinkEditorSheet.qml:90
-#, fuzzy, kde-format
-#| msgctxt "Label for the link text input field"
-#| msgid "Text"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Text"
 msgstr "Texto"
 
 #: creator/qml/LinkEditorSheet.qml:95
-#, fuzzy, kde-format
-#| msgctxt "Label for the link destination input field"
-#| msgid "Destination"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Destination"
 msgstr "Destino"
@@ -2013,7 +1885,7 @@ msgstr "Destino"
 #: creator/qml/LinkEditorSheet.qml:157
 #, kde-format
 msgid "Preview"
-msgstr ""
+msgstr "Previsualizar"
 
 #: creator/qml/Main.qml:170
 #, kde-format
@@ -2090,84 +1962,64 @@ msgid "Please complete the information for this author."
 msgstr "Por favor, complete la información de este autor."
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:74
-#, fuzzy, kde-format
-#| msgctxt "placeholder text for the last name field"
-#| msgid "Last Name"
+#, kde-format
 msgctxt "@title:group"
 msgid "Name"
-msgstr "Apellido"
+msgstr "Nombre"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:80
-#, fuzzy, kde-format
-#| msgctxt "label for the first name field"
-#| msgid "First name:"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "First name"
-msgstr "Nombre:"
+msgstr "Nombre"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:85
-#, fuzzy, kde-format
-#| msgctxt "label for the middle name field"
-#| msgid "Middle name:"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Middle name"
-msgstr "Segundo nombre:"
+msgstr "Segundo nombre"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:90
-#, fuzzy, kde-format
-#| msgctxt "label for the last name field"
-#| msgid "Last name:"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Last name"
-msgstr "Apellido:"
+msgstr "Apellido"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:95
-#, fuzzy, kde-format
-#| msgctxt "placeholder text for the nickname field"
-#| msgid "Nickname"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Nickname"
 msgstr "Apodo"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:104
-#, fuzzy, kde-format
-#| msgctxt "label for the activity field"
-#| msgid "Activity:"
+#, kde-format
 msgctxt "@label:listbox"
 msgid "Activity"
-msgstr "Actividad:"
+msgstr "Actividad"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:114
-#, fuzzy, kde-format
-#| msgctxt "label for the homepage field"
-#| msgid "Homepage addresses:"
+#, kde-format
 msgctxt "@title:group"
 msgid "Homepage addresses"
-msgstr "Direcciones web:"
+msgstr "Direcciones web"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:152
-#, fuzzy, kde-format
-#| msgctxt "placeholder text for the homepage field"
-#| msgid "Add Homepage"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "New Homepage"
-msgstr "Añadir página web"
+msgstr "Nueva página web"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:171
-#, fuzzy, kde-format
-#| msgctxt "label for the email field"
-#| msgid "Email addresses:"
+#, kde-format
 msgctxt "@title:group"
 msgid "Email addresses"
-msgstr "Correo electrónico:"
+msgstr "Correos electrónicos"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:209
-#, fuzzy, kde-format
-#| msgctxt "placeholder text for the email field"
-#| msgid "Add Email address"
+#, kde-format
 msgctxt "placeholder text for the email field"
 msgid "New Email address"
-msgstr "Añadir dirección de correo electrónico"
+msgstr "Nueva dirección de correo electrónico"
 
 #: creator/qml/PageMetaInfo.qml:42
 #, kde-format
@@ -2186,53 +2038,43 @@ msgstr "Cerrar editor"
 #, kde-format
 msgctxt "@title:group"
 msgid "General"
-msgstr ""
+msgstr "General"
 
 #: creator/qml/PageMetaInfo.qml:63
-#, fuzzy, kde-format
-#| msgctxt "Switch to the listing page showing items grouped by title"
-#| msgid "Title"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Title:"
-msgstr "Título"
+msgstr "Título:"
 
 #: creator/qml/PageMetaInfo.qml:72
-#, fuzzy, kde-format
-#| msgctxt "Label for the ID input field"
-#| msgid "ID:"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "ID:"
 msgstr "ID:"
 
 #: creator/qml/PageMetaInfo.qml:82
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the page transition type"
-#| msgid "Transition"
+#, kde-format
 msgctxt "@label:listbox"
 msgid "Transition:"
-msgstr "Transición"
+msgstr "Transición:"
 
 #: creator/qml/PageMetaInfo.qml:95
-#, fuzzy, kde-format
-#| msgctxt "Label from frame background color."
-#| msgid "Background Color:"
+#, kde-format
 msgctxt "@label:chooser"
 msgid "Background Color:"
 msgstr "Color de fondo:"
 
 #: creator/qml/PageMetaInfo.qml:102
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the page frames"
-#| msgid "Frames"
+#, kde-format
 msgctxt "@title:group"
 msgid "Frames"
-msgstr "Marcos"
+msgstr "Fotogramas"
 
 #: creator/qml/PageMetaInfo.qml:108
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "No frames present"
-msgstr ""
+msgstr "Ningún fotograma presente"
 
 #: creator/qml/PageMetaInfo.qml:119
 #, kde-format
@@ -2279,9 +2121,7 @@ msgid "Delete Frame"
 msgstr "Borrar marco"
 
 #: creator/qml/PageMetaInfo.qml:187
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the page textareas"
-#| msgid "Text Areas"
+#, kde-format
 msgctxt "@title:group"
 msgid "Text Areas"
 msgstr "Áreas de texto"
@@ -2290,7 +2130,7 @@ msgstr "Áreas de texto"
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "No text areas present"
-msgstr ""
+msgstr "Ninguna área de texto presente"
 
 #: creator/qml/PageMetaInfo.qml:213
 #, kde-format
@@ -2317,9 +2157,7 @@ msgid "Text Area %1"
 msgstr "Área de texto %1"
 
 #: creator/qml/PageMetaInfo.qml:255
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the page jumps"
-#| msgid "Jumps"
+#, kde-format
 msgctxt "@title:group"
 msgid "Jumps"
 msgstr "Saltos"
@@ -2328,7 +2166,7 @@ msgstr "Saltos"
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "No jumps present"
-msgstr ""
+msgstr "Ningún salto presente"
 
 #: creator/qml/PageMetaInfo.qml:273
 #, kde-format
@@ -2361,9 +2199,7 @@ msgid "Page Index:"
 msgstr "Índice de página:"
 
 #: creator/qml/SettingsPage.qml:17
-#, fuzzy, kde-format
-#| msgctxt "Open the settings page"
-#| msgid "Settings"
+#, kde-format
 msgctxt "@title"
 msgid "Settings"
 msgstr "Preferencias"
@@ -2413,13 +2249,10 @@ msgid "Create Blank"
 msgstr "Crear en blanco"
 
 #: creator/qml/WelcomePage.qml:96
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "Switch to the listing page showing the most recently discovered books"
-#| msgid "Recently Added Books"
+#, kde-format
 msgctxt "@title:group"
 msgid "Recent books"
-msgstr "Libros añadidos recientemente"
+msgstr "Libros recientes"
 
 #: creator/qml/WelcomePage.qml:116
 #, kde-format
@@ -2430,11 +2263,10 @@ msgid "Continue working on %1"
 msgstr "Continuar trabajando en %1"
 
 #: creator/qml/WelcomePage.qml:129
-#, fuzzy, kde-format
-#| msgid "There are no folder currently indexed."
+#, kde-format
 msgctxt "@info:placeholder"
 msgid "There are no recent books"
-msgstr "No hay ninguna carpeta indexada."
+msgstr "No hay libros recientes"
 
 #: qtquick/ArchiveBookModel.cpp:527
 #, kde-format
