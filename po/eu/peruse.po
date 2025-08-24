@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: peruse\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-30 00:40+0000\n"
-"PO-Revision-Date: 2025-07-12 13:27+0200\n"
+"PO-Revision-Date: 2025-08-23 15:33+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 25.04.3\n"
+"X-Generator: Lokalize 25.08.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -648,6 +648,12 @@ msgid ""
 "about it. Please report a bug, and make the book available to us, so we can "
 "try and work out how to handle this!"
 msgstr ""
+"Aktibatu berri duzun esteka, harekin zer egin ez dakigun zerbaitera doa. "
+"Horrek iradokitzen du irakurtzen ari zaren liburua ez datorrela ACBF "
+"(Advanced Comic Book Format / Komiki Liburu Formatu Aurreratua) "
+"zehaztapenarekin bat, baina hala ere horren berri izan nahiko genuke. "
+"Mesedez, eman akats baten berri eta jarri liburua guretzako eskuragarri, "
+"nola maneiatu asmatzen saia gaitezen!"
 
 #: app/qml/viewers/ImageBrowser.qml:93
 #, kde-format
@@ -656,6 +662,9 @@ msgid ""
 "something with the ID %1 but didn't locate anything. This is likely an error "
 "in the book, and the author would probably like to know about it."
 msgstr ""
+"Ematen du aktibatu berri duzun esteka ez doala inora. Saiatu gara %1 ID duen "
+"zerbait bilatzen baina ez dugu ezer aurkitu. Litekeena da liburuan errore "
+"bat egotea, eta posible da egileak horri buruz jakin nahi izatea."
 
 #: app/qml/viewers/ImageBrowser.qml:501
 #, kde-format
@@ -676,6 +685,18 @@ msgid ""
 "If not, please report this bug to us, and give as much information as you "
 "can to assist us in working out what's wrong."
 msgstr ""
+"Ezin izan du orrialde honetako irudia zamatu.\n"
+"Hori gehienetan falta den irudi-deskodetzaile baten ondorioz gertatzen da "
+"(zehazki, Qt Imageformats paketea, Perusek irudiak zamatzeko behar duena), "
+"eta ziurrenik paketatze errore bategatik. Jarri harremanean pakete hau eman "
+"dizunarekin eta eman iezaiezu errore honen berri.\n"
+"\n"
+"Zamatzen saiatu garen irudia, zehazki, %1 deitzen da, eta Qt(e)k ezagutzen "
+"dituen irudi-formatuak %2 dira. Haien arteko ezadostasunik badago, arazoa "
+"hori izango da.\n"
+"\n"
+"Bestela, eman iezaguzu akats honen berri, eta gaizki dagoena konpontzen "
+"lagundu diezagukeen ahal bezainbeste informazio."
 
 #: app/qml/viewers/ViewerBase.qml:100
 #, kde-format
@@ -697,6 +718,9 @@ msgid ""
 "check the details of the link below, to make sure that you really do want to "
 "open it, or just close this sheet."
 msgstr ""
+"Klik egin berri duzun estekak liburutik kanpoko nonbaitera seinalatzen du. "
+"Mesedez, aztertu beheko estekaren xehetasunak, benetan ireki nahi duzula "
+"ziurtatzeko, edo orri hau itxi eta kito."
 
 #: app/qml/viewers/ViewerBase.qml:141
 #, kde-format
@@ -705,6 +729,9 @@ msgid ""
 "\n"
 "%2"
 msgstr ""
+"Idatzi e-posta bat %1(e)ri, ondoko estekan oinarrituta:\n"
+"\n"
+"%2"
 
 #: app/qml/viewers/ViewerBase.qml:143
 #, kde-format
@@ -713,16 +740,19 @@ msgid ""
 "\n"
 "%3"
 msgstr ""
+"Idatzi e-posta bat %1(e)ri, \"%2\" gaiarekin eta ondoko gorputzarekin:\n"
+"\n"
+"%3"
 
 #: app/qml/viewers/ViewerBase.qml:145
 #, kde-format
 msgid "Compose an email for %1 with the subject \"%2\""
-msgstr ""
+msgstr "Idatzi %1(e)rentzako e-posta bat \"%2\" gaiarekin"
 
 #: app/qml/viewers/ViewerBase.qml:147
 #, kde-format
 msgid "Compose email for: %1"
-msgstr ""
+msgstr "Idatzi e-posta honi: %1"
 
 #: app/qml/WelcomePage.qml:42 creator/qml/WelcomePage.qml:42
 #, kde-format
@@ -789,6 +819,8 @@ msgid ""
 "Please select the method you want to add the new page. No changes will be "
 "made outside of the project by performing these actions."
 msgstr ""
+"Mesedez, hautatu orrialde berria gehitzeko nahi duzun metodoa. Ekintza hauek "
+"egitean proiektutik kanpo ez da aldaketarik egingo."
 
 #: creator/qml/AddPageSheet.qml:55
 #, kde-format
@@ -817,13 +849,13 @@ msgstr "Sortu irudi berri bat irudi editore bat erabiliz"
 #, kde-format
 msgctxt "@action:button add a page by taking a photo with a camera"
 msgid "Take a Photo and Add That"
-msgstr ""
+msgstr "Argazki bat atera eta hori gehitu"
 
 #: creator/qml/Book.qml:50
 #, kde-format
 msgctxt "title of the main book editor page"
 msgid "Pages in %1"
-msgstr ""
+msgstr "%1(e)ko orrialdeak"
 
 #: creator/qml/Book.qml:59 creator/qml/BookBasics.qml:42
 #: creator/qml/BookBinaries.qml:42 creator/qml/BookMetainfoPage.qml:32
@@ -901,10 +933,10 @@ msgid "Pages:"
 msgstr "Orrialdeak:"
 
 #: creator/qml/BookBasics.qml:90
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "A link which when clicked shows the book pages editor"
 msgid "%1 total pages"
-msgstr "Orrialde guztira: %1"
+msgstr "%1 orrialde guztira"
 
 #: creator/qml/BookBasics.qml:97
 #, kde-format
@@ -912,38 +944,38 @@ msgctxt ""
 "Header for a list which shows every file contained in the archive which "
 "makes up this book"
 msgid "Every File In The Book:"
-msgstr ""
+msgstr "Liburuko fitxategi guztiak:"
 
 #: creator/qml/BookBasics.qml:184
 #, kde-format
 msgctxt "If a file is not referenced at all"
 msgid "Unreferenced file"
-msgstr ""
+msgstr "Erreferentziarik gabeko fitxategia"
 
 #: creator/qml/BookBasics.qml:186
 #, kde-format
 msgctxt "If a file is referenced by its full path"
 msgid "Referenced by full path"
-msgstr ""
+msgstr "Bide-izen oso baten erreferentzia du"
 
 #: creator/qml/BookBasics.qml:188
 #, kde-format
 msgctxt "If a file is referenced partially, describe that"
 msgid "Referenced by filename only"
-msgstr ""
+msgstr "Fitxategi-izenaren erreferentzia du bakarrik"
 
 #: creator/qml/BookBasics.qml:190
 #, kde-format
 msgctxt "What happens if we have an unexpected reference amount"
 msgid "%1 might be referenced, but in some way we've not accounted for"
-msgstr ""
+msgstr "%1(e)k erreferentzia izan dezake, baina nolabait ez dugu kontuan hartu"
 
 #: creator/qml/BookBasics.qml:198
 #, kde-format
 msgctxt ""
 "action which marks the file to be included next time the book is saved"
 msgid "Include File"
-msgstr ""
+msgstr "Sartu fitxategia"
 
 #: creator/qml/BookBasics.qml:199
 #, kde-format
@@ -978,13 +1010,13 @@ msgctxt ""
 "title text for a card which informs the user there are no binary data "
 "entries, and what those are"
 msgid "No Embedded Binary Data Entries"
-msgstr ""
+msgstr "Ez dago txertatutako datu bitarren sarrerarik"
 
 #: creator/qml/BookBinaries.qml:81
 #, kde-format
 msgctxt "title text for a card which informs the user what binary data is"
 msgid "Embedded Binary Data"
-msgstr ""
+msgstr "Txertatutako datu bitarrak"
 
 #: creator/qml/BookBinaries.qml:89
 #, kde-format
@@ -997,6 +1029,10 @@ msgid ""
 "file on your system. That data will be imported into your book, and leaves "
 "the external file otherwise untouched."
 msgstr ""
+"Zure liburuan oraindik ez dago txertatutako daturik. Halako datuak gehitu "
+"ditzakezu sarrera berri bat sortu, eta ondoren sarrera horretara zure "
+"sisteman dagoen fitxategi bateko datuak gehituz. Datu horiek zure liburura "
+"inportatuko dira, eta kanpoko fitxategia ukitu gabe uzten du."
 
 #: creator/qml/BookBinaries.qml:90
 #, kde-format
@@ -1008,6 +1044,10 @@ msgid ""
 "data to that entry from some existing file on your system. That data will be "
 "imported into your book, and leaves the external file otherwise untouched."
 msgstr ""
+"Datu bitar sarrera berriak gehitu ditzakezu sarrera berri bat sortu, eta "
+"ondoren sarrera horretara zure sisteman dagoen fitxategi bateko datuak "
+"gehituz. Datu horiek zure liburura inportatuko dira, eta kanpoko fitxategia "
+"ukitu gabe uzten du."
 
 #: creator/qml/BookBinaries.qml:99
 #, kde-format
@@ -1015,7 +1055,7 @@ msgctxt ""
 "Title used in the list of binary data when there is no id defined for that "
 "entry"
 msgid "Unnamed piece of data"
-msgstr ""
+msgstr "Datu-zati izengabea"
 
 #: creator/qml/BookBinaries.qml:133
 #, kde-format
@@ -1081,7 +1121,7 @@ msgctxt ""
 "Label used in the binary editor sheet when there is no data in the current "
 "instance"
 msgid "No data set"
-msgstr ""
+msgstr "Ez dago datu multzorik"
 
 #: creator/qml/BookBinaryEditor.qml:89
 #, kde-format
@@ -1096,13 +1136,13 @@ msgstr "Inportatu datuak..."
 msgctxt ""
 "@title:window standard file open dialog used to add file data into the book"
 msgid "Pick A File To Add"
-msgstr ""
+msgstr "Hautatu gehitu beharreko fitxategi bat"
 
 #: creator/qml/BookBinaryEditor.qml:109 creator/qml/Main.qml:336
 #, kde-format
 msgctxt "The file type filter for showing all files"
 msgid "All files %1"
-msgstr "Fitxategi guztiak %1"
+msgstr "%1 fitxategi guztiak"
 
 #: creator/qml/BookBinaryEditor.qml:137
 #, kde-format
@@ -1121,6 +1161,8 @@ msgid ""
 "The file you are attempting to add, %1, is more than 10MiB. Are you sure you "
 "want to add it to the book?"
 msgstr ""
+"Gehitu nahian zabiltzan fitxategia, %1, 10MiB baino handiagoa da. Ziur zaude "
+"liburura gehitu nahi duzula?"
 
 #: creator/qml/BookBinaryEditor.qml:141
 #, kde-format
@@ -1300,7 +1342,7 @@ msgstr "Idatzi puntuazio-sistema gehitzeko."
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Review title"
-msgstr ""
+msgstr "Berrikuspenaren izenburua"
 
 #: creator/qml/BookMetainfoPage.qml:733
 #, kde-format
@@ -1384,7 +1426,7 @@ msgstr "Dokumentuaren informazio berria"
 #, kde-format
 msgctxt "@title:group"
 msgid "General Page Background Color"
-msgstr ""
+msgstr "Orrialdearen atzeko planoaren kolore orokorra"
 
 #: creator/qml/BookPage.qml:32
 #, kde-format
@@ -1439,7 +1481,7 @@ msgstr "Gorde"
 #, kde-format
 msgctxt "Abort the changes made in the editor, and close the editor"
 msgid "Abort Changes"
-msgstr ""
+msgstr "Aldaketak bertan behera utzi"
 
 #: creator/qml/BookReferenceEditor.qml:66
 #, kde-format
@@ -1521,11 +1563,13 @@ msgid ""
 "<p>Enter the body of your reference document here.</p>\n"
 "<p>This is what links look like: <a href=\"destination\">Some Link</a></p>"
 msgstr ""
+"<p>Sartu hemen zure erreferentzia-dokumentuaren gorpua.</p>\n"
+"<p>Hau da esteken itxura: <a href=\"destination\">Estekaren bat</a></p>"
 
 #: creator/qml/BookReferences.qml:92
 #, kde-format
 msgid "There is no reference information in your book yet"
-msgstr ""
+msgstr "Zure liburuan oraindik ez dago erreferentzia-informaziorik"
 
 #: creator/qml/BookReferences.qml:93
 #, kde-format
@@ -1535,6 +1579,11 @@ msgid ""
 "as well as links to both internal things (other references or one of the "
 "pieces of binary data), or to an external resource, such as a website."
 msgstr ""
+"Erreferentziak testu-paragrafoen bildumak dira, formatu sinplez bete "
+"ditzakezunak (sendoa, enfasia, eta diseinurako halako beste batzuk), baita "
+"bietarako estekak, barneko gauzetarako (beste erreferentziak edo datu "
+"bitarren piezetako bat), zein kanpoko sorburu baterako, webgune batera "
+"adibidez."
 
 #: creator/qml/BookStylesheet.qml:44
 #, kde-format
@@ -1625,6 +1674,9 @@ msgid ""
 "entry from some existing file on your system. That data will be imported "
 "into your book, and leaves the external file otherwise untouched."
 msgstr ""
+"Halako datuak gehitu ditzakezu sarrera berri bat sortu, eta ondoren sarrera "
+"horretara zure sisteman dagoen fitxategi bateko datuak gehituz. Datu horiek "
+"zure liburura inportatuko dira, eta kanpoko fitxategia ukitu gabe uzten du."
 
 #: creator/qml/CreateNewBook.qml:44
 #, kde-format
@@ -1777,13 +1829,13 @@ msgstr "Mota:"
 #, kde-format
 msgctxt "Label for the text area body field"
 msgid "Textarea Body:"
-msgstr ""
+msgstr "Testu-eremuaren gorputza:"
 
 #: creator/qml/EditPageArea.qml:299
 #, kde-format
 msgctxt "Label for a text input box in which to input a hyperlink destination"
 msgid "Jump Destination:"
-msgstr ""
+msgstr "Jauziaren helmuga:"
 
 #: creator/qml/EditPageArea.qml:301
 #, kde-format
@@ -1791,7 +1843,7 @@ msgctxt ""
 "Placeholder text for a text input box in which to input a hyperlink "
 "destination"
 msgid "Enter the jump destination here"
-msgstr ""
+msgstr "Sartu hemen jauziaren helmuga"
 
 #: creator/qml/EditPageArea.qml:305
 #, kde-format
@@ -2017,7 +2069,7 @@ msgstr "Markoak"
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "No frames present"
-msgstr ""
+msgstr "Ez dago markorik"
 
 #: creator/qml/PageMetaInfo.qml:119
 #, kde-format
@@ -2073,7 +2125,7 @@ msgstr "Testu-eremuak"
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "No text areas present"
-msgstr ""
+msgstr "Ez dago testu-eremurik"
 
 #: creator/qml/PageMetaInfo.qml:213
 #, kde-format
@@ -2109,7 +2161,7 @@ msgstr "Jauziak"
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "No jumps present"
-msgstr ""
+msgstr "Ez dago jauzirik"
 
 #: creator/qml/PageMetaInfo.qml:273
 #, kde-format
@@ -2171,18 +2223,25 @@ msgid ""
 "archive at the KDE Store from within the application, or just share the "
 "files with your friends."
 msgstr ""
+"Ongi etorri Peruse Sortzailera, cbz gaitasuna duen komikiak irakurtzeko "
+"edozein aplikaziorekin irakur daitekeen komiki-liburu artxiboak sortzeko "
+"diseinatutako tresna. Hutsetik abiatuta komiki-liburu artxibo berriak sortu, "
+"irudi multzo batetik bat sortu, edo dauden artxiboak editatu ditzakezu. "
+"Sortu ondoren, aplikaziotik bertatik zuzenean KDE biltegiko lerroko komiki-"
+"liburu artxiboa atalean argitaratu ditzakezu, edo fitxategiak zure lagunekin "
+"partekatu ditzakezu."
 
 #: creator/qml/WelcomePage.qml:81
 #, kde-format
 msgctxt "@action:button open existing comic book archive"
 msgid "Open Existing..."
-msgstr ""
+msgstr "Irekin dauden..."
 
 #: creator/qml/WelcomePage.qml:89
 #, kde-format
 msgctxt "@action:button create a new, empty comic book archive"
 msgid "Create Blank"
-msgstr ""
+msgstr "Sortu hutsik"
 
 #: creator/qml/WelcomePage.qml:96
 #, kde-format
@@ -2196,36 +2255,36 @@ msgctxt ""
 "@action:button continue working on the most recently opened comic book "
 "archive"
 msgid "Continue working on %1"
-msgstr ""
+msgstr "Jarraitu %1(e)an lanean"
 
 #: creator/qml/WelcomePage.qml:129
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "There are no recent books"
-msgstr ""
+msgstr "Ez dago azken aldiko libururik"
 
 #: qtquick/ArchiveBookModel.cpp:527
-#, fuzzy, kde-format
+#, kde-format
 msgid "Creating archive in %1"
 msgstr "%1(e)an artxiboa sortzen"
 
 #: qtquick/ArchiveBookModel.cpp:539
-#, fuzzy, kde-format
+#, kde-format
 msgid "Writing in ACBF data"
-msgstr "ACBF datuak gordetzen"
+msgstr "ACBF datuak idazten"
 
 #: qtquick/ArchiveBookModel.cpp:549
-#, fuzzy, kde-format
+#, kde-format
 msgid "Copying across all files not marked for deletion"
 msgstr "Ezabatzeko markatu gabeko fitxategi guztietan kopiatzen du"
 
 #: qtquick/ArchiveBookModel.cpp:557
-#, fuzzy, kde-format
+#, kde-format
 msgid "Copying over %1"
 msgstr "%1(e)ren gainean kopiatzen"
 
 #: qtquick/ArchiveBookModel.cpp:584
-#, fuzzy, kde-format
+#, kde-format
 msgid "Copying all content from %1 to %2"
 msgstr "%1(e)tik %2(e)ra eduki guztia kopiatzen"
 
