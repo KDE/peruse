@@ -26,6 +26,7 @@
   <name xml:lang="pa">ਪੇਰੁਸ</name>
   <name xml:lang="pl">Peruse</name>
   <name xml:lang="pt">Peruse</name>
+  <name xml:lang="pt-BR">Peruse</name>
   <name xml:lang="ru">Peruse</name>
   <name xml:lang="sk">Peruse</name>
   <name xml:lang="sl">Peruse</name>
@@ -56,6 +57,7 @@
   <summary xml:lang="pa">ਕਾਮਿਕ ਕਿਤਾਬ ਨਿਰਮਾਣ ਲਈ ਸਾਧਨ</summary>
   <summary xml:lang="pl">Narzędzie do tworzenia komiksów</summary>
   <summary xml:lang="pt">Ferramenta de Criação de Bandas Desenhadas</summary>
+  <summary xml:lang="pt-BR">Ferramenta de criação de livros em quadrinhos</summary>
   <summary xml:lang="sk">Nástroj na vytváranie komiksov</summary>
   <summary xml:lang="sl">Orodje za ustvarjanje stripov</summary>
   <summary xml:lang="sv">Serietidningsskapare</summary>
@@ -84,6 +86,7 @@
     <p xml:lang="nl">Rijke digitale stripboeken maken is lang een opgave geweest of vereiste het gebruik van niet-open formaten, maar het geavanceerde stripboekformaat richt zich op de reparatie hiervan door concepten te introduceren zoals op frames gebaseerde navigatie om mee te gaan met de meer traditionele op pagina's gebaseerde methoden, referentie informatie zoals karakterinformatie, locatienotities enzovoort, alles bevat in het boek, evenals ingebedde typesettinginformatie en opgemaakte tekstoverlays zodat vertaling gedaan kan worden zonder meerdere afbeeldingen van dezelfde pagina te vereisen. Peruse Creator biedt u deze hoog interactieve en geavanceerde boeken te maken op een manier die zowel gemakkelijk is te gebruiken als krachtig is.</p>
     <p xml:lang="pl">Tworzenie bogatych komiksów cyfrowych od dawna było uciążliwe lub wymagało użycia własnościowych formatów, lecz Format Rozbudowanego Komiksu ma temu zaradzić, wprowadzając takie koncepty jak poruszanie się oparte na kratkach, aby bardziej odwzorować tradycyjne sposoby oparte na stronach, dane literaturowe takie jak szczegóły o postaciach, uwagi o miejscach i tak dalej, wszystko zawarte w komiksie, a także osadzone czcionki oraz nakładki sformatowanego tekstu tak, aby tłumaczenia można było wykonywać bez posiadania wielu obrazów tej samej strony. Twórca Peruse umożliwia tworzenie tych wysoce interaktywnych i rozbudowanych komiksów w sposób zarówno łatwy i jak i dający wiele możliwości.</p>
     <p xml:lang="pt">A criação de livros de banda desenhada elaborados tem sido bastante difícil ou obrigava à utilização de formatos proprietários, mas o Advanced Comic Book Format pretende corrigir isto ao introduzir conceitos como a navegação com base em imagens para além dos métodos tradicionais e baseados em páginas, informações de referencia como a informação das personagens, as notas da localização, entre outros itens, tudo reunido dentro do livro, assim como a incorporação de informação da formatação e as camadas de texto formatado, para que a tradução possa ser feita sem obrigar a várias imagens da mesma página. O Peruse Creator permite-lhe criar estes livros altamente interactivos e avançados de uma forma que seja simples de usar e poderosa.</p>
+    <p xml:lang="pt-BR">Criar histórias em quadrinhos digitais ricas sempre foi uma tarefa árdua ou exigiu o uso de formatos proprietários, mas o Formato de Livro em Quadrinho Avançado visa corrigir isso introduzindo conceitos como navegação por quadros para complementar os métodos mais tradicionais baseados em páginas, informações de referência como informações sobre personagens, notas de localização e assim por diante, tudo contido no livro, bem como informações de composição incorporadas e sobreposições de texto avançadas para que a tradução  possa ser feita sem a necessidade de múltiplas imagens da mesma página. O Peruse Creator permite que você crie esses livros altamente interativos e avançados de uma forma fácil de usar e poderosa.</p>
     <p xml:lang="sl">Ustvarjanje bogatih digitalnih stripov je že dolgo kar naporno ali pa zahteva uporabo lastniških zapisov, vendar je cilj naprednega zapisa stripov to popraviti z uvedbo konceptov, kot so krmarjenje, ki temelji na sličicah, ki gre skupaj z bolj tradicionalnimi metodami, ki temeljijo na straneh, referenčne informacije, kot so podatki o liku, opombe o lokaciji itn., vse skupaj pa v obliki knjige, skupaj z vdelanimi podatki o stavljenju in prekrivno obogatenim besedilom, tako da je mogoče opraviti prevod, ne da bi to zahtevalo več slik iste strani. Peruse Creator omogoča, da ustvarite te zelo interaktivne in napredne knjige na način, ki je enostaven za uporabo in ponuja veliko možnosti.</p>
     <p xml:lang="sv">Att skapa innehållsrika digitala serieböcker har länge varit något av ett grovgöra, eller krävt användning av skyddade format, men det avancerade serieboksformatet har som mål att korrigera det genom att introducera koncept som rambaserad navigering tillsammans med mer traditionella sidbaserade metoder, referensinformation såsom karaktärsinformation, platsanmärkningar, med mera, som allt ingår i boken, samt inbäddad typsättningsinformation och överlagring av formaterad text så att översättning kan göras utan att kräva flera versioner av samma sida. Peruse låter dig skapa dessa ytterst interaktiva och avancerade böcker på ett sätt som är både lättanvänt och kraftfullt.</p>
     <p xml:lang="tr">Zengin sayısal çizgi romanlar oluşturmak uzun zamandır angarya bir şeydi veya özel biçimlerin kullanılmasını gerektiriyordu; ancak Gelişmiş Çizgi Roman Biçimi, daha geleneksel sayfa tabanlı yöntemler, başvuru bilgileri ile gitmek için çerçeve tabanlı gezinme gibi kavramları tanıtarak bunu düzeltmeyi amaçlıyor. karakter bilgileri, konum notları vb. gibi tümü kitapta yer alır, ayrıca gömülü dizgi bilgileri ve zengin metin kaplamaları, böylece aynı sayfanın birden fazla görüntüsüne gerek kalmadan çeviri yapılabilir. Peruse Creator, bu son derece etkileşimli ve gelişmiş kitapları hem kullanımı kolay hem de güçlü bir şekilde oluşturmanıza olanak tanır.</p>
@@ -111,6 +114,7 @@
     <p xml:lang="pa">ਫੀਚਰ:</p>
     <p xml:lang="pl">Możliwości:</p>
     <p xml:lang="pt">Funcionalidades:</p>
+    <p xml:lang="pt-BR">Funcionalidades:</p>
     <p xml:lang="ru">Возможности:</p>
     <p xml:lang="sk">Funkcie:</p>
     <p xml:lang="sl">Zmožnosti:</p>
@@ -143,6 +147,7 @@
       <li xml:lang="pa">ਕਾਮਿਕਸ ਬੁੱਕ ਅਕਾਇਵ (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="pl">Zeszyty komiksów (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="pt">Pacote de Banda Desenhada (cbz, cbr, cb7, cbt, cba)</li>
+      <li xml:lang="pt-BR">Arquivo de Livro em Quadrinhos (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="sk">Komiksový archív (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="sl">Arhivi stripov (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="sv">Serietidningsarkiv (cbz, cbr, cb7, cbt, cba)</li>
