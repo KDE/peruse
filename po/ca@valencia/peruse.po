@@ -400,7 +400,7 @@ msgctxt ""
 "@title:window standard file open dialog used to open a book not in the "
 "collection"
 msgid "Please Choose a Comic to Open"
-msgstr "Seleccioneu un còmic que s'ha d'obrir"
+msgstr "Trieu un còmic que s'ha d'obrir"
 
 #: app/qml/MobileMain.qml:42
 #, kde-format
@@ -602,13 +602,13 @@ msgstr "Actualment no hi ha cap carpeta indexada."
 #, kde-format
 msgctxt "@title:window Dialogue used to add a new search folder"
 msgid "Select a folder"
-msgstr "Seleccioneu una carpeta"
+msgstr "Trieu una carpeta"
 
 #: app/qml/Settings.qml:123
 #, kde-format
 msgctxt "@title:window dialogue used to add a new search folder"
 msgid "Select a Folder"
-msgstr "Seleccioneu una carpeta"
+msgstr "Trieu una carpeta"
 
 #: app/qml/Store.qml:37
 #, kde-format
@@ -699,7 +699,7 @@ msgstr ""
 "este serà el problema.\n"
 "\n"
 "Si no, informeu-nos d'este error, i proporcioneu tanta informació com pugueu "
-"per a ajudar-nos a trobar allò que estiga malament."
+"per ajudar-nos a trobar allò que estiga malament."
 
 #: app/qml/viewers/ViewerBase.qml:100
 #, kde-format
@@ -822,8 +822,8 @@ msgid ""
 "Please select the method you want to add the new page. No changes will be "
 "made outside of the project by performing these actions."
 msgstr ""
-"Seleccioneu el mètode que voleu per a afegir la pàgina nova. No es farà cap "
-"canvi fora del projecte en portar a terme estes accions."
+"Trieu el mètode que voleu per a afegir la pàgina nova. No es farà cap canvi "
+"fora del projecte en portar a terme estes accions."
 
 #: creator/qml/AddPageSheet.qml:55
 #, kde-format
@@ -1140,7 +1140,7 @@ msgstr "Importa les dades…"
 msgctxt ""
 "@title:window standard file open dialog used to add file data into the book"
 msgid "Pick A File To Add"
-msgstr "Seleccioneu el que cal afegir"
+msgstr "Trieu el que cal afegir"
 
 #: creator/qml/BookBinaryEditor.qml:109 creator/qml/Main.qml:336
 #, kde-format
@@ -1716,7 +1716,7 @@ msgstr "Carpeta"
 #, kde-format
 msgctxt "@action:button"
 msgid "Select Folder"
-msgstr "Seleccioneu una carpeta"
+msgstr "Trieu una carpeta"
 
 #: creator/qml/CreateNewBook.qml:111
 #, kde-format
@@ -1746,7 +1746,7 @@ msgstr "Falta la imatge de la portada"
 #, kde-format
 msgctxt "@action:button"
 msgid "Select image"
-msgstr "Seleccioneu una imatge"
+msgstr "Trieu una imatge"
 
 #: creator/qml/CreateNewBook.qml:184
 #, kde-format
@@ -1800,7 +1800,7 @@ msgstr "Color de fons:"
 #, kde-format
 msgctxt "@title color choosing dialog"
 msgid "Choose the background color for this frame"
-msgstr "Seleccioneu el color de fons d'este marc"
+msgstr "Trieu el color de fons d'este marc"
 
 #: creator/qml/EditPageArea.qml:218
 #, kde-format
@@ -2098,7 +2098,7 @@ msgstr "Color de fons:"
 #, kde-format
 msgctxt "@title color choosing dialog"
 msgid "Choose background color for this frame"
-msgstr "Seleccioneu el color de fons d'este marc"
+msgstr "Trieu el color de fons d'este marc"
 
 #: creator/qml/PageMetaInfo.qml:159
 #, kde-format
@@ -2226,10 +2226,10 @@ msgid ""
 "archive at the KDE Store from within the application, or just share the "
 "files with your friends."
 msgstr ""
-"Us donem la benvinguda al Creador de Peruse, una eina dissenyada per a "
-"ajudar-vos a crear arxius de llibres de còmic que es poden llegir amb "
-"qualsevol aplicació de lectura de llibres de còmic que accepte «cbz». Podeu "
-"crear arxius de llibre de còmic totalment des de zero, crear-ne un des d'un "
+"Us donem la benvinguda al Creador de Peruse, una eina dissenyada per ajudar-"
+"vos a crear arxius de llibres de còmic que es poden llegir amb qualsevol "
+"aplicació de lectura de llibres de còmic que accepte «cbz». Podeu crear "
+"arxius de llibre de còmic totalment des de zero, crear-ne un des d'un "
 "conjunt d'imatges, o editar arxius existents. Una vegada creats, també els "
 "podeu publicar directament a l'arxiu de llibres de còmic en línia de la KDE "
 "Store des de l'aplicació, o només compartir els fitxers amb els amics."
