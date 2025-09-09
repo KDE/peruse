@@ -33,7 +33,6 @@
   <name xml:lang="sv">Peruse</name>
   <name xml:lang="tr">Peruse</name>
   <name xml:lang="uk">Peruse</name>
-  <name xml:lang="x-test">xxPerusexx</name>
   <name xml:lang="zh-TW">Peruse</name>
   <summary>Comic Book Creation Tool</summary>
   <summary xml:lang="ca">Eina de creació de llibres de còmic</summary>
@@ -63,7 +62,6 @@
   <summary xml:lang="sv">Serietidningsskapare</summary>
   <summary xml:lang="tr">Çizgi Roman Oluşturma Aracı</summary>
   <summary xml:lang="uk">Засіб для створення коміксів</summary>
-  <summary xml:lang="x-test">xxComic Book Creation Toolxx</summary>
   <summary xml:lang="zh-TW">漫畫書製作工具</summary>
   <description>
     <p>
@@ -91,7 +89,6 @@
     <p xml:lang="sv">Att skapa innehållsrika digitala serieböcker har länge varit något av ett grovgöra, eller krävt användning av skyddade format, men det avancerade serieboksformatet har som mål att korrigera det genom att introducera koncept som rambaserad navigering tillsammans med mer traditionella sidbaserade metoder, referensinformation såsom karaktärsinformation, platsanmärkningar, med mera, som allt ingår i boken, samt inbäddad typsättningsinformation och överlagring av formaterad text så att översättning kan göras utan att kräva flera versioner av samma sida. Peruse låter dig skapa dessa ytterst interaktiva och avancerade böcker på ett sätt som är både lättanvänt och kraftfullt.</p>
     <p xml:lang="tr">Zengin sayısal çizgi romanlar oluşturmak uzun zamandır angarya bir şeydi veya özel biçimlerin kullanılmasını gerektiriyordu; ancak Gelişmiş Çizgi Roman Biçimi, daha geleneksel sayfa tabanlı yöntemler, başvuru bilgileri ile gitmek için çerçeve tabanlı gezinme gibi kavramları tanıtarak bunu düzeltmeyi amaçlıyor. karakter bilgileri, konum notları vb. gibi tümü kitapta yer alır, ayrıca gömülü dizgi bilgileri ve zengin metin kaplamaları, böylece aynı sayfanın birden fazla görüntüsüne gerek kalmadan çeviri yapılabilir. Peruse Creator, bu son derece etkileşimli ve gelişmiş kitapları hem kullanımı kolay hem de güçlü bir şekilde oluşturmanıza olanak tanır.</p>
     <p xml:lang="uk">Досить довго створення багатих на можливості цифрових коміксів було чимось надзвичайним або потребувало використання закритих форматів, але поява Advanced Comic Book Format має виправити це впровадженням речей, подібних до навігації за кадрами разом із традиційнішими заснованими на переході між сторінками методами, довідкової інформації, зокрема відомостей щодо персонажів, нотаток щодо місць тощо. І усе це міститься у самому коміксі, разом із вбудованими даними щодо поліграфії і накладеним форматованим текстом, який забезпечує можливість перекладу без потреби у створенні декількох зображень однієї сторінки. За допомогою Peruse Creator ви можете створювати такі інтерактивні комікси із розширеними можливостями у простий спосіб із доступом до усіх потужностей нового формату.</p>
-    <p xml:lang="x-test">xxCreating rich digital comic books has long been something of a chore, or required the use of proprietary formats, but the Advanced Comic Book Format aims to fix this by introducing concepts like frame based navigation to go with the more traditional page based methods, reference information such as character information, location notes, and so on, all contained within the book, as well as embedded typesetting information and rich text overlays so translation can be done without requiring multiple images of the same page. Peruse Creator allows you to create these highly interactive and advanced books in a way which is both easy to use, and powerful.xx</p>
     <p>Features:</p>
     <p xml:lang="ca">Característiques:</p>
     <p xml:lang="ca-valencia">Característiques:</p>
@@ -121,7 +118,6 @@
     <p xml:lang="sv">Funktioner:</p>
     <p xml:lang="tr">Özellikler:</p>
     <p xml:lang="uk">Можливості</p>
-    <p xml:lang="x-test">xxFeatures:xx</p>
     <p xml:lang="zh-CN">功能：</p>
     <p xml:lang="zh-TW">功能：</p>
     <ul>
@@ -153,7 +149,6 @@
       <li xml:lang="sv">Serietidningsarkiv (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="tr">Çizgi Roman Arşivi (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="uk">Робота із архівами коміксів (cbz, cbr, cb7, cbt, cba)</li>
-      <li xml:lang="x-test">xxComic Book Archive (cbz, cbr, cb7, cbt, cba)xx</li>
       <li xml:lang="zh-TW">漫畫書封存檔 (cbz, cbr, cb7, cbt, cba)</li>
     </ul>
   </description>
