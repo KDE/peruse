@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: peruse\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-30 00:40+0000\n"
-"PO-Revision-Date: 2025-08-25 13:24-0300\n"
+"PO-Revision-Date: 2025-09-14 08:40-0300\n"
 "Last-Translator: Marcus Gama <marcus.gama@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 25.08.0\n"
+"X-Generator: Lokalize 25.08.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -62,13 +62,13 @@ msgstr "Abrir arquivo no peruse."
 #, kde-format
 msgctxt "Enter full screen mode on a touch-based device"
 msgid "Go Full Screen"
-msgstr "Ir para tela inteira"
+msgstr "Ir para tela cheia"
 
 #: app/qml/Book.qml:182
 #, kde-format
 msgctxt "Exit full sceen mode on a touch based device"
 msgid "Exit Full Screen"
-msgstr "Sair da tela inteira"
+msgstr "Sair da tela cheia"
 
 #: app/qml/Book.qml:188
 #, kde-format
@@ -135,13 +135,13 @@ msgstr "Próxima página"
 #, kde-format
 msgctxt "Enter full screen mode on a non-touch-based device"
 msgid "Go Full Screen"
-msgstr "Ir para tela inteira"
+msgstr "Ir para tela cheia"
 
 #: app/qml/Book.qml:268
 #, kde-format
 msgctxt "Exit full sceen mode on a non-touch based device"
 msgid "Exit Full Screen"
-msgstr "Sair da tela inteira"
+msgstr "Sair da tela cheia"
 
 #: app/qml/Book.qml:275
 #, kde-format
