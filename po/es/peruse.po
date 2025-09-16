@@ -359,7 +359,7 @@ msgstr "No, cancelar borrado"
 #, kde-format
 msgctxt "A percentage of progress"
 msgid "%1%"
-msgstr "%1%"
+msgstr "%1 %"
 
 #: app/qml/listcomponents/BookTileTall.qml:93
 #, kde-format
