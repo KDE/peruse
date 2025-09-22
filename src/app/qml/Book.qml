@@ -179,7 +179,7 @@ Kirigami.Page {
 
     property list<QtObject> mobileActions: [
         Kirigami.Action {
-            text: applicationWindow().visibility !== Window.FullScreen ? i18nc("Enter full screen mode on a touch-based device", "Go Full Screen") : i18nc("Exit full sceen mode on a touch based device", "Exit Full Screen");
+            text: applicationWindow().visibility !== Window.FullScreen ? i18nc("Enter full screen mode on a touch-based device", "Go Full Screen") : i18nc("Exit full screen mode on a touch based device", "Exit Full Screen");
             icon.name: "view-fullscreen";
             onTriggered: toggleFullscreen();
             enabled: root.isCurrentContext && Kirigami.Settings.isMobile
@@ -265,7 +265,7 @@ Kirigami.Page {
             enabled: root.isCurrentContext && !Kirigami.Settings.isMobile;
         },
         Kirigami.Action {
-            text: applicationWindow().visibility !== Window.FullScreen ? i18nc("Enter full screen mode on a non-touch-based device", "Go Full Screen") : i18nc("Exit full sceen mode on a non-touch based device", "Exit Full Screen");
+            text: applicationWindow().visibility !== Window.FullScreen ? i18nc("Enter full screen mode on a non-touch-based device", "Go Full Screen") : i18nc("Exit full screen mode on a non-touch based device", "Exit Full Screen");
             shortcut: (applicationWindow().visibility === Window.FullScreen) ? "Esc" : "f";
             icon.name: "view-fullscreen";
             onTriggered: toggleFullscreen();

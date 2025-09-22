@@ -85,7 +85,7 @@ public:
     int number() const;
     /**
      * \brief set the number in the sequence.
-     * @param number - an interger number that indicates where it is
+     * @param number - an integer number that indicates where it is
      * part of the series.
      */
     void setNumber(int number);

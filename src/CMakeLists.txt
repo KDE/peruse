@@ -7,7 +7,7 @@ add_subdirectory(contentlist)
 # Our Qt Quick plugin
 add_subdirectory(qtquick)
 
-# Comon helper library shared between app and creator.
+# Common helper library shared between app and creator.
 add_subdirectory(common)
 
 # Base application

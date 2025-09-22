@@ -98,7 +98,7 @@ public:
     Q_SIGNAL void bookLocationsChanged();
 
     /**
-     * \brief Holds url to the peruse's KNewStuff configuration fle, to
+     * \brief Holds url to the peruse's KNewStuff configuration file, to
      * make it easy to retrieve.
      */
     QString newstuffLocation() const;
