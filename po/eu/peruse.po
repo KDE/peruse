@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: peruse\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-04-30 00:40+0000\n"
+"POT-Creation-Date: 2025-09-29 00:41+0000\n"
 "PO-Revision-Date: 2025-08-23 15:33+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -67,8 +67,10 @@ msgid "Go Full Screen"
 msgstr "Joan pantaila osora"
 
 #: app/qml/Book.qml:182
-#, kde-format
-msgctxt "Exit full sceen mode on a touch based device"
+#, fuzzy, kde-format
+#| msgctxt "Exit full sceen mode on a touch based device"
+#| msgid "Exit Full Screen"
+msgctxt "Exit full screen mode on a touch based device"
 msgid "Exit Full Screen"
 msgstr "Irten pantaila osotik"
 
@@ -140,8 +142,10 @@ msgid "Go Full Screen"
 msgstr "Joan pantaila osora"
 
 #: app/qml/Book.qml:268
-#, kde-format
-msgctxt "Exit full sceen mode on a non-touch based device"
+#, fuzzy, kde-format
+#| msgctxt "Exit full sceen mode on a touch based device"
+#| msgid "Exit Full Screen"
+msgctxt "Exit full screen mode on a non-touch based device"
 msgid "Exit Full Screen"
 msgstr "Irten pantaila osotik"
 
@@ -2296,3 +2300,7 @@ msgid ""
 msgstr ""
 "Fitxategi zaharra berriarekin behar bezala ordeztu da - orain fitxategi "
 "berria zamatzen..."
+
+#~ msgctxt "Exit full sceen mode on a non-touch based device"
+#~ msgid "Exit Full Screen"
+#~ msgstr "Irten pantaila osotik"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: peruse\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-04-30 00:40+0000\n"
+"POT-Creation-Date: 2025-09-29 00:41+0000\n"
 "PO-Revision-Date: 2025-07-11 11:58+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -64,8 +64,10 @@ msgid "Go Full Screen"
 msgstr "Siirry koko näytölle"
 
 #: app/qml/Book.qml:182
-#, kde-format
-msgctxt "Exit full sceen mode on a touch based device"
+#, fuzzy, kde-format
+#| msgctxt "Exit full sceen mode on a touch based device"
+#| msgid "Exit Full Screen"
+msgctxt "Exit full screen mode on a touch based device"
 msgid "Exit Full Screen"
 msgstr "Poistu koko näytöltä"
 
@@ -137,8 +139,10 @@ msgid "Go Full Screen"
 msgstr "Siirry koko näytölle"
 
 #: app/qml/Book.qml:268
-#, kde-format
-msgctxt "Exit full sceen mode on a non-touch based device"
+#, fuzzy, kde-format
+#| msgctxt "Exit full sceen mode on a touch based device"
+#| msgid "Exit Full Screen"
+msgctxt "Exit full screen mode on a non-touch based device"
 msgid "Exit Full Screen"
 msgstr "Poistu koko näytöltä"
 
@@ -2286,6 +2290,10 @@ msgid ""
 "archive..."
 msgstr ""
 "Vanhan arkiston korvaaminen uudella onnistui – ladataan nyt uusi arkisto…"
+
+#~ msgctxt "Exit full sceen mode on a non-touch based device"
+#~ msgid "Exit Full Screen"
+#~ msgstr "Poistu koko näytöltä"
 
 #~ msgctxt "Closes the book information drawer"
 #~ msgid "Close"

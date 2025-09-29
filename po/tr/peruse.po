@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: peruse\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-04-30 00:40+0000\n"
+"POT-Creation-Date: 2025-09-29 00:41+0000\n"
 "PO-Revision-Date: 2025-04-30 17:41+0300\n"
 "Last-Translator: Emir SARI <emir_sari@îcloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -64,8 +64,10 @@ msgid "Go Full Screen"
 msgstr "Tam Ekrana Geç"
 
 #: app/qml/Book.qml:182
-#, kde-format
-msgctxt "Exit full sceen mode on a touch based device"
+#, fuzzy, kde-format
+#| msgctxt "Exit full sceen mode on a touch based device"
+#| msgid "Exit Full Screen"
+msgctxt "Exit full screen mode on a touch based device"
 msgid "Exit Full Screen"
 msgstr "Tam Ekrandan Çık"
 
@@ -137,8 +139,10 @@ msgid "Go Full Screen"
 msgstr "Tam Ekrana Geç"
 
 #: app/qml/Book.qml:268
-#, kde-format
-msgctxt "Exit full sceen mode on a non-touch based device"
+#, fuzzy, kde-format
+#| msgctxt "Exit full sceen mode on a touch based device"
+#| msgid "Exit Full Screen"
+msgctxt "Exit full screen mode on a non-touch based device"
 msgid "Exit Full Screen"
 msgstr "Tam Ekrandan Çık"
 
@@ -2288,6 +2292,10 @@ msgid ""
 msgstr ""
 "Eski arşiv, yeni arşiv ile başarıyla değiştirildi — şimdi yeni arşiv "
 "yükleniyor…"
+
+#~ msgctxt "Exit full sceen mode on a non-touch based device"
+#~ msgid "Exit Full Screen"
+#~ msgstr "Tam Ekrandan Çık"
 
 #~ msgctxt "Closes the book information drawer"
 #~ msgid "Close"

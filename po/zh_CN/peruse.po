@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-04-30 00:40+0000\n"
+"POT-Creation-Date: 2025-09-29 00:41+0000\n"
 "PO-Revision-Date: 2024-04-22 16:05\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -64,8 +64,10 @@ msgid "Go Full Screen"
 msgstr ""
 
 #: app/qml/Book.qml:182
-#, kde-format
-msgctxt "Exit full sceen mode on a touch based device"
+#, fuzzy, kde-format
+#| msgctxt "Exit full sceen mode on a touch based device"
+#| msgid "Exit Full Screen"
+msgctxt "Exit full screen mode on a touch based device"
 msgid "Exit Full Screen"
 msgstr "退出全屏"
 
@@ -137,8 +139,10 @@ msgid "Go Full Screen"
 msgstr ""
 
 #: app/qml/Book.qml:268
-#, kde-format
-msgctxt "Exit full sceen mode on a non-touch based device"
+#, fuzzy, kde-format
+#| msgctxt "Exit full sceen mode on a touch based device"
+#| msgid "Exit Full Screen"
+msgctxt "Exit full screen mode on a non-touch based device"
 msgid "Exit Full Screen"
 msgstr "退出全屏"
 
@@ -2227,3 +2231,7 @@ msgid ""
 "Successfully replaced old archive with the new archive - now loading the new "
 "archive..."
 msgstr ""
+
+#~ msgctxt "Exit full sceen mode on a non-touch based device"
+#~ msgid "Exit Full Screen"
+#~ msgstr "退出全屏"

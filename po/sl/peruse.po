@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: peruse\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-04-30 00:40+0000\n"
+"POT-Creation-Date: 2025-09-29 00:41+0000\n"
 "PO-Revision-Date: 2025-04-30 07:23+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -67,8 +67,10 @@ msgid "Go Full Screen"
 msgstr "Vstopi v celozaslonski način"
 
 #: app/qml/Book.qml:182
-#, kde-format
-msgctxt "Exit full sceen mode on a touch based device"
+#, fuzzy, kde-format
+#| msgctxt "Exit full sceen mode on a touch based device"
+#| msgid "Exit Full Screen"
+msgctxt "Exit full screen mode on a touch based device"
 msgid "Exit Full Screen"
 msgstr "Izhod iz celozaslonskega načina"
 
@@ -140,8 +142,10 @@ msgid "Go Full Screen"
 msgstr "Vstopi v celozaslonski način"
 
 #: app/qml/Book.qml:268
-#, kde-format
-msgctxt "Exit full sceen mode on a non-touch based device"
+#, fuzzy, kde-format
+#| msgctxt "Exit full sceen mode on a touch based device"
+#| msgid "Exit Full Screen"
+msgctxt "Exit full screen mode on a non-touch based device"
 msgid "Exit Full Screen"
 msgstr "Izhod iz celozaslonskega načina"
 
@@ -2295,6 +2299,10 @@ msgid ""
 "archive..."
 msgstr ""
 "Uspešno zamenjan stari arhiv z novim arhivom - zdaj se nalaga novi arhiv ..."
+
+#~ msgctxt "Exit full sceen mode on a non-touch based device"
+#~ msgid "Exit Full Screen"
+#~ msgstr "Izhod iz celozaslonskega načina"
 
 #~ msgctxt "Closes the book information drawer"
 #~ msgid "Close"

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: peruse\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-04-30 00:40+0000\n"
+"POT-Creation-Date: 2025-09-29 00:41+0000\n"
 "PO-Revision-Date: 2025-05-02 17:21+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
@@ -67,8 +67,10 @@ msgid "Go Full Screen"
 msgstr "Passer en plein écran"
 
 #: app/qml/Book.qml:182
-#, kde-format
-msgctxt "Exit full sceen mode on a touch based device"
+#, fuzzy, kde-format
+#| msgctxt "Exit full sceen mode on a touch based device"
+#| msgid "Exit Full Screen"
+msgctxt "Exit full screen mode on a touch based device"
 msgid "Exit Full Screen"
 msgstr "Sortir du mode plein écran"
 
@@ -140,8 +142,10 @@ msgid "Go Full Screen"
 msgstr "Passer en plein écran"
 
 #: app/qml/Book.qml:268
-#, kde-format
-msgctxt "Exit full sceen mode on a non-touch based device"
+#, fuzzy, kde-format
+#| msgctxt "Exit full sceen mode on a touch based device"
+#| msgid "Exit Full Screen"
+msgctxt "Exit full screen mode on a non-touch based device"
 msgid "Exit Full Screen"
 msgstr "Sortir du mode plein écran"
 
@@ -2315,6 +2319,10 @@ msgid ""
 msgstr ""
 "Remplacement avec succès de l'ancienne archive par la nouvelle. Chargement "
 "en cours de la nouvelle archive..."
+
+#~ msgctxt "Exit full sceen mode on a non-touch based device"
+#~ msgid "Exit Full Screen"
+#~ msgstr "Sortir du mode plein écran"
 
 #~ msgctxt "Closes the book information drawer"
 #~ msgid "Close"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: peruse\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-04-30 00:40+0000\n"
+"POT-Creation-Date: 2025-09-29 00:41+0000\n"
 "PO-Revision-Date: 2025-04-30 06:09+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -65,8 +65,10 @@ msgid "Go Full Screen"
 msgstr "სრულ ეკრანზე გატანა"
 
 #: app/qml/Book.qml:182
-#, kde-format
-msgctxt "Exit full sceen mode on a touch based device"
+#, fuzzy, kde-format
+#| msgctxt "Exit full sceen mode on a touch based device"
+#| msgid "Exit Full Screen"
+msgctxt "Exit full screen mode on a touch based device"
 msgid "Exit Full Screen"
 msgstr "სრული ეკრანიდან გამოსვლა"
 
@@ -138,8 +140,10 @@ msgid "Go Full Screen"
 msgstr "სრულ ეკრანზე გატანა"
 
 #: app/qml/Book.qml:268
-#, kde-format
-msgctxt "Exit full sceen mode on a non-touch based device"
+#, fuzzy, kde-format
+#| msgctxt "Exit full sceen mode on a touch based device"
+#| msgid "Exit Full Screen"
+msgctxt "Exit full screen mode on a non-touch based device"
 msgid "Exit Full Screen"
 msgstr "სრული ეკრანიდან გამოსვლა"
 
@@ -2293,6 +2297,10 @@ msgid ""
 "archive..."
 msgstr ""
 "ძველი არქივი ახლით წარმატებით შეიცვალა - ახლა იტვირთება ახალი არქივი..."
+
+#~ msgctxt "Exit full sceen mode on a non-touch based device"
+#~ msgid "Exit Full Screen"
+#~ msgstr "სრული ეკრანიდან გამოსვლა"
 
 #~ msgctxt "Closes the book information drawer"
 #~ msgid "Close"
