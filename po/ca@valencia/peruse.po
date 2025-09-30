@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: peruse\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-09-29 00:41+0000\n"
-"PO-Revision-Date: 2025-04-30 11:11+0200\n"
+"PO-Revision-Date: 2025-09-29 10:12+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -70,9 +70,7 @@ msgid "Go Full Screen"
 msgstr "Ves a pantalla completa"
 
 #: app/qml/Book.qml:182
-#, fuzzy, kde-format
-#| msgctxt "Exit full sceen mode on a touch based device"
-#| msgid "Exit Full Screen"
+#, kde-format
 msgctxt "Exit full screen mode on a touch based device"
 msgid "Exit Full Screen"
 msgstr "Ix de pantalla completa"
@@ -145,9 +143,7 @@ msgid "Go Full Screen"
 msgstr "Ves a pantalla completa"
 
 #: app/qml/Book.qml:268
-#, fuzzy, kde-format
-#| msgctxt "Exit full sceen mode on a touch based device"
-#| msgid "Exit Full Screen"
+#, kde-format
 msgctxt "Exit full screen mode on a non-touch based device"
 msgid "Exit Full Screen"
 msgstr "Ix de pantalla completa"
@@ -2303,7 +2299,3 @@ msgid ""
 msgstr ""
 "S'ha reemplaçat correctament l'arxiu antic per l'arxiu nou - ara es carrega "
 "l'arxiu nou…"
-
-#~ msgctxt "Exit full sceen mode on a non-touch based device"
-#~ msgid "Exit Full Screen"
-#~ msgstr "Ix de pantalla completa"

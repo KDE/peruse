@@ -65,8 +65,6 @@ msgstr ""
 
 #: app/qml/Book.qml:182
 #, fuzzy, kde-format
-#| msgctxt "Exit full sceen mode on a touch based device"
-#| msgid "Exit Full Screen"
 msgctxt "Exit full screen mode on a touch based device"
 msgid "Exit Full Screen"
 msgstr "退出全屏"
@@ -140,8 +138,6 @@ msgstr ""
 
 #: app/qml/Book.qml:268
 #, fuzzy, kde-format
-#| msgctxt "Exit full sceen mode on a touch based device"
-#| msgid "Exit Full Screen"
 msgctxt "Exit full screen mode on a non-touch based device"
 msgid "Exit Full Screen"
 msgstr "退出全屏"
@@ -178,13 +174,13 @@ msgstr ""
 #, kde-format
 msgctxt "@label"
 msgid "Author(s):"
-msgstr ""
+msgstr "作者："
 
 #: app/qml/BookInfoPage.qml:44 app/qml/BookInfoPage.qml:51
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "Unknown"
-msgstr ""
+msgstr "未知"
 
 #: app/qml/BookInfoPage.qml:50
 #, kde-format
@@ -202,24 +198,24 @@ msgstr ""
 #, kde-format
 msgctxt "@title:group"
 msgid "File Metadata"
-msgstr ""
+msgstr "文件元数据"
 
 #: app/qml/BookInfoPage.qml:70
 #, kde-format
 msgctxt "@label"
 msgid "Rating:"
-msgstr ""
+msgstr "评分："
 
 #: app/qml/BookInfoPage.qml:92
 #, kde-format
 msgid "Set rating to %1"
-msgstr ""
+msgstr "设定评分为：%1"
 
 #: app/qml/BookInfoPage.qml:123
 #, kde-format
 msgctxt "@label"
 msgid "Tags:"
-msgstr ""
+msgstr "标签："
 
 #: app/qml/BookInfoPage.qml:125 app/qml/listcomponents/BookTile.qml:291
 #, kde-format
@@ -264,13 +260,13 @@ msgstr ""
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Open"
-msgstr ""
+msgstr "打开"
 
 #: app/qml/Bookshelf.qml:163
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Details"
-msgstr ""
+msgstr "详细信息"
 
 #: app/qml/CategoryPage.qml:65
 #, kde-format
@@ -382,7 +378,7 @@ msgstr ""
 #, kde-format
 msgctxt "Author name used when there are no known authors for a book"
 msgid "Unknown author"
-msgstr ""
+msgstr "未知作者"
 
 #: app/qml/listcomponents/CategoryTile.qml:40
 #, kde-format
@@ -527,7 +523,7 @@ msgstr ""
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "No series found"
-msgstr ""
+msgstr "未找到系列"
 
 #: app/qml/PeruseMain.qml:350
 #, kde-format
@@ -539,25 +535,25 @@ msgstr ""
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "No authors found"
-msgstr ""
+msgstr "未找到作者"
 
 #: app/qml/PeruseMain.qml:362
 #, kde-format
 msgctxt "@title"
 msgid "Authors"
-msgstr ""
+msgstr "作者"
 
 #: app/qml/PeruseMain.qml:372
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "No publishers found"
-msgstr ""
+msgstr "未找到发布者"
 
 #: app/qml/PeruseMain.qml:374
 #, kde-format
 msgctxt "@title"
 msgid "Publishers"
-msgstr ""
+msgstr "发布者"
 
 #: app/qml/PeruseMain.qml:382
 #, kde-format
@@ -874,7 +870,7 @@ msgstr ""
 #: creator/qml/Book.qml:190
 #, kde-format
 msgid "Start adding pages to your book"
-msgstr ""
+msgstr "开始添加页面到您的书"
 
 #: creator/qml/BookBasics.qml:39
 #, kde-format
@@ -1170,7 +1166,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:group"
 msgid "Authors"
-msgstr ""
+msgstr "作者"
 
 #: creator/qml/BookMetainfoPage.qml:132 creator/qml/BookMetainfoPage.qml:842
 #, kde-format
@@ -1182,25 +1178,25 @@ msgstr ""
 #, kde-format
 msgctxt "@action:button"
 msgid "Edit author"
-msgstr ""
+msgstr "编辑作者"
 
 #: creator/qml/BookMetainfoPage.qml:151
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove author"
-msgstr ""
+msgstr "移除作者"
 
 #: creator/qml/BookMetainfoPage.qml:176 creator/qml/BookMetainfoPage.qml:880
 #, kde-format
 msgctxt "@label:textfield"
 msgid "New author (nickname)"
-msgstr ""
+msgstr "新作者(昵称)"
 
 #: creator/qml/BookMetainfoPage.qml:189
 #, kde-format
 msgctxt "@action:button"
 msgid "Add new author"
-msgstr ""
+msgstr "新增作者"
 
 #: creator/qml/BookMetainfoPage.qml:197
 #, kde-format
@@ -1212,7 +1208,7 @@ msgstr "流派"
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove genre"
-msgstr ""
+msgstr "移除类别"
 
 #: creator/qml/BookMetainfoPage.qml:294
 #, kde-format
@@ -1260,19 +1256,19 @@ msgstr ""
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Reference:"
-msgstr ""
+msgstr "引用："
 
 #: creator/qml/BookMetainfoPage.qml:533 creator/qml/BookMetainfoPage.qml:609
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Database name:"
-msgstr ""
+msgstr "数据库名称"
 
 #: creator/qml/BookMetainfoPage.qml:550
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Reference type:"
-msgstr ""
+msgstr "引用类型："
 
 #: creator/qml/BookMetainfoPage.qml:628
 #, kde-format
@@ -1296,13 +1292,13 @@ msgstr ""
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Review title"
-msgstr ""
+msgstr "书评标题"
 
 #: creator/qml/BookMetainfoPage.qml:733
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Description"
-msgstr ""
+msgstr "描述"
 
 #: creator/qml/BookMetainfoPage.qml:754
 #, kde-format
@@ -1481,7 +1477,7 @@ msgstr ""
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Unique identifier"
-msgstr ""
+msgstr "唯一标识符"
 
 #: creator/qml/BookReferenceEditor.qml:112
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:109
@@ -1577,7 +1573,7 @@ msgstr ""
 #, kde-format
 msgctxt "@option:check"
 msgid "Color"
-msgstr ""
+msgstr "颜色"
 
 #: creator/qml/BookStylesheet.qml:139
 #, kde-format
@@ -1657,7 +1653,7 @@ msgstr "文件夹"
 #, kde-format
 msgctxt "@action:button"
 msgid "Select Folder"
-msgstr ""
+msgstr "选择文件夹"
 
 #: creator/qml/CreateNewBook.qml:111
 #, kde-format
@@ -1681,13 +1677,13 @@ msgstr ""
 #, kde-format
 msgctxt "placeholder message for missing cover image"
 msgid "Missing cover image"
-msgstr ""
+msgstr "缺少封面图像"
 
 #: creator/qml/CreateNewBook.qml:160
 #, kde-format
 msgctxt "@action:button"
 msgid "Select image"
-msgstr ""
+msgstr "选择图像"
 
 #: creator/qml/CreateNewBook.qml:184
 #, kde-format
@@ -1824,7 +1820,7 @@ msgstr ""
 #: creator/qml/LinkEditorSheet.qml:157
 #, kde-format
 msgid "Preview"
-msgstr ""
+msgstr "预览"
 
 #: creator/qml/Main.qml:170
 #, kde-format
@@ -1904,25 +1900,25 @@ msgstr ""
 #, kde-format
 msgctxt "@title:group"
 msgid "Name"
-msgstr ""
+msgstr "全名"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:80
 #, kde-format
 msgctxt "@label:textfield"
 msgid "First name"
-msgstr ""
+msgstr "名字"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:85
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Middle name"
-msgstr ""
+msgstr "中间名"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:90
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Last name"
-msgstr ""
+msgstr "姓氏"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:95
 #, kde-format
@@ -1952,13 +1948,13 @@ msgstr ""
 #, kde-format
 msgctxt "@title:group"
 msgid "Email addresses"
-msgstr ""
+msgstr "邮箱地址"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:209
 #, kde-format
 msgctxt "placeholder text for the email field"
 msgid "New Email address"
-msgstr ""
+msgstr "添加邮箱地址"
 
 #: creator/qml/PageMetaInfo.qml:42
 #, kde-format
@@ -1977,13 +1973,13 @@ msgstr "关闭编辑器"
 #, kde-format
 msgctxt "@title:group"
 msgid "General"
-msgstr ""
+msgstr "常规"
 
 #: creator/qml/PageMetaInfo.qml:63
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Title:"
-msgstr ""
+msgstr "标题："
 
 #: creator/qml/PageMetaInfo.qml:72
 #, kde-format
@@ -2069,7 +2065,7 @@ msgstr ""
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "No text areas present"
-msgstr ""
+msgstr "无文本区域"
 
 #: creator/qml/PageMetaInfo.qml:213
 #, kde-format
@@ -2105,7 +2101,7 @@ msgstr "跳转"
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "No jumps present"
-msgstr ""
+msgstr "无跳转"
 
 #: creator/qml/PageMetaInfo.qml:273
 #, kde-format
