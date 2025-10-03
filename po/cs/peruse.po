@@ -64,12 +64,10 @@ msgid "Go Full Screen"
 msgstr "Spustit celoobrazovkový režim"
 
 #: app/qml/Book.qml:182
-#, fuzzy, kde-format
-#| msgctxt "Exit full sceen mode on a touch based device"
-#| msgid "Exit Full Screen"
+#, kde-format
 msgctxt "Exit full screen mode on a touch based device"
 msgid "Exit Full Screen"
-msgstr "Ukončit celoobrazovkový režim"
+msgstr ""
 
 #: app/qml/Book.qml:188
 #, kde-format
@@ -139,12 +137,10 @@ msgid "Go Full Screen"
 msgstr "Spustit celoobrazovkový režim"
 
 #: app/qml/Book.qml:268
-#, fuzzy, kde-format
-#| msgctxt "Exit full sceen mode on a touch based device"
-#| msgid "Exit Full Screen"
+#, kde-format
 msgctxt "Exit full screen mode on a non-touch based device"
 msgid "Exit Full Screen"
-msgstr "Ukončit celoobrazovkový režim"
+msgstr ""
 
 #: app/qml/Book.qml:275
 #, kde-format
@@ -2234,7 +2230,3 @@ msgid ""
 "Successfully replaced old archive with the new archive - now loading the new "
 "archive..."
 msgstr ""
-
-#~ msgctxt "Exit full sceen mode on a non-touch based device"
-#~ msgid "Exit Full Screen"
-#~ msgstr "Ukončit celoobrazovkový režim"
