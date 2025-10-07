@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Peruse Creator
+Name[ar]=منشئ القصص المصورة
 Name[ca]=Creador del Peruse
 Name[ca@valencia]=Creador de Peruse
 Name[cs]=Tvůrce Peruse
@@ -28,6 +29,7 @@ Name[tr]=Peruse Oluşturucu
 Name[uk]=Peruse Creator
 Name[zh_TW]=Peruse 製作工具
 GenericName=Comic Book Creator
+GenericName[ar]=منشئ القصص المصورة
 GenericName[ca]=Creador de llibres de còmic
 GenericName[ca@valencia]=Creador de llibres de còmic
 GenericName[cs]=Tvůrce komiksů
@@ -56,6 +58,7 @@ GenericName[tr]=Çizgi Roman Oluşturucusu
 GenericName[uk]=Програма для створення коміксів
 GenericName[zh_TW]=漫畫書製作工具
 Comment=An application for creating comic books archives
+Comment[ar]=تطبيق لإنشاء أرشيفات للكتب المصورة
 Comment[ca]=Una aplicació per a crear arxius de llibres de còmic
 Comment[ca@valencia]=Una aplicació per a crear arxius de llibres de còmic
 Comment[cs]=Aplikace pro vytváření archivů knih komiksů
