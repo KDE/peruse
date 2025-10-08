@@ -9,6 +9,7 @@
   </developer>
   <launchable type="desktop-id">org.kde.peruse.desktop</launchable>
   <name>Peruse</name>
+  <name xml:lang="ar">قارئ القصص</name>
   <name xml:lang="ca">Peruse</name>
   <name xml:lang="ca-valencia">Peruse</name>
   <name xml:lang="cs">Peruse</name>
@@ -39,6 +40,7 @@
   <name xml:lang="uk">Peruse</name>
   <name xml:lang="zh-TW">Peruse</name>
   <summary>Comic Book Reader</summary>
+  <summary xml:lang="ar">قارئ القصص المصورة</summary>
   <summary xml:lang="ca">Lector de llibres de còmic</summary>
   <summary xml:lang="ca-valencia">Lector de llibres de còmic</summary>
   <summary xml:lang="cs">Čtečka komiksů</summary>
@@ -76,6 +78,7 @@
       peruse your comic books at your leisure, but that would be a silly way of
       putting it - so, peruse your comic books at your leisure!
     </p>
+    <p xml:lang="ar">توجد طرق عديدة لقراءة القصص المصورة، وصار إحداها أكثر شيوعًا في السنوات الأخيرة وهي على حاسوب. أُنْشِئ قارئ القصص لتوفير هذه التجربة بسهولة ومُتعة قدر الإمكان، وللابتعاد عن الطريق ببساطة والسماح لك بقراءة قصصك المصورة. قد يقول قائل أنه يتيح لك تصفح قصصك المصورة على مهلك، لكنها طريقة سخيفة لقول ذلك - لذا، تصفح قصصك المصورة على مهلك!</p>
     <p xml:lang="ca">Hi ha moltes maneres de llegir còmics, i una de les que ha esdevingut més normal en anys recents és en un ordinador. El Peruse es va crear com una manera de fer-ho exactament tan fàcil i agradable com fos possible, i per a senzillament oblidar-se de la manera i permetre llegir els llibres de còmic. Es podria dir que permet llegir atentament els llibres de còmic en el temps de lleure, però això seria una manera forassenyada de dir-ho, així que llegiu atentament els llibres de còmic en el vostre temps de lleure!</p>
     <p xml:lang="ca-valencia">Hi ha moltes maneres de llegir còmics, i una de les que ha esdevingut més normal en anys recents és en un ordinador. Peruse es va crear com una manera de fer-ho exactament tan fàcil i agradable com fora possible, i per a senzillament oblidar-se de la manera i permetre llegir els llibres de còmic. Es podria dir que permet llegir atentament els llibres de còmic en el temps de lleure, però açò seria una manera forassenyada de dir-ho, així que llegiu atentament els llibres de còmic en el vostre temps de lleure!</p>
     <p xml:lang="en-GB">There are many ways to read comic books, and one of those that has become more common in recent years is on a computer. Peruse was created as a way to make exactly that as easy and pleasant as possible, and to simply get out of the way and let you read your comic books. One could say that it allows you to peruse your comic books at your leisure, but that would be a silly way of putting it - so, peruse your comic books at your leisure!</p>
@@ -107,6 +110,7 @@
       where you left off, simply tap the top left item and you will be taken right to
       the page you were reading before you had to stop.
     </p>
+    <p xml:lang="ar">إحدى الطرق التي يضمن بها قارئ القصص أن تكون تجربة قراءتك ممتعة وسهلة قدر الإمكان هي السماح لك ببساطة بالاستئناف من حيث توقفت آخر مرة. تعرض صفحة الترحيب في التطبيق (لقطة الشاشة الأولى أدناه) قصصك المصورة المقروءة مؤخرًا، وتوضح تقدمك فيها. للاستئناف من حيث توقفت، ما عليك سوى انقر العنصر الموجود أعلى اليسار وستنتقل مباشرة إلى الصفحة التي كنت تقرأها قبل أن تضطر إلى التوقف.</p>
     <p xml:lang="ca">Una de les maneres en què el Peruse us assegura que l'experiència de lectura serà agradable i sense esforç és senzillament retornar a on ho vàreu deixar. La pàgina de benvinguda de l'aplicació (la primera captura de pantalla de sota) us mostra els còmics llegits més recents, i mostra el seu progrés. Per a tornar a on ho vàreu deixar, només toqueu l'element superior de l'esquerra i anireu directe a la pàgina que estàveu llegint abans d'aturar-vos.</p>
     <p xml:lang="ca-valencia">Una de les maneres en què Peruse vos assegura que l'experiència de lectura serà agradable i sense esforç és senzillament retornar a on ho vau deixar. La pàgina de benvinguda de l'aplicació (la primera captura de pantalla de davall) vos mostra els còmics llegits més recents, i mostra el seu progrés. Per a tornar a on ho vau deixar, només toqueu l'element superior de l'esquerra i anireu directe a la pàgina que estàveu llegint abans de parar-vos.</p>
     <p xml:lang="en-GB">One of the ways in which Peruse ensures your reading experience is as pleasant and effortless as possible is to allow you to simply pick up where you last left off. The welcome page in the application (first screenshot below) shows you your most recently read comics, and shows your progress through them. To pick up where you left off, simply tap the top left item and you will be taken right to the page you were reading before you had to stop.</p>
@@ -131,6 +135,7 @@
     <p xml:lang="tr">Peruse’un okuma deneyiminizi olabildiğince keyifli ve zahmetsiz hale getirmenin yollarından biri, en son kaldığınız yerden sürdürmenize izin vermektir. Uygulamadaki karşılama sayfası (aşağıdaki ilk ekran görüntüsü) size en son okuduğunuz çizgi romanları açar ve bunlar arasındaki ilerlemenizi gösterir. Kaldığınız yerden sürdürmek için sol üstteki ögeye dokunmanız yeterlidir; durmak zorunda kalmadan önce okumakta olduğunuz sayfaya yönlendirilirsiniz.</p>
     <p xml:lang="uk">Однією з можливостей, яку пропонує вам Peruse для спрощення читання, є можливість продовжувати читання з місця, на якому ви востаннє зупинилися. На сторінці вітання програми (перший з наведених нижче знімків) буде показано список коміксів, які ви читали останніми, та дані щодо поступу читання. Щоб перейти до місця, де ви зупинилися, просто натисніть пункт вгорі ліворуч, і програма відкриє вам сторінку, яку ви читали останньою.</p>
     <p>Features:</p>
+    <p xml:lang="ar">الميزات:</p>
     <p xml:lang="ca">Característiques:</p>
     <p xml:lang="ca-valencia">Característiques:</p>
     <p xml:lang="cs">Vlastnosti:</p>
@@ -163,6 +168,7 @@
     <p xml:lang="zh-TW">功能：</p>
     <ul>
       <li>Comic Book Archive (cbz, cbr, cb7, cbt, cba)</li>
+      <li xml:lang="ar">أرشيف القصص المصورة (cbz، cbr، cb7، cbt، cba)</li>
       <li xml:lang="ca">Arxiu de llibres de còmic (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="ca-valencia">Arxiu de llibres de còmic (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="cs">Archiv knihy komiksů (cbz, cbr, cb7, cbt, cba)</li>
@@ -192,6 +198,7 @@
       <li xml:lang="uk">Робота з архівами коміксів (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="zh-TW">漫畫書封存檔 (cbz, cbr, cb7, cbt, cba)</li>
       <li>Portable Document Format (pdf)</li>
+      <li xml:lang="ar">تنسيق المستند المحمول (pdf)</li>
       <li xml:lang="ca">Format de document portable (pdf)</li>
       <li xml:lang="ca-valencia">Format de document portable (pdf)</li>
       <li xml:lang="cs">Portable Document Format (pdf)</li>
@@ -221,6 +228,7 @@
       <li xml:lang="uk">Робота із портативним форматом документів (pdf)</li>
       <li xml:lang="zh-TW">可攜式文件格式 (pdf)</li>
       <li>ePub Books (epub)</li>
+      <li xml:lang="ar">كتب ePub (epub)</li>
       <li xml:lang="ca">Llibres ePub (epub)</li>
       <li xml:lang="ca-valencia">Llibres ePub (epub)</li>
       <li xml:lang="cs">Knihy ePub (epub)</li>
@@ -250,6 +258,7 @@
       <li xml:lang="uk">Робота з книгами ePub (epub)</li>
       <li xml:lang="zh-TW">ePub 書本 (epub)</li>
       <li>DeVice Independent files (dvi)</li>
+      <li xml:lang="ar">ملفات مستقلة عن الجهاز (dvi)</li>
       <li xml:lang="ca">Fitxers independents del dispositiu (dvi)</li>
       <li xml:lang="ca-valencia">Fitxers independents del dispositiu (dvi)</li>
       <li xml:lang="cs">Soubory nezávislé na zařízení (DeVice Independent files - dvi)</li>
@@ -278,6 +287,7 @@
       <li xml:lang="uk">Робота із файлами DeVice Independent (dvi)</li>
       <li xml:lang="zh-TW">DeVice 獨立檔案 (dvi)</li>
       <li>DeJaVu (djvu)</li>
+      <li xml:lang="ar">ديجا فو (djvu)</li>
       <li xml:lang="ca">DeJaVu (djvu)</li>
       <li xml:lang="ca-valencia">DeJaVu (djvu)</li>
       <li xml:lang="cs">DeJaVu (djvu)</li>
@@ -306,6 +316,7 @@
       <li xml:lang="uk">Робота з файлами DeJaVu (djvu)</li>
       <li xml:lang="zh-TW">DeJaVu (djvu)</li>
       <li>Compiled Help (chm)</li>
+      <li xml:lang="ar">مساعدة مُصرَّفة (chm)</li>
       <li xml:lang="ca">Ajuda compilada (chm)</li>
       <li xml:lang="ca-valencia">Ajuda compilada (chm)</li>
       <li xml:lang="cs">Kompilovaná nápověda (chm)</li>

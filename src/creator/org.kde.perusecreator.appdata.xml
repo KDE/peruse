@@ -5,6 +5,7 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0+</project_license>
   <name>Peruse</name>
+  <name xml:lang="ar">قارئ القصص</name>
   <name xml:lang="ca">Peruse</name>
   <name xml:lang="ca-valencia">Peruse</name>
   <name xml:lang="cs">Peruse</name>
@@ -35,6 +36,7 @@
   <name xml:lang="uk">Peruse</name>
   <name xml:lang="zh-TW">Peruse</name>
   <summary>Comic Book Creation Tool</summary>
+  <summary xml:lang="ar">أداة إنشاء القصص المصورة</summary>
   <summary xml:lang="ca">Eina de creació de llibres de còmic</summary>
   <summary xml:lang="ca-valencia">Eina de creació de llibres de còmic</summary>
   <summary xml:lang="cs">Nástroj pro vytváření komiksů</summary>
@@ -67,6 +69,7 @@
     <p>
       Creating rich digital comic books has long been something of a chore, or required the use of proprietary formats, but the Advanced Comic Book Format aims to fix this by introducing concepts like frame based navigation to go with the more traditional page based methods, reference information such as character information, location notes, and so on, all contained within the book, as well as embedded typesetting information and rich text overlays so translation can be done without requiring multiple images of the same page. Peruse Creator allows you to create these highly interactive and advanced books in a way which is both easy to use, and powerful.
     </p>
+    <p xml:lang="ar">لطالما كان إنشاء كتب قصص مصورة رقمية غنية مهمة شاقة، أو يتطلب استخدام تنسيقات خاصة، ولكن تنسيق الكتب المصورة المتقدم يهدف إلى حل هذه المشكلة من خلال إدخال مفاهيم مثل التنقل القائم على الإطارات لتتوافق مع الأساليب التقليدية القائمة على الصفحات، والمعلومات المرجعية مثل معلومات الشخصيات وملاحظات الموقع وما إلى ذلك، وكلها موجودة داخل الكتاب، بالإضافة إلى معلومات التنضيد المضمنة وتراكبات النص الغني بحيث يمكن إجراء الترجمة دون الحاجة إلى صور متعددة لنفس الصفحة. يتيح لك منشئ القصص المصورة إنشاء هذه الكتب المتقدمة والتفاعلية للغاية بطريقة سهلة الاستخدام وقوية في الوقت نفسه.</p>
     <p xml:lang="ca">La creació de llibres de còmics digitals exquisits ha estat una tasca una mica pesada, o ha requerit l'ús de formats propietaris, però el Format Avançat de Llibre de Còmic («Advanced Comic Book Format») pretén corregir això introduint conceptes com la navegació basada en marcs per a anar amb els mètodes més tradicionals basats en pàgines, referenciar la informació com les dades dels personatges, notes de les ubicacions, i etcètera, tot contingut en el llibre, així com informació incrustada de la composició tipogràfica i les superposicions de text enriquit de manera que es poden fer les traduccions sense requerir imatges múltiples de la mateixa pàgina. El Creador del Peruse permet crear aquests llibres altament interactius i avançats d'una manera que és a la vegada fàcil d'emprar i potent.</p>
     <p xml:lang="ca-valencia">La creació de llibres de còmics digitals exquisits ha sigut una tasca una mica pesada, o ha requerit l'ús de formats propietaris, però el Format Avançat de Llibre de Còmic («Advanced Comic Book Format») pretén corregir açò introduint conceptes com la navegació basada en marcs per a anar amb els mètodes més tradicionals basats en pàgines, referenciar la informació com les dades dels personatges, notes de les ubicacions, i etcètera, tot contingut en el llibre, així com informació incrustada de la composició tipogràfica i les superposicions de text enriquit de manera que es poden fer les traduccions sense requerir imatges múltiples de la mateixa pàgina. El Creador de Peruse permet crear estos llibres altament interactius i avançats d'una manera que és a la vegada fàcil d'emprar i potent.</p>
     <p xml:lang="en-GB">Creating rich digital comic books has long been something of a chore, or required the use of proprietary formats, but the Advanced Comic Book Format aims to fix this by introducing concepts like frame based navigation to go with the more traditional page based methods, reference information such as character information, location notes, and so on, all contained within the book, as well as embedded typesetting information and rich text overlays so translation can be done without requiring multiple images of the same page. Peruse Creator allows you to create these highly interactive and advanced books in a way which is both easy to use, and powerful.</p>
@@ -90,6 +93,7 @@
     <p xml:lang="tr">Zengin sayısal çizgi romanlar oluşturmak uzun zamandır angarya bir şeydi veya özel biçimlerin kullanılmasını gerektiriyordu; ancak Gelişmiş Çizgi Roman Biçimi, daha geleneksel sayfa tabanlı yöntemler, başvuru bilgileri ile gitmek için çerçeve tabanlı gezinme gibi kavramları tanıtarak bunu düzeltmeyi amaçlıyor. karakter bilgileri, konum notları vb. gibi tümü kitapta yer alır, ayrıca gömülü dizgi bilgileri ve zengin metin kaplamaları, böylece aynı sayfanın birden fazla görüntüsüne gerek kalmadan çeviri yapılabilir. Peruse Creator, bu son derece etkileşimli ve gelişmiş kitapları hem kullanımı kolay hem de güçlü bir şekilde oluşturmanıza olanak tanır.</p>
     <p xml:lang="uk">Досить довго створення багатих на можливості цифрових коміксів було чимось надзвичайним або потребувало використання закритих форматів, але поява Advanced Comic Book Format має виправити це впровадженням речей, подібних до навігації за кадрами разом із традиційнішими заснованими на переході між сторінками методами, довідкової інформації, зокрема відомостей щодо персонажів, нотаток щодо місць тощо. І усе це міститься у самому коміксі, разом із вбудованими даними щодо поліграфії і накладеним форматованим текстом, який забезпечує можливість перекладу без потреби у створенні декількох зображень однієї сторінки. За допомогою Peruse Creator ви можете створювати такі інтерактивні комікси із розширеними можливостями у простий спосіб із доступом до усіх потужностей нового формату.</p>
     <p>Features:</p>
+    <p xml:lang="ar">الميزات:</p>
     <p xml:lang="ca">Característiques:</p>
     <p xml:lang="ca-valencia">Característiques:</p>
     <p xml:lang="cs">Vlastnosti:</p>
@@ -122,6 +126,7 @@
     <p xml:lang="zh-TW">功能：</p>
     <ul>
       <li>Comic Book Archive (cbz, cbr, cb7, cbt, cba)</li>
+      <li xml:lang="ar">أرشيف القصص المصورة (cbz، cbr، cb7، cbt، cba)</li>
       <li xml:lang="ca">Arxiu de llibres de còmic (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="ca-valencia">Arxiu de llibres de còmic (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="cs">Archiv knihy komiksů (cbz, cbr, cb7, cbt, cba)</li>
