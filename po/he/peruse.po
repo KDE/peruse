@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: peruse\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-09-29 00:41+0000\n"
-"PO-Revision-Date: 2025-10-05 11:54+0300\n"
+"PO-Revision-Date: 2025-10-09 13:16+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -1294,7 +1294,7 @@ msgstr "הפניות למסד הנתונים"
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Reference:"
-msgstr "הפנייה:"
+msgstr "הפניה:"
 
 #: creator/qml/BookMetainfoPage.qml:533 creator/qml/BookMetainfoPage.qml:609
 #, kde-format
@@ -1306,7 +1306,7 @@ msgstr "שם מסד הנתונים:"
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Reference type:"
-msgstr "סוג ההפנייה:"
+msgstr "סוג ההפניה:"
 
 #: creator/qml/BookMetainfoPage.qml:628
 #, kde-format
