@@ -64,7 +64,7 @@ msgid "Go Full Screen"
 msgstr ""
 
 #: app/qml/Book.qml:182
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Exit full screen mode on a touch based device"
 msgid "Exit Full Screen"
 msgstr "退出全屏"
@@ -137,7 +137,7 @@ msgid "Go Full Screen"
 msgstr ""
 
 #: app/qml/Book.qml:268
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Exit full screen mode on a non-touch based device"
 msgid "Exit Full Screen"
 msgstr "退出全屏"
@@ -2227,7 +2227,3 @@ msgid ""
 "Successfully replaced old archive with the new archive - now loading the new "
 "archive..."
 msgstr ""
-
-#~ msgctxt "Exit full sceen mode on a non-touch based device"
-#~ msgid "Exit Full Screen"
-#~ msgstr "退出全屏"
