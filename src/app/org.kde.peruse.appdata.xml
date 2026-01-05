@@ -349,13 +349,13 @@
   </description>
   <screenshots>
     <screenshot type="default">
-      <image width="1797" height="1155">https://peruse.kde.org/screenshots/peruse-welcome.jpg</image>
+      <image width="1797" height="1155">https://cdn.kde.org/screenshots/peruse/peruse-welcome.jpg</image>
     </screenshot>
     <screenshot type="default">
-      <image width="1886" height="1152">https://peruse.kde.org/screenshots/peruse-reading-sidebar.jpg</image>
+      <image width="1886" height="1152">https://cdn.kde.org/screenshots/peruse/peruse-reading-sidebar.jpg</image>
     </screenshot>
     <screenshot type="default">
-      <image width="1839" height="1124">https://peruse.kde.org/screenshots/peruse-book-details.jpg</image>
+      <image width="1839" height="1124">https://cdn.kde.org/screenshots/peruse/peruse-book-details.jpg</image>
     </screenshot>
   </screenshots>
   <releases>
