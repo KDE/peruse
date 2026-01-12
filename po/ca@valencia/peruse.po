@@ -163,7 +163,7 @@ msgctxt ""
 "reader at all (usually when Okular's qml components are not installed for "
 "some reason)"
 msgid "Failed to load the reader component"
-msgstr "No s'ha pogut carregar el component del lector"
+msgstr "Ha fallat mentre es carregava el component del lector"
 
 #: app/qml/Book.qml:383
 #, kde-format
