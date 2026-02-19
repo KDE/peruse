@@ -63,6 +63,7 @@
   <summary xml:lang="pl">Czytnik komiksów</summary>
   <summary xml:lang="pt">Leitor de Bandas Desenhadas</summary>
   <summary xml:lang="pt-BR">Leitor de revista em quadrinhos</summary>
+  <summary xml:lang="ru">Программа для чтения комиксов</summary>
   <summary xml:lang="sk">Čítačka komiksoc</summary>
   <summary xml:lang="sl">Bralnik stripov</summary>
   <summary xml:lang="sv">Serietidningsläsare</summary>
@@ -98,6 +99,7 @@
     <p xml:lang="pl">Istnieje wiele sposobów na to, aby czytać komiksy, a tym który stał się w ostatnich czasach bardziej powszechnym, jest na komputerze. Peruse został stworzony, tak aby można było to zrobić jak najłatwiej i najprzyjemniej jak to tylko możliwe i tak aby zejść ci z drogi i pozwolić czytać komiksy.</p>
     <p xml:lang="pt">Existem muitas formas de ler bandas desenhadas, e uma das que se tornou mais comum recentemente é num computador. O Peruse foi criado como uma forma de fazer exactamente isso da forma mais agradável possível, saindo simplesmente do caminho e deixando-o ler as suas bandas desenhadas. Pode-se dizer que lhe permite usar os seus livros de banda desenhada para o seu lazer, mas isso seria uma forma estranha de o colocar - como tal, use os seus livros de banda desenhada à sua vontade!</p>
     <p xml:lang="pt-BR">Existem muitas maneiras de ler histórias em quadrinhos, e uma delas que se tornou mais comum nos últimos anos é no computador. O Peruse foi criado para tornar isso o mais fácil e agradável possível, simplesmente para sair do caminho e deixar você ler suas histórias em quadrinhos. Pode-se dizer que ele permite que você folheie suas histórias em quadrinhos quando quiser, mas essa seria uma maneira boba de dizer — então, folheie suas histórias em quadrinhos quando quiser!</p>
+    <p xml:lang="ru">Существует множество способов чтения комиксов, и один из тех, что стал более распространён в последние годы, — это чтение на компьютере. Приложение Peruse создано для того, чтобы сделать этот процесс максимально простым и приятным, просто предоставив вам возможность читать ваши комиксы. Можно сказать, что оно позволяет просматривать комиксы в удобном для вас темпе, но это было бы глупой формулировкой — так что просто наслаждайтесь чтением комиксов в своё удовольствие!</p>
     <p xml:lang="sl">Obstaja veliko načinov za branje stripov. Eden teh, ki postaja zadnja leta vse pogostejši, je na računalniku. Peruse smo ustvarili, da bi to počeli čim bolj enostavno in prijetno, ter vam preprosto ponudili način branja stripov. Lahko bi rekli, da omogoča, da v prostem času berete svoje stripe, vendar bi bilo to bilo neumno - omogoča, da si v prostem času ogledujete stripe!</p>
     <p xml:lang="sv">Det finns många sätt att läsa serietidningar, och ett av dem som har blivit allt vanligare den senaste tiden är med en dator. Peruse skapades som ett sätt att göra precis det, så enkelt och behagligt som möjligt, och att helt enkelt hålla sig undan och låta dig läsa dina serietidningar. Man skulle kunna säga att det tillåter dig att noga läsa (peruse på engelska) dina serietidningar i lugn och ro, men det skulle vara ett fånigt sätt att säga det - så läs dina serietidningar i lugn och ro!</p>
     <p xml:lang="tr">Çizgi roman okumanın birçok yolu var ve son yıllarda daha yaygın hale gelenlerden biri de bilgisayardadır. Peruse, bunu olabildiğince kolay ve keyifli hale getirmenin ve yalnızca aradan çekilip çizgi romanlarınızı okumanıza izin vermenin bir yolu olarak yaratıldı. Çizgi romanlarınızı boş zamanlarınızda incelemenize izin verdiği söylenebilir; ancak bu onu ifade etmenin aptalca bir yolu olurdu — bu yüzden çizgi romanlarınızı boş zamanlarınızda inceleyin!</p>
@@ -130,6 +132,7 @@
     <p xml:lang="pl">Jednym ze sposobów w jaki Peruse zapewnia, aby czynność czytania była tak przyjemna i łatwa jak to tylko możliwe, jest wznowienie tam, gdzie przestałeś. Strona powitalna w aplikacji (pierwszy zrzut ekranu poniżej) pokazuje tobie twoje poprzednio czytane komiksy i postęp w ich czytaniu. Aby wznowić w miejscu, w którym przerwałeś, po prostu stuknij w element w górnym lewym narożniku i zostaniesz przeniesiony bezpośrednio do strony, którą czytałeś zanim przerwałeś.</p>
     <p xml:lang="pt">Uma das formas nas quais o Peruse garante que a sua experiência de leitura se torna tão agradável e simples quanto possível é simplesmente pegar onde deixou da última vez. A página de boas-vindas na aplicação (primeira imagem em baixo) mostra-lhe as suas bandas desenhadas mais recentes, mostrando o seu progresso nelas. Para pegar onde deixou da última vez, basta tocar no item no canto superior-esquerdo para que passe logo para a página que estava a ler antes de parar.</p>
     <p xml:lang="pt-BR">Uma das maneiras pelas quais o Peruse garante que sua experiência de leitura seja a mais agradável e tranquila possível é permitir que você simplesmente continue de onde parou. A página inicial do aplicativo (primeira captura de tela abaixo) mostra seus quadrinhos lidos mais recentemente e seu progresso neles. Para continuar de onde parou, basta tocar no item superior esquerdo e você será levado diretamente para a página que estava lendo antes de precisar parar.</p>
+    <p xml:lang="ru">Чтобы сделать чтение максимально приятным и необременительным, в Peruse реализована возможность продолжить чтение с того места, где вы остановились. На стартовой странице приложения (первый скриншот ниже) отображаются последние прочитанные комиксы и ваш прогресс по ним. Чтобы продолжить чтение, просто щёлкните по первому элементу в левом верхнем углу — вы сразу перейдёте на ту страницу, на которой остановились.</p>
     <p xml:lang="sl">Eden izmed načinov, kako Peruse poskrbi, da je vaša bralna izkušnja prijetna in brez napora, je, da vam omogoča, da vas preprosto napoti tja, kjer ste nazadnje končali. Stran dobrodošlice v programu (prvi posnetek zaslona spodaj) prikazuje vaše zadnje brane stripe in prikazuje vaš napredek. Če želite izbrati mesto, kjer ste prenehali brati, preprosto tapnite zgornji levi element in preusmeril vas bo na stran, ki ste jo prebrali, preden ste prenehali brati.</p>
     <p xml:lang="sv">Ett av sätten som Peruse garanterar att läsupplevelsen är så behaglig och enkel som möjligt är att låta dig enkelt fortsätta där du senast slutade. Programmets välkomstsida (första skärmbilden nedan) visar dina senast lästa serietidningar, och visar hur långt du kommit i dem. För att fortsätta där du slutade, tryck helt enkelt på objektet längst upp till vänster så kommer du direkt till sidan som du höll på att läsa innan du behövde sluta.</p>
     <p xml:lang="tr">Peruse’un okuma deneyiminizi olabildiğince keyifli ve zahmetsiz hale getirmenin yollarından biri, en son kaldığınız yerden sürdürmenize izin vermektir. Uygulamadaki karşılama sayfası (aşağıdaki ilk ekran görüntüsü) size en son okuduğunuz çizgi romanları açar ve bunlar arasındaki ilerlemenizi gösterir. Kaldığınız yerden sürdürmek için sol üstteki ögeye dokunmanız yeterlidir; durmak zorunda kalmadan önce okumakta olduğunuz sayfaya yönlendirilirsiniz.</p>
@@ -191,6 +194,7 @@
       <li xml:lang="pl">Zeszyty komiksów (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="pt">Pacote de Banda Desenhada (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="pt-BR">Arquivo de Livro em Quadrinhos (cbz, cbr, cb7, cbt, cba)</li>
+      <li xml:lang="ru">Поддержка форматов архивов комиксов (cbz, cbr, cb7, cbt, cba);</li>
       <li xml:lang="sk">Komiksový archív (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="sl">Arhiv stripov (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="sv">Serietidningsarkiv (cbz, cbr, cb7, cbt, cba)</li>
@@ -221,6 +225,7 @@
       <li xml:lang="pl">Przenośny Format Dokumentów (pdf)</li>
       <li xml:lang="pt">Formato de Documento Portátil (pdf)</li>
       <li xml:lang="pt-BR">Portable Document Format (pdf)</li>
+      <li xml:lang="ru">Portable Document Format (pdf);</li>
       <li xml:lang="sk">Portable Document Format (pdf)</li>
       <li xml:lang="sl">Prenosni zapis dokumentov (pdf)</li>
       <li xml:lang="sv">Portable Dokumentformat (pdf)</li>
@@ -251,6 +256,7 @@
       <li xml:lang="pl">Książki ePub (epub)</li>
       <li xml:lang="pt">Livros ePub (epub)</li>
       <li xml:lang="pt-BR">Livros ePub (epub)</li>
+      <li xml:lang="ru">Книги в формате ePub (epub);</li>
       <li xml:lang="sk">Knihy ePub (epub)</li>
       <li xml:lang="sl">E-knjige ePub (epub)</li>
       <li xml:lang="sv">ePub-böcker (epub)</li>
@@ -280,6 +286,7 @@
       <li xml:lang="pl">Pliki niezależne od urządzenia (dvi)</li>
       <li xml:lang="pt">Ficheiros Independentes do Dispositivo (dvi)</li>
       <li xml:lang="pt-BR">DeVice Independent files (dvi)</li>
+      <li xml:lang="ru">Файлы DeVice Independent (dvi);</li>
       <li xml:lang="sk">DeVice Independent súbory (dvi)</li>
       <li xml:lang="sl">Datoteke, neodvisne od naprave (dvi)</li>
       <li xml:lang="sv">DeVice oberoende filer (dvi)</li>
@@ -309,6 +316,7 @@
       <li xml:lang="pl">DeJaVu (djvu)</li>
       <li xml:lang="pt">DeJaVu (djvu)</li>
       <li xml:lang="pt-BR">DeJaVu (djvu)</li>
+      <li xml:lang="ru">DeJaVu (djvu);</li>
       <li xml:lang="sk">DeJaVu (djvu)</li>
       <li xml:lang="sl">DeJaVu (djvu)</li>
       <li xml:lang="sv">DeJaVu (djvu)</li>
@@ -339,6 +347,7 @@
       <li xml:lang="pl">Skompilowana pomoc (chm)</li>
       <li xml:lang="pt">Ajuda Compilada (chm)</li>
       <li xml:lang="pt-BR">Ajuda compilada (chm)</li>
+      <li xml:lang="ru">Скомпилированная справка (chm);</li>
       <li xml:lang="sk">Kompilovaná nápoveda (chm)</li>
       <li xml:lang="sl">Sestavljena pomoč (chm)</li>
       <li xml:lang="sv">Kompilerad hjälp (chm)</li>
