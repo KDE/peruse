@@ -1989,13 +1989,13 @@ msgstr "النّشاط"
 #, kde-format
 msgctxt "@title:group"
 msgid "Homepage addresses"
-msgstr "عناوين الصفحة الرئيسية"
+msgstr "عناوين الصفحة الرئيسة"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:152
 #, kde-format
 msgctxt "@label:textfield"
 msgid "New Homepage"
-msgstr "صفحة رئيسية جديدة"
+msgstr "صفحة رئيسة جديدة"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:171
 #, kde-format
