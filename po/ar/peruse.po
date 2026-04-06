@@ -755,7 +755,7 @@ msgstr "أنشئ رسالة بريد إلكتروني لـ: %1"
 #, kde-format
 msgctxt "title of the welcome page"
 msgid "Welcome"
-msgstr "مرحباً"
+msgstr "مرحبًا"
 
 #: app/qml/WelcomePage.qml:84
 #, kde-format
