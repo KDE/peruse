@@ -12,25 +12,21 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 2.0\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Lokalize 2.0\n"
 
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the page frames"
-#| msgid "Frames"
+#, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Rámce"
+msgstr "Your names"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "Your emails"
 
 #: app/main.cpp:48
-#, fuzzy, kde-format
-#| msgctxt "application title for the sidebar"
-#| msgid "Peruse"
+#, kde-format
 msgid "Peruse Reader"
 msgstr "Peruse"
 
@@ -42,12 +38,12 @@ msgstr ""
 #: app/main.cpp:52 creator/main.cpp:48
 #, kde-format
 msgid "© 2016-2021 KDE"
-msgstr ""
+msgstr "© 2016-2021 KDE"
 
 #: app/main.cpp:53 creator/main.cpp:49
 #, kde-format
 msgid "Dan Leinir Turthra Jensen"
-msgstr ""
+msgstr "Dan Leinir Turthra Jensen"
 
 #: app/main.cpp:63
 #, kde-format
@@ -66,9 +62,7 @@ msgid "Go Full Screen"
 msgstr ""
 
 #: app/qml/Book.qml:182
-#, fuzzy, kde-format
-#| msgctxt "Exit full sceen mode on a touch based device"
-#| msgid "Exit Full Screen"
+#, kde-format
 msgctxt "Exit full screen mode on a touch based device"
 msgid "Exit Full Screen"
 msgstr "Ukončiť režim celej obrazovky"
@@ -79,7 +73,7 @@ msgctxt ""
 "Action used on touch devices to close the currently open book and return to "
 "whatever page was most recently shown"
 msgid "Close Book"
-msgstr ""
+msgstr "Close Book"
 
 #: app/qml/Book.qml:197
 #, kde-format
@@ -94,36 +88,30 @@ msgctxt ""
 "Header title for the section in which the direction the book will be "
 "navigated can be picked"
 msgid "Reading Direction"
-msgstr ""
+msgstr "Reading Direction"
 
 #: app/qml/Book.qml:203
 #, kde-format
 msgctxt ""
 "Title for the option which will make the book navigate from left to right"
 msgid "Left to Right"
-msgstr ""
+msgstr "Zľava doprava"
 
 #: app/qml/Book.qml:210
-#, fuzzy, kde-format
-#| msgctxt "label text for right to left checkbox."
-#| msgid "Right to left."
+#, kde-format
 msgctxt ""
 "Title for the option which will make the book navigate from right to left"
 msgid "Right to Left"
 msgstr "Sprava doľava."
 
 #: app/qml/Book.qml:240
-#, fuzzy, kde-format
-#| msgctxt "Go to the previous page in the book"
-#| msgid "Previous Page"
+#, kde-format
 msgctxt "Go to the previous frame on the current page"
 msgid "Previous Frame"
 msgstr "Predchádzajúca stránka"
 
 #: app/qml/Book.qml:247
-#, fuzzy, kde-format
-#| msgctxt "Go to the next page in the book"
-#| msgid "Next Page"
+#, kde-format
 msgctxt "Go to the next frame on the current page"
 msgid "Next Frame"
 msgstr "Nasledujúca stránka"
@@ -147,9 +135,7 @@ msgid "Go Full Screen"
 msgstr ""
 
 #: app/qml/Book.qml:268
-#, fuzzy, kde-format
-#| msgctxt "Exit full sceen mode on a touch based device"
-#| msgid "Exit Full Screen"
+#, kde-format
 msgctxt "Exit full screen mode on a non-touch based device"
 msgid "Exit Full Screen"
 msgstr "Ukončiť režim celej obrazovky"
@@ -160,7 +146,7 @@ msgctxt ""
 "Action used on non-touch devices to close the currently open book and return "
 "to whatever page was most recently shown"
 msgid "Close Book"
-msgstr ""
+msgstr "Close Book"
 
 #: app/qml/Book.qml:382
 #, kde-format
@@ -183,47 +169,37 @@ msgid ""
 msgstr ""
 
 #: app/qml/BookInfoPage.qml:43
-#, fuzzy, kde-format
-#| msgctxt "Label for authors"
-#| msgid "Author(s)"
+#, kde-format
 msgctxt "@label"
 msgid "Author(s):"
 msgstr "Autor(i)"
 
 #: app/qml/BookInfoPage.qml:44 app/qml/BookInfoPage.qml:51
-#, fuzzy, kde-format
-#| msgctxt "used for the author data in book lists if author is empty"
-#| msgid "(unknown)"
+#, kde-format
 msgctxt "@info:placeholder"
 msgid "Unknown"
 msgstr "(neznáme)"
 
 #: app/qml/BookInfoPage.qml:50
-#, fuzzy, kde-format
-#| msgctxt "Label for the publisher field"
-#| msgid "Publisher:"
+#, kde-format
 msgctxt "@label"
 msgid "Publisher:"
 msgstr "Vydavateľ:"
 
 #: app/qml/BookInfoPage.qml:57
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the default annotation"
-#| msgid "Annotation"
+#, kde-format
 msgctxt "@label"
 msgid "Location:"
-msgstr "Poznámka"
+msgstr "Umiestnenie:"
 
 #: app/qml/BookInfoPage.qml:63
 #, kde-format
 msgctxt "@title:group"
 msgid "File Metadata"
-msgstr ""
+msgstr "File Metadata"
 
 #: app/qml/BookInfoPage.qml:70
-#, fuzzy, kde-format
-#| msgctxt "label for rating widget"
-#| msgid "Rating"
+#, kde-format
 msgctxt "@label"
 msgid "Rating:"
 msgstr "Hodnotenie"
@@ -231,15 +207,13 @@ msgstr "Hodnotenie"
 #: app/qml/BookInfoPage.qml:92
 #, kde-format
 msgid "Set rating to %1"
-msgstr ""
+msgstr "Nastaviť hodnotenie na %1"
 
 #: app/qml/BookInfoPage.qml:123
-#, fuzzy, kde-format
-#| msgctxt "label for tags field"
-#| msgid "Tags"
+#, kde-format
 msgctxt "@label"
 msgid "Tags:"
-msgstr "Značky"
+msgstr "Značky:"
 
 #: app/qml/BookInfoPage.qml:125 app/qml/listcomponents/BookTile.qml:291
 #, kde-format
@@ -260,7 +234,7 @@ msgctxt ""
 "Placeholder Text when there are no comics in the library that match the "
 "filter"
 msgid "No matches"
-msgstr ""
+msgstr "Žiadne zhody"
 
 #: app/qml/BooksByTitlePage.qml:76
 #, kde-format
@@ -272,7 +246,7 @@ msgstr ""
 #, kde-format
 msgctxt "search in the list of books (not inside the books)"
 msgid "Search Books"
-msgstr ""
+msgstr "Search Books"
 
 #: app/qml/Bookshelf.qml:95
 #, kde-format
@@ -284,13 +258,13 @@ msgstr ""
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Open"
-msgstr ""
+msgstr "Otvoriť"
 
 #: app/qml/Bookshelf.qml:163
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Details"
-msgstr ""
+msgstr "Podrobnosti"
 
 #: app/qml/CategoryPage.qml:65
 #, kde-format
@@ -380,13 +354,13 @@ msgstr ""
 #, kde-format
 msgctxt "A percentage of progress"
 msgid "%1%"
-msgstr ""
+msgstr "%1%"
 
 #: app/qml/listcomponents/BookTileTall.qml:93
 #, kde-format
 msgctxt "should be keep short, inside a label. Will be in uppercase"
 msgid "New"
-msgstr ""
+msgstr "Nové"
 
 #: app/qml/listcomponents/BookTileTall.qml:126
 #, kde-format
@@ -398,13 +372,13 @@ msgstr ""
 #, kde-format
 msgctxt "An item in a list of authors (but not the last)"
 msgid ", %1"
-msgstr ""
+msgstr ", %1"
 
 #: app/qml/listcomponents/BookTileTall.qml:138
 #, kde-format
 msgctxt "Author name used when there are no known authors for a book"
 msgid "Unknown author"
-msgstr ""
+msgstr "Neznámy autor"
 
 #: app/qml/listcomponents/CategoryTile.qml:40
 #, kde-format
@@ -438,36 +412,32 @@ msgid "Back"
 msgstr "Späť"
 
 #: app/qml/PeruseMain.qml:56
-#, fuzzy, kde-format
-#| msgctxt "application subtitle"
-#| msgid "Comic Book Creation Tool"
+#, kde-format
 msgctxt "@title:window the generic descriptive title of the application"
 msgid "Comic Book Reader"
 msgstr "Nástroj na vytváranie komiksov"
 
 #: app/qml/PeruseMain.qml:153
-#, fuzzy, kde-format
-#| msgctxt "application title for the sidebar"
-#| msgid "Peruse"
+#, kde-format
 msgid "Peruse"
 msgstr "Peruse"
 
 #: app/qml/PeruseMain.qml:165 creator/qml/Main.qml:130
 #, kde-format
 msgid "Show intro page"
-msgstr ""
+msgstr "Zobraziť úvodnú stránku"
 
 #: app/qml/PeruseMain.qml:203
 #, kde-format
 msgctxt "Switch to the listing page showing the most recently read books"
 msgid "Home"
-msgstr ""
+msgstr "Domov"
 
 #: app/qml/PeruseMain.qml:214
 #, kde-format
 msgctxt "Switch to the listing page showing the most recently discovered books"
 msgid "Recently Added Books"
-msgstr ""
+msgstr "Nedávno pridané knihy"
 
 #: app/qml/PeruseMain.qml:220 creator/qml/Main.qml:176
 #, kde-format
@@ -475,54 +445,42 @@ msgctxt ""
 "Open a book from somewhere on disk (uses the open dialog, or a drilldown on "
 "touch devices)"
 msgid "Open Other..."
-msgstr ""
+msgstr "Otvoriť inú..."
 
 #: app/qml/PeruseMain.qml:227
-#, fuzzy, kde-format
-#| msgctxt "Switch to the listing page showing items grouped by author"
-#| msgid "Group by Author"
+#, kde-format
 msgctxt ""
 "Heading for switching to listing page showing items grouped by some "
 "properties"
 msgid "Group By"
-msgstr "Zoskupiť podľa autora"
+msgstr "Zoskupiť podľa"
 
 #: app/qml/PeruseMain.qml:230
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the book title"
-#| msgid "Title"
+#, kde-format
 msgctxt "Switch to the listing page showing items grouped by title"
 msgid "Title"
 msgstr "Názov"
 
 #: app/qml/PeruseMain.qml:236
-#, fuzzy, kde-format
-#| msgctxt "Label for the author field"
-#| msgid "Author:"
+#, kde-format
 msgctxt "Switch to the listing page showing items grouped by author"
 msgid "Author"
-msgstr "Autor:"
+msgstr "Autor"
 
 #: app/qml/PeruseMain.qml:242
-#, fuzzy, kde-format
-#| msgctxt "Label for the series field"
-#| msgid "Series:"
+#, kde-format
 msgctxt "Switch to the listing page showing items grouped by series"
 msgid "Series"
-msgstr "Série:"
+msgstr "Série"
 
 #: app/qml/PeruseMain.qml:248
-#, fuzzy, kde-format
-#| msgctxt "Label for publisher"
-#| msgid "Publisher"
+#, kde-format
 msgctxt "Switch to the listing page showing items grouped by publisher"
 msgid "Publisher"
 msgstr "Vydavateľ"
 
 #: app/qml/PeruseMain.qml:254
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the keyword list"
-#| msgid "Keywords"
+#, kde-format
 msgctxt ""
 "Switch to the listing page showing items grouped by keywords, characters or "
 "genres"
@@ -530,10 +488,7 @@ msgid "Keywords"
 msgstr "Kľúčové slová"
 
 #: app/qml/PeruseMain.qml:260
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "label text for the edit field for the file system location for the book"
-#| msgid "Folder"
+#, kde-format
 msgctxt ""
 "Switch to the listing page showing items grouped by their filesystem folder"
 msgid "Folder"
@@ -555,14 +510,14 @@ msgstr "Nastavenia"
 #, kde-format
 msgctxt "Open the about page"
 msgid "About"
-msgstr ""
+msgstr "O programe"
 
 #: app/qml/PeruseMain.qml:334
 #, kde-format
 msgctxt ""
 "Title of the page with all books ordered by which was added most recently"
 msgid "Recently Added Books"
-msgstr ""
+msgstr "Nedávno pridané knihy"
 
 #: app/qml/PeruseMain.qml:348
 #, kde-format
@@ -571,9 +526,7 @@ msgid "No series found"
 msgstr ""
 
 #: app/qml/PeruseMain.qml:350
-#, fuzzy, kde-format
-#| msgctxt "Label for the series field"
-#| msgid "Series:"
+#, kde-format
 msgctxt "@title"
 msgid "Series"
 msgstr "Série:"
@@ -585,9 +538,7 @@ msgid "No authors found"
 msgstr ""
 
 #: app/qml/PeruseMain.qml:362
-#, fuzzy, kde-format
-#| msgctxt "Label for the author field"
-#| msgid "Author:"
+#, kde-format
 msgctxt "@title"
 msgid "Authors"
 msgstr "Autor:"
@@ -599,9 +550,7 @@ msgid "No publishers found"
 msgstr ""
 
 #: app/qml/PeruseMain.qml:374
-#, fuzzy, kde-format
-#| msgctxt "Label for publisher"
-#| msgid "Publisher"
+#, kde-format
 msgctxt "@title"
 msgid "Publishers"
 msgstr "Vydavateľ"
@@ -625,17 +574,12 @@ msgid "Configure the indexed folders"
 msgstr ""
 
 #: app/qml/Settings.qml:50
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "label text for the edit field for the file system location for the book"
-#| msgid "Folder"
+#, kde-format
 msgid "Add folder"
 msgstr "Priečinok"
 
 #: app/qml/Settings.qml:83
-#, fuzzy, kde-format
-#| msgctxt "remove the search folder from the list"
-#| msgid "Delete"
+#, kde-format
 msgctxt "@action:button"
 msgid "Delete"
 msgstr "Vymazať"
@@ -646,9 +590,7 @@ msgid "There are no folder currently indexed."
 msgstr ""
 
 #: app/qml/Settings.qml:106
-#, fuzzy, kde-format
-#| msgctxt "title of the list of search folders"
-#| msgid "Search Folders"
+#, kde-format
 msgctxt "@title:window Dialogue used to add a new search folder"
 msgid "Select a folder"
 msgstr "Hľadané priečinky"
@@ -657,13 +599,13 @@ msgstr "Hľadané priečinky"
 #, kde-format
 msgctxt "@title:window dialogue used to add a new search folder"
 msgid "Select a Folder"
-msgstr ""
+msgstr "Vyberať priečinok"
 
 #: app/qml/Store.qml:37
 #, kde-format
 msgctxt "title of the book store page"
 msgid "Book Store"
-msgstr ""
+msgstr "Book Store"
 
 #: app/qml/Store.qml:97
 #, kde-format
@@ -677,18 +619,14 @@ msgid ""
 msgstr ""
 
 #: app/qml/viewers/cbr.qml:91 creator/qml/BookPage.qml:80
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the page transition type"
-#| msgid "Transition"
+#, kde-format
 msgctxt ""
 "A submenu which allows the user to chose between translations of the book"
 msgid "Translations"
 msgstr "Prechod"
 
 #: app/qml/viewers/cbr.qml:94 creator/qml/BookPage.qml:83
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the page transition type"
-#| msgid "Transition"
+#, kde-format
 msgctxt "The option used to show no translation should be used"
 msgid "No Translation"
 msgstr "Prechod"
@@ -742,7 +680,7 @@ msgstr ""
 #, kde-format
 msgctxt "label for a button which activates an external link"
 msgid "Open Link"
-msgstr ""
+msgstr "Otvoriť odkaz"
 
 #: app/qml/viewers/ViewerBase.qml:118
 #, kde-format
@@ -788,7 +726,7 @@ msgstr "Vitajte"
 #, kde-format
 msgctxt "title of list of recently opened books"
 msgid "Continue Reading"
-msgstr ""
+msgstr "Pokračovať v čítaní"
 
 #: app/qml/WelcomePage.qml:86
 #, kde-format
@@ -799,12 +737,10 @@ msgstr "Nedávno pridané"
 #: creator/main.cpp:44 creator/qml/Main.qml:118
 #, kde-format
 msgid "Peruse Creator"
-msgstr ""
+msgstr "Peruse Creator"
 
 #: creator/main.cpp:46
-#, fuzzy, kde-format
-#| msgctxt "application subtitle"
-#| msgid "Comic Book Creation Tool"
+#, kde-format
 msgid "Comic Book Creator by KDE"
 msgstr "Nástroj na vytváranie komiksov"
 
@@ -815,9 +751,7 @@ msgid "Add Page Area"
 msgstr ""
 
 #: creator/qml/AddPageArea.qml:85
-#, fuzzy, kde-format
-#| msgctxt "remove the frame from the page"
-#| msgid "Delete Frame"
+#, kde-format
 msgctxt "Button which creates a new frame, and closes the dialog"
 msgid "Create Frame"
 msgstr "Vymazať snímku"
@@ -826,18 +760,16 @@ msgstr "Vymazať snímku"
 #, kde-format
 msgctxt "Button which creates new textarea, and closes the dialog"
 msgid "Create Textarea"
-msgstr ""
+msgstr "Create Textarea"
 
 #: creator/qml/AddPageArea.qml:113
 #, kde-format
 msgctxt "Button which creates a new jump, and closes the dialog"
 msgid "Create Jump"
-msgstr ""
+msgstr "Create Jump"
 
 #: creator/qml/AddPageSheet.qml:43
-#, fuzzy, kde-format
-#| msgctxt "adds a new page at the end of the book"
-#| msgid "Add Page"
+#, kde-format
 msgctxt "@title"
 msgid "Add Page"
 msgstr "Pridať stránku"
@@ -880,9 +812,7 @@ msgid "Take a Photo and Add That"
 msgstr ""
 
 #: creator/qml/Book.qml:50
-#, fuzzy, kde-format
-#| msgctxt "title of the page editing sub-page for the book editor"
-#| msgid "Page %1"
+#, kde-format
 msgctxt "title of the main book editor page"
 msgid "Pages in %1"
 msgstr "Stránka %1"
@@ -893,7 +823,7 @@ msgstr "Stránka %1"
 #, kde-format
 msgctxt "Saves the book to a file on disk"
 msgid "Save Book"
-msgstr ""
+msgstr "Save Book"
 
 #: creator/qml/Book.qml:66
 #, kde-format
@@ -929,7 +859,7 @@ msgstr ""
 #, kde-format
 msgctxt "Edit page data such as title, frames, etc."
 msgid "Edit Page"
-msgstr ""
+msgstr "Upraviť stránku"
 
 #: creator/qml/Book.qml:189
 #, kde-format
@@ -949,22 +879,18 @@ msgid "Your Book At A Glance"
 msgstr ""
 
 #: creator/qml/BookBasics.qml:85
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the book title"
-#| msgid "Title"
+#, kde-format
 msgctxt ""
 "The descriptive label for a label which displays the title of the book"
 msgid "Book Title:"
 msgstr "Názov"
 
 #: creator/qml/BookBasics.qml:89
-#, fuzzy, kde-format
-#| msgctxt "title of the page editing sub-page for the book editor"
-#| msgid "Page %1"
+#, kde-format
 msgctxt ""
 "The descriptive label for a link which shows the number of pages in the book"
 msgid "Pages:"
-msgstr "Stránka %1"
+msgstr ""
 
 #: creator/qml/BookBasics.qml:90
 #, kde-format
@@ -1005,9 +931,7 @@ msgid "%1 might be referenced, but in some way we've not accounted for"
 msgstr ""
 
 #: creator/qml/BookBasics.qml:198
-#, fuzzy, kde-format
-#| msgctxt "remove the frame from the page"
-#| msgid "Delete Frame"
+#, kde-format
 msgctxt ""
 "action which marks the file to be included next time the book is saved"
 msgid "Include File"
@@ -1026,7 +950,7 @@ msgctxt ""
 "title of the page which lets the user manage chunks of binary data embedded "
 "in the book"
 msgid "Embedded Data"
-msgstr ""
+msgstr "Embedded Data"
 
 #: creator/qml/BookBinaries.qml:49
 #, kde-format
@@ -1038,7 +962,7 @@ msgstr ""
 #, kde-format
 msgctxt "The initial identifier used for a newly created binary data element"
 msgid "Unnamed Binary"
-msgstr ""
+msgstr "Unnamed Binary"
 
 #: creator/qml/BookBinaries.qml:80
 #, kde-format
@@ -1092,24 +1016,22 @@ msgid "Content type: %1"
 msgstr ""
 
 #: creator/qml/BookBinaryEditor.qml:46
-#, fuzzy, kde-format
-#| msgctxt "title of the main book editor page"
-#| msgid "Editing %1"
+#, kde-format
 msgctxt "title text for a sheet which lets the user edit a binary entry"
 msgid "Edit Binary"
-msgstr "Editovanie %1"
+msgstr ""
 
 #: creator/qml/BookBinaryEditor.qml:52
 #, kde-format
 msgctxt "label for a button which updates the binary with the new details"
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: creator/qml/BookBinaryEditor.qml:64
 #, kde-format
 msgctxt "Label for the binary ID input field"
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: creator/qml/BookBinaryEditor.qml:65
 #, kde-format
@@ -1121,7 +1043,7 @@ msgstr ""
 #, kde-format
 msgctxt "Label for the binary content type input field"
 msgid "Content Type"
-msgstr ""
+msgstr "Typ obsahu"
 
 #: creator/qml/BookBinaryEditor.qml:71
 #, kde-format
@@ -1135,7 +1057,7 @@ msgctxt ""
 "Label for the field which describes the data currently held by the current "
 "instance"
 msgid "Current Data"
-msgstr ""
+msgstr "Current Data"
 
 #: creator/qml/BookBinaryEditor.qml:81
 #, kde-format
@@ -1159,7 +1081,7 @@ msgctxt ""
 "Label for the button in the binary editor sheet which lets the user replace "
 "the data contained in the current instance"
 msgid "Import Data..."
-msgstr ""
+msgstr "Importovať dáta..."
 
 #: creator/qml/BookBinaryEditor.qml:106
 #, kde-format
@@ -1199,9 +1121,7 @@ msgid "Yes, Add Large File"
 msgstr ""
 
 #: creator/qml/BookBinaryEditor.qml:145
-#, fuzzy, kde-format
-#| msgctxt "adds a new page at the end of the book"
-#| msgid "Add Page"
+#, kde-format
 msgctxt "The option used to let the user abort the proposed action"
 msgid "Don't Add"
 msgstr "Pridať stránku"
@@ -1213,25 +1133,19 @@ msgid "Edit Meta Information"
 msgstr ""
 
 #: creator/qml/BookMetainfoPage.qml:49
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the book title"
-#| msgid "Title"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Title"
 msgstr "Názov"
 
 #: creator/qml/BookMetainfoPage.qml:62
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the default annotation"
-#| msgid "Annotation"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Annotation"
 msgstr "Poznámka"
 
 #: creator/qml/BookMetainfoPage.qml:75
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the keyword list"
-#| msgid "Keywords"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Keywords"
 msgstr "Kľúčové slová"
@@ -1249,26 +1163,22 @@ msgid "Document Version:"
 msgstr "Verzia dokumentu:"
 
 #: creator/qml/BookMetainfoPage.qml:120
-#, fuzzy, kde-format
-#| msgctxt "Label for the author field"
-#| msgid "Author:"
+#, kde-format
 msgctxt "@title:group"
 msgid "Authors"
-msgstr "Autor:"
+msgstr "Autori"
 
 #: creator/qml/BookMetainfoPage.qml:132 creator/qml/BookMetainfoPage.qml:842
 #, kde-format
 msgctxt "The text used in place of an author's name if one has not been set"
 msgid "(unnamed)"
-msgstr ""
+msgstr "(nepomenované)"
 
 #: creator/qml/BookMetainfoPage.qml:139
-#, fuzzy, kde-format
-#| msgctxt "title of the main book editor page"
-#| msgid "Editing %1"
+#, kde-format
 msgctxt "@action:button"
 msgid "Edit author"
-msgstr "Editovanie %1"
+msgstr ""
 
 #: creator/qml/BookMetainfoPage.qml:151
 #, kde-format
@@ -1289,9 +1199,7 @@ msgid "Add new author"
 msgstr ""
 
 #: creator/qml/BookMetainfoPage.qml:197
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the genre list"
-#| msgid "Genres"
+#, kde-format
 msgctxt "@title:group"
 msgid "Genres"
 msgstr "Žánre"
@@ -1303,9 +1211,7 @@ msgid "Remove genre"
 msgstr ""
 
 #: creator/qml/BookMetainfoPage.qml:294
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the character list"
-#| msgid "Characters"
+#, kde-format
 msgctxt "@title:group"
 msgid "Characters"
 msgstr "Znaky"
@@ -1317,9 +1223,7 @@ msgid "Write to add new character"
 msgstr ""
 
 #: creator/qml/BookMetainfoPage.qml:363
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the sequence list"
-#| msgid "Sequence"
+#, kde-format
 msgctxt "@title:group"
 msgid "Sequence"
 msgstr "Sekvencia"
@@ -1346,18 +1250,16 @@ msgstr ""
 #, kde-format
 msgctxt "@title:group"
 msgid "Database References"
-msgstr ""
+msgstr "Database References"
 
 #: creator/qml/BookMetainfoPage.qml:507 creator/qml/BookMetainfoPage.qml:595
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Reference:"
-msgstr ""
+msgstr "Referencia:"
 
 #: creator/qml/BookMetainfoPage.qml:533 creator/qml/BookMetainfoPage.qml:609
-#, fuzzy, kde-format
-#| msgctxt "label for the last name field"
-#| msgid "Last name:"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Database name:"
 msgstr "Priezvisko:"
@@ -1369,9 +1271,7 @@ msgid "Reference type:"
 msgstr ""
 
 #: creator/qml/BookMetainfoPage.qml:628
-#, fuzzy, kde-format
-#| msgctxt "Open the settings page"
-#| msgid "Settings"
+#, kde-format
 msgctxt "@title:group"
 msgid "Content Ratings"
 msgstr "Nastavenia"
@@ -1395,17 +1295,13 @@ msgid "Review title"
 msgstr ""
 
 #: creator/qml/BookMetainfoPage.qml:733
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the default annotation"
-#| msgid "Annotation"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Description"
 msgstr "Poznámka"
 
 #: creator/qml/BookMetainfoPage.qml:754
-#, fuzzy, kde-format
-#| msgctxt "Label for publisher"
-#| msgid "Publisher"
+#, kde-format
 msgctxt "@title:group"
 msgid "Publisher Info"
 msgstr "Vydavateľ"
@@ -1447,17 +1343,13 @@ msgid "License:"
 msgstr "Licencia:"
 
 #: creator/qml/BookMetainfoPage.qml:830
-#, fuzzy, kde-format
-#| msgctxt "Label for the document version spinbox"
-#| msgid "Document Version:"
+#, kde-format
 msgctxt "@title:group"
 msgid "Document Authors"
 msgstr "Verzia dokumentu:"
 
 #: creator/qml/BookMetainfoPage.qml:900
-#, fuzzy, kde-format
-#| msgctxt "Label for the document version spinbox"
-#| msgid "Document Version:"
+#, kde-format
 msgctxt "@title:group"
 msgid "Document Sources"
 msgstr "Verzia dokumentu:"
@@ -1469,9 +1361,7 @@ msgid "New document source"
 msgstr ""
 
 #: creator/qml/BookMetainfoPage.qml:960
-#, fuzzy, kde-format
-#| msgctxt "Label for the document version spinbox"
-#| msgid "Document Version:"
+#, kde-format
 msgctxt "@title:group"
 msgid "Document History"
 msgstr "Verzia dokumentu:"
@@ -1483,9 +1373,7 @@ msgid "New document info"
 msgstr ""
 
 #: creator/qml/BookMetainfoPage.qml:1020
-#, fuzzy, kde-format
-#| msgctxt "Label from frame background color."
-#| msgid "Background Color:"
+#, kde-format
 msgctxt "@title:group"
 msgid "General Page Background Color"
 msgstr "Farba pozadia:"
@@ -1497,9 +1385,7 @@ msgid "Page %1"
 msgstr "Stránka %1"
 
 #: creator/qml/BookPage.qml:70
-#, fuzzy, kde-format
-#| msgctxt "title of the page editing sub-page for the book editor"
-#| msgid "Page %1"
+#, kde-format
 msgid "Page %1"
 msgstr "Stránka %1"
 
@@ -1530,10 +1416,7 @@ msgid "Editing %1 (language: %2)"
 msgstr ""
 
 #: creator/qml/BookReferenceEditor.qml:42
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "Saves the remaining unsaved edited fields and closes the metainfo editor"
-#| msgid "Close Editor"
+#, kde-format
 msgctxt "Save the reference and close the editor"
 msgid "Save and Close Editor"
 msgstr "Zatvoriť editor"
@@ -1542,13 +1425,13 @@ msgstr "Zatvoriť editor"
 #, kde-format
 msgctxt "Save the reference and keep editing"
 msgid "Save"
-msgstr ""
+msgstr "Uložiť"
 
 #: creator/qml/BookReferenceEditor.qml:59
 #, kde-format
 msgctxt "Abort the changes made in the editor, and close the editor"
 msgid "Abort Changes"
-msgstr ""
+msgstr "Abort Changes"
 
 #: creator/qml/BookReferenceEditor.qml:66
 #, kde-format
@@ -1562,29 +1445,27 @@ msgstr ""
 #, kde-format
 msgctxt "Copies the selected text"
 msgid "Copy"
-msgstr ""
+msgstr "Kopírovať"
 
 #: creator/qml/BookReferenceEditor.qml:78
 #, kde-format
 msgctxt "Cuts the selected text"
 msgid "Cut"
-msgstr ""
+msgstr "Vystrihnúť"
 
 #: creator/qml/BookReferenceEditor.qml:84
 #, kde-format
 msgctxt "Pastes the clipboard contents into the current location"
 msgid "Paste"
-msgstr ""
+msgstr "Vložiť"
 
 #: creator/qml/BookReferenceEditor.qml:91 creator/qml/EditPageArea.qml:245
-#, fuzzy, kde-format
-#| msgctxt "title of the main book editor page"
-#| msgid "Editing %1"
+#, kde-format
 msgctxt ""
 "Edit the link the cursor is currently positioned on (or convert the "
 "selection to a link, or add a new one if there is no selection)"
 msgid "Edit Link"
-msgstr "Editovanie %1"
+msgstr ""
 
 #: creator/qml/BookReferenceEditor.qml:100
 #, kde-format
@@ -1596,13 +1477,11 @@ msgstr ""
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Unique identifier"
-msgstr ""
+msgstr "Jedinečný identifikátor"
 
 #: creator/qml/BookReferenceEditor.qml:112
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:109
-#, fuzzy, kde-format
-#| msgctxt "placeholder text for the language field"
-#| msgid "Language"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Language"
 msgstr "Jazyk"
@@ -1611,7 +1490,7 @@ msgstr "Jazyk"
 #, kde-format
 msgctxt "title text for the references page"
 msgid "References"
-msgstr ""
+msgstr "References"
 
 #: creator/qml/BookReferences.qml:24
 #, kde-format
@@ -1619,13 +1498,13 @@ msgctxt ""
 "Action which when triggered adds a new reference to the book and opens the "
 "reference editor"
 msgid "New Reference"
-msgstr ""
+msgstr "New Reference"
 
 #: creator/qml/BookReferences.qml:28
 #, kde-format
 msgctxt "The default ID for new references"
 msgid "Unnamed Reference"
-msgstr ""
+msgstr "Unnamed Reference"
 
 #: creator/qml/BookReferences.qml:29
 #, kde-format
@@ -1653,7 +1532,7 @@ msgstr ""
 #, kde-format
 msgctxt "title of the page which lets the user manage the book's stylesheet"
 msgid "Stylesheet"
-msgstr ""
+msgstr "Stylesheet"
 
 #: creator/qml/BookStylesheet.qml:55
 #, kde-format
@@ -1665,13 +1544,13 @@ msgstr ""
 #, kde-format
 msgctxt "@title:dialog"
 msgid "Edit Style"
-msgstr ""
+msgstr "Edit Style"
 
 #: creator/qml/BookStylesheet.qml:99
 #, kde-format
 msgctxt "Label for the style element input field"
 msgid "Element"
-msgstr ""
+msgstr "Prvok"
 
 #: creator/qml/BookStylesheet.qml:105
 #, kde-format
@@ -1688,13 +1567,13 @@ msgstr ""
 #: creator/qml/BookStylesheet.qml:111
 #, kde-format
 msgid "None"
-msgstr ""
+msgstr "Žiadne"
 
 #: creator/qml/BookStylesheet.qml:116
 #, kde-format
 msgctxt "@option:check"
 msgid "Color"
-msgstr ""
+msgstr "Farba"
 
 #: creator/qml/BookStylesheet.qml:139
 #, kde-format
@@ -1716,7 +1595,7 @@ msgstr ""
 #, kde-format
 msgctxt "The title of a style entry which has a type"
 msgid "%1"
-msgstr ""
+msgstr "%1"
 
 #: creator/qml/BookStylesheet.qml:147
 #, kde-format
@@ -1749,7 +1628,7 @@ msgstr ""
 #, kde-format
 msgctxt "Accept button which will create a new book"
 msgid "Create Book"
-msgstr ""
+msgstr "Create Book"
 
 #: creator/qml/CreateNewBook.qml:65
 #, kde-format
@@ -1771,9 +1650,7 @@ msgid "Folder"
 msgstr "Priečinok"
 
 #: creator/qml/CreateNewBook.qml:99
-#, fuzzy, kde-format
-#| msgctxt "title of the list of search folders"
-#| msgid "Search Folders"
+#, kde-format
 msgctxt "@action:button"
 msgid "Select Folder"
 msgstr "Hľadané priečinky"
@@ -1803,9 +1680,7 @@ msgid "Missing cover image"
 msgstr ""
 
 #: creator/qml/CreateNewBook.qml:160
-#, fuzzy, kde-format
-#| msgctxt "title of the list of search folders"
-#| msgid "Search Folders"
+#, kde-format
 msgctxt "@action:button"
 msgid "Select image"
 msgstr "Hľadané priečinky"
@@ -1844,7 +1719,7 @@ msgstr ""
 #, kde-format
 msgctxt "Label for the ID input field"
 msgid "ID:"
-msgstr ""
+msgstr "ID:"
 
 #: creator/qml/EditPageArea.qml:149
 #, kde-format
@@ -1853,9 +1728,7 @@ msgid "Write to add an ID"
 msgstr ""
 
 #: creator/qml/EditPageArea.qml:153 creator/qml/EditPageArea.qml:184
-#, fuzzy, kde-format
-#| msgctxt "Label from frame background color."
-#| msgid "Background Color:"
+#, kde-format
 msgctxt "Label for background color button"
 msgid "Background color:"
 msgstr "Farba pozadia:"
@@ -1870,7 +1743,7 @@ msgstr ""
 #, kde-format
 msgctxt "Option for making the background of a text area transparent"
 msgid "Transparent"
-msgstr ""
+msgstr "Priehľadné"
 
 #: creator/qml/EditPageArea.qml:223
 #, kde-format
@@ -1878,7 +1751,7 @@ msgctxt ""
 "Option for making the background of a text area cause what is behind it to "
 "be inverted"
 msgid "Inverted"
-msgstr ""
+msgstr "Invertované"
 
 #: creator/qml/EditPageArea.qml:227
 #, kde-format
@@ -1893,12 +1766,10 @@ msgid "Type:"
 msgstr ""
 
 #: creator/qml/EditPageArea.qml:254
-#, fuzzy, kde-format
-#| msgctxt "Comic book panel textarea name."
-#| msgid "Text Area %1"
+#, kde-format
 msgctxt "Label for the text area body field"
 msgid "Textarea Body:"
-msgstr "Textové pole %1"
+msgstr ""
 
 #: creator/qml/EditPageArea.qml:299
 #, kde-format
@@ -1926,26 +1797,22 @@ msgstr ""
 #, kde-format
 msgctxt "Button which saves the page area, and closes the dialog"
 msgid "Save"
-msgstr ""
+msgstr "Uložiť"
 
 #: creator/qml/LinkEditorSheet.qml:70
-#, fuzzy, kde-format
-#| msgctxt "title of the main book editor page"
-#| msgid "Editing %1"
+#, kde-format
 msgctxt "@title:dialog"
 msgid "Edit Link"
-msgstr "Editovanie %1"
+msgstr ""
 
 #: creator/qml/LinkEditorSheet.qml:90
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Text"
-msgstr ""
+msgstr "Text"
 
 #: creator/qml/LinkEditorSheet.qml:95
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the default annotation"
-#| msgid "Annotation"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Destination"
 msgstr "Poznámka"
@@ -1953,7 +1820,7 @@ msgstr "Poznámka"
 #: creator/qml/LinkEditorSheet.qml:157
 #, kde-format
 msgid "Preview"
-msgstr ""
+msgstr "Náhľad"
 
 #: creator/qml/Main.qml:170
 #, kde-format
@@ -1968,12 +1835,10 @@ msgid "%1 (unsaved)"
 msgstr ""
 
 #: creator/qml/Main.qml:200
-#, fuzzy, kde-format
-#| msgctxt "title of the page editing sub-page for the book editor"
-#| msgid "Page %1"
+#, kde-format
 msgctxt "Switch to the page which displays the pages in the current book"
 msgid "Pages"
-msgstr "Stránka %1"
+msgstr ""
 
 #: creator/qml/Main.qml:208
 #, kde-format
@@ -1981,7 +1846,7 @@ msgctxt ""
 "Switch to the page where the user can edit the meta information for the "
 "entire book"
 msgid "Metainfo"
-msgstr ""
+msgstr "Metainfo"
 
 #: creator/qml/Main.qml:216
 #, kde-format
@@ -1989,7 +1854,7 @@ msgctxt ""
 "Switch to the page where the user can edit the references (that is, snippets "
 "of information) found in the book"
 msgid "References"
-msgstr ""
+msgstr "References"
 
 #: creator/qml/Main.qml:224
 #, kde-format
@@ -1997,13 +1862,13 @@ msgctxt ""
 "Switch to the page where the user can work with the bits of binary data "
 "found in the book"
 msgid "Embedded Data"
-msgstr ""
+msgstr "Embedded Data"
 
 #: creator/qml/Main.qml:232
 #, kde-format
 msgctxt "Switch to the page where the user can work with the book's stylesheet"
 msgid "Stylesheet"
-msgstr ""
+msgstr "Stylesheet"
 
 #: creator/qml/Main.qml:332
 #, kde-format
@@ -2023,7 +1888,7 @@ msgstr ""
 #, kde-format
 msgctxt "title text for the edit author sheet"
 msgid "Edit Author"
-msgstr ""
+msgstr "Edit Author"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:69
 #, kde-format
@@ -2032,57 +1897,43 @@ msgid "Please complete the information for this author."
 msgstr ""
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:74
-#, fuzzy, kde-format
-#| msgctxt "placeholder text for the last name field"
-#| msgid "Last Name"
+#, kde-format
 msgctxt "@title:group"
 msgid "Name"
 msgstr "Priezvisko"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:80
-#, fuzzy, kde-format
-#| msgctxt "label for the first name field"
-#| msgid "First name:"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "First name"
 msgstr "Prvé meno:"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:85
-#, fuzzy, kde-format
-#| msgctxt "label for the middle name field"
-#| msgid "Middle name:"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Middle name"
 msgstr "Stredné meno:"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:90
-#, fuzzy, kde-format
-#| msgctxt "label for the last name field"
-#| msgid "Last name:"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Last name"
 msgstr "Priezvisko:"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:95
-#, fuzzy, kde-format
-#| msgctxt "placeholder text for the nickname field"
-#| msgid "Nickname"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Nickname"
 msgstr "Prezývka"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:104
-#, fuzzy, kde-format
-#| msgctxt "label for the activity field"
-#| msgid "Activity:"
+#, kde-format
 msgctxt "@label:listbox"
 msgid "Activity"
 msgstr "Aktivita:"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:114
-#, fuzzy, kde-format
-#| msgctxt "label for the email field"
-#| msgid "Email addresses:"
+#, kde-format
 msgctxt "@title:group"
 msgid "Homepage addresses"
 msgstr "E-mailové adresy:"
@@ -2091,20 +1942,16 @@ msgstr "E-mailové adresy:"
 #, kde-format
 msgctxt "@label:textfield"
 msgid "New Homepage"
-msgstr ""
+msgstr "New Homepage"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:171
-#, fuzzy, kde-format
-#| msgctxt "label for the email field"
-#| msgid "Email addresses:"
+#, kde-format
 msgctxt "@title:group"
 msgid "Email addresses"
 msgstr "E-mailové adresy:"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:209
-#, fuzzy, kde-format
-#| msgctxt "placeholder text for the email field"
-#| msgid "Add Email address"
+#, kde-format
 msgctxt "placeholder text for the email field"
 msgid "New Email address"
 msgstr "Pridať e-mailovú adresu"
@@ -2126,42 +1973,34 @@ msgstr "Zatvoriť editor"
 #, kde-format
 msgctxt "@title:group"
 msgid "General"
-msgstr ""
+msgstr "Všeobecné"
 
 #: creator/qml/PageMetaInfo.qml:63
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the book title"
-#| msgid "Title"
+#, kde-format
 msgctxt "@label:textfield"
 msgid "Title:"
-msgstr "Názov"
+msgstr "Názov:"
 
 #: creator/qml/PageMetaInfo.qml:72
 #, kde-format
 msgctxt "@label:textfield"
 msgid "ID:"
-msgstr ""
+msgstr "ID:"
 
 #: creator/qml/PageMetaInfo.qml:82
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the page transition type"
-#| msgid "Transition"
+#, kde-format
 msgctxt "@label:listbox"
 msgid "Transition:"
 msgstr "Prechod"
 
 #: creator/qml/PageMetaInfo.qml:95
-#, fuzzy, kde-format
-#| msgctxt "Label from frame background color."
-#| msgid "Background Color:"
+#, kde-format
 msgctxt "@label:chooser"
 msgid "Background Color:"
 msgstr "Farba pozadia:"
 
 #: creator/qml/PageMetaInfo.qml:102
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the page frames"
-#| msgid "Frames"
+#, kde-format
 msgctxt "@title:group"
 msgid "Frames"
 msgstr "Rámce"
@@ -2179,9 +2018,7 @@ msgid "Frame %1"
 msgstr "Snímka %1"
 
 #: creator/qml/PageMetaInfo.qml:124
-#, fuzzy, kde-format
-#| msgctxt "Label from frame background color."
-#| msgid "Background Color:"
+#, kde-format
 msgctxt ""
 "A switch which lets the user change the background colour of the page when "
 "this frame is focused"
@@ -2219,12 +2056,10 @@ msgid "Delete Frame"
 msgstr "Vymazať snímku"
 
 #: creator/qml/PageMetaInfo.qml:187
-#, fuzzy, kde-format
-#| msgctxt "Comic book panel textarea name."
-#| msgid "Text Area %1"
+#, kde-format
 msgctxt "@title:group"
 msgid "Text Areas"
-msgstr "Textové pole %1"
+msgstr ""
 
 #: creator/qml/PageMetaInfo.qml:200
 #, kde-format
@@ -2257,9 +2092,7 @@ msgid "Text Area %1"
 msgstr "Textové pole %1"
 
 #: creator/qml/PageMetaInfo.qml:255
-#, fuzzy, kde-format
-#| msgctxt "label text for the edit field for the page jumps"
-#| msgid "Jumps"
+#, kde-format
 msgctxt "@title:group"
 msgid "Jumps"
 msgstr "Skoky"
@@ -2286,7 +2119,7 @@ msgstr "Posunúť dole"
 #, kde-format
 msgctxt "remove the jump from the page"
 msgid "Delete Jump"
-msgstr ""
+msgstr "Delete Jump"
 
 #: creator/qml/PageMetaInfo.qml:297
 #, kde-format
@@ -2301,17 +2134,13 @@ msgid "Page Index:"
 msgstr ""
 
 #: creator/qml/SettingsPage.qml:17
-#, fuzzy, kde-format
-#| msgctxt "Open the settings page"
-#| msgid "Settings"
+#, kde-format
 msgctxt "@title"
 msgid "Settings"
 msgstr "Nastavenia"
 
 #: creator/qml/WelcomePage.qml:54
-#, fuzzy, kde-format
-#| msgctxt "application title for the sidebar"
-#| msgid "Peruse"
+#, kde-format
 msgctxt "The application's name"
 msgid "Peruse Creator"
 msgstr "Peruse"
@@ -2345,7 +2174,7 @@ msgstr ""
 #, kde-format
 msgctxt "@action:button create a new, empty comic book archive"
 msgid "Create Blank"
-msgstr ""
+msgstr "Create Blank"
 
 #: creator/qml/WelcomePage.qml:96
 #, kde-format
@@ -2354,11 +2183,7 @@ msgid "Recent books"
 msgstr ""
 
 #: creator/qml/WelcomePage.qml:116
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "@action:button continue working on the most recently opened comic book "
-#| "archive"
-#| msgid "Continue %1"
+#, kde-format
 msgctxt ""
 "@action:button continue working on the most recently opened comic book "
 "archive"
@@ -2428,8 +2253,6 @@ msgstr ""
 #~ msgstr "Späť"
 
 #, fuzzy
-#~| msgctxt "Closes the book information drawer"
-#~| msgid "Close"
 #~ msgctxt "Closes the book details drawer"
 #~ msgid "Close"
 #~ msgstr "Zavrieť"
@@ -2439,8 +2262,6 @@ msgstr ""
 #~ msgstr "Zoskupiť podľa autora"
 
 #, fuzzy
-#~| msgctxt "adds a new page at the end of the book"
-#~| msgid "Add Page"
 #~ msgctxt "closes the add page sheet"
 #~ msgid "Do not Add a Page"
 #~ msgstr "Pridať stránku"
@@ -2458,16 +2279,12 @@ msgstr ""
 #~ msgstr "Sprava doľava."
 
 #, fuzzy
-#~| msgctxt "title of the main book editor page"
-#~| msgid "Editing %1"
 #~ msgctxt ""
 #~ "title text for a sheet which lets the user edit the parameters of a link"
 #~ msgid "Edit Link"
 #~ msgstr "Editovanie %1"
 
 #, fuzzy
-#~| msgctxt "Comic book panel textarea name."
-#~| msgid "Text Area %1"
 #~ msgctxt ""
 #~ "Entry in a dropdown list which gives the base details of a Textarea "
 #~ "object, and identifies it as one such"
@@ -2475,7 +2292,6 @@ msgstr ""
 #~ msgstr "Textové pole %1"
 
 #, fuzzy
-#~| msgid "Frame"
 #~ msgctxt ""
 #~ "Entry in a dropdown list which gives the name of a frame object, and "
 #~ "identifies it as one such"
@@ -2483,8 +2299,6 @@ msgstr ""
 #~ msgstr "Snímka"
 
 #, fuzzy
-#~| msgctxt "used for the author data in book lists if author is empty"
-#~| msgid "(unknown)"
 #~ msgctxt ""
 #~ "Entry in a dropdown list which gives the name of an identified object of "
 #~ "an unknown type, and marks it as one such"
@@ -2528,8 +2342,6 @@ msgstr ""
 #~ msgstr "Nastavenia"
 
 #, fuzzy
-#~| msgctxt "Switch to the listing page showing items grouped by author"
-#~| msgid "Group by Author"
 #~ msgctxt ""
 #~ "Switch to the listing page showing items grouped by keywords, characters "
 #~ "or genres"
@@ -2552,15 +2364,11 @@ msgstr ""
 #~ msgstr "Ďaľšia kniha"
 
 #, fuzzy
-#~| msgctxt "application title for the sidebar"
-#~| msgid "Peruse"
 #~ msgctxt "The name of the application"
 #~ msgid "Peruse"
 #~ msgstr "Peruse"
 
 #, fuzzy
-#~| msgctxt "title of the main book editor page"
-#~| msgid "Editing %1"
 #~ msgctxt "title text for the reference editor page"
 #~ msgid "Editing %1"
 #~ msgstr "Editovanie %1"
