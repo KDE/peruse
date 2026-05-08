@@ -63,10 +63,6 @@ find_package(KF6 ${KF_DEP_VERSION} REQUIRED
     WindowSystem
 )
 
-if (NOT WIN32)
-    find_package(KF6 ${KF_DEP_VERSION} REQUIRED COMPONENTS Auth)
-endif()
-
 find_package(KF6Baloo ${KF_DEP_VERSION}) # optional - we'll just let it pass if it's missing
 set_package_properties(KF5Baloo PROPERTIES
     DESCRIPTION "KDE's Framework which implements file indexing"
