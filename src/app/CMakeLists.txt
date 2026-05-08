@@ -65,7 +65,6 @@ ecm_qt_declare_logging_category(peruse
     HEADER app_debug.h
     IDENTIFIER APP_LOG
     CATEGORY_NAME org.kde.peruse.app
-    DEFAULT_SEVERITY Warning
 )
 
 target_link_libraries(peruse PRIVATE

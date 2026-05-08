@@ -17,7 +17,6 @@ ecm_qt_declare_logging_category(qtquick_internal
     HEADER qtquick_debug.h
     IDENTIFIER QTQUICK_LOG
     CATEGORY_NAME org.kde.peruse.qml
-    DEFAULT_SEVERITY Warning
 )
 
 target_include_directories(qtquick_internal PUBLIC

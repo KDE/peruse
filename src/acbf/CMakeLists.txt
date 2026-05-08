@@ -58,7 +58,6 @@ ecm_qt_declare_logging_category(acbf_SRCS
     HEADER acbf_debug.h
     IDENTIFIER ACBF_LOG
     CATEGORY_NAME org.kde.peruse.acbf
-    DEFAULT_SEVERITY Warning
     DESCRIPTION "Advanced Comic Book Format (aka ACBF)"
     EXPORT AdvancedComicBookFormat
 )
