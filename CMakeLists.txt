@@ -64,7 +64,7 @@ find_package(KF6 ${KF_DEP_VERSION} REQUIRED
 )
 
 find_package(KF6Baloo ${KF_DEP_VERSION}) # optional - we'll just let it pass if it's missing
-set_package_properties(KF5Baloo PROPERTIES
+set_package_properties(KF6Baloo PROPERTIES
     DESCRIPTION "KDE's Framework which implements file indexing"
     PURPOSE "Used by the ContentLister library to find books on the system if available (if unavailable, we will fall back to a classic file system scraper)"
     TYPE OPTIONAL
