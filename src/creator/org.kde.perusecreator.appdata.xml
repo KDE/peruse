@@ -19,6 +19,7 @@
   <name xml:lang="fr">Peruse</name>
   <name xml:lang="gl">Peruse</name>
   <name xml:lang="he">Peruse</name>
+  <name xml:lang="ia">Peruse</name>
   <name xml:lang="id">Peruse</name>
   <name xml:lang="it">Peruse</name>
   <name xml:lang="ka">Peruse</name>
@@ -50,6 +51,7 @@
   <summary xml:lang="fr">Outil de création de bandes dessinées</summary>
   <summary xml:lang="gl">Ferramenta de creación de libros de banda deseñada</summary>
   <summary xml:lang="he">כלי ליצירת ספרי קומיקס</summary>
+  <summary xml:lang="ia">Instrumento de creation de magazines a designos (Comic Book)</summary>
   <summary xml:lang="id">Alat Penciptaan Buku Komik</summary>
   <summary xml:lang="it">Strumento per la creazione di fumetti</summary>
   <summary xml:lang="ka">კომიქსების წიგნის შექმნის პროგრამა</summary>
@@ -81,6 +83,7 @@
     <p xml:lang="fr">La création de bandes dessinées numériques de qualité a été longtemps une corvée ou nécessitait l'utilisation de formats propriétaires. Cependant, le format avancé pour des bandes dessinées « Advanced Comic Book Format » a pour objectif de corriger cet état en introduisant des concepts comme la navigation reposant sur des cadres, en conjonction avec les méthodes reposant sur les pages traditionnelles. Ainsi, les informations de référence telles que les informations sur les caractères, les notes d'emplacements, etc., toutes sont contenues dans la bande dessinée, en plus, les informations intégrées de typographie et les superpositions avec du texte enrichi. Avec ces informations, une traduction peut être réalisée sans avoir besoin de multiples images pour la même page. Le logiciel « Peruse Creator » vous permet de créer ces bandes dessinées fortement interactives et de qualité, de façon à rester à la fois facile à utiliser et puissant.</p>
     <p xml:lang="gl">Durante moito tempo, crear libros dixitais de banda deseñada requiría moito traballo ou do uso de formatos privativos. O formato avanzado de libro de banda deseñada (ACBF) pretende solucionalo. Introduce conceptos como navegación por marcos para usar os métodos máis tradicionais baseados en páxinas, información de referencia como información de caracteres, notas sobre localizacións, etc. todo dentro do libro, así como información de fonte incrustada e capas de texto enriquecido para permitir traducir sen a necesitade de ter varias imaxes da mesma páxina. Peruse Creator permítelle crear estes libros moi interactivos e avanzados dunha forma que resulta tanto fácil de usar como potente.</p>
     <p xml:lang="he">יצירת ספרי קומיקס דיגיטליים עשירים הייתה סוג של מטלה, או שהיה צורך בסוגי קבצים קנייניים, אבל תסדיר ספרי הקומיקס המתקדם מתכוון לתקן את זה על ידי הצגת עקרונות כגון ניווט מבוסס תבניות כדי להתכתב עם השיטות מבוססות העמוד המסורתיות יותר, פרטי סימוכין כגון פרטים על הדמויות, הערות על מקום ההתרחשות וכן הלאה, כולם כחלק מהספר, לרבות פרטי סידור לדפוס ושכבות טקסט עשיר עשירות כדי לאפשר תרגום ללא הוספת מספר תמונות באותו העמוד. Peruse יוצר מאפשר לך ליצור את הספרים האינטראקטיביים והמתקדמים בטירוף האלה בדרך שהיא גם פשוטה לשימוש וגם לא מחמיצה אף יכולת משמעותית.</p>
+    <p xml:lang="ia">Crear comic-libros digital ric ha essite durante multo tempore un labor penose, o requireva le uso de formatos proprietari, ma le *Advanced Comic Book Format* ha le scopo de corriger isto introducente conceptos como navigation basate in quadros pro accompaniar le methodos plus traditional basate in paginas, information de referentia como datos de characteres, notas de location, e altere cosas, tote continite intra le libro, assi como information de composition typographic incastrate e superpositiones de texto ric pro que le traduction pote esser facite sin requirer multiple imagines del mesme pagina. *Peruse Creator* permitte crear iste libros altemente interactive e avantiate de un maniera que es al mesme tempore facile a usar e potente.</p>
     <p xml:lang="id">Membuat buku komik digital yang kaya telah lama menjadi tugas, atau memerlukan penggunaan format berpemilik, tetapi Advanced Comic Book Format bertujuan untuk memperbaikinya dengan memperkenalkan konsep seperti navigasi berbasis bingkai untuk mengikuti metode berbasis halaman yang lebih tradisional, informasi referensi seperti informasi karakter, catatan lokasi, dan sebagainya, semua terdapat dalam buku, serta informasi penyusunan huruf yang disematkan dan hamparan teks kaya sehingga terjemahan bisa dilakukan tanpa memerlukan banyak gambar dari halaman yang sama. Peruse Creator memungkinkan kamu membuat buku yang sangat interaktif dan canggih ini dengan cara yang mudah digunakan dan hebat.</p>
     <p xml:lang="it">La creazione di fumetti digitali ricchi è stata a lungo una sorta di lavoro ingrato, oppure ha richiesto l'uso di formati proprietari. Il formato Advanced Comic Book mira a risolvere questo problema, introducendo concetti come la navigazione basata sui quadri, che funziona con i metodi più tradizionali basati sulle pagine, le informazioni di riferimento come quelle sui personaggi, le note di posizione e così via, tutte contenute nel libro, nonché le informazioni sulla composizione incorporate e il testo ricco di sovrapposizioni, in modo che la traduzione possa essere eseguita senza aver bisogno di più immagini della stessa pagina. Peruse Creator ti consente di creare dei libri altamente interattivi e avanzati, in un modo che siano semplici da usare e potenti.</p>
     <p xml:lang="ka">მდიდარი ციფრული კომიქსების შექმნა დიდი რამ იყო საკმაო ხნის განმავლობაში, ან ითხოვდა ფასიანი ფორმატების გამოყენებას, მაგრამ Advanced Comic Book Format ამ ყველაფერში ეცდება, დაგეხმაროთ ისეთი ცნებების შემოღებით, როგორიცაა ჩარჩოებზე დაფუძნებული ნავიგაციის ტრადიციული გვერდზე დაფუძნებული მეთოდების მაგიერ, მიმართული ინფორმაცია, როგორიცაა სიმბოლოს ინფორმაცია, მდებარეობის შენიშვნები და ა.შ. ყველაფერი, რასაც ეს წიგნი შეიცავს, ჩაშენებული აკრეფის ინფორმაციის და მდიდარი ტექსტის განლაგებების ჩათვლით, ასე რომ თარგმნა იგივე გვერდის ერთზე მეტი გამოსახულების ქონის გარეშეც შეგიძლიათ. Peruse Creator საშუალებას გაძლევთ, შექმნათ ეს ინტერაქტიული და განვითარებული წიგნები ისე, რომ მისი გამოყენება ორივე, ადვილი და მძლავრი იყოს.</p>
@@ -110,6 +113,7 @@
     <p xml:lang="fr">Fonctionnalités :</p>
     <p xml:lang="gl">Funcionalidades:</p>
     <p xml:lang="he">יכולות:</p>
+    <p xml:lang="ia">Characteristicas:</p>
     <p xml:lang="id">Fitur:</p>
     <p xml:lang="it">Funzionalità:</p>
     <p xml:lang="ka">თვისებები:</p>
@@ -143,6 +147,7 @@
       <li xml:lang="fr">Archives de bandes dessinées (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="gl">Arquivo de libro de banda deseñada (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="he">ארכיוני ספרי קומיקס (‎cbz,‏ cbr,‏ cb7,‏ cbt,‏ cba)</li>
+      <li xml:lang="ia">Comic Book Archive (cbz, cbr, cb7, cbt, cba) - Archivo de libro de dessignos</li>
       <li xml:lang="id">Arsip Buku Komik (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="it">Archivio di fumetti (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="ka">კომიქსების წიგნის არქივი (cbz, cbr, cb7, cbt, cba)</li>
