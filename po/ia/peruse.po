@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: peruse\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 11:50+0000\n"
-"PO-Revision-Date: 2026-05-11 15:36+0200\n"
+"PO-Revision-Date: 2026-05-12 12:50+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -50,7 +50,7 @@ msgstr "Dan Leinir Turthra Jensen"
 #: app/main.cpp:63
 #, kde-format
 msgid "Clear the metainfo cache and perform a full rescan."
-msgstr ""
+msgstr "Netta lecache de metainfo e exeque un plen rescander."
 
 #: app/main.cpp:64 creator/main.cpp:59
 #, kde-format
@@ -169,6 +169,8 @@ msgid ""
 "This is generally caused by broken packaging. Contact whomever you got this "
 "package from and inform them of this error."
 msgstr ""
+"Isto es generalmente causate per un pacchetto rumpite. Contacta le personas "
+"de qui tu ha recipite iste pacchetto e informa los de iste error."
 
 #: app/qml/BookInfoPage.qml:43
 #, kde-format
@@ -499,7 +501,7 @@ msgstr "Dossier"
 #, kde-format
 msgctxt "shown with a throbber when searching for books on the device"
 msgid "Please wait while we find your books..."
-msgstr ""
+msgstr "Per favor attende durante que nos trova tu libros..."
 
 #: app/qml/PeruseMain.qml:286 creator/qml/Main.qml:246
 #, kde-format
@@ -524,7 +526,7 @@ msgstr "Libro recentemente addite"
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "No series found"
-msgstr ""
+msgstr "Nulle series trovate"
 
 #: app/qml/PeruseMain.qml:350
 #, kde-format
@@ -572,7 +574,7 @@ msgstr "Filtra per Dossier"
 #, kde-format
 msgctxt "title of the settings page"
 msgid "Configure the indexed folders"
-msgstr ""
+msgstr "Configura le dossieres indicisate"
 
 #: app/qml/Settings.qml:50
 #, kde-format
@@ -588,7 +590,7 @@ msgstr "Dele"
 #: app/qml/Settings.qml:96
 #, kde-format
 msgid "There are no folder currently indexed."
-msgstr ""
+msgstr "Il non ha alcun dossier currentemente indicisate."
 
 #: app/qml/Settings.qml:106
 #, kde-format
@@ -606,7 +608,7 @@ msgstr "Selige un dossier"
 #, kde-format
 msgctxt "title of the book store page"
 msgid "Book Store"
-msgstr ""
+msgstr "Libreria"
 
 #: app/qml/Store.qml:97
 #, kde-format
@@ -618,6 +620,8 @@ msgid ""
 "Sorry, no books.\n"
 "This is unusual, and likely means your internet is down, or the store is."
 msgstr ""
+"Pardono, nulle libros.Isto es inusual, e probabilemente significa que tu "
+"internet es foras de servicio, o que le magazin es vacue."
 
 #: app/qml/viewers/cbr.qml:91 creator/qml/BookPage.qml:80
 #, kde-format
@@ -641,6 +645,11 @@ msgid ""
 "about it. Please report a bug, and make the book available to us, so we can "
 "try and work out how to handle this!"
 msgstr ""
+"Le ligamine que tu ha justo activate va a un cosa con le qual nos non sape  "
+"vermente que facer. Isto suggere que le libro que tu lege non se conforma al "
+"specification de \"Formato de Libro de Comic Avantiate\", ma nos volerea  "
+"ancora saper de illo. Per favor, reporta un error e face le libro "
+"disponibile a  nos, proque nos pote provar a trovar un modo de tractar isto!"
 
 #: app/qml/viewers/ImageBrowser.qml:93
 #, kde-format
@@ -649,6 +658,10 @@ msgid ""
 "something with the ID %1 but didn't locate anything. This is likely an error "
 "in the book, and the author would probably like to know about it."
 msgstr ""
+"Le ligamine que tu ha activate non pare ducer a alicubi. Nos ha provate "
+"trovar alicun cosa con le ID %1 ma non ha locate nihil. Isto es "
+"probabilemente  un error in le libro, e le autor probabilemente volerea "
+"saper de isto."
 
 #: app/qml/viewers/ImageBrowser.qml:501
 #, kde-format
@@ -669,6 +682,15 @@ msgid ""
 "If not, please report this bug to us, and give as much information as you "
 "can to assist us in working out what's wrong."
 msgstr ""
+"Il non esseva possibile cargar le imagine pro iste pagina.Isto es le plus "
+"sovente causate per un decodificator de imagines mancante  (specificamente, "
+"le pacchetto Qt Imageformats, del qual Peruse depende  pro cargar imagines), "
+"e es probabilemente un error de pacchettamento. Contacta le persona de qui "
+"tu ha recipite iste pacchetto e informa los de iste error.Specificamente, le "
+"imagine que nos tentava cargar se appella %1, e le formatos de imagine que "
+"Qt cognosce es %2. Si il ha un discrepantia ibi, ille essera le problema.Si "
+"non, per favor reporta iste bug a nos, e da tante information como tupote "
+"pro adjutar nos a discoperir lo que es incorrecte."
 
 #: app/qml/viewers/ViewerBase.qml:100
 #, kde-format
@@ -690,6 +712,9 @@ msgid ""
 "check the details of the link below, to make sure that you really do want to "
 "open it, or just close this sheet."
 msgstr ""
+"Le ligamine super le qual tu justo clicca puncta a un loco foras del libro.  "
+"Per favor, verifica le detalios del ligamine infra pro assecurar te que tu "
+"realmente vole aperir lo, o simplemente claude iste folio."
 
 #: app/qml/viewers/ViewerBase.qml:141
 #, kde-format
