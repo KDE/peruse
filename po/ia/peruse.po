@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: peruse\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 11:50+0000\n"
-"PO-Revision-Date: 2026-05-12 12:50+0200\n"
+"PO-Revision-Date: 2026-05-13 15:08+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -734,11 +734,14 @@ msgid ""
 "\n"
 "%3"
 msgstr ""
+"Compone un message de e-posta pro %1 con le subjecto \"%2\" e le sequente "
+"corpore:\n"
+"%3"
 
 #: app/qml/viewers/ViewerBase.qml:145
 #, kde-format
 msgid "Compose an email for %1 with the subject \"%2\""
-msgstr ""
+msgstr "Compone un message de e-posta pro %1 con le subjecto \"%2\" "
 
 #: app/qml/viewers/ViewerBase.qml:147
 #, kde-format
@@ -810,6 +813,8 @@ msgid ""
 "Please select the method you want to add the new page. No changes will be "
 "made outside of the project by performing these actions."
 msgstr ""
+"Per favor selige le methodo con le qual tu vole adder le nove pagina.  Nulle "
+"modificationes essera facite foras del projecto per executar  iste actiones."
 
 #: creator/qml/AddPageSheet.qml:55
 #, kde-format
@@ -825,20 +830,20 @@ msgctxt ""
 "@title:window standard file open dialog used to find a page to add to the "
 "book"
 msgid "Please Choose an Image to Add"
-msgstr ""
+msgstr "Per favor selige un imagine a adder"
 
 #: creator/qml/AddPageSheet.qml:75
 #, kde-format
 msgctxt ""
 "@action:button add a page by creating a new image using an image editor"
 msgid "Create a New Image Using an Image Editor"
-msgstr ""
+msgstr "Crea un imagine usante un editor de imagine"
 
 #: creator/qml/AddPageSheet.qml:83
 #, kde-format
 msgctxt "@action:button add a page by taking a photo with a camera"
 msgid "Take a Photo and Add That"
-msgstr ""
+msgstr "Prende un Photo e adde ille"
 
 #: creator/qml/Book.qml:50
 #, kde-format
@@ -899,13 +904,13 @@ msgstr "Tu libro es vacue"
 #: creator/qml/Book.qml:190
 #, kde-format
 msgid "Start adding pages to your book"
-msgstr ""
+msgstr "Starta adder paginas a tu libro"
 
 #: creator/qml/BookBasics.qml:39
 #, kde-format
 msgctxt "title of the basic book information page"
 msgid "Your Book At A Glance"
-msgstr ""
+msgstr "Tu Libro a reguardar"
 
 #: creator/qml/BookBasics.qml:85
 #, kde-format
@@ -933,7 +938,7 @@ msgctxt ""
 "Header for a list which shows every file contained in the archive which "
 "makes up this book"
 msgid "Every File In The Book:"
-msgstr ""
+msgstr "Cata file In leLibro"
 
 #: creator/qml/BookBasics.qml:184
 #, kde-format
@@ -945,19 +950,20 @@ msgstr "Filenon referentiate"
 #, kde-format
 msgctxt "If a file is referenced by its full path"
 msgid "Referenced by full path"
-msgstr ""
+msgstr "Referentiate per le percurso complete"
 
 #: creator/qml/BookBasics.qml:188
 #, kde-format
 msgctxt "If a file is referenced partially, describe that"
 msgid "Referenced by filename only"
-msgstr ""
+msgstr "Referentiate solmente per nomine de file"
 
 #: creator/qml/BookBasics.qml:190
 #, kde-format
 msgctxt "What happens if we have an unexpected reference amount"
 msgid "%1 might be referenced, but in some way we've not accounted for"
 msgstr ""
+"%1 poterea esser referite, ma in un maniera que nos non ha considerate."
 
 #: creator/qml/BookBasics.qml:198
 #, kde-format
@@ -999,13 +1005,13 @@ msgctxt ""
 "title text for a card which informs the user there are no binary data "
 "entries, and what those are"
 msgid "No Embedded Binary Data Entries"
-msgstr ""
+msgstr "Nulle entratas de datos binari incorporate"
 
 #: creator/qml/BookBinaries.qml:81
 #, kde-format
 msgctxt "title text for a card which informs the user what binary data is"
 msgid "Embedded Binary Data"
-msgstr ""
+msgstr "Datos Binari Incorporate"
 
 #: creator/qml/BookBinaries.qml:89
 #, kde-format
@@ -1018,6 +1024,10 @@ msgid ""
 "file on your system. That data will be imported into your book, and leaves "
 "the external file otherwise untouched."
 msgstr ""
+"Il non ha ancora datos incorporate in tu libro. Tu pote adder tal datos "
+"creante un nove entrata, e postea adder datos a ille entrata ab alicun file "
+"existente in tu systema. Iste datos essera importate in tu libro, e  lassa "
+"le file externe sin alteration."
 
 #: creator/qml/BookBinaries.qml:90
 #, kde-format
@@ -1029,6 +1039,10 @@ msgid ""
 "data to that entry from some existing file on your system. That data will be "
 "imported into your book, and leaves the external file otherwise untouched."
 msgstr ""
+"Tu pote adder nove entratas de datos binari per crear un nove entrata, e "
+"postea adder datos a ille entrata ab alicun file existente in tu systema.  "
+"Ille datos essera importate in tu libro, e lassa le file externe sin "
+"alteration."
 
 #: creator/qml/BookBinaries.qml:99
 #, kde-format
@@ -1036,7 +1050,7 @@ msgctxt ""
 "Title used in the list of binary data when there is no id defined for that "
 "entry"
 msgid "Unnamed piece of data"
-msgstr ""
+msgstr "Pecia de datos sin nomine"
 
 #: creator/qml/BookBinaries.qml:133
 #, kde-format
@@ -1066,7 +1080,7 @@ msgstr "ID"
 #, kde-format
 msgctxt "Placeholder text for the binary ID input field"
 msgid "Enter the name of your binary here (often a filename)"
-msgstr ""
+msgstr "Inserta hic lenomine de tu binari (sovente un nomine de file)"
 
 #: creator/qml/BookBinaryEditor.qml:69
 #, kde-format
@@ -1079,6 +1093,8 @@ msgstr "Typo de Contento"
 msgctxt "Placeholder text for the binary content type input field"
 msgid "Enter the content type of your binary here (aka mimetype)"
 msgstr ""
+"Inserta  hic le typo de contento de tu binari (etiam cognoscite como "
+"mimetype)"
 
 #: creator/qml/BookBinaryEditor.qml:75
 #, kde-format
@@ -1142,6 +1158,8 @@ msgid ""
 "The file you are attempting to add, %1, is more than 10MiB. Are you sure you "
 "want to add it to the book?"
 msgstr ""
+"Le file que tu essaya adder, %1, es plus grande que 10MiB.Es tu secur que tu "
+"vole adder lo al libro?"
 
 #: creator/qml/BookBinaryEditor.qml:141
 #, kde-format
@@ -1159,7 +1177,7 @@ msgstr "Non adde"
 #, kde-format
 msgctxt "title text for the book meta information editor sheet"
 msgid "Edit Meta Information"
-msgstr ""
+msgstr "Edita Meta Information"
 
 #: creator/qml/BookMetainfoPage.qml:49
 #, kde-format
@@ -1183,7 +1201,7 @@ msgstr "Parolas clave"
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "Write a comma separated list of keywords."
-msgstr ""
+msgstr "Scribe un lista de parolas clave separate per commas."
 
 #: creator/qml/BookMetainfoPage.qml:92
 #, kde-format
@@ -1249,7 +1267,7 @@ msgstr "Characteres"
 #, kde-format
 msgctxt "placeholder text for the add new character text entry"
 msgid "Write to add new character"
-msgstr ""
+msgstr "Scribe per adder un nove character"
 
 #: creator/qml/BookMetainfoPage.qml:363
 #, kde-format
@@ -1273,13 +1291,13 @@ msgstr "Tomo:"
 #, kde-format
 msgctxt "@label:textfield"
 msgid "New serie"
-msgstr ""
+msgstr "Nove serie"
 
 #: creator/qml/BookMetainfoPage.qml:481
 #, kde-format
 msgctxt "@title:group"
 msgid "Database References"
-msgstr ""
+msgstr "Referentias de base de datos"
 
 #: creator/qml/BookMetainfoPage.qml:507 creator/qml/BookMetainfoPage.qml:595
 #, kde-format
@@ -1309,19 +1327,19 @@ msgstr "Evalutationes de contento"
 #, kde-format
 msgctxt "placeholder text for the add content rating text entry"
 msgid "Write to add rating label."
-msgstr ""
+msgstr "Scribe pro adder un etiquetta de evalutation."
 
 #: creator/qml/BookMetainfoPage.qml:665
 #, kde-format
 msgctxt "placeholder text for the add content rating system text entry"
 msgid "Write to add rating system."
-msgstr ""
+msgstr "Scribe pro adder un systema de evalutation."
 
 #: creator/qml/BookMetainfoPage.qml:717
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Review title"
-msgstr ""
+msgstr "Titulo del revista"
 
 #: creator/qml/BookMetainfoPage.qml:733
 #, kde-format
@@ -1333,7 +1351,7 @@ msgstr "Description"
 #, kde-format
 msgctxt "@title:group"
 msgid "Publisher Info"
-msgstr ""
+msgstr "Information del  editor (publisher)"
 
 #: creator/qml/BookMetainfoPage.qml:760
 #, kde-format
@@ -1345,7 +1363,7 @@ msgstr "Editor (Publisher):"
 #, kde-format
 msgctxt "placeholder text for the publisher entry"
 msgid "Write to add publisher"
-msgstr ""
+msgstr "Scribe per adder Editor (Publisher)"
 
 #: creator/qml/BookMetainfoPage.qml:774
 #, kde-format
@@ -1405,7 +1423,7 @@ msgstr "Nove information de documento"
 #, kde-format
 msgctxt "@title:group"
 msgid "General Page Background Color"
-msgstr ""
+msgstr "Color general de fundo de pagina"
 
 #: creator/qml/BookPage.qml:32
 #, kde-format
@@ -1436,19 +1454,19 @@ msgctxt ""
 "title text for the reference editor page, when the reference has no language "
 "set"
 msgid "Editing %1 (default language)"
-msgstr ""
+msgstr "Editante %1 (linguage predefinite)"
 
 #: creator/qml/BookReferenceEditor.qml:31
 #, kde-format
 msgctxt "title text for the reference editor page"
 msgid "Editing %1 (language: %2)"
-msgstr ""
+msgstr "Editante %1 (linguage:%2)"
 
 #: creator/qml/BookReferenceEditor.qml:42
 #, kde-format
 msgctxt "Save the reference and close the editor"
 msgid "Save and Close Editor"
-msgstr ""
+msgstr "Salveguarda e claude Editor"
 
 #: creator/qml/BookReferenceEditor.qml:51
 #, kde-format
@@ -1460,7 +1478,7 @@ msgstr "Salveguarda"
 #, kde-format
 msgctxt "Abort the changes made in the editor, and close the editor"
 msgid "Abort Changes"
-msgstr ""
+msgstr "Abandona  Modificationes"
 
 #: creator/qml/BookReferenceEditor.qml:66
 #, kde-format
@@ -1542,11 +1560,13 @@ msgid ""
 "<p>Enter the body of your reference document here.</p>\n"
 "<p>This is what links look like: <a href=\"destination\">Some Link</a></p>"
 msgstr ""
+"<p>Inserta hic le corpore de tu documento de referentia.</p><p>Isto es como "
+"le ligamines appare: <a href=\"destination\">Alicun Ligamine</a></p>"
 
 #: creator/qml/BookReferences.qml:92
 #, kde-format
 msgid "There is no reference information in your book yet"
-msgstr ""
+msgstr "Il non ha ancora information de referentia in tu libro."
 
 #: creator/qml/BookReferences.qml:93
 #, kde-format
@@ -1556,6 +1576,11 @@ msgid ""
 "as well as links to both internal things (other references or one of the "
 "pieces of binary data), or to an external resource, such as a website."
 msgstr ""
+"Referentias es collectiones de paragraphos de texto, le quales tu pote  "
+"impler con formatation simple (fortia, emphasis, e altere dispositiones  "
+"simple de iste typo), assi como ligamines a cosas interne (altere "
+"referentias  o un del pecias de datos binari), o a un ressource externe, tal "
+"como un  sito web."
 
 #: creator/qml/BookStylesheet.qml:44
 #, kde-format
@@ -1585,13 +1610,13 @@ msgstr "Elemento"
 #, kde-format
 msgctxt "@option:check"
 msgid "Apply to style elements which request an inverted scheme"
-msgstr ""
+msgstr "Applica a elementos de stilo que require un schema invertite"
 
 #: creator/qml/BookStylesheet.qml:110
 #, kde-format
 msgctxt "@option:check"
 msgid "Sub-element selector type"
-msgstr ""
+msgstr "Typo de selector de sub-elemento"
 
 #: creator/qml/BookStylesheet.qml:111
 #, kde-format
@@ -1618,7 +1643,7 @@ msgctxt ""
 "The title of a style entry which does not have type, and which represents "
 "the inverted version of that style"
 msgid "%1 (sub type: %2, inverted)"
-msgstr ""
+msgstr "%1 (sub typo: %2, invertite)"
 
 #: creator/qml/BookStylesheet.qml:145
 #, kde-format
@@ -1630,13 +1655,13 @@ msgstr "%1"
 #, kde-format
 msgctxt "The title of a style entry which does not have type"
 msgid "%1 (sub type: %2)"
-msgstr ""
+msgstr "%1 (sub typo: %2)"
 
 #: creator/qml/BookStylesheet.qml:154
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "No Styling Information"
-msgstr ""
+msgstr "Nulle information de silo"
 
 #: creator/qml/BookStylesheet.qml:155
 #, kde-format
@@ -1646,6 +1671,9 @@ msgid ""
 "entry from some existing file on your system. That data will be imported "
 "into your book, and leaves the external file otherwise untouched."
 msgstr ""
+"Tu pote adder tal datos creante un nove entrata, e postea adder datos a  "
+"ille entrata ab alicun file existente in tu systema. Iste datos essera "
+"importate in tu libro, e lassa le file externe alteremente intacte."
 
 #: creator/qml/CreateNewBook.qml:44
 #, kde-format
@@ -1694,7 +1722,7 @@ msgstr "*.cbz"
 #, kde-format
 msgctxt "@title:window folder dialog used to select the location of a new book"
 msgid "Please Choose the Location for the Book"
-msgstr ""
+msgstr "Pro favor Selige leLocation per le Libro"
 
 #: creator/qml/CreateNewBook.qml:130
 #, kde-format
@@ -1706,7 +1734,7 @@ msgstr "Image de copertura"
 #, kde-format
 msgctxt "placeholder message for missing cover image"
 msgid "Missing cover image"
-msgstr ""
+msgstr "Imagine de copertura mancante"
 
 #: creator/qml/CreateNewBook.qml:160
 #, kde-format
@@ -1719,7 +1747,7 @@ msgstr "Selige imagine..."
 msgctxt ""
 "@title:window file dialog used to select the cover image for a new book"
 msgid "Please Choose Your Cover Image"
-msgstr ""
+msgstr "Pro favor selige tu image de copertura"
 
 #: creator/qml/CreateNewBook.qml:187
 #, kde-format
@@ -1742,7 +1770,7 @@ msgstr "Edita area de pagina"
 #: creator/qml/EditPageArea.qml:136
 #, kde-format
 msgid "Text Rotation Guide"
-msgstr ""
+msgstr "Guida de rotation de texto"
 
 #: creator/qml/EditPageArea.qml:148
 #, kde-format
@@ -1754,7 +1782,7 @@ msgstr "ID:"
 #, kde-format
 msgctxt "Placeholder text for the page area ID text-field"
 msgid "Write to add an ID"
-msgstr ""
+msgstr "Scribe per adder un ID"
 
 #: creator/qml/EditPageArea.qml:153 creator/qml/EditPageArea.qml:184
 #, kde-format
@@ -1766,7 +1794,7 @@ msgstr "Color de fundo:"
 #, kde-format
 msgctxt "@title color choosing dialog"
 msgid "Choose the background color for this frame"
-msgstr ""
+msgstr "Selige le color de fundo per iste quadro"
 
 #: creator/qml/EditPageArea.qml:218
 #, kde-format
@@ -1804,7 +1832,7 @@ msgstr "Corpore de area de texto:"
 #, kde-format
 msgctxt "Label for a text input box in which to input a hyperlink destination"
 msgid "Jump Destination:"
-msgstr ""
+msgstr "Destimation de salto (jump):"
 
 #: creator/qml/EditPageArea.qml:301
 #, kde-format
@@ -1812,7 +1840,7 @@ msgctxt ""
 "Placeholder text for a text input box in which to input a hyperlink "
 "destination"
 msgid "Enter the jump destination here"
-msgstr ""
+msgstr "Inserta le destination de salto hic"
 
 #: creator/qml/EditPageArea.qml:305
 #, kde-format
@@ -1905,13 +1933,13 @@ msgctxt ""
 "@title:window standard file open dialog used to open a book not in the "
 "collection"
 msgid "Please Choose a Book to Open"
-msgstr ""
+msgstr "Pro favor selige un Libro a aperir"
 
 #: creator/qml/Main.qml:335
 #, kde-format
 msgctxt "The file type filter for comic book archives"
 msgid "Comic Book Archive zip format %1"
-msgstr ""
+msgstr "Comic Book Archive (Archivo de libro de designos) formato zip %1"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:54
 #, kde-format
@@ -1923,7 +1951,7 @@ msgstr "Edita autor"
 #, kde-format
 msgctxt "help text for the edit author sheet"
 msgid "Please complete the information for this author."
-msgstr ""
+msgstr "Pro favor completa le information per iste autor."
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:74
 #, kde-format
@@ -1965,13 +1993,13 @@ msgstr "Activitate"
 #, kde-format
 msgctxt "@title:group"
 msgid "Homepage addresses"
-msgstr ""
+msgstr "Adresses de pagina principal o initial "
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:152
 #, kde-format
 msgctxt "@label:textfield"
 msgid "New Homepage"
-msgstr ""
+msgstr "Nove pagina domo ( initial o principal)"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:171
 #, kde-format
@@ -1989,7 +2017,7 @@ msgstr "Nove adresse de e-posta"
 #, kde-format
 msgctxt "title text for the page meta information editor sheet"
 msgid "Edit Page Information"
-msgstr ""
+msgstr "Edita information de pagina"
 
 #: creator/qml/PageMetaInfo.qml:46
 #, kde-format
@@ -2038,7 +2066,7 @@ msgstr "Quadros"
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "No frames present"
-msgstr ""
+msgstr "Necun quadro (photogramma) presente"
 
 #: creator/qml/PageMetaInfo.qml:119
 #, kde-format
@@ -2052,7 +2080,7 @@ msgctxt ""
 "A switch which lets the user change the background colour of the page when "
 "this frame is focused"
 msgid "Change page background color"
-msgstr ""
+msgstr "Cambia color de fundo de pagina"
 
 #: creator/qml/PageMetaInfo.qml:129
 #, kde-format
@@ -2064,7 +2092,7 @@ msgstr "Color de fundo:"
 #, kde-format
 msgctxt "@title color choosing dialog"
 msgid "Choose background color for this frame"
-msgstr ""
+msgstr "Seliuge color de fundo per iste quadro"
 
 #: creator/qml/PageMetaInfo.qml:159
 #, kde-format
@@ -2082,19 +2110,19 @@ msgstr "Move a basso "
 #, kde-format
 msgctxt "remove the frame from the page"
 msgid "Delete Frame"
-msgstr ""
+msgstr "Dele quadro"
 
 #: creator/qml/PageMetaInfo.qml:187
 #, kde-format
 msgctxt "@title:group"
 msgid "Text Areas"
-msgstr ""
+msgstr "Area de texto"
 
 #: creator/qml/PageMetaInfo.qml:200
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "No text areas present"
-msgstr ""
+msgstr "Nulle area de texto presente"
 
 #: creator/qml/PageMetaInfo.qml:213
 #, kde-format
@@ -2112,7 +2140,7 @@ msgstr "Move a basso "
 #, kde-format
 msgctxt "remove the text area from the page"
 msgid "Delete Text Area"
-msgstr ""
+msgstr "Dele area de texto"
 
 #: creator/qml/PageMetaInfo.qml:237
 #, kde-format
@@ -2124,13 +2152,13 @@ msgstr "Area de texto %1"
 #, kde-format
 msgctxt "@title:group"
 msgid "Jumps"
-msgstr ""
+msgstr "Saltos (Jumps)"
 
 #: creator/qml/PageMetaInfo.qml:261
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "No jumps present"
-msgstr ""
+msgstr "Necun saltos (jumps) presente"
 
 #: creator/qml/PageMetaInfo.qml:273
 #, kde-format
@@ -2148,13 +2176,13 @@ msgstr "Move a basso "
 #, kde-format
 msgctxt "remove the jump from the page"
 msgid "Delete Jump"
-msgstr ""
+msgstr "Dele Salto (jump)"
 
 #: creator/qml/PageMetaInfo.qml:297
 #, kde-format
 msgctxt "Comic book panel jump name."
 msgid "Jump %1"
-msgstr ""
+msgstr "Salto (Jump) %1"
 
 #: creator/qml/PageMetaInfo.qml:306
 #, kde-format
@@ -2192,24 +2220,32 @@ msgid ""
 "archive at the KDE Store from within the application, or just share the "
 "files with your friends."
 msgstr ""
+"Benvenite a Peruse Creator, un instrumento designate pro adjutar te a crear "
+"archivos de libros de Comics que pote esser legite con qualcunque "
+"applicationde lector de libros de Comics capace de cbz. Tu pote o crear "
+"archivos de libros  de Comics integremente nove ab le initio, crear un ab un "
+"gruppo de imagines,  o editar archivos existente. Un vice que tu los ha "
+"create, tu pote mesmo publicar  los directemente al archivo de libros de "
+"Comics in linea al KDE Store desde intra  le application, o simplemente "
+"compartir le files con tu amicos."
 
 #: creator/qml/WelcomePage.qml:81
 #, kde-format
 msgctxt "@action:button open existing comic book archive"
 msgid "Open Existing..."
-msgstr ""
+msgstr "Aperi existente..."
 
 #: creator/qml/WelcomePage.qml:89
 #, kde-format
 msgctxt "@action:button create a new, empty comic book archive"
 msgid "Create Blank"
-msgstr ""
+msgstr "Crea  vacue (blanc)"
 
 #: creator/qml/WelcomePage.qml:96
 #, kde-format
 msgctxt "@title:group"
 msgid "Recent books"
-msgstr ""
+msgstr "Libros recente"
 
 #: creator/qml/WelcomePage.qml:116
 #, kde-format
@@ -2217,38 +2253,38 @@ msgctxt ""
 "@action:button continue working on the most recently opened comic book "
 "archive"
 msgid "Continue working on %1"
-msgstr ""
+msgstr "Continua laborar sur %1"
 
 #: creator/qml/WelcomePage.qml:129
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "There are no recent books"
-msgstr ""
+msgstr "Il non ha libros recente"
 
 #: qtquick/ArchiveBookModel.cpp:527
 #, kde-format
 msgid "Creating archive in %1"
-msgstr ""
+msgstr "Creante archivo in %1"
 
 #: qtquick/ArchiveBookModel.cpp:539
 #, kde-format
 msgid "Writing in ACBF data"
-msgstr ""
+msgstr "Scribente in datos ACBF"
 
 #: qtquick/ArchiveBookModel.cpp:549
 #, kde-format
 msgid "Copying across all files not marked for deletion"
-msgstr ""
+msgstr "Copiar trans omne files non marcate pro deletion"
 
 #: qtquick/ArchiveBookModel.cpp:557
 #, kde-format
 msgid "Copying over %1"
-msgstr ""
+msgstr "Copiar sur %1"
 
 #: qtquick/ArchiveBookModel.cpp:584
 #, kde-format
 msgid "Copying all content from %1 to %2"
-msgstr ""
+msgstr "Copiar omne contentoex %1 a %2"
 
 #: qtquick/ArchiveBookModel.cpp:592
 #, kde-format
@@ -2256,3 +2292,5 @@ msgid ""
 "Successfully replaced old archive with the new archive - now loading the new "
 "archive..."
 msgstr ""
+"Reimplaciate con successo le vetere archivo con le nove archivo - ora "
+"cargante le nove archivo..."
