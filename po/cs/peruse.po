@@ -1,31 +1,32 @@
-# Copyright (C) YEAR This file is copyright:
+# Copyright (C) 2026 This file is copyright:
 # This file is distributed under the same license as the peruse package.
 # Vit Pelcak <vit@pelcak.org>, 2018, 2019, 2020, 2021, 2022, 2023.
+# SPDX-FileCopyrightText: 2026 Libor Filípek <libor.filipek@gmail.com>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: peruse\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 11:50+0000\n"
-"PO-Revision-Date: 2023-06-15 13:53+0200\n"
-"Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
+"PO-Revision-Date: 2026-05-17 23:07+0200\n"
+"Last-Translator: Libor Filípek <libor.filipek@gmail.com>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 23.04.2\n"
+"X-Generator: Poedit 3.8\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Vít Pelčák"
+msgstr "Vít Pelčák,Libor Filípek"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "vit@pelcak.org"
+msgstr "vit@pelcak.org,libor.filipek@gmail.com"
 
 #: app/main.cpp:48
 #, kde-format
@@ -50,7 +51,7 @@ msgstr "Dan Leinir Turthra Jensen"
 #: app/main.cpp:63
 #, kde-format
 msgid "Clear the metainfo cache and perform a full rescan."
-msgstr ""
+msgstr "Vymazat mezipaměť metainformací a provést úplné opětovné prohledání."
 
 #: app/main.cpp:64 creator/main.cpp:59
 #, kde-format
@@ -67,7 +68,7 @@ msgstr "Spustit celoobrazovkový režim"
 #, kde-format
 msgctxt "Exit full screen mode on a touch based device"
 msgid "Exit Full Screen"
-msgstr ""
+msgstr "Ukončit celoobrazovkový režim"
 
 #: app/qml/Book.qml:188
 #, kde-format
@@ -90,7 +91,7 @@ msgctxt ""
 "Header title for the section in which the direction the book will be "
 "navigated can be picked"
 msgid "Reading Direction"
-msgstr ""
+msgstr "Směr čtení"
 
 #: app/qml/Book.qml:203
 #, kde-format
@@ -140,7 +141,7 @@ msgstr "Spustit celoobrazovkový režim"
 #, kde-format
 msgctxt "Exit full screen mode on a non-touch based device"
 msgid "Exit Full Screen"
-msgstr ""
+msgstr "Ukončit celoobrazovkový režim"
 
 #: app/qml/Book.qml:275
 #, kde-format
@@ -157,7 +158,7 @@ msgctxt ""
 "reader at all (usually when Okular's qml components are not installed for "
 "some reason)"
 msgid "Failed to load the reader component"
-msgstr ""
+msgstr "Nepodařilo se načíst komponentu čtečky"
 
 #: app/qml/Book.qml:383
 #, kde-format
@@ -169,24 +170,26 @@ msgid ""
 "This is generally caused by broken packaging. Contact whomever you got this "
 "package from and inform them of this error."
 msgstr ""
+"Toto je obvykle způsobeno chybným balením. Kontaktujte osobu, od které jste "
+"balíček obdrželi, a informujte ji o této chybě."
 
 #: app/qml/BookInfoPage.qml:43
 #, kde-format
 msgctxt "@label"
 msgid "Author(s):"
-msgstr ""
+msgstr "Autor (autoři):"
 
 #: app/qml/BookInfoPage.qml:44 app/qml/BookInfoPage.qml:51
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "Unknown"
-msgstr ""
+msgstr "Neznámý"
 
 #: app/qml/BookInfoPage.qml:50
 #, kde-format
 msgctxt "@label"
 msgid "Publisher:"
-msgstr ""
+msgstr "Vydavatel:"
 
 #: app/qml/BookInfoPage.qml:57
 #, kde-format
@@ -198,7 +201,7 @@ msgstr "Umístění:"
 #, kde-format
 msgctxt "@title:group"
 msgid "File Metadata"
-msgstr ""
+msgstr "Metadata souboru"
 
 #: app/qml/BookInfoPage.qml:70
 #, kde-format
@@ -227,7 +230,7 @@ msgstr "(Žádné značky)"
 #, kde-format
 msgctxt "Title of the page with books grouped by the title start letters"
 msgid "Group by Title"
-msgstr ""
+msgstr "Seřadit podle názvu"
 
 #: app/qml/BooksByTitlePage.qml:76 app/qml/Bookshelf.qml:131
 #: app/qml/CategoryPage.qml:82
@@ -242,7 +245,7 @@ msgstr "Žádné shody"
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "No authors available"
-msgstr ""
+msgstr "Nejsou k dispozici žádní autoři"
 
 #: app/qml/Bookshelf.qml:88
 #, kde-format
@@ -254,7 +257,7 @@ msgstr "Hledat knihy"
 #, kde-format
 msgctxt "placeholder text for the search field"
 msgid "Tap and type to search"
-msgstr ""
+msgstr "Klepněte a zadejte text pro vyhledání"
 
 #: app/qml/Bookshelf.qml:155
 #, kde-format
@@ -266,16 +269,16 @@ msgstr "Otevřít"
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Details"
-msgstr ""
+msgstr "Podrobnosti"
 
 #: app/qml/CategoryPage.qml:65
 #, kde-format
 msgctxt "@info"
 msgid "%1 book"
 msgid_plural "%1 books"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%1 kniha"
+msgstr[1] "%1 knihy"
+msgstr[2] "%1 knih"
 
 #: app/qml/FileFinder.qml:90
 #, kde-format
@@ -283,7 +286,7 @@ msgctxt ""
 "A fake folder item which if activated will cause the folder list to navigate "
 "up through the folder structure by one step"
 msgid "(go up one level)"
-msgstr ""
+msgstr "(o úroveň výš)"
 
 #: app/qml/listcomponents/BookTile.qml:150
 #, kde-format
@@ -326,19 +329,19 @@ msgstr "(Bez komentáře)"
 msgctxt ""
 "Placeholder text for the book description field when no description is set"
 msgid "(no description available for this book)"
-msgstr ""
+msgstr "(k této knize není k dispozici žádný popis)"
 
 #: app/qml/listcomponents/BookTile.qml:373
 #, kde-format
 msgctxt "Spawn inline dialog box to confirm permanent removal of this book"
 msgid "Delete from Device"
-msgstr ""
+msgstr "Odstranit ze zařízení"
 
 #: app/qml/listcomponents/BookTile.qml:401
 #, kde-format
 msgctxt "Dialog text for delete book dialog"
 msgid "Are you sure you want to delete this from your device?"
-msgstr ""
+msgstr "Opravdu chcete tuto položku ze zařízení odstranit?"
 
 #: app/qml/listcomponents/BookTile.qml:411
 #, kde-format
@@ -380,12 +383,12 @@ msgstr ", %1"
 #, kde-format
 msgctxt "Author name used when there are no known authors for a book"
 msgid "Unknown author"
-msgstr ""
+msgstr "Neznámý autor"
 
 #: app/qml/listcomponents/CategoryTile.qml:40
 #, kde-format
 msgid "Comics in folder: %1"
-msgstr ""
+msgstr "Komiksy ve složce: %1"
 
 #: app/qml/Main.qml:39
 #, kde-format
@@ -393,7 +396,7 @@ msgctxt ""
 "@title:window standard file open dialog used to open a book not in the "
 "collection"
 msgid "Please Choose a Comic to Open"
-msgstr ""
+msgstr "Vyberte si komiks, který chcete otevřít"
 
 #: app/qml/MobileMain.qml:42
 #, kde-format
@@ -401,7 +404,7 @@ msgctxt ""
 "Title of a page which lets you open comics not in your collection by using a "
 "standard touch-friendly dig-down style filesystem browser"
 msgid "Open Comics not in Your Collection"
-msgstr ""
+msgstr "Otevřít komiksy, které nemáte ve své sbírce"
 
 #: app/qml/PeruseContextDrawer.qml:38
 #, kde-format
@@ -500,7 +503,7 @@ msgstr "Složka"
 #, kde-format
 msgctxt "shown with a throbber when searching for books on the device"
 msgid "Please wait while we find your books..."
-msgstr ""
+msgstr "Čekejte prosím, probíhá vyhledávání komiksů..."
 
 #: app/qml/PeruseMain.qml:286 creator/qml/Main.qml:246
 #, kde-format
@@ -525,19 +528,19 @@ msgstr "Nedávno přidané knihy"
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "No series found"
-msgstr ""
+msgstr "Nebyla nalezena žádná série"
 
 #: app/qml/PeruseMain.qml:350
 #, kde-format
 msgctxt "@title"
 msgid "Series"
-msgstr ""
+msgstr "Série"
 
 #: app/qml/PeruseMain.qml:360
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "No authors found"
-msgstr ""
+msgstr "Nebyli nalezeni žádní autoři"
 
 #: app/qml/PeruseMain.qml:362
 #, kde-format
@@ -549,19 +552,19 @@ msgstr "Autoři"
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "No publishers found"
-msgstr ""
+msgstr "Nebyli nalezeni žádní nakladatelé"
 
 #: app/qml/PeruseMain.qml:374
 #, kde-format
 msgctxt "@title"
 msgid "Publishers"
-msgstr ""
+msgstr "Nakladatel"
 
 #: app/qml/PeruseMain.qml:382
 #, kde-format
 msgctxt "Title of the page with books grouped by keywords, character or genres"
 msgid "Group by Keywords, Characters and Genres"
-msgstr ""
+msgstr "Seskupit podle klíčových slov, postav a žánrů"
 
 #: app/qml/PeruseMain.qml:392
 #, kde-format
@@ -607,7 +610,7 @@ msgstr "Vyberte složku"
 #, kde-format
 msgctxt "title of the book store page"
 msgid "Book Store"
-msgstr ""
+msgstr "Knihkupectví"
 
 #: app/qml/Store.qml:97
 #, kde-format
@@ -619,6 +622,9 @@ msgid ""
 "Sorry, no books.\n"
 "This is unusual, and likely means your internet is down, or the store is."
 msgstr ""
+"Je nám líto, žádné knihy nejsou k dispozici.\n"
+"To je neobvyklé a pravděpodobně to znamená, že máte výpadek internetu nebo "
+"že je mimo provoz internetový obchod."
 
 #: app/qml/viewers/cbr.qml:91 creator/qml/BookPage.qml:80
 #, kde-format
@@ -642,6 +648,11 @@ msgid ""
 "about it. Please report a bug, and make the book available to us, so we can "
 "try and work out how to handle this!"
 msgstr ""
+"Odkaz, který jste právě aktivovali, vede na stránku, se kterou si nevíme "
+"rady. To naznačuje, že kniha, kterou právě čtete, nesplňuje specifikaci "
+"formátu Advanced Comic Book Format, ale přesto bychom o tom rádi věděli. "
+"Nahlaste prosím chybu a dejte nám k dispozici danou knihu, abychom mohli "
+"zjistit, jak tento problém vyřešit!"
 
 #: app/qml/viewers/ImageBrowser.qml:93
 #, kde-format
@@ -650,6 +661,9 @@ msgid ""
 "something with the ID %1 but didn't locate anything. This is likely an error "
 "in the book, and the author would probably like to know about it."
 msgstr ""
+"Odkaz, na který jste klikli, zřejmě nikam nevede. Pokusili jsme se najít "
+"položku s ID %1, ale nic jsme nenašli. Pravděpodobně se jedná o chybu v "
+"knize a autor by o tom asi rád věděl."
 
 #: app/qml/viewers/ImageBrowser.qml:501
 #, kde-format
@@ -670,13 +684,25 @@ msgid ""
 "If not, please report this bug to us, and give as much information as you "
 "can to assist us in working out what's wrong."
 msgstr ""
+"Nelze načíst obrázek pro tuto stránku.\n"
+"Nejčastěji je to způsobeno chybějícím dekodérem obrázků (konkrétně balíčkem "
+"Qt Imageformats, na kterém je Peruse při načítání obrázků závislý) a "
+"pravděpodobně chybou v balíčku. Kontaktujte poskytovatele tohoto balíčku a "
+"informujte ho o této chybě.\n"
+"\n"
+"Konkrétně se obrázek, který jsme se pokusili načíst, jmenuje %1 a formáty "
+"obrázků, které Qt rozpoznává, jsou %2. Pokud zde dochází k nesouladu, bude "
+"to příčinou problému.\n"
+"\n"
+"Pokud ne, nahlaste nám prosím tuto chybu a uveďte co nejvíce informací, "
+"abyste nám pomohli zjistit, v čem je problém."
 
 #: app/qml/viewers/ViewerBase.qml:100
 #, kde-format
 msgctxt ""
 "Title for a dialog offering the user to open a link to some external resource"
 msgid "Open External Link?"
-msgstr ""
+msgstr "Otevřít externí odkaz?"
 
 #: app/qml/viewers/ViewerBase.qml:106
 #, kde-format
@@ -691,6 +717,9 @@ msgid ""
 "check the details of the link below, to make sure that you really do want to "
 "open it, or just close this sheet."
 msgstr ""
+"Odkaz, na který jste právě klikli, směřuje mimo tuto knihu. Zkontrolujte "
+"prosím níže uvedené podrobnosti o odkazu, abyste se ujistili, že jej opravdu "
+"chcete otevřít, nebo tento list jednoduše zavřete."
 
 #: app/qml/viewers/ViewerBase.qml:141
 #, kde-format
@@ -699,6 +728,9 @@ msgid ""
 "\n"
 "%2"
 msgstr ""
+"Napsat e-mail na adresu %1 podle následujícího odkazu:\n"
+"\n"
+"%2"
 
 #: app/qml/viewers/ViewerBase.qml:143
 #, kde-format
@@ -707,16 +739,19 @@ msgid ""
 "\n"
 "%3"
 msgstr ""
+"Napsat e-mail pro %1 s předmětem \"%2\" a následujícím textem:\n"
+"\n"
+"%3"
 
 #: app/qml/viewers/ViewerBase.qml:145
 #, kde-format
 msgid "Compose an email for %1 with the subject \"%2\""
-msgstr ""
+msgstr "Napsat e-mail pro %1 s předmětem \"%2\""
 
 #: app/qml/viewers/ViewerBase.qml:147
 #, kde-format
 msgid "Compose email for: %1"
-msgstr ""
+msgstr "Napsat e-mail pro: %1"
 
 #: app/qml/WelcomePage.qml:42 creator/qml/WelcomePage.qml:42
 #, kde-format
@@ -744,25 +779,25 @@ msgstr "Tvůrce Peruse"
 #: creator/main.cpp:46
 #, kde-format
 msgid "Comic Book Creator by KDE"
-msgstr ""
+msgstr "Tvůrce komiksů od KDE"
 
 #: creator/qml/AddPageArea.qml:62
 #, kde-format
 msgctxt "title text for the add page area sheet"
 msgid "Add Page Area"
-msgstr ""
+msgstr "Přidat oblast stránky"
 
 #: creator/qml/AddPageArea.qml:85
 #, kde-format
 msgctxt "Button which creates a new frame, and closes the dialog"
 msgid "Create Frame"
-msgstr ""
+msgstr "Vytvořit rámeček"
 
 #: creator/qml/AddPageArea.qml:99
 #, kde-format
 msgctxt "Button which creates new textarea, and closes the dialog"
 msgid "Create Textarea"
-msgstr ""
+msgstr "Vytvořit textové pole"
 
 #: creator/qml/AddPageArea.qml:113
 #, kde-format
@@ -774,7 +809,7 @@ msgstr "Vytvořit skok"
 #, kde-format
 msgctxt "@title"
 msgid "Add Page"
-msgstr ""
+msgstr "Přidat stranu"
 
 #: creator/qml/AddPageSheet.qml:46
 #, kde-format
@@ -783,6 +818,8 @@ msgid ""
 "Please select the method you want to add the new page. No changes will be "
 "made outside of the project by performing these actions."
 msgstr ""
+"Vyberte prosím způsob, jakým chcete přidat novou stránku. Provedením těchto "
+"akcí nedojde k žádným změnám mimo projekt."
 
 #: creator/qml/AddPageSheet.qml:55
 #, kde-format
@@ -790,7 +827,7 @@ msgctxt ""
 "@action:button add a page by finding an image on the filesystem and copying "
 "it into the book"
 msgid "Copy Image from Device"
-msgstr ""
+msgstr "Kopírovat obrázek ze zařízení"
 
 #: creator/qml/AddPageSheet.qml:61
 #, kde-format
@@ -798,20 +835,20 @@ msgctxt ""
 "@title:window standard file open dialog used to find a page to add to the "
 "book"
 msgid "Please Choose an Image to Add"
-msgstr ""
+msgstr "Vyberte prosím obrázek, který chcete přidat"
 
 #: creator/qml/AddPageSheet.qml:75
 #, kde-format
 msgctxt ""
 "@action:button add a page by creating a new image using an image editor"
 msgid "Create a New Image Using an Image Editor"
-msgstr ""
+msgstr "Vytvoření nového obrázku pomocí grafického editoru"
 
 #: creator/qml/AddPageSheet.qml:83
 #, kde-format
 msgctxt "@action:button add a page by taking a photo with a camera"
 msgid "Take a Photo and Add That"
-msgstr ""
+msgstr "Udělejte fotku a přidejte ji"
 
 #: creator/qml/Book.qml:50
 #, kde-format
@@ -855,7 +892,7 @@ msgstr "Smazat stranu"
 #, kde-format
 msgctxt "add a page to the book after this one"
 msgid "Add Page After This"
-msgstr ""
+msgstr "Vložit stránku za tuto"
 
 #: creator/qml/Book.qml:128
 #, kde-format
@@ -867,18 +904,18 @@ msgstr "Upravit stranu"
 #, kde-format
 msgctxt "Empty page list placeholder message"
 msgid "Your book is empty"
-msgstr ""
+msgstr "Vaše kniha je prázdná"
 
 #: creator/qml/Book.qml:190
 #, kde-format
 msgid "Start adding pages to your book"
-msgstr ""
+msgstr "Začněte přidávat stránky do své knihy"
 
 #: creator/qml/BookBasics.qml:39
 #, kde-format
 msgctxt "title of the basic book information page"
 msgid "Your Book At A Glance"
-msgstr ""
+msgstr "Vaše kniha v kostce"
 
 #: creator/qml/BookBasics.qml:85
 #, kde-format
@@ -906,31 +943,31 @@ msgctxt ""
 "Header for a list which shows every file contained in the archive which "
 "makes up this book"
 msgid "Every File In The Book:"
-msgstr ""
+msgstr "Všechny soubory v knize:"
 
 #: creator/qml/BookBasics.qml:184
 #, kde-format
 msgctxt "If a file is not referenced at all"
 msgid "Unreferenced file"
-msgstr ""
+msgstr "Soubor bez odkazu"
 
 #: creator/qml/BookBasics.qml:186
 #, kde-format
 msgctxt "If a file is referenced by its full path"
 msgid "Referenced by full path"
-msgstr ""
+msgstr "Odkazováno pomocí úplné cesty"
 
 #: creator/qml/BookBasics.qml:188
 #, kde-format
 msgctxt "If a file is referenced partially, describe that"
 msgid "Referenced by filename only"
-msgstr ""
+msgstr "Odkazováno pouze názvem souboru"
 
 #: creator/qml/BookBasics.qml:190
 #, kde-format
 msgctxt "What happens if we have an unexpected reference amount"
 msgid "%1 might be referenced, but in some way we've not accounted for"
-msgstr ""
+msgstr "Na %1 se možná odkazuje, ale nějakým způsobem to není zohledněno"
 
 #: creator/qml/BookBasics.qml:198
 #, kde-format
@@ -944,7 +981,7 @@ msgstr "Vložit soubor"
 msgctxt ""
 "action which marks the file to NOT be included next time the book is saved"
 msgid "Mark File For Deletion"
-msgstr ""
+msgstr "Označit soubor ke smazání"
 
 #: creator/qml/BookBinaries.qml:38
 #, kde-format
@@ -964,7 +1001,7 @@ msgstr "Přidat soubor..."
 #, kde-format
 msgctxt "The initial identifier used for a newly created binary data element"
 msgid "Unnamed Binary"
-msgstr ""
+msgstr "Bezejmenný binární soubor"
 
 #: creator/qml/BookBinaries.qml:80
 #, kde-format
@@ -972,13 +1009,13 @@ msgctxt ""
 "title text for a card which informs the user there are no binary data "
 "entries, and what those are"
 msgid "No Embedded Binary Data Entries"
-msgstr ""
+msgstr "Žádné vložené binární datové záznamy"
 
 #: creator/qml/BookBinaries.qml:81
 #, kde-format
 msgctxt "title text for a card which informs the user what binary data is"
 msgid "Embedded Binary Data"
-msgstr ""
+msgstr "Vložená binární data"
 
 #: creator/qml/BookBinaries.qml:89
 #, kde-format
@@ -991,6 +1028,10 @@ msgid ""
 "file on your system. That data will be imported into your book, and leaves "
 "the external file otherwise untouched."
 msgstr ""
+"Ve vaší knize zatím nejsou žádná vložená data. Taková data můžete přidat "
+"tak, že vytvoříte nový záznam a poté do něj vložíte data z nějakého "
+"existujícího souboru ve vašem systému. Tato data se importují do vaší knihy, "
+"přičemž externí soubor zůstane jinak beze změny."
 
 #: creator/qml/BookBinaries.qml:90
 #, kde-format
@@ -1002,6 +1043,10 @@ msgid ""
 "data to that entry from some existing file on your system. That data will be "
 "imported into your book, and leaves the external file otherwise untouched."
 msgstr ""
+"Nové záznamy s binárními daty můžete přidat tak, že vytvoříte nový záznam a "
+"poté do něj vložíte data z nějakého existujícího souboru ve vašem systému. "
+"Tato data se importují do vaší knihy, přičemž externí soubor zůstane jinak "
+"beze změny."
 
 #: creator/qml/BookBinaries.qml:99
 #, kde-format
@@ -1009,7 +1054,7 @@ msgctxt ""
 "Title used in the list of binary data when there is no id defined for that "
 "entry"
 msgid "Unnamed piece of data"
-msgstr ""
+msgstr "Nepojmenovaná část dat"
 
 #: creator/qml/BookBinaries.qml:133
 #, kde-format
@@ -1021,7 +1066,7 @@ msgstr "Typ obsahu: %1"
 #, kde-format
 msgctxt "title text for a sheet which lets the user edit a binary entry"
 msgid "Edit Binary"
-msgstr ""
+msgstr "Upravit binární soubor"
 
 #: creator/qml/BookBinaryEditor.qml:52
 #, kde-format
@@ -1040,6 +1085,7 @@ msgstr "ID"
 msgctxt "Placeholder text for the binary ID input field"
 msgid "Enter the name of your binary here (often a filename)"
 msgstr ""
+"Zadejte sem název svého binárního souboru (často se jedná o název souboru)"
 
 #: creator/qml/BookBinaryEditor.qml:69
 #, kde-format
@@ -1051,7 +1097,7 @@ msgstr "Typ obsahu"
 #, kde-format
 msgctxt "Placeholder text for the binary content type input field"
 msgid "Enter the content type of your binary here (aka mimetype)"
-msgstr ""
+msgstr "Zadejte zde typ obsahu svého binárního souboru (tzv. MIME typ)"
 
 #: creator/qml/BookBinaryEditor.qml:75
 #, kde-format
@@ -1059,7 +1105,7 @@ msgctxt ""
 "Label for the field which describes the data currently held by the current "
 "instance"
 msgid "Current Data"
-msgstr ""
+msgstr "Aktuální data"
 
 #: creator/qml/BookBinaryEditor.qml:81
 #, kde-format
@@ -1075,7 +1121,7 @@ msgctxt ""
 "Label used in the binary editor sheet when there is no data in the current "
 "instance"
 msgid "No data set"
-msgstr ""
+msgstr "Žádný datový soubor"
 
 #: creator/qml/BookBinaryEditor.qml:89
 #, kde-format
@@ -1090,7 +1136,7 @@ msgstr "Importovat data..."
 msgctxt ""
 "@title:window standard file open dialog used to add file data into the book"
 msgid "Pick A File To Add"
-msgstr ""
+msgstr "Vyberte soubor, který chcete přidat"
 
 #: creator/qml/BookBinaryEditor.qml:109 creator/qml/Main.qml:336
 #, kde-format
@@ -1104,7 +1150,7 @@ msgctxt ""
 "@title:window a message box used to ask the user if they really want to add "
 "a very large file to their book"
 msgid "Very Large File"
-msgstr ""
+msgstr "Velmi velký soubor"
 
 #: creator/qml/BookBinaryEditor.qml:138
 #, kde-format
@@ -1115,48 +1161,50 @@ msgid ""
 "The file you are attempting to add, %1, is more than 10MiB. Are you sure you "
 "want to add it to the book?"
 msgstr ""
+"Soubor %1, který se pokoušíte přidat, je větší než 10 MiB. Opravdu jej "
+"chcete přidat do knihy?"
 
 #: creator/qml/BookBinaryEditor.qml:141
 #, kde-format
 msgctxt "The option used to let the user agree to the proposed action"
 msgid "Yes, Add Large File"
-msgstr ""
+msgstr "Ano, přidat velký soubor"
 
 #: creator/qml/BookBinaryEditor.qml:145
 #, kde-format
 msgctxt "The option used to let the user abort the proposed action"
 msgid "Don't Add"
-msgstr ""
+msgstr "Nepřidávat"
 
 #: creator/qml/BookMetainfoPage.qml:26
 #, kde-format
 msgctxt "title text for the book meta information editor sheet"
 msgid "Edit Meta Information"
-msgstr ""
+msgstr "Upravit meta informace"
 
 #: creator/qml/BookMetainfoPage.qml:49
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Title"
-msgstr ""
+msgstr "Název"
 
 #: creator/qml/BookMetainfoPage.qml:62
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Annotation"
-msgstr ""
+msgstr "Poznámka"
 
 #: creator/qml/BookMetainfoPage.qml:75
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Keywords"
-msgstr ""
+msgstr "Klíčová slova"
 
 #: creator/qml/BookMetainfoPage.qml:76
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "Write a comma separated list of keywords."
-msgstr ""
+msgstr "Čárkou oddělený seznam klíčových slov."
 
 #: creator/qml/BookMetainfoPage.qml:92
 #, kde-format
@@ -1168,7 +1216,7 @@ msgstr "Verze dokumentu:"
 #, kde-format
 msgctxt "@title:group"
 msgid "Authors"
-msgstr ""
+msgstr "Autoři"
 
 #: creator/qml/BookMetainfoPage.qml:132 creator/qml/BookMetainfoPage.qml:842
 #, kde-format
@@ -1180,55 +1228,55 @@ msgstr "(nepojmenované)"
 #, kde-format
 msgctxt "@action:button"
 msgid "Edit author"
-msgstr ""
+msgstr "Upravit autora"
 
 #: creator/qml/BookMetainfoPage.qml:151
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove author"
-msgstr ""
+msgstr "Odstranit autora"
 
 #: creator/qml/BookMetainfoPage.qml:176 creator/qml/BookMetainfoPage.qml:880
 #, kde-format
 msgctxt "@label:textfield"
 msgid "New author (nickname)"
-msgstr ""
+msgstr "Nový autor (přezdívka)"
 
 #: creator/qml/BookMetainfoPage.qml:189
 #, kde-format
 msgctxt "@action:button"
 msgid "Add new author"
-msgstr ""
+msgstr "Přidat nového autora"
 
 #: creator/qml/BookMetainfoPage.qml:197
 #, kde-format
 msgctxt "@title:group"
 msgid "Genres"
-msgstr ""
+msgstr "Žánry"
 
 #: creator/qml/BookMetainfoPage.qml:223
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove genre"
-msgstr ""
+msgstr "Odstranit žánr"
 
 #: creator/qml/BookMetainfoPage.qml:294
 #, kde-format
 msgctxt "@title:group"
 msgid "Characters"
-msgstr ""
+msgstr "Postavy"
 
 #: creator/qml/BookMetainfoPage.qml:339
 #, kde-format
 msgctxt "placeholder text for the add new character text entry"
 msgid "Write to add new character"
-msgstr ""
+msgstr "Napište a přidejte nové postavy"
 
 #: creator/qml/BookMetainfoPage.qml:363
 #, kde-format
 msgctxt "@title:group"
 msgid "Sequence"
-msgstr ""
+msgstr "Posloupnost"
 
 #: creator/qml/BookMetainfoPage.qml:414
 #, kde-format
@@ -1246,67 +1294,67 @@ msgstr "Svazek:"
 #, kde-format
 msgctxt "@label:textfield"
 msgid "New serie"
-msgstr ""
+msgstr "Nová série"
 
 #: creator/qml/BookMetainfoPage.qml:481
 #, kde-format
 msgctxt "@title:group"
 msgid "Database References"
-msgstr ""
+msgstr "Odkazy na databáze"
 
 #: creator/qml/BookMetainfoPage.qml:507 creator/qml/BookMetainfoPage.qml:595
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Reference:"
-msgstr ""
+msgstr "Odkazy:"
 
 #: creator/qml/BookMetainfoPage.qml:533 creator/qml/BookMetainfoPage.qml:609
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Database name:"
-msgstr ""
+msgstr "Název databáze:"
 
 #: creator/qml/BookMetainfoPage.qml:550
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Reference type:"
-msgstr ""
+msgstr "Typ odkazu:"
 
 #: creator/qml/BookMetainfoPage.qml:628
 #, kde-format
 msgctxt "@title:group"
 msgid "Content Ratings"
-msgstr ""
+msgstr "Hodnocení obsahu"
 
 #: creator/qml/BookMetainfoPage.qml:652
 #, kde-format
 msgctxt "placeholder text for the add content rating text entry"
 msgid "Write to add rating label."
-msgstr ""
+msgstr "Napište a přidejte štítek s hodnocením."
 
 #: creator/qml/BookMetainfoPage.qml:665
 #, kde-format
 msgctxt "placeholder text for the add content rating system text entry"
 msgid "Write to add rating system."
-msgstr ""
+msgstr "Napište a přidejte hodnotící systém."
 
 #: creator/qml/BookMetainfoPage.qml:717
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Review title"
-msgstr ""
+msgstr "Nadpis recenze"
 
 #: creator/qml/BookMetainfoPage.qml:733
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Description"
-msgstr ""
+msgstr "Popis"
 
 #: creator/qml/BookMetainfoPage.qml:754
 #, kde-format
 msgctxt "@title:group"
 msgid "Publisher Info"
-msgstr ""
+msgstr "Info o vydavateli"
 
 #: creator/qml/BookMetainfoPage.qml:760
 #, kde-format
@@ -1318,13 +1366,13 @@ msgstr "Vydavatel:"
 #, kde-format
 msgctxt "placeholder text for the publisher entry"
 msgid "Write to add publisher"
-msgstr ""
+msgstr "Napište a přidejte vydavatele"
 
 #: creator/qml/BookMetainfoPage.qml:774
 #, kde-format
 msgctxt "Label for publishing date"
 msgid "Publishing Date:"
-msgstr ""
+msgstr "Datum publikování:"
 
 #: creator/qml/BookMetainfoPage.qml:788
 #, kde-format
@@ -1348,37 +1396,37 @@ msgstr "Licence:"
 #, kde-format
 msgctxt "@title:group"
 msgid "Document Authors"
-msgstr ""
+msgstr "Autor dokumentu"
 
 #: creator/qml/BookMetainfoPage.qml:900
 #, kde-format
 msgctxt "@title:group"
 msgid "Document Sources"
-msgstr ""
+msgstr "Zdroj dokumentu"
 
 #: creator/qml/BookMetainfoPage.qml:941
 #, kde-format
 msgctxt "@label:textfield"
 msgid "New document source"
-msgstr ""
+msgstr "Zdroj nových dokumentů"
 
 #: creator/qml/BookMetainfoPage.qml:960
 #, kde-format
 msgctxt "@title:group"
 msgid "Document History"
-msgstr ""
+msgstr "Historie dokumentů"
 
 #: creator/qml/BookMetainfoPage.qml:1001
 #, kde-format
 msgctxt "@label:textfield"
 msgid "New document info"
-msgstr ""
+msgstr "Info o novém dokumentu"
 
 #: creator/qml/BookMetainfoPage.qml:1020
 #, kde-format
 msgctxt "@title:group"
 msgid "General Page Background Color"
-msgstr ""
+msgstr "Barva pozadí hlavní stránky"
 
 #: creator/qml/BookPage.qml:32
 #, kde-format
@@ -1401,7 +1449,7 @@ msgstr "Uložit a zavřít stranu"
 #, kde-format
 msgctxt "Edit the page data in detail"
 msgid "Edit Page Data"
-msgstr ""
+msgstr "Upravit údaje stránky"
 
 #: creator/qml/BookReferenceEditor.qml:30
 #, kde-format
@@ -1409,13 +1457,13 @@ msgctxt ""
 "title text for the reference editor page, when the reference has no language "
 "set"
 msgid "Editing %1 (default language)"
-msgstr ""
+msgstr "Úprava %1 (výchozí jazyk)"
 
 #: creator/qml/BookReferenceEditor.qml:31
 #, kde-format
 msgctxt "title text for the reference editor page"
 msgid "Editing %1 (language: %2)"
-msgstr ""
+msgstr "Úprava %1 (jazyk: %2)"
 
 #: creator/qml/BookReferenceEditor.qml:42
 #, kde-format
@@ -1433,7 +1481,7 @@ msgstr "Uložit"
 #, kde-format
 msgctxt "Abort the changes made in the editor, and close the editor"
 msgid "Abort Changes"
-msgstr ""
+msgstr "Zrušit změny"
 
 #: creator/qml/BookReferenceEditor.qml:66
 #, kde-format
@@ -1473,20 +1521,20 @@ msgstr "Upravit odkaz"
 #, kde-format
 msgctxt "@title:dialog"
 msgid "Edit Reference Details"
-msgstr ""
+msgstr "Upravit podrobnosti odkazu"
 
 #: creator/qml/BookReferenceEditor.qml:107
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Unique identifier"
-msgstr ""
+msgstr "Unikátní identifikátor"
 
 #: creator/qml/BookReferenceEditor.qml:112
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:109
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Language"
-msgstr ""
+msgstr "Jazyk"
 
 #: creator/qml/BookReferences.qml:19
 #, kde-format
@@ -1500,13 +1548,13 @@ msgctxt ""
 "Action which when triggered adds a new reference to the book and opens the "
 "reference editor"
 msgid "New Reference"
-msgstr ""
+msgstr "Nový odkaz"
 
 #: creator/qml/BookReferences.qml:28
 #, kde-format
 msgctxt "The default ID for new references"
 msgid "Unnamed Reference"
-msgstr ""
+msgstr "Nepojmenovaný odkaz"
 
 #: creator/qml/BookReferences.qml:29
 #, kde-format
@@ -1515,11 +1563,13 @@ msgid ""
 "<p>Enter the body of your reference document here.</p>\n"
 "<p>This is what links look like: <a href=\"destination\">Some Link</a></p>"
 msgstr ""
+"<p>Zde zadejte text svého odkazovaného dokumentu.</p>\n"
+"<p>Takto vypadají odkazy: <a href=\"destination\">Nějaký odkaz</a></p>"
 
 #: creator/qml/BookReferences.qml:92
 #, kde-format
 msgid "There is no reference information in your book yet"
-msgstr ""
+msgstr "Ve vaší knize zatím nejsou žádné odkazy"
 
 #: creator/qml/BookReferences.qml:93
 #, kde-format
@@ -1529,6 +1579,10 @@ msgid ""
 "as well as links to both internal things (other references or one of the "
 "pieces of binary data), or to an external resource, such as a website."
 msgstr ""
+"Odkazy jsou soubory textových odstavců, do nichž můžete vkládat jednoduché "
+"formátování (tučné písmo, zvýraznění a podobné jednoduché úpravy) i odkazy "
+"na interní položky (jiné odkazy nebo binární data) či na externí zdroje, "
+"jako jsou například webové stránky."
 
 #: creator/qml/BookStylesheet.qml:44
 #, kde-format
@@ -1546,7 +1600,7 @@ msgstr "Přidat styl..."
 #, kde-format
 msgctxt "@title:dialog"
 msgid "Edit Style"
-msgstr ""
+msgstr "Upravit styl"
 
 #: creator/qml/BookStylesheet.qml:99
 #, kde-format
@@ -1558,13 +1612,13 @@ msgstr "Prvek"
 #, kde-format
 msgctxt "@option:check"
 msgid "Apply to style elements which request an inverted scheme"
-msgstr ""
+msgstr "Použít na stylové prvky, které vyžadují invertované schéma"
 
 #: creator/qml/BookStylesheet.qml:110
 #, kde-format
 msgctxt "@option:check"
 msgid "Sub-element selector type"
-msgstr ""
+msgstr "Typ selektoru podprvku"
 
 # žádné parametry funkce v inspektoru funkcí
 #: creator/qml/BookStylesheet.qml:111
@@ -1576,7 +1630,7 @@ msgstr "Nic"
 #, kde-format
 msgctxt "@option:check"
 msgid "Color"
-msgstr ""
+msgstr "Barva"
 
 #: creator/qml/BookStylesheet.qml:139
 #, kde-format
@@ -1592,7 +1646,7 @@ msgctxt ""
 "The title of a style entry which does not have type, and which represents "
 "the inverted version of that style"
 msgid "%1 (sub type: %2, inverted)"
-msgstr ""
+msgstr "%1 (podtyp: %2, invertováno)"
 
 #: creator/qml/BookStylesheet.qml:145
 #, kde-format
@@ -1604,13 +1658,13 @@ msgstr "%1"
 #, kde-format
 msgctxt "The title of a style entry which does not have type"
 msgid "%1 (sub type: %2)"
-msgstr ""
+msgstr "%1 (podtyp: %2)"
 
 #: creator/qml/BookStylesheet.qml:154
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "No Styling Information"
-msgstr ""
+msgstr "Žádné informace o stylu"
 
 #: creator/qml/BookStylesheet.qml:155
 #, kde-format
@@ -1620,6 +1674,9 @@ msgid ""
 "entry from some existing file on your system. That data will be imported "
 "into your book, and leaves the external file otherwise untouched."
 msgstr ""
+"Taková data můžete přidat tak, že vytvoříte nový záznam a poté do něj "
+"načtete data z nějakého existujícího souboru ve vašem systému. Tato data se "
+"importují do vaší knihy, přičemž externí soubor zůstane jinak beze změny."
 
 #: creator/qml/CreateNewBook.qml:44
 #, kde-format
@@ -1656,19 +1713,19 @@ msgstr "Složka"
 #, kde-format
 msgctxt "@action:button"
 msgid "Select Folder"
-msgstr ""
+msgstr "Vyberte složku"
 
 #: creator/qml/CreateNewBook.qml:111
 #, kde-format
 msgctxt "File filter cbz file"
 msgid "*.cbz"
-msgstr ""
+msgstr "*.cbz"
 
 #: creator/qml/CreateNewBook.qml:113
 #, kde-format
 msgctxt "@title:window folder dialog used to select the location of a new book"
 msgid "Please Choose the Location for the Book"
-msgstr ""
+msgstr "Vyberte prosím umístění pro knihu"
 
 #: creator/qml/CreateNewBook.qml:130
 #, kde-format
@@ -1680,20 +1737,20 @@ msgstr "Obrázek obalu"
 #, kde-format
 msgctxt "placeholder message for missing cover image"
 msgid "Missing cover image"
-msgstr ""
+msgstr "Chybí obrázek obalu"
 
 #: creator/qml/CreateNewBook.qml:160
 #, kde-format
 msgctxt "@action:button"
 msgid "Select image"
-msgstr ""
+msgstr "Vybrat obrázek"
 
 #: creator/qml/CreateNewBook.qml:184
 #, kde-format
 msgctxt ""
 "@title:window file dialog used to select the cover image for a new book"
 msgid "Please Choose Your Cover Image"
-msgstr ""
+msgstr "Vyberte si prosím obrázek obalu"
 
 #: creator/qml/CreateNewBook.qml:187
 #, kde-format
@@ -1711,12 +1768,12 @@ msgstr "Všechny soubory %1"
 #, kde-format
 msgctxt "title text for the edit page area sheet"
 msgid "Edit Page Area"
-msgstr ""
+msgstr "Upravit oblast stránky"
 
 #: creator/qml/EditPageArea.qml:136
 #, kde-format
 msgid "Text Rotation Guide"
-msgstr ""
+msgstr "Návod k otáčení textu"
 
 #: creator/qml/EditPageArea.qml:148
 #, kde-format
@@ -1728,7 +1785,7 @@ msgstr "ID:"
 #, kde-format
 msgctxt "Placeholder text for the page area ID text-field"
 msgid "Write to add an ID"
-msgstr ""
+msgstr "Napište a přidejte ID"
 
 #: creator/qml/EditPageArea.qml:153 creator/qml/EditPageArea.qml:184
 #, kde-format
@@ -1772,13 +1829,13 @@ msgstr "Typ:"
 #, kde-format
 msgctxt "Label for the text area body field"
 msgid "Textarea Body:"
-msgstr ""
+msgstr "Obsah textového pole:"
 
 #: creator/qml/EditPageArea.qml:299
 #, kde-format
 msgctxt "Label for a text input box in which to input a hyperlink destination"
 msgid "Jump Destination:"
-msgstr ""
+msgstr "Cíl skoku:"
 
 #: creator/qml/EditPageArea.qml:301
 #, kde-format
@@ -1786,7 +1843,7 @@ msgctxt ""
 "Placeholder text for a text input box in which to input a hyperlink "
 "destination"
 msgid "Enter the jump destination here"
-msgstr ""
+msgstr "Zadejte sem cíl skoku"
 
 #: creator/qml/EditPageArea.qml:305
 #, kde-format
@@ -1794,7 +1851,7 @@ msgctxt ""
 "Label for the dropdown which will let you pick a page a jump will send the "
 "reader to when activated"
 msgid "Page Index:"
-msgstr ""
+msgstr "Obsah stránky:"
 
 #: creator/qml/EditPageArea.qml:315
 #, kde-format
@@ -1806,19 +1863,19 @@ msgstr "Uložit"
 #, kde-format
 msgctxt "@title:dialog"
 msgid "Edit Link"
-msgstr ""
+msgstr "Upravit odkaz"
 
 #: creator/qml/LinkEditorSheet.qml:90
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Text"
-msgstr ""
+msgstr "Text"
 
 #: creator/qml/LinkEditorSheet.qml:95
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Destination"
-msgstr ""
+msgstr "Cíl"
 
 #: creator/qml/LinkEditorSheet.qml:157
 #, kde-format
@@ -1879,13 +1936,13 @@ msgctxt ""
 "@title:window standard file open dialog used to open a book not in the "
 "collection"
 msgid "Please Choose a Book to Open"
-msgstr ""
+msgstr "Vyberte si knihu, kterou chcete otevřít"
 
 #: creator/qml/Main.qml:335
 #, kde-format
 msgctxt "The file type filter for comic book archives"
 msgid "Comic Book Archive zip format %1"
-msgstr ""
+msgstr "Archiv komiksů ve formátu ZIP %1"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:54
 #, kde-format
@@ -1897,73 +1954,73 @@ msgstr "Upravit autora"
 #, kde-format
 msgctxt "help text for the edit author sheet"
 msgid "Please complete the information for this author."
-msgstr ""
+msgstr "Doplňte prosím údaje o tomto autorovi."
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:74
 #, kde-format
 msgctxt "@title:group"
 msgid "Name"
-msgstr ""
+msgstr "Jméno"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:80
 #, kde-format
 msgctxt "@label:textfield"
 msgid "First name"
-msgstr ""
+msgstr "Jméno"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:85
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Middle name"
-msgstr ""
+msgstr "Prostřední jméno"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:90
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Last name"
-msgstr ""
+msgstr "Příjmení"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:95
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Nickname"
-msgstr ""
+msgstr "Přezdívka"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:104
 #, kde-format
 msgctxt "@label:listbox"
 msgid "Activity"
-msgstr ""
+msgstr "Aktivita"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:114
 #, kde-format
 msgctxt "@title:group"
 msgid "Homepage addresses"
-msgstr ""
+msgstr "Adresy domovských stránek"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:152
 #, kde-format
 msgctxt "@label:textfield"
 msgid "New Homepage"
-msgstr ""
+msgstr "Nová domovská stránka"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:171
 #, kde-format
 msgctxt "@title:group"
 msgid "Email addresses"
-msgstr ""
+msgstr "E-mailové adresy"
 
 #: creator/qml/metainfoeditors/AuthorEntryEditor.qml:209
 #, kde-format
 msgctxt "placeholder text for the email field"
 msgid "New Email address"
-msgstr ""
+msgstr "Nová e-mailová adresa"
 
 #: creator/qml/PageMetaInfo.qml:42
 #, kde-format
 msgctxt "title text for the page meta information editor sheet"
 msgid "Edit Page Information"
-msgstr ""
+msgstr "Upravit informace o stránce"
 
 #: creator/qml/PageMetaInfo.qml:46
 #, kde-format
@@ -1982,37 +2039,37 @@ msgstr "Obecné"
 #, kde-format
 msgctxt "@label:textfield"
 msgid "Title:"
-msgstr ""
+msgstr "Název:"
 
 #: creator/qml/PageMetaInfo.qml:72
 #, kde-format
 msgctxt "@label:textfield"
 msgid "ID:"
-msgstr ""
+msgstr "ID:"
 
 #: creator/qml/PageMetaInfo.qml:82
 #, kde-format
 msgctxt "@label:listbox"
 msgid "Transition:"
-msgstr ""
+msgstr "Přechod:"
 
 #: creator/qml/PageMetaInfo.qml:95
 #, kde-format
 msgctxt "@label:chooser"
 msgid "Background Color:"
-msgstr ""
+msgstr "Barva pozadí:"
 
 #: creator/qml/PageMetaInfo.qml:102
 #, kde-format
 msgctxt "@title:group"
 msgid "Frames"
-msgstr ""
+msgstr "Rámce"
 
 #: creator/qml/PageMetaInfo.qml:108
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "No frames present"
-msgstr ""
+msgstr "Žádné rámce"
 
 #: creator/qml/PageMetaInfo.qml:119
 #, kde-format
@@ -2026,7 +2083,7 @@ msgctxt ""
 "A switch which lets the user change the background colour of the page when "
 "this frame is focused"
 msgid "Change page background color"
-msgstr ""
+msgstr "Změnit barvu pozadí stránky"
 
 #: creator/qml/PageMetaInfo.qml:129
 #, kde-format
@@ -2062,13 +2119,13 @@ msgstr "Smazat snímek"
 #, kde-format
 msgctxt "@title:group"
 msgid "Text Areas"
-msgstr ""
+msgstr "Textová oblast"
 
 #: creator/qml/PageMetaInfo.qml:200
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "No text areas present"
-msgstr ""
+msgstr "Žádná textová oblast"
 
 #: creator/qml/PageMetaInfo.qml:213
 #, kde-format
@@ -2098,13 +2155,13 @@ msgstr "Textová oblast %1"
 #, kde-format
 msgctxt "@title:group"
 msgid "Jumps"
-msgstr ""
+msgstr "Skoky"
 
 #: creator/qml/PageMetaInfo.qml:261
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "No jumps present"
-msgstr ""
+msgstr "Žádné skoky"
 
 #: creator/qml/PageMetaInfo.qml:273
 #, kde-format
@@ -2134,7 +2191,7 @@ msgstr "Skok %1"
 #, kde-format
 msgctxt "Label from jump page index."
 msgid "Page Index:"
-msgstr ""
+msgstr "Obsah stránky:"
 
 #: creator/qml/SettingsPage.qml:17
 #, kde-format
@@ -2166,6 +2223,13 @@ msgid ""
 "archive at the KDE Store from within the application, or just share the "
 "files with your friends."
 msgstr ""
+"Vítejte v aplikaci Tvůrce Peruse, nástroji, který vám pomůže vytvářet "
+"komiksové archivy, které lze číst v jakékoli aplikaci pro prohlížení komiksů "
+"podporující formát CBZ. Můžete vytvářet zcela nové komiksové archivy od "
+"nuly, sestavit je ze sady obrázků nebo upravovat již existující archivy. "
+"Jakmile je vytvoříte, můžete je přímo z aplikace publikovat do online "
+"komiksového archivu v KDE Store nebo soubory jednoduše sdílet se svými "
+"přáteli."
 
 #: creator/qml/WelcomePage.qml:81
 #, kde-format
@@ -2177,13 +2241,13 @@ msgstr "Otevřít existující..."
 #, kde-format
 msgctxt "@action:button create a new, empty comic book archive"
 msgid "Create Blank"
-msgstr ""
+msgstr "Vytvořit prázdný"
 
 #: creator/qml/WelcomePage.qml:96
 #, kde-format
 msgctxt "@title:group"
 msgid "Recent books"
-msgstr ""
+msgstr "Nejnovější knihy"
 
 #: creator/qml/WelcomePage.qml:116
 #, kde-format
@@ -2191,28 +2255,28 @@ msgctxt ""
 "@action:button continue working on the most recently opened comic book "
 "archive"
 msgid "Continue working on %1"
-msgstr ""
+msgstr "Pokračovat v práci na %1"
 
 #: creator/qml/WelcomePage.qml:129
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "There are no recent books"
-msgstr ""
+msgstr "Nejsou zde žádné nové knihy"
 
 #: qtquick/ArchiveBookModel.cpp:527
 #, kde-format
 msgid "Creating archive in %1"
-msgstr ""
+msgstr "Vytváření archivu v %1"
 
 #: qtquick/ArchiveBookModel.cpp:539
 #, kde-format
 msgid "Writing in ACBF data"
-msgstr ""
+msgstr "Zápis do ACBF dat"
 
 #: qtquick/ArchiveBookModel.cpp:549
 #, kde-format
 msgid "Copying across all files not marked for deletion"
-msgstr ""
+msgstr "Kopírování všech souborů, které nejsou označeny k odstranění"
 
 #: qtquick/ArchiveBookModel.cpp:557
 #, kde-format
@@ -2222,7 +2286,7 @@ msgstr "Kopírování přes %1"
 #: qtquick/ArchiveBookModel.cpp:584
 #, kde-format
 msgid "Copying all content from %1 to %2"
-msgstr ""
+msgstr "Kopírování veškerého obsahu z %1 do %2"
 
 #: qtquick/ArchiveBookModel.cpp:592
 #, kde-format
@@ -2230,3 +2294,4 @@ msgid ""
 "Successfully replaced old archive with the new archive - now loading the new "
 "archive..."
 msgstr ""
+"Starý archiv byl úspěšně nahrazen novým – nyní se načítá nový archiv..."
