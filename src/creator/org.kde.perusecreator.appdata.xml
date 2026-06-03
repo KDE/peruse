@@ -66,6 +66,7 @@
   <summary xml:lang="sl">Orodje za ustvarjanje stripov</summary>
   <summary xml:lang="sv">Serietidningsskapare</summary>
   <summary xml:lang="tr">Çizgi Roman Oluşturma Aracı</summary>
+  <summary xml:lang="ug">ھەجۋىي كىتاب تۈزۈش قورالى</summary>
   <summary xml:lang="uk">Засіб для створення коміксів</summary>
   <summary xml:lang="zh-TW">漫畫書製作工具</summary>
   <description>
@@ -129,6 +130,7 @@
     <p xml:lang="sl">Zmožnosti:</p>
     <p xml:lang="sv">Funktioner:</p>
     <p xml:lang="tr">Özellikler:</p>
+    <p xml:lang="ug">ئىقتىدار:</p>
     <p xml:lang="uk">Можливості</p>
     <p xml:lang="zh-CN">功能：</p>
     <p xml:lang="zh-TW">功能：</p>
@@ -163,6 +165,7 @@
       <li xml:lang="sl">Arhivi stripov (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="sv">Serietidningsarkiv (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="tr">Çizgi Roman Arşivi (cbz, cbr, cb7, cbt, cba)</li>
+      <li xml:lang="ug">ھەجۋى كىتاب ئارخىپى (cbz، cbr، cb7، cbt، cba)</li>
       <li xml:lang="uk">Робота із архівами коміксів (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="zh-TW">漫畫書封存檔 (cbz, cbr, cb7, cbt, cba)</li>
     </ul>

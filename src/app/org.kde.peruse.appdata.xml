@@ -70,6 +70,7 @@
   <summary xml:lang="sl">Bralnik stripov</summary>
   <summary xml:lang="sv">Serietidningsläsare</summary>
   <summary xml:lang="tr">Çizgi Roman Okuyucusu</summary>
+  <summary xml:lang="ug">ھەجۋىي كىتاب ئوقۇغۇچ</summary>
   <summary xml:lang="uk">Програма для читання коміксів</summary>
   <summary xml:lang="zh-TW">漫畫書閱讀器</summary>
   <description>
@@ -175,6 +176,7 @@
     <p xml:lang="sl">Zmožnosti:</p>
     <p xml:lang="sv">Funktioner:</p>
     <p xml:lang="tr">Özellikler:</p>
+    <p xml:lang="ug">ئىقتىدار:</p>
     <p xml:lang="uk">Можливості:</p>
     <p xml:lang="zh-CN">功能：</p>
     <p xml:lang="zh-TW">功能：</p>
@@ -209,6 +211,7 @@
       <li xml:lang="sl">Arhiv stripov (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="sv">Serietidningsarkiv (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="tr">Çizgi Roman Arşivi (cbz, cbr, cb7, cbt, cba)</li>
+      <li xml:lang="ug">ھەجۋى كىتاب ئارخىپى (cbz، cbr، cb7، cbt، cba)</li>
       <li xml:lang="uk">Робота з архівами коміксів (cbz, cbr, cb7, cbt, cba)</li>
       <li xml:lang="zh-TW">漫畫書封存檔 (cbz, cbr, cb7, cbt, cba)</li>
       <li>Portable Document Format (pdf)</li>
@@ -241,6 +244,7 @@
       <li xml:lang="sl">Prenosni zapis dokumentov (pdf)</li>
       <li xml:lang="sv">Portable Dokumentformat (pdf)</li>
       <li xml:lang="tr">Taşınabilir Belge Biçimi (pdf)</li>
+      <li xml:lang="ug">ئەپچىل پۈتۈك پىچىمى (pdf)</li>
       <li xml:lang="uk">Робота із портативним форматом документів (pdf)</li>
       <li xml:lang="zh-TW">可攜式文件格式 (pdf)</li>
       <li>ePub Books (epub)</li>
@@ -273,6 +277,7 @@
       <li xml:lang="sl">E-knjige ePub (epub)</li>
       <li xml:lang="sv">ePub-böcker (epub)</li>
       <li xml:lang="tr">ePub Kitapları (epub)</li>
+      <li xml:lang="ug">ePub كىتاب (epub)</li>
       <li xml:lang="uk">Робота з книгами ePub (epub)</li>
       <li xml:lang="zh-TW">ePub 書本 (epub)</li>
       <li>DeVice Independent files (dvi)</li>
@@ -304,6 +309,7 @@
       <li xml:lang="sl">Datoteke, neodvisne od naprave (dvi)</li>
       <li xml:lang="sv">DeVice oberoende filer (dvi)</li>
       <li xml:lang="tr">Aygıttan Bağımsız dosyalar (dvi)</li>
+      <li xml:lang="ug">DeVice مۇستەقىل ھۆججەت (dvi)</li>
       <li xml:lang="uk">Робота із файлами DeVice Independent (dvi)</li>
       <li xml:lang="zh-TW">DeVice 獨立檔案 (dvi)</li>
       <li>DeJaVu (djvu)</li>
@@ -335,6 +341,7 @@
       <li xml:lang="sl">DeJaVu (djvu)</li>
       <li xml:lang="sv">DeJaVu (djvu)</li>
       <li xml:lang="tr">DeJaVu (djvu)</li>
+      <li xml:lang="ug">DeJaVu (djvu)</li>
       <li xml:lang="uk">Робота з файлами DeJaVu (djvu)</li>
       <li xml:lang="zh-TW">DeJaVu (djvu)</li>
       <li>Compiled Help (chm)</li>
@@ -367,6 +374,7 @@
       <li xml:lang="sl">Sestavljena pomoč (chm)</li>
       <li xml:lang="sv">Kompilerad hjälp (chm)</li>
       <li xml:lang="tr">Derlenmiş Yardım (chm)</li>
+      <li xml:lang="ug">يۇغۇرۇلغان ياردەم (chm)</li>
       <li xml:lang="uk">Робота з файлами компільованої довідки (chm)</li>
       <li xml:lang="zh-TW">編譯過的說明文件 (chm)</li>
     </ul>
