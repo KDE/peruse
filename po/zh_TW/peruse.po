@@ -2,13 +2,13 @@
 # This file is distributed under the same license as the peruse package.
 #
 # pan93412 <pan93412@gmail.com>, 2019.
-# SPDX-FileCopyrightText: 2025 Kisaragi Hiu <mail@kisaragi-hiu.com>
+# SPDX-FileCopyrightText: 2025-2026 Kisaragi Hiu <mail@kisaragi-hiu.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: peruse\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 11:50+0000\n"
-"PO-Revision-Date: 2025-05-22 14:58+0900\n"
+"PO-Revision-Date: 2026-08-04 07:39+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 25.07.70\n"
+"X-Generator: Lokalize 26.11.70\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -65,9 +65,7 @@ msgid "Go Full Screen"
 msgstr "進入全螢幕"
 
 #: app/qml/Book.qml:182
-#, fuzzy, kde-format
-#| msgctxt "Exit full sceen mode on a touch based device"
-#| msgid "Exit Full Screen"
+#, kde-format
 msgctxt "Exit full screen mode on a touch based device"
 msgid "Exit Full Screen"
 msgstr "離開全螢幕"
@@ -140,9 +138,7 @@ msgid "Go Full Screen"
 msgstr "進入全螢幕"
 
 #: app/qml/Book.qml:268
-#, fuzzy, kde-format
-#| msgctxt "Exit full sceen mode on a touch based device"
-#| msgid "Exit Full Screen"
+#, kde-format
 msgctxt "Exit full screen mode on a non-touch based device"
 msgid "Exit Full Screen"
 msgstr "離開全螢幕"
@@ -388,7 +384,7 @@ msgstr "未知的作者"
 #: app/qml/listcomponents/CategoryTile.qml:40
 #, kde-format
 msgid "Comics in folder: %1"
-msgstr ""
+msgstr "資料夾中的漫畫：%1"
 
 #: app/qml/Main.qml:39
 #, kde-format
@@ -610,7 +606,7 @@ msgstr "選擇資料夾"
 #, kde-format
 msgctxt "title of the book store page"
 msgid "Book Store"
-msgstr ""
+msgstr "書店"
 
 #: app/qml/Store.qml:97
 #, kde-format
