@@ -601,13 +601,13 @@ msgstr "لا مجلدات مفهرسة حاليا."
 #, kde-format
 msgctxt "@title:window Dialogue used to add a new search folder"
 msgid "Select a folder"
-msgstr "اختر مجلداً"
+msgstr "اختر مجلدًا"
 
 #: app/qml/Settings.qml:123
 #, kde-format
 msgctxt "@title:window dialogue used to add a new search folder"
 msgid "Select a Folder"
-msgstr "اختر مجلداً"
+msgstr "اختر مجلدًا"
 
 #: app/qml/Store.qml:37
 #, kde-format
@@ -625,7 +625,7 @@ msgid ""
 "Sorry, no books.\n"
 "This is unusual, and likely means your internet is down, or the store is."
 msgstr ""
-"عذراً، لا كتب.\n"
+"عذرًا، لا كتب.\n"
 "هذا غير عادي، ويحتمل أنه يعني أن اتصالك بالإنترنت مقطوع، أو أن المتجر معطّل."
 
 #: app/qml/viewers/cbr.qml:91 creator/qml/BookPage.qml:80
@@ -686,7 +686,7 @@ msgid ""
 "can to assist us in working out what's wrong."
 msgstr ""
 "لم يمكن تحميل صورة هذه الصفحة.\n"
-"هذا بسبب فك ترميز صور مفقود في أغلب الأحيان (حزمة تنسيقات صور كيو تي تحديداً، "
+"هذا بسبب فك ترميز صور مفقود في أغلب الأحيان (حزمة تنسيقات صور كيو تي تحديدًا، "
 "التي يعتمد عليها Peruse لتحميل الصور)، وخطأ تغليف محتمل. اتصل بالجهة التي "
 "حصلت منها على هذه الحزمة وأبلغها بهذا الخطأ.\n"
 "\n"
@@ -767,7 +767,7 @@ msgstr "استأنف القراءة"
 #, kde-format
 msgctxt "title of list of recently discovered books"
 msgid "Recently Added"
-msgstr "أضيف مؤخراً"
+msgstr "أضيف مؤخرًا"
 
 #: creator/main.cpp:44 creator/qml/Main.qml:118
 #, kde-format
@@ -993,7 +993,7 @@ msgstr "بيانات مُضمَّنة"
 #, kde-format
 msgctxt "Lets the user pick a file to append as a binary item"
 msgid "Add File..."
-msgstr "أضف ملفاً..."
+msgstr "أضف ملفًا..."
 
 #: creator/qml/BookBinaries.qml:52 creator/qml/BookBinaryEditor.qml:97
 #, kde-format
@@ -2216,7 +2216,7 @@ msgid ""
 "archive at the KDE Store from within the application, or just share the "
 "files with your friends."
 msgstr ""
-"أهلاً بك في منشئ Peruse، أداة مصممة لمساعدتك في إنشاء أرشيفات قصص مصورة يمكن "
+"أهلًا بك في منشئ Peruse، أداة مصممة لمساعدتك في إنشاء أرشيفات قصص مصورة يمكن "
 "قراءتها بأي تطبيق قارئ قصص مصورة قادر على CBZ. أنشئ أرشيفات قصص مصورة جديدة "
 "كليًا من الصفر، أو أنشئ واحدًا من مجموعة من الصور، أو حرر الأرشيفات الموجودة. "
 "بعد إنشائها، انشرها مباشرة إلى أرشيف القصص المصورة على الإنترنت في متجر كيدي "
