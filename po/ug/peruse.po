@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: peruse\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 11:50+0000\n"
-"PO-Revision-Date: 2026-06-01 17:38-0400\n"
+"PO-Revision-Date: 2026-09-22 18:03+0900\n"
 "Last-Translator: Abduqadir Abliz <sahranbay@gmail.com>\n"
 "Language-Team: Uyghur <kde-i18n-doc@kde.org>\n"
 "Language: ug\n"
@@ -46,7 +46,7 @@ msgstr ""
 #: app/main.cpp:53 creator/main.cpp:49
 #, kde-format
 msgid "Dan Leinir Turthra Jensen"
-msgstr "Dan Leinir Turthra Jensen"
+msgstr ""
 
 #: app/main.cpp:63
 #, kde-format
@@ -355,7 +355,7 @@ msgstr ""
 #, kde-format
 msgctxt "A percentage of progress"
 msgid "%1%"
-msgstr "%1%"
+msgstr ""
 
 #: app/qml/listcomponents/BookTileTall.qml:93
 #, kde-format
@@ -860,7 +860,7 @@ msgstr ""
 #, kde-format
 msgctxt "Edit page data such as title, frames, etc."
 msgid "Edit Page"
-msgstr ""
+msgstr "بەت تەھرىر"
 
 #: creator/qml/Book.qml:189
 #, kde-format
@@ -1596,7 +1596,7 @@ msgstr ""
 #, kde-format
 msgctxt "The title of a style entry which has a type"
 msgid "%1"
-msgstr "%1"
+msgstr ""
 
 #: creator/qml/BookStylesheet.qml:147
 #, kde-format
