@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: peruse\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 11:50+0000\n"
-"PO-Revision-Date: 2026-10-12 11:56+0300\n"
+"PO-Revision-Date: 2026-11-10 21:39+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 26.08.0\n"
+"X-Generator: Lokalize 26.08.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1582,19 +1582,19 @@ msgstr ""
 #, kde-format
 msgctxt "title of the page which lets the user manage the book's stylesheet"
 msgid "Stylesheet"
-msgstr "Biçem Sayfası"
+msgstr "Stil Sayfası"
 
 #: creator/qml/BookStylesheet.qml:55
 #, kde-format
 msgctxt "Creates a new, empty stylesheet entry and lets the user edit it"
 msgid "Add Style..."
-msgstr "Biçem Ekle…"
+msgstr "Stil Ekle…"
 
 #: creator/qml/BookStylesheet.qml:84
 #, kde-format
 msgctxt "@title:dialog"
 msgid "Edit Style"
-msgstr "Biçemi Düzenle"
+msgstr "Stili Düzenle"
 
 #: creator/qml/BookStylesheet.qml:99
 #, kde-format
@@ -1606,7 +1606,7 @@ msgstr "Öge"
 #, kde-format
 msgctxt "@option:check"
 msgid "Apply to style elements which request an inverted scheme"
-msgstr "Ters çevrilmiş bir şema isteyen biçem ögelerine uygula"
+msgstr "Ters çevrilmiş bir şema isteyen stil ögelerine uygula"
 
 #: creator/qml/BookStylesheet.qml:110
 #, kde-format
@@ -1657,7 +1657,7 @@ msgstr "%1 (alt tür: %2)"
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "No Styling Information"
-msgstr "Biçem bilgisi yok"
+msgstr "Stil bilgisi yok"
 
 #: creator/qml/BookStylesheet.qml:155
 #, kde-format
@@ -1921,7 +1921,7 @@ msgstr "Gömülü Veri"
 #, kde-format
 msgctxt "Switch to the page where the user can work with the book's stylesheet"
 msgid "Stylesheet"
-msgstr "Biçem Sayfası"
+msgstr "Stil Sayfası"
 
 #: creator/qml/Main.qml:332
 #, kde-format

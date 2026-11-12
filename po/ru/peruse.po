@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: peruse\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 11:50+0000\n"
-"PO-Revision-Date: 2026-09-24 21:22+0200\n"
-"Last-Translator: Alexander Yavorskiy <kekcuha@gmail.com>\n"
+"PO-Revision-Date: 2026-11-11 23:00+0200\n"
+"Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -361,7 +361,7 @@ msgstr "Нет, отменить удаление"
 #, kde-format
 msgctxt "A percentage of progress"
 msgid "%1%"
-msgstr "%1 %"
+msgstr "%1 %"
 
 #: app/qml/listcomponents/BookTileTall.qml:93
 #, kde-format
